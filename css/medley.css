@@ -1,0 +1,149 @@
+article nav ul {
+	text-indent: -.8em;
+	padding: 0 0 0 1em;
+	line-height: 1.2;
+}
+article:nth-child(6) section, article:nth-child(8) section {
+	margin: 0 0 0 30%;
+}
+article:nth-child(6) nav {
+	margin: 1em 0 0;
+}
+article:nth-child(6) p, article:nth-child(8) p {
+	line-height: 1.3;
+}
+#presslinks nav ul li {
+	margin: 0 0 .75em 0;
+}
+#presslinks nav ul li a {
+	border: solid 1px;
+	border-width: 0 0 1px 0;
+}
+article:nth-child(8) nav {
+	margin: 0 0 1em 0;
+}
+article:nth-child(8) nav ul {
+	padding: 0em 0 0em 1em;
+	line-height: 1;
+}
+article:nth-child(8) p {
+	text-align: left;
+}
+article:nth-child(8) nav li {
+	margin: .5em 0;
+}
+#PoloGirls, #arena_boy {
+	margin: 0;
+	width: 27%;
+	/* overrides media query to unfloat images by default */
+	float: left;
+}
+#tvcoverage iframe {
+	width: 320px;
+	height: 180px;
+	margin: 0 0 3em 1em;
+	display: block;
+	float: right;
+	clear: both;
+}
+#tvcoverage section {
+	/*fix float*/
+	overflow: hidden;
+}
+#tvcoverage p {
+	margin: 0 0 1em 0;
+}
+#view::after {
+	content: "on the right";
+}
+#tvcoverage>a {
+	width: 100%;
+}
+/*top level links a are set to white for current page. To save having to repeat #nav or similar:
+#medley #nav li:nth-child(7) we use #presslinks HERE to override (so can do this #medley li:nth-child(7))
+was only effecting the 7th child as in #medley li:nth-child(7), which can also refer to the presslinks ul*/
+
+#presslinks li:nth-child(odd) a:link, article:nth-child(8) li:nth-child(odd) a:link {
+	color: #900;
+}
+#presslinks li:nth-child(odd) a:hover, article:nth-child(8) li:nth-child(odd) a:hover {
+	color: #306;
+}
+@media screen and (max-width: 736px) {
+	h2 {
+		text-indent: 3em;
+		text-indent: 17vw;
+	}
+	article nav ul {
+		padding: 0 0 1em 1em;
+	}
+	.no-js article:nth-child(1) .read-more-trigger:before {
+		content: "Laureus";
+	}
+	.no-js article:nth-child(2) .read-more-trigger:before {
+		content: "Community";
+	}
+	.no-js article:nth-child(3) .read-more-trigger:before {
+		content: "Beekeeping";
+	}
+	.no-js article:nth-child(4) .read-more-trigger:before {
+		content: "Activities on the farm";
+	}
+	.no-js article:nth-child(5) .read-more-trigger:before {
+		content: "Activities around the farm";
+	}
+	.no-js article:nth-child(6) .read-more-trigger:before {
+		content: "Press Coverage";
+	}
+	.no-js article:nth-child(7) .read-more-trigger:before {
+		content: "TV and video coverage";
+	}
+	.no-js article:nth-child(8) .read-more-trigger:before {
+		content: "Links";
+	}
+	.no-js article:nth-child(6) section {
+		margin: 0 0 0 30%;
+	}
+	.override article:nth-child(6) section>p {
+		text-align: left;
+	}
+	.override article:nth-child(8) section>a {
+		margin: 0 0 1em 0;
+	}
+	.js #medley article:nth-child(6) p, .js #medley article:nth-child(8) p {
+		margin: 1em 0 1em 30%;
+	}
+	.js #medley article:nth-child(6) nav, .js #medley article:nth-child(8) nav {
+		margin: 1em 0 0 30%;
+	}
+	#tvcoverage p:first-of-type {
+		margin: 1em 0;
+	}
+	#tvcoverage iframe:first-of-type {
+		margin: 1em 0 3em 1em;
+	}
+	#view::after {
+		content: "above";
+	}
+}
+/*736*/
+
+@media screen and (max-width: 600px) {
+	#tvcoverage iframe {
+		margin: 0 auto;
+		width: 92vw;
+		height: 51.625vw;
+		float: none;
+	}
+	#tvcoverage iframe:first-of-type {
+		margin: 1em auto 0;
+	}
+}
+@media screen and (min-width: 737px) {
+	h2 {
+		background: url(../images/sub-medley-1.png) no-repeat 0% 0%;
+	}
+	#tvcoverage h3 {
+		width: 67%;
+	}
+}

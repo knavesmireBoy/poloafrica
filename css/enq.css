@@ -1,0 +1,257 @@
+/*content*/
+
+form {
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	background-color: #cc9;
+	border: solid 1px #000;
+	padding: 1em 0;
+}
+form fieldset {
+	font-size: 1em;
+	padding: 0 0 0 2%;
+	border: solid 1px black;
+	border-width: 1px 0 0;
+}
+form fieldset:last-child {
+	border-width: 0px;
+	padding: .3em 2% 0 2%;
+}
+form fieldset legend {
+	font-weight: bold;
+	background-color: #cc6;
+	border: solid 1px white;
+	padding: 0.2em .5em;
+}
+form label {
+	font: bold .8em/2 Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	background-color: #cc6;
+	text-align: right;
+	padding: 0 .2em 0 0;
+	border: solid 1px #fff;
+}
+form fieldset:first-child input {
+	background-color: white;
+	text-transform: uppercase;
+	border-width: 0;
+}
+#enquries #intro {
+	margin: 2em 0 1em 0;
+}
+#enquiries article {
+	margin: 1em 0 0;
+}
+.override article img {
+	width: 40%;
+	float: right;
+	margin: 1em 0 0 3em;
+}
+article p:first-of-type {
+	margin: 0 3em 1.3em 0;
+}
+article:last-child p {
+	margin: 0;
+}
+/*layout*/
+
+#contactarea form, #contactarea img {
+	display: inline-block;
+	vertical-align: top;
+}
+#contactarea form input {
+	position: static;
+	left: auto;
+}
+#contactarea form {
+	width: 68%;
+}
+form input, form label {
+	display: inline-block;
+	vertical-align: text-bottom;
+}
+form input:first-of-type, form label:first-of-type {
+	margin-top: 1em;
+}
+form label {
+	margin: .1em 0;
+	width: 12%;
+}
+#contactarea form fieldset:first-child input {
+	height: 2em;
+	margin: .1em 0 .1em .5em;
+	width: 84%;
+}
+#contactarea #dogs {
+	width: 16.8em;
+	width: 20vw;
+	height: 8.4em;
+	height: 10vw;
+	margin: 0;
+	display: block;
+	position: static;
+	float: right;
+}
+#contactarea fieldset:last-child input:last-child {
+	position: absolute;
+	left: -999em;
+}
+textarea {
+	border-width: 0;
+	width: 50%;
+	width: 30vw;
+	height: 8em;
+	height: 9.8vw;
+	float: left;
+}
+#contactarea figure {
+	border: solid 1px;
+	margin: 0 0 0 1%;
+	width: 30%;
+	float: right;
+	box-shadow: none;
+    overflow: hidden;
+}
+#contactarea figure img {
+	width: 101%;
+	float: none;
+	margin: 0;
+	box-shadow: none;
+	border-width: 0px;
+}
+/* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
+article:nth-child(2) {
+	clear:left;
+	float:left;
+	width:100%;
+	overflow:hidden;
+	background:#ffa7a7;
+}
+
+#wrap #contactarea {
+    float:left;
+	width:100%;
+	position:relative;
+	right:50%;
+	background:#fff689;
+}
+
+#wrap #contactarea form {
+    float:left;
+	width:46%;
+	position:relative;
+	left:52%;
+	overflow:hidden;
+}
+#wrap #contactarea figure {
+    float:left;
+	width:46%;
+	position:relative;
+	left:56%;
+	overflow:hidden;
+}
+*/
+
+
+@media screen and (max-width: 736px) {
+    
+    h2 {
+              text-indent: 2.2em;
+                text-indent: 12vw;
+	           }
+    
+	#enquiries article {
+		margin: 0;
+	}
+	#contactarea form {
+		width: auto;
+		float: none;
+	}
+	textarea {
+		width: 99%;
+		height: 10em;
+		float: none;
+	}
+	#enquiries #contactarea figure, #wrap #grooms, #contactarea #dogs {
+		position: absolute;
+		left: -999em;
+	}
+	#wrap #contactarea fieldset:last-child input:last-child {
+		position: static;
+		left: auto;
+		display: block;
+		margin: 0 auto;
+	}
+	.no-js article>label:nth-of-type(1):before {
+		content: "Donations and sponsorship";
+	}
+	.no-js article>label:nth-of-type(2):before {
+		content: "Holiday rates";
+	}
+	.no-js article>label:nth-of-type(3):before {
+		content: "Contact us";
+	}
+	.no-js #wrap article:nth-child(2)>label:before {
+		content: "Poloafrica contact form";
+	}
+	.no-js article:nth-child(3)>label:before {
+		content: "Directions";
+	}
+	.no-js #wrap #post1.read-more-state:checked~section:nth-of-type(1), .no-js #wrap #post2.read-more-state~section:nth-of-type(2), .no-js #wrap #post3.read-more-state~section:nth-of-type(3), .no-js #wrap #post4.read-more-state~section:nth-of-type(1), .no-js #wrap #post5.read-more-state~section:nth-of-type(2) {
+		position: absolute;
+		top: 0px;
+		left: -999em;
+		margin: 0;
+	}
+	.no-js #wrap #post1~section:nth-of-type(1), .no-js #wrap #post2:checked~section:nth-of-type(2), .no-js #wrap #post3:checked~section:nth-of-type(3), .no-js #wrap #post4:checked~section:nth-of-type(1), .no-js #wrap #post5:checked~section:nth-of-type(2), .js #wrap article section.show * {
+		position: static;
+		left: 0em;
+	}
+	#contact_form {
+		width: 100%;
+	}
+	#wrap article section.show p, .no-js #enquiries article section p {
+		margin: 1em 0;
+	}
+}
+/*@*/
+
+@media screen and (min-width: 737px) {
+    
+    #contactarea {
+	margin: 2em 0 0;
+	box-sizing: border-box;
+}
+    h2 {
+			background: url(../images/sub-enquiries-1.png) no-repeat 0% 0%;
+		}
+	@supports(column-gap: 20px) {
+		/*the textarea form element seems to confuse attempts at a grid layout
+            The form expands if textarea is given explicit dimensions either as html attributes, or css.
+            A solution is to put it in a container, but what kind of hackery is that
+            So for the moment confine grid to the first four items on the page*/
+		/*
+        	#wrap fieldset {
+        		display: -ms-grid;
+        		display: grid;
+        		grid-gap: 1em;
+        		grid-auto-columns: repeat(11, 1fr);
+        		grid-auto-rows: repeat(7, 1fr);
+        	}
+        	#enquiries #wrap fieldset, #enquiries #wrap fieldset>* {
+        		margin: 0;
+        	}
+        	#wrap div:nth-child(1) {
+        		grid-row: 1/2;
+        		grid-column: 1 / 6;
+        		background: red;
+        		margin: 1em;
+        	}
+        	#wrap label {
+        		grid-column: 1 / 2;
+        	}
+        	#wrap input {
+        		grid-column: 2 / 12;
+        	}
+        	 */
+	}
+}

@@ -1,0 +1,97 @@
+@import "flex.css";
+@supports(flex-wrap: wrap) {
+	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+	#contactarea {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		flex-wrap: wrap;
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: row;
+		flex-direction: row;
+	}
+	#contactarea #figure {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 1%;
+		flex: 3 1 1%;
+		width: 1%;
+		align-self: flex-start;
+	}
+	#contactarea form {
+		-webkit-box-flex: 2;
+		-ms-flex: 2 1 1%;
+		flex: 7 1 1%;
+	}
+	form input {
+		position: static;
+		left: 0;
+	}
+	input+fieldset {
+		border-width: 0;
+		padding: .5em 2% 0 0;
+		display: flex;
+	}
+	textarea {
+		flex: 2 1 1%;
+	}
+	#wrap #contactarea form input#dogs {
+		flex: 1 1 1%;
+		margin-top: 0;
+	}
+	#contactarea>img {
+		-webkit-box-flex: 4;
+		-ms-flex: 4 0 1%;
+		flex: 4 0 1%;
+		border: solid 1px red;
+	}
+}
+/*wrap*/
+@media screen and (min-width: 737px) {
+
+	@supports(column-gap: 20px) {
+		#wrap #intro label {
+			position: absolute;
+			left: -999em;
+		}
+		article {
+			margin: 0em 0 0;
+		}
+		article:first-child h3 {
+			width: 95%;
+		}
+		#contact_form {
+			position: absolute;
+			top: 0px;
+			left: -999em;
+			margin: 0;
+		}
+		/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+		#wrap #intro {
+			display: -ms-grid;
+			display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            grid-gap: 0em;  
+		}
+		#wrap #intro>* {
+			width: 100%;
+		}
+		#intro section {
+			-ms-grid-row: 1;
+			-ms-grid-row-span: 2;
+			-ms-grid-column: 1;
+			-ms-grid-column-span: 4;
+			grid-column: 1 / 10;
+		}
+  
+		#grooms {
+			-ms-grid-row: 1;
+			-ms-grid-row-span: 3;
+			grid-row: 1 / 4;
+			margin: 0;
+			-ms-grid-column: 5;
+			-ms-grid-column-span: 3;
+			grid-column: 10/ 16;
+		}
+	}
+}

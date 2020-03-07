@@ -1,0 +1,39 @@
+.override article:nth-child(1) img {
+	clear: both;
+	margin:  1em 0 1em 2em;
+    width: auto;
+}
+.override article:nth-child(1) img {
+    float: right;
+}
+
+@media screen and (max-width: 736px) {
+	.no-js article:nth-child(1) .read-more-trigger:before {
+		content: "Facilities";
+	}
+	.no-js article:nth-child(2) .read-more-trigger:before {
+		content: "Ponies";
+	}
+	.no-js article:nth-child(3) .read-more-trigger:before {
+		content: "Our team";
+	}
+	.no-js article:nth-child(4) .read-more-trigger:before {
+		content: "Your polo day";
+	}
+	.override article:nth-child(1) {
+		flex-direction: column;
+	}
+	.js .override article.show img {
+		position: static;
+		left: 0;
+	}
+	
+	h2 {
+		text-indent: 4em;
+        text-indent: 22vw;
+	}
+}
+@media screen and (min-width: 737px) {
+	h2 {
+		background: url(../images/sub-polo-1.png) no-repeat 0% 0%;
+	}
