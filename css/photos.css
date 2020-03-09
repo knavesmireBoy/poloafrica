@@ -1,0 +1,400 @@
+body {
+	margin: 0;
+}
+#wrap {
+	position: relative;
+	max-width: 80.152em;
+	min-height: 100%;
+}
+.js #wrap {
+    /*max-width: 80em;*/
+}
+main {
+	position: relative;
+	font: normal 1rem Arial, sans-serif;
+	padding: 0;
+	margin: 2em 0 0 0;
+	text-align: center;
+	height: 100%;
+}
+main {
+    padding: 6px 0;
+}
+main nav, main img, main, .showtime main ul {
+	border: 1px solid black;
+}
+
+main>a {
+	position: absolute;
+	top: 49%;
+}
+.js main>a:first-of-type {
+	display: block;
+	left: 0px;
+	border-top: 10px solid;
+	border-bottom: 10px solid;
+	border-right: 20px solid;
+	border-color: transparent silver transparent transparent;
+}
+.js main>a:last-of-type {
+	right: 0px;
+	border-top: 10px solid;
+	border-bottom: 10px solid;
+	border-right: 0px solid;
+	border-left: 20px solid;
+	border-color: transparent transparent transparent silver;
+}
+.js main>a:first-of-type:hover {
+	border-color: transparent black transparent transparent;
+}
+.js main>a:last-of-type:hover {
+	border-color: transparent transparent transparent black;
+}
+/*main ul li, */
+
+main img {
+	width: 100%;
+}
+.showtime main {
+	border-width: 0;
+	position: relative;
+    margin: 0;
+    /*to accommodate exit button*/
+    padding: 3em 0 0 0;
+}
+
+footer {
+	margin: 0 auto;
+}
+.showtime footer {
+	margin: -5em auto;
+}
+#exit {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	line-height: 1;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+}
+.js main nav {
+	width: 90.91%;
+	padding: 6px 0;
+}
+main nav {
+	text-align: center;
+	margin: 0 auto;
+}
+main ul {
+	padding: 0 6px;
+	/*clear*/
+	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding*/
+	*padding: 1.2em 1.2em .4em 1.2em;
+	transition: width 1s ease-in-out;
+	overflow: hidden;
+}
+.showtime main ul {
+    padding: 12px;
+}
+main ul.gallery {
+	display: block;
+    text-align: center;
+    margin: 0 auto;
+}
+
+li#slide, li#paused, li#base {
+	display: block;
+	opacity: 1;
+	*display: inline;
+}
+
+.no-js main ul li, .no-flexbox main ul li {
+    width: 249px;
+}
+main ul li {
+	margin: 6px;
+	float: left;
+	*display: inline;
+}
+.no-js main ul li:nth-child(n+5) {
+	width: 162px;
+}
+.no-js main ul li:nth-child(n+11) {
+	width: 249px;
+}
+.no-flexbox main ul li {
+	width: 225px;
+}
+.no-flexbox main ul li.portrait {
+	width: 146px;
+}
+main ul.gallery li:nth-child(5), main ul.gallery li:nth-child(11) {
+	clear: left;
+}
+
+.js .showtime main ul li {
+    width: 100%;
+    margin: 0;
+}
+
+.js main ul.portrait {
+    width: 40%;
+    margin: 0 auto;
+}
+main ul li, h2, .inplay main ul li.show {
+	position: absolute;
+	top: 0em;
+	left: -99em;
+}
+main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide {
+	position: relative;
+	left: auto;
+}
+li#slide, li#paused {
+	margin-left: -100%;
+}
+#controls, #controls button {
+	display: inline;
+	display: inline-block;
+	zoom: 1;
+}
+#controls {
+	clear: both;
+	display: table;
+	margin: 1em auto 0;
+}
+#controls button {
+	width: 1.5em;
+	height: 1.5em;
+	padding: 0;
+	margin: 0 .3em;
+	display: table-cell;
+	border: solid 1px;
+}
+#controls {
+	position: relative;
+	text-align: center;
+	font-size: 1.8em;
+	margin: 0 auto;
+	top: 0em;
+	z-index: 2;
+	opacity: 0;
+	border-spacing: .5em;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+}
+#controls.static {
+	top: -3.5em;
+	opacity: 1;
+}
+#controls button {
+	cursor: pointer;
+	background-color: #556B2F;
+	border: 1px solid #7F9933;
+	border: 1px solid hsla(75, 50%, 40%, 1);
+	border-radius: .2em;
+	-webkit-box-shadow: 2px 2px 4px black;
+	box-shadow: 2px 2px 4px black;
+	text-shadow: 1px 1px 1px black;
+	line-height: 1.6;
+	opacity: 1;
+	background-image: url(../images/buttons_sprite_lowend8.png);
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+}
+#controls.static button {
+	border: 1px solid #FFF;
+	border: 1px solid rgba(255, 255, 255, .75);
+}
+#controls>button {
+	background-image: url(../images/buttons_sprite_lowend.png);
+	background-color: hsla(50, 50%, 40%, .3);
+}
+#controls button:hover, #controls button:focus {
+	background-color: silver;
+	background-color: rgba(150, 150, 150, .5);
+	color: black;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, .75);
+}
+#controls button#backbutton {
+	background-position: 50% 14.7%;
+}
+#controls button#playbutton {
+	background-position: 50% 29%;
+}
+#controls.playing button#playbutton {
+	background-position: 50% 44%;
+	opacity: 0.9;
+}
+/*.touchevents replaces media queries (hover: hover) || (pointer: fine) where support is doubtful
+logic dictates that we only get to this point courtesy of javascript so modernizr supplies the className .(no-)touchevents */
+
+.touchevents .inplay #controls {
+	top: 2.4em;
+	opacity: 1;
+}
+.touchevents #gallery.showtime #innerwrap {
+	padding-bottom: 6em;
+}
+.touchevents #gallery.showtime footer {
+	margin-top: -5em;
+}
+.touchevents #wrap.inplay footer ul>* {
+	opacity: 0;
+}
+.no-touchevents button#forwardbutton:hover {
+	background-position: 50% 56%;
+}
+.no-touchevents button#backbutton:hover {
+	background-position: 50% 70.5%;
+}
+.no-touchevents button#playbutton:hover {
+	background-position: 50% 85%;
+}
+.no-touchevents.playing button#playbutton:hover {
+	background-position: 50% 100%;
+}
+#tooltip {
+	position: absolute;
+	z-index: 3;
+	bottom: 0em;
+	font-weight: normal;
+	font-size: .7em;
+	opacity: 0;
+	-webkit-transform: translate(-10em, -10em);
+	-ms-transform: translate(-10em, -10em);
+	transform: translate(-10em, -10em);
+	-webkit-transition-property: opacity, -webkit-transform;
+	transition-property: opacity, -webkit-transform;
+	-o-transition-property: transform, opacity;
+	transition-property: transform, opacity;
+	transition-property: transform, opacity, -webkit-transform;
+	-webkit-transition-duration: 2s;
+	-o-transition-duration: 2s;
+	transition-duration: 2s;
+}
+#tooltip.tip {
+	-webkit-transform: translate(10em, -3em);
+	-ms-transform: translate(10em, -3em);
+	transform: translate(10em, -3em);
+	opacity: .75;
+}
+#tooltip.tb1 {
+	-webkit-transform: translate(2em, -5em);
+	-ms-transform: translate(2em, -5em);
+	transform: translate(2em, -5em);
+	opacity: 1;
+}
+#tooltip.tb2 {
+	-webkit-transform: translate(2em, 10em);
+	-ms-transform: translate(2em, 10em);
+	transform: translate(2em, 10em);
+	z-index: 5;
+}
+#tooltip div:first-child {
+	background: #FFF;
+	padding: 3px;
+}
+#tooltip #triangle {
+	width: 0;
+	height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	border-top: 12px solid #FFF;
+	margin: -1px 0px 0px 5em;
+}
+@media only screen {
+	
+	main ul.gallery {
+		padding: 0 .7%;
+	}
+    
+    main {
+    padding: .7% 0;
+}
+	main ul.gallery li {
+		margin: .56%;
+		width: 23.85%;
+	}
+	.js main ul li:nth-child(n+5), main ul.gallery li.portrait {
+		width: 15.52%;
+	}
+    
+    .js main ul li:nth-child(n+11) {
+        width: 23.85%; /*li.width/ul.width(-ul.padding)*/
+    }
+	main ul li a {
+		float: none;
+	}
+    
+    .showtime #wrap main ul li {
+        width: 100%;
+    }
+    
+	#controls button {
+		background-image: url(../images/buttons_sprite.png);
+		background-color: hsla(75, 50%, 40%, .3);
+		background-size: 128%;
+	}
+	button#exit {
+		color: hsla(75, 50%, 40%, .5);
+		padding: .2em .25em;
+		border-radius: 2em;
+		border: 0px solid #FFF;
+		font-size: 2em;
+		text-shadow: 1px 1px 1px hsla(75, 50%, 30%, 1);
+		background: none;
+		width: auto;
+		height: auto;
+		display: inline;
+	}
+	.no-textshadow button#exit {
+		color: hsla(75, 50%, 40%, 1);
+	}
+	button#exit:hover, button#exit:focus {
+		background-color: hsla(75, 50%, 40%, .5);
+		color: #FFF;
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+
+/*
+    @media screen and (max-width: 737px) {
+    	h2 {
+    		text-indent: 2.6em;
+    		text-indent: 14vw;
+    	}
+    	@media screen and (max-width: 737px) and (orientation: portrait) {
+    		@supports(column-gap: 20px) {
+    			main ul .gallery li:nth-child(-n+2) {
+    				grid-row: 1 / 2;
+    				grid-column: auto / span 6;
+    			}
+    			main ul .gallery li:nth-child(n+3) {
+    				grid-row: 2 / 3;
+    				grid-column: auto / span 6;
+    			}
+    			main ul .gallery li:nth-child(n+5) {
+    				grid-row: 3 / 4;
+    				grid-column: auto / span 4;
+    			}
+    			main ul .gallery li:nth-child(n+8) {
+    				grid-row: 4 / 5;
+    				grid-column: auto / span 4;
+    			}
+    			main ul .gallery li:nth-child(n+11) {
+    				grid-row: 5 / 6;
+    				grid-column: auto / span 6;
+    			}
+    			main ul .gallery li:nth-child(n+13) {
+    				grid-row: 6 / 7;
+    				grid-column: auto / span 6;
+    			}
+    		}
+    	}
+    }
+*/

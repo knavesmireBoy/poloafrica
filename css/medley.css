@@ -71,8 +71,8 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 }
 @media screen and (max-width: 736px) {
 	h2 {
-		text-indent: 3em;
-		text-indent: 17vw;
+		text-indent: 2.6em;
+        text-indent: 14vw;
 	}
 	article nav ul {
 		padding: 0 0 1em 1em;
