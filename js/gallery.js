@@ -295,7 +295,7 @@
 							}), anCr(thumbs), always(clone)).render(),
 							img = getDomTargetImg(pauser.getElement());
 						img.onload = fade50(pauser.getElement());
-						img.src = isPortrait(clone) ? '../images/pauseLong.png' : '../images/pause.png';
+						img.src = isPortrait(clone) ? '../images/pause_long.png' : '../images/pause.png';
 						return pauser;
 					},
 					//dummy pause, gets rewitten after first run
