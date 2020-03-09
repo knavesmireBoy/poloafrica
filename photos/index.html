@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+	<!-- IE compatibility mode issue -->
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Gallery</title>
+		<link href="../css/standard.css" media="screen" rel="stylesheet">
+    <link href="../css/flex.css" media="screen" rel="stylesheet">
+    <link href="../css/photos.css" media="screen" rel="stylesheet">
+    	<script>
+	   document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
+	</script>
+	<script src="../js/modernizr.js">
+	</script>
+	</head>
+    <body id="photos">
+    	<div id="wrap">
+		   <header>
+               <a href=".">
+			<h1>POLOAFRICA<img src="../images/logo_alt_only.png"></h1></a>
+                <nav id="main_nav">
+                    <label class="menu" for="menu-toggle"></label>
+                    <input id="menu-toggle" type="checkbox">
+                    <ul id="nav">
+						<li><a href="..">home</a></li>
+						<li><a href="../trust">the trust</a></li>
+						<li><a href="../scholars">the scholars</a></li>
+						<li><a href="../place">the place</a></li>						
+						<li><a href="../stay">your stay</a></li>						
+						<li><a href=".">polo</a>
+						<li><a href="../medley">medley</a></li>
+						<li><a href="../enquiries">enquiries</a></li>
+						<li><a href=".">photos</a></li>
+			</ul>
+               </nav></header>
+             <h2>
+				photos
+			</h2>
+    <main>
+<ul class="gallery">    
+<li><a href="pages/001.html"><img src="images/001.jpg" alt=""></a></li>
+<li><a href="pages/002.html"><img src="images/002.jpg" alt=""></a></li>
+<li><a href="pages/003.html"><img src="images/003.jpg" alt=""></a></li>
+<li><a href="pages/009.html"><img src="images/009.jpg" alt=""></a></li>
+<li><a href="pages/004.html"><img src="images/004.jpg" alt=""></a></li>
+<li><a href="pages/005.html"><img src="images/005.jpg" alt=""></a></li>
+<li><a href="pages/006.html"><img src="images/006.jpg" alt=""></a></li>
+<li><a href="pages/007.html"><img src="images/007.jpg" alt=""></a></li>
+<li><a href="pages/008.html"><img src="images/008.jpg" alt=""></a></li>
+<li><a href="pages/024.html"><img src="images/024.jpg" alt=""></a></li>
+<li><a href="pages/010.html"><img src="images/010.jpg" alt=""></a></li>
+<li><a href="pages/011.html"><img src="images/011.jpg" alt=""></a></li>
+<li><a href="pages/012.html"><img src="images/012.jpg" alt=""></a></li>
+<li><a href="pages/013.html"><img src="images/013.jpg" alt=""></a></li></ul>
+            </main></div>
+    
+      <footer>
+        <div id="footer_girl">
+			<a href="#"><img src="../images/footer_girl.png"></a>
+            <a href="."><b>tel: </b>(+27) 84 290 0000</a>
+            <a href="mailto:info@poloafrica.com"><b>email: </b>info@poloafrica.com</a>
+		</div>
+        <div id="fb">
+            <a href="https:/www.instagram.com/poloafrica/" id="InstagramIcon" target="_blank"><img alt="Instagram icon" src="../images/instagram_white.png"></a> <a href="https:/www.facebook.com/Poloafrica-Development-Trust-301491696614583/" id="FacebookBadge" target="_blank"><img alt="Facebook badge" src="../images/like-us-on-facebook-png-black-1.png"></a>
+        </div>
+        <a href="mailto:photos@mwinsight.com">photos by <b>mark ward</b></a>
+    </footer>
+    <script src="../js/viewportSize.js"></script>
+    <script src="../js/shims.js"></script>
+    <script src="../js/underscore.js"></script>
+    <script src="../js/intaface.js"></script>
+    <script src="../js/eventing.js"></script>
+    <script src="../js/classlist.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/basicIterator.js"></script>
+    <script src="../js/tooltips.js"></script> 
+    <script src="../js/gallery.js"></script>
+        <script>
+        var utils = poloAF.Util,
+            con = window.console.log.bind(window),
+            $ = utils.$,
+            ptL = _.partial,
+            anCrIn = utils.insert(),
+            main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(), 
+            all_thumbs = utils.getByTag('ul', main),
+            thumbs = all_thumbs[0],
+            query = function(){
+               if(utils.getClassList(utils.getByClass('show')[0]).contains('portrait')){
+                   utils.addClass('portrait', thumbs);
+               }
+                else {
+                   utils.removeClass('portrait', thumbs);
+                }
+            };
+            
+            var allpics = utils.getByTag('img', main),
+            portrait_pics = _.filter(allpics, function(el, i){
+                var pass = el.offsetHeight > el.offsetWidth;
+                if(pass){
+                    utils.addClass('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
+                }
+                return pass;
+            }),
+            //handler = utils.addHandler('click', thumbs, _.debounce(query, 300)),
+            flexBreak = function(){
+                var lis = _.map(allpics, function(el){
+                    return utils.getDomParent(utils.getNodeByTag('li'))(el);
+                });
+                _.each([lis[4], lis[10]], function(li){
+                      utils.machElement(_.partial(utils.addClass, 'breaker'), anCrIn(li, li.parentNode), (utils.always('li'))).render();
+                   });
+            };
+           //utils.doWhen(_.negate(utils.always(Modernizr.cssgrid)), flexBreak); 
+            
+            var look = function(e){
+                if(e.target.nodeName === 'A'){
+                var i = _.findIndex(all_thumbs, ptL(utils.isEqual, utils.getByClass('gallery')[0])),
+                    j;
+                _.each(all_thumbs, ptL(utils.removeClass, 'gallery'));
+                    j = (i+1) % all_thumbs.length;
+                utils.addClass('gallery', all_thumbs[j]);
+            }
+            };
+            //utils.addEvent(ptL(utils.addHandler, 'click'), look)(main);
+        </script>
+    </body>
+</html>
