@@ -26,13 +26,18 @@
 		return bool ? x : y;
 	}
     
+    
+    function getElementOffset(el) {
+        var elementHeight = el.offsetHeight || el.getBoundingClientRect().height;
+        return utils.getElementOffset(el).top + elementHeight;
+    }
+    
     function invokemethod(o, arg, m) {
 		return o[m](arg);
 	}
 	var utils = poloAF.Util,
 		ptL = _.partial,
 		doTwice = utils.curryTwice(),
-		doTwiceDefer = utils.curryTwice(true),
 		doThrice = utils.curryThrice(),
 		con = window.console.log.bind(window),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
@@ -52,14 +57,16 @@
 			}
 		}()),
 		//isDesktop = getEnvironment(),
-		negater = function(alternators) {
+		negater = function(alternators, func) {
 			if (!getEnvironment()) {
 				_.each(alternators, function(f) {
 					f();
 				});
+                func();
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
+       
         headingmatch = doThrice(invokemethod)('match')(/h3/i),
         isHeading = _.compose(headingmatch, utils.drillDown(['target', 'nodeName'])),
 		bridge = function(e) {
@@ -81,7 +88,6 @@
             }
             return utils.getSibling(utils.getNodeByTag('section'))(el);
         },
-        greater = doTwice(utils.gtThan)(0),
 		floaters = function(els) {
 			var conditions = [doTwice(utils.getter)('id'), doWrap2, utils.always(true)],
 				invoker = function(elem, zipped) {
@@ -114,9 +120,17 @@
 				if (getEnvironment()) {
 					//pair.reverse();
 				}
+               
 				return doAlt(pair);
 			}); //map           
 		},
+        myF = function(){
+            var offsets = _.toArray(utils.getByClass('show')),
+                last = offsets.pop();
+                window.pageYOffset = getElementOffset(last)+window.innerHeight;
+            con(9)
+            //document.scrollTop = last;
+        },
         /*
         doScroll = function(el){
             return greater(getPageOffset() - utils.getScrollThreshold(el))
@@ -164,8 +178,8 @@
     }
     //reverse reqd to fix polo page in float mode
     //float_handler = ptL(negater, floaters(utils.reverse(images)));
-    float_handler = ptL(negater, floaters(images));
+    float_handler = ptL(negater, floaters(images), noOp);
     float_handler();
-    //utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
+    utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
 }('(min-width: 736px)', Modernizr.mq('only all')));
