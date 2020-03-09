@@ -353,6 +353,57 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		transform: rotate(360deg);
 	}
 }
+
+@supports(flex-wrap: wrap) and (not (column-gap: 20px)) {
+	/*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
+	.no-cssgrid main ul.gallery li.breaker {
+		flex-basis: 100%;
+		height: 0;
+		width: 100%;
+		border-width: 0px;
+		line-height: normal;
+		margin: 0;
+	}
+	.no-cssgrid main ul.gallery {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.no-cssgrid main ul.gallery li {
+		flex: 1 1 1%;
+		align-self: flex-start;
+	}
+	.no-cssgrid main ul.gallery li.portrait {a
+		flex: 1 1 1%;
+	}
+}
+
+@supports(column-gap: 20px) {
+	main ul.gallery {
+		display: grid;
+		grid-gap: 1em;
+		padding: 1em;
+		grid-template-columns: repeat(12, 1fr);
+		grid-template-rows: 1 1.525 1;
+	}
+	#wrap main ul.gallery li, #wrap main ul.gallery li.portrait {
+		width: 100%;
+		margin: 0;
+	}
+	main ul.gallery li:nth-child(-n+4) {
+		grid-row: 1 / 3;
+		grid-column: auto / span 3;
+	}
+	main ul.gallery li:nth-child(n+5) {
+		grid-row: 3 / 5;
+		grid-column: auto / span 2;
+	}
+	main ul.gallery li:nth-child(n+11) {
+		grid-row: 5 / 7;
+		grid-column: auto / span 3;
+	}
+}	
+
 /*
     @media screen and (max-width: 737px) {
     	h2 {
