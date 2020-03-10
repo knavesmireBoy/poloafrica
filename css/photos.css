@@ -1,13 +1,8 @@
-body {
-	margin: 0;
-}
 #wrap {
 	position: relative;
-	max-width: 80.152em;
+	max-width: 60.3031em;
+	width: 60.3031em;
 	min-height: 100%;
-}
-.js #wrap {
-	/*max-width: 80em;*/
 }
 main {
 	position: relative;
@@ -20,7 +15,7 @@ main {
 main {
 	padding: 6px 0;
 }
-main nav, main img, main, .showtime main ul {
+main img, main ul {
 	border: 1px solid black;
 }
 main>a {
@@ -76,22 +71,19 @@ footer {
 	-o-transition: all 1s;
 	transition: all 1s;
 }
-.js main nav {
+main ul {
 	width: 90.91%;
 	padding: 6px 0;
-}
-main nav {
-	text-align: center;
+    text-align: center;
 	margin: 0 auto;
-}
-main ul {
-	padding: 0 6px;
+    	padding: 0 6px;
 	/*clear*/
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding*/
 	*padding: 1.2em 1.2em .4em 1.2em;
 	transition: width 1s ease-in-out;
 	overflow: hidden;
 }
+
 .showtime main ul {
 	padding: 12px;
 }
@@ -116,22 +108,30 @@ main ul li {
 	float: left;
 	*display: inline;
 }
-.no-js main ul li:nth-child(n+5) {
-	width: 162px;
-}
-.no-js main ul li:nth-child(n+11) {
-	width: 249px;
-}
-.no-flexbox main ul li {
+
+main ul li {
 	width: 225px;
+	width: 183px;
 }
-.no-flexbox main ul li.portrait {
+main ul li.portrait {
 	width: 146px;
+	width: 118px;
 }
-main.alt ul.gallery li:nth-child(5), main.alt ul.gallery li:nth-child(11) {
+main ul.gallery li:nth-child(5), main ul.gallery li:nth-child(11) {
 	clear: left;
 }
 
+main.alt ul.gallery li:nth-child(11) {
+    clear: none;
+}
+
+main.alt ul.gallery li:nth-child(9) {
+	clear: left;
+}
+
+main.alt ul.gallery li:nth-child(n+13) {
+    display: none;
+}
 .js .showtime main ul li {
 	width: 100%;
 	margin: 0;
@@ -145,7 +145,7 @@ main ul li, h2, .inplay main ul li.show {
 	top: 0em;
 	left: -99em;
 }
-main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide {
+main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused {
 	position: relative;
 	left: auto;
 }
@@ -173,7 +173,7 @@ li#slide, li#paused {
 #controls {
 	position: relative;
 	text-align: center;
-	font-size: 1.8em;
+	font-size: 1.5em;
 	margin: 0 auto;
 	top: 0em;
 	z-index: 2;
@@ -193,14 +193,14 @@ li#slide, li#paused {
 	border: 1px solid #7F9933;
 	border: 1px solid hsla(75, 50%, 40%, 1);
 	border-radius: .2em;
-	-webkit-box-shadow: 2px 2px 4px black;
-	box-shadow: 2px 2px 4px black;
-	text-shadow: 1px 1px 1px black;
 	line-height: 1.6;
 	opacity: 1;
 	background-image: url(../images/buttons_sprite_lowend8.png);
 	background-repeat: no-repeat;
 	background-position: 50% 0%;
+	-webkit-box-shadow: 2px 2px 4px black;
+	box-shadow: 2px 2px 4px black;
+	text-shadow: 1px 1px 1px black;
 }
 #controls.static button {
 	border: 1px solid #FFF;
@@ -304,23 +304,26 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	margin: -1px 0px 0px 5em;
 }
 @media only screen {
+	#wrap {
+		max-width: 80em;
+		width: 100%;
+	}
 	main ul.gallery {
 		padding: 0 .7%;
 	}
 	main {
 		padding: .7% 0;
 	}
+    main.alt {
+        background-color: seashell;
+    }
 	main ul.gallery li {
 		margin: .56%;
 		width: 23.85%;
+        /*li.width/ul.width(-ul.padding)*/
 	}
-    
-main.alt ul li:nth-child(n+5), main ul.gallery li.portrait {
+	main ul.gallery li.portrait {
 		width: 15.52%;
-	}
-main.alt ul li:nth-child(n+11) {
-		width: 23.85%;
-		/*li.width/ul.width(-ul.padding)*/
 	}
 
 	main ul li a {
@@ -355,58 +358,58 @@ main.alt ul li:nth-child(n+11) {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
 	}
+	@supports(flex-wrap: wrapp) and (not (column-gap: 20px)) {
+		/*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
+		.no-cssgrid main ul.gallery li.breaker {
+			flex-basis: 100%;
+			height: 0;
+			width: 100%;
+			border-width: 0px;
+			line-height: normal;
+			margin: 0;
+		}
+		.no-cssgrid main ul.gallery {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		.no-cssgrid main ul.gallery li {
+			flex: 1 1 1%;
+			align-self: flex-start;
+		}
+		.no-cssgrid main ul.gallery li.portrait {
+			flex: 1 1 1%;
+		}
+	}
+	@supports(column-gapp: 20px) {
+		main {
+            padding: 0;
+        }
+        main ul.gallery {
+			display: grid;
+			grid-gap: 1em;
+			padding: 1em;
+			grid-template-columns: repeat(12, 1fr);
+			grid-template-rows: 1 1.525 1;
+		}
+		#wrap main ul.gallery li, #wrap main ul.gallery li.portrait {
+			width: 100%;
+			margin: 0;
+		}
+		main ul.gallery li:nth-child(-n+4) {
+			grid-row: 1 / 3;
+			grid-column: auto / span 3;
+		}
+		main ul.gallery li:nth-child(n+5) {
+			grid-row: 3 / 5;
+			grid-column: auto / span 2;
+		}
+		main ul.gallery li:nth-child(n+11) {
+			grid-row: 5 / 7;
+			grid-column: auto / span 3;
+		}
+	}
 }
-
-@supports(flex-wrap: wrapp) and (not (column-gapp: 20px)) {
-	/*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
-	.no-cssgrid main ul.gallery li.breaker {
-		flex-basis: 100%;
-		height: 0;
-		width: 100%;
-		border-width: 0px;
-		line-height: normal;
-		margin: 0;
-	}
-	.no-cssgrid main ul.gallery {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
-	.no-cssgrid main ul.gallery li {
-		flex: 1 1 1%;
-		align-self: flex-start;
-	}
-	.no-cssgrid main ul.gallery li.portrait {
-		flex: 1 1 1%;
-	}
-}
-
-@supports(column-gapp: 20px) {
-	main ul.gallery {
-		display: grid;
-		grid-gap: 1em;
-		padding: 1em;
-		grid-template-columns: repeat(12, 1fr);
-		grid-template-rows: 1 1.525 1;
-	}
-	#wrap main ul.gallery li, #wrap main ul.gallery li.portrait {
-		width: 100%;
-		margin: 0;
-	}
-	main ul.gallery li:nth-child(-n+4) {
-		grid-row: 1 / 3;
-		grid-column: auto / span 3;
-	}
-	main ul.gallery li:nth-child(n+5) {
-		grid-row: 3 / 5;
-		grid-column: auto / span 2;
-	}
-	main ul.gallery li:nth-child(n+11) {
-		grid-row: 5 / 7;
-		grid-column: auto / span 3;
-	}
-}	
-
 /*
     @media screen and (max-width: 737px) {
     	h2 {

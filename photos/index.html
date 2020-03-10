@@ -38,7 +38,8 @@
              <h2>
 				photos
 			</h2>
-    <main class="alt">
+    <main>
+        <a href="."></a>
 <ul class="gallery">
      <!--
    <li><a href="pages/032.html"><img src="images/032.jpg" alt=""></a></li>
@@ -67,7 +68,9 @@
 <li><a href="pages/011.html"><img src="images/011.jpg" alt=""></a></li>
 <li><a href="pages/012.html"><img src="images/012.jpg" alt=""></a></li>
 <li><a href="pages/013.html"><img src="images/013.jpg" alt=""></a></li></ul>
+        <a href="."></a>
             </main></div>
+        
     
       <footer>
         <div id="footer_girl">
@@ -91,63 +94,104 @@
     <script src="../js/tooltips.js"></script> 
     <script src="../js/gallery.js"></script>
         <script>
-        var utils = poloAF.Util,
-            con = window.console.log.bind(window),
-            $ = utils.$,
-            ptL = _.partial,
-            anCrIn = utils.insert(),
-            main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(), 
-            all_thumbs = utils.getByTag('ul', main),
-            thumbs = all_thumbs[0],
-            query = function(){
-               if(utils.getClassList(utils.getByClass('show')[0]).contains('portrait')){
-                   utils.addClass('portrait', thumbs);
-               }
-                else {
-                   utils.removeClass('portrait', thumbs);
-                }
-            };
-            
-            var allpics = utils.getByTag('img', main),
-            portrait_pics = _.filter(allpics, function(el, i){
-                var pass = el.offsetHeight > el.offsetWidth;
-                if(pass){
-                    utils.addClass('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
-                }
-                return pass;
-            }),
-            //handler = utils.addHandler('click', thumbs, _.debounce(query, 300)),
-            flexBreak = function(){
-                var lis = _.map(allpics, function(el){
-                    return utils.getDomParent(utils.getNodeByTag('li'))(el);
-                });
-                _.each([lis[4], lis[10]], function(li){
-                      utils.machElement(_.partial(utils.addClass, 'breaker'), anCrIn(li, li.parentNode), (utils.always('li'))).render();
-                   });
-            };
-           //utils.doWhen(_.negate(utils.always(Modernizr.cssgrid)), flexBreak); 
-            
-            var look = function(e){
-                if(e.target.nodeName === 'A'){
-                var i = _.findIndex(all_thumbs, ptL(utils.isEqual, utils.getByClass('gallery')[0])),
-                    j;
-                _.each(all_thumbs, ptL(utils.removeClass, 'gallery'));
-                    j = (i+1) % all_thumbs.length;
-                utils.addClass('gallery', all_thumbs[j]);
-            }
-            };
-            
-            var F = function(){
-                     var sec = [14,15,16,17,28,33,34,35,36,43,18,19,20,21],
-                         tri = [22,23,25,26,47,70,82,60,67,69,27,29,30,31],
-                         last = _.range(83,97);
-                
-                _.each(allpics, function(img, i){
-                    img.src = "images/0"+last[i]+".jpg";
-                });
-                }
-            //setTimeout(F, 3333);
-            //utils.addEvent(ptL(utils.addHandler, 'click'), look)(main);
+            function modulo(n, i) {
+    	return i % n;
+    }
+
+    function noOp() {
+    	return function() {};
+    }
+    var utils = poloAF.Util,
+    	con = window.console.log.bind(window),
+    	$ = utils.$,
+    	ptL = _.partial,
+    	doTwice = utils.curryTwice(),
+    	dovier = utils.curryFourFold(),
+    	anCrIn = utils.insert(),
+    	klasAdd = utils.addClass,
+    	klasRem = utils.removeClass,
+    	klasTog = utils.toggleClass,
+    	main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
+    	doToggle = ptL(klasTog, 'alt', main),
+    	all_thumbs = utils.getByTag('ul', main),
+    	thumbs = all_thumbs[0],
+    	makeIterator = function(coll) {
+    		var prepIterator = dovier(poloAF.Iterator(false));
+    		return prepIterator(ptL(modulo, coll.length))(utils.always(true))(coll)(0);
+    	},
+    	getNodeName = utils.drillDown(['target', 'nodeName']),
+    	getTarget = utils.drillDown(['target']),
+    	getLength = utils.drillDown(['length']),
+    	query = function() {
+    		if (utils.getClassList(utils.getByClass('show')[0]).contains('portrait')) {
+    			utils.addClass('portrait', thumbs);
+    		} else {
+    			utils.removeClass('portrait', thumbs);
+    		}
+    	},
+    	allpics = utils.getByTag('img', main),
+    	portrait_pics = _.filter(allpics, function(el, i) {
+    		var pass = el.offsetHeight > el.offsetWidth;
+    		if (pass) {
+    			utils.addClass('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
+    		} else {
+    			utils.removeClass('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
+    		}
+    		return pass;
+    	}),
+    	//handler = utils.addHandler('click', thumbs, _.debounce(query, 300)),
+    	flexBreak = function() {
+    		var lis = _.map(allpics, function(el) {
+    			return utils.getDomParent(utils.getNodeByTag('li'))(el);
+    		});
+    		_.each([lis[4], lis[10]], function(li) {
+    			utils.machElement(_.partial(utils.addClass, 'breaker'), anCrIn(li, li.parentNode), (utils.always('li'))).render();
+    		});
+    	},
+    	neg = function(a, b) {
+    		return getLength(a) !== getLength(b);
+    	},
+    	negator = function(cb, a, b) {
+    		if (neg(a, b)) {
+    			cb();
+    			neg = _.negate(neg);
+    		}
+    	},
+    	advance = function() {
+    		var een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
+    			twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
+    			drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],
+    			vyf = [50, 51, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63],
+    			vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
+    			ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
+    			sewe = _.range(83, 97),
+    			iterator = makeIterator([een, twee, drie, vier, vyf, ses, sewe]),
+    			doPortrait = function(e) {
+    				var el = e.target,
+    					pass = el.offsetHeight > el.offsetWidth,
+    					m = pass ? 'addClass' : 'removeClass';
+    				utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
+    			},
+    			doNeg = ptL(negator, doToggle);
+    		return function(e) {
+    			if (getNodeName(e).match(/a/i)) {
+    				var m = utils.getNext(getTarget(e)) ? 'back' : 'forward',
+    					gang = iterator[m](),
+    					allpics = utils.getByTag('img', main),
+    					path = '001';
+    				doNeg(allpics, gang);
+    				allpics = utils.getByTag('img', main);
+    				_.each(allpics, function(img, j) {
+    					path = gang[j] || path;
+    					img.src = "images/0" + path + ".jpg";
+    					img.onload = doPortrait;
+    				});
+    			}
+    		};
+    	};
+    //utils.doWhen(_.negate(utils.always(Modernizr.cssgrid)), flexBreak); 
+    //setTimeout(F, 3333);
+    utils.addEvent(ptL(utils.addHandler, 'click'), advance())(main);
         </script>
     </body>
 </html>
