@@ -128,9 +128,10 @@ main ul li {
 .no-flexbox main ul li.portrait {
 	width: 146px;
 }
-main ul.gallery li:nth-child(5), main ul.gallery li:nth-child(11) {
+main.alt ul.gallery li:nth-child(5), main.alt ul.gallery li:nth-child(11) {
 	clear: left;
 }
+
 .js .showtime main ul li {
 	width: 100%;
 	margin: 0;
@@ -313,13 +314,15 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		margin: .56%;
 		width: 23.85%;
 	}
-	.js main ul li:nth-child(n+5), main ul.gallery li.portrait {
+    
+main.alt ul li:nth-child(n+5), main ul.gallery li.portrait {
 		width: 15.52%;
 	}
-	.js main ul li:nth-child(n+11) {
+main.alt ul li:nth-child(n+11) {
 		width: 23.85%;
 		/*li.width/ul.width(-ul.padding)*/
 	}
+
 	main ul li a {
 		float: none;
 	}
@@ -354,7 +357,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 
-@supports(flex-wrap: wrap) and (not (column-gap: 20px)) {
+@supports(flex-wrap: wrapp) and (not (column-gapp: 20px)) {
 	/*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
 	.no-cssgrid main ul.gallery li.breaker {
 		flex-basis: 100%;
@@ -373,12 +376,12 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		flex: 1 1 1%;
 		align-self: flex-start;
 	}
-	.no-cssgrid main ul.gallery li.portrait {a
+	.no-cssgrid main ul.gallery li.portrait {
 		flex: 1 1 1%;
 	}
 }
 
-@supports(column-gap: 20px) {
+@supports(column-gapp: 20px) {
 	main ul.gallery {
 		display: grid;
 		grid-gap: 1em;

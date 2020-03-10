@@ -38,8 +38,21 @@
              <h2>
 				photos
 			</h2>
-    <main>
-<ul class="gallery">    
+    <main class="alt">
+<ul class="gallery">
+     <!--
+   <li><a href="pages/032.html"><img src="images/032.jpg" alt=""></a></li>
+<li><a href="pages/037.html"><img src="images/037.jpg" alt=""></a></li>
+<li><a href="pages/038.html"><img src="images/038.jpg" alt=""></a></li>
+<li><a href="pages/039.html"><img src="images/039.jpg" alt=""></a></li>
+<li><a href="pages/040.html"><img src="images/040.jpg" alt=""></a></li>
+<li><a href="pages/041.html"><img src="images/041.jpg" alt=""></a></li>
+<li><a href="pages/042.html"><img src="images/042.jpg" alt=""></a></li>
+<li><a href="pages/044.html"><img src="images/044.jpg" alt=""></a></li>
+<li><a href="pages/045.html"><img src="images/045.jpg" alt=""></a></li>
+<li><a href="pages/046.html"><img src="images/046.jpg" alt=""></a></li>
+<li><a href="pages/048.html"><img src="images/048.jpg" alt=""></a></li>
+<li><a href="pages/049.html"><img src="images/049.jpg" alt=""></a></li>-->
 <li><a href="pages/001.html"><img src="images/001.jpg" alt=""></a></li>
 <li><a href="pages/002.html"><img src="images/002.jpg" alt=""></a></li>
 <li><a href="pages/003.html"><img src="images/003.jpg" alt=""></a></li>
@@ -123,6 +136,17 @@
                 utils.addClass('gallery', all_thumbs[j]);
             }
             };
+            
+            var F = function(){
+                     var sec = [14,15,16,17,28,33,34,35,36,43,18,19,20,21],
+                         tri = [22,23,25,26,47,70,82,60,67,69,27,29,30,31],
+                         last = _.range(83,97);
+                
+                _.each(allpics, function(img, i){
+                    img.src = "images/0"+last[i]+".jpg";
+                });
+                }
+            //setTimeout(F, 3333);
             //utils.addEvent(ptL(utils.addHandler, 'click'), look)(main);
         </script>
     </body>
