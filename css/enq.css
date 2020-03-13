@@ -1,5 +1,4 @@
 /*content*/
-
 form {
 	font-family: Arial, Helvetica, Verdana, sans-serif;
 	background-color: #cc9;
@@ -150,15 +149,9 @@ article:nth-child(2) {
 	overflow:hidden;
 }
 */
+        
+ @media screen and (max-width: 736px) {
 
-
-@media screen and (max-width: 736px) {
-    
-    h2 {
-              text-indent: 2.2em;
-                text-indent: 12vw;
-	           }
-    
 	#enquiries article {
 		margin: 0;
 	}

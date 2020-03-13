@@ -70,10 +70,10 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	color: #306;
 }
 @media screen and (max-width: 736px) {
-	h2 {
-		text-indent: 2.6em;
-        text-indent: 14vw;
-	}
+    
+       body {
+        background-color: pink;
+    }
 	article nav ul {
 		padding: 0 0 1em 1em;
 	}

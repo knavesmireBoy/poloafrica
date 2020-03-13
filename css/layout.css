@@ -1,5 +1,5 @@
 body {
-	margin: 0 4%;
+	margin: 4%;
 }
 html, body {
 	height: 100%;
@@ -26,10 +26,10 @@ header {
 	width: 100%;
 }
 header a h1 {
-	margin: -3em 0 0 0;
+	margin: -3.3em 0 0 0;
 	white-space: nowrap;
 	width: 40%;
-	text-indent: 300%;
+	text-indent: 500%;
 }
 header a h1 img {
 	width: 100%;
@@ -96,13 +96,13 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	left: 0;
 }
 #menu-toggle:checked+ul#nav {
-	top: 6.5em;
-	right: 2em;
+	top: 5.5em;
+	right: 1em;
 	z-index: 2;
 }
 /*no need to fix advanced selectors for ie as mobile only layout*/
 
-#menu-toggle:checked+ul#nav>li {
+#menu-toggle:checked+ul#nav>li{
 	height: 2em;
 }
 main {
@@ -154,6 +154,7 @@ footer a:link {
 .no-js body {
 	background-color: mintcream;
 }
+
 @media screen and (max-width: 736px) {
 	#footer_girl img {
 		visibility: hidden;
@@ -165,13 +166,14 @@ footer a:link {
 	}
 	header a h1 img {
 		margin: .25em 0 0 0;
-		width: 115%;
-		min-width: 6em;
 		visibility: visible;
+        min-width: 3em;
+        border: solid 1px red;
 	}
 	header a h1 {
-		margin: -1em 0 0 0;
-		padding: 0% 0 10% 5%;
+		margin: -1em 0 0 4.5vw;
+		padding: 0% 0 9vw 0;
+        width: 43vw;
 		white-space: nowrap;
 	}
 	/*ie*/
@@ -185,10 +187,10 @@ footer a:link {
 	}
 	.menu {
 		position: absolute;
-		top: 2.4em;
-		right: 1.5em;
-		height: 2em;
-		width: 2em;
+		top: 2em;
+		right: .7em;
+		height: 2rem;
+		width: 2rem;
 	}
 	ul#nav {
 		position: absolute;
@@ -244,9 +246,18 @@ footer a:link {
 		display: block;
 	}
 	h2 {
-		margin: -1.77em 0 0 0;
-		position: relative;
+		margin: -1.77em 0 0 0em;
+        padding: .3em 0 0 4.5vw;
+        position: relative; 
 	}
+    h2 span {
+        text-align: center;
+        display: inline-block;
+        width: 49%;
+        width: 43vw;
+        margin: 0 auto;
+        border: solid 1px blue;
+    }
 	#footer_girl {
 		width: 15em;
 	}
@@ -264,5 +275,54 @@ footer a:link {
 		display: block;
 		margin: .25em 0;
 	}
+}
+
+@media only screen and (max-width: 667px) and (orientation: portrait) {
+
+    /*
+	.touchevents .inplay #controls {
+		top: 2.2em;
+	}
+}*/
+}
+
+@media only screen and (max-width: 480px){
+    
+    .js body {
+            background-color: gainsboro;
+        }
+    h2 {
+        font-size: 1.6em;
+	}
+    
+    header a h1 {
+        /*margin: -1em 0 0 4.5vw;*/
+    }
+    h2 span, header a h1 img{
+        width: 50vw;
+        margin: 0;
+        border-width: 0;
+    }
+    ul#nav {
+        font-size: .9em;
+        font-weight: bold;
+    }
+    #menu-toggle:checked+ul#nav {
+        top: 6em;
+    }
+    
+}
+
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+       .js body {
+            background-color: beige;
+        }
+    body {
+        margin: 0;
+   }
+     h2 span, header a h1 img{
+        width: 60vw;
+    }
+
 }
 /*@*/
