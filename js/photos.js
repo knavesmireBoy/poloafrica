@@ -15,31 +15,16 @@ if (!window.poloAF) {
     function undef(x) {
 		return typeof (x) === 'undefined';
 	}
-    
-    function noOp(){
-        //return function(){};
-    }
+
 	var utils = window.poloAF.Util,
-		con = window.console.log.bind(window),
-		$ = utils.$,
-		ptL = _.partial,
+        ptL = _.partial,
+		//con = window.console.log.bind(window),
+		//$ = utils.$,
 		report = function (msg) {
 			utils.getByTag('h2', document)[0].innerHTML = undef(msg) ? document.documentElement.className : msg;
 			//utils.getByTag('b', $('footer_girl'))[0].innerHTML = msg || document.documentElement.className;
 		},
 		dovier = utils.curryFourFold(),
-        doTwice = utils.curryTwice(),
-        doAlt = utils.doAlternate(),
-		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
-		threshold = Number(thequery.match(number_reg)[1]),
-		getEnvironment = (function () {
-			if (mq) {
-				return _.partial(Modernizr.mq, thequery);
-			} else {
-				return _.partial(utils.isDesktop, threshold);
-			}
-		}()),
-		anCrIn = utils.insert(),
 		klasTog = utils.toggleClass,
 		main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
 		doToggle = ptL(klasTog, 'alt', main),
@@ -60,32 +45,6 @@ if (!window.poloAF) {
 			}
 		},
 		allpics = utils.getByTag('img', main),
-		lis = _.map(allpics, function (el) {
-			return utils.getDomParent(utils.getNodeByTag('li'))(el);
-		}),
-        /*
-		flexBreak = function (coll) {
-			_.each(coll, function (li) {
-				utils.machElement(_.partial(utils.addClass, 'breaker'), anCrIn(li, li.parentNode), (utils.always('li'))).render();
-			});
-		},
-        standard = [lis[2], lis[4], lis[7], lis[10], lis[12]],
-		extent = getEnvironment() ? [lis[4], lis[10]] : standard,
-		doFlexBreak = ptL(flexBreak, extent),
-        doFlexFix = (function(i){
-             var lis = utils.getByTag('li', thumbs),
-                 insert = ptL(utils.invokeRest, 'insertBefore', thumbs),
-                 inbound = doTwice(insert)(lis[8]),
-                 outbound = doTwice(insert)(lis[10]),
-                 funcs = [noOp, noOp, inbound, noOp, noOp, outbound, noOp],
-                 L = funcs.length;
-             return function(){
-                 var breaker = utils.getByClass('breaker')[1];
-                funcs[modulo(L, i++)](breaker);
-            
-        };
-        }(0)),
-        */
 		neg = function (a, b) {
 			return getLength(a) !== getLength(b);
 		},
@@ -106,7 +65,6 @@ if (!window.poloAF) {
 		doPortraitBridge = function (e) {
 			doDoPortrait(e.target);
 		},
-        //mayBeFlexFix = ptL(utils.doWhen, utils.always(Modernizr.flexwrap && Modernizr.cssgrid), doFlexFix),
 		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
 		advance = function () {
 			var twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
@@ -129,14 +87,11 @@ if (!window.poloAF) {
 						path = gang[j] || path;
 						img.src = "images/0" + path + ".jpg";
 						img.onload = doPortraitBridge;
-					});
-                     ///mayBeFlexFix();
-				}
+					});				}
 			};
 		},
 		myadvance = advance();
         
-	//utils.doWhen(utils.always(Modernizr.flexwrap && Modernizr.cssgrid), doFlexBreak);
 	utils.addHandler('click', thumbs, _.debounce(query, 300));
 	_.each(allpics, function (img) {
 		doPortrait(img);//add portrait class until i fix gallery.js
