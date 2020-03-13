@@ -39,16 +39,18 @@
 		ptL = _.partial,
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
-		con = window.console.log.bind(window),
+		//con = window.console.log.bind(window),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
 		main = document.getElementsByTagName('main')[0],
+        report = function(msg){
+           utils.getByTag('h2', document)[0].innerHTML = msg || document.documentElement.className; 
+        },
 		articles = document.getElementsByTagName('article'),
         images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, articles, ptL(utils.getByTag, 'img')))(),
         animation = utils.$("ani"),
 		doAlt = utils.doAlternate(),
-        doWrap2 = utils.always(!Modernizr.flexwrap),
-        doWrap2 = utils.always(true),
+        doWrap = utils.always(true),
 		getEnvironment = (function() {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
@@ -89,7 +91,7 @@
             return utils.getSibling(utils.getNodeByTag('section'))(el);
         },
 		floaters = function(els) {
-			var conditions = [doTwice(utils.getter)('id'), doWrap2, utils.always(true)],
+			var conditions = [doTwice(utils.getter)('id'), doWrap, utils.always(true)],
 				invoker = function(elem, zipped) {
 					return elem && zipped[0](elem);
 				};
@@ -103,7 +105,6 @@
 					},
 					move = function() {
                        var p = utils.getSibling(utils.getNodeByTag('p'))(section.firstChild);
-                        //utils.insertAfter(el, utils.getNextElement(section.firstChild));
                         section.insertBefore(el, p);
 					},
 					unmove = function() {
@@ -120,18 +121,16 @@
 				if (getEnvironment()) {
 					//pair.reverse();
 				}
-               
 				return doAlt(pair);
 			}); //map           
-		},
+		},/*
         myF = function(){
             var offsets = _.toArray(utils.getByClass('show')),
                 last = offsets.pop();
                 window.pageYOffset = getElementOffset(last)+window.innerHeight;
-            con(9)
             //document.scrollTop = last;
         },
-        /*
+        
         doScroll = function(el){
             return greater(getPageOffset() - utils.getScrollThreshold(el))
         },
@@ -161,6 +160,7 @@
 		},
         */
 		float_handler;
+        
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
 	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels, but the picture will come before the content
 	*/
@@ -180,6 +180,8 @@
     //float_handler = ptL(negater, floaters(utils.reverse(images)));
     float_handler = ptL(negater, floaters(images), noOp);
     float_handler();
-    utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
+    if(Modernizr.touchevents){
+    //utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
+    }
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
 }('(min-width: 736px)', Modernizr.mq('only all')));

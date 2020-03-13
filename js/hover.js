@@ -43,6 +43,7 @@ if (!window.poloAF) {
 		$ = function (str) {
 			return document.getElementById(str);
 		},
+        h2 = poloAF.Util.getByTag('h2', document)[0],
         doAlt = poloAF.Util.doAlternate(),
 		fader = (function () {
             

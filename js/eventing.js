@@ -11,7 +11,7 @@ window.poloAF.Eventing = (function (eventing) {
 		return function () {};
 	}
 	////$element.triggerEvent($element.getElement(), 'scroll');
-	function triggerEvent(el, type, ) {
+	function triggerEvent(el, type) {
 		var e;
 		if ('createEvent' in document) {
        // if (document.hasOwnProperty('createEvent')) {

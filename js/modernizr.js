@@ -1,6 +1,6 @@
 /*!
  * modernizr v3.5.0
- * Build https://modernizr.com/download?-bgpositionshorthand-boxshadow-hsla-rgba-textshadow-backgroundsize-cssanimations-cssgrid_cssgridlegacy-cssmask-flexbox-flexboxlegacy-flexboxtweener-flexwrap-nthchild-opacity-requestanimationframe-svgasimg-svgfilters-addtest-atrule-domprefixes-hasevent-mq-prefixed-prefixedcss-prefixedcssvalue-prefixes-printshiv-setclasses-testallprops-testprop-teststyles-dontmin
+ * Build https://modernizr.com/download?-borderradius-cssremunit-cssvhunit-cssvmaxunit-cssvminunit-cssvwunit-bgpositionshorthand-boxshadow-hsla-rgba-textshadow-backgroundsize-cssanimations-cssgrid_cssgridlegacy-cssmask-flexbox-flexboxlegacy-flexboxtweener-flexwrap-nthchild-opacity-requestanimationframe-svgasimg-svgfilters-addtest-atrule-domprefixes-hasevent-mq-prefixed-prefixedcss-prefixedcssvalue-prefixes-printshiv-setclasses-testallprops-testprop-teststyles-dontmin
  *
  * Copyright (c)
  *  Faruk Ates
@@ -1797,6 +1797,21 @@ Detects support for the ':nth-child()' CSS pseudo-selector.
   });
 
   
+      /**
+   * roundedEquals takes two integers and checks if the first is within 1 of the second
+   *
+   * @access private
+   * @function roundedEquals
+   * @param {number} a
+   * @param {number} b
+   * @returns {boolean}
+   */
+
+  function roundedEquals(a, b) {
+    return a - 1 === b || a === b || a + 1 === b;
+  }
+
+  ;
 
 
   /**
@@ -2634,6 +2649,131 @@ eg `background-position: right 10px bottom 10px`
   Modernizr.addTest('textshadow', testProp('textShadow', '1px 1px'));
 
 
+/*!
+{
+  "name": "CSS vh unit",
+  "property": "cssvhunit",
+  "caniuse": "viewport-units",
+  "tags": ["css"],
+  "builderAliases": ["css_vhunit"],
+  "notes": [{
+    "name": "Related Modernizr Issue",
+    "href": "https://github.com/Modernizr/Modernizr/issues/572"
+  },{
+    "name": "Similar JSFiddle",
+    "href": "https://jsfiddle.net/FWeinb/etnYC/"
+  }]
+}
+!*/
+
+  testStyles('#modernizr { height: 50vh; }', function(elem) {
+    var height = parseInt(window.innerHeight / 2, 10);
+    var compStyle = parseInt(computedStyle(elem, null, 'height'), 10);
+
+    Modernizr.addTest('cssvhunit', roundedEquals(compStyle, height));
+  });
+
+/*!
+{
+  "name": "CSS vmax unit",
+  "property": "cssvmaxunit",
+  "caniuse": "viewport-units",
+  "tags": ["css"],
+  "builderAliases": ["css_vmaxunit"],
+  "notes": [{
+    "name": "Related Modernizr Issue",
+    "href": "https://github.com/Modernizr/Modernizr/issues/572"
+  },{
+    "name": "JSFiddle Example",
+    "href": "https://jsfiddle.net/glsee/JDsWQ/4/"
+  }]
+}
+!*/
+
+  testStyles('#modernizr1{width: 50vmax}#modernizr2{width:50px;height:50px;overflow:scroll}#modernizr3{position:fixed;top:0;left:0;bottom:0;right:0}', function(node) {
+    var elem = node.childNodes[2];
+    var scroller = node.childNodes[1];
+    var fullSizeElem = node.childNodes[0];
+    var scrollbarWidth = parseInt((scroller.offsetWidth - scroller.clientWidth) / 2, 10);
+
+    var one_vw = fullSizeElem.clientWidth / 100;
+    var one_vh = fullSizeElem.clientHeight / 100;
+    var expectedWidth = parseInt(Math.max(one_vw, one_vh) * 50, 10);
+    var compWidth = parseInt(computedStyle(elem, null, 'width'), 10);
+
+    Modernizr.addTest('cssvmaxunit', roundedEquals(expectedWidth, compWidth) || roundedEquals(expectedWidth, compWidth - scrollbarWidth));
+  }, 3);
+
+/*!
+{
+  "name": "CSS vmin unit",
+  "property": "cssvminunit",
+  "caniuse": "viewport-units",
+  "tags": ["css"],
+  "builderAliases": ["css_vminunit"],
+  "notes": [{
+    "name": "Related Modernizr Issue",
+    "href": "https://github.com/Modernizr/Modernizr/issues/572"
+  },{
+    "name": "JSFiddle Example",
+    "href": "https://jsfiddle.net/glsee/JRmdq/8/"
+  }]
+}
+!*/
+
+  testStyles('#modernizr1{width: 50vm;width:50vmin}#modernizr2{width:50px;height:50px;overflow:scroll}#modernizr3{position:fixed;top:0;left:0;bottom:0;right:0}', function(node) {
+    var elem = node.childNodes[2];
+    var scroller = node.childNodes[1];
+    var fullSizeElem = node.childNodes[0];
+    var scrollbarWidth = parseInt((scroller.offsetWidth - scroller.clientWidth) / 2, 10);
+
+    var one_vw = fullSizeElem.clientWidth / 100;
+    var one_vh = fullSizeElem.clientHeight / 100;
+    var expectedWidth = parseInt(Math.min(one_vw, one_vh) * 50, 10);
+    var compWidth = parseInt(computedStyle(elem, null, 'width'), 10);
+
+    Modernizr.addTest('cssvminunit', roundedEquals(expectedWidth, compWidth) || roundedEquals(expectedWidth, compWidth - scrollbarWidth));
+  }, 3);
+    
+    /*!
+{
+  "name": "Border Radius",
+  "property": "borderradius",
+  "caniuse": "border-radius",
+  "polyfills": ["css3pie"],
+  "tags": ["css"],
+  "notes": [{
+    "name": "Comprehensive Compat Chart",
+    "href": "https://muddledramblings.com/table-of-css3-border-radius-compliance"
+  }]
+}
+!*/
+
+  Modernizr.addTest('borderradius', testAllProps('borderRadius', '0px', true));
+
+/*!
+{
+  "name": "CSS vw unit",
+  "property": "cssvwunit",
+  "caniuse": "viewport-units",
+  "tags": ["css"],
+  "builderAliases": ["css_vwunit"],
+  "notes": [{
+    "name": "Related Modernizr Issue",
+    "href": "https://github.com/Modernizr/Modernizr/issues/572"
+  },{
+    "name": "JSFiddle Example",
+    "href": "https://jsfiddle.net/FWeinb/etnYC/"
+  }]
+}
+!*/
+
+  testStyles('#modernizr { width: 50vw; }', function(elem) {
+    var width = parseInt(window.innerWidth / 2, 10);
+    var compStyle = parseInt(computedStyle(elem, null, 'width'), 10);
+
+    Modernizr.addTest('cssvwunit', roundedEquals(compStyle, width));
+  });
 
 
 

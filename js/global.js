@@ -790,6 +790,7 @@ poloAF.Util = (function () {
 		},
 		insertAfter: insertAfter,
 		invokeRest: function (m, o) {
+            console.log(arguments)
 			return o[m].apply(o, _.rest(arguments, 2));
 		},
 		invokeWhen: invokeWhen,
