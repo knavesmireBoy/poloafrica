@@ -34,14 +34,33 @@
 	    	.no-js article:nth-child(5) .read-more-trigger:before {
 	    		content: "Social change";
 	    	}
-	    	 h2 {
-                text-indent: 1.9em;
-                 text-indent: 10.5vw;
-	           }
+	    
+            article:nth-child(5) section img {
+                float: right;
+                width: 20%;
+                margin: 1em 0 0 1em;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            article:nth-child(5) section img {
+                width: 30%;
+            }
+        }
+        
+        @media screen and (max-width: 414px) and (orientation: portrait) {
+            article:nth-child(5) section img {
+                margin: 1em 1em 0;
+                width: 40%;
+            }
+        }
+        
+                        
+
 	    @media screen and (min-width: 737px) {
 	    	h2 {
 	    		background: url(../images/sub_the-trust.png) no-repeat 0% 0%;
 	    	}
+            
 	    }
 	</style>
     	<script>
@@ -76,7 +95,7 @@
 				<li><a href="../photos" target="_top">photos</a></li>
 			</ul></nav>
 			 </header>
-        <h2>the trust</h2>
+        <h2><span>the trust</span></h2>
 		<main class="override">
 			<article>
 				<input class="read-more-state" id="post1" type="checkbox">

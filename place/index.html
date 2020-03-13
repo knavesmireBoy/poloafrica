@@ -43,12 +43,29 @@
 		.no-js article:nth-child(5) .read-more-trigger:before {
 			content: "Location";
 		}
-        h2 {
-            text-indent: 2em;
-            text-indent: 11vw;
-	           }
+        
+        .override article:nth-child(5) section img {
+                float: right;
+                width: 20%;
+            }
         
 	}
+        
+           @media screen and (max-width: 480px) {
+            .override article:nth-child(5) section img {
+                width: 30%;
+            }
+               section p:first-of-type {
+                   text-align: left;
+               }
+        }
+        
+        @media screen and (max-width: 414px) and (orientation: portrait) {
+            .override article:nth-child(5) section img {
+                width: 40%;
+                margin: 1em 1em 0;
+            }
+        }
 	@media screen and (min-width: 737px) {
 		h2 {
 			background: url(../images/sub-the-place-1.png) no-repeat 0% 0%;
@@ -88,7 +105,7 @@
 						<li><a href="../photos" target="_top">photos</a></li>								
 				</ul></nav>
         </header>
-        <h2>the place</h2>
+        <h2><span>the place</span></h2>
 		<main class="override">
 			<article>
 				<input class="read-more-state" id="post1" type="checkbox">
