@@ -12,14 +12,22 @@ if (!window.poloAF) {
 	function modulo(n, i) {
 		return i % n;
 	}
-    function undef(x) {
+
+	function undef(x) {
 		return typeof (x) === 'undefined';
 	}
 
+	function partial(f, el) {
+		return _.partial(f, el);
+	}
+
+	function noOp() {
+		//return function (){};
+	}
 	var utils = window.poloAF.Util,
-        ptL = _.partial,
-		//con = window.console.log.bind(window),
-		//$ = utils.$,
+		con = window.console.log.bind(window),
+		$ = utils.$,
+		ptL = _.partial,
 		report = function (msg) {
 			utils.getByTag('h2', document)[0].innerHTML = undef(msg) ? document.documentElement.className : msg;
 			//utils.getByTag('b', $('footer_girl'))[0].innerHTML = msg || document.documentElement.className;
@@ -37,11 +45,13 @@ if (!window.poloAF) {
 		getNodeName = utils.drillDown(['target', 'nodeName']),
 		getTarget = utils.drillDown(['target']),
 		getLength = utils.drillDown(['length']),
-		query = function () {
-			if (utils.getClassList(utils.getByClass('show')[0]).contains('portrait')) {
-				utils.addClass('portrait', thumbs);
-			} else {
-				utils.removeClass('portrait', thumbs);
+		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
+		query = function (e) {
+			if (getNodeName(e).match(/img/i)) {
+				var current = utils.getByClass('show')[0],
+					img = getDomTargetImg(current),
+					m = (img.offsetHeight > img.offsetWidth) ? 'addClass' : 'removeClass';
+				utils[m]('portrait', thumbs);
 			}
 		},
 		allpics = utils.getByTag('img', main),
@@ -55,16 +65,15 @@ if (!window.poloAF) {
 			}
 		},
 		doPortrait = function (el) {
-			var pass = el.offsetHeight > el.offsetWidth,
-				m = pass ? 'addClass' : 'removeClass';
+			var m = (el.offsetHeight > el.offsetWidth) ? 'addClass' : 'removeClass';
 			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
 		},
-		doDoPortrait = function (el) {
-			utils.doWhen(_.negate(utils.always(Modernizr.nthchild)), ptL(doPortrait, el));
-		},
+		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
+		doPortraitLoop = ptL(_.each, allpics, fixNoNthChild),
 		doPortraitBridge = function (e) {
-			doDoPortrait(e.target);
+			fixNoNthChild(e.target);
 		},
+		toogleLoop = _.compose(doPortraitLoop, doToggle),
 		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
 		advance = function () {
 			var twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
@@ -74,10 +83,10 @@ if (!window.poloAF) {
 				ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
 				sewe = _.range(83, 97),
 				iterator = makeIterator([een, twee, drie, vier, vyf, ses, sewe]),
-				doNeg = ptL(negator, doToggle);
+				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
 				if (getNodeName(e).match(/a/i)) {
-					var m = utils.getNext(getTarget(e)) ? 'back' : 'forward',
+					var m = utils.getPrevious(getTarget(e)) ? 'forward' : 'back',
 						gang = iterator[m](),
 						allpics = utils.getByTag('img', main),
 						path = '001';
@@ -87,14 +96,11 @@ if (!window.poloAF) {
 						path = gang[j] || path;
 						img.src = "images/0" + path + ".jpg";
 						img.onload = doPortraitBridge;
-					});				}
+					});
+				}
 			};
 		},
 		myadvance = advance();
-        
 	utils.addHandler('click', thumbs, _.debounce(query, 300));
-	_.each(allpics, function (img) {
-		doPortrait(img);//add portrait class until i fix gallery.js
-	});
 	utils.addEvent(ptL(utils.addHandler, 'click'), myadvance)(main);
 }('(min-width: 601px)', Modernizr.mq('only all')));

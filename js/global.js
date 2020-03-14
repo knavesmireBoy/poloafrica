@@ -30,26 +30,28 @@ poloAF.Util = (function () {
 	function noOp() {
 		return function () {};
 	}
-    
-    function gtEq(x, y) {
+
+	function gtEq(x, y) {
 		return getResult(x) >= getResult(y);
 	}
 
 	function lsEq(x, y) {
 		return getResult(x) <= getResult(y);
 	}
-    function gtThan(x, y, flag) {
-			if (flag) {
-				return gtEq(x, y);
-			}
-			return getResult(x) > getResult(y);
+
+	function gtThan(x, y, flag) {
+		if (flag) {
+			return gtEq(x, y);
 		}
-     function lsThan(x, y, flag) {
-			if (flag) {
-				return lsEq(x, y);
-			}
-			return getResult(x) < getResult(y);
+		return getResult(x) > getResult(y);
+	}
+
+	function lsThan(x, y, flag) {
+		if (flag) {
+			return lsEq(x, y);
 		}
+		return getResult(x) < getResult(y);
+	}
 
 	function cat() {
 		var head = _.first(arguments);
@@ -88,7 +90,7 @@ poloAF.Util = (function () {
 	}
 
 	function getter(o, k) {
-        //console.log(arguments)
+		//console.log(arguments)
 		return o && o[k];
 	}
 
@@ -110,8 +112,8 @@ poloAF.Util = (function () {
 		//console.log(arguments)
 		return o[m](arg);
 	}
-    
-    function mittleInvoke(m, arg, o) {
+
+	function mittleInvoke(m, arg, o) {
 		return o[m](arg);
 	}
 
@@ -136,8 +138,8 @@ poloAF.Util = (function () {
 		}
 		return function (actions) {
 			var f = _.partial(thunk, alternate(0, 2));
-			return function () {
-				return poloAF.Util.getBest(f, actions)();
+			return function (arg) {
+				return poloAF.Util.getBest(f, [_.partial(actions[0], arg), _.partial(actions[1], arg)])();
 			};
 		};
 	}
@@ -226,10 +228,10 @@ poloAF.Util = (function () {
 	function removeElement(node) {
 		return node.parentNode.removeChild(node);
 	}
-    
-    function getElementHeight(el){
-        return el.offsetHeight || el.getBoundingClientRect().height;
-    }
+
+	function getElementHeight(el) {
+		return el.offsetHeight || el.getBoundingClientRect().height;
+	}
 
 	function getPageOffset(bool) {
 		var w = window,
@@ -253,7 +255,7 @@ poloAF.Util = (function () {
 			poloAF.Intaface.ensures($el, inta);
 			handleElement($el, cb);
 		} else { //default treatment
-            //getPageOffset() > ($el.offsetTop - window.innerHeight)
+			//getPageOffset() > ($el.offsetTop - window.innerHeight)
 			if (getPageOffset() > cb($el)) {
 				poloAF.Util.addClass(klas, $el);
 			} else {
@@ -282,15 +284,15 @@ poloAF.Util = (function () {
 	}
 
 	function getScrollThreshold(el, percent) {
-        /*park this 
-        var documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
-        var po = getPageOffset(),
-        elementOffsetTop = utils.getElementOffset(el).top,
-        elementHeight = utils.getElementHeight(el);
-        depth = elementOffsetTop + elementHeight,
-        scrolled = po + window.viewportSize.getHeight();
-        (po+window.innerHeight) - (elementOffsetTop + elementHeight) ===  po-threshold;
-        */
+		/*park this 
+		var documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+		var po = getPageOffset(),
+		elementOffsetTop = utils.getElementOffset(el).top,
+		elementHeight = utils.getElementHeight(el);
+		depth = elementOffsetTop + elementHeight,
+		scrolled = po + window.viewportSize.getHeight();
+		(po+window.innerHeight) - (elementOffsetTop + elementHeight) ===  po-threshold;
+		*/
 		try {
 			var elementOffsetTop = getElementOffset(el).top,
 				elementHeight = el.offsetHeight || el.getBoundingClientRect().height,
@@ -454,9 +456,9 @@ poloAF.Util = (function () {
 	function setFromArray(validate, method, classArray, target) {
 		//console.log(arguments)
 		//target may be a function returning a target element
-        if(!target){
-            return null;
-        }
+		if (!target) {
+			return null;
+		}
 		var fn,
 			tgt = getClassList(getResult(target)),
 			args = _.rest(arguments, 3);
@@ -634,7 +636,7 @@ poloAF.Util = (function () {
 			};
 		};
 	return {
-        $: function (str) {
+		$: function (str) {
 			return document.getElementById(str);
 		},
 		addClass: _.partial(setFromArray, always(true), 'add'),
@@ -691,22 +693,22 @@ poloAF.Util = (function () {
 			return flag ? curry44 : curry4;
 		},
 		doAlternate: doAlternate,
-        /*USAGE: 
+		/*USAGE: 
         var once = doOnce(),
         actions = [func1, func2, ...];
         function (flag) {
         var f = ptL(thunk, once(1));
         return best(f, actions)();
 				}; */
-        doOnce: function () {
-		return function (i) {
-			return function () {
-				var res = i > 0;
-				i -= 1;
-				return res > 0;
+		doOnce: function () {
+			return function (i) {
+				return function () {
+					var res = i > 0;
+					i -= 1;
+					return res > 0;
+				};
 			};
-		};
-        },
+		},
 		doWhen: doWhen,
 		drillDown: drillDown,
 		findIndex: function (collection, predicate) {
@@ -717,7 +719,7 @@ poloAF.Util = (function () {
 			return document.body || document.getElementsByTagName('body')[0];
 		},
 		getByClass: _.partial(getPolyClass, document),
-        getByTag: _.partial(mittleInvoke, 'getElementsByTagName'),
+		getByTag: _.partial(mittleInvoke, 'getElementsByTagName'),
 		getClassList: getClassList,
 		getComputedStyle: function (element, styleProperty) {
 			var computedStyle = null,
@@ -734,9 +736,9 @@ poloAF.Util = (function () {
 		getDefaultAction: _.partial(best, noOp()),
 		getDomChild: curry3(getTargetNode)('firstChild'),
 		getDomParent: curry3(getTargetNode)('parentNode'),
-        getElementHeight: getElementHeight,
-        getElementOffset: getElementOffset,
-        getSibling: curry3(getTargetNode)('nextSibling'),
+		getElementHeight: getElementHeight,
+		getElementOffset: getElementOffset,
+		getSibling: curry3(getTargetNode)('nextSibling'),
 		getNewElement: getNewElement,
 		getNext: _.partial(nested, curry2(getter)('nextSibling'), getNextElement), // expects node //?//
 		getNextElement: getNextElement, //expects node.nextSibling
@@ -749,7 +751,7 @@ poloAF.Util = (function () {
 		getScrollThreshold: getScrollThreshold,
 		getZero: _.partial(byIndex, 0),
 		getter: getter,
-        gtThan: gtThan,
+		gtThan: gtThan,
 		hasFeature: (function () {
 			var html = document.documentElement || document.getElementsByTagName('html')[0];
 			return function (str) {
@@ -790,16 +792,15 @@ poloAF.Util = (function () {
 		},
 		insertAfter: insertAfter,
 		invokeRest: function (m, o) {
-            console.log(arguments)
 			return o[m].apply(o, _.rest(arguments, 2));
 		},
 		invokeWhen: invokeWhen,
 		invoker: invoker,
-        isDesktop: _.partial(gtThan, window.viewportSize.getWidth),
+		isDesktop: _.partial(gtThan, window.viewportSize.getWidth),
 		isEqual: function (x, y) {
 			return getResult(x) === getResult(y);
 		},
-        lsThan: lsThan,
+		lsThan: lsThan,
 		machElement: machElement,
 		makeElement: makeElement,
 		map: function (coll, mapper) {
@@ -841,7 +842,7 @@ poloAF.Util = (function () {
 		show: _.partial(setFromArray, always(true), 'add', ['show']),
 		simpleAdapter: simpleAdapter,
 		toggleClass: _.partial(setFromArray, always(true), 'toggle'),
-        toggle: _.partial(setFromArray, always(true), 'toggle', ['show']),
+		toggle: _.partial(setFromArray, always(true), 'toggle', ['show']),
 		validator: validator,
 		shout: function (m) {
 			var applier = function (f, args) {
