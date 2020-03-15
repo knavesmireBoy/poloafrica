@@ -25,10 +25,8 @@ main {
             justify-content: center; 
 }
 .flexboxlegacy main {
-    background-color: chartreuse;
 }
 .flexbox main {
-    background-color: snow;
 }
 main img, main ul {
 	border: 1px solid black;
@@ -66,8 +64,12 @@ main>a {
         -ms-flex-order: 3;
             order: 3;
 }
-#gal_back:hover, #gal_forward:hover {
+#gal_back:hover {
 	border-right-color: silver;
+}
+
+#gal_forward:hover {
+	border-left-color: silver;
 }
 /*main ul li, */
 
@@ -79,7 +81,7 @@ main img {
 	position: relative;
 	margin: 0;
 	/*to accommodate exit button*/
-	padding: 3em 0 0 0;
+	padding: 3.75em 0 0 0;
     display: block;/*force override flex ?*/
 }
 
@@ -91,12 +93,15 @@ footer {
 }
 #exit {
 	position: absolute;
-	top: 0px;
+	top: .75em;
 	right: 0px;
-	line-height: 1;
+    width: 2em;
+    height: 2em;
+    border: 0;
 	-webkit-transition: all 1s;
 	-o-transition: all 1s;
 	transition: all 1s;
+    display: block;
 }
 main ul {
 	width: 90.91%;
@@ -154,6 +159,7 @@ main.alt ul.gallery li:nth-last-child(-n+2) {
 }
 .js main ul.portrait {
 	width: 40%;
+	width: 60vmin;
 	margin: 0 auto;
 }
 main ul li, h2, .inplay main ul li.show, .showtime #wrap main>a, .no-js main>a {
@@ -343,23 +349,8 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		background-color: hsla(75, 50%, 40%, .3);
 		background-size: 128%;
 	}
-	button#exit {
-		color: hsla(75, 50%, 80%, .5);
-		padding: .2em .25em;
-		border-radius: 2em;
-		border: 0px solid #FFF;
-		font-size: 2em;
-		text-shadow: 1px 1px 1px hsla(75, 50%, 30%, 1);
-		background: none;
-		width: auto;
-		height: auto;
-	}
-	.no-textshadow button#exit {
-		color: hsla(75, 50%, 40%, 1);
-	}
+
 	button#exit:hover, button#exit:focus {
-		background-color: hsla(75, 50%, 40%, .5);
-		color: #FFF;
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
 	}
@@ -427,6 +418,12 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 			grid-column: auto / span 3;
 		}
 	}
+}
+
+@media screen and (max-width: 736px) {
+    .no-cssvminunit main ul.portrait {
+        width: 70%;
+    }
 }
 @media only screen and (max-width: 600px) {
 	footer {

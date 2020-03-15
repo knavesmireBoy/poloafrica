@@ -218,7 +218,7 @@ article:nth-child(2) {
 	box-sizing: border-box;
 }
     h2 {
-			background: url(../images/sub-enquiries-1.png) no-repeat 0% 0%;
+			background: 0% 0%/contain url(../images/sub-enquiries.png) no-repeat;
 		}
 	@supports(column-gap: 20px) {
 		/*the textarea form element seems to confuse attempts at a grid layout
