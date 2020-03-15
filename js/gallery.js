@@ -106,10 +106,12 @@
 		makeElement = utils.machElement,
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
+        getNodeName = utils.drillDown(['target', 'nodeName']),
 		getControls = ptL($, 'controls'),
 		getSlide = ptL($, 'slide'),
 		//thumbs = $('thumbnails'),
         thumbs = utils.getByClass('gallery')[0],
+        main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
 		lis = _.toArray(thumbs.getElementsByTagName('li')),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
 		isPortrait = ptL(function (el) {
@@ -121,6 +123,18 @@
 		doShow = function (next) {
 			hideCurrent();
 			utils.show(next);
+		},
+
+        exitGallery = function () {
+                 var m,
+                    current = utils.getByClass('show')[0],
+					img = getDomTargetImg(current);
+                //when slideshow is playing there won't be a current item; maybe add/remove listener
+                    if(img) {
+					m = (img.offsetHeight > img.offsetWidth) ? 'addClass' : 'removeClass';
+                        utils[m]('portrait', thumbs);
+                    }
+			
 		},
 		makeIterator = function (coll) {
 			var findIndex = ptL(utils.findIndex, coll),
@@ -158,7 +172,14 @@
 				anCrIn = utils.insert(),
 				getDomTargetList = utils.getDomParent(utils.getNodeByTag('li')),
 				//all arguments must be functions...hence always
-				$thumbs = makeElement(ptL(klasRem, 'gallery'), always(thumbs)),
+				$thumbs = makeElement(_.debounce(exitGallery, 300), ptL(klasRem, 'gallery'), always(thumbs)),
+                //$thumbs2 = makeElement(ptL(klasAdd, 'portrait'), always(thumbs)),
+
+            /*
+             comp.add(_.extend(poloAF.Composite(), $thumbs2, {
+				unrender: ptL(klasRem, 'portrait', thumbs)
+			}));
+            */
 				$body = makeElement(ptL(klasAdd, 'showtime'), always(utils.getBody)),
 				$wrap = makeElement(always($('wrap'))),
 				$show = makeElement(ptL(utils.show), getDomTargetList, drill(['target'])),
@@ -187,7 +208,7 @@
 				$exit = makeElement(doTwice(utils.getter)('getElement'), ptL(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf), anCrIn(thumbs, main), always('input')),
 				$controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
 			comp.add(_.extend(poloAF.Composite(), $thumbs, {
-				unrender: ptL(klasAdd, 'gallery', thumbs)
+				unrender: _.compose(ptL(klasRem, 'portrait'), ptL(klasAdd, 'gallery', thumbs))
 			}));
 			comp.add(_.extend(poloAF.Composite(), $body, {
 				unrender: ptL(klasRem, 'showtime', utils.getBody())
@@ -531,6 +552,7 @@
 				render: hideCurrent,
 				unrender: noOp
 			},
+            
 			makeSwapper = function () {
 				var ret = {
 					swap: function (counter) {
