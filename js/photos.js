@@ -33,11 +33,11 @@ if (!window.poloAF) {
 			//utils.getByTag('b', $('footer_girl'))[0].innerHTML = msg || document.documentElement.className;
 		},
 		dovier = utils.curryFourFold(),
+        doTwiceDefer = utils.curryTwice(true),
 		klasTog = utils.toggleClass,
 		main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
 		doToggle = ptL(klasTog, 'alt', main),
-		all_thumbs = utils.getByTag('ul', main),
-		thumbs = all_thumbs[0],
+		thumbs = utils.getByTag('ul', main)[0],
 		makeIterator = function (coll) {
 			var prepIterator = dovier(window.poloAF.Iterator(false));
 			return prepIterator(ptL(modulo, coll.length))(utils.always(true))(coll)(0);
@@ -45,13 +45,20 @@ if (!window.poloAF) {
 		getNodeName = utils.drillDown(['target', 'nodeName']),
 		getTarget = utils.drillDown(['target']),
 		getLength = utils.drillDown(['length']),
+        getHeight = doTwiceDefer(utils.getter)('offsetHeight'),
+        getWidth = doTwiceDefer(utils.getter)('offsetWidth'),
+        //getOrient = _.compose(utils.gtThan(getHeight, getWidth)
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
-		query = function (e) {
+        exitGallery = function (e) {
 			if (getNodeName(e).match(/img/i)) {
-				var current = utils.getByClass('show')[0],
-					img = getDomTargetImg(current),
-					m = (img.offsetHeight > img.offsetWidth) ? 'addClass' : 'removeClass';
-				utils[m]('portrait', thumbs);
+                 var m,
+                    current = utils.getByClass('show')[0],
+					img = getDomTargetImg(current);
+                //when slideshow is playing there won't be a current item; maybe add/remove listener
+                    if(img) {
+					m = utils.gtThan(getHeight(img), getWidth(img)) ? 'addClass' : 'removeClass';
+                        utils[m]('portrait', thumbs);
+                    }
 			}
 		},
 		allpics = utils.getByTag('img', main),
@@ -101,6 +108,6 @@ if (!window.poloAF) {
 			};
 		},
 		myadvance = advance();
-	utils.addHandler('click', thumbs, _.debounce(query, 300));
+	utils.addEvent(ptL(utils.addHandler, 'click'), _.debounce(exitGallery, 300))(thumbs);
 	utils.addEvent(ptL(utils.addHandler, 'click'), myadvance)(main);
 }('(min-width: 601px)', Modernizr.mq('only all')));

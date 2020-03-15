@@ -113,7 +113,9 @@
 		lis = _.toArray(thumbs.getElementsByTagName('li')),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
 		isPortrait = ptL(function (el) {
-			return utils.getClassList(el).contains('portrait');
+            var img = getDomTargetImg(el);
+            return img.offsetHeight > img.offsetWidth;
+			//return utils.getClassList(el).contains('portrait');
 		}),
 		hideCurrent = _.compose(utils.hide, getCurrentSlide),
 		doShow = function (next) {
@@ -161,7 +163,10 @@
 				$wrap = makeElement(always($('wrap'))),
 				$show = makeElement(ptL(utils.show), getDomTargetList, drill(['target'])),
 				exitconf = {
-					id: 'exit'
+					id: 'exit',
+                    type: 'image',
+                    alt: '',
+                    src: '../images/sticks.png'
 				},
 				controlsconf = {
 					id: 'controls'
@@ -171,7 +176,7 @@
 					//remove exit listener from event_cache
 					var list = poloAF.Eventing.listEvents(),
 						res = _.findIndex(list, function (item) {
-							return item.el.match(/button/i);
+							return item.el.match(/input/i);
 						});
 					//is res always 1???
 					if (!failed(res)) {
@@ -179,7 +184,7 @@
 					}
 				},
 				presenter_unrender = ptL(invokemethod, presenter, null, 'unrender'),
-				$exit = makeElement(doTwice(utils.getter)('getElement'), ptL(clicker, _.compose(fixcache, presenter_unrender)), utils.setText('&#x2716'), ptL(setAttrs, exitconf), anCrIn(thumbs, main), always('button')),
+				$exit = makeElement(doTwice(utils.getter)('getElement'), ptL(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf), anCrIn(thumbs, main), always('input')),
 				$controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
 			comp.add(_.extend(poloAF.Composite(), $thumbs, {
 				unrender: ptL(klasAdd, 'gallery', thumbs)
