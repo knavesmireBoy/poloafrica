@@ -1,6 +1,9 @@
 /*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
 
 @supports(flex-wrap: wrap) {
+    header {
+        background-color: rgb(0,0,1);
+    }
 	/*border not cleared by floating image, introduce it at this point*/
 	h3 {
 		border-bottom: solid 1px;
@@ -39,6 +42,7 @@
 		-ms-flex: 4 0 1%;
 		flex: 4 1 1%;
 		min-width: 1%;
+        width: 1%;
 		align-self: flex-start;
 		/* reqd: safari 6.2.8 
     width: 68%;
@@ -52,9 +56,8 @@
 		section {
 			margin: 1em 0 0 0;
 		}
-		article > img {
+		article>img {
 			border-bottom: solid 1px white;
 		}
 	}
-
 }

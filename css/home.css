@@ -1,0 +1,94 @@
+#ani {
+	width: 18em;
+	height: auto;
+	padding: 2em;
+	margin: -3em -2em 0 0;
+}
+.js #tween, .no-js #flower {
+	display: none;
+}
+.no-js #tween, .js #flower {
+	display: block;
+}
+#home #ani img {
+	width: 100%;
+	float: left;
+	box-shadow: none;
+	border-width: 0;
+	margin: 0;
+}
+.js #home #ani img:last-child {
+	margin: 0 0 0 -100%;
+}
+@media screen and (max-width: 736px) {
+	#ani {
+		width: 9em;
+		height: auto;
+		margin: .5em 0 0;
+		padding: .5em;
+		position: absolute;
+		left: -999em;
+	}
+	article.show #ani, .read-more-state:checked~#ani {
+		position: relative;
+		left: auto;
+	}
+	article.show #ani, .read-more-state:checked~#ani {
+		position: relative;
+		left: auto;
+	}
+	.no-js article:nth-child(1) .read-more-trigger:before {
+		content: "The Poloafrica Development Trust";
+	}
+	.no-js article:nth-child(2) .read-more-trigger:before {
+		content: "The Uitgedacht experience";
+	}
+	.no-js article:nth-child(3) .read-more-trigger:before {
+		content: "The Poloafrica / Polo 150 tour to England";
+	}
+    .no-js article:nth-child(3){
+			display: block;
+		}
+    h2 span {
+		width: 52vw;
+	}
+    h2 {
+		padding: .3vw 0 0 0;
+	}
+}
+@media screen and (max-width: 540px) {
+	h2 {
+		padding: .3vw 0 0 0vw;
+	}
+	
+    article:last-child h3, article:last-child label {
+			line-height: 1.2;
+		}
+}
+
+@media screen and (max-width: 480px) {
+
+
+ h2 {
+        padding: .25w 0 0 0vw;
+	}
+    h2 span {
+		width: 60vw;
+	}
+}
+
+@media screen and (max-width: 400px) {
+
+
+ h2 {
+        font-size: 1.6em;
+	}
+    h2 span {
+		width: 58vw;
+	}
+    
+ article:first-child h3, article:first-child label {
+			line-height: 1.2;
+		}
+}
+

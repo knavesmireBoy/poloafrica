@@ -26,10 +26,12 @@ header {
 	width: 100%;
 }
 header a h1 {
-	margin: -3.3em 0 0 0;
+    font-size: 5em;
+    margin: -3.8em 0 0 0;
 	white-space: nowrap;
 	width: 40%;
-	text-indent: 500%;
+	text-indent: -9999px;
+    border: solid 1px yellow;
 }
 header a h1 img {
 	width: 100%;
@@ -58,11 +60,7 @@ article input, nav input {
 article>img {
 	margin: 1em 2% 1em 0;
 	float: left;
-    width: 1%;
-}
-
-.no-flexbox article>img {
-	width: 50%;
+	width: 40%;
 }
 article:nth-child(odd)>img, #ani {
 	margin: 1em 0 1em 2%;
@@ -95,16 +93,7 @@ article:after {
 nav li#current:hover ul, nav li#current.sfhover ul {
 	left: 0;
 }
-#menu-toggle:checked+ul#nav {
-	top: 5.5em;
-	right: 1em;
-	z-index: 2;
-}
-/*no need to fix advanced selectors for ie as mobile only layout*/
 
-#menu-toggle:checked+ul#nav>li{
-	height: 2em;
-}
 main {
 	padding: 0 1em 10.1em;
 }
@@ -154,7 +143,6 @@ footer a:link {
 .no-js body {
 	background-color: mintcream;
 }
-
 @media screen and (max-width: 736px) {
 	#footer_girl img {
 		visibility: hidden;
@@ -165,16 +153,27 @@ footer a:link {
 		margin: 0;
 	}
 	header a h1 img {
-		margin: .25em 0 0 0;
+        /*
+		margin: -.8em 0 0 0;
+		margin: -4vw 0 0 0;
+        */
 		visibility: visible;
-        min-width: 3em;
-        border: solid 1px red;
+		min-width: 3em;
+		max-width: 100%;
+		border: solid 1px red;
 	}
 	header a h1 {
-		margin: -1em 0 0 4.5vw;
-		padding: 0% 0 9vw 0;
-        width: 43vw;
+        font-size: 12px;
+		margin: 0 0 0 4.5vw;
+		padding: 0% 0 7vw 0;
+		width: 43vw;
 		white-space: nowrap;
+	}
+	h2 {
+		margin: -1.7em 0 0 0em;
+		margin: -7.5vw 0 0 0em;
+		padding: 1vw 0 0 4.5vw;
+		position: relative;
 	}
 	/*ie*/
 	header>a {
@@ -187,22 +186,38 @@ footer a:link {
 	}
 	.menu {
 		position: absolute;
-		top: 2em;
+		top: .7em;
 		right: .7em;
-		height: 2rem;
-		width: 2rem;
-	}
+		height: 2.5rem;
+		width: 2.5rem;
+	}    
 	ul#nav {
 		position: absolute;
 		top: 0em;
 		right: -99em;
 		display: block;
-		width: 9em;
+		width: 10em;
 	}
-	#nav>li {
+    
+    #menu-toggle:checked+ul#nav {
+	top: 4em;
+	right: 1em;
+	z-index: 2;
+}
+
+    #nav>li a{
+        line-height: 2.6;
+    }
+/*no need to fix advanced selectors for ie as mobile only layout*/
+
+#menu-toggle:checked+ul#nav>li {
+	height: 2.6em;
+}
+    #nav>li {
 		height: 0px;
 		transition: height .9s ease-out;
 	}
+    
 	label {
 		display: block;
 		width: 100%;
@@ -245,19 +260,14 @@ footer a:link {
 	ul#nav a, ul#nav li {
 		display: block;
 	}
-	h2 {
-		margin: -1.77em 0 0 0em;
-        padding: .3em 0 0 4.5vw;
-        position: relative; 
+	h2 span {
+		text-align: center;
+		display: inline-block;
+		width: 49%;
+		width: 43vw;
+		margin: 0 auto;
+		border: solid 1px blue;
 	}
-    h2 span {
-        text-align: center;
-        display: inline-block;
-        width: 49%;
-        width: 43vw;
-        margin: 0 auto;
-        border: solid 1px blue;
-    }
 	#footer_girl {
 		width: 15em;
 	}
@@ -275,54 +285,80 @@ footer a:link {
 		display: block;
 		margin: .25em 0;
 	}
+	header a h1 img, h2 span {
+		border-width: 1px;
+	}
 }
-
 @media only screen and (max-width: 667px) and (orientation: portrait) {
-
-    /*
+	/*
 	.touchevents .inplay #controls {
 		top: 2.2em;
 	}
 }*/
 }
-
-@media only screen and (max-width: 480px){
-    
-    .js body {
-            background-color: gainsboro;
-        }
-    h2 {
-        font-size: 1.6em;
+@media screen and (max-width: 540px) {
+	body {
+		background-color: thistle;
 	}
-    
-    header a h1 {
-        /*margin: -1em 0 0 4.5vw;*/
-    }
-    h2 span, header a h1 img{
-        width: 50vw;
+	header a h1 img {
+        /*
+		margin: -.8em 0 0 0;
+		margin: -4.5vw 0 0 0;
+        */
+	}
+	header a h1 {
+		margin: 0 0 0 4.5vw;
+		padding: 0 0 7vw 0;
+	}
+	h2 {
+		margin: -7.5vw 0 0 0em;
+		margin: -8% 0 0 0em;
+		padding: .5vw 0 0 4.5vw;
+	}
+}
+@media only screen and (max-width: 480px) {
+	body {
+		background-color: rosybrown;
         margin: 0;
-        border-width: 0;
-    }
-    ul#nav {
-        font-size: .9em;
-        font-weight: bold;
-    }
-    #menu-toggle:checked+ul#nav {
-        top: 6em;
-    }
-    
+	}
+	h2 span, header a h1 {
+		width: 50vw;
+		width: 50%;
+	}
+	ul#nav {
+		font-size: .9em;
+		font-weight: bold;
+	}
+	header a h1 img {
+        /*
+		margin: -8vw 0 0 0;
+        */
+	}
+	h2 {
+		padding: .25w 0 0 4.5vw;
+	}
+	#menu-toggle:checked+ul#nav {
+		top: 4.5em;
+	}
 }
 
-@media only screen and (max-width: 480px) and (orientation: portrait) {
-       .js body {
-            background-color: beige;
-        }
-    body {
-        margin: 0;
-   }
-     h2 span, header a h1 img{
-        width: 60vw;
-    }
-
+@media only screen and (max-width: 440px) {
+	h2 {
+		margin: -9vw 0 0 0em;
+	}
+	header a h1 {
+		padding: 0% 0 8vw 0;
+	}
+	body {
+		background-color: lavenderblush
+	}
+}
+@media only screen and (max-width: 360px) {
+	body {
+		background-color: ivory;
+	}
+	h2 {
+		font-size: 1.6em;
+	}
 }
 /*@*/

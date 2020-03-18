@@ -71,9 +71,6 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 }
 @media screen and (max-width: 736px) {
     
-       body {
-        background-color: pink;
-    }
 	article nav ul {
 		padding: 0 0 1em 1em;
 	}
@@ -104,6 +101,9 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	.no-js article:nth-child(6) section {
 		margin: 0 0 0 30%;
 	}
+    .js article:nth-child(6) section, .js  article:nth-child(8) section {
+			margin: 0;
+        }
 	.override article:nth-child(6) section>p {
 		text-align: left;
 	}
@@ -125,6 +125,9 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	#view::after {
 		content: "above";
 	}
+    .js .override img#arena_boy, .js .override img#PoloGirls {
+            margin: 1em 0 0 0;
+		}
 }
 /*736*/
 

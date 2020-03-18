@@ -63,9 +63,7 @@
 			margin: 0 0 0 2%;
 			flex: 5 0 1%
 		}
-        .js article:nth-child(6) section, .js  article:nth-child(8) section {
-			margin: 0;
-        }
+        
 		.js .override img#arena_boy, .js .override img#PoloGirls {
 			width: 27%;
 		}

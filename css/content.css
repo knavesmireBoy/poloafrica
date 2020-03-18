@@ -51,7 +51,7 @@ h2 {
     line-height: normal;
 	color: #cc6;
 	text-transform: uppercase;
-    padding: 0.1em 0 0.2em 3em;
+    padding: .05em 0 0.2em 3em;
     text-shadow: 1px 1px 2px black;
 }
 
@@ -155,10 +155,6 @@ footer div a:hover, footer b {
 
 /**/
 
-.no-js body {
-	background-color: mintcream;
-}
-
 @media screen and (max-width: 736px) and (pointer: coarse){/*support*/
     body {
         margin: 0;
@@ -211,18 +207,16 @@ footer div a:hover, footer b {
     }
     */
 	.menu {
-        background:  url("../images/polo_ball.png") center no-repeat;
-        background-size: cover;
+        background:  50% 0% url("../images/polo_ball_sprite.png") no-repeat;
+        background-size: 100%;
         cursor: pointer;
-        border-radius: 22px;
-        /*
-		-webkit-box-shadow: inset 0px 0px 5px hsla(300, 10%, 20%, .75), 2px 2px 2px hsla(300, 10%, 20%, .75);
-		box-shadow: inset 0px 0px 5px hsla(45, 20%, 30%, .75), 0px 0px 2px hsla(45, 20%, 30%, .75);
-        */
+        -webkit-transition: transform 1s;
+	-o-transition: transform 1s;
+	transition: transform 1s;
 	}
     .menu:hover {
-        background-color: #E7E7C7;
-         -webkit-transform: rotate(360deg);
+        background-position: 50% 100%;
+        -webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
     }
 	ul#nav {
@@ -231,15 +225,13 @@ footer div a:hover, footer b {
 		box-shadow: -3px 3px 6px hsla(300, 10%, 20%, .75);
 		border-radius: 2px;
 	}
-	#nav>li {
-		height: 0px;
-		transition: height .9s ease-out;
-	}
+  
 	label, .js h3 {
         font-size: 1.4em;
         margin: 0;
         background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
+        line-height: 1.75;
 	}
 	label {
         font-weight: bold;
@@ -284,7 +276,8 @@ footer div a:hover, footer b {
 	}
 	#nav>li a {
 		background: none;
-		padding: 0 1em;
+		padding: 0 1em 0 0;
+        display: block;
 	}
 	h2 {
 		color: white;
