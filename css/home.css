@@ -49,46 +49,54 @@
     .no-js article:nth-child(3){
 			display: block;
 		}
-    h2 span {
-		width: 52vw;
-	}
-    h2 {
-		padding: .3vw 0 0 0;
-	}
-}
-@media screen and (max-width: 540px) {
-	h2 {
-		padding: .3vw 0 0 0vw;
-	}
-	
-    article:last-child h3, article:last-child label {
-			line-height: 1.2;
-		}
 }
 
-@media screen and (max-width: 480px) {
+  @media only screen and (max-width: 540px) {
+  		article:last-child h3, article:last-child label {
+  		line-height: 1.2;
+  	}
+  }
 
+ @media only screen and (max-width: 440px) {
+  		article:first-child h3, article:first-child label {
+  		line-height: 1.2;
+  	}
+  }
+/*
 
- h2 {
-        padding: .25w 0 0 0vw;
-	}
-    h2 span {
-		width: 60vw;
-	}
-}
-
-@media screen and (max-width: 400px) {
-
-
- h2 {
-        font-size: 1.6em;
-	}
-    h2 span {
-		width: 58vw;
-	}
-    
- article:first-child h3, article:first-child label {
-			line-height: 1.2;
-		}
-}
-
+ @media only screen and (max-width: 540px) {
+  	body {
+  		background-color: orchid;
+  	}
+  	h2 span {
+  		width: 44vw;
+  	}
+  	h2 {
+  		padding: 0.3rem 0 0 .5rem;
+  	}
+  	article:last-child h3, article:last-child label {
+  		line-height: 1.2;
+  	}
+  }
+  @media only screen and (max-width: 480px) {
+  	body {
+  		background-color: darkseagreen;
+  	}
+  	
+  }
+  @media screen and (max-width: 400px) {
+  	article:first-child h3, article:first-child label {
+  		line-height: 1.2;
+  	}
+  }
+  @media only screen and (max-width: 360px) {
+  	body {
+  		background-color: olive;
+  	}
+  	h2 span {
+  		width: 61vw;
+  	}
+  	h2 {
+  		padding: 0.3rem 0 0 0rem;
+  	}
+  }

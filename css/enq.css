@@ -211,6 +211,12 @@ article:nth-child(2) {
 }
 /*@*/
 
+ @media only screen and (max-width: 360px) {
+  		.override article:first-child h3, .override article:first-child label {
+  		line-height: 1.2;
+  	}
+  }
+
 @media screen and (min-width: 737px) {
     
     #contactarea {

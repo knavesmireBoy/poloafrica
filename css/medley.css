@@ -142,6 +142,12 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 		margin: 1em auto 0;
 	}
 }
+
+ @media only screen and (max-width: 360px) {
+  		.override article:nth-child(5) h3, .override article:nth-child(5) label {
+  		line-height: 1.2;
+  	}
+  }
 @media screen and (min-width: 737px) {
 	h2 {
 		background: 0% 0%/contain url(../images/sub-medley.png) no-repeat;

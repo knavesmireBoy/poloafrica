@@ -2,7 +2,7 @@
 
 @supports(flex-wrap: wrap) {
     header {
-        background-color: rgb(0,0,1);
+        /*background-color: rgb(0,0,1);*/
     }
 	/*border not cleared by floating image, introduce it at this point*/
 	h3 {
