@@ -8,60 +8,10 @@
 	<meta content="Polo, South Africa, farm, guests, tournaments, hireling" name="keywords">
 	<title>Welcome</title>
 	<link href="css/standard.css" media="screen" rel="stylesheet">
-	<link href="css/flex.css" media="screen" rel="stylesheet">
+    <link href="css/flex.css" media="screen" rel="stylesheet">
+    <link href="css/home.css" media="screen" rel="stylesheet">
 	<style>
-	       
 
-	      #ani { 
-	           width: 18em;
-	           height: auto;
-	           padding: 2em;
-	           margin: -3em -2em 0 0;
-	          
-	       }
-	       #home #ani img {
-	           width: 100%;
-	           float: left;
-	           box-shadow: none;
-	           border-width: 0;
-	           margin: 0;
-	       }
-	       .js #home #ani img:last-child {
-	           margin: 0 0 0 -100%;
-	       }
-	       article.show #ani, .read-more-state:checked~#ani {
-	           position: relative;
-	           left: auto;
-	       }
-	       @media screen and (max-width: 736px) {
-	           
-	            #ani {
-	               width: 9em;
-	               height: auto;
-	               margin: .5em 0 0;
-	               padding: .5em;
-	                position: absolute;
-	                left: -999em;
-	           }
-	            article.show #ani, .read-more-state:checked~#ani {
-	           position: relative;
-	           left: auto;
-	       }
-	           .no-js article:nth-child(1) .read-more-trigger:before {
-	               content: "The Poloafrica Development Trust";
-	           }
-	           .no-js article:nth-child(2) .read-more-trigger:before {
-	               content: "The Uitgedacht experience";
-	           }
-	           .no-js article:nth-child(3) .read-more-trigger:before {
-	               content: "The Poloafrica / Polo 150 tour to England";
-	           }
-	       }
-	       @media screen and (max-width: 515px) {
-	           article:last-child h3 {
-	               line-height: 1.2;
-	           }
-	       }
 	</style>
 	<script>
 	      document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
@@ -119,7 +69,8 @@
 			<article>
 				<input class="read-more-state" id="post3" type="checkbox"> <label class="read-more-trigger" for="post3"></label>
 				<aside id="ani">
-					<img src="images/poloafrica_flower_logo.jpg">
+                    <img id="flower" src="images/poloafrica_flower_logo.jpg">
+                    <img id="tween" src="images/poloafrica_ani.gif">
 				</aside>
 				<section>
 					<a href="#" id="tour">
@@ -142,7 +93,7 @@
         </div>
         <a href="mailto:photos@mwinsight.com">photos by <b>mark ward</b></a>
     </footer>
-    <script src="js/viewportSize.js"></script>
+     <script src="js/viewportSize.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/eventing.js"></script>
     <script src="js/classlist.js"></script>
