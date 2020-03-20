@@ -149,15 +149,42 @@ article:nth-child(2) {
 	overflow:hidden;
 }
 */
-        
- @media screen and (max-width: 736px) {
 
-	#enquiries article {
-		margin: 0;
+ @media screen and (max-width: 800px) {
+     
+     #enquiries #contactarea figure, #wrap #grooms {
+		position: absolute;
+		left: -999em;
 	}
+   
     #enquiries article:first-child {
 		margin: 2em 0 0 0;
 	}
+     
+     #wrap article section.show p, .no-js #enquiries article section p {
+		margin: 1em 0;
+	}
+     
+     article p:first-of-type {
+	margin: 0 0 1.3em 0;
+}
+   
+     #contact_form {
+		width: 100%;
+	}
+}
+        
+ @media screen and (max-width: 667px) {
+     
+        	#enquiries article {
+		margin: 0;
+	}
+     
+        #contactarea #dogs {
+		position: absolute;
+		left: -999em;
+	}
+    
 	#contactarea form {
 		width: auto;
 		float: none;
@@ -177,6 +204,8 @@ article:nth-child(2) {
 		display: block;
 		margin: 0 auto;
 	}
+
+
 	.no-js article>label:nth-of-type(1):before {
 		content: "Donations and sponsorship";
 	}
@@ -202,12 +231,7 @@ article:nth-child(2) {
 		position: static;
 		left: 0em;
 	}
-	#contact_form {
-		width: 100%;
-	}
-	#wrap article section.show p, .no-js #enquiries article section p {
-		margin: 1em 0;
-	}
+	
 }
 /*@*/
 
@@ -217,15 +241,17 @@ article:nth-child(2) {
   	}
   }
 
-@media screen and (min-width: 737px) {
+@media screen and (min-width: 801px) {
     
     #contactarea {
 	margin: 2em 0 0;
 	box-sizing: border-box;
 }
+    @media screen and (min-width: 668px) {
     h2 {
 			background: 0% 0%/contain url(../images/sub-enquiries.png) no-repeat;
 		}
+        
 	@supports(column-gap: 20px) {
 		/*the textarea form element seems to confuse attempts at a grid layout
             The form expands if textarea is given explicit dimensions either as html attributes, or css.

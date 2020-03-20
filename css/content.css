@@ -27,10 +27,16 @@ h3, label {
 	letter-spacing: 1px;
 }
 
-a:link a:visited {
+a:link, a:visited, a:hover, a:active {
 	color: #993;
-	text-decoration: none;
 }
+a:hover, a:active {
+	color: #cc6;
+}
+p a:hover, p a:active {
+	text-decoration: underline;
+}
+
 a:hover h3, a:active h3 {
 	color: #cc6;
 }
@@ -47,8 +53,7 @@ h2 {
 	margin: .8em 0 0 0;
 	background: url(../images/sub-polo-in-africa.png) no-repeat 0% 50%;
     background-size: contain;
-    font: normal 2.8em  Georgia, serif;
-    line-height: normal;
+    font: normal 2.8em/normal  Georgia, serif;
 	color: #cc6;
 	text-transform: uppercase;
     padding: .05em 0 0.2em 3em;
@@ -61,26 +66,17 @@ article > img {
 	/*box-shadow: 0px 0px 12px indigo;*/
 }
 #nav {
-	font: bold 1em/2 'Arial Black', Verdana, Arial, Helvetica, serif;
+	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 }
 #nav ul {
-	line-height: 1.4;
-	font-size: .9em;
-	padding: .2em 0 1em;
+    font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
+    padding-bottom: 1em;
 }
 #nav li {
 	border: solid 1px #ccc;
 	border-color: #ccc #000 #449 #ccc;
 }
-a:link, a:visited, a:hover, a:active {
-	color: #993;
-}
-a:hover, a:active {
-	color: #cc6;
-}
-p a:hover, p a:active {
-	text-decoration: underline;
-}
+
 section a {
 	font-weight: bold;
 	outline: none;
@@ -104,14 +100,14 @@ section a {
 
 #nav ul li {
 	margin: 1px 0 0;
-	border: solid 1px #fff;
+	border: solid 1px transparent;
 	border-width: 3px 1px 0;
 }
 #nav li ul a:link, #nav li ul a:visited {
     background: #cc9;
 	border: solid 1px;
 	border-color: #999 #000 #000 #999;
-	padding: 0 1em;
+	padding: 0 .7em;
 	background-image: none;
 }
 #nav li ul li a:hover, #nav li ul li a:active {
@@ -123,7 +119,7 @@ section a {
 	color: white;
 }
 /*override above for sub-menu*/
-#nav ul li a:hover, #nav ul li a:active {
+#nav ul li a:link, #nav ul li a:visited, #nav ul li a:hover, #nav ul li a:active {
 	color: #306;
 }
 
@@ -136,7 +132,7 @@ footer {
     content: " | ";
 }
 
-footer a:link {
+footer a:link, footer a:visited {
     color: white;
     padding: 0;
     line-height: normal;
@@ -155,13 +151,24 @@ footer div a:hover, footer b {
 
 /**/
 
-@media screen and (max-width: 736px) and (pointer: coarse){/*support*/
+@media screen and (max-width: 800px) {
+    
+    #nav {
+	font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
+}    
+    
+}
+
+@media screen and (max-width: 667px) {/*support*/
     body {
         margin: 0;
     }
+        #nav {
+	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
+}  
 }
 
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 667px) {
 
     footer {
 	background: url(../images/sil_bg.png) no-repeat top center;
@@ -227,6 +234,7 @@ footer div a:hover, footer b {
   
 	label, .js h3 {
         font-size: 1.4em;
+        font-size: 1.25rem;
         margin: 0;
         background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);

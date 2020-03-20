@@ -1,0 +1,37 @@
+/*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
+
+@supports(flex-wrap: wrap) {
+	#medley article:nth-child(6), #medley article:nth-child(8) {
+		display: flex;
+	}
+    
+    #medley article:nth-child(6) > *, #medley article:nth-child(8) > * {
+        -ms-flex-item-align: start;
+		align-self: flex-start;
+	}
+}
+@media screen and (max-width: 667px) {
+    
+	@supports(flex-wrap: wrap) {
+		.override img, .override section {
+			flex: 0 0 100%;
+			width: 100%;
+		}
+		.override img, {
+			border-bottom: solid 1px white;
+		}
+	}
+}
+@media screen and (min-width: 983px) {
+	@supports(flex-wrap: wrap) {
+		#medley article:nth-child(2) {
+			display: flex;
+		}
+}
+@media screen and (min-width: 890px) {
+	@supports(flex-wrap: wrap) {
+		#place article:nth-child(2), #scholars article:nth-child(4), #scholars article:last-child, #trust article:nth-child(2), #trust article:nth-child(4) {
+			display: flex;
+		}
+	}
+}

@@ -69,7 +69,7 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 #presslinks li:nth-child(odd) a:hover, article:nth-child(8) li:nth-child(odd) a:hover {
 	color: #306;
 }
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 667px) {
     
 	article nav ul {
 		padding: 0 0 1em 1em;
@@ -129,9 +129,9 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
             margin: 1em 0 0 0;
 		}
 }
-/*736*/
+/*667*/
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 667px) {
 	#tvcoverage iframe {
 		margin: 0 auto;
 		width: 92vw;
@@ -148,7 +148,7 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
   		line-height: 1.2;
   	}
   }
-@media screen and (min-width: 737px) {
+@media screen and (min-width: 668px) {
 	h2 {
 		background: 0% 0%/contain url(../images/sub-medley.png) no-repeat;
 	}

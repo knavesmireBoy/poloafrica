@@ -19,25 +19,42 @@
 		position: static;
 		left: 0;
 	}
-	fieldset:last-child{
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) 
+
+	#wrap .override fieldset:last-child{
 		border-width: 0;
-		padding: .5em 2% 0 0;
+		padding: .5em 2% 0;
+		display: -webkit-box;
+		display: -ms-flexbox;
 		display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
 	}
-	textarea {
-		flex: 3 1 1%;
+	#wrap .override textarea {
+		-webkit-box-flex: 3;
+		    -ms-flex: 3 1 1em;
+		        flex: 3 1 1em;
         margin: 0 1em 0 0;
+        float: none;
+        min-width: 0;
 	}
 	#wrap #contactarea form input#dogs {
-        width: auto;
-		flex: 1 1 1%;
+		-webkit-box-flex: 1;
+		    -ms-flex: 1 1 1em;
+		        flex: 1 1 1em;
+        float: none;
 		margin-top: 0;
+        min-width: 0;
 	}
 }
-
+*/
 
 /*wrap*/
-@media screen and (min-width: 737px) {
+@media screen and (min-width: 800px) {
 
 	@supports(column-gap: 20px) {
 		#wrap #intro label {

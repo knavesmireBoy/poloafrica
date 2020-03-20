@@ -21,7 +21,6 @@ main>a {
 	border-bottom: 1.5vw solid transparent;
     position: relative;
     margin: 1px;
-    
 }
 
 #gal_back {
@@ -62,7 +61,7 @@ main img {
 	position: relative;
 	margin: 0;
 	/*to accommodate exit button*/
-	padding: 1em 0 0 0;
+	padding: 1.5em 0 0 0;
     display: block;/*force override flex ?*/
 }
 
@@ -72,17 +71,20 @@ footer {
 .showtime footer {
 	margin: -5em auto;
 }
-#exit {
+#wrap #exit {
 	position: absolute;
-	top: .75em;
-	right: 0px;
+	top: 0;
+	right: .5rem;
     border: 0;
     width: 2em;
     height: 2em;
     display: block;
-    background: url("../images/sticks_sprite.png") no-repeat;
+    background: transparent url("../images/sticks_sprite.png") no-repeat;
     background-position: 50% 0%;
     background-size: 100%;
+}
+#wrap #exit {
+    background-color: transparent;
 }
 
 #exit:hover {
@@ -182,11 +184,11 @@ li#slide, li#paused {
 	border: solid 1px;
 }
 #controls {
+    top: 0em;
 	position: relative;
 	text-align: center;
 	font-size: 1.5em;
 	margin: 0 auto;
-	top: 0em;
 	z-index: 2;
 	opacity: 0;
 	border-spacing: .5em;
@@ -194,6 +196,9 @@ li#slide, li#paused {
 	-o-transition: all 1s;
 	transition: all 1s;
     clear: left;
+}
+.touchevents controls {
+    opacity: 1;
 }
 #controls.static {
 	top: -3.5em;
@@ -242,7 +247,7 @@ li#slide, li#paused {
 logic dictates that we only get to this point courtesy of javascript so modernizr supplies the className .(no-)touchevents */
 
 .touchevents .inplay #controls {
-	top: 2.4em;
+	top: 0em;
 	opacity: 1;
 }
 .no-touchevents button#forwardbutton:hover {
@@ -347,7 +352,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
     
 }/*screen*/
 
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 667px) {
     .no-cssvminunit main ul.portrait {
         width: 70%;
     }
@@ -357,6 +362,11 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
          display: -ms-flexbox;
          display: flex;
     }
+              .flexboxlegacy .showtime #wrap main {
+         display: block;
+    }
+    
+
   .flexboxlegacy #wrap main > * {
         -webkit-box-flex: 1;
       margin: 0 .5%;
@@ -365,6 +375,9 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
         -ms-flex-item-align: stretch;
             -ms-grid-row-align: stretch;
             align-self: stretch;
+    }
+    .flexboxlegacy .showtime #wrap main > * {
+         margin: 0 auto;/*controls*/
     }
     .flexboxlegacy #wrap main > a {
         border-width: 0;
@@ -390,7 +403,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		transition: background-position 2s ease;
 	}
     
-    .showtime main {
+    #wrap .showtime main {
         display: block;
     }
     /*
@@ -401,8 +414,6 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
     color: #444;
 }
     */
-
-    
 
 	#controls {
 		font-size: 1.3em;
@@ -443,25 +454,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 
-@media only screen and (max-width: 480px){
-    
 
-
-  .flexboxlegacy #wrap main > * {
-        -webkit-box-flex: 1;
-            -ms-flex: 1 1 8%;
-                flex: 1 1 8%;
-    }
-    
-    
-    .flexboxlegacy #wrap main ul.gallery {
-                width: 60%;
-        -webkit-box-flex: 2;
-            -ms-flex: 2 1 8%;
-                flex: 2 1 8%;
-    }
-
-}
 /*
 @media only screen and (max-width: 480px){
     
@@ -485,22 +478,3 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 }
 */
 
-@media only screen and (max-width: 480px) and (orientation: portrait){
-    
- .flexboxlegacy #wrap main ul.gallery {
-        -webkit-box-flex: 1;
-            -ms-flex: 1 1 8%;
-                flex: 1 1 8%;
-    }
-.no-flexboxlegacy main>a {
-    border-top: 1.5em solid transparent;
-	border-bottom: 1.5em solid transparent;
-}
-
-.no-flexboxlegacy #gal_back {
-	border-right: 3em solid #444;
-}
-.no-flexboxlegacy #gal_forward {
-    border-left: 3em solid #444;
-}
-}

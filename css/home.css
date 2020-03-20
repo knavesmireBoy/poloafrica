@@ -20,7 +20,14 @@
 .js #home #ani img:last-child {
 	margin: 0 0 0 -100%;
 }
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 800px) {
+    
+    #ani {
+		width: 14em;
+        padding: 1.6em 1.6em 0;
+	}
+}
+@media screen and (max-width: 667px) {
 	#ani {
 		width: 9em;
 		height: auto;
@@ -53,13 +60,13 @@
 
   @media only screen and (max-width: 540px) {
   		article:last-child h3, article:last-child label {
-  		line-height: 1.2;
+  		line-height: 1;
   	}
   }
 
- @media only screen and (max-width: 440px) {
+ @media only screen and (max-width: 410px) {
   		article:first-child h3, article:first-child label {
-  		line-height: 1.2;
+  		line-height: 1;
   	}
   }
 /*

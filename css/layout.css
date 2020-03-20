@@ -59,12 +59,12 @@ article input, nav input {
 /* direct child selector, otherwise will have to override for animation */
 
 article>img {
-	margin: 1em 2% 1em 0;
+	margin: .5em 2% .5em 0;
 	float: left;
 	width: 40%;
 }
 article:nth-child(odd)>img, #ani {
-	margin: 1em 0 1em 2%;
+	margin: 0em 0 .5em 2%;
 	float: right;
 }
 article:after {
@@ -82,7 +82,7 @@ article:after {
 }
 #nav ul {
 	position: absolute;
-	left: -999em;
+	left: -9999px;
 }
 #home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
 	left: auto;
@@ -143,7 +143,7 @@ footer a:link {
 .no-js body {
 	background-color: mintcream;
 }
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 667px) {
     
     .touchevents body {
         margin: 0;
@@ -177,7 +177,7 @@ footer a:link {
 		padding: 0% 0 7vw 0;
 	}
     
-     .no-flexbox header h1 {
+     .no-flexwrap header h1 {
 		margin: 0 0 0 1rem;
 		padding: 0% 0 3.1rem 0;
 	}
@@ -185,13 +185,14 @@ footer a:link {
     header h1, h2 span {
 		width: 40vw;
 	}
-    .no-flexbox h2 span, .no-flexbox header h1 {
+    .no-flexwrap h2 span, .no-flexwrap header h1 {
 		width: 17.7rem;
 	}
    
 	h2 {
 		position: relative;
 		font-size: 4vw;
+		font-size: 1.9rem;
 	}
 	
 	h2 {
@@ -199,7 +200,7 @@ footer a:link {
 		padding: 1vw 0 0 4vw;
 	}
     
-    .no-flexbox h2 {
+    .no-flexwrap h2 {
 		margin: -3.2rem 0 0 0em;
 		padding: .5rem 0 0 1rem;
 	}
@@ -306,7 +307,7 @@ footer a:link {
 		margin: .25em 0;
 	}
 	header h1, header h1 img, h2 span {
-		border-width: 1px;
+		border-width: 0px;
 	}
 }
 @media only screen and (max-width: 568px) {
@@ -314,28 +315,26 @@ footer a:link {
 	h2 span, header h1 {
 		width: 44vw;
 	}
-    .no-flexbox h2 span, .no-flexbox header h1 {
+    .no-flexwrap h2 span, .no-flexwrap header h1 {
 		width: 13rem;
 	}
     
 	h2 {
-		font-size: 5vw;
-	}
-    .no-flexbox h2 {
-		font-size: 1.3rem;
+        font-size: 1.8em;
+        font-size: 1.6rem;
 	}
 	header h1 {
-		padding: 0 0 8vw 0;
+		padding: 0 0 8.5vw 0;
 	}
     
-    .no-flexbox header h1 {
+    .no-flexwrap header h1 {
 		padding: 0 0 3rem 0;
 	}
 	h2 {
-		margin: -8.5vw 0 0 0em;
+		margin: -9vw 0 0 0em;
 	}
     
-    .no-flexbox h2 {
+    .no-flexwrap h2 {
 		margin: -2.9rem 0 0 0em;
 	}
 	label, .js h3 {
@@ -346,7 +345,7 @@ footer a:link {
 	header h1, h2 span {
 		width: 59vw;
 	}
-       .no-flexbox h2 span, .no-flexbox header h1 {
+       .no-flexwrap h2 span, .no-flexwrap header h1 {
 		width: 12rem;
 	}    
  
@@ -357,7 +356,10 @@ footer a:link {
 	#menu-toggle:checked+ul#nav {
 		top: 3rem;
 	}
-	#nav {
-		font-size: .75em;
+    
+    h2 {
+        font-size: 1.55em;
+        font-size: 1.35rem;
 	}
+	
 }

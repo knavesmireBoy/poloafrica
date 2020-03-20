@@ -1,64 +1,58 @@
 @import "flex.css";
-
-
 @media only screen {
-    
-    @supports (flex-wrap: wrap){
-        
-   main {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center; 
-}
-#wrap main>a {
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 1%;
-            flex: 0 0 1%;
-    -ms-flex-item-align: center;
-        -ms-grid-row-align: center;
-    align-self: center;
-
-}
-
-/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
-#gal_forward {
-    -webkit-box-ordinal-group: 4;
-        -ms-flex-order: 3;
-            order: 3;
-}
-        @supports (flex-wrap: wrap) and (not (column-gap: 20px)) {
-		#photos main ul a {
-			/*extra test*/
-		}
-		main ul.gallery {
+	@supports (flex-wrap: wrap) {
+		main {
+			display: -webkit-box;
+			display: -ms-flexbox;
 			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-between;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			align-items: center;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			justify-content: center;
 		}
-		main ul.gallery li, main.alt ul.gallery li.portrait {
-			flex: 1 1 20%;
-			align-self: flex-start;
+		#wrap main>a {
+			-webkit-box-flex: 0;
+			-ms-flex: 0 0 1%;
+			flex: 0 0 1%;
+			-ms-flex-item-align: center;
+			-ms-grid-row-align: center;
+			align-self: center;
 		}
-		main ul.gallery li.portrait {
-			flex: 1 1 15%;
-			align-self: flex-start;
+		/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+		#gal_forward {
+			-webkit-box-ordinal-group: 4;
+			-ms-flex-order: 3;
+			order: 3;
+		}
+		@supports (flex-wrap: wrap) and (not (column-gap: 20px)) {
+			#photos main ul a {
+				/*extra test*/
+			}
+			main ul.gallery {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+			}
+			main ul.gallery li, main.alt ul.gallery li.portrait {
+				flex: 1 1 20%;
+				align-self: flex-start;
+			}
+			main ul.gallery li.portrait {
+				flex: 1 1 15%;
+				align-self: flex-start;
+			}
+		}
+		/*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
+		#wrap .breaker {
+			-ms-flex-preferred-size: 100%;
+			flex-basis: 100%;
+			height: 0;
+			margin: 0;
 		}
 	}
-	/*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
-	#wrap .breaker {
-		-ms-flex-preferred-size: 100%;
-		flex-basis: 100%;
-		height: 0;
-		margin: 0;
-	}
-    }       
-	@supports(column-gapp: 20px) {
+	@supports(column-gap: 20px) {
 		#photos main ul a {
 			/*extra test*/
 		}
@@ -97,23 +91,57 @@
 		}
 	}
 }
-
-
+@media screen and (max-width: 667px) {
+	.flexboxlegacy #wrap main {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	.flexboxlegacy .showtime #wrap main {
+		display: block;
+	}
+	.flexboxlegacy #wrap main>* {
+		-webkit-box-flex: 1;
+		margin: 0 .5%;
+		-ms-flex: 1 1 2%;
+		flex: 1 1 2%;
+		-ms-flex-item-align: stretch;
+		-ms-grid-row-align: stretch;
+		align-self: stretch;
+	}
+	.flexboxlegacy .showtime #wrap main>* {
+		margin: 0 auto;
+		/*controls*/
+	}
+	.flexboxlegacy #wrap main>a {
+		border-width: 0;
+		background: #444;
+	}
+	.flexboxlegacy #wrap main #gal_forward {
+		-webkit-box-ordinal-group: 4;
+		-ms-flex-order: 3;
+		order: 3
+	}
+	.flexboxlegacy #wrap main ul {
+		-webkit-box-flex: 20;
+		-ms-flex: 20 1 10%;
+		flex: 20 1 10%;
+	}
+}
 @media only screen and (max-width: 600px) {
-    
-    .flexbox  main, .flexboxlegacy main {
-        /*display: block;*/
-    }
-    #wrap main > a {
-        flex: 0 0 5%;
-        align-self: stretch;
-    background: #cc6;
-    border-width: 0;
-    margin: 0 .5em;
-    top: 0;
-    }
-
-        @supports (flex-wrap: wrap) /*and (not (column-gapp: 20px)) */{
+	.flexbox main, .flexboxlegacy main {
+		/*display: block;*/
+	}
+	#wrap main>a {
+		flex: 0 0 5%;
+		align-self: stretch;
+		background: #cc6;
+		border-width: 0;
+		margin: 0 .5em;
+		top: 0;
+	}
+	@supports (flex-wrap: wrap)/*and (not (column-gapp: 20px)) */
+		{
 		main ul.gallery li, main.alt ul.gallery li.portrait {
 			flex: 1 1 40%;
 		}
@@ -121,7 +149,7 @@
 			flex: 1 1 30%;
 		}
 	}
-	@supports(column-gapp: 20px) {
+	@supports(column-gap: 20px) {
 		main ul.gallery {
 			padding: 1em;
 			width: auto;
@@ -170,19 +198,46 @@
 		}
 	}
 }
-
 @media only screen and (max-width: 480px) {
-    @supports (flex-wrap: wrap) and (not (column-gap: 20px)){
-    .flexbox  main, .flexboxlegacy main {
-        /*display: block;*/
-    }
-    #wrap main > a {
-        flex: 0 0 5%;
-        align-self: stretch;
-    background: #cc6;
-    border-width: 0;
-    margin: 0 .5em;
-    top: 0;
-    }
+	@supports (flex-wrap: wrap) and (not (column-gap: 20px)) {
+		.flexbox main, .flexboxlegacy main {
+			/*display: block;*/
+		}
+		#wrap main>a {
+			flex: 0 0 5%;
+			align-self: stretch;
+			background: #cc6;
+			border-width: 0;
+			margin: 0 .5em;
+			top: 0;
+		}
+	}
+	.flexboxlegacy #wrap main>* {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 3rem;
+		flex: 1 1 3rem;
+	}
+	.flexboxlegacy #wrap main ul.gallery {
+		width: 60%;
+		-webkit-box-flex: 2;
+		-ms-flex: 2 1 3rem;
+		flex: 2 1 3rem;
+	}
 }
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+	.flexboxlegacy #wrap main ul.gallery {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 20rem;
+		flex: 1 1 20rem;
+	}
+	.no-flexboxlegacy main>a {
+		border-top: 1.5em solid transparent;
+		border-bottom: 1.5em solid transparent;
+	}
+	.no-flexboxlegacy #gal_back {
+		border-right: 3em solid #444;
+	}
+	.no-flexboxlegacy #gal_forward {
+		border-left: 3em solid #444;
+	}
 }

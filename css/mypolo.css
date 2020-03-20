@@ -1,4 +1,7 @@
 @import "flex.css";
+@import "fullflex.css";
+@media screen and (min-width: 1025px) {
+
 @supports(column-gap: 20px) {
 	article:nth-child(1) {
 		display: -ms-grid;
@@ -27,8 +30,9 @@
 		grid-column: 2 / 3;
 	}
 }
+}
 
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 667px) {
     @supports(flex-wrap: wrap) {
         
         .js article:first-child section {
