@@ -94,6 +94,8 @@
 		doQuart = utils.curryFourFold(),
 		doTwiceDefer = utils.curryTwice(true),
 		doThriceDefer = utils.curryThrice(true),
+        number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
+		threshold = Number(query.match(number_reg)[1]),
 		drill = utils.drillDown,
 		invokeWhen = utils.invokeWhen,
 		setAttrs = utils.setAttributes,
@@ -101,22 +103,28 @@
 		anCr = utils.append(),
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
+        	isDesktop = (function() {
+			if (mq) {
+				return _.partial(Modernizr.mq, query);
+			} else {
+				return _.partial(utils.isDesktop, threshold);
+			}
+		}()),
 		//clicker = touchevents ? ptL(utils.addHandler, 'touchend') : ptL(utils.addHandler, 'click'),
 		clicker = ptL(utils.addHandler, 'click'),
 		makeElement = utils.machElement,
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
-        getNodeName = utils.drillDown(['target', 'nodeName']),
 		getControls = ptL($, 'controls'),
 		getSlide = ptL($, 'slide'),
 		//thumbs = $('thumbnails'),
-        thumbs = utils.getByClass('gallery')[0],
-        main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
+		thumbs = utils.getByClass('gallery')[0],
+		//main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
 		lis = _.toArray(thumbs.getElementsByTagName('li')),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
 		isPortrait = ptL(function (el) {
-            var img = getDomTargetImg(el);
-            return img.offsetHeight > img.offsetWidth;
+			var img = getDomTargetImg(el);
+			return img.offsetHeight > img.offsetWidth;
 			//return utils.getClassList(el).contains('portrait');
 		}),
 		hideCurrent = _.compose(utils.hide, getCurrentSlide),
@@ -124,17 +132,12 @@
 			hideCurrent();
 			utils.show(next);
 		},
-
-        exitGallery = function () {
-                 var m,
-                    current = utils.getByClass('show')[0],
-					img = getDomTargetImg(current);
-                //when slideshow is playing there won't be a current item; maybe add/remove listener
-                    if(img) {
-					m = (img.offsetHeight > img.offsetWidth) ? 'addClass' : 'removeClass';
-                        utils[m]('portrait', thumbs);
-                    }
-			
+		exitGallery = function () {
+			var current = utils.getByClass('show')[0],
+				img = getDomTargetImg(current),
+                math = (img.offsetHeight > img.offsetWidth),
+				m = math && isDesktop() ? 'addClass' : 'removeClass';
+			utils[m]('portrait', thumbs);
 		},
 		makeIterator = function (coll) {
 			var findIndex = ptL(utils.findIndex, coll),
@@ -173,9 +176,8 @@
 				getDomTargetList = utils.getDomParent(utils.getNodeByTag('li')),
 				//all arguments must be functions...hence always
 				$thumbs = makeElement(_.debounce(exitGallery, 300), ptL(klasRem, 'gallery'), always(thumbs)),
-                //$thumbs2 = makeElement(ptL(klasAdd, 'portrait'), always(thumbs)),
-
-            /*
+				//$thumbs2 = makeElement(ptL(klasAdd, 'portrait'), always(thumbs)),
+				/*
              comp.add(_.extend(poloAF.Composite(), $thumbs2, {
 				unrender: ptL(klasRem, 'portrait', thumbs)
 			}));
@@ -185,9 +187,7 @@
 				$show = makeElement(ptL(utils.show), getDomTargetList, drill(['target'])),
 				exitconf = {
 					id: 'exit',
-                    type: 'image',
-                    alt: '',
-                    src: '../images/sticks.png'
+                    href: "."
 				},
 				controlsconf = {
 					id: 'controls'
@@ -205,7 +205,7 @@
 					}
 				},
 				presenter_unrender = ptL(invokemethod, presenter, null, 'unrender'),
-				$exit = makeElement(doTwice(utils.getter)('getElement'), ptL(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf), anCrIn(thumbs, main), always('input')),
+				$exit = makeElement(doTwice(utils.getter)('getElement'), ptL(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf), anCrIn(thumbs, main), always('a')),
 				$controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
 			comp.add(_.extend(poloAF.Composite(), $thumbs, {
 				unrender: _.compose(ptL(klasRem, 'portrait'), ptL(klasAdd, 'gallery', thumbs))
@@ -313,7 +313,7 @@
 				var counter = mycountdown(cb, x),
 					control = getControls(),
 					klas = 'playing',
-                    shutdown = _.compose(ptL(setter, mycountdown, 'progress', null), ptL(klasRem, klas, control)),
+					shutdown = _.compose(ptL(setter, mycountdown, 'progress', null), ptL(klasRem, klas, control)),
 					pauserender = function () {
 						var clone = getSlide(),
 							pauser = makeElement(ptL(setAttrs, {
@@ -348,9 +348,9 @@
 							this.state = s;
 						},
 						unrender: function () {
-                            shutdown();
+							shutdown();
 							pause.unrender();
-							this.state = this.states.playing;//reset
+							this.state = this.states.playing; //reset
 						},
 						states: {
 							playing: {
@@ -366,7 +366,7 @@
 							paused: {
 								init: init,
 								render: function () {
-                                    shutdown();
+									shutdown();
 									pause = pauserender();
 									this.target.changestates(this.target.states.playing);
 								}
@@ -428,20 +428,21 @@
 				_.compose(stage_one_rpt.add, adapter, utils.addEvent(clicker, cb))($('controls'));
 			},
 			play = noOp,
-            
-            toggle_command = (function (klas, cb) {
-				var o = { timer: null },
-                    rem = _.compose(ptL(klasRem, klas), cb),
-                    wrap = makeElement(ptL(klasAdd, 'inplay'), always($('wrap'))),
-                    $wrap = _.extend(wrap, {
-                        unrender: ptL(klasRem, 'inplay', $('wrap'))
-                    }),
+			toggle_command = (function (klas, cb) {
+				var o = {
+						timer: null
+					},
+					rem = _.compose(ptL(klasRem, klas), cb),
+					wrap = makeElement(ptL(klasAdd, 'inplay'), always($('wrap'))),
+					$wrap = _.extend(wrap, {
+						unrender: ptL(klasRem, 'inplay', $('wrap'))
+					}),
 					clear = function () {
 						window.clearTimeout(o.timer);
 						o.timer = null;
-                        $wrap.render();
+						$wrap.render();
 					},
-                    preppedAdd = _.compose(ptL(klasAdd, klas), cb),
+					preppedAdd = _.compose(ptL(klasAdd, klas), cb),
 					ret = {
 						render: function () {
 							o.timer = window.setTimeout(rem, 3000);
@@ -449,12 +450,11 @@
 						},
 						unrender: function () {
 							_.compose(clear, preppedAdd)();
-                            $wrap.unrender();
+							$wrap.unrender();
 						}
 					};
 				return makeLeafComp(ret);
 			}('static', getControls)),
-            
 			prepToggler = function (command) {
 				var enterHandler = ptL(utils.addHandler, 'mouseenter'),
 					handler = ptL(klasAdd, 'static', getControls);
@@ -552,7 +552,6 @@
 				render: hideCurrent,
 				unrender: noOp
 			},
-            
 			makeSwapper = function () {
 				var ret = {
 					swap: function (counter) {
@@ -627,8 +626,7 @@
 				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render);
 			presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 			stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
-            utils.highLighter.perform();
-            
+			utils.highLighter.perform();
 			_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(thumbs);
 		}());
 	}());

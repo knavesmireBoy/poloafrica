@@ -852,6 +852,10 @@ poloAF.Util = (function () {
 			};
 			return applier(_.bind(window[m], window), _.rest(arguments));
 		},
+        supportTest: function(el, prop, reg){
+            var getBg = curry3(simpleInvoke)(reg)('match');
+            return getBg(poloAF.Util.getComputedStyle(el, prop));
+        },
 		getDummyTarget: function (k, v) {
 			var tgt = {};
 			tgt[k] = v;

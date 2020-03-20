@@ -10,6 +10,9 @@
 	function noOp() {
         //console.log('default')
     }
+    	function simpleInvoke(o, m, arg) {
+		return o[m](arg);
+	}
     
     function thunk(f) {
 		return f.apply(f, _.rest(arguments));
@@ -25,7 +28,6 @@
 			y = (w.pageYOffset !== undefined) ? w.pageYOffset : d.scrollTop;
 		return bool ? x : y;
 	}
-    
     
     function getElementOffset(el) {
         var elementHeight = el.offsetHeight || el.getBoundingClientRect().height;
@@ -43,8 +45,10 @@
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
 		main = document.getElementsByTagName('main')[0],
-        report = function(msg){
-           utils.getByTag('h2', document)[0].innerHTML = msg || document.documentElement.className; 
+        report = function(msg, el){
+            el = el || utils.getByTag('h2', document)[0];
+            msg = msg || document.documentElement.className; 
+            el.innerHTML = msg; 
         },
 		articles = document.getElementsByTagName('article'),
         images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, articles, ptL(utils.getByTag, 'img')))(),
@@ -98,6 +102,7 @@
 			return _.map(els, function(el) {
 				var section = getSib(el),
                     outbound = function() {
+                        //console.log(el, utils.getNextElement(section.firstChild))
                         utils.insertAfter(el, utils.getNextElement(section.firstChild));
 					},
 					inbound = function() {
@@ -161,6 +166,7 @@
         */
 		float_handler;
         
+        
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
 	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels, but the picture will come before the content
 	*/
@@ -172,9 +178,9 @@
         return;
     }
     if(animation){
-        images.pop();
-        images.pop();
+        images.splice(-3, 3)
         images.push(animation);
+        utils.removeNodeOnComplete(utils.$('tween'));
     }
     //reverse reqd to fix polo page in float mode
     //float_handler = ptL(negater, floaters(utils.reverse(images)));
@@ -183,5 +189,7 @@
     if(Modernizr.touchevents){
     //utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
     }
+    //console.log(utils.getByTag('header', document)[0])
+   report(utils.getComputedStyle(document.documentElement, 'width'))
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
-}('(min-width: 736px)', Modernizr.mq('only all')));
+}('(min-width: 668px)', Modernizr.mq('only all')));
