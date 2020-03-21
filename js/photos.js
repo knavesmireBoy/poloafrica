@@ -25,7 +25,7 @@ if (!window.poloAF) {
 		//return function (){};
 	}
 	var utils = window.poloAF.Util,
-		con = window.console.log.bind(window),
+		//con = window.console.log.bind(window),
 		$ = utils.$,
 		ptL = _.partial,
 		report = function (msg) {

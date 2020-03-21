@@ -1,7 +1,5 @@
 #wrap {
-	position: relative;
-	max-width: 65.2em;
-	width: 65.2em;
+	width: 832px;
 	min-height: 100%;
 }
 main {
@@ -12,42 +10,38 @@ main {
 	text-align: right;
 	height: 100%;
 }
-
 main img, main ul {
 	border: 1px solid black;
 }
 main>a {
-	border-top: 1.5vw solid transparent;
-	border-bottom: 1.5vw solid transparent;
-    position: relative;
-    margin: 1px;
+	border-top: 1vw solid transparent;
+	border-bottom: 1vw solid transparent;
+	position: relative;
+	margin: 1px;
 }
-
 #gal_back {
-	border-right: 3vw solid #444;
-    float: left;
+	border-right: 2vw solid #444;
+	float: left;
 }
 #gal_forward {
 	border-right: 0px solid;
-    border-left: 3vw solid transparent;
+	border-left: 2vw solid transparent;
 	border-left-color: #444;
-    float: right;
+	float: right;
 }
-
 main>a {
-	border-top: .625em solid transparent;
-	border-bottom: .625em solid transparent;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
 }
 #gal_back {
-	border-right: 1.25em solid #444;;
+	border-right: 21px solid #444;
 }
 #gal_forward {
-	border-left: 1.25em solid #444;
+	border-left: 21px solid #444;
 }
 #gal_back:hover {
 	border-right-color: silver;
 }
-
 #gal_forward:hover {
 	border-left-color: silver;
 }
@@ -61,55 +55,28 @@ main img {
 	position: relative;
 	margin: 0;
 	/*to accommodate exit button*/
-	padding: 1.5em 0 0 0;
-    display: block;/*force override flex ?*/
-}
-
-footer {
-	margin: 0 auto;
-}
-.showtime footer {
-	margin: -5em auto;
-}
-#wrap #exit {
-	position: absolute;
-	top: 0;
-	right: .5rem;
-    border: 0;
-    width: 2em;
-    height: 2em;
-    display: block;
-    background: transparent url("../images/sticks_sprite.png") no-repeat;
-    background-position: 50% 0%;
-    background-size: 100%;
-}
-#wrap #exit {
-    background-color: transparent;
-}
-
-#exit:hover {
-    background-position: 50% 106%;
+	padding: 3em 0 0 0;
+	display: block;
+	/*force override flex ?*/
 }
 main ul {
-	width: 90.91%;
 	text-align: center;
-	margin: 0 auto;
+	margin: 0;
 	padding: 6px;
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding*/
 	*padding: 1.2em 1.2em .4em 1.2em;
+	overflow: hidden;
+}
+main ul.gallery {
+	display: block;
 	-webkit-transition: width 1s ease-in-out;
 	-o-transition: width 1s ease-in-out;
 	transition: width 1s ease-in-out;
-    overflow: hidden;
 }
 .showtime main ul {
 	padding: 12px;
 }
-main ul.gallery {
-	display: block;
-	text-align: center;
-	margin: 0 auto;
-}
+main ul.gallery {}
 li#slide, li#paused, li#base {
 	display: block;
 	opacity: 1;
@@ -123,13 +90,16 @@ main ul li {
 	float: left;
 	*display: inline;
 }
-main ul li {
+main ul.gallery li {
 	width: 225px;
-	width: 183px;
+	width: 180px;
 }
-main ul li.portrait {
+main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	width: 146px;
-	width: 118px;
+	width: 116px;
+}
+main ul.gallery li:nth-last-child(-n+4) {
+	width: 180px;
 }
 main ul.gallery li:nth-child(5), main ul.gallery li:nth-child(11), main.alt ul.gallery li:nth-child(9) {
 	clear: left;
@@ -144,24 +114,44 @@ main.alt ul.gallery li:nth-last-child(-n+2) {
 	width: 100%;
 	margin: 0;
 }
-.js main ul.portrait {
-	width: 40%;
-	width: 60vmin;
+main ul.portrait {
+	width: 36%;
 	margin: 0 auto;
 }
-main ul li, h2, .inplay main ul li.show, .showtime #wrap main>a, .no-js main>a {
+main ul li, h2, .inplay main ul li.show, .showtime main>a, .no-js main>a {
 	position: absolute;
 	top: 0em;
 	left: -99em;
 }
-main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused, #wrap #exit {
+main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused, .js #exit {
 	position: relative;
 	left: auto;
 }
-#wrap #exit {
-    display: inline-block;
+footer {
+	margin: 0 auto;
 }
-
+.showtime footer {
+	margin: -5em auto;
+}
+.js #exit {
+	position: absolute;
+	top: .5rem;
+	right: .5rem;
+	border: 0;
+	width: 2em;
+	height: 2em;
+	display: block;
+	background: transparent url("../images/sticks_sprite.png") no-repeat;
+	background-position: 50% 0%;
+	background-size: 100%;
+	display: inline-block;
+}
+.js #exit {
+	background-color: transparent;
+}
+.js #exit:hover {
+	background-position: 50% 106%;
+}
 li#slide, li#paused {
 	margin-left: -100%;
 }
@@ -184,7 +174,7 @@ li#slide, li#paused {
 	border: solid 1px;
 }
 #controls {
-    top: 0em;
+	top: 0em;
 	position: relative;
 	text-align: center;
 	font-size: 1.5em;
@@ -195,10 +185,10 @@ li#slide, li#paused {
 	-webkit-transition: all 1s;
 	-o-transition: all 1s;
 	transition: all 1s;
-    clear: left;
+	clear: left;
 }
 .touchevents controls {
-    opacity: 1;
+	opacity: 1;
 }
 #controls.static {
 	top: -3.5em;
@@ -318,23 +308,24 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		width: 100%;
 	}
 	main ul.gallery {
-		padding: .7%;
+		padding: .5%;
 	}
-
+    main ul.gallery li {
+     margin: .5%;
+    }
 	main ul.gallery li, main.alt ul.gallery li:nth-child(n+5), main.alt ul.gallery li.portrait {
-		margin: .56%;
-		width: 23.85%;
+		width: 24%;
 	}
 	main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
-		width: 15.52%;
+		width: 15.66%;
 	}
 	main ul.gallery li:nth-last-child(-n+4) {
-		width: 23.85%;
+		width: 24%;
 	}
 	main ul li a {
 		float: none;
 	}
-	.showtime #wrap main ul li {
+	.showtime main ul li {
 		width: 100%;
 	}
 	#controls button {
@@ -342,71 +333,24 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		background-color: hsla(75, 50%, 40%, .3);
 		background-size: 128%;
 	}
-
-	button#exit:hover, button#exit:focus {
+	#exit:hover, #exit:focus {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
 	}
-    
-    
-    
-}/*screen*/
-
-@media screen and (max-width: 667px) {
-    .no-cssvminunit main ul.portrait {
-        width: 70%;
-    }
-    
-         .flexboxlegacy #wrap main {
-         display: -webkit-box;
-         display: -ms-flexbox;
-         display: flex;
-    }
-              .flexboxlegacy .showtime #wrap main {
-         display: block;
-    }
-    
-
-  .flexboxlegacy #wrap main > * {
-        -webkit-box-flex: 1;
-      margin: 0 .5%;
-            -ms-flex: 1 1 2%;
-                flex: 1 1 2%;
-        -ms-flex-item-align: stretch;
-            -ms-grid-row-align: stretch;
-            align-self: stretch;
-    }
-    .flexboxlegacy .showtime #wrap main > * {
-         margin: 0 auto;/*controls*/
-    }
-    .flexboxlegacy #wrap main > a {
-        border-width: 0;
-        background: #444;
-    }
-
-    .flexboxlegacy #wrap main #gal_forward{
-        -webkit-box-ordinal-group: 4;
-            -ms-flex-order: 3;
-                order: 3
-    }
-    .flexboxlegacy #wrap main ul {
-        -webkit-box-flex: 20;
-            -ms-flex: 20 1 10%;
-                flex: 20 1 10%;
-    }
 }
-@media only screen and (max-width: 600px) {
-	footer {
-		-webkit-transition: background-position 2s ease;
-		-moz-transition: background-position 2s ease;
-		-o-transition: background-position 2s ease;
-		transition: background-position 2s ease;
+@media only screen and (max-width: 667px) {
+	main ul.portrait {
+		width: 70%;
 	}
-    
-    #wrap .showtime main {
-        display: block;
-    }
-    /*
+	h2 {
+		position: relative;
+		left: auto;
+	}
+
+	#wrap .showtime main {
+		display: block;
+	}
+	/*
     .js main>a {
 	border-top: 2vw solid;
 	border-bottom: 2vw solid;
@@ -414,7 +358,6 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
     color: #444;
 }
     */
-
 	#controls {
 		font-size: 1.3em;
 	}
@@ -430,31 +373,33 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	main ul.gallery {
 		padding: 1vw;
 		padding: 1%;
-        width: calc(98% - 2px);
 	}
-	
+    main ul.gallery li{
+		margin: 1.3%;
+	}
 	main ul.gallery li, main.alt ul.gallery li {
-		margin: 1%;
 		width: 244px;
 		width: 40vw;
-		width: 48%;
+		width: 47.2%;
 	}
-    main ul.gallery li, main.alt ul.gallery li:nth-child(n+5), main.alt ul.gallery li.portrait {
-		margin: 1%;
-		width: 48%;
+	main ul.gallery li, main.alt ul.gallery li:nth-child(n+5), main.alt ul.gallery li.portrait {
+		width: 47.2%;
 	}
-    
 	main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		width: 161px;
 		width: 26.2vw;
-		width: 31.3%;
+		width: 30.7%;
 	}
 	main ul.gallery li:nth-last-child(-n+4) {
-		width: 48%;
+		width: 47.2%;
+	}
+    	footer {
+		-webkit-transition: background-position 2s ease;
+		-moz-transition: background-position 2s ease;
+		-o-transition: background-position 2s ease;
+		transition: background-position 2s ease;
 	}
 }
-
-
 /*
 @media only screen and (max-width: 480px){
     
@@ -477,4 +422,3 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 }
 }
 */
-
