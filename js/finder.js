@@ -81,11 +81,12 @@
 			if (!isHeading(e)) {
 				return;
 			}
-             report(e.target);
-            return;
+            
 			var tgt = e.target || e.srcElement,
                 el = utils.getDomParent(utils.getNodeByTag('article'))(tgt),
 				hit = utils.getClassList(el).contains('show');
+             report(hit);
+            return;
 			_.each(articles, function (article) {
 				utils.hide(article);
 			});
