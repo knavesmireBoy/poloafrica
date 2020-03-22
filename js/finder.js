@@ -85,9 +85,9 @@
 			var tgt = e.target || e.srcElement,
                 el = utils.getDomParent(utils.getNodeByTag('article'))(tgt);
                          report(el);
+                            return;
 
 				var hit = utils.getClassList(el).contains('show');
-            return;
 			_.each(articles, function (article) {
 				utils.hide(article);
 			});
