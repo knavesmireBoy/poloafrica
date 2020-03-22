@@ -169,5 +169,8 @@
 	*/
 	//main.addEventListener('click', bridge);
     utils.addHandler('click', main, bridge);
+	bridge({
+		target: articles[0].getElementsByTagName('h3')[0]
+	});
 
 }(Modernizr.mq('only all'), '(min-width: 668px)'));
