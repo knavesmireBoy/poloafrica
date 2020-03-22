@@ -191,6 +191,6 @@
     }
     //console.log(utils.getByTag('header', document)[0])
    //report(utils.getComputedStyle(document.documentElement, 'width'))
-   //report();
+   report();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
 }('(min-width: 668px)', Modernizr.mq('only all')));
