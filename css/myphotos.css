@@ -220,13 +220,13 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		margin: 0 1%;
         border-width: 0px;
 		box-sizing: border-box;
-        background-color: white;
+        background-color: #444;
 	}
 	.touchevents #exit {
 		top: 1.5em;
 	}
     .flexbox main  {
-		background-color: black;
+		background-color: whitesmoke;
 	}
 }
 @media only screen and (min-width: 320px) and (orientation: portrait) {
