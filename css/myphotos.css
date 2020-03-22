@@ -33,8 +33,8 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 }
 .flexboxlegacy main>a, .flexbox main>a {
 	-webkit-box-flex: 0;
-	-ms-flex: 0 0 .4%;
-	flex: 0 0 .4%;
+	-ms-flex: 0 0 .2%;
+	flex: 0 0 .2%;
 }
 .flexboxlegacy main #gal_forward, .flexbox main #gal_forward {
 	-webkit-box-ordinal-group: 4;
@@ -220,13 +220,13 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		margin: 0 1%;
         border-width: 0px;
 		box-sizing: border-box;
-        background-color: lavender;
+        background-color: white;
 	}
 	.touchevents #exit {
 		top: 1.5em;
 	}
     .flexbox main  {
-		background-color: cornflowerblue;
+		background-color: black;
 	}
 }
 @media only screen and (min-width: 320px) and (orientation: portrait) {
