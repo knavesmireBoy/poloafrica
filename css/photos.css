@@ -80,7 +80,7 @@ main ul.gallery {
 .showtime main ul {
 	padding: 12px;
 }
-main ul.gallery {}
+
 li#slide, li#paused, li#base {
 	display: block;
 	opacity: 1;
