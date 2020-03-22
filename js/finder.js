@@ -190,6 +190,7 @@
     //utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
     }
     //console.log(utils.getByTag('header', document)[0])
-   report(utils.getComputedStyle(document.documentElement, 'width'))
+   //report(utils.getComputedStyle(document.documentElement, 'width'))
+   report();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
 }('(min-width: 668px)', Modernizr.mq('only all')));

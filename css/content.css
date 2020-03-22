@@ -52,7 +52,7 @@ p:first-of-type {
 h2 {
 	margin: .8em 0 0 0;
 	background: url(../images/sub-polo-in-africa.png) no-repeat 0% 50%;
-    background-size: contain;
+    background-size: cover;
     font: normal 2.8em/normal  Georgia, serif;
 	color: #cc6;
 	text-transform: uppercase;
