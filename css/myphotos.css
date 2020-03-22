@@ -218,8 +218,10 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	}
 	.touchevents.flexboxlegacy main>a, .flexbox main>a {
 		margin: 0 1%;
+        padding: 0;
         border-width: 0px;
-        background-color: crimson;
+		box-sizing: border-box;
+        background-color: honeydew;
 	}
 	.touchevents #exit {
 		top: 1.5em;
