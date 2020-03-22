@@ -196,4 +196,4 @@
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
 	//report();
 	//utils.addHandler('resize', window, _.throttle(float_handler, 99));
-}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.mq('(min-width: 668px)')));
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.mq("(min-width: 668px)")));
