@@ -77,11 +77,12 @@
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['target', 'nodeName']));
 		var bridge = function (e) {
-            report(e.target);
-            return;
+           
 			if (!isHeading(e)) {
 				return;
 			}
+             report(e.target);
+            return;
 			var tgt = e.target || e.srcElement,
                 el = utils.getDomParent(utils.getNodeByTag('article'))(tgt),
 				hit = utils.getClassList(el).contains('show');
