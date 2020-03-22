@@ -6,7 +6,7 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-(function (thequery, mq) {
+(function (thequery, mq, touchevents) {
 	"use strict";
 
 	function modulo(n, i) {
@@ -64,6 +64,7 @@ if (!window.poloAF) {
 			fixNoNthChild(e.target);
 		},
 		toogleLoop = _.compose(doPortraitLoop, doToggle),
+        clicker = touchevents ? ptL(utils.addHandler, 'touchend') : ptL(utils.addHandler, 'click'),
 		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
 		advance = function () {
 			var twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
@@ -75,7 +76,8 @@ if (!window.poloAF) {
 				iterator = makeIterator([een, twee, drie, vier, vyf, ses, sewe]),
 				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
-				if (getNodeName(e).match(/a/i)) {
+                var mode = utils.getByClass('gallery').length;
+				if (mode && getNodeName(e).match(/a/i)) {
 					var m = utils.getPrevious(getTarget(e)) ? 'forward' : 'back',
 						gang = iterator[m](),
 						allpics = utils.getByTag('img', main),
@@ -91,5 +93,5 @@ if (!window.poloAF) {
 			};
 		},
 		myadvance = advance();
-	utils.addEvent(ptL(utils.addHandler, 'click'), myadvance)(main);
-}('(min-width: 601px)', Modernizr.mq('only all')));
+	utils.addEvent(clicker, myadvance)(main);
+}('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));

@@ -361,5 +361,13 @@ footer a:link {
         font-size: 1.55em;
         font-size: 1.35rem;
 	}
+    
+    #footer_girl {
+	margin: 0 0 .75em .6em;
+}
+    
+    #fb {
+		margin: 0 0 .75em -23.5em;
+	}
 	
 }

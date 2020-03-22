@@ -110,8 +110,7 @@
 				return _.partial(utils.isDesktop, threshold);
 			}
 		}()),
-		//clicker = touchevents ? ptL(utils.addHandler, 'touchend') : ptL(utils.addHandler, 'click'),
-		clicker = ptL(utils.addHandler, 'click'),
+        clicker = ptL(utils.addHandler, 'click'),
 		makeElement = utils.machElement,
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
