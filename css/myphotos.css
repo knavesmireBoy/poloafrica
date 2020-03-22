@@ -12,6 +12,7 @@
 	-webkit-box-flex: 0;
 	-ms-flex: 1 1 1%;
 	flex: 1 1 1%;
+    float: none;
 }
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
@@ -67,7 +68,7 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-    background-color: darkblue;
+    background-color: darkcyan;
 }
 .flexboxlegacy main ul.gallery, .flexbox main ul.gallery {
 	width: auto;
