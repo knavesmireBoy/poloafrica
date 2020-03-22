@@ -169,8 +169,24 @@
 	*/
 	//main.addEventListener('click', bridge);
     utils.addHandler('click', main, bridge);
-	bridge({
-		target: articles[0].getElementsByTagName('h3')[0]
-	});
 
+	if (utils.$('enquiries')) {
+		return;
+	}
+	if (animation) {
+		images.splice(-3, 3);
+		images.push(animation);
+		utils.removeNodeOnComplete(utils.$('tween'));
+	}
+	//reverse reqd to fix polo page in float mode
+	//float_handler = ptL(negater, floaters(utils.reverse(images)));
+	//float_handler = ptL(negater, floaters(images), noOp);
+	//float_handler();
+	if (Modernizr.touchevents) {
+		//utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
+	}
+	//console.log(utils.getByTag('header', document)[0])
+	//report(utils.getComputedStyle(document.documentElement, 'width'))
+	//report();
+	//utils.addHandler('resize', window, _.throttle(float_handler, 99));
 }(Modernizr.mq('only all'), '(min-width: 668px)'));
