@@ -67,7 +67,7 @@
 		//isDesktop = getEnvironment(),
 		negater = function (alternators, func) {
 			if (!getEnvironment()) {
-                report(mq);
+                report(Modernizr.mq(query));
 				_.each(alternators, function (f) {
 					f();
 				});
