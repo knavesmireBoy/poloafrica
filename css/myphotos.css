@@ -15,11 +15,6 @@
 }
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
-#gal_forward {
-	-webkit-box-ordinal-group: 4;
-	-ms-flex-order: 3;
-	order: 3;
-}
 main ul.gallery li {
 	-ms-flex-item-align: start;
 	align-self: flex-start;
@@ -44,8 +39,8 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 }
 .flexboxlegacy main>a, .flexbox main>a {
 	-webkit-box-flex: 0;
-	-ms-flex: 0 0 2%;
-	flex: 0 0 2%;
+	-ms-flex: 1 0 2%;
+	flex: 1 0 2%;
 }
 .flexboxlegacy main #gal_forward, .flexbox main #gal_forward {
 	-webkit-box-ordinal-group: 4;
@@ -72,7 +67,7 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-    background-color: mediumaquamarine;
+    background-color: darkblue;
 }
 .flexboxlegacy main ul.gallery, .flexbox main ul.gallery {
 	width: auto;
