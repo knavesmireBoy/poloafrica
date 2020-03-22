@@ -76,5 +76,24 @@
 		},
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['target', 'nodeName']));
-
+		var bridge = function (e) {
+			if (!isHeading(e)) {
+				return;
+			}
+			var el = utils.getDomParent(utils.getNodeByTag('article'))(e.target),
+				hit = utils.getClassList(el).contains('show');
+			_.each(articles, function (article) {
+				utils.hide(article);
+			});
+			if (!hit) {
+				utils.show(el);
+			}
+		},
+		getSib = function (el) {
+			if (animation) {
+				return utils.getNext(el);
+			}
+			return utils.getSibling(utils.getNodeByTag('section'))(el);
+		};
+		
 }(Modernizr.mq('only all'), '(min-width: 668px)'));
