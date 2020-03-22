@@ -182,7 +182,7 @@
 	}
 	//reverse reqd to fix polo page in float mode
 	//float_handler = ptL(negater, floaters(utils.reverse(images)));
-	float_handler = ptL(negater, floaters(images), noOp);
+	//float_handler = ptL(negater, floaters(images), noOp);
 	//float_handler();
 	if (Modernizr.touchevents) {
 		//utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
