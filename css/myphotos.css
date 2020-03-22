@@ -1,4 +1,4 @@
-.no-touchevents.flexboxlegacy main, .no-touchevents.flexbox main{
+.no-touchevents.flexboxlegacy main, .no-touchevents.flexbox main {
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
@@ -57,12 +57,22 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	-ms-flex: 20 1 10%;
 	flex: 20 1 10%;
 }
-.flexboxlegacy main, .flexbox main {
+.flexboxlegacy main{
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
+    background-color: aqua;
+}
+
+.flexbox main {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+    background-color: mediumaquamarine;
 }
 .flexboxlegacy main ul.gallery, .flexbox main ul.gallery {
 	width: auto;
