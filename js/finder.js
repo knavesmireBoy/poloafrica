@@ -164,5 +164,10 @@
 				},
 		        */
 		float_handler;
-	
+	/* float is used for layout on older browsers and requires that the image comes before content in page source order
+	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels, but the picture will come before the content
+	*/
+	//main.addEventListener('click', bridge);
+    utils.addHandler('click', main, bridge);
+
 }(Modernizr.mq('only all'), '(min-width: 668px)'));
