@@ -95,5 +95,74 @@
 			}
 			return utils.getSibling(utils.getNodeByTag('section'))(el);
 		};
-		
+		var floaters = function (els) {
+			var conditions = [doTwice(utils.getter)('id'), doWrap, utils.always(true)],
+				invoker = function (elem, zipped) {
+					return elem && zipped[0](elem);
+				};
+			return _.map(els, function (el) {
+				var section = getSib(el),
+					outbound = function () {
+						//console.log(el, utils.getNextElement(section.firstChild))
+						utils.insertAfter(el, utils.getNextElement(section.firstChild));
+					},
+					inbound = function () {
+						section.parentNode.insertBefore(el, section);
+					},
+					move = function () {
+						var p = utils.getSibling(utils.getNodeByTag('p'))(section.firstChild);
+						section.insertBefore(el, p);
+					},
+					unmove = function () {
+						section.parentNode.insertBefore(el, section);
+					},
+					standard = [move, unmove],
+					floater = [outbound, inbound],
+					def = [noOp, noOp],
+					meroutes = _.zip(conditions, [floater, standard, def]),
+					reducer = function (el) {
+						return utils.getBest(ptL(invoker, el), meroutes)[1];
+					},
+					pair = reducer(el);
+				return doAlt(pair);
+			}); //map           
+		},
+		/*
+		        myF = function (){
+		            var offsets = _.toArray(utils.getByClass('show')),
+		                last = offsets.pop();
+		                window.pageYOffset = getElementOffset(last)+window.innerHeight;
+		            //document.scrollTop = last;
+		        },
+		        
+		        doScroll = function (el){
+		            return greater(getPageOffset() - utils.getScrollThreshold(el))
+		        },
+		        options = [utils.show, utils.hide],
+		        ops = [utils.shout('confirm', 'C'), utils.shout('alert', 'A')],
+		        doBest = function (actions, el){
+		           return utils.getBest(ptL(doScroll, el), actions);
+		        },
+		        mapped = _.map(articles, ptL(doBest, [utils.show, utils.hide])),
+		        scroller = function () {
+		            var smile = function (f){
+		                    var isNotEq = _.negate(utils.isEqual),
+		                         hide = _.compose(utils.hide, utils.getPrevious),
+		                        show = _.compose(utils.show, utils.getNext),
+		                        el = getResult(f),
+		                        current = utils.getZero(utils.getByClass('show')),
+		                        action = _.compose(utils.show, utils.always(el)),
+		                        zipped = _.zip([el, current], [action, noOp]);
+		                        //utils.hide(current);
+		                   return _.compose(ptL(utils.byIndex, 1), ptL(utils.getBest, _.compose(ptL(isNotEq, current), utils.getZero), zipped))();
+		                },
+		                reducer = function (champ, contender){
+		                    return doScroll(contender) ? contender : champ;
+		                },
+		                primed = ptL(_.reduce, articles, reducer),
+		                throttled = _.throttle(_.compose(getResult, ptL(thunk, smile, primed)), 100);
+				},
+		        */
+		float_handler;
+	
 }(Modernizr.mq('only all'), '(min-width: 668px)'));
