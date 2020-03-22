@@ -67,7 +67,7 @@
 		//isDesktop = getEnvironment(),
 		negater = function (alternators, func) {
 			if (!getEnvironment()) {
-                report(query);
+                report(getEnvironment());
 				_.each(alternators, function (f) {
 					f();
 				});
@@ -196,4 +196,4 @@
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
 	//report();
 	//utils.addHandler('resize', window, _.throttle(float_handler, 99));
-}(Modernizr.mq('only all'), '(min-width: 668px)'));
+}(Modernizr.mq('only all'), 'only screen and (min-width: 668px)'));
