@@ -67,6 +67,7 @@
 		//isDesktop = getEnvironment(),
 		negater = function (alternators, func) {
 			if (!getEnvironment()) {
+                report();
 				_.each(alternators, function (f) {
 					f();
 				});
