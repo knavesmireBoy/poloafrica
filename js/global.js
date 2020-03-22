@@ -305,7 +305,7 @@ poloAF.Util = (function () {
 	}
 
 	function getClassList(el) {
-		return el && (el.classList || poloAF.Util.getClassList(el));
+		return el && (el.classList || poloAF.ClassList(el));
 	}
 
 	function curry2(fun) {
