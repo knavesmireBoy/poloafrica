@@ -2,7 +2,8 @@
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
 	align-items: stretch;
 }
 
@@ -223,9 +224,6 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	}
 	.touchevents #exit {
 		top: 1.5em;
-	}
-    .flexbox main  {
-		background-color: whitesmoke;
 	}
 }
 @media only screen and (min-width: 320px) and (orientation: portrait) {
