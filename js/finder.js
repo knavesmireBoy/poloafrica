@@ -72,6 +72,7 @@
 		//isDesktop = getEnvironment(),
 		negater = function (alternators, func) {
 			report(pass);
+            /*
 			if (!getEnvironment()) {
 				report(99);
 				_.each(alternators, function (f) {
@@ -80,6 +81,7 @@
 				func();
 				getEnvironment = _.negate(getEnvironment);
 			}
+            */
 		},
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['target', 'nodeName'])),
