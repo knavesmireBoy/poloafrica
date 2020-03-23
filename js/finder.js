@@ -53,7 +53,7 @@
 		main = document.getElementsByTagName('main')[0],
 		report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
-			msg = undef(msg) ? document.documentElement.className : msg;
+			msg = undef(msg) ? document.documentElement.className : msg + '!';
 			el.innerHTML = msg;
 		},
 		articles = document.getElementsByTagName('article'),
@@ -72,7 +72,6 @@
 		negater = function (alternators, func) {
 			report(pass);
             if (!getEnvironment()) {
-                report(99);
 				_.each(alternators, function (f) {
 					f();
 				});
@@ -102,7 +101,7 @@
 			}
 			return utils.getSibling(utils.getNodeByTag('section'))(el);
 		},
-            floaters = function (els) {
+        floaters = function (els) {
 			var conditions = [doTwice(utils.getter)('id'), doWrap, utils.always(true)],
 				invoker = function (elem, zipped) {
 					return elem && zipped[0](elem);
@@ -134,42 +133,6 @@
 				return doAlt(pair);
 			}); //map           
 		},
-		/*
-		        myF = function (){
-		            var offsets = _.toArray(utils.getByClass('show')),
-		                last = offsets.pop();
-		                window.pageYOffset = getElementOffset(last)+window.innerHeight;
-		            //document.scrollTop = last;
-		        },
-		        
-		        doScroll = function (el){
-		            return greater(getPageOffset() - utils.getScrollThreshold(el))
-		        },
-		        options = [utils.show, utils.hide],
-		        ops = [utils.shout('confirm', 'C'), utils.shout('alert', 'A')],
-		        doBest = function (actions, el){
-		           return utils.getBest(ptL(doScroll, el), actions);
-		        },
-		        mapped = _.map(articles, ptL(doBest, [utils.show, utils.hide])),
-		        scroller = function () {
-		            var smile = function (f){
-		                    var isNotEq = _.negate(utils.isEqual),
-		                         hide = _.compose(utils.hide, utils.getPrevious),
-		                        show = _.compose(utils.show, utils.getNext),
-		                        el = getResult(f),
-		                        current = utils.getZero(utils.getByClass('show')),
-		                        action = _.compose(utils.show, utils.always(el)),
-		                        zipped = _.zip([el, current], [action, noOp]);
-		                        //utils.hide(current);
-		                   return _.compose(ptL(utils.byIndex, 1), ptL(utils.getBest, _.compose(ptL(isNotEq, current), utils.getZero), zipped))();
-		                },
-		                reducer = function (champ, contender){
-		                    return doScroll(contender) ? contender : champ;
-		                },
-		                primed = ptL(_.reduce, articles, reducer),
-		                throttled = _.throttle(_.compose(getResult, ptL(thunk, smile, primed)), 100);
-				},
-		        */
 		float_handler;
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
 	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels, but the picture will come before the content
@@ -192,12 +155,15 @@
 	//float_handler = ptL(negater, floaters(utils.reverse(images)));
 	float_handler = ptL(negater, floaters(images), noOp);
 	float_handler();
+    /*
 	if (Modernizr.touchevents) {
-		//utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
+		utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
 	}
+    */
 	//console.log(utils.getByTag('header', document)[0])
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
 	//report();
 	//utils.addHandler('resize', window, _.throttle(float_handler, 99));
+    return true;
     
-}(Modernizr.mq('only all'), '(min-width: 668px)', matchMedia('only screen and (min-width: 668px)').matches)));
+}(Modernizr.mq('only all'), '(min-width: 668px)', window.matchMedia('only screen and (min-width: 668px)').matches));
