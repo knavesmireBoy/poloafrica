@@ -71,7 +71,7 @@
 		}()),
         getEnvironment = _.partial(utils.isDesktop, threshold),
 		negater = function (alternators, func) {
-            report();
+            //report();
             /*NOTE netrnederer reports winodw.width AS ZERO, it's just an image REMOVE "return true;" for production*/
 			if (!getEnvironment()) {
 				return true;
