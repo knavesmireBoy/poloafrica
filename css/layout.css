@@ -140,9 +140,7 @@ footer a:link {
 
 /**/
 
-.no-js body {
-	background-color: mintcream;
-}
+
 @media screen and (max-width: 667px) {
     
     .touchevents body {
