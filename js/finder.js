@@ -205,4 +205,4 @@
 	//report();
 	//utils.addHandler('resize', window, _.throttle(float_handler, 99));
 	return true;
-}(Modernizr.mq('only all'), '(min-width: 668px)', window.matchMedia('only screen and (min-width: 668px)').matches));
+}(Modernizr.mq('only all'), '(min-width: 668px)', window.matchMedia('only screen and (max-width: 668px)').matches));
