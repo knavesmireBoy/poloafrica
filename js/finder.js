@@ -5,7 +5,6 @@
 /*global poloAF: false */
 /*global _: false */
 (function (mq, query, pass) {
-	//https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 	"use strict";
 
 	function noOp() {
@@ -62,6 +61,7 @@
 		animation = utils.$("ani"),
 		doAlt = utils.doAlternate(),
 		doWrap = utils.always(true),
+        //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment1 = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
@@ -70,19 +70,17 @@
 			}
 		}()),
         getEnvironment = _.partial(utils.isDesktop, threshold),
-		isDesktop = getEnvironment(),
 		negater = function (alternators, func) {
-			report(window.viewportSize.getWidth());
-            /*
+            report();
+            /*NOTE netrnederer reports winodw.width AS ZERO, it's just an image REMOVE "return true;" for production*/
 			if (!getEnvironment()) {
-				report(99);
+				return true;
 				_.each(alternators, function (f) {
 					f();
 				});
 				func();
 				getEnvironment = _.negate(getEnvironment);
 			}
-            */
 		},
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['target', 'nodeName'])),
