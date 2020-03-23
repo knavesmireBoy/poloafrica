@@ -139,7 +139,9 @@ footer a:link {
 /**/
 
 /**/
-
+	header h1, header h1 img, h2 span {
+		border-width: 0px;
+	}
 
 @media screen and (max-width: 667px) {
     

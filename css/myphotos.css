@@ -1,12 +1,11 @@
-.no-touchevents.flexboxlegacy main, .no-touchevents.flexbox main {
+.no-touchevents.flexboxlegacy main, .no-touchevents.flexbox main, .no-touchevents.flexboxtweener main {
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-	align-items: stretch;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+	align-items: center;
 }
-
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 main ul.gallery li {
@@ -31,39 +30,40 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	height: 0;
 	margin: 0;
 }
-.flexboxlegacy main>a, .flexbox main>a {
+.flexboxlegacy main>a, .flexbox main>a, .flexboxtweener main>a {
 	-webkit-box-flex: 0;
 	-ms-flex: 0 0 1%;
 	flex: 0 0 1%;
 }
-.flexboxlegacy main #gal_forward, .flexbox main #gal_forward {
+.flexboxlegacy main #gal_forward, .flexbox main #gal_forward, .flexboxtweener main #gal_forward {
 	-webkit-box-ordinal-group: 4;
 	-ms-flex-order: 3;
 	order: 3
 }
-.flexboxlegacy main ul, .flexbox main ul {
+.flexboxlegacy main ul, .flexbox main ul, .flexboxtweener main ul{
 	-webkit-box-flex: 40;
 	-ms-flex: 40 1 10%;
 	flex: 40 1 10%;
 }
-.flexboxlegacy main {
+.flexbox main, .flexboxlegacy main, .flexboxtweener main {
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-    background-color: aqua;
 }
 
 .flexbox main {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
     background-color: firebrick;
 }
-.flexboxlegacy main ul.gallery, .flexbox main ul.gallery {
+.flexboxlegacy main {
+    background-color: aqua;
+}
+
+.override main {
+    background-color: white;
+}
+.flexboxlegacy main ul.gallery, .flexbox main ul.gallery, .flexboxtweener main ul.gallery {
 	width: auto;
 }
 .showtime main.override {
@@ -75,17 +75,13 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		display: -ms-flexbox;
 		display: flex;
 	}
-	main ul.gallery {
-		background-color: sandybrown;
-	}
 }
 @supports (flex-wrap: wrap) and (not(column-gap: 20px)) {
 	main ul.gallery {
 		justify-content: space-between;
 		display: flex;
 		flex-wrap: wrap;
-		background-color: lavender;
-	}
+    }
 	#wrap main ul.gallery li {
 		width: auto;
 	}
@@ -126,6 +122,16 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	}
 }
 @media only screen and (max-width: 667px) {
+    
+        .touchevents.flexboxlegacy main, .touchevents.flexbox main, .touchevents.flexboxtweener main {
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+	align-items: stretch;
+}
+    
 	.flexwrap main ul.gallery li {
 		width: auto;
 	}
@@ -230,8 +236,9 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	.touchevents .showtime main {
 		padding: 4em 1em 0;
 	}
-	.touchevents.flexboxlegacy main>a, .flexbox main>a {
+	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 2%;
 		border-width: 0;
 	}
+
 }
