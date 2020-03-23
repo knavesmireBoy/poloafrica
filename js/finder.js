@@ -22,6 +22,9 @@
 	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
 	}
+    function undef(x) {
+		return typeof (x) === 'undefined';
+	}
 
 	function getPageOffset(bool) {
 		var w = window,
@@ -49,7 +52,7 @@
 		main = document.getElementsByTagName('main')[0],
 		report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
-			msg = msg || document.documentElement.className;
+			msg = undef(msg) ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
 		articles = document.getElementsByTagName('article'),
@@ -196,4 +199,4 @@
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
 	//report();
 	//utils.addHandler('resize', window, _.throttle(float_handler, 99));
-}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.mq("(min-width: 668px)")));
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.mq("(only screen and min-width: 668px)")));
