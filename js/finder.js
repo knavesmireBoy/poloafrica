@@ -5,6 +5,7 @@
 /*global poloAF: false */
 /*global _: false */
 (function (mq, query, pass) {
+    //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 	"use strict";
 
 	function noOp() {
@@ -69,8 +70,9 @@
 		}()),
 		//isDesktop = getEnvironment(),
 		negater = function (alternators, func) {
-			if (!getEnvironment()) {
-                report(pass);
+			report(pass);
+            if (!getEnvironment()) {
+                report(99);
 				_.each(alternators, function (f) {
 					f();
 				});
@@ -81,11 +83,9 @@
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['target', 'nodeName'])),
         bridge = function (e) {
-           
 			if (!isHeading(e)) {
 				return;
 			}
-            
 			var tgt = e.target || e.srcElement,
                 el = utils.getDomParent(utils.getNodeByTag('article'))(tgt),
                 hit = utils.getClassList(el).contains('show');
@@ -199,4 +199,5 @@
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
 	//report();
 	//utils.addHandler('resize', window, _.throttle(float_handler, 99));
+    
 }(Modernizr.mq('only all'), '(min-width: 668px)', matchMedia('only screen and (min-width: 668px)').matches)));
