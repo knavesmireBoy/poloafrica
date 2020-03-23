@@ -62,16 +62,17 @@
 		animation = utils.$("ani"),
 		doAlt = utils.doAlternate(),
 		doWrap = utils.always(true),
-		getEnvironment = (function () {
+		getEnvironment1 = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
 			} else {
 				return _.partial(utils.isDesktop, threshold);
 			}
 		}()),
-		//isDesktop = getEnvironment(),
+        getEnvironment = _.partial(utils.isDesktop, threshold),
+		isDesktop = getEnvironment(),
 		negater = function (alternators, func) {
-			report(pass);
+			report(window.viewportSize.getWidth());
             /*
 			if (!getEnvironment()) {
 				report(99);
