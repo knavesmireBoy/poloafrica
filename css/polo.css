@@ -6,6 +6,10 @@
 .override article:nth-child(1) img {
     float: right;
 }
+h2 {
+		background: 0% 0% url(../images/sub-polo.png) no-repeat;
+    background-size: contain;
+	}
 
 @media screen and (max-width: 667px) {
 	.no-js article:nth-child(1) .read-more-trigger:before {
@@ -27,9 +31,9 @@
 		position: static;
 		left: 0;
 	}
+    h2 {
+        background: none;
+    }
 	
 }
-@media screen and (min-width: 668px) {
-	h2 {
-		background: 0% 0%/contain url(../images/sub-polo.png) no-repeat;
-	}
+	

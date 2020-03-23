@@ -103,7 +103,7 @@
 		anCr = utils.append(),
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
-        	isDesktop = (function() {
+        isDesktop = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
 			} else {
@@ -623,10 +623,16 @@
 					});
 				},
 				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render);
-			presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
+			try {
+                presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 			stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
-			utils.highLighter.perform();
+                
+			//utils.highLighter.perform();
 			_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(thumbs);
+            }
+            catch(e){
+                $('report').innerHTML = e;
+            }
 		}());
 	}());
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 769px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('h2')[0], document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0]));

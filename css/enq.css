@@ -2,6 +2,11 @@
 #contactarea {
 }
 
+  h2 {
+      background: 0% 0% url(../images/sub-enquiries.png) no-repeat;
+        background-size: contain;
+		}
+
 form {
 	font-family: Arial, Helvetica, Verdana, sans-serif;
 	background-color: #cc9;
@@ -176,6 +181,10 @@ article:nth-child(2) {
         
  @media screen and (max-width: 667px) {
      
+         h2 {
+        background: none;
+    }
+     
         	#enquiries article {
 		margin: 0;
 	}
@@ -248,9 +257,7 @@ article:nth-child(2) {
 	box-sizing: border-box;
 }
     @media screen and (min-width: 668px) {
-    h2 {
-			background: 0% 0%/contain url(../images/sub-enquiries.png) no-repeat;
-		}
+  
         
 	@supports(column-gap: 20px) {
 		/*the textarea form element seems to confuse attempts at a grid layout

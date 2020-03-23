@@ -74,11 +74,20 @@ article:after {
 }
 #nav {
 	width: 100%;
-	display: table;
+    display: table;
 }
 #nav li {
-	display: inline-block;
-	display: table-cell;
+    display: table-cell;
+    *display: inline-block;
+    *display: inline;
+    zoom: 1;
+    *width: 89px;
+}
+
+#nav li:nth-child(3) {
+    *width: 102px;
+}
+#wrap #nav li a {
 }
 #nav ul {
 	position: absolute;
@@ -140,7 +149,9 @@ footer a:link {
 
 /**/
 
-
+.no-js body {
+	background-color: mintcream;
+}
 @media screen and (max-width: 667px) {
     
     .touchevents body {
@@ -191,6 +202,7 @@ footer a:link {
 		position: relative;
 		font-size: 4vw;
 		font-size: 1.9rem;
+        background: none;
 	}
 	
 	h2 {

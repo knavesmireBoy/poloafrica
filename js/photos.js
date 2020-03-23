@@ -28,9 +28,10 @@ if (!window.poloAF) {
 		//con = window.console.log.bind(window),
 		$ = utils.$,
 		ptL = _.partial,
-		report = function (msg) {
-			utils.getByTag('h2', document)[0].innerHTML = undef(msg) ? document.documentElement.className : msg;
-			//utils.getByTag('b', $('footer_girl'))[0].innerHTML = msg || document.documentElement.className;
+		report = function (msg, el) {
+			el = el || utils.getByTag('h2', document)[0];
+			msg = undef(msg) ? document.documentElement.className : msg;
+			el.innerHTML = msg;
 		},
 		dovier = utils.curryFourFold(),
 		klasTog = utils.toggleClass,
