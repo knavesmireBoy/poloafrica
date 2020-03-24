@@ -1,0 +1,46 @@
+main ul {
+    width: 754px;
+    background: red;
+    *display: inline;
+    zoom: 1;
+}
+
+main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
+	width: 146px;
+	width: 113px;
+}
+main ul.gallery li:nth-last-child(-n+4) {
+	width: 176px;
+}
+
+main>a {
+    *width: 2em;
+    *height: 2em;
+    *background: #444;
+    *display: inline;
+    zoom: 1;
+}
+
+main>a {
+    *border-width: 0px;
+}
+#gal_back {
+	*border-width: 0px;
+}
+#gal_forward {
+	*border-width: 0px;
+}
+
+main ul {
+    *display: inline;
+    zoom: 1;
+}
+
+#controls, #controls button {
+	*display: inline;
+	zoom: 1;
+}
+
+li#slide, li#paused, li#base {
+	*display: inline;
+}

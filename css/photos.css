@@ -6,10 +6,8 @@ main {
 	position: relative;
 	font: normal 1rem Arial, sans-serif;
 	padding: 0;
-	text-align: right;
+	text-align: center;
 	height: 100%;
-    *display: inline;
-    clear: left;
 }
 
 main img, main ul {
@@ -23,13 +21,8 @@ main>a {
 	border-bottom: 1vw solid transparent;
 	position: relative;
 	margin: 1px;
-    *width: 2em;
-    *height: 2em;
-    *background: #444;
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
     vertical-align: middle;
+    display: inline-block;
 }
 #gal_back {
 	border-right: 2vw solid #444;
@@ -48,16 +41,6 @@ main>a {
 }
 #gal_forward {
 	border-left: 21px solid #444;
-}
-
-main>a {
-    *border-width: 0px;
-}
-#gal_back {
-	*border-width: 0px;
-}
-#gal_forward {
-	*border-width: 0px;
 }
 
 .no-touchevents #gal_back:hover {
@@ -81,17 +64,14 @@ main img {
 	/*force override flex ?*/
 }
 main ul {
-	text-align: center;
 	margin: 0;
 	padding: 6px;
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
 	overflow: hidden;
     display: inline-block;
-    *display: inline;
-    zoom: 1;
-    width: 91%;
     vertical-align: middle;
+    width: 92%;
 }
 main ul.gallery {
 	margin: 0 auto;
@@ -106,7 +86,6 @@ main ul.gallery {
 li#slide, li#paused, li#base {
 	display: block;
 	opacity: 1;
-	*display: inline;
 }
 .no-js main ul li, .no-flexbox main ul li {
 	width: 249px;
@@ -114,7 +93,6 @@ li#slide, li#paused, li#base {
 main ul li {
 	margin: 6px;
 	float: left;
-	*display: inline;
 }
 main ul.gallery li {
 	width: 225px;
@@ -189,9 +167,7 @@ li#slide, li#paused {
 	margin-left: -100%;
 }
 #controls, #controls button {
-	display: inline;
 	display: inline-block;
-	zoom: 1;
 }
 #controls {
 	clear: both;
@@ -340,7 +316,8 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		max-width: 80em;
 		width: 100%;
 	}
-	main ul.gallery {
+
+	#wrap main ul.gallery {
 		padding: .5%;
 	}
 	main ul.gallery li {
@@ -355,9 +332,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	main ul.gallery li:nth-last-child(-n+4) {
 		width: 24%;
 	}
-	main ul li a {
-		float: none;
-	}
+    
 	.showtime main ul li {
 		width: 100%;
 	}
@@ -372,14 +347,14 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 @media only screen and (max-width: 667px) {
-	main ul.portrait {
+	.touchevents main ul.portrait {
 		width: 70%;
 	}
-	h2 {
+	.touchevents h2 {
 		position: relative;
 		left: auto;
 	}
-	#wrap .showtime main {
+	.touchevents #wrap .showtime main {
 		display: block;
 	}
 	/*
@@ -390,42 +365,42 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
     color: #444;
 }
     */
-	#controls {
+	.touchevents #controls {
 		font-size: 1.3em;
 	}
-	#controls.static {
+	.touchevents #controls.static {
 		top: -3.3em;
 	}
 	.touchevents .inplay #controls {
 		top: .2em;
 	}
-	#wrap.inplay+footer {
+	.touchevents #wrap.inplay+footer {
 		background: url(../images/sil_bg.png) no-repeat 60% top;
 	}
-	main ul.gallery {
+	.touchevents main ul.gallery {
 		padding: 1vw;
 		padding: 1%;
 	}
-	main ul.gallery li {
+	.touchevents main ul.gallery li {
 		margin: 1.3%;
 	}
-	main ul.gallery li, main.alt ul.gallery li {
+	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li {
 		width: 244px;
 		width: 40vw;
 		width: 47.2%;
 	}
-	main ul.gallery li, main.alt ul.gallery li:nth-child(n+5), main.alt ul.gallery li.portrait {
+	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li:nth-child(n+5), .touchevents main.alt ul.gallery li.portrait {
 		width: 47.2%;
 	}
-	main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
+	.touchevents main ul.gallery li.portrait, .touchevents main ul.gallery li:nth-child(n+5) {
 		width: 161px;
 		width: 26.2vw;
 		width: 30.7%;
 	}
-	main ul.gallery li:nth-last-child(-n+4) {
+	.touchevents main ul.gallery li:nth-last-child(-n+4) {
 		width: 47.2%;
 	}
-	footer {
+	.touchevents footer {
 		-webkit-transition: background-position 2s ease;
 		-moz-transition: background-position 2s ease;
 		-o-transition: background-position 2s ease;
@@ -433,20 +408,20 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 @media only screen and (max-width: 480px) {
-	main ul.gallery {
+	.touchevents main ul.gallery {
 		width: 76%;
 	}
-	main>a:link {
+	.touchevents main>a:link {
 		color: transparent;
 	}
-	main>a {
+	.touchevents main>a {
 		border-top: 1em solid transparent;
 		border-bottom: 1em solid transparent;
 	}
-	#gal_back {
+	.touchevents #gal_back {
 		border-right: 2em solid #444;
 	}
-	#gal_forward {
+	.touchevents #gal_forward {
 		border-left: 2em solid #444;
 	}
 }

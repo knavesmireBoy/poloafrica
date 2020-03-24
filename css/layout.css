@@ -77,8 +77,14 @@ article:after {
 	display: table;
 }
 #nav li {
-	display: inline-block;
 	display: table-cell;
+    *display: inline-block;
+    *display: inline;
+    zoom: 1;
+    *width: 89px;
+}
+#nav li:nth-child(3){
+    *width: 102px;
 }
 #nav ul {
 	position: absolute;
