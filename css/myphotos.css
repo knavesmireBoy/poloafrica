@@ -53,16 +53,6 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	display: flex;
 }
 
-.flexbox main {
-    background-color: firebrick;
-}
-.flexboxlegacy main {
-    background-color: aqua;
-}
-
-.flexboxtweener main {
-    background-color: white;
-}
 .flexboxlegacy main ul.gallery, .flexbox main ul.gallery, .flexboxtweener main ul.gallery {
 	width: auto;
 }
@@ -75,16 +65,23 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		display: -ms-flexbox;
 		display: flex;
 	}
+    
 }
-@supports (flex-wrap: wrap) and (not(column-gap: 20px)) {
-	main ul.gallery {
+@supports (flex-wrap: wrap) {
+    
+    main ul.gallery {
 		justify-content: space-between;
 		display: flex;
 		flex-wrap: wrap;
+        padding: 2%;
     }
 	#wrap main ul.gallery li {
 		width: auto;
 	}
+	main ul.gallery li {
+		margin: 2%;
+	}
+	
 }
 @supports(column-gap: 20px) {
 	main {
@@ -123,7 +120,7 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 }
 @media only screen and (max-width: 667px) {
     
-        .touchevents.flexboxlegacy main, .touchevents.flexbox main, .touchevents.flexboxtweener main {
+ .touchevents.flexboxlegacy main, .touchevents.flexbox main, .touchevents.flexboxtweener main {
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
@@ -161,7 +158,7 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 			background: silver;
 		}
 	}
-	@supports (flex-wrap: wrap) and (not(column-gap: 20px)) {
+	@supports (flex-wrap: wrap) {
 		main ul.gallery li, main.alt ul.gallery li.portrait {
 			flex: 1 1 40%;
 		}
@@ -217,12 +214,12 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		}
 	}
 }
-@media only screen and (min-width: 320px) {
+@media only screen and (max-width: 480px) {
 	.touchevents .showtime main {
 		padding: 4em 4em 0;
         background-color: coral;
 	}
-	.touchevents.flexboxlegacy main>a, .flexbox main>a {
+	.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a {
 		margin: 0 1%;
         border-width: 0px;
 		box-sizing: border-box;
@@ -232,7 +229,7 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		top: 1.5em;
 	}
 }
-@media only screen and (min-width: 320px) and (orientation: portrait) {
+@media only screen and (max-width: 480px) and (orientation: portrait) {
 	.touchevents .showtime main {
 		padding: 4em 1em 0;
 	}
@@ -240,5 +237,4 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		margin: 0 2%;
 		border-width: 0;
 	}
-
 }

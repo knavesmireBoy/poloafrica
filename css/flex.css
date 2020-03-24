@@ -78,6 +78,9 @@
 }
 
 	@media screen and (max-width: 667px) {
+        .flexwrap h3 {
+		border-bottom: solid 1px white;
+	}
         @supports(flex-wrap: wrap) {
 		.override article img, .override article section {
 			flex: 0 0 100%;

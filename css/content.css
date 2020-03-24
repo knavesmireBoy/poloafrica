@@ -170,14 +170,13 @@ footer div a:hover, footer b {
 @media screen and (max-width: 667px) {/*support*/
     .js body {
         margin: 0;
-        background-color: skyblue;
     }
         #nav {
 	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 }  
 }
 
-@media screen and (max-width: 667px) and (not(-ms-high-contrast: active)) and (not (-ms-high-contrast: none)){
+@media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)) and (not (-ms-high-contrast: none))*/{
 
     footer {
 	background: url(../images/sil_bg.png) no-repeat top center;

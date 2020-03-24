@@ -133,8 +133,6 @@ main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .sho
 }
 h2 {
     background: none;
-    margin: 0;
-    padding: 0;
     color: white;
     text-shadow: none;
 }
@@ -152,7 +150,7 @@ footer {
 	width: 2em;
 	height: 2em;
 	display: block;
-	background: transparent url("../images/sticks_sprite.png") no-repeat;
+	background: transparent url("../images/sticks_sprite_fat.png") no-repeat;
 	background-position: 50% 0%;
 	background-size: 100%;
 	display: inline-block;
@@ -316,8 +314,8 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		max-width: 80em;
 		width: 100%;
 	}
-
-	#wrap main ul.gallery {
+    
+    main ul.gallery {
 		padding: .5%;
 	}
 	main ul.gallery li {
@@ -349,6 +347,12 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 @media only screen and (max-width: 667px) {
 	.touchevents main ul.portrait {
 		width: 70%;
+	}
+    
+     h2 {
+		margin: -8vw 0 2em 0em;
+		margin: -2.73rem 0 1em 0em;
+       text-shadow: 2px 2px 2px black;
 	}
 	.touchevents h2 {
 		position: relative;

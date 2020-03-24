@@ -181,7 +181,7 @@ footer a:link {
 	}
     
     header h1, h2 span {
-		width: 40vw;
+		width: 44vw;
 	}
     .no-flexwrap h2 span, .no-flexwrap header h1 {
 		width: 17.7rem;
@@ -191,11 +191,13 @@ footer a:link {
 		position: relative;
 		font-size: 4vw;
 		font-size: 1.9rem;
+        line-height: 1.4;
 	}
 	
 	h2 {
-		margin: -7.5vw 0 0 0em;
-		padding: 1vw 0 0 4vw;
+		margin: -7vw 0 0 0em;
+        margin: -2.73rem 0 0em 0em;
+		padding: 0 0 0 4vw;
 	}
     
     .no-flexwrap h2 {
@@ -330,10 +332,11 @@ footer a:link {
 	}
 	h2 {
 		margin: -9vw 0 0 0em;
+        margin: -2.8rem 0 0 0em;
 	}
     
     .no-flexwrap h2 {
-		margin: -2.9rem 0 0 0em;
+		margin: -2.8rem 0 0 0em;
 	}
 	label, .js h3 {
 	}
