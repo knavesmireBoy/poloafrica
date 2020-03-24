@@ -60,7 +60,7 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
     background-color: aqua;
 }
 
-.override main {
+.flexboxtweener main {
     background-color: white;
 }
 .flexboxlegacy main ul.gallery, .flexbox main ul.gallery, .flexboxtweener main ul.gallery {

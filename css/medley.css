@@ -1,3 +1,7 @@
+	h2 {
+		background: 0% 0% url(../images/sub-medley.png) no-repeat;
+        background-size: contain;
+	}
 article nav ul {
 	text-indent: -.8em;
 	padding: 0 0 0 1em;
@@ -70,6 +74,9 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	color: #306;
 }
 @media screen and (max-width: 667px) {
+    h2 {
+        background: none;
+    }
     
 	article nav ul {
 		padding: 0 0 1em 1em;
@@ -149,9 +156,7 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
   	}
   }
 @media screen and (min-width: 668px) {
-	h2 {
-		background: 0% 0%/contain url(../images/sub-medley.png) no-repeat;
-	}
+
 	#tvcoverage h3 {
 		width: 67%;
 	}
