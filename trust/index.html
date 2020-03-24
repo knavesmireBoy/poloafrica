@@ -9,72 +9,62 @@
 	<link href="../css/flex.css" media="screen" rel="stylesheet">
 	<link href="../css/fullflex.css" media="screen" rel="stylesheet">
 	<style>
-        
-        
-        	article:nth-child(5) img {
-		flex: 1 1 10em;
-		box-shadow: none;
-	}
+        article:nth-child(5) img {
+        	flex: 1 1 10em;
+        	box-shadow: none;
+        }
         article:nth-child(5) section {
-		flex: 12 20 20em;
-	}
-        
+        	flex: 12 20 20em;
+        }
         h2 {
-            background: 0% 0% url(../images/sub_the-trust.png)  no-repeat;
-            background-size: contain;
-	    	}
-        
-	    @media screen and (max-width: 667px) {
-	    	.no-js article:nth-child(1) .read-more-trigger:before {
-	    		content: "History";
-	    	}
-	    	.no-js article:nth-child(2) .read-more-trigger:before {
-	    		content: "Transformation";
-	    	}
-	    	.no-js article:nth-child(3) .read-more-trigger:before {
-	    		content: "Development";
-	    	}
-	    	.no-js article:nth-child(4) .read-more-trigger:before {
-	    		content: "Economic impact";
-	    	}
-	    	.no-js article:nth-child(5) .read-more-trigger:before {
-	    		content: "Social change";
-	    	}
-          
-            .override article:nth-child(5) img {
-                float: right;
-                width: 25%;
-                margin: 1em 0 0 1em;
-            }
-             h2 {
-            background: none;
-	    	}
+        	background: 0% 0%/contain url(../images/sub_the-trust.png) no-repeat;
+        }
+        @media screen and (max-width: 667px) {
+        	.no-js article:nth-child(1) .read-more-trigger:before {
+        		content: "History";
+        	}
+        	.no-js article:nth-child(2) .read-more-trigger:before {
+        		content: "Transformation";
+        	}
+        	.no-js article:nth-child(3) .read-more-trigger:before {
+        		content: "Development";
+        	}
+        	.no-js article:nth-child(4) .read-more-trigger:before {
+        		content: "Economic impact";
+        	}
+        	.no-js article:nth-child(5) .read-more-trigger:before {
+        		content: "Social change";
+        	}
+        	.override article:nth-child(5) img {
+        		float: right;
+        		width: 25%;
+        		margin: 1em 0 0 1em;
+        	}
+        	h2 {
+        		background: none;
+        	}
         }
         @media screen and (max-width: 480px) {
-            article:nth-child(5) section img {
-                width: 30%;
-            }
+        	article:nth-child(5) section img {
+        		width: 30%;
+        	}
         }
-        
         @media screen and (max-width: 414px) and (orientation: portrait) {
-            article:nth-child(5) section img {
-                margin: 1em 1em 0;
-                width: 40%;
-            }
+        	article:nth-child(5) section img {
+        		margin: 1em 1em 0;
+        		width: 40%;
+        	}
         }
-        
-	    @media screen and (min-width: 668px) {
-	    	
-            
-	    }
+
 	</style>
     	<script>
 	   document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
 	<script src="../js/modernizr.js"></script>
-<!--[if (gte IE 6)&(lte IE 8)]>
+<!--[if (gte IE 5)&(lte IE 8)]>
 <script src="../js/jquery.js"></script>
   <script type="text/javascript" src="../js/selectivizr.js"></script>
+<link href="../css/hacks.css" media="screen"rel="stylesheet">
 <![endif]-->
 </head>
 <body id="trust">

@@ -11,7 +11,10 @@
 }
 body {
     font: normal .875em/1.75 Georgia, serif;
-    background-color: white;
+}
+
+.no-js body {
+	background-color: mintcream;
 }
 
 header {
@@ -53,11 +56,11 @@ p:first-of-type {
 h2 {
 	margin: .8em 0 0 0;
 	background: url(../images/sub-polo-in-africa.png) no-repeat 0% 50%;
-    background-size: contain;
+    background-size: cover;
     font: normal 2.8em/normal  Georgia, serif;
 	color: #cc6;
 	text-transform: uppercase;
-    padding: .2em 0 0.2em 3em;
+    padding: .05em 0 0.2em 3em;
     text-shadow: 1px 1px 2px black;
 }
 
@@ -160,16 +163,21 @@ footer div a:hover, footer b {
     
 }
 
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {  
+   /* IE10+ specific styles go here */  
+}
+
 @media screen and (max-width: 667px) {/*support*/
-    body {
+    .js body {
         margin: 0;
+        background-color: skyblue;
     }
         #nav {
 	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 }  
 }
 
-@media screen and (max-width: 667px) {
+@media screen and (max-width: 667px) and (not(-ms-high-contrast: active)) and (not (-ms-high-contrast: none)){
 
     footer {
 	background: url(../images/sil_bg.png) no-repeat top center;

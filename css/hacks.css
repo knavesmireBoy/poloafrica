@@ -1,8 +1,19 @@
+.js body {
+}
+#nav li:nth-child(3){
+    *width: 118px;
+}
+
+#wrap {
+    width: 832px;
+}
+
+#nav li {
+    *width: 87px;
+}
+
 main ul {
     width: 754px;
-    background: red;
-    *display: inline;
-    zoom: 1;
 }
 
 main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
@@ -13,34 +24,60 @@ main ul.gallery li:nth-last-child(-n+4) {
 	width: 176px;
 }
 
-main>a {
+#photos main a {
     *width: 2em;
     *height: 2em;
     *background: #444;
-    *display: inline;
-    zoom: 1;
 }
 
-main>a {
+#photos main li a {
+    _width: auto;
+    _height: auto;
+    _background: none;
+}
+
+main a {
     *border-width: 0px;
 }
-#gal_back {
-	*border-width: 0px;
-}
-#gal_forward {
-	*border-width: 0px;
-}
 
-main ul {
-    *display: inline;
-    zoom: 1;
-}
-
-#controls, #controls button {
+main a, main ul, #nav li, #controls, #controls button, li#slide, li#paused, li#base{
 	*display: inline;
 	zoom: 1;
 }
+#nav li a {
+    display: block;
+}
 
-li#slide, li#paused, li#base {
-	*display: inline;
+header {
+	background-image: url(../images/header.jpg);
+}
+
+h2 {
+    padding: .2em 0 0.25em 3em;
+}
+
+#home h2 {
+     background: 0% 0% url(../images/sub-polo-in-africa.jpg) no-repeat;
+}
+
+#trust h2 {
+     background: 0% 0% url(../images/sub-the-trust.jpg) no-repeat;
+}
+#scholars h2 {
+     background: 0% 0% url(../images/sub-the-scholars.jpg) no-repeat;
+}
+#place h2 {
+     background: 0% 0% url(../images/sub-the-place.jpg) no-repeat;
+}
+#stay h2 {
+     background: 0% 0% url(../images/sub-your-stay.jpg) no-repeat;
+}
+#polo h2 {
+     background: 0% 0% url(../images/sub-polo.jpg) no-repeat;
+}
+#medley h2 {
+     background: 0% 0% url(../images/sub-medley.jpg) no-repeat;
+}
+#enquiries h2 {
+     background: 0% 0% url(../images/sub-enquiries.jpg) no-repeat;
 }

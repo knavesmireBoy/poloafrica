@@ -13,10 +13,6 @@
         #scholars li:nth-child(3):hover ul {
   	left: 0;
   }
-        	h2 {
-  		background: 0% 0% url(../images/sub-the-scholars.png) no-repeat;
-        background-size: contain;
-  	}
   @media screen and (max-width: 668px) {
   	.no-js article:nth-child(1) .read-more-trigger:before {
   		content: "Participation";
@@ -36,9 +32,6 @@
   	.no-js article:nth-child(6) .read-more-trigger:before {
   		content: "A childhood dream";
   	}
-      h2 { 
-      background: none;
-      }
   }
         
  @media only screen and (max-width: 440px) {
@@ -48,16 +41,19 @@
   }
  
   @media screen and (min-width: 668px) {
-  
+  	h2 {
+  		background: 0% 0%/contain url(../images/sub-the-scholars.png) no-repeat;
+  	}
   }
     </style>
     	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
 	<script src="../js/modernizr.js"></script>
-<!--[if (gte IE 6)&(lte IE 8)]>
+    <!--[if (gte IE 6)&(lte IE 8)]>
 <script src="../js/jquery.js"></script>
   <script type="text/javascript" src="../js/selectivizr.js"></script>
+<link href="../css/hacks.css" media="screen"rel="stylesheet">
 <![endif]-->
 	</head>
 

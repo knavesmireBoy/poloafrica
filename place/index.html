@@ -21,12 +21,6 @@
         .override article:nth-child(5) img {
             width: 20%;
 		}
-        
-        h2 {
-			background: left top url(../images/sub-the-place.png) no-repeat;
-            background-size: contain;
-            height: 100%;
-		}
 
         
 	@media screen and (max-width: 667px) {
@@ -61,10 +55,6 @@
                 width: 25%;
             }
         
-         h2 {
-			background: none;
-		}
-        
 	}
         
            @media screen and (max-width: 480px) {
@@ -82,15 +72,23 @@
                 margin: 1em 1em 0;
             }
         }
-		
+	@media screen and (min-width: 668px) {
+		h2 {
+			background:  url(../images/sub-the-place.png) no-repeat;
+			background-position: 0% 0%;
+            background-size: cover;
+		}
+	}
 	</style>
     	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
 	<script src="../js/modernizr.js"></script>
+    <script type="text/javascript" src="../jquery.js"></script>
 <!--[if (gte IE 6)&(lte IE 8)]>
 <script src="../js/jquery.js"></script>
   <script type="text/javascript" src="../js/selectivizr.js"></script>
+<link href="../css/hacks.css" media="screen"rel="stylesheet">
 <![endif]-->
 </head>
 <body id="place">
