@@ -77,8 +77,11 @@ if (!window.poloAF) {
 				iterator = makeIterator([een, twee, drie, vier, vyf, ses, sewe]),
 				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
-                var mode = utils.getByClass('gallery').length;
-				if (mode && getNodeName(e).match(/a/i)) {
+                var mode = utils.getByClass('gallery').length,
+                    exit = window.poloAF.Eventing.getEventTarget(e).id;
+                if (!mode || !getNodeName(e).match(/a/i) || exit === 'exit') {
+                    return;
+                }                
 					var m = utils.getPrevious(getTarget(e)) ? 'forward' : 'back',
 						gang = iterator[m](),
 						allpics = utils.getByTag('img', main),
@@ -90,9 +93,8 @@ if (!window.poloAF) {
 						img.src = "images/0" + path + ".jpg";
 						img.onload = doPortraitBridge;
 					});
-				}
 			};
 		},
 		myadvance = advance();
-	utils.addEvent(clicker, myadvance)(main);
+	utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
 }('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));

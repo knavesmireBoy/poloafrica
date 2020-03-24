@@ -72,9 +72,8 @@
         getEnvironment = _.partial(utils.isDesktop, threshold),
 		negater = function (alternators, func) {
             //report();
-            /*NOTE netrnederer reports winodw.width AS ZERO, it's just an image REMOVE "return true;" for production*/
+            /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
-				return true;
 				_.each(alternators, function (f) {
 					f();
 				});
@@ -176,8 +175,8 @@
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
 	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels, but the picture will come before the content
 	*/
-	//main.addEventListener('click', bridge);
-	utils.addHandler('click', main, bridge);
+	main.addEventListener('click', bridge);
+	//utils.addHandler('click', main, bridge);
 	bridge({
 		target: articles[0].getElementsByTagName('h3')[0],
 		srcElement: articles[0].getElementsByTagName('h3')[0]
@@ -202,6 +201,6 @@
 	//console.log(utils.getByTag('header', document)[0])
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
 	//report();
-	//utils.addHandler('resize', window, _.throttle(float_handler, 99));
+	utils.addHandler('resize', window, _.throttle(float_handler, 99));
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 668px)', window.matchMedia('only screen and (max-width: 668px)').matches));
