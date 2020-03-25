@@ -59,47 +59,31 @@
 }
 
   @media only screen and (max-width: 540px) {
-  		article:last-child h3, article:last-child label {
+  		article:last-child h3, article label {
   		line-height: 1;
   	}
   }
 
  @media only screen and (max-width: 410px) {
-  		article:first-child h3, article:first-child label {
+  		article h3, article:first-child label {
   		line-height: 1;
   	}
   }
-/*
+
 
  @media only screen and (max-width: 540px) {
-  	body {
-  		background-color: orchid;
-  	}
-  	h2 span {
-  		width: 44vw;
-  	}
-  	h2 {
-  		padding: 0.3rem 0 0 .5rem;
-  	}
+
   	article:last-child h3, article:last-child label {
   		line-height: 1.2;
   	}
-  }
-  @media only screen and (max-width: 480px) {
-  	body {
-  		background-color: darkseagreen;
-  	}
-  	
-  }
+}
   @media screen and (max-width: 400px) {
   	article:first-child h3, article:first-child label {
   		line-height: 1.2;
   	}
   }
   @media only screen and (max-width: 360px) {
-  	body {
-  		background-color: olive;
-  	}
+
   	h2 span {
   		width: 61vw;
   	}
