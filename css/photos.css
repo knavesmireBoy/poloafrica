@@ -71,7 +71,7 @@ main ul {
 	overflow: hidden;
     display: inline-block;
     vertical-align: middle;
-    width: 92%;
+    width: 90%;
 }
 main ul.gallery {
 	margin: 0 auto;
@@ -131,13 +131,7 @@ main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .sho
 	position: relative;
 	left: auto;
 }
-h2 {
-    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
-    background: none;
-    color: white;
-    text-shadow: none;
-    margin-top: 0;
-}
+
 footer {
 	margin: 0 auto;
 }
@@ -352,8 +346,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
     
      h2 {
-		margin: -8vw 0 2em 0em;
-		margin: -2.73rem 0 1em 0em;
+		
        text-shadow: 2px 2px 2px black;
 	}
 	.touchevents h2 {
@@ -430,4 +423,13 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents #gal_forward {
 		border-left: 2em solid #444;
 	}
+}
+@media only screen and (min-width: 668px) {/* do min width to save overriding*/
+h2 {
+    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+    background: none;
+    color: white;
+    text-shadow: none;
+    margin: 0;
+}
 }

@@ -6,6 +6,15 @@
     -ms-flex-align: center;
 	align-items: center;
 }
+
+.touchevents.flexboxlegacy main, .touchevents.flexbox main, .touchevents.flexboxtweener main {
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+	align-items: stretch;
+}
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 main ul.gallery li {
@@ -24,38 +33,33 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 }
 /*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
 
-#wrap .breaker {
-	-ms-flex-preferred-size: 100%;
-	flex-basis: 100%;
-	height: 0;
-	margin: 0;
-}
+
+.flexboxlegacy main, .flexbox main, .flexboxtweener main {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+	}
 .flexboxlegacy main>a, .flexbox main>a, .flexboxtweener main>a {
-	-webkit-box-flex: 0;
-	-ms-flex: 0 0 1%;
-	flex: 0 0 1%;
-}
-.flexboxlegacy main #gal_forward, .flexbox main #gal_forward, .flexboxtweener main #gal_forward {
-	-webkit-box-ordinal-group: 4;
-	-ms-flex-order: 3;
-	order: 3
-}
-.flexboxlegacy main ul, .flexbox main ul, .flexboxtweener main ul{
-	-webkit-box-flex: 40;
-	-ms-flex: 40 1 10%;
-	flex: 40 1 10%;
-}
-.flexbox main, .flexboxlegacy main, .flexboxtweener main {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 1%;
+	flex: 1 1 1%;
+    min-width: 5px;
+    background: blue;
 }
 
+.flexboxlegacy main ul, .flexbox main ul, .flexboxtweener main ul{
+	-webkit-box-flex: 20;
+	-ms-flex: 20 1 10%;
+	flex: 20 1 10%;
+}
+
+
+
+/*
 .flexboxlegacy main ul.gallery, .flexbox main ul.gallery, .flexboxtweener main ul.gallery {
 	width: auto;
 }
+*/
 .showtime main.override {
 	display: block;
 }
@@ -65,8 +69,8 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		display: -ms-flexbox;
 		display: flex;
 	}
-    
 }
+
 @supports (flex-wrap: wrap) {
     
     main ul.gallery {
@@ -129,9 +133,22 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	align-items: stretch;
 }
     
-	.flexwrap main ul.gallery li {
-		width: auto;
+    main {
+        padding: 2em 0 0 0;
+    }
+    
+    /*
+.flexwrap main ul.gallery {
+		-webkit-box-pack: justify;
+		    -ms-flex-pack: justify;
+		        justify-content: space-between;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		    flex-wrap: wrap;
 	}
+    */
 	.flexwrap main ul.gallery {
 		justify-content: space-between;
 		display: flex;
@@ -149,14 +166,18 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	.flexwrap main ul.gallery li:nth-last-child(-n+4), .flexwrap main.alt ul.gallery li:nth-child(n+0) {
 		flex: 1 1 40%;
 	}
-	@supports ((display: flex) or (display: -webkit-box)) and (pointer: coarse) {
-		main>a {
-			border-width: 0;
+    
+    	main>a {
+			/*border-width: 0;*/
 			background: #444;
 		}
 		main.override>a:hover {
 			background: silver;
 		}
+       
+    
+	@supports ((display: flex) or (display: -webkit-box)) /*and (pointer: coarse)*/ {
+
 	}
 	@supports (flex-wrap: wrap) {
 		main ul.gallery li, main.alt ul.gallery li.portrait {
@@ -213,13 +234,12 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 			grid-column: auto / span 6;
 		}
 	}
-}
+}/*667*/
 @media only screen and (max-width: 480px) {
 	.touchevents .showtime main {
 		padding: 4em 4em 0;
-        background-color: coral;
 	}
-	.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a {
+	.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 1%;
         border-width: 0px;
 		box-sizing: border-box;
@@ -230,9 +250,7 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	}
 }
 @media only screen and (max-width: 480px) and (orientation: portrait) {
-	.touchevents .showtime main {
-		padding: 4em 1em 0;
-	}
+
 	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 2%;
 		border-width: 0;
