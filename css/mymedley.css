@@ -69,8 +69,10 @@
         
 		.js .override img#arena_boy, .js .override img#PoloGirls {
 			width: 27%;
+            margin: 1em 0 0 1em;
 		}
 	}
+ 
 	@supports(column-gap: 20px) {
 		.override #tvcoverage section {
 			grid-gap: 1em;
@@ -130,8 +132,8 @@
     
     @supports(column-gap: 20px) {
         .override #tvcoverage section iframe {
-             width: 40vw;
-        height: 22.5vw;
+            width: 40vw;
+            height: 22.5vw;
         }
 }
 }

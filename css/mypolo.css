@@ -31,61 +31,78 @@
 	}
 }
 }
-
+    
+/* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
 @media screen and (max-width: 667px) {
+
     @supports(flex-wrap: wrap) {
-        
         .js article:first-child section {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
         }
-        .js article section a {
+        
+        .js article:first-child section p{
+            margin: .25em 0;
+        }
+        
+        article section a {
             flex: 1 1 100%;
         }
-        .js .override article:first-child img {
-            flex: 0 1 1%;
-            width: 47%;
-            margin: 1em 0 0;
-            align-self: flex-start;
+        .override article:first-child img {
+            flex: 1 1 1%;
+            width: 48%;
+            align-self: stretch;
         }
-        /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
-         .js .override section p {
+        .override article:first-child img:first-of-type {
+            margin: 1em .5em 0 1em;
+        }
+        
+         .override article:first-child img:last-of-type {
+            margin: 1em 1em 0 .5em;
+        }
+         .override section p {
             flex: 1 1 100%;
              margin: 1em 0 0;
         }
-        
-          .js .override section p:last-child {
+          .override section p:last-child {
              margin: 1em 0;
         }
     }
 	@supports(column-gap: 20px) {
         
-        .override article:nth-child(1) {
-			grid-row-gap: 0;
-		}
-        
 		.js article:first-child section {
 			display: grid;
-            grid-column-gap: 1em;
+            grid-template-columns: .05fr 1fr .05fr 1fr .05fr;
+            grid-row-gap: 1em;
+            justify-content: space-between;
 		}
         
         .js .override article:first-child section a:first-child {
-             grid-column: 1 / 3;
+             grid-column: 1 / -1;
 		}
+      
         .js .override article:first-child section p {
-            grid-column: 1 / 3;
+            grid-column: 2 / 5;
+            margin: 0;
+            padding: 0;
+		}
+        .js .override article:first-child section p:last-of-type {
+            padding: 0 0 1em 0;
 		}
         .js .override article:first-child img {
-			width: 100%;
-            grid-row: 2/3;
+            width: 100%;
+            margin: 0;
+            align-self: stretch;
 		}
 		.js .override article:first-child img:first-of-type {
-			grid-column: 1 / 2;
+            grid-row: 2/3;
+			grid-column: 2 / 3;
+            
 		}
 		.js .override article:first-child img:last-of-type {
-			grid-column: 2 / 3;
-            align-self: stretch;
+			grid-row: 2/3;
+            grid-column: 4 / 5;
 		}
         
         .no-js article:nth-child(1) {
@@ -114,5 +131,21 @@
             align-self: stretch;
             margin: 0 0 1em 0;
         }
-	}
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .no-flexwrap #polo article:first-child{
+        display: block;
+    }
+    .no-flexwrap #polo .field {
+        float: right;
+        width: 50%;
+        margin: 0em 1em 0;
+    }
+    
+    .no-flexwrap #polo .field:last-of-type {
+        margin: 1em 1em 0;
+    }
+ 
 }

@@ -42,8 +42,9 @@ p a:hover, p a:active {
 }
 
 a:hover h3, a:active h3 {
-	color: #cc6;
+	color: #993;
 }
+
 p {
 	color: #444;
 	text-align: justify;
@@ -55,13 +56,16 @@ p:first-of-type {
 
 h2 {
 	margin: .8em 0 0 0;
-	background: url(../images/sub-polo-in-africa.png) no-repeat 0% 50%;
-    background-size: contain;
-    font: normal 2.8em/normal  Georgia, serif;
+	background: 0% 50%/contain url(../images/sub-polo-in-africa.png) no-repeat;
+    font: normal 2.8em/1.6 Georgia, serif;
+    font: normal 2.45rem/1.6 Georgia, serif;
+    font: normal 3.75vw/1.6 Georgia, serif;
 	color: #cc6;
 	text-transform: uppercase;
-    padding: .15em 0 0.2em 3em;
-    text-shadow: 1px 1px 2px black;
+    padding: 0 0 0 3.2em;
+    padding: 0 0 0 7.8rem;
+    padding: 0 0 0 14.5vw;
+    text-shadow: 1px 1px 2px #444;
 }
 
 /* direct child selector, otherwise will have to override for animation */
@@ -157,7 +161,7 @@ footer div a:hover, footer b {
 
 @media screen and (max-width: 800px) {
     
-    #nav {
+    #nav{
 	font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 }    
     
@@ -167,16 +171,14 @@ footer div a:hover, footer b {
    /* IE10+ specific styles go here */  
 }
 
-@media screen and (max-width: 667px) {/*support*/
-    .js body {
+@media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)) and (not (-ms-high-contrast: none))*/{
+    
+        .js body {
         margin: 0;
     }
-        #nav {
+        #nav ul {
 	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 }  
-}
-
-@media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)) and (not (-ms-high-contrast: none))*/{
 
     footer {
 	background: url(../images/sil_bg.png) no-repeat top center;
@@ -276,6 +278,7 @@ footer div a:hover, footer b {
         text-shadow: 1px 1px 1px black;
         background-color: hsl(60, 40%, 64%);
     }
+    
     /* explicitly set float to none in case browser doesn't support flex/grid*/
 	.no-js article > img, .js section > img {
 		float: none;
@@ -298,8 +301,6 @@ footer div a:hover, footer b {
 		color: white;
 		background-image: none;
 		text-shadow: 2px 2px 2px black;
-        font-size: 2.05em;
-        /*font-size: 5.5vw;*/
 		border: 1px solid;
 		border-width: 1px 0 0;
 	}

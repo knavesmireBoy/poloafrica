@@ -22,7 +22,7 @@
     <div id="wrap">
      <header>
                 <a href=".">
-			<h1>POLOAFRICA<img src="../images/logo_alt_only.png"></h1></a>
+			<h1>POLOAFRICA<img src="../images/logo_alt.png"></h1></a>
                 <nav id="main_nav">
                        <label class="menu" for="menu-toggle"></label>
                 <input id="menu-toggle" type="checkbox">
@@ -122,12 +122,24 @@
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
        <script>
+
         var utils = poloAF.Util,
             main = document.getElementsByTagName('main')[0],
             sections = document.getElementsByTagName('section'),
+            invokemethod = function (o, arg, m) {
+                return o[m](arg);
+            },
+            doThrice = utils.curryThrice(),
+            headingmatch = doThrice(invokemethod)('match')(/h3/i),
+            isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
             bridge = function(e) {
-			var mysection = utils.getDomParent(utils.getNodeByTag('section'))(e.target),
+			var el = window.poloAF.Eventing.getEventTarget(e),
+                mysection = utils.getDomParent(utils.getNodeByTag('section'))(el),
 				hit = utils.getClassList(mysection).contains('show');
+                console.log(el);    
+                if(!isHeading){
+                    return;
+                }
 			_.each(sections, function(sec) {
 				utils.hide(sec);
 			});
@@ -137,7 +149,8 @@
 		};
         utils.addHandler('click', bridge, main);
 	bridge({
-		target: sections[0].getElementsByTagName('h3')[0]
+		target: sections[0].getElementsByTagName('h3')[0],
+        srcElement: sections[0].getElementsByTagName('h3')[0]
 	});
     </script>
 </body>

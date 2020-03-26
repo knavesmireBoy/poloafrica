@@ -21,6 +21,10 @@
         .override article:nth-child(5) img {
             width: 20%;
 		}
+        
+        h2 {
+			background:  0% 0%/contain url(../images/sub-the-place.png) no-repeat;
+		}
 
         
 	@media screen and (max-width: 667px) {
@@ -52,33 +56,26 @@
         
         .override article:nth-child(5) section img {
                 float: right;
-                width: 25%;
+                width: 30%;
+                margin: 1em 1em 0
+
             }
+        h2 {
+            background: none;
+        }
         
 	}
         
-           @media screen and (max-width: 480px) {
+           @media screen and (max-width: 370px) {
             .override article:nth-child(5) section img {
-                width: 30%;
+                width: 37%;
             }
-               section p:first-of-type {
+               article:nth-child(5) section p:first-of-type {
                    text-align: left;
                }
         }
         
-        @media screen and (max-width: 414px) and (orientation: portrait) {
-            .override article:nth-child(5) section img {
-                width: 40%;
-                margin: 1em 1em 0;
-            }
-        }
-	@media screen and (min-width: 668px) {
-		h2 {
-			background:  url(../images/sub-the-place.png) no-repeat;
-			background-position: 0% 0%;
-            background-size: cover;
-		}
-	}
+    
 	</style>
     	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
@@ -94,7 +91,7 @@
 	<div id="wrap">
 		<header>
 			<a href=".">
-			<h1>POLOAFRICA<img src="../images/logo_alt_only.png"></h1></a>
+			<h1>POLOAFRICA<img src="../images/logo_alt.png"></h1></a>
 			<nav id="main_nav">
                 <label class="menu" for="menu-toggle"></label>
                 <input id="menu-toggle" type="checkbox">

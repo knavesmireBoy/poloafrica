@@ -7,8 +7,7 @@
     float: right;
 }
 h2 {
-		background: 0% 0% url(../images/sub-polo.png) no-repeat;
-    background-size: contain;
+    background: 0% 0%/contain url(../images/sub-polo.png) no-repeat;
 	}
 
 @media screen and (max-width: 667px) {
@@ -34,6 +33,5 @@ h2 {
     h2 {
         background: none;
     }
-	
 }
 	

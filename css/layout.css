@@ -120,7 +120,7 @@ footer div img {
 	width: 40em;
 }
 #footer_girl a:first-child {
-	width: 8em;
+	width: 9em;
 	margin: 0 0 -1.5em 0;
 }
 footer a:link {
@@ -138,7 +138,7 @@ footer a:link {
 
 /**/
 	header h1, header h1 img, h2 span {
-		border-width: 0px;
+		border-width: 1px;
 	}
 
 @media screen and (max-width: 667px) {
@@ -166,41 +166,38 @@ footer a:link {
 		max-width: 100%;
 		border: solid 1px red;
 	}
-	.flexwrap header h1 {
-		font-size: 2vw;
-	}
     
-    header h1 {
-        margin: 0 0 0 4vw;
-		padding: 0% 0 7vw 0;
-	}
-    
-     .no-flexwrap header h1 {
-         font-size: 1rem;
-         margin: 0 0 0 1rem;
-         padding: 0% 0 3.1rem 0;
-	}
-    
-    header h1, h2 span {
+     header h1, h2 span {
 		width: 44vw;
 	}
     .no-flexwrap header h1, .no-flexwrap h2 span {
 		width: 17.7rem;
 	}
    
+
+    header h1 {
+        margin: 0 0 0 4vw;
+		padding: 0% 0 7vw 0;
+	}
+    
+     .no-flexwrap header h1 {
+         margin: 0 0 0 1.2rem;
+         padding: 0% 0 3.1rem 0;
+	}
+   
 	h2 {
 		position: relative;
-		font-size: 4vw;
-        line-height: 1.4;
-        margin: -7vw 0 0 0em;
-        margin: -2.73rem 0 0em 0em;
+        margin: -7.4vw 0 0 0em;
 		padding: 0 0 0 4vw;
+        font-size: 2em;
+        font-size: 1.75rem;
 	}
 	
     .no-flexwrap h2 {
-        font-size: 1.9rem;
-        margin: -3.2rem 0 0 0em;
-		padding: .5rem 0 0 1rem;
+        margin: -1.6em 0 0em 0em;
+        margin: -2.73rem 0 0em 0em;
+		padding: 0 0 0 .7em;
+        padding: 0 0 0 1.2rem;
 	}
     
      h2 span {
@@ -310,32 +307,46 @@ footer a:link {
 }
 @media only screen and (max-width: 568px) {
     
-	.no-flexwrap h2 {
-        font-size: 1.8em;
-        font-size: 1.6rem;
-        margin: -2.8rem 0 0 0em;
-	}
-
-	header h1 {
+    header h1 {
 		padding: 0 0 8.5vw 0;
 	}
     
     .no-flexwrap header h1 {
 		padding: 0 0 3rem 0;
 	}
-	h2 {
+	
+    h2 {
 		margin: -9vw 0 0 0em;
 	}
+    
+	.no-flexwrap h2 {
+        margin: -2.8rem 0 0 0em;
+	}
+
+	
 }
-@media only screen and (max-width: 440px) {
+@media only screen and (max-width: 480px) {
 
 	header h1, h2 span {
-		width: 59vw;
+		width: 58vw;
 	}
     .no-flexwrap h2 span, .no-flexwrap header h1 {
-		width: 12rem;
-	}    
- 
+		width: 15.7rem;
+	} 
+    
+     header h1 {
+		padding: 0 0 9vw 0;
+         /*quick way to lift up logo*/
+        font-size: .5rem;
+	}
+    h2 {
+		margin: -10vw 0 0 0em;
+	}
+    
+    .no-flexwrap header h1 {
+		padding: 0 0 2.5rem 0;
+	}
+	
 	.menu {
 		height: 2rem;
 		width: 2rem;
@@ -344,17 +355,44 @@ footer a:link {
 		top: 3rem;
 	}
     
-    .no-flexwrap h2 {
-        font-size: 1.55em;
-        font-size: 1.35rem;
-	}
-    
     #footer_girl {
-	margin: 0 0 .75em .6em;
-}
+        margin: 0 0 .75em .6em;
+    }
     
     #fb {
 		margin: 0 0 .75em -23.5em;
 	}
-	
+}
+
+@media only screen and (max-width: 400px) {
+    
+  
+    
+    h2 {
+        font-size: 1.7em;
+        font-size: 1.5rem;
+	}
+    
+    header h1 {
+        margin: 0 0 0 1.5vw;
+	}
+    h2 {
+		padding: 0 0 0 1.5vw
+	}
+    
+     .no-flexwrap header h1 {
+        margin: 0 0 0 .3rem;
+	}
+    
+    .no-flexwrap h2 {
+		padding: 0 0 0 .3rem;
+	}
+    header h1, h2 span {
+		width: 64vw;
+	}
+    
+     .no-flexwrap header h1, .no-flexwrap h2 span {
+		width: 13rem;
+	} 
+   
 }

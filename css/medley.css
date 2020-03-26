@@ -118,10 +118,10 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 		margin: 0 0 1em 0;
 	}
 	.js #medley article:nth-child(6) p, .js #medley article:nth-child(8) p {
-		margin: 1em 0 1em 30%;
+		margin: 1em 0 1em 33%;
 	}
 	.js #medley article:nth-child(6) nav, .js #medley article:nth-child(8) nav {
-		margin: 1em 0 0 30%;
+		margin: 1em 0 0 33%;
 	}
 	#tvcoverage p:first-of-type {
 		margin: 1em 0;

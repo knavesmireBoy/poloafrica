@@ -132,9 +132,11 @@ main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .sho
 	left: auto;
 }
 h2 {
+    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
     background: none;
     color: white;
     text-shadow: none;
+    margin-top: 0;
 }
 footer {
 	margin: 0 auto;

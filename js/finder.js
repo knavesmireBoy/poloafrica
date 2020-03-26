@@ -59,17 +59,18 @@
 		articles = document.getElementsByTagName('article'),
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, articles, ptL(utils.getByTag, 'img')))(),
 		animation = utils.$("ani"),
+		polo = utils.$("polo") && !Modernizr.cssgrid,
 		doAlt = utils.doAlternate(),
 		doWrap = utils.always(true),
         //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
-		getEnvironment1 = (function () {
+		getEnvironment = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
 			} else {
 				return _.partial(utils.isDesktop, threshold);
 			}
 		}()),
-        getEnvironment = _.partial(utils.isDesktop, threshold),
+        //getEnvironment = _.partial(utils.isDesktop, threshold),
 		negater = function (alternators, func) {
             //report();
             /*NOTE netrenderer reports window.width AS ZERO*/
@@ -82,14 +83,15 @@
 			}
 		},
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
-		isHeading = _.compose(headingmatch, utils.drillDown(['target', 'nodeName'])),
+		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
 		bridge = function (e) {
-			if (!isHeading(e)) {
-				return;
-			}
-			var tgt = e.target || e.srcElement,
+            var tgt = window.poloAF.Eventing.getEventTarget(e),
 				el = utils.getDomParent(utils.getNodeByTag('article'))(tgt),
 				hit = utils.getClassList(el).contains('show');
+			if (!isHeading(tgt)) {
+				return;
+			}
+			
 			_.each(articles, function (article) {
 				utils.hide(article);
 			});
@@ -101,6 +103,7 @@
 			if (animation) {
 				return utils.getNext(el);
 			}
+         
 			return utils.getSibling(utils.getNodeByTag('section'))(el);
 		},
 		floaters = function (els) {
@@ -112,14 +115,20 @@
 				var section = getSib(el),
 					outbound = function () {
 						//console.log(el, utils.getNextElement(section.firstChild))
-						utils.insertAfter(el, utils.getNextElement(section.firstChild));
+                        var tgt = polo ? section.lastChild : section.firstChild;
+						utils.insertAfter(el, utils.getNextElement(tgt));
 					},
 					inbound = function () {
 						section.parentNode.insertBefore(el, section);
 					},
 					move = function () {
 						var p = utils.getSibling(utils.getNodeByTag('p'))(section.firstChild);
-						section.insertBefore(el, p);
+                        if(polo && utils.getClassList(el).contains('field')){
+                            utils.insertAfter(el, utils.getNextElement(p))
+                        }
+                        else {
+                            section.insertBefore(el, p);
+                        }
 					},
 					unmove = function () {
 						section.parentNode.insertBefore(el, section);
@@ -175,8 +184,8 @@
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
 	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels, but the picture will come before the content
 	*/
-	main.addEventListener('click', bridge);
-	//utils.addHandler('click', main, bridge);
+	//main.addEventListener('click', bridge);
+	utils.addHandler('click', main, bridge);
 	bridge({
 		target: articles[0].getElementsByTagName('h3')[0],
 		srcElement: articles[0].getElementsByTagName('h3')[0]

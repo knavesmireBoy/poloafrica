@@ -70,7 +70,6 @@
   	}
   }
 
-
  @media only screen and (max-width: 540px) {
 
   	article:last-child h3, article:last-child label {
@@ -82,12 +81,9 @@
   		line-height: 1.2;
   	}
   }
-  @media only screen and (max-width: 360px) {
 
-  	h2 span {
-  		width: 61vw;
-  	}
-  	h2 {
-  		padding: 0.3rem 0 0 0rem;
-  	}
-  }
+  @media only screen and (max-width: 325px) {
+      .override article h3, article:first-child label {
+          line-height: 1;
+      }
+}
