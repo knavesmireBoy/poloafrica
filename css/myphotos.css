@@ -11,9 +11,6 @@
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-	align-items: stretch;
 }
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
@@ -39,21 +36,26 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 		display: -ms-flexbox;
 		display: flex;
 	}
+
+.flexboxlegacy main > * {
+    display: block;/*fix for ios safari ipod */
+}
+
 .flexboxlegacy main>a, .flexbox main>a, .flexboxtweener main>a {
-	-webkit-box-flex: 1;
-	-ms-flex: 1 1 1%;
-	flex: 1 1 1%;
-    min-width: 5px;
-    background: blue;
+    -webkit-box-flex: 0;
+	-ms-flex: 0 0 1%;
+	flex: 0 0 1%;
 }
 
 .flexboxlegacy main ul, .flexbox main ul, .flexboxtweener main ul{
-	-webkit-box-flex: 20;
-	-ms-flex: 20 1 10%;
-	flex: 20 1 10%;
+    -webkit-box-flex: 16;
+	-ms-flex: 16 1 10%;
+	flex: 16 1 10%;
+    display: block;
 }
-
-
+.flexboxlegacy main ul {
+    margin: 0; /*override margin: 0 auto */
+}
 
 /*
 .flexboxlegacy main ul.gallery, .flexbox main ul.gallery, .flexboxtweener main ul.gallery {
@@ -165,16 +167,7 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	}
 	.flexwrap main ul.gallery li:nth-last-child(-n+4), .flexwrap main.alt ul.gallery li:nth-child(n+0) {
 		flex: 1 1 40%;
-	}
-    
-    	main>a {
-			/*border-width: 0;*/
-			background: #444;
-		}
-		main.override>a:hover {
-			background: silver;
-		}
-       
+	}       
     
 	@supports ((display: flex) or (display: -webkit-box)) /*and (pointer: coarse)*/ {
 
@@ -236,14 +229,19 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	}
 }/*667*/
 @media only screen and (max-width: 480px) {
+
+    	main>a {
+			border-width: 0;
+			background: #444;
+		}
+		main.override>a:hover {
+			background: silver;
+		}
 	.touchevents .showtime main {
 		padding: 4em 4em 0;
 	}
 	.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 1%;
-        border-width: 0px;
-		box-sizing: border-box;
-        background-color: #444;
 	}
 	.touchevents #exit {
 		top: 1.5em;
