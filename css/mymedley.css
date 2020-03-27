@@ -5,7 +5,7 @@
 	display: block;
 	background-color: magenta;
 }
-/*
+
 .override #tvcoverage section>a {
 	-ms-grid-column: 1;
 	-ms-grid-column-span: 2;
@@ -41,7 +41,7 @@
 	-ms-grid-row-span: 1;
 	grid-row: 1/4;
 }
-*/
+
 #presslinks section, article:last-child section {
 	margin-left: 2%;
 }
@@ -123,7 +123,7 @@
 }
 @media screen and (min-width: 668px) {
 	.js body {
-		background-color: navy;
+		background-color: beige;;
 	}
 	.flexwrap #tvcoverage h3 {
 		width: 100%;
