@@ -76,7 +76,11 @@ article:nth-child(6) section img {
 		margin: 0 0 0 2%;
 		flex: 5 0 1%
 	}
-	@supports(column-gap: 20px) {
+    
+    .js body {
+        background-color: lime;
+    }
+	@supports(column-gapp: 20px) {
 		/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 		.override #tvcoverage section {
 			grid-gap: .5em;
