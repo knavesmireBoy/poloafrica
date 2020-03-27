@@ -3,11 +3,18 @@ h2 {
         background-size: contain;
 }
 
-article nav ul {
+#presslinks nav ul {
 	text-indent: -2.2em;
 	padding: 0 0 0 2.8em;
 	line-height: 1.2;
 }
+
+article:last-child nav ul {
+	text-indent: -.8em;
+	padding: 0 0 0 1em;
+	line-height: 1.2;
+}
+
 article:last-child section {
 	margin: 0 0 0 30%;
 }
@@ -15,9 +22,8 @@ article:last-child section {
 	margin: 1em 0 0;
 }
 
-#presslinks nav li::before {   
+article:last-child nav li::before {   
     content: '» '; 
-
 }
 
 #presslinks nav li::before {   
