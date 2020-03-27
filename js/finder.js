@@ -210,7 +210,7 @@
     */
 	//console.log(utils.getByTag('header', document)[0])
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
-	//report();
+	report();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 668px)', window.matchMedia('only screen and (max-width: 668px)').matches));
