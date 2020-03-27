@@ -94,7 +94,7 @@
 		doQuart = utils.curryFourFold(),
 		doTwiceDefer = utils.curryTwice(true),
 		doThriceDefer = utils.curryThrice(true),
-        number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
+		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
 		drill = utils.drillDown,
 		invokeWhen = utils.invokeWhen,
@@ -103,14 +103,14 @@
 		anCr = utils.append(),
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
-        isDesktop = (function () {
+		isDesktop = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
 			} else {
 				return _.partial(utils.isDesktop, threshold);
 			}
 		}()),
-        clicker = ptL(utils.addHandler, 'click'),
+		clicker = ptL(utils.addHandler, 'click'),
 		makeElement = utils.machElement,
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
@@ -134,7 +134,7 @@
 		exitGallery = function () {
 			var current = utils.getByClass('show')[0],
 				img = getDomTargetImg(current),
-                math = (img.offsetHeight > img.offsetWidth),
+				math = (img.offsetHeight > img.offsetWidth),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
 			utils[m]('portrait', thumbs);
 		},
@@ -186,7 +186,7 @@
 				$show = makeElement(ptL(utils.show), getDomTargetList, drill(['target'])),
 				exitconf = {
 					id: 'exit',
-                    href: "."
+					href: "."
 				},
 				controlsconf = {
 					id: 'controls'
@@ -624,15 +624,13 @@
 				},
 				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render);
 			try {
-                presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
-			stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
-                
-			//utils.highLighter.perform();
-			_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(thumbs);
-            }
-            catch(e){
-                $('report').innerHTML = e;
-            }
+				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
+				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
+				//utils.highLighter.perform();
+				_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(thumbs);
+			} catch (e) {
+				$('report').innerHTML = e;
+			}
 		}());
 	}());
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 769px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('h2')[0], document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0]));
