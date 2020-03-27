@@ -69,9 +69,7 @@ main ul {
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
 	overflow: hidden;
-    display: inline-block;
-    vertical-align: middle;
-    width: 90%;
+
 }
 main ul.gallery {
 	margin: 0 auto;
@@ -346,7 +344,6 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
     
      h2 {
-		
        text-shadow: 2px 2px 2px black;
 	}
 	.touchevents h2 {
@@ -376,13 +373,16 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents #wrap.inplay+footer {
 		background: url(../images/sil_bg.png) no-repeat 60% top;
 	}
-	.touchevents main ul.gallery {
+    
+	.no-flexwrap main ul.gallery {
 		padding: 1vw;
 		padding: 1%;
 	}
-	.touchevents main ul.gallery li {
-		margin: 1.3%;
+	.no-flexwrap main ul.gallery li {
+		margin: 1.5%;
+        box-sizing: border-box;
 	}
+    
 	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li {
 		width: 244px;
 		width: 40vw;
@@ -394,7 +394,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents main ul.gallery li.portrait, .touchevents main ul.gallery li:nth-child(n+5) {
 		width: 161px;
 		width: 26.2vw;
-		width: 30.7%;
+		width: 30.8%;
 	}
 	.touchevents main ul.gallery li:nth-last-child(-n+4) {
 		width: 47.2%;
@@ -424,7 +424,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		border-left: 2em solid #444;
 	}
 }
-@media only screen and (min-width: 668px) {/* do min width to save overriding*/
+@media only screen and (min-width: 668px) {/* do min width to save .override h2 */
 h2 {
     /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
     background: none;
@@ -432,4 +432,21 @@ h2 {
     text-shadow: none;
     margin: 0;
 }
+    
+    .showtime h2 {
+        display: none;
+    }
+}
+
+/*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+     main ul {
+        display: inline-block;
+        vertical-align: middle;
+        width: 90%;
+    }
+    .showtime main ul {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }

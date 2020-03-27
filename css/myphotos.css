@@ -1,17 +1,17 @@
-.no-touchevents.flexboxlegacy main, .no-touchevents.flexbox main, .no-touchevents.flexboxtweener main {
-	-webkit-box-pack: center;
+main {
+    display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+    -webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
+}
+.no-touchevents main {
+	-webkit-box-align: center;
+	-ms-flex-align: center;
 	align-items: center;
 }
 
-.touchevents.flexboxlegacy main, .touchevents.flexbox main, .touchevents.flexboxtweener main {
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-}
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 main ul.gallery li {
@@ -30,64 +30,44 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 }
 /*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
 
-
-.flexboxlegacy main, .flexbox main, .flexboxtweener main {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-	}
-
-.flexboxlegacy main > * {
-    display: block;/*fix for ios safari ipod */
-}
-
-.flexboxlegacy main>a, .flexbox main>a, .flexboxtweener main>a {
-    -webkit-box-flex: 0;
+main>a {
+	-webkit-box-flex: 0;
 	-ms-flex: 0 0 1%;
 	flex: 0 0 1%;
 }
-
-.flexboxlegacy main ul, .flexbox main ul, .flexboxtweener main ul{
-    -webkit-box-flex: 16;
+main ul {
+	-webkit-box-flex: 16;
 	-ms-flex: 16 1 10%;
 	flex: 16 1 10%;
-    display: block;
+}
+.flexboxlegacy main>* {
+	display: block;
+	/*fix for ios safari ipod */
 }
 .flexboxlegacy main ul {
-    margin: 0; /*override margin: 0 auto */
+	margin: 0;
+	/*override margin: 0 auto */
 }
-
-/*
-.flexboxlegacy main ul.gallery, .flexbox main ul.gallery, .flexboxtweener main ul.gallery {
+main ul.gallery {
 	width: auto;
 }
-*/
 .showtime main.override {
 	display: block;
 }
-@supports ((display: flex) or (display: -webkit-box)) {
-	main {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-	}
-}
 
 @supports (flex-wrap: wrap) {
-    
-    main ul.gallery {
+	main ul.gallery {
 		justify-content: space-between;
 		display: flex;
 		flex-wrap: wrap;
-        padding: 2%;
-    }
+		padding: 2%;
+	}
 	#wrap main ul.gallery li {
 		width: auto;
 	}
 	main ul.gallery li {
 		margin: 2%;
 	}
-	
 }
 @supports(column-gap: 20px) {
 	main {
@@ -125,67 +105,63 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 	}
 }
 @media only screen and (max-width: 667px) {
-    
- .touchevents.flexboxlegacy main, .touchevents.flexbox main, .touchevents.flexboxtweener main {
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-	align-items: stretch;
-}
-    
-    main {
-        padding: 2em 0 0 0;
-    }
-    
-    /*
-.flexwrap main ul.gallery {
-		-webkit-box-pack: justify;
-		    -ms-flex-pack: justify;
-		        justify-content: space-between;
+	.touchevents main {
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		padding: 2em 0 0 0;
+	}
+	.flexwrap main ul.gallery {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
 		-ms-flex-wrap: wrap;
-		    flex-wrap: wrap;
-	}
-    */
-	.flexwrap main ul.gallery {
-		justify-content: space-between;
-		display: flex;
 		flex-wrap: wrap;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between;
 	}
 	.flexwrap main ul.gallery li {
 		width: auto;
 	}
-	.flexwrap main ul.gallery li, .flexwrap main.alt ul.gallery li.portrait {
+	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+	main ul.gallery li, main.alt ul.gallery li.portrait {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 40%;
 		flex: 1 1 40%;
 	}
-	.flexwrap main ul.gallery li:nth-child(n+5), .flexwrap main ul.gallery li.portrait {
+	main ul.gallery li:nth-child(n+5), main ul.gallery li.portrait {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 30%;
 		flex: 1 1 30%;
 	}
-	.flexwrap main ul.gallery li:nth-last-child(-n+4), .flexwrap main.alt ul.gallery li:nth-child(n+0) {
+	main ul.gallery li:nth-last-child(-n+4), main.alt ul.gallery li:nth-child(n+0) {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 40%;
 		flex: 1 1 40%;
-	}       
-    
-	@supports ((display: flex) or (display: -webkit-box)) /*and (pointer: coarse)*/ {
-
 	}
 	@supports (flex-wrap: wrap) {
-		main ul.gallery li, main.alt ul.gallery li.portrait {
-			flex: 1 1 40%;
-		}
-		main ul.gallery li:nth-child(n+5), main ul.gallery li.portrait {
-			flex: 1 1 30%;
-		}
-		main ul.gallery li:nth-last-child(-n+4), main.alt ul.gallery li:nth-child(n+0) {
-			flex: 1 1 40%;
+        
+		main ul.gallery {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-ms-flex-wrap: wrap;
+			flex-wrap: wrap;
+			-webkit-box-pack: justify;
+			-ms-flex-pack: justify;
+			justify-content: space-between;
 		}
 	}
 	@supports (column-gap: 20px) {
-		main.override ul.gallery {
+        
+        .touchevents body {
+            background-color: lemonchiffon;
+        }
+        
+	main.override ul.gallery {
 			display: grid;
+        padding: 1em;
 		}
 		main ul.gallery li:nth-child(-n+2) {
 			grid-row: 1 / 2;
@@ -227,30 +203,34 @@ main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
 			grid-column: auto / span 6;
 		}
 	}
-}/*667*/
-@media only screen and (max-width: 480px) {
+}
+/*667*/
 
-    	main>a {
-			border-width: 0;
-			background: #444;
-		}
-		main.override>a:hover {
-			background: silver;
-		}
-	.touchevents .showtime main {
-		padding: 4em 4em 0;
+@media only screen and (max-width: 480px) {
+	main>a {
+		border-width: 0;
+		background: #444;
 	}
+	main.override>a:hover {
+		background: silver;
+	}
+    .touchevents .showtime main {
+		padding: 3.5rem 2rem 0;
+	}
+  
 	.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 1%;
 	}
 	.touchevents #exit {
-		top: 1.5em;
+		top: 1rem;
 	}
 }
 @media only screen and (max-width: 480px) and (orientation: portrait) {
-
 	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 2%;
 		border-width: 0;
+	}
+     .touchevents .showtime main {
+		padding: 3.5rem 1rem 0;
 	}
 }
