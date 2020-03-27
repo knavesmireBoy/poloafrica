@@ -53,7 +53,15 @@ p {
 p:first-of-type {
 	margin: 0;
 }
-
+/*
+  p::first-letter {
+     -webkit-initial-letter: 4;
+     initial-letter: 4;
+     color: #FE742F;
+     font-weight: bold;
+     margin-right: 0.5em;
+  }
+*/
 h2 {
 	margin: .8em 0 0 0;
 	background: 0% 50%/contain url(../images/sub-polo-in-africa.png) no-repeat;
@@ -208,6 +216,9 @@ footer div a:hover, footer b {
     
     .js article section p {
          padding: 0 1em;
+    }
+    .js article section p:first-of-type {
+         padding: 1em 1em 0;
     }
     /*
 .js article section > * {

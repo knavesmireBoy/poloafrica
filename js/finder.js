@@ -89,9 +89,9 @@
         dummy = {},
 		bridge = function (e) {
             var tgt = getTarget(e),
-				el = utils.getDomParent(utils.getNodeByTag('article'))(tgt),
-				hit = utils.getClassList(el).contains('show');
-			if (!isHeading(tgt)) {
+				el = tgt && utils.getDomParent(utils.getNodeByTag('article'))(tgt),
+				hit = el && utils.getClassList(el).contains('show');
+			if (!el || !isHeading(tgt)) {
 				return;
 			}
 			

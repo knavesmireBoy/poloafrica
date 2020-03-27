@@ -70,9 +70,7 @@ main ul.gallery {
 	}
 }
 @supports(column-gap: 20px) {
-	main {
-		padding: 0;
-	}
+
 	main ul.gallery {
 		display: grid;
 		grid-gap: 1em;
@@ -105,6 +103,7 @@ main ul.gallery {
 	}
 }
 @media only screen and (max-width: 667px) {
+    
 	.touchevents main {
 		-webkit-box-pack: center;
 		-ms-flex-pack: center;

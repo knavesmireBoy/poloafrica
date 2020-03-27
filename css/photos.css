@@ -138,7 +138,7 @@ footer {
 }
 .js #exit {
 	position: absolute;
-	top: 1em;
+	top: .5em;
 	right: 1em;
 	border: 0;
 	width: 2em;
@@ -339,6 +339,11 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 @media only screen and (max-width: 667px) {
+    
+       main.override {
+		padding: 3rem 2rem 0;
+	}
+    
 	.touchevents main ul.portrait {
 		width: 70%;
 	}
