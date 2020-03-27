@@ -35,14 +35,16 @@ if (!window.poloAF) {
 		},
 		dovier = utils.curryFourFold(),
 		klasTog = utils.toggleClass,
+        mytarget = !window.addEventListener ? 'srcElement' : 'target',
 		main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
 		doToggle = ptL(klasTog, 'alt', main),
 		makeIterator = function (coll) {
 			var prepIterator = dovier(window.poloAF.Iterator(false));
 			return prepIterator(ptL(modulo, coll.length))(utils.always(true))(coll)(0);
 		},
-		getNodeName = utils.drillDown(['target', 'nodeName']),
-		getTarget = utils.drillDown(['target']),
+		getNodeName = utils.drillDown(['nodeName']),
+		getID = utils.drillDown(['id']),
+		getTarget = utils.drillDown([mytarget]),
 		getLength = utils.drillDown(['length']),
         //getOrient = _.compose(utils.gtThan(getHeight, getWidth)
 		allpics = utils.getByTag('img', main),
@@ -65,7 +67,8 @@ if (!window.poloAF) {
 			fixNoNthChild(e.target);
 		},
 		toogleLoop = _.compose(doPortraitLoop, doToggle),
-        clicker = touchevents ? ptL(utils.addHandler, 'touchend') : ptL(utils.addHandler, 'click'),
+        //clicker = touchevents ? ptL(utils.addHandler, 'touchend') : ptL(utils.addHandler, 'click'),
+        clicker = ptL(utils.addHandler, 'click'),
 		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
 		advance = function () {
 			var twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
@@ -78,11 +81,12 @@ if (!window.poloAF) {
 				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
                 var mode = utils.getByClass('gallery').length,
-                    exit = window.poloAF.Eventing.getEventTarget(e).id;
-                if (!mode || !getNodeName(e).match(/a/i) || exit === 'exit') {
+                    tgt = getTarget(e),
+                    exit = tgt.id;
+                if (!mode || !getNodeName(tgt).match(/a/i) || exit === 'exit') {
                     return;
-                }                
-					var m = utils.getPrevious(getTarget(e)) ? 'forward' : 'back',
+                }      
+					var m = getID(tgt).match(/back$/) ? 'back' : 'forward',
 						gang = iterator[m](),
 						allpics = utils.getByTag('img', main),
 						path = '001';

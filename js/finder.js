@@ -51,6 +51,7 @@
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
 		main = document.getElementsByTagName('main')[0],
+        mytarget = !window.addEventListener ? 'srcElement' : 'target',
 		report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
 			msg = undef(msg) ? document.documentElement.className : msg;
@@ -84,8 +85,10 @@
 		},
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
+        getTarget = utils.drillDown([mytarget]),
+        dummy = {},
 		bridge = function (e) {
-            var tgt = window.poloAF.Eventing.getEventTarget(e),
+            var tgt = getTarget(e),
 				el = utils.getDomParent(utils.getNodeByTag('article'))(tgt),
 				hit = utils.getClassList(el).contains('show');
 			if (!isHeading(tgt)) {
@@ -186,10 +189,8 @@
 	*/
 	//main.addEventListener('click', bridge);
 	utils.addHandler('click', main, bridge);
-	bridge({
-		target: articles[0].getElementsByTagName('h3')[0],
-		srcElement: articles[0].getElementsByTagName('h3')[0]
-	});
+    dummy[mytarget] = articles[0].getElementsByTagName('h3')[0];
+	bridge(dummy);
 	if (utils.$('enquiries')) {
 		return;
 	}
