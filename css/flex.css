@@ -1,6 +1,6 @@
 /*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
 
-@media screen and (max-width: 667px), screen and (min-width: 1024px) {
+@media only screen and (max-width: 667px), only screen and (min-width: 1024px) {
 	article:nth-child(odd) {
 		-webkit-box-orient: horizontal;
 		-webkit-box-direction: reverse;
@@ -41,6 +41,7 @@
 		display: -ms-flexbox;
 		display: flex;
 	}
+    /* only bother if flex-wrap is supported, happy to fallback to floats otherwise */
 	@supports(flex-wrap: wrap) {
 		/*consequently add some space here*/
 		p:first-of-type {
