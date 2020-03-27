@@ -455,7 +455,7 @@
 				return makeLeafComp(ret);
 			}('static', getControls)),
 			prepToggler = function (command) {
-				var enterHandler = ptL(utils.addHandler, 'mouseenter'),
+				var enterHandler = ptL(utils.addHandler, 'mouseover'),
 					handler = ptL(klasAdd, 'static', getControls);
 				_.compose(stage_two_rpt.add, adapterFactory(), utils.addEvent(enterHandler, handler), getControls)();
 				_.compose(stage_two_rpt.add, adapterFactory(), utils.addEvent(enterHandler, ptL(klasRem, 'static', getControls)))(footer);
