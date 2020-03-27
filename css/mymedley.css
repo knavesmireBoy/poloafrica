@@ -1,8 +1,9 @@
 @import "flex.css";
 @import "fullflex.css";
-.cssgrid #tvcoverage {
+.no-cssgrid #tvcoverage {
 	/*if not grid, NOT flex*/
 	display: block;
+	background-color: magenta;
 }
 .override #tvcoverage section>a {
 	-ms-grid-column: 1;
@@ -76,10 +77,9 @@ article:nth-child(6) section img {
 		margin: 0 0 0 2%;
 		flex: 5 0 1%
 	}
-    
-    .js body {
-        background-color: lime;
-    }
+	.js body {
+		background-color: lime;
+	}
 	@supports(column-gapp: 20px) {
 		/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 		.override #tvcoverage section {
@@ -121,6 +121,9 @@ article:nth-child(6) section img {
 	}
 }
 @media screen and (min-width: 668px) {
+	.js body {
+		background-color: orangered;
+	}
 	.flexwrap #tvcoverage h3 {
 		width: 100%;
 		margin: 0 0 1em 0;

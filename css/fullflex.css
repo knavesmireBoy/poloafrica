@@ -1,57 +1,56 @@
 /*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
+
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
- #medley article:nth-child(6) > *, #medley article:nth-child(8) > * {
-        -ms-flex-item-align: start;
-		align-self: flex-start;
-	}
-
+#medley article:nth-child(6)>*, #medley article:nth-child(8)>* {
+	-ms-flex-item-align: start;
+	align-self: flex-start;
+}
 @supports(flex-wrap: wrap) {
 	#medley article:nth-child(6), #medley article:nth-child(8) {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
-	}   
+	}
 }
 @media screen and (max-width: 667px) {
-    
 	@supports(flex-wrap: wrap) {
 		.override img, .override section {
 			-webkit-box-flex: 0;
-			    -ms-flex: 0 0 100%;
-			        flex: 0 0 100%;
-            width: 100%;
+			-ms-flex: 0 0 100%;
+			flex: 0 0 100%;
+			width: 100%;
 		}
 		.override img, {
 			border-bottom: solid 1px white;
 		}
 	}
-    	.flexwrap img, .flexwrap section {
-			-webkit-box-flex: 0;
-			    -ms-flex: 0 0 100%;
-			        flex: 0 0 100%;
-            width: 100%;
-		}
-		.flexwrap main img{
-			border-bottom: solid 1px white;
-		}
+	.flexwrap img, .flexwrap section {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 100%;
+		flex: 0 0 100%;
+		width: 100%;
+	}
+	.flexwrap main img {
+		border-bottom: solid 1px white;
+	}
 }
 @media screen and (min-width: 983px) {
 	@supports(flex-wrap: wrap) {
 		#medley article:nth-child(2) {
 			display: flex;
 		}
-        .flexwrap #medley article:nth-child(2) {
-			display: flex;
-		}
-}
-@media screen and (min-width: 890px) {
-	@supports(flex-wrap: wrap) {
-		#place article:nth-child(2), #scholars article:nth-child(4), #scholars article:last-child, #trust article:nth-child(2), #trust article:nth-child(4) {
+		.flexwrap #medley article:nth-child(2) {
 			display: flex;
 		}
 	}
-    .flexwrap #place article:nth-child(2), .flexwrap #scholars article:nth-child(4), .flexwrap #scholars article:last-child, .flexwrap #trust article:nth-child(2), .flexwrap #trust article:nth-child(4) {
+	@media screen and (min-width: 890px) {
+		@supports(flex-wrap: wrap) {
+			#place article:nth-child(2), #scholars article:nth-child(4), #scholars article:last-child, #trust article:nth-child(2), #trust article:nth-child(4) {
+				display: flex;
+			}
+		}
+		.flexwrap #place article:nth-child(2), .flexwrap #scholars article:nth-child(4), .flexwrap #scholars article:last-child, .flexwrap #trust article:nth-child(2), .flexwrap #trust article:nth-child(4) {
 			display: flex;
 		}
-}
+	}

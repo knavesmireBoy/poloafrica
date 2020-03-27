@@ -1,13 +1,12 @@
 /*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
+
 @media screen and (max-width: 667px), screen and (min-width: 1024px) {
-    
-    article:nth-child(odd) {
+	article:nth-child(odd) {
 		-webkit-box-orient: horizontal;
 		-webkit-box-direction: reverse;
 		-ms-flex-direction: row-reverse;
 		flex-direction: row-reverse;
 	}
-    
 	article>* {
 		-ms-flex-item-align: start;
 		align-self: flex-start;
@@ -23,74 +22,63 @@
 		flex: 4 1 1%;
 		min-width: 1%;
 		-ms-flex-item-align: start;
-		    align-self: flex-start;
-        /*
+		align-self: flex-start;
+		/*
         width: 68%;
         height: auto;
         float: none;
         */
 	}
-    
-    article {
+	article {
 		-webkit-box-align: start;
 		-ms-flex-align: start;
 		align-items: flex-start;
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 	}
-    
-    .flexwrap article {
+	.flexwrap article {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
 	}
-    
-   
-@supports(flex-wrap: wrap) {
-   	/*consequently add some space here*/
-	p:first-of-type {
-		margin: 0;
+	@supports(flex-wrap: wrap) {
+		/*consequently add some space here*/
+		p:first-of-type {
+			margin: 0;
+		}
+		article {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+		}
+		h3 {
+			border-bottom: solid 1px;
+		}
 	}
-	article {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-	}
-    
-     h3 {
-		border-bottom: solid 1px;
-	}
-    
-    }
-    
-
 	@media screen and (max-width: 667px) {
-        .flexwrap h3 {
-		border-bottom: solid 1px white;
-        }
-
-    .flexwrap p:first-of-type {
-		margin: 0;
-	}
-        @supports(flex-wrap: wrap) {
-		.override article img, .override article section {
-			flex: 0 0 100%;
-			width: 100%;
-		}
-		section {
-			margin: 1em 0 0 0;
-		}
-		article>img {
+		.flexwrap h3 {
 			border-bottom: solid 1px white;
 		}
-	}
-        
-        .flexwrap article img, .flexwrap article section {
+		.flexwrap p:first-of-type {
+			margin: 0;
+		}
+		@supports(flex-wrap: wrap) {
+			.override article img, .override article section {
+				flex: 0 0 100%;
+				width: 100%;
+			}
+			section {
+				margin: 1em 0 0 0;
+			}
+			article>img {
+				border-bottom: solid 1px white;
+			}
+		}
+		.flexwrap article img, .flexwrap article section {
 			flex: 0 0 100%;
 			width: 100%;
 		}
-		
 		.flexwrap article>img {
 			border-bottom: solid 1px white;
 		}
-}
+	}

@@ -1,42 +1,37 @@
 h2 {
-		background: 0% 0% url(../images/sub-medley.png) no-repeat;
-        background-size: contain;
+	background: 0% 0% url(../images/sub-medley.png) no-repeat;
+	background-size: contain;
 }
-
 #presslinks nav ul {
 	text-indent: -2.2em;
 	padding: 0 0 0 2.8em;
 	line-height: 1.2;
 }
-
 article:last-child nav ul {
 	text-indent: -.8em;
 	padding: 0 0 0 1em;
 	line-height: 1.2;
 }
-
 article:last-child section {
 	margin: 0 0 0 30%;
 }
 #presslinks nav {
 	margin: 1em 0 0;
 }
-
-article:last-child nav li::before {   
-    content: '» '; 
+article:last-child nav li::before {
+	content: '» ';
 }
-
-#presslinks nav li::before {   
-    content: ''; 
-    display: inline-block;   
-    height: 1.4em;  
-    width: 1.4em;   
-    background-size: cover;   
-    background-image: url("../images/pdf.png"); 
-    background-repeat: no-repeat;   
-    margin-right: 10px;
-    background-position: center center;
-    vertical-align: middle;
+#presslinks nav li::before {
+	content: '';
+	display: inline-block;
+	height: 1.4em;
+	width: 1.4em;
+	background-size: cover;
+	background-image: url("../images/pdf.png");
+	background-repeat: no-repeat;
+	margin-right: 10px;
+	background-position: center center;
+	vertical-align: middle;
 }
 #presslinks p, article:last-child p {
 	line-height: 1.3;
@@ -99,10 +94,9 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	color: #306;
 }
 @media screen and (max-width: 667px) {
-    h2 {
-        background: none;
-    }
-    
+	h2 {
+		background: none;
+	}
 	article nav ul {
 		padding: 0 0 1em 1em;
 	}
@@ -133,9 +127,9 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	.no-js #presslinks section {
 		margin: 0 0 0 30%;
 	}
-    .js #presslinks section, .js  article:last-child section {
-			margin: 0;
-        }
+	.js #presslinks section, .js article:last-child section {
+		margin: 0;
+	}
 	.override #presslinks section>p {
 		text-align: left;
 	}
@@ -145,7 +139,7 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	.js #medley article:last-child p {
 		margin: 1em;
 	}
-    .js #presslinks p {
+	.js #presslinks p {
 		margin: 0;
 	}
 	.js #medley #presslinks nav, .js #medley article:last-child nav {
@@ -160,17 +154,14 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	#view::after {
 		content: "above";
 	}
-
-    .js .override img#arena_boy, .js .override img#PoloGirls {
-        float: right;
-        width: 27%;
-        margin: 1em 1em 0 1em;
-		}
-    
-    p:first-of-type {
+	.js .override img#arena_boy, .js .override img#PoloGirls {
+		float: right;
+		width: 27%;
+		margin: 1em 1em 0 1em;
+	}
+	p:first-of-type {
 		margin: 1em 0;
 	}
-    
 	#tvcoverage iframe {
 		margin: 0 auto;
 		width: 92vw;
@@ -180,16 +171,13 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	#tvcoverage iframe:first-of-type {
 		margin: 1em auto 0;
 	}
-  
 }
-
- @media only screen and (max-width: 360px) {
-  		.override article:nth-child(5) h3, .override article:nth-child(5) label {
-  		line-height: 1.2;
-  	}
-  }
+@media only screen and (max-width: 360px) {
+	.override article:nth-child(5) h3, .override article:nth-child(5) label {
+		line-height: 1.2;
+	}
+}
 @media screen and (min-width: 668px) {
-
 	#tvcoverage h3 {
 		width: 67%;
 	}
