@@ -97,5 +97,5 @@ if (!window.poloAF) {
 		},
 		myadvance = advance();
     //report();
-	//utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
+	utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
 }('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));
