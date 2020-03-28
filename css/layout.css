@@ -32,7 +32,6 @@ header h1 {
 	width: 40%;
 	text-indent: 100%;
 	overflow: hidden;
-	border: solid 1px orange;
 	line-height: normal;
 }
 header h1 img {
@@ -122,6 +121,10 @@ footer div img {
 #footer_girl a:first-child {
 	width: 9em;
 	margin: 0 0 -1.5em 0;
+}
+
+#footer_girl a:first-child img {
+ 
 }
 footer a:link {
 	display: inline-block;
