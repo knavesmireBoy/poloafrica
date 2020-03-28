@@ -140,6 +140,12 @@ footer a:link {
 	header h1, header h1 img, h2 span {
 		border-width: 1px;
 	}
+@media screen and (max-width: 867px) {
+#polo li:nth-child(6):hover ul {
+	left: auto;
+	right: 0px;
+}
+}
 
 @media screen and (max-width: 667px) {
     

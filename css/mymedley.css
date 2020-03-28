@@ -1,11 +1,9 @@
 @import "flex.css";
 @import "fullflex.css";
-.no-cssgrid #tvcoverage {
+.cssgrid #tvcoverage {
 	/*if not grid, NOT flex*/
 	display: block;
-	background-color: magenta;
 }
-
 .override #tvcoverage section>a {
 	-ms-grid-column: 1;
 	-ms-grid-column-span: 2;
@@ -41,7 +39,6 @@
 	-ms-grid-row-span: 1;
 	grid-row: 1/4;
 }
-
 #presslinks section, article:last-child section {
 	margin-left: 2%;
 }
@@ -68,20 +65,22 @@
 	display: -ms-grid;
 	display: grid;
 }
-/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 .cssgrid .override #tvcoverage section {
 	display: -ms-grid;
 	display: grid;
+}
+.no-cssgrid .override #tvcoverage {
+	display: block;
+}
+no-cssgrid .override #tvcoverage section {
+	display: block;
 }
 @media screen and (max-width: 667px) {
 	.no-js #presslinks section, .no-js #medley .override article:last-child section {
 		margin: 0 0 0 2%;
 		flex: 5 0 1%
 	}
-	.js body {
-		background-color: lime;
-	}
-	@supports(column-gapp: 20px) {
+	@supports(column-gap: 20px) {
 		/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 		.override #tvcoverage section {
 			grid-gap: .5em;
@@ -122,9 +121,6 @@
 	}
 }
 @media screen and (min-width: 668px) {
-	.js body {
-		background-color: gainsboro;
-	}
 	.flexwrap #tvcoverage h3 {
 		width: 100%;
 		margin: 0 0 1em 0;
@@ -134,5 +130,9 @@
 			width: 40vw;
 			height: 22.5vw;
 		}
+	}
+	.css-grid #tvcoverage section iframe {
+		width: 40vw;
+		height: 22.5vw;
 	}
 }

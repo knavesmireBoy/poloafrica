@@ -1,6 +1,10 @@
 /*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
 
 @media only screen and (max-width: 667px), only screen and (min-width: 1024px) {
+    
+    /*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
+     /*REMEMBER override class hardcoded in HTML*/
+    
 	article:nth-child(odd) {
 		-webkit-box-orient: horizontal;
 		-webkit-box-direction: reverse;
@@ -41,7 +45,7 @@
 		display: -ms-flexbox;
 		display: flex;
 	}
-    /* only bother if flex-wrap is supported, happy to fallback to floats otherwise */
+    /* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 	@supports(flex-wrap: wrap) {
 		/*consequently add some space here*/
 		p:first-of-type {
@@ -55,14 +59,9 @@
 		h3 {
 			border-bottom: solid 1px;
 		}
-	}
+	}/*NO-JS*/
 	@media screen and (max-width: 667px) {
-		.flexwrap h3 {
-			border-bottom: solid 1px white;
-		}
-		.flexwrap p:first-of-type {
-			margin: 0;
-		}
+     
 		@supports(flex-wrap: wrap) {
 			.override article img, .override article section {
 				flex: 0 0 100%;
@@ -74,6 +73,13 @@
 			article>img {
 				border-bottom: solid 1px white;
 			}
+		}/*NO-JS*/
+          /*JS (MODERNIZR)*/
+		.flexwrap h3 {
+			border-bottom: solid 1px white;
+		}
+		.flexwrap p:first-of-type {
+			margin: 0;
 		}
 		.flexwrap article img, .flexwrap article section {
 			flex: 0 0 100%;

@@ -65,7 +65,7 @@ article:last-child nav li {
 #tvcoverage iframe {
 	width: 320px;
 	height: 180px;
-	margin: 0 0 3em 1em;
+	margin: 0 0 0 1em;
 	display: block;
 	float: right;
 	clear: both;
@@ -73,9 +73,20 @@ article:last-child nav li {
 #tvcoverage section {
 	/*fix float*/
 	overflow: hidden;
+    margin: 0 0 1.5em 0;
+    padding: 0 0 1.5em 0;
+    border-bottom: dotted 1px #444;
+}
+#tvcoverage section:last-child {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
 }
 #tvcoverage p {
 	margin: 0 0 1em 0;
+}
+#tvcoverage p:last-child {
+	margin: 0;
 }
 #view::after {
 	content: "on the right";
@@ -171,6 +182,11 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	#tvcoverage iframe:first-of-type {
 		margin: 1em auto 0;
 	}
+    #tvcoverage section{
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+}
 }
 @media only screen and (max-width: 360px) {
 	.override article:nth-child(5) h3, .override article:nth-child(5) label {
