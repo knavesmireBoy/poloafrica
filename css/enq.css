@@ -2,7 +2,7 @@
 
 #contactarea {}
 h2 {
-	background: 0% 0% url(../images/sub-enquiries.png) no-repeat;
+	background: 0% 50% url(../images/sub-enquiries.png) no-repeat;
 	background-size: contain;
 }
 h3 {
@@ -108,6 +108,7 @@ form label {
 	height: 2em;
 	margin: .1em 0 .1em .5em;
 	width: 84%;
+    *width: 80%;
     padding: 0 .5em;
     box-sizing: border-box;
 }
@@ -146,6 +147,10 @@ textarea {
 	box-shadow: none;
 	border-width: 0px;
 	height: 100%;
+}
+
+#enquiries article:last-child {
+    clear: left;
 }
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
 article:nth-child(2) {

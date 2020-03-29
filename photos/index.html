@@ -20,7 +20,13 @@
   <script type="text/javascript" src="../js/selectivizr.js"></script>
 <link href="../css/hacks.css" media="screen"rel="stylesheet">
 <![endif]-->
-    <!--[if gt IE 8]><!--> <!--<![endif]--> 
+    <!--[if IE 9]>
+<style>
+main ul {
+    width: calc(100% - 64px);
+}
+</style>
+<![endif]-->
 	</head>
     <body id="photos">
     	<div id="wrap">
@@ -46,9 +52,7 @@
     <main class="override">
         <!--<input alt="" src="../images/dogsform.gif" tabindex="9" type="image" id="dogs">-->
 <a href="." id="gal_back"></a><ul class="gallery"><li><a href="images/001.jpg"><img src="images/001.jpg" alt=""></a></li><li><a href="images/002.jpg"><img src="images/002.jpg" alt=""></a></li><li><a href="images/003.jpg"><img src="images/003.jpg" alt=""></a></li><li><a href="images/009.jpg"><img src="images/009.jpg" alt=""></a></li><li><a href="images/004.jpg"><img src="images/004.jpg" alt=""></a></li><li><a href="images/005.jpg"><img src="images/005.jpg" alt=""></a></li><li><a href="images/006.jpg"><img src="images/006.jpg" alt=""></a></li><li><a href="images/007.jpg"><img src="images/007.jpg" alt=""></a></li><li><a href="images/008.jpg"><img src="images/008.jpg" alt=""></a></li><li><a href="images/024.jpg"><img src="images/024.jpg" alt=""></a></li><li><a href="images/010.jpg"><img src="images/010.jpg" alt=""></a></li><li><a href="images/011.jpg"><img src="images/011.jpg" alt=""></a></li><li><a href="images/012.jpg"><img src="images/012.jpg" alt=""></a></li><li><a href="images/013.jpg"><img src="images/013.jpg" alt=""></a></li></ul><a href="." id="gal_forward"></a>
-            </main></div>
-        
-    
+            </main></div>    
       <footer>
         <div id="footer_girl">
 			<a href="#"><img src="../images/footer_girl.png"></a>
@@ -71,5 +75,10 @@
     <script src="../js/tooltips.js"></script> 
     <script src="../js/gallery.js"></script>
     <script src="../js/photos.js"></script>
+                <!--<div id="controls" class="static">
+        <button id="backbutton"></button>
+        <button id="playbutton"></button>
+        <button id="forwardbutton"></button>
+        </div>-->
     </body>
 </html>

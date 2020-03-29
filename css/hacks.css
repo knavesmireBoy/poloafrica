@@ -24,7 +24,7 @@ main ul.gallery li:nth-last-child(-n+4) {
 	width: 176px;
 }
 
-#photos main a {
+#photos main > a {
     *width: 2em;
     *height: 2em;
     *background: #444;
@@ -36,14 +36,29 @@ main ul.gallery li:nth-last-child(-n+4) {
     _background: none;
 }
 
-main a {
+main > a {
     *border-width: 0px;
 }
 
-main a, main ul, #nav li, #controls, #controls button, li#slide, li#paused, li#base{
-	*display: inline;
+#nav li {
+    *display:inline-block;
+    *display: inline;
 	zoom: 1;
 }
+
+main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, footer a:link{
+	display:inline-block;
+    *display: inline;
+	zoom: 1;
+}
+
+#gal_back {
+	*border-right: 2px solid #444;
+}
+#gal_forward {
+	*border-left: 2px solid #444;
+}
+
 #nav li a {
     display: block;
 }
@@ -80,4 +95,18 @@ h2 {
 }
 #enquiries h2 {
      background: 0% 0% url(../images/sub-enquiries.jpg) no-repeat;
+}
+
+#footer_girl {
+    *float: left;
+}
+
+#fb {
+	*margin: 7.5em 1em .75em 0;
+    *left: 0;
+    *float: right;
+}
+
+footer > a {
+    *clear: both;
 }

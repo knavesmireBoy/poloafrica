@@ -69,7 +69,6 @@ article:last-child nav li {
 	display: block;
 	float: right;
 	clear: both;
-    border: solid 2px red;
 }
 #tvcoverage section {
 	/*fix float*/

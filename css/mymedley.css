@@ -5,7 +5,6 @@
 	display: block;
 }
 
-
 .override #tvcoverage section p {
 	-ms-grid-row: 1;
 	-ms-grid-row-span: 1;
@@ -46,8 +45,11 @@
 }
 #PoloGirls, #arena_boy {
 	-webkit-box-flex: 1;
-	-ms-flex: 1 1 1%;
-	flex: 2 1 1%;
+	-ms-flex: 1 1 40%;
+	flex: 2 1 40%;
+    -ms-flex-item-align: start;
+        align-self: flex-start;
+    float: none;
 }
 #presslinks section img {
 	margin-right: 2%;
@@ -77,7 +79,16 @@
 no-cssgrid .override #tvcoverage section {
 	display: block;
 }
+/* @media only screen and (max-width: 410px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+  		article h3, article:first-child label {
+  		line-height: 1;
+  	}
+  }
+*/
 @media screen and (max-width: 667px) {
+    .js body {
+        background-color: pink;
+    }
 	.no-js #presslinks section, .no-js #medley .override article:last-child section {
 		margin: 0 0 0 2%;
 		flex: 5 0 1%

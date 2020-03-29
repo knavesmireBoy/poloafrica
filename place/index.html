@@ -8,75 +8,7 @@
 	<link href="../css/standard.css" media="screen" rel="stylesheet">
 	<link href="../css/flex.css" media="screen" rel="stylesheet">
 	<link href="../css/fullflex.css" media="screen" rel="stylesheet">
-	<style>
-        
-	article:nth-child(5) img {
-		flex: 1 1 10em;
-		box-shadow: none;
-	}
-        article:nth-child(5) section {
-		flex: 12 20 20em;
-	}
-        
-        .override article:nth-child(5) img {
-            width: 20%;
-		}
-        
-        h2 {
-			background:  0% 0%/contain url(../images/sub-the-place.png) no-repeat;
-		}
-
-        
-	@media screen and (max-width: 667px) {
-		.override article:nth-child(5) {
-			display: block;
-		}
-		.override article:nth-child(5) img {
-			width: auto;
-			margin: 1em 0 0 1em;
-            /* floats are explicitly disabled in "mobile layout", so re-apply where reqd"*/
-            float: right;
-		}
-
-		.no-js article:nth-child(1) .read-more-trigger:before {
-			content: "The setting";
-		}
-		.no-js article:nth-child(2) .read-more-trigger:before {
-			content: "Farm life";
-		}
-		.no-js article:nth-child(3) .read-more-trigger:before {
-			content: "Climate";
-		}
-		.no-js article:nth-child(4) .read-more-trigger:before {
-			content: "Connectivity";
-		}
-		.no-js article:nth-child(5) .read-more-trigger:before {
-			content: "Location";
-		}
-        
-        .override article:nth-child(5) section img {
-                float: right;
-                width: 30%;
-                margin: 1em 1em 0
-
-            }
-        h2 {
-            background: none;
-        }
-        
-	}
-        
-           @media screen and (max-width: 370px) {
-            .override article:nth-child(5) section img {
-                width: 37%;
-            }
-               article:nth-child(5) section p:first-of-type {
-                   text-align: left;
-               }
-        }
-        
-    
-	</style>
+	<link href="../css/place.css" media="screen" rel="stylesheet">
     	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>

@@ -1,10 +1,8 @@
 /*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
 
 @media only screen and (max-width: 667px), only screen and (min-width: 1024px) {
-    
-    /*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
-     /*REMEMBER override class hardcoded in HTML*/
-    
+	/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
+	/*REMEMBER override class hardcoded in HTML*/
 	article:nth-child(odd) {
 		-webkit-box-orient: horizontal;
 		-webkit-box-direction: reverse;
@@ -40,52 +38,60 @@
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 	}
-	.flexwrap article {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-	}
-    /* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
+	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 	@supports(flex-wrap: wrap) {
 		/*consequently add some space here*/
 		p:first-of-type {
 			margin: 0;
+		}
+		h3 {
+			border-bottom: solid 1px;
 		}
 		article {
 			display: -webkit-box;
 			display: -ms-flexbox;
 			display: flex;
 		}
-		h3 {
-			border-bottom: solid 1px;
-		}
-	}/*NO-JS*/
-	@media screen and (max-width: 667px) {
-     
-		@supports(flex-wrap: wrap) {
-			.override article img, .override article section {
-				flex: 0 0 100%;
-				width: 100%;
-			}
-			section {
-				margin: 1em 0 0 0;
-			}
-			article>img {
-				border-bottom: solid 1px white;
-			}
-		}/*NO-JS*/
-          /*JS (MODERNIZR)*/
-		.flexwrap h3 {
-			border-bottom: solid 1px white;
-		}
-		.flexwrap p:first-of-type {
-			margin: 0;
-		}
-		.flexwrap article img, .flexwrap article section {
+	}
+	/*NO-JS*/
+	.flexwrap article {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	.flexwrap p:first-of-type {
+		margin: 0;
+	}
+	.flexwrap h3 {
+		border-bottom: solid 1px;
+	}
+}
+@media screen and (max-width: 667px) {
+	@supports(flex-wrap: wrap) {
+		.override article img, .override article section {
 			flex: 0 0 100%;
 			width: 100%;
 		}
-		.flexwrap article>img {
+		section {
+			margin: 1em 0 0 0;
+		}
+		article>img {
 			border-bottom: solid 1px white;
 		}
 	}
+	/*NO-JS*/
+	/*JS (MODERNIZR)*/
+	.flexwrap h3 {
+		border-bottom: solid 1px white;
+	}
+	.flexwrap p:first-of-type {
+		margin: 0;
+	}
+	.flexwrap article img, .flexwrap article section {
+		flex: 0 0 100%;
+		width: 100%;
+	}
+	.flexwrap article>img {
+		border-bottom: solid 1px white;
+	}
+}

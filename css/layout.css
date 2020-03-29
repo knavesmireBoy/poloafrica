@@ -39,6 +39,7 @@ header h1 img {
 	visibility: hidden;
 }
 /* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
+
 h3 {
 	margin: 0 0 .3em 0;
 	line-height: 1.2;
@@ -55,6 +56,7 @@ article input, nav input {
 	left: -9999px;
 }
 /* direct child selector, otherwise will have to override for animation */
+
 article>img {
 	margin: .5em 2% .5em 0;
 	float: left;
@@ -70,13 +72,12 @@ article:after {
 	clear: both;
 }
 #nav {
-	width: 100%;
 	display: table;
+	width: 100%;
 }
 #nav li {
 	display: table-cell;
 }
-
 #nav ul {
 	position: absolute;
 	left: -9999px;
@@ -122,10 +123,7 @@ footer div img {
 	width: 9em;
 	margin: 0 0 -1.5em 0;
 }
-
-#footer_girl a:first-child img {
- 
-}
+#footer_girl a:first-child img {}
 footer a:link {
 	display: inline-block;
 }
@@ -140,21 +138,20 @@ footer a:link {
 /**/
 
 /**/
-	header h1, header h1 img, h2 span {
-		border-width: 1px;
-	}
-@media screen and (max-width: 867px) {
-#polo li:nth-child(6):hover ul {
-	left: auto;
-	right: 0px;
-}
-}
 
-@media screen and (max-width: 667px) {
-    
-    .touchevents body {
-        margin: 0;
-    }
+header h1, header h1 img, h2 span {
+	border-width: 1px;
+}
+@media screen and (max-width: 867px) {
+	#polo li:nth-child(6):hover ul {
+		left: auto;
+		right: 0px;
+	}
+}
+@media screen and (max-width: 667px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+	.touchevents body {
+		margin: 0;
+	}
 	#footer_girl img {
 		visibility: hidden;
 		width: 8em;
@@ -163,59 +160,49 @@ footer a:link {
 		padding: 0 0 10.1em 0;
 		margin: 0;
 	}
-    
-    /*ie*/
+	/*ie*/
 	header>a {
 		display: block;
 	}
-    
 	header h1 img {
 		visibility: visible;
 		min-width: 3em;
 		max-width: 100%;
 		border: solid 1px red;
 	}
-    
-     header h1, h2 span {
+	header h1, h2 span {
 		width: 44vw;
 	}
-    .no-flexwrap header h1, .no-flexwrap h2 span {
+	.no-flexwrap header h1, .no-flexwrap h2 span {
 		width: 17.7rem;
 	}
-   
-
-    header h1 {
-        margin: 0 0 0 4vw;
+	header h1 {
+		margin: 0 0 0 4vw;
 		padding: 0% 0 7vw 0;
 	}
-    
-     .no-flexwrap header h1 {
-         margin: 0 0 0 1.2rem;
-         padding: 0% 0 3.1rem 0;
+	.no-flexwrap header h1 {
+		margin: 0 0 0 1.2rem;
+		padding: 0% 0 3.1rem 0;
 	}
-   
 	h2 {
 		position: relative;
-        margin: -7.4vw 0 0 0em;
+		margin: -7.4vw 0 0 0em;
 		padding: 0 0 0 4vw;
-        font-size: 2em;
-        font-size: 1.75rem;
+		font-size: 2em;
+		font-size: 1.75rem;
 	}
-	
-    .no-flexwrap h2 {
-        margin: -1.6em 0 0em 0em;
-        margin: -2.73rem 0 0em 0em;
+	.no-flexwrap h2 {
+		margin: -1.6em 0 0em 0em;
+		margin: -2.73rem 0 0em 0em;
 		padding: 0 0 0 .7em;
-        padding: 0 0 0 1.2rem;
+		padding: 0 0 0 1.2rem;
 	}
-    
-     h2 span {
+	h2 span {
 		text-align: center;
 		display: inline-block;
 		margin: 0 auto;
 		border: solid 1px blue;
 	}
-	
 	article img {
 		width: 100%;
 		margin: 0em 0 0;
@@ -315,47 +302,37 @@ footer a:link {
 	}
 }
 @media only screen and (max-width: 568px) {
-    
-    header h1 {
+	header h1 {
 		padding: 0 0 8.5vw 0;
 	}
-    
-    .no-flexwrap header h1 {
+	.no-flexwrap header h1 {
 		padding: 0 0 3rem 0;
 	}
-	
-    h2 {
+	h2 {
 		margin: -9vw 0 0 0em;
 	}
-    
 	.no-flexwrap h2 {
-        margin: -2.8rem 0 0 0em;
+		margin: -2.8rem 0 0 0em;
 	}
-
-	
 }
 @media only screen and (max-width: 480px) {
-
 	header h1, h2 span {
 		width: 58vw;
 	}
-    .no-flexwrap h2 span, .no-flexwrap header h1 {
+	.no-flexwrap h2 span, .no-flexwrap header h1 {
 		width: 15.7rem;
-	} 
-    
-     header h1 {
-		padding: 0 0 9vw 0;
-         /*quick way to lift up logo*/
-        font-size: .5rem;
 	}
-    h2 {
+	header h1 {
+		padding: 0 0 9vw 0;
+		/*quick way to lift up logo*/
+		font-size: .5rem;
+	}
+	h2 {
 		margin: -10vw 0 0 0em;
 	}
-    
-    .no-flexwrap header h1 {
+	.no-flexwrap header h1 {
 		padding: 0 0 2.5rem 0;
 	}
-	
 	.menu {
 		height: 2rem;
 		width: 2rem;
@@ -363,45 +340,34 @@ footer a:link {
 	#menu-toggle:checked+ul#nav {
 		top: 3rem;
 	}
-    
-    #footer_girl {
-        margin: 0 0 .75em .6em;
-    }
-    
-    #fb {
+	#footer_girl {
+		margin: 0 0 .75em .6em;
+	}
+	#fb {
 		margin: 0 0 .75em -23.5em;
 	}
 }
-
 @media only screen and (max-width: 400px) {
-    
-  
-    
-    h2 {
-        font-size: 1.7em;
-        font-size: 1.5rem;
+	h2 {
+		font-size: 1.7em;
+		font-size: 1.5rem;
 	}
-    
-    header h1 {
-        margin: 0 0 0 1.5vw;
+	header h1 {
+		margin: 0 0 0 1.5vw;
 	}
-    h2 {
+	h2 {
 		padding: 0 0 0 1.5vw
 	}
-    
-     .no-flexwrap header h1 {
-        margin: 0 0 0 .3rem;
+	.no-flexwrap header h1 {
+		margin: 0 0 0 .3rem;
 	}
-    
-    .no-flexwrap h2 {
+	.no-flexwrap h2 {
 		padding: 0 0 0 .3rem;
 	}
-    header h1, h2 span {
+	header h1, h2 span {
 		width: 64vw;
 	}
-    
-     .no-flexwrap header h1, .no-flexwrap h2 span {
+	.no-flexwrap header h1, .no-flexwrap h2 span {
 		width: 13rem;
-	} 
-   
+	}
 }

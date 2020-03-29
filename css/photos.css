@@ -21,8 +21,11 @@ main>a {
 	border-bottom: 1vw solid transparent;
 	position: relative;
 	margin: 1px;
-    vertical-align: middle;
+    
+}
+main>* {
     display: inline-block;
+    vertical-align: middle;
 }
 #gal_back {
 	border-right: 2vw solid #444;
@@ -69,7 +72,6 @@ main ul {
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
 	overflow: hidden;
-
 }
 main ul.gallery {
 	margin: 0 auto;
@@ -302,6 +304,13 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	border-top: 12px solid #cc6;
 	margin: -1px 0px 0px 5em;
 }
+h2 {
+    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+    background: none;
+    color: white;
+    text-shadow: none;
+    margin: 0;
+}
 @media only screen {
 	/*li.width/ul.width(-ul.padding)*/
 	#wrap {
@@ -430,13 +439,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 @media only screen and (min-width: 668px) {/* do min width to save .override h2 */
-h2 {
-    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
-    background: none;
-    color: white;
-    text-shadow: none;
-    margin: 0;
-}
+
     
     .showtime h2 {
         display: none;
