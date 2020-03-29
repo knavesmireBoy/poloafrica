@@ -62,13 +62,14 @@ article:last-child nav li {
 	/* overrides media query to unfloat images by default */
 	float: left;
 }
-#tvcoverage iframe {
+#tvcoverage iframe, #tvcoverage video {
 	width: 320px;
 	height: 180px;
 	margin: 0 0 0 1em;
 	display: block;
 	float: right;
 	clear: both;
+    border: solid 2px red;
 }
 #tvcoverage section {
 	/*fix float*/
@@ -98,7 +99,7 @@ article:last-child nav li {
 #medley #nav li:nth-child(7) we use #presslinks HERE to override (so can do this #medley li:nth-child(7))
 was only effecting the 7th child as in #medley li:nth-child(7), which can also refer to the presslinks ul*/
 
-#presslinks li:nth-child(odd) a:link, article:last-child li:nth-child(odd) a:link {
+#presslinks li:nth-child(odd) a, #presslinks li:nth-child(odd) a:link, article:last-child li:nth-child(odd) a:link {
 	color: #900;
 }
 #presslinks li:nth-child(odd) a:hover, article:last-child li:nth-child(odd) a:hover {
