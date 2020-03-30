@@ -30,6 +30,7 @@ h3, label {
 }
 a:link, a:visited, a:hover, a:active {
 	color: #993;
+    color: hsl(58,60%, 40%);
 }
 a:hover, a:active {
 	color: #cc6;
@@ -183,6 +184,9 @@ footer div a:hover, footer b {
 		margin: 0;
 		background-color: khaki;
 	}
+    h2:hover, h2:active {
+        color: azure;
+    }
 	#nav ul {
 		font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
@@ -210,11 +214,14 @@ footer div a:hover, footer b {
 		background-position: 0px 0px;
 		background-size: cover;
 	}
-	.js article section p {
+	.touchevents article section p {
 		padding: 0 1em;
 	}
-	.js article section p:first-of-type {
+	.touchevents article section p:first-of-type {
 		padding: 1em 1em 0;
+	}
+    .js article section p:first-of-type {
+		padding: 1em 0 0;
 	}
 	/*
 .js article section > * {
@@ -321,8 +328,3 @@ footer div a:hover, footer b {
 	}
 }
 /*@*/
-
-body{
-    background: white;
-    color: white;
-}

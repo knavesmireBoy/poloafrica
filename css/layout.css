@@ -7,6 +7,10 @@ html, body {
 img, #nav a, #fb a, footer>a:link:last-child {
 	display: block;
 }
+#wrap .override img{
+    border-radius: 4px;
+    box-shadow: 0px 0px 2px #993;
+}
 #wrap {
 	min-height: 100%;
 }
@@ -32,7 +36,7 @@ header h1 {
 	width: 40%;
 	text-indent: 100%;
 	overflow: hidden;
-	line-height: normal;
+	line-height: .3;
 }
 header h1 img {
 	width: 100%;
@@ -149,6 +153,11 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media screen and (max-width: 667px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+    
+    #wrap .override img {
+    border-radius: 0px;
+    box-shadow: none;
+}
 	.touchevents body {
 		margin: 0;
 	}
@@ -171,10 +180,10 @@ header h1, header h1 img, h2 span {
 		border: solid 1px red;
 	}
 	header h1, h2 span {
-		width: 44vw;
+		width: 48vw;
 	}
 	.no-flexwrap header h1, .no-flexwrap h2 span {
-		width: 17.7rem;
+		width: 15rem;
 	}
 	header h1 {
 		margin: 0 0 0 4vw;
