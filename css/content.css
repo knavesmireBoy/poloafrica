@@ -30,7 +30,7 @@ h3, label {
 }
 a:link, a:visited, a:hover, a:active {
 	color: #993;
-    color: hsl(58,60%, 40%);
+	color: hsl(58, 60%, 40%);
 }
 a:hover, a:active {
 	color: #cc6;
@@ -38,9 +38,9 @@ a:hover, a:active {
 p a:hover, p a:active {
 	text-decoration: underline;
 }
-a:hover h3, a:active h3 {
+.no-touchevents a:hover h3, .no-touchevents  a:active h3 {
 	color: #993;
-    color: hsl(58,60%,48%);
+	color: hsl(58, 60%, 48%);
 }
 p {
 	color: #444;
@@ -63,18 +63,17 @@ p:first-of-type {
 h2 {
 	margin: .8em 0 0 0;
 	color: #cc6;
-	color: hsl(58,60%,48%);
+	color: hsl(58, 60%, 48%);
 	font-family: Georgia, serif;
 	font-size: 2.8em;
 	line-height: 1.75;
 	font-weight: normal;
 	text-transform: uppercase;
 	padding: 1px 0 1px 0;
-    text-shadow: 1px 1px 2px #444;
-	background: url(../images/sub-polo-in-africa.png) no-repeat 0% 0%;
-	background-size: contain;
+	text-shadow: 1px 1px 2px #444;
+	/*background: url(../images/sub-polo-in-africa.png) no-repeat 0% 0%;
+	background-size: contain;*/
 }
-
 h2:hover, h2:active {
 	color: #cc6;
 }
@@ -162,16 +161,15 @@ footer div a:hover, footer b {
 /**/
 
 /**/
- h2 span {
-        display: block;
-        padding: 0 0 0 10rem;
-    }
 
+h2 span {
+	display: block;
+	padding: 0 0 0 10rem;
+}
 @media only screen {
-    
-    h2 {
-		background-image: linear-gradient(to right,#993, white);
-		background-image: linear-gradient(90deg, hsl(58,60%,45%), white);
+	h2 {
+		background-image: linear-gradient(to right, #993, white);
+		background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
 	}
 }
 @media screen and (max-width: 800px) {
@@ -179,16 +177,17 @@ footer div a:hover, footer b {
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
 }
-@media screen and (max-width: 667px), screen and (not(-ms-high-contrast: active)), screen and (not (-ms-high-contrast: none)) {
+/*@media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {*/
+
+@media screen and (max-width: 667px) {
 	.js #wrap body {
 		margin: 0;
-		background-color: khaki;
 	}
-    h2:hover, h2:active {
-        color: azure;
-    }
-	#nav ul {
-		font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
+	h2:hover, h2:active {
+		color: azure;
+	}
+	nav#main_nav #nav {
+		font: bold 1em/2  "Arial Back", Arial, Verdana, Helvetica, sans-serif;
 	}
 	footer {
 		background: url(../images/sil_bg.png) no-repeat top center;
@@ -206,7 +205,7 @@ footer div a:hover, footer b {
 	#home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
 		color: #cc6;
 	}
-	a:hover h3 {
+	.no-touchevents a:hover h3 {
 		color: #fff;
 	}
 	header {
@@ -214,14 +213,12 @@ footer div a:hover, footer b {
 		background-position: 0px 0px;
 		background-size: cover;
 	}
+
 	.touchevents article section p {
 		padding: 0 1em;
 	}
-	.touchevents article section p:first-of-type {
-		padding: 1em 1em 0;
-	}
-    .js article section p:first-of-type {
-		padding: 1em 0 0;
+    .override article section p {
+		line-height: 1.55;
 	}
 	/*
 .js article section > * {

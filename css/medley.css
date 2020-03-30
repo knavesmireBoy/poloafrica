@@ -166,7 +166,7 @@ h2 span {
 		margin: 1em;
 	}
 	.js #presslinks p {
-		margin: 0;
+		margin: 1em 0 0;
 	}
 	.js #medley #presslinks nav, .js #medley article:last-child nav {
 		margin: 1em 1em 0 1em;
@@ -182,31 +182,57 @@ h2 span {
 	}
 	.js .override img#arena_boy, .js .override img#PoloGirls {
 		float: right;
-		width: 27%;
+		width: 28%;
 		margin: 1em 1em 0 1em;
 	}
 	p:first-of-type {
 		margin: 1em 0;
 	}
-	#tvcoverage iframe {
+	#tvcoverage iframe, #tvcoverage video {
 		margin: 0 auto;
 		width: 92vw;
 		height: 51.625vw;
 		float: none;
 	}
-	#tvcoverage iframe:first-of-type {
+	#tvcoverage iframe:first-of-type, #tvcoverage video {
 		margin: 1em auto 0;
 	}
-    #tvcoverage section{
+    #tvcoverage section {
     margin: 0;
     padding: 0;
     border-width: 0;
 }
 }
+@media screen and (max-width: 568px) {
+    #PoloGirls {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+
+     #wrap article:last-child p {
+        margin: 0;
+        padding: .5em;
+        background-color: #444
+    }
+     #wrap article:last-child p{
+        color: white;
+    }
+    #arena_boy {
+        border: solid 1px white;
+        margin: 1em 0 .5em 0;
+    }
+}
 @media only screen and (max-width: 360px) {
 	.override article:nth-child(5) h3, .override article:nth-child(5) label {
 		line-height: 1.2;
 	}
+    #arena_boy {
+        display: none;
+    }
+   
 }
 @media screen and (min-width: 668px) {
 	#tvcoverage h3 {

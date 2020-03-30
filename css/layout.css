@@ -152,7 +152,7 @@ header h1, header h1 img, h2 span {
 		right: 0px;
 	}
 }
-@media screen and (max-width: 667px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+@media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
     
     #wrap .override img {
     border-radius: 0px;
@@ -195,7 +195,7 @@ header h1, header h1 img, h2 span {
 	}
 	h2 {
 		position: relative;
-		margin: -7.4vw 0 0 0em;
+		margin: -8vw 0 0 0em;
 		padding: 0 0 0 4vw;
 		font-size: 2em;
 		font-size: 1.75rem;
@@ -261,9 +261,7 @@ header h1, header h1 img, h2 span {
 	.no-js .read-more-state~section, section p:first-of-type, section p:last-child {
 		margin: 1em 0;
 	}
-	section p {
-		margin: 1em 0 0;
-	}
+	
 	/*first article is shown by default?*/
 	.no-js section>a, .no-js .read-more-state~section, .no-js .read-more-state~img, .no-js article:first-of-type .read-more-state:checked~section, .no-js article:first-of-type .read-more-state:checked~img, .js section>* {
 		position: absolute;
@@ -280,10 +278,7 @@ header h1, header h1 img, h2 span {
 		float: none;
 		border-width: 0;
 	}
-	.override article section p {
-		margin: 1em 0;
-		line-height: 1.55;
-	}
+	
 	ul#nav ul {
 		display: none;
 	}
@@ -340,6 +335,9 @@ header h1, header h1 img, h2 span {
 	h2 {
 		margin: -10vw 0 0 0em;
 	}
+    .no-touchevents h2 {
+        line-height: 1.4;
+	}
 	.no-flexwrap header h1 {
 		padding: 0 0 2.5rem 0;
 	}
@@ -355,6 +353,12 @@ header h1, header h1 img, h2 span {
 	}
 	#fb {
 		margin: 0 0 .75em -23.5em;
+	}
+}
+
+@media only screen and (max-width: 414px) {
+#wrap h2 {
+        line-height: 1.4;
 	}
 }
 @media only screen and (max-width: 400px) {

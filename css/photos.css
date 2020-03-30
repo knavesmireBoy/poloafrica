@@ -1,6 +1,8 @@
 #wrap {
 	width: 832px;
+	/*
 	min-height: 100%;
+    */
 }
 main {
 	position: relative;
@@ -9,14 +11,12 @@ main {
 	text-align: center;
 	height: 100%;
 }
-
 main img, main ul {
 	border: 1px solid black;
 }
-
-#wrap .override img{
-    border-radius: 0px;
-    box-shadow: none;
+#wrap .override img {
+	border-radius: 0px;
+	box-shadow: none;
 }
 main img:hover {
 	border-color: indigo;
@@ -26,11 +26,10 @@ main>a {
 	border-bottom: 1vw solid transparent;
 	position: relative;
 	margin: 1px;
-    
 }
 main>* {
-    display: inline-block;
-    vertical-align: middle;
+	display: inline-block;
+	vertical-align: middle;
 }
 #gal_back {
 	border-right: 2vw solid #444;
@@ -50,7 +49,6 @@ main>a {
 #gal_forward {
 	border-left: 21px solid #444;
 }
-
 .no-touchevents #gal_back:hover {
 	border-right-color: silver;
 }
@@ -67,7 +65,7 @@ main img {
 	position: relative;
 	margin: 0;
 	/*to accommodate exit button*/
-	padding: 4em 0 0 0;
+	padding: 4em 1em 0;
 	display: block;
 	/*force override flex ?*/
 }
@@ -87,7 +85,6 @@ main ul.gallery {
 .showtime main ul {
 	padding: 12px;
 }
-
 li#slide, li#paused, li#base {
 	display: block;
 	opacity: 1;
@@ -136,7 +133,6 @@ main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .sho
 	position: relative;
 	left: auto;
 }
-
 footer {
 	margin: 0 auto;
 }
@@ -310,14 +306,13 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	margin: -1px 0px 0px 5em;
 }
 h2 {
-    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
-    background: none;
-    color: white;
-    text-shadow: none;
-    margin: 0;
+	/*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+	background: none;
+	color: white;
+	text-shadow: none;
 }
 h2:hover, h2:active {
-    color: white;
+	color: white;
 }
 @media only screen {
 	/*li.width/ul.width(-ul.padding)*/
@@ -325,8 +320,7 @@ h2:hover, h2:active {
 		max-width: 80em;
 		width: 100%;
 	}
-    
-    main ul.gallery {
+	main ul.gallery {
 		padding: .5%;
 	}
 	main ul.gallery li {
@@ -341,7 +335,6 @@ h2:hover, h2:active {
 	main ul.gallery li:nth-last-child(-n+4) {
 		width: 24%;
 	}
-    
 	.showtime main ul li {
 		width: 100%;
 	}
@@ -356,17 +349,14 @@ h2:hover, h2:active {
 	}
 }
 @media only screen and (max-width: 667px) {
-    
-       main.override {
-		padding: 3rem 2rem 0;
+	.showtime main.override {
+		padding: 4rem 3rem 0;
 	}
-    
 	.touchevents main ul.portrait {
 		width: 70%;
 	}
-    
-     h2 {
-       text-shadow: 2px 2px 2px black;
+	h2 {
+		text-shadow: 2px 2px 2px black;
 	}
 	.touchevents h2 {
 		position: relative;
@@ -395,16 +385,14 @@ h2:hover, h2:active {
 	.touchevents #wrap.inplay+footer {
 		background: url(../images/sil_bg.png) no-repeat 60% top;
 	}
-    
 	.no-flexwrap main ul.gallery {
 		padding: 1vw;
 		padding: 1%;
 	}
 	.no-flexwrap main ul.gallery li {
 		margin: 1.5%;
-        box-sizing: border-box;
+		box-sizing: border-box;
 	}
-    
 	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li {
 		width: 244px;
 		width: 40vw;
@@ -446,23 +434,25 @@ h2:hover, h2:active {
 		border-left: 2em solid #444;
 	}
 }
-@media only screen and (min-width: 668px) {/* do min width to save .override h2 */
-
-    
-    .showtime h2 {
-        display: none;
-    }
+@media only screen and (min-width: 668px) {
+	/* do min width to save .override h2 */
+	h2 {
+		margin: 0;
+	}
+	.showtime h2 {
+		display: none;
+	}
 }
-
 /*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/
+
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-     main ul {
-        display: inline-block;
-        vertical-align: middle;
-        width: 90%;
-    }
-    .showtime main ul {
-        width: 100%;
-        box-sizing: border-box;
-    }
+	main ul {
+		display: inline-block;
+		vertical-align: middle;
+		width: 90%;
+	}
+	.showtime main ul {
+		width: 100%;
+		box-sizing: border-box;
+	}
 }

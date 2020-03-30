@@ -1,8 +1,8 @@
 main {
-    display: -webkit-box;
+	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-    -webkit-box-pack: center;
+	-webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
 }
@@ -11,7 +11,6 @@ main {
 	-ms-flex-align: center;
 	align-items: center;
 }
-
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 main ul.gallery li {
@@ -54,7 +53,6 @@ main ul {
 .showtime main.override {
 	display: block;
 }
-
 @supports (flex-wrap: wrap) {
 	main ul.gallery {
 		justify-content: space-between;
@@ -70,7 +68,6 @@ main ul {
 	}
 }
 @supports(column-gap: 20px) {
-
 	main ul.gallery {
 		display: grid;
 		grid-gap: 1em;
@@ -103,7 +100,6 @@ main ul {
 	}
 }
 @media only screen and (max-width: 667px) {
-    
 	.touchevents main {
 		-webkit-box-pack: center;
 		-ms-flex-pack: center;
@@ -140,7 +136,6 @@ main ul {
 		flex: 1 1 40%;
 	}
 	@supports (flex-wrap: wrap) {
-        
 		main ul.gallery {
 			display: -webkit-box;
 			display: -ms-flexbox;
@@ -153,14 +148,9 @@ main ul {
 		}
 	}
 	@supports (column-gap: 20px) {
-        
-        .touchevents body {
-            background-color: lemonchiffon;
-        }
-        
-	main.override ul.gallery {
+		main.override ul.gallery {
 			display: grid;
-        padding: 1em;
+			padding: 1em;
 		}
 		main ul.gallery li:nth-child(-n+2) {
 			grid-row: 1 / 2;
@@ -202,10 +192,6 @@ main ul {
 			grid-column: auto / span 6;
 		}
 	}
-}
-/*667*/
-
-@media only screen and (max-width: 480px) {
 	main>a {
 		border-width: 0;
 		background: #444;
@@ -213,10 +199,9 @@ main ul {
 	main.override>a:hover {
 		background: silver;
 	}
-    .touchevents .showtime main {
+	.touchevents .showtime main {
 		padding: 3.5rem 2rem 0;
 	}
-  
 	.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 1%;
 	}
@@ -224,12 +209,14 @@ main ul {
 		top: 1rem;
 	}
 }
+/*667*/
+
 @media only screen and (max-width: 480px) and (orientation: portrait) {
 	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 2%;
 		border-width: 0;
 	}
-     .touchevents .showtime main {
+	.touchevents .showtime main {
 		padding: 3.5rem 1rem 0;
 	}
 }

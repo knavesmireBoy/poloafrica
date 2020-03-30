@@ -67,18 +67,18 @@ h2 span {
 		display: block;
 	}
 }
-@media only screen and (max-width: 540px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+@media only screen and (max-width: 540px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
 	article:last-child h3, article label {
-		line-height: 1;
+		line-height: normal;
 	}
 }
-@media only screen and (max-width: 410px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
-	article h3, article:first-child label {
-		line-height: 1;
+@media only screen and (max-width: 410px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
+	.override article h3, article:first-child label {
+		line-height: normal;
 	}
 }
 @media only screen and (max-width: 325px) {
 	.override article h3, article:first-child label {
-		line-height: 1;
+		line-height: normal;
 	}
 }
