@@ -13,8 +13,13 @@ main {
 main img, main ul {
 	border: 1px solid black;
 }
+
+#wrap .override img{
+    border-radius: 0px;
+    box-shadow: none;
+}
 main img:hover {
-	border-color: white;
+	border-color: indigo;
 }
 main>a {
 	border-top: 1vw solid transparent;
@@ -140,7 +145,7 @@ footer {
 }
 .js #exit {
 	position: absolute;
-	top: .5em;
+	top: 1em;
 	right: 1em;
 	border: 0;
 	width: 2em;
