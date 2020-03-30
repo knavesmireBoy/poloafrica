@@ -20,14 +20,24 @@
 .js #home #ani img:last-child {
 	margin: 0 0 0 -100%;
 }
-@media screen and (max-width: 800px) {
-    
-    #ani {
-		width: 14em;
-        padding: 1.6em 1.6em 0;
+h2 span {
+	background: white 0% 0% url(../images/sub_home.jpg) no-repeat;
+}
+@media screen {
+	h2 span {
+		background: white 0% 0%/contain url(../images/sub_home.png) no-repeat;
 	}
 }
-@media screen and (max-width: 667px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)){
+@media screen and (max-width: 800px) {
+	#ani {
+		width: 14em;
+		padding: 1.6em 1.6em 0;
+	}
+}
+@media screen and (max-width: 667px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+	h2, h2 span {
+		background: none;
+	}
 	#ani {
 		width: 9em;
 		height: auto;
@@ -53,26 +63,22 @@
 	.no-js article:nth-child(3) .read-more-trigger:before {
 		content: "The Poloafrica / Polo 150 tour to England";
 	}
-    .no-js article:nth-child(3){
-			display: block;
-		}
+	.no-js article:nth-child(3) {
+		display: block;
+	}
 }
-
-  @media only screen and (max-width: 540px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
-  		article:last-child h3, article label {
-  		line-height: 1;
-  	}
-  }
-
-
- @media only screen and (max-width: 410px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
-  		article h3, article:first-child label {
-  		line-height: 1;
-  	}
-  }
-
-  @media only screen and (max-width: 325px) {
-      .override article h3, article:first-child label {
-          line-height: 1;
-      }
+@media only screen and (max-width: 540px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+	article:last-child h3, article label {
+		line-height: 1;
+	}
+}
+@media only screen and (max-width: 410px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+	article h3, article:first-child label {
+		line-height: 1;
+	}
+}
+@media only screen and (max-width: 325px) {
+	.override article h3, article:first-child label {
+		line-height: 1;
+	}
 }

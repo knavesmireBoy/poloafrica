@@ -8,10 +8,18 @@
         .override article:nth-child(5) img {
         	width: 20%;
         }
-        h2 {
-        	background: 0% 0%/contain url(../images/sub-the-place.png) no-repeat;
+        h2 span {
+        	background: white 0% 0% url(../images/sub_place.jpg) no-repeat;
+        }
+        @media screen {
+        	h2 span {
+        		background: white 0% 0%/contain url(../images/sub_the_place.png) no-repeat;
+        	}
         }
         @media screen and (max-width: 667px) {
+            h2, h2 span {
+        		background: none;
+        	}
         	.override article:nth-child(5) {
         		display: block;
         	}
@@ -40,9 +48,6 @@
         		float: right;
         		width: 30%;
         		margin: 1em 1em 0
-        	}
-        	h2 {
-        		background: none;
         	}
         }
         @media screen and (max-width: 370px) {

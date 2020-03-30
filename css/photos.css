@@ -311,6 +311,9 @@ h2 {
     text-shadow: none;
     margin: 0;
 }
+h2:hover, h2:active {
+    color: white;
+}
 @media only screen {
 	/*li.width/ul.width(-ul.padding)*/
 	#wrap {

@@ -1,47 +1,52 @@
  .override article:last-child img {
-        	-webkit-box-flex: 1;
-        	    -ms-flex: 1 1 1em;
-        	        flex: 1 1 1em;
-            width: 20%;
-        }
-        .override article:last-child section {
-        	-webkit-box-flex: 12;
-        	    -ms-flex: 12 1 2em;
-        	        flex: 12 1 2em;
-        }
-        .no-flexwrap .override article:last-child {
-            display: block;
-        }
-        .no-flexwrap .override article:last-child img {
-        		float: right;
-                width: 20%;
-        		margin: 1em 1em 0;
-        	}
-        h2 {
-        	background: 0% 0%/contain url(../images/sub_the-trust.png) no-repeat ;
-        }
-        @media screen and (max-width: 667px) {
-        	.no-js article:nth-child(1) .read-more-trigger:before {
-        		content: "History";
-        	}
-        	.no-js article:nth-child(2) .read-more-trigger:before {
-        		content: "Transformation";
-        	}
-        	.no-js article:nth-child(3) .read-more-trigger:before {
-        		content: "Development";
-        	}
-        	.no-js article:nth-child(4) .read-more-trigger:before {
-        		content: "Economic impact";
-        	}
-        	.no-js article:nth-child(5) .read-more-trigger:before {
-        		content: "Social change";
-        	}
-        	h2 {
-        		background: none;
-        	}
-        }
-        @media screen and (max-width: 480px) {
-        	.override article:nth-child(5) section img {
-        		width: 40%;
-        	}
-        }
+ 	-webkit-box-flex: 1;
+ 	-ms-flex: 1 1 1em;
+ 	flex: 1 1 1em;
+ 	width: 20%;
+ }
+ .override article:last-child section {
+ 	-webkit-box-flex: 12;
+ 	-ms-flex: 12 1 2em;
+ 	flex: 12 1 2em;
+ }
+ .no-flexwrap .override article:last-child {
+ 	display: block;
+ }
+ .no-flexwrap .override article:last-child img {
+ 	float: right;
+ 	width: 20%;
+ 	margin: 1em 1em 0;
+ }
+ h2 span {
+ 	background: white 0% 0% url(../images/sub_trust.jpg) no-repeat;
+ }
+ @media screen {
+ 	h2 span {
+ 		background: white 0% 0%/contain url(../images/sub_trust.png) no-repeat;
+ 	}
+ }
+ @media screen and (max-width: 667px) {
+ 	.no-js article:nth-child(1) .read-more-trigger:before {
+ 		content: "History";
+ 	}
+ 	.no-js article:nth-child(2) .read-more-trigger:before {
+ 		content: "Transformation";
+ 	}
+ 	.no-js article:nth-child(3) .read-more-trigger:before {
+ 		content: "Development";
+ 	}
+ 	.no-js article:nth-child(4) .read-more-trigger:before {
+ 		content: "Economic impact";
+ 	}
+ 	.no-js article:nth-child(5) .read-more-trigger:before {
+ 		content: "Social change";
+ 	}
+ 	h2, h2 span {
+ 		background: none;
+ 	}
+ }
+ @media screen and (max-width: 480px) {
+ 	.override article:nth-child(5) section img {
+ 		width: 40%;
+ 	}
+ }

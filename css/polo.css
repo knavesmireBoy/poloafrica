@@ -1,15 +1,19 @@
 .override article:nth-child(1) img {
 	clear: both;
-	margin:  1em 0 1em 2em;
-    width: auto;
+	margin: 1em 0 1em 2em;
+	width: auto;
 }
 .override article:nth-child(1) img {
-    float: right;
+	float: right;
 }
-h2 {
-    background: 0% 0%/contain url(../images/sub-polo.png) no-repeat;
+h2 span {
+	background: white 0% 0% url(../images/sub_polo.jpg) no-repeat;
+}
+@media screen {
+	h2 span {
+		background: white 0% 0%/contain url(../images/sub_polo.png) no-repeat;
 	}
-
+}
 @media screen and (max-width: 667px) {
 	.no-js article:nth-child(1) .read-more-trigger:before {
 		content: "Facilities";
@@ -30,8 +34,7 @@ h2 {
 		position: static;
 		left: 0;
 	}
-    h2 {
-        background: none;
-    }
+	h2, h2 span {
+		background: none;
+	}
 }
-	

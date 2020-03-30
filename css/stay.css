@@ -1,4 +1,15 @@
+        h2 span {
+        	background: white 0% 0% url(../images/sub_stay.jpg) no-repeat;
+        }
+        @media screen {
+        	h2 span {
+        		background: white 0% 0%/contain url(../images/sub_stay.png) no-repeat;
+        	}
+        }
         @media screen and (max-width: 667px) {
+        	h2, h2 span {
+        		background: none;
+        	}
         	.no-js article:nth-child(1) .read-more-trigger:before {
         		content: "Timing";
         	}
@@ -13,10 +24,5 @@
         	}
         	.no-js article:nth-child(5) .read-more-trigger:before {
         		content: "Day visiting";
-        	}
-        }
-        @media screen and (min-width: 668px) {
-        	h2 {
-        		background: 0% 0%/contain url(../images/sub-your-stay.png) no-repeat;
         	}
         }

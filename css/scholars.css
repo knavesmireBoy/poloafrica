@@ -1,35 +1,39 @@
 #scholars li:nth-child(3):hover ul {
-  	left: 0;
-  }
-  @media screen and (max-width: 668px) {
-  	.no-js article:nth-child(1) .read-more-trigger:before {
-  		content: "Participation";
-  	}
-  	.no-js article:nth-child(2) .read-more-trigger:before {
-  		content: "The Programme";
-  	}
-  	.no-js article:nth-child(3) .read-more-trigger:before {
-  		content: "Gender divide";
-  	}
-  	.no-js article:nth-child(4) .read-more-trigger:before {
-  		content: "Attending school";
-  	}
-  	.no-js article:nth-child(5) .read-more-trigger:before {
-  		content: "Typical school holiday programme";
-  	}
-  	.no-js article:nth-child(6) .read-more-trigger:before {
-  		content: "A childhood dream";
-  	}
-  }
-        
- @media only screen and (max-width: 440px) {
-  		.override article:nth-child(5) h3, .override article:nth-child(5) label {
-  		line-height: 1.2;
-  	}
-  }
- 
-  @media screen and (min-width: 668px) {
-  	h2 {
-  		background: 0% 0%/contain url(../images/sub-the-scholars.png) no-repeat;
-  	}
-  }
+	left: 0;
+}
+h2 span {
+	background: white 0% 0% url(../images/sub_scholars.jpg) no-repeat;
+}
+@media screen {
+	h2 span {
+		background: white 0% 0%/contain url(../images/sub_scholars.png) no-repeat;
+	}
+}
+@media screen and (max-width: 667px) {
+	h2, h2 span {
+		background: none;
+	}
+	.no-js article:nth-child(1) .read-more-trigger:before {
+		content: "Participation";
+	}
+	.no-js article:nth-child(2) .read-more-trigger:before {
+		content: "The Programme";
+	}
+	.no-js article:nth-child(3) .read-more-trigger:before {
+		content: "Gender divide";
+	}
+	.no-js article:nth-child(4) .read-more-trigger:before {
+		content: "Attending school";
+	}
+	.no-js article:nth-child(5) .read-more-trigger:before {
+		content: "Typical school holiday programme";
+	}
+	.no-js article:nth-child(6) .read-more-trigger:before {
+		content: "A childhood dream";
+	}
+}
+@media only screen and (max-width: 440px) {
+	.override article:nth-child(5) h3, .override article:nth-child(5) label {
+		line-height: 1.2;
+	}
+}

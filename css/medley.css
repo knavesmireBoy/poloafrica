@@ -1,7 +1,3 @@
-h2 {
-	background: 0% 0% url(../images/sub-medley.png) no-repeat;
-	background-size: contain;
-}
 #presslinks nav ul {
 	text-indent: -2.2em;
 	padding: 0 0 0 2.8em;
@@ -56,6 +52,7 @@ article:last-child p {
 article:last-child nav li {
 	margin: .5em 0;
 }
+
 #PoloGirls, #arena_boy {
 	margin: 0;
 	width: 27%;
@@ -104,8 +101,17 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 #presslinks li:nth-child(odd) a:hover, article:last-child li:nth-child(odd) a:hover {
 	color: #306;
 }
+
+h2 span {
+	background: white 0% 0% url(../images/sub_medley.jpg) no-repeat;
+}
+@media screen {
+	h2 span {
+		background: white 0% 0%/contain url(../images/sub_medley.png) no-repeat;
+	}
+}
 @media screen and (max-width: 667px) {
-	h2 {
+	h2, h2 span {
 		background: none;
 	}
 	article nav ul {

@@ -1,10 +1,3 @@
-/*content*/
-
-#contactarea {}
-h2 {
-	background: 0% 50% url(../images/sub-enquiries.png) no-repeat;
-	background-size: contain;
-}
 h3 {
     border-bottom: solid 1px;
 	}
@@ -185,6 +178,15 @@ article:nth-child(2) {
 }
 */
 
+h2 span {
+	background: white 0% 0% url(../images/sub_enquiries.jpg) no-repeat;
+}
+@media screen {
+	h2 span {
+		background: white 0% 0%/contain url(../images/sub_enq.png) no-repeat;
+	}
+}
+
 @media screen and (max-width: 823px) {
 	#enquiries #contactarea figure, #wrap #grooms {
 		position: absolute;
@@ -207,7 +209,7 @@ article:nth-child(2) {
 }
 
 @media screen and (max-width: 667px) {
-	h2 {
+	h2, h2 span {
 		background: none;
 	}
 	#enquiries article {
