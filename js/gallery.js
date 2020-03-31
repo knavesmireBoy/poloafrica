@@ -136,6 +136,7 @@
 				img = getDomTargetImg(current),
 				math = (img.offsetHeight > img.offsetWidth),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
+				m = math ? 'addClass' : 'removeClass';
 			utils[m]('portrait', thumbs);
 		},
 		makeIterator = function (coll) {
@@ -633,4 +634,4 @@
 			}
 		}());
 	}());
-}(document, 'show', Modernizr.mq('only all'), '(min-width: 769px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('h2')[0], document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0]));
+}(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('h2')[0], document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0]));

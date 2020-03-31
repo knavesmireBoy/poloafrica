@@ -86,6 +86,7 @@ if (!window.poloAF) {
                 if (!mode || !getNodeName(tgt).match(/a/i) || exit === 'exit') {
                     return;
                 }      
+                //doPortraitBridge(e);
 					var m = getID(tgt).match(/back$/) ? 'back' : 'forward',
 						gang = iterator[m](),
 						allpics = utils.getByTag('img', main),

@@ -13,7 +13,7 @@
         }
         @media screen {
         	h2 span {
-        		background: white 0% 0%/contain url(../images/sub_the_place.png) no-repeat;
+        		background: white 0% 0%/contain url(../images/sub_place.png) no-repeat;
         	}
         }
         @media screen and (max-width: 667px) {

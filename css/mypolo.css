@@ -30,6 +30,9 @@
 		grid-column: 2 / 3;
 	}
 }
+    .no-cssgrid article:nth-child(1) {
+		display: block
+	}
 }
     
 /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */

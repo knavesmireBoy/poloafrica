@@ -126,14 +126,17 @@
         var utils = poloAF.Util,
             main = document.getElementsByTagName('main')[0],
             sections = document.getElementsByTagName('section'),
+            tgt = !window.addEventListener ? 'srcElement' : 'target',
             invokemethod = function (o, arg, m) {
                 return o[m](arg);
             },
             doThrice = utils.curryThrice(),
             headingmatch = doThrice(invokemethod)('match')(/h3/i),
+            getTarget = utils.drillDown([tgt]),
             isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
+            dummy = {},
             bridge = function(e) {
-			var el = window.poloAF.Eventing.getEventTarget(e),
+			var el = getTarget(e),
                 mysection = utils.getDomParent(utils.getNodeByTag('section'))(el),
 				hit = utils.getClassList(mysection).contains('show');
                 if(!isHeading){
@@ -147,10 +150,8 @@
 			}
 		};
         utils.addHandler('click', bridge, main);
-	bridge({
-		target: sections[0].getElementsByTagName('h3')[0],
-        srcElement: sections[0].getElementsByTagName('h3')[0]
-	});
+           dummy[tgt] = sections[0].getElementsByTagName('h3')[0];
+	bridge(dummmy);
     </script>
 </body>
 </html>

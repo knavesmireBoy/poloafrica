@@ -203,11 +203,10 @@ h2 span {
     border-width: 0;
 }
 }
-@media screen and (max-width: 568px) {
+@media only screen and (max-width: 568px) and (min-resolution: 192dpi)  {
     #PoloGirls {
         display: none;
     }
-
 }
 
 @media screen and (max-width: 480px) {
@@ -232,7 +231,6 @@ h2 span {
     #arena_boy {
         display: none;
     }
-   
 }
 @media screen and (min-width: 668px) {
 	#tvcoverage h3 {

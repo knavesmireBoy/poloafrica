@@ -36,6 +36,10 @@ main ul.gallery li:nth-last-child(-n+4) {
     _background: none;
 }
 
+a:link, a:visited, a:hover, a:active, .no-touchevents a:hover h3, .no-touchevents a:active h3 {
+	color: #993;
+}
+
 main > a {
     *border-width: 0px;
 }
@@ -68,9 +72,13 @@ header {
 }
 
 h2 {
-    padding: .2em 0 0.25em 3em;
+    background: 0% 0% url(../images/grad.jpg) no-repeat;
 }
-
+h2 span {
+	padding: 0 0 0 3.5em;
+    line-height: normal;
+}
+/*
 #home h2 {
      background: 0% 0% url(../images/sub-polo-in-africa.jpg) no-repeat;
 }
@@ -96,7 +104,7 @@ h2 {
 #enquiries h2 {
      background: 0% 0% url(../images/sub-enquiries.jpg) no-repeat;
 }
-
+*/
 #footer_girl {
     *float: left;
 }

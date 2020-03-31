@@ -25,7 +25,8 @@ h2 span {
 }
 @media screen {
 	h2 span {
-		background: white 0% 0%/contain url(../images/sub_home.png) no-repeat;
+		background: white 0% 0% url(../images/sub_home.png) no-repeat;
+		background-size: contain;
 	}
 }
 @media screen and (max-width: 800px) {

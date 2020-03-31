@@ -9,7 +9,7 @@ img, #nav a, #fb a, footer>a:link:last-child {
 }
 #wrap .override img{
     border-radius: 4px;
-    box-shadow: 0px 0px 2px #993;
+    box-shadow: 0px 0px 3px #993;
 }
 #wrap {
 	min-height: 100%;
@@ -383,5 +383,15 @@ header h1, header h1 img, h2 span {
 	}
 	.no-flexwrap header h1, .no-flexwrap h2 span {
 		width: 13rem;
+	}
+}
+@media screen and (-ms-high-contrast: none){
+    .js body {
+        background-color: palegoldenrod;
+    }
+.touchevents footer {
+		background: url(../images/sil_bg.png) no-repeat top center;
+		background-size: cover;
+		padding: 7em 0 0 0;
 	}
 }

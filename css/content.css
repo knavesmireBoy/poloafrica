@@ -29,18 +29,19 @@ h3, label {
 	letter-spacing: 1px;
 }
 a:link, a:visited, a:hover, a:active {
-	color: #993;
-	color: hsl(58, 60%, 40%);
+	color: #990;
+    color: hsl(58, 60%, 40%);
 }
 a:hover, a:active {
 	color: #cc6;
+    color: hsl(58, 60%, 48%);
 }
 p a:hover, p a:active {
 	text-decoration: underline;
 }
-.no-touchevents a:hover h3, .no-touchevents  a:active h3 {
-	color: #993;
-	color: hsl(58, 60%, 48%);
+.no-touchevents a:hover h3, .no-touchevents a:active h3 {
+	color: #990;
+    color: hsl(58, 60%, 40%);
 }
 p {
 	color: #444;
@@ -62,17 +63,20 @@ p:first-of-type {
 
 h2 {
 	margin: .8em 0 0 0;
-	color: #cc6;
-	color: hsl(58, 60%, 48%);
+	color: #993;
 	font-family: Georgia, serif;
 	font-size: 2.8em;
-	line-height: 1.75;
+	line-height: 1.7;
 	font-weight: normal;
 	text-transform: uppercase;
 	padding: 1px 0 1px 0;
 	text-shadow: 1px 1px 2px #444;
+    border: solid 0px red;
 	/*background: url(../images/sub-polo-in-africa.png) no-repeat 0% 0%;
 	background-size: contain;*/
+}
+h2 {
+    color: hsl(58, 60%, 48%);
 }
 h2:hover, h2:active {
 	color: #cc6;
@@ -144,7 +148,7 @@ footer {
 #footer_girl a:last-child:before {
 	content: " | ";
 }
-footer a:link, footer a:visited {
+footer a, footer a:link, footer a:visited {
 	color: white;
 	padding: 0;
 	line-height: normal;
@@ -164,7 +168,8 @@ footer div a:hover, footer b {
 
 h2 span {
 	display: block;
-	padding: 0 0 0 10rem;
+	padding: 0 0 0 8rem;
+    line-height: 1.5;
 }
 @media only screen {
 	h2 {
