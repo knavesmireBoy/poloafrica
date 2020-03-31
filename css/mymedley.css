@@ -4,16 +4,18 @@
 	/*if not grid, block, NOT flex*/
 	display: block;
 }
-#tvcoverage section p {
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+
+#tvcoverage p {
 	-ms-grid-row: 1;
 	-ms-grid-row-span: 1;
 	grid-row: 1/3;
 	-ms-grid-column: 1;
 	-ms-grid-column-span: 1;
-	grid-column: 1/3;
+	grid-column: 1/4;
 	min-width: 0;
 }
-#tvcoverage section p:last-of-type {
+#tvcoverage p:last-of-type {
 	-ms-grid-row: 2;
 	-ms-grid-row-span: 1;
 	grid-row: 3/4;
@@ -22,11 +24,13 @@
 	-ms-grid-row: 2;
 	-ms-grid-row-span: 1;
 	grid-row: 1/6;
+	grid-column: 4/6;
 }
 #tvcoverage #naledi>a {
 	-ms-grid-column: 1;
 	-ms-grid-column-span: 2;
 	grid-column: 1/6;
+	-ms-grid-row: 1;
 	grid-row: 1/1;
 }
 #tvcoverage #naledi p:last-of-type {
@@ -34,11 +38,13 @@
 	-ms-grid-row-span: 1;
 	grid-row: 2/4;
 }
-#tvcoverage #naledi>*:nth-child(2) {
+#naledi>*:nth-child(2) {
 	-ms-grid-column: 2;
 	-ms-grid-column-span: 1;
+	-ms-grid-row: 2;
+	-ms-grid-row-span: 1;
 	grid-row: 2/3;
-	grid-column: 3/6;
+	grid-column: 4/6;
 }
 #presslinks section, article:last-child section {
 	margin-left: 2%;
@@ -54,33 +60,28 @@
 #presslinks section img {
 	margin-right: 2%;
 }
-@supports(column-gap: 20px) {
+@supports((-moz-column-gap: 20px) or (column-gap: 20px)) {
 	.override #tvcoverage {
 		display: -ms-grid;
 		display: grid;
 	}
-	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 	.override #tvcoverage section {
 		display: -ms-grid;
 		display: grid;
-		/*
-        grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        */
 	}
 }
-.cssgrid .override #tvcoverage {
+.cssgrid #tvcoverage {
 	display: -ms-grid;
 	display: grid;
 }
-.cssgrid .override #tvcoverage section {
+.cssgrid #tvcoverage section {
 	display: -ms-grid;
 	display: grid;
 }
-.no-cssgrid .override #tvcoverage {
+.no-cssgrid #tvcoverage {
 	display: block;
 }
-no-cssgrid .override #tvcoverage section {
+no-cssgrid #tvcoverage section {
 	display: block;
 }
 /* @media only screen and (max-width: 410px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
@@ -91,37 +92,16 @@ no-cssgrid .override #tvcoverage section {
 */
 
 @media screen and (max-width: 667px) {
-
 	.no-js #presslinks section, .no-js #medley .override article:last-child section {
 		margin: 0 0 0 2%;
+		-webkit-box-flex: 5;
+		-ms-flex: 5 0 1%;
 		flex: 5 0 1%
 	}
-	@supports(column-gap: 20px) {
-		/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
-		#wrap main.override #tvcoverage p {
-			-ms-grid-column: 1;
-			-ms-grid-column-span: 5;
-			grid-column: 1/6;
-		}
-		#wrap #tvcoverage p {
-			-ms-grid-row: 2;
-			-ms-grid-row-span: 1;
-			grid-row: 2/3;
-		}
-		#wrap #tvcoverage p:last-child {
-			-ms-grid-row: 3;
-			-ms-grid-row-span: 1;
-			grid-row: 3/4;
-		}
-		#wrap #tvcoverage section>*:first-child {
-			-ms-grid-row: 1;
-			-ms-grid-row-span: 1;
-			grid-row: 1/2;
-		}
-		#wrap #tvcoverage #sport1 p:last-child {
-			margin: 0 auto 1em;
-		}
-	}
+    
+    #wrap .override #tvcoverage, #wrap .override #tvcoverage section {
+        display: block;
+    }
 }
 @media screen and (min-width: 668px) {
 	.flexwrap #tvcoverage h3 {
@@ -139,16 +119,15 @@ no-cssgrid .override #tvcoverage section {
 	}
 }
 @media only screen and (-ms-high-contrast: none) {
-/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
-
+	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 	#medley #wrap img#PoloGirls, #arena_boy {
 		-webkit-box-flex: 1;
 		-ms-flex: 2 0 5em;
 		flex: 2 0 5em;
-        -ms-flex-item-align: start;
-            align-self: flex-start;
+		-ms-flex-item-align: start;
+		align-self: flex-start;
 		float: none;
-        height: 100%;
-        border: solid 3px red;
+		height: 100%;
+		border: solid 3px red;
 	}
 }

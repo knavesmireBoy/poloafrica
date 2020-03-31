@@ -94,7 +94,7 @@ article:last-child nav li {
 #tvcoverage p:last-child {
 	margin: 0;
 }
-#view::after {
+.view::after {
 	content: "on the right";
 }
 #tvcoverage>a {
@@ -177,7 +177,7 @@ h2 span {
 	#tvcoverage iframe:first-of-type {
 		margin: 1em 0 3em 1em;
 	}
-	#view::after {
+	.view::after {
 		content: "above";
 	}
 	.js .override img#arena_boy, .js .override img#PoloGirls {
@@ -194,14 +194,17 @@ h2 span {
 		height: 51.625vw;
 		float: none;
 	}
-	#tvcoverage iframe:first-of-type, #tvcoverage video {
-		margin: 1em auto 0;
+	#tvcoverage iframe:first-of-type {
+		margin: 1em auto;
 	}
     #tvcoverage section {
     margin: 0;
     padding: 0;
     border-width: 0;
 }
+    #tvcoverage section p:last-child {
+        margin: 0 0 1em;
+    }
 }
 @media only screen and (max-width: 568px) and (min-resolution: 192dpi)  {
     #PoloGirls {

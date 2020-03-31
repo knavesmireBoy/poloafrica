@@ -1,8 +1,5 @@
 #wrap {
 	width: 832px;
-	/*
-	min-height: 100%;
-    */
 }
 main {
 	position: relative;
@@ -11,12 +8,14 @@ main {
 	text-align: center;
 	height: 100%;
 }
+
 main img, main ul {
 	border: 1px solid black;
 }
-#wrap .override img {
-	border-radius: 0px;
-	box-shadow: none;
+
+#wrap .override img{
+    border-radius: 0px;
+    box-shadow: none;
 }
 main img:hover {
 	border-color: indigo;
@@ -26,10 +25,8 @@ main>a {
 	border-bottom: 1vw solid transparent;
 	position: relative;
 	margin: 1px;
-}
-main>* {
-	display: inline-block;
-	vertical-align: middle;
+    vertical-align: middle;
+    display: inline-block;
 }
 #gal_back {
 	border-right: 2vw solid #444;
@@ -49,6 +46,7 @@ main>a {
 #gal_forward {
 	border-left: 21px solid #444;
 }
+
 .no-touchevents #gal_back:hover {
 	border-right-color: silver;
 }
@@ -65,7 +63,7 @@ main img {
 	position: relative;
 	margin: 0;
 	/*to accommodate exit button*/
-	padding: 4em 1em 0;
+	padding: 4em 0 0 0;
 	display: block;
 	/*force override flex ?*/
 }
@@ -75,6 +73,7 @@ main ul {
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
 	overflow: hidden;
+
 }
 main ul.gallery {
 	margin: 0 auto;
@@ -85,6 +84,7 @@ main ul.gallery {
 .showtime main ul {
 	padding: 12px;
 }
+
 li#slide, li#paused, li#base {
 	display: block;
 	opacity: 1;
@@ -120,11 +120,11 @@ main.alt ul.gallery li:nth-last-child(-n+2) {
 	width: 100%;
 	margin: 0;
 }
-.showtime main ul.portrait {
+main ul.portrait {
 	margin: 0 30%;
 }
 
-.showtime main ul {
+main ul {
 	margin: 0 5%;
 }
 main ul li, .inplay main ul li.show, .showtime main>a, .no-js main>a {
@@ -136,6 +136,7 @@ main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .sho
 	position: relative;
 	left: auto;
 }
+
 footer {
 	margin: 0 auto;
 }
@@ -308,22 +309,14 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	border-top: 12px solid #cc6;
 	margin: -1px 0px 0px 5em;
 }
-h2 {
-	/*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
-	background: none;
-	color: white;
-	text-shadow: none;
-}
-h2:hover, h2:active {
-	color: white;
-}
 @media only screen {
 	/*li.width/ul.width(-ul.padding)*/
 	#wrap {
 		max-width: 80em;
 		width: 100%;
 	}
-	main ul.gallery {
+    
+    main ul.gallery {
 		padding: .5%;
 	}
 	main ul.gallery li {
@@ -338,6 +331,7 @@ h2:hover, h2:active {
 	main ul.gallery li:nth-last-child(-n+4) {
 		width: 24%;
 	}
+    
 	.showtime main ul li {
 		width: 100%;
 	}
@@ -353,33 +347,21 @@ h2:hover, h2:active {
 }
 
 @media only screen and (max-width: 1024px) {
-.showtime main ul.portrait {
-	margin: 0 25%;
+main ul.portrait {
+	margin: 0 20%;
 }
 }
 
 @media only screen and (max-width: 800px) {
-.showtime main ul.portrait {
-	margin: 0 20%;
+main ul.portrait {
+	margin: 0 10%;
 }
 }
+
 @media only screen and (max-width: 667px) {
-	main.override {
-		padding: 4em 0 0;
-	}
-    
-    .touchevents main.override {
-		padding: 2em 0 0;
-	}
-    
-    .showtime main ul.portrait {
-        margin: 0 10%;
-    }
-    
-    
-	
-	h2 {
-		text-shadow: 2px 2px 2px black;
+
+     h2 {
+       text-shadow: 2px 2px 2px black;
 	}
 	.touchevents h2 {
 		position: relative;
@@ -408,14 +390,16 @@ h2:hover, h2:active {
 	.touchevents #wrap.inplay+footer {
 		background: url(../images/sil_bg.png) no-repeat 60% top;
 	}
+    
 	.no-flexwrap main ul.gallery {
 		padding: 1vw;
 		padding: 1%;
 	}
 	.no-flexwrap main ul.gallery li {
 		margin: 1.5%;
-		box-sizing: border-box;
+        box-sizing: border-box;
 	}
+    
 	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li {
 		width: 244px;
 		width: 40vw;
@@ -440,7 +424,11 @@ h2:hover, h2:active {
 	}
 }
 @media only screen and (max-width: 480px) {
-
+    
+    .showtime main ul {
+	margin: 0;
+}
+	
 	.touchevents main>a:link {
 		color: transparent;
 	}
@@ -455,25 +443,29 @@ h2:hover, h2:active {
 		border-left: 2em solid #444;
 	}
 }
-@media only screen and (min-width: 668px) {
-	/* do min width to save .override h2 */
-	h2 {
-		margin: 0;
-	}
-	.showtime h2 {
-		display: none;
-	}
+@media only screen and (min-width: 668px) {/* do min width to save .override h2 */
+h2 {
+    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+    background: none;
+    color: white;
+    text-shadow: none;
+    margin: 0;
 }
-/*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/
+    
+    .showtime h2 {
+        display: none;
+    }
+}
 
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-	main ul {
-		display: inline-block;
-		vertical-align: middle;
-		width: 90%;
-	}
-	.showtime main ul {
-		width: 100%;
-		box-sizing: border-box;
-	}
+/*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/
+@media all and (-ms-high-contrast: none) {
+     main ul {
+        display: inline-block;
+        vertical-align: middle;
+        width: 90%;
+    }
+    .showtime main ul {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }

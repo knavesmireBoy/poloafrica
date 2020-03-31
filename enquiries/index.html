@@ -112,7 +112,7 @@
             <a href="mailto:info@poloafrica.com"><b>email: </b>info@poloafrica.com</a>
 		</div>
         <div id="fb">
-            <a href="https://www.instagram.com/poloafrica/" id="InstagramIcon" target="_blank"><img alt="Instagram icon" src="../images/instagram_white.png"></a> <a href="https://www.facebook.com/Poloafrica-Development-Trust-301491696614583/" id="FacebookBadge" target="_blank"><img alt="Facebook badge" src="../images/like-us-on-facebook-png-black-1.png"></a>
+            <a href="https://www.instagram.com/poloafrica/" id="InstagramIcon" target="_blank"><img alt="Instagram icon" src="../images/instagram_drop.png"></a> <a href="https://www.facebook.com/Poloafrica-Development-Trust-301491696614583/" id="FacebookBadge" target="_blank"><img alt="Facebook badge" src="../images/like-us-on-facebook-png-black-1.png"></a>
         </div>
         <a href="mailto:photos@mwinsight.com">photos by <b>mark ward</b></a>
     </footer>
@@ -123,7 +123,8 @@
     <script src="../js/global.js"></script>
        <script>
 
-        var utils = poloAF.Util,
+        var dum = {},
+            utils = poloAF.Util,
             main = document.getElementsByTagName('main')[0],
             sections = document.getElementsByTagName('section'),
             tgt = !window.addEventListener ? 'srcElement' : 'target',
@@ -134,7 +135,6 @@
             headingmatch = doThrice(invokemethod)('match')(/h3/i),
             getTarget = utils.drillDown([tgt]),
             isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
-            dummy = {},
             bridge = function(e) {
 			var el = getTarget(e),
                 mysection = utils.getDomParent(utils.getNodeByTag('section'))(el),
@@ -150,8 +150,8 @@
 			}
 		};
         utils.addHandler('click', bridge, main);
-           dummy[tgt] = sections[0].getElementsByTagName('h3')[0];
-	bridge(dummmy);
+        dum[tgt] = sections[0].getElementsByTagName('h3')[0];
+	bridge(dum);
     </script>
 </body>
 </html>
