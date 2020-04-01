@@ -17,6 +17,16 @@ article:last-child section {
 article:last-child nav li::before {
 	content: '» ';
 }
+
+article:nth-child(5) {
+    padding: 0 0 1em 0;
+    border: solid 1px black;
+    border-width: 0 0 1px 0;
+    margin: 3em 0 0 0;
+}
+#presslinks {
+    background-color: #cc6;
+}
 #presslinks nav li::before {
 	content: '';
 	display: inline-block;
@@ -42,7 +52,7 @@ article:last-child nav li::before {
 	line-height: 1.3;
 }
 #presslinks nav ul li {
-	margin: 0 0 .75em 0;
+	margin: 0 0 .25em 0;
 }
 #presslinks nav ul li a {
 	border: solid 1px;
