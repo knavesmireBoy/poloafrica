@@ -1,5 +1,9 @@
 /*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
-
+/*https://stackoverflow.com/questions/36822370/flexbox-on-ie11-image-stretched-for-no-reason/36828291*/
+.js html body img, .no-js html body img {
+      max-width: 100%;
+      flex-shrink: 0;
+    }
 .flexwrap #wrap+footer #footer_girl {
 	-webkit-box-flex: 13;
 	-ms-flex: 13 10 5em;

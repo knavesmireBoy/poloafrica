@@ -3,6 +3,13 @@
 	padding: 0 0 0 2.8em;
 	line-height: 1.2;
 }
+#presslinks {
+    border: solid 1px red;
+}
+#presslinks section {
+    margin: 0 0 0 30%;
+    
+}
 article:last-child nav ul {
 	text-indent: -.8em;
 	padding: 0 0 0 1em;
