@@ -21,7 +21,7 @@
 		left: 0;
 	}
 }
-	@supports(column-gapp: 20px) {
+	@supports(column-gap: 20px) {
 		#wrap #intro label {
 			position: absolute;
 			left: -999em;
@@ -86,7 +86,7 @@
     
 @media screen and (max-width: 823px) {
     
-    @supports(column-gapp: 20px) {
+    @supports(column-gap: 20px) {
     	#intro section {
 			grid-column: 1 / 20;
 		}
@@ -116,7 +116,10 @@
 /*TRIED flex-wrapping in fieldset: https://stackoverflow.com/questions/46472136/fieldset-as-flex-container-not-working-in-google-chrome*/
     }
     
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 504px) {
+        textarea {
+            width: 100%;
+        }
         #contactarea form fieldset:first-child label,  #contactarea form fieldset:first-child input {
             width: 98%;
             box-sizing: border-box;

@@ -48,7 +48,7 @@ main ul {
 	/*margin: 0;*/
 	/*override margin: 0 auto */
 }
-main ul.gallery {
+.flexbox main ul.gallery {
 	width: auto;
 }
 .showtime main.override {

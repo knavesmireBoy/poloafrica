@@ -1,11 +1,11 @@
 h3 {
-    border-bottom: solid 1px;
-	}
-#enquiries article:first-child section {
-    margin: 0 38% 0 0;
+	border-bottom: solid 1px;
 }
-#enquiries article:first-child section p{
-    margin: 0 0 1.3em 0;
+#enquiries article:first-child section {
+	margin: 0 38% 0 0;
+}
+#enquiries article:first-child section p {
+	margin: 0 0 1.3em 0;
 }
 form {
 	font-family: Arial, Helvetica, Verdana, sans-serif;
@@ -48,27 +48,23 @@ form fieldset:first-child input {
 	margin: 2em 0 1em 0;
 }
 #enquiries article {
-    display: block;
+	display: block;
 	margin: 1em 0 0;
 }
-
-#enquiries article section > a {
-    flex: 0 0 100%;
+#enquiries article section>a {
+	flex: 0 0 100%;
 }
-
-.no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before  {
-        color: white;
-        text-shadow: 1px 1px 1px black;
-        background-color: hsl(60, 40%, 64%);
-    }
-    
+.no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before {
+	color: white;
+	text-shadow: 1px 1px 1px black;
+	background-color: hsl(60, 40%, 64%);
+}
 .no-js #intro .read-more-state+label:before, .no-js #intro .read-more-state:first-of-type:checked+label:before {
-        color: #993;
-        text-shadow: none;
-        background-color: #E7E7C7;
-        background-color: hsl(60, 40%, 84%);
-	}
-
+	color: #993;
+	text-shadow: none;
+	background-color: #E7E7C7;
+	background-color: hsl(60, 40%, 84%);
+}
 .override article img {
 	width: 33%;
 	float: right;
@@ -101,9 +97,9 @@ form label {
 	height: 2em;
 	margin: .1em 0 .1em .5em;
 	width: 84%;
-    *width: 80%;
-    padding: 0 .5em;
-    box-sizing: border-box;
+	*width: 80%;
+	padding: 0 .5em;
+	box-sizing: border-box;
 }
 #contactarea #dogs {
 	margin: 0;
@@ -141,9 +137,8 @@ textarea {
 	border-width: 0px;
 	height: 100%;
 }
-
 #enquiries article:last-child {
-    clear: left;
+	clear: left;
 }
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
 article:nth-child(2) {
@@ -186,7 +181,6 @@ h2 span {
 		background: white 0% 0%/contain url(../images/sub_enq.png) no-repeat;
 	}
 }
-
 @media screen and (max-width: 823px) {
 	#enquiries #contactarea figure, #wrap #grooms {
 		position: absolute;
@@ -195,19 +189,16 @@ h2 span {
 	#enquiries article:first-child {
 		margin: 2em 0 0 0;
 	}
-    
-        #enquiries article:first-child section {
-    margin: 0;
-}
-	
-	article section p{
+	#enquiries article:first-child section {
+		margin: 0;
+	}
+	article section p {
 		margin: 0 0 1.3em 0;
 	}
 	#contact_form {
 		width: 100%;
 	}
 }
-
 @media screen and (max-width: 667px) {
 	h2, h2 span {
 		background: none;
@@ -215,17 +206,17 @@ h2 span {
 	#enquiries article {
 		margin: 0;
 	}
-    
-    #enquiries article:first-child section p{
-    margin: 1em 0 1.3em 0;
-}
-
-     #enquiries section.show h3{
-        color: white;
-        text-shadow: 1px 1px 1px black;
-        background-color: hsl(60, 40%, 64%);
-    }
-   
+	#contactarea form fieldset:first-child input {
+		width: 83.5%;
+	}
+	#enquiries article:first-child section p {
+		margin: 1em 0 1.3em 0;
+	}
+	#enquiries section.show h3 {
+		color: white;
+		text-shadow: 1px 1px 1px black;
+		background-color: hsl(60, 40%, 64%);
+	}
 	#contactarea #dogs {
 		position: absolute;
 		left: -999em;
@@ -233,13 +224,14 @@ h2 span {
 	#contactarea form {
 		width: 90%;
 		float: none;
-        display: block;
-        box-sizing: border-box;
+		display: block;
+		box-sizing: border-box;
 	}
 	textarea {
-		width: 99%;
+		width: 100%;
 		height: 10em;
 		float: none;
+		box-sizing: border-box;
 	}
 	#enquiries #contactarea figure, #wrap #grooms, #contactarea #dogs {
 		position: absolute;

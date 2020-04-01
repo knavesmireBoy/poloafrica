@@ -184,9 +184,10 @@ h2 span {
 }
 /*@media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {*/
 
-@media screen and (max-width: 667px) {
+@media screen and (max-width: 667px) and (not(-ms-high-contrast: none)){
 	.js #wrap body {
 		margin: 0;
+        background: red;
 	}
 	h2:hover, h2:active {
 		color: azure;
@@ -225,19 +226,6 @@ h2 span {
     .override article section p {
 		line-height: 1.55;
 	}
-	/*
-.js article section > * {
-    opacity: 0;
-    transition: opacity 4s ease-out;
-    height: 0px;
-    transition: height 9s ease-out;
-}
-    
-.js article section:first-child, .js article.show section > * {
-    opacity: 1;
-    height: auto;
-    }
-    */
 	.menu {
 		background: 50% 0% url("../images/polo_ball_sprite.png") no-repeat;
 		background-size: 100%;
