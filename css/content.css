@@ -182,9 +182,9 @@ h2 span {
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
 }
-/*@media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {*/
+/*@media screen and (max-width: 667px)/*, (not (-ms-high-contrast: none)) {*/
 
-@media screen and (max-width: 667px) and (not(-ms-high-contrast: none)){
+@media only screen and (max-width: 667px){
 	.js #wrap body {
 		margin: 0;
         background: red;

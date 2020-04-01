@@ -4,7 +4,7 @@
 	line-height: 1.2;
 }
 
-#presslinks section {
+#presslinks section, article:last-child section  {
     margin: 0 0 0 30%;
 }
 article:last-child nav ul {
@@ -12,9 +12,7 @@ article:last-child nav ul {
 	padding: 0 0 0 1em;
 	line-height: 1.2;
 }
-article:last-child section {
-	margin: 0 0 0 30%;
-}
+
 #presslinks nav {
 	margin: 1em 0 0;
 }

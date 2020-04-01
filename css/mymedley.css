@@ -101,6 +101,10 @@ no-cssgrid #tvcoverage section {
 	#wrap .override #tvcoverage, #wrap .override #tvcoverage section {
 		display: block;
 	}
+    
+    .flexbox #presslinks section, .flexboxtweener #presslinks section, .flexboxlegacy #presslinks section, .flexbox article:last-child section, .flexboxtweener article:last-child section, .flexboxlegacy article:last-child section {
+	margin-left: 0;
+}
 }
 @media screen and (min-width: 668px) {
 	.flexwrap #tvcoverage h3 {
