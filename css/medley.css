@@ -118,7 +118,8 @@ h2 span {
 }
 @media screen {
 	h2 span {
-		background: white 0% 0%/contain url(../images/sub_medley.png) no-repeat;
+		background: white 0% 0% url(../images/sub_medley.png) no-repeat;
+        background-size: contain;
 	}
 }
 @media screen and (max-width: 667px) {
@@ -211,6 +212,9 @@ h2 span {
 @media only screen and (max-width: 568px) and (min-resolution: 192dpi)  {
     #PoloGirls {
         display: none;
+    }
+   .js body {
+       background: red; 
     }
 }
 

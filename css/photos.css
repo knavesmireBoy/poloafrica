@@ -74,6 +74,7 @@ main ul {
     -webkit-transition: width 1s ease-in-out;
 	-o-transition: width 1s ease-in-out;
 	transition: width 1s ease-in-out;
+    overflow: hidden;
 }
 
 .showtime main ul {
@@ -119,6 +120,9 @@ main ul.portrait {
 }
 main ul {
 	margin: 0 5%;
+}
+.flexboxlegacy main ul, .flexboxtweener main ul, .flexbox main ul {
+	margin: 0;
 }
 main ul li, .inplay main ul li.show, .showtime main>a, .no-js main>a {
 	position: absolute;
@@ -444,6 +448,9 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		text-shadow: none;
 		margin: 0;
 	}
+    h2:hover {
+        color: white;
+    }
 	.showtime h2 {
 		display: none;
 	}
