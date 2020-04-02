@@ -62,7 +62,7 @@ main ul {
 }
 /*REPLACE margin with border to support earlier FIREFOX */
 
-.override .gallery li {
+.flexwrap .override .gallery li {
 	margin: 0;
 	border: 6px solid white;
 }
@@ -78,6 +78,10 @@ main ul {
 		/*override % from float layout*/
 		padding: 6px;
 	}
+    .override .gallery li {
+	margin: 0;
+	border: 6px solid white;
+}
 }
 @supports(column-gap: 20px) {
 	main {
@@ -113,6 +117,22 @@ main ul {
 		grid-column: auto / span 3;
 	}
 }
+/*  */
+
+/*  */
+
+/*  */
+
+/*  */
+
+/*  */
+
+/*  */
+
+/*  */
+
+/*  */
+
 @media only screen and (max-width: 667px) {
 	main {
 		-webkit-box-pack: center;
@@ -184,37 +204,34 @@ main ul {
 			grid-column: auto / span 6;
 		}
 	}
-	/*
-    	main>a {
+	main>a {
 		border-width: 0;
-		background: #444;
-    */
-}
-.no-touchevents #gal_back:hover {
-	border-right-color: silver;
-}
-.no-touchevents #gal_forward:hover {
-	border-left-color: silver;
-}
-.touchevents main.override>a:active {
-	background: blue;
-}
-.touchevents .showtime main {
-	padding: 3.5rem 2rem 0;
-}
-.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
-	margin: 0 1%;
-}
-.touchevents #exit {
-	top: 1rem;
-}
+		background: blue;
+	}
+	.no-touchevents #gal_back:hover {
+		border-right-color: silver;
+	}
+	.no-touchevents #gal_forward:hover {
+		border-left-color: silver;
+	}
+	.touchevents main.override>a:active {
+		background: blue;
+	}
+	.touchevents .showtime main {
+		padding: 3.5rem 2rem 0;
+	}
+	.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
+		margin: 0 1%;
+	}
+	.touchevents #exit {
+		top: 1rem;
+	}
 }
 /*667*/
 
 @media only screen and (max-width: 480px) and (orientation: portrait) {
 	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 2%;
-		border-width: 0;
 	}
 	.touchevents .showtime main {
 		padding: 3.5rem 1rem 0;

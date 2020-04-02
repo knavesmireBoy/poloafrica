@@ -2,27 +2,32 @@
 
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
-#medley >*, #medley article:last-child>* {
+#medley>*, #medley article:last-child>* {
 	-ms-flex-item-align: start;
+	-webkit-align-self: flex-start;
 	align-self: flex-start;
 }
-@supports(flex-wrap: wrap) {
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
 	#medley #presslinks, #medley article:last-child {
 		display: -webkit-box;
 		display: -ms-flexbox;
+		display: -webkit-flex;
 		display: flex;
 	}
 }
 .flexwrap #medley #presslinks, .flexwrap #medley article:last-child {
 	display: -webkit-box;
 	display: -ms-flexbox;
+	display: -webkit-flex;
 	display: flex;
 }
 @media screen and (max-width: 667px) {
-	@supports(flex-wrap: wrap) {
+	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
 		.override img, .override section {
-			-webkit-box-flex: 0;
+			-webkit-box: 0;
+			-moz-box: 0;
 			-ms-flex: 0 0 100%;
+			-webkit-flex: 0 0 100%;
 			flex: 0 0 100%;
 			width: 100%;
 		}
@@ -31,8 +36,10 @@
 		}
 	}
 	.flexwrap img, .flexwrap section {
-		-webkit-box-flex: 0;
+		-webkit-box: 0;
+		-moz-box: 0;
 		-ms-flex: 0 0 100%;
+		-webkit-flex: 0 0 100%;
 		flex: 0 0 100%;
 		width: 100%;
 	}
@@ -43,19 +50,31 @@
 @media screen and (min-width: 890px) {
 	@supports(flex-wrap: wrap) {
 		#place article:nth-child(2), #scholars article:nth-child(4), #scholars article:last-child, #trust article:nth-child(2), #trust article:nth-child(4) {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
 			display: flex;
 		}
 	}
 	.flexwrap #place article:nth-child(2), .flexwrap #scholars article:nth-child(4), .flexwrap #scholars article:last-child, .flexwrap #trust article:nth-child(2), .flexwrap #trust article:nth-child(4) {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
 		display: flex;
 	}
 }
 @media screen and (min-width: 983px) {
 	@supports(flex-wrap: wrap) {
 		#medley article:nth-child(2) {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
 			display: flex;
 		}
 		.flexwrap #medley article:nth-child(2) {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
 			display: flex;
 		}
 	}
