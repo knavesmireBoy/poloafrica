@@ -1,4 +1,6 @@
-        article:nth-child(5) img {
+@import "flex_mod.css";
+@import "fullflex_mod.css";
+article:nth-child(5) img {
         	flex: 1 1 10em;
         	box-shadow: none;
         }

@@ -91,24 +91,24 @@ main ul li {
 	margin: 6px;
 	float: left;
 }
-main ul.gallery li {
+.gallery li {
 	width: 225px;
 	width: 176px;
 }
-main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
+.gallery li.portrait, .gallery li:nth-child(n+5) {
 	width: 146px;
 	width: 113px;
 }
-main ul.gallery li:nth-last-child(-n+4) {
+.gallery li:nth-last-child(-n+4) {
 	width: 176px;
 }
-main ul.gallery li:nth-child(5), main ul.gallery li:nth-child(11), main.alt ul.gallery li:nth-child(9) {
+.gallery li:nth-child(5), .gallery li:nth-child(11), .alt .gallery li:nth-child(9) {
 	clear: left;
 }
-main.alt ul.gallery li:nth-child(11) {
+.alt .gallery li:nth-child(11) {
 	clear: none;
 }
-main.alt ul.gallery li:nth-last-child(-n+2) {
+.alt .gallery li:nth-last-child(-n+2) {
 	display: none;
 }
 .js .showtime main ul li {
@@ -129,7 +129,7 @@ main ul li, .inplay main ul li.show, .showtime main>a, .no-js main>a {
 	top: 0em;
 	left: -9999px;
 }
-main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused, .js #exit {
+.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused, .js #exit {
 	position: relative;
 	left: auto;
 }
@@ -313,19 +313,19 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		width: 100%;
 	}
     
-	main ul.gallery {
+	.gallery {
 		padding: .5%;
 	}
-	main ul.gallery li {
+	.gallery li {
 		margin: .5%;
 	}
-	main ul.gallery li, main.alt ul.gallery li:nth-child(n+5), main.alt ul.gallery li.portrait {
+	.gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait {
 		width: 24%;
 	}
-	main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
+	.gallery li.portrait, .gallery li:nth-child(n+5) {
 		width: 15.66%;
 	}
-	main ul.gallery li:nth-last-child(-n+4) {
+	.gallery li:nth-last-child(-n+4) {
 		width: 24%;
 	}
 	.showtime main ul li {
@@ -389,28 +389,28 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents #wrap.inplay+footer {
 		background: url(../images/sil_bg.png) no-repeat 60% top;
 	}
-	.no-flexwrap main ul.gallery {
+	.no-flexwrap .gallery {
 		padding: 1vw;
 		padding: 1%;
 	}
-	.no-flexwrap main ul.gallery li {
+	.no-flexwrap .gallery li {
 		margin: 1.5%;
 		box-sizing: border-box;
 	}
-	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li {
+	.touchevents .gallery li, .touchevents .alt .gallery li {
 		width: 244px;
 		width: 40vw;
 		width: 47.2%;
 	}
-	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li:nth-child(n+5), .touchevents main.alt ul.gallery li.portrait {
+	.touchevents .gallery li, .touchevents .alt .gallery li:nth-child(n+5), .touchevents .alt .gallery li.portrait {
 		width: 47.2%;
 	}
-	.touchevents main ul.gallery li.portrait, .touchevents main ul.gallery li:nth-child(n+5) {
+	.touchevents .gallery li.portrait, .touchevents .gallery li:nth-child(n+5) {
 		width: 161px;
 		width: 26.2vw;
 		width: 30.8%;
 	}
-	.touchevents main ul.gallery li:nth-last-child(-n+4) {
+	.touchevents .gallery li:nth-last-child(-n+4) {
 		width: 47.2%;
 	}
 	.touchevents footer {

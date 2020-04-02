@@ -1,4 +1,6 @@
- .override article:last-child img {
+@import "flex_mod.css";
+@import "fullflex_mod.css";
+.override article:last-child img {
  	-webkit-box-flex: 1;
  	-ms-flex: 1 1 %;
  	flex: 1 1 1%;

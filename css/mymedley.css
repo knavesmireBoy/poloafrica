@@ -1,5 +1,5 @@
-@import "flex.css";
-@import "fullflex.css";
+@import "flex_mod.css";
+@import "fullflex_mod.css";
 .no-cssgrid #tvcoverage {
 	/*if not grid, block, NOT flex*/
 	display: block;
