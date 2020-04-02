@@ -1,10 +1,14 @@
 @import "flex_mod.css";
 main {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
+    display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 	-webkit-box-pack: center;
+	-moz-box-pack: center;
 	-ms-flex-pack: center;
+	-webkit-justify-content: center;
 	justify-content: center;
 }
 .no-touchevents main {
@@ -50,13 +54,14 @@ main ul {
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 .flexwrap main ul.gallery {
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
+display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 	-ms-flex-wrap: wrap;
-	flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
+    	flex-wrap: wrap;
 	/*override % from float layout*/
 	padding: 6px;
 }
@@ -135,9 +140,6 @@ main ul {
 
 @media only screen and (max-width: 667px) {
 	main {
-		-webkit-box-pack: center;
-		-ms-flex-pack: center;
-		justify-content: center;
 		padding: 2em 0 0 0;
 	}
 	.gallery li, .alt .gallery li.portrait, .alt .gallery li:nth-child(n+5) {
