@@ -103,10 +103,10 @@ form label {
 }
 #contactarea #dogs {
 	margin: 0;
-	position: static;
-	display: block;
+	position: relative;
 	width: 26%;
-	float: right;
+    left: 100%;
+    margin-left: -100%;
 	border: solid 1px white;
 }
 #contactarea fieldset:last-child input:last-child {
@@ -115,10 +115,9 @@ form label {
 }
 textarea {
 	border-width: 0;
-	width: 70%;
+	width: 71%;
 	height: 9.8vw;
 	height: 6.8em;
-	float: left;
 }
 #contactarea figure {
 	border: solid 1px;
@@ -172,6 +171,15 @@ article:nth-child(2) {
 	overflow:hidden;
 }
 */
+
+textarea, #contactarea #dogs {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+textarea {
+    margin: 0 1em 0 0;
+}
 
 h2 span {
 	background: white 0% 0% url(../images/sub_enq.jpg) no-repeat;
