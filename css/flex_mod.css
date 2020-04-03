@@ -66,6 +66,7 @@ html.js body img, html.no-js body img {
 	padding: .75em 1% .75rem 0;
 }
 /* fallback layout if javascript disabled AND @support NOT supported*/
+
 .no-js #wrap+footer {
 	display: block;
 }
@@ -79,6 +80,7 @@ html.js body img, html.no-js body img {
 	width: 40em;
 }
 /**/
+
 @media only screen and (max-width: 667px), only screen and (min-width: 1024px) {
 	/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
 	/*REMEMBER override class hardcoded in HTML*/
@@ -142,18 +144,17 @@ html.js body img, html.no-js body img {
 			padding: .75em 1% .75rem 0;
 		}
 	}
-}
-.flexwrap article {
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-}
-.flexwrap h3 {
-	border-bottom: solid 1px;
+	.flexwrap article {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	.flexwrap h3 {
+		border-bottom: solid 1px;
+	}
 }
 @media screen and (max-width: 667px) {
-  
 	article {
 		display: block;
 	}

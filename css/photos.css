@@ -18,34 +18,25 @@ main img, main ul {
 main img:hover {
 	border-color: indigo;
 }
-main>a {
-	border-top: 1vw solid transparent;
-	border-bottom: 1vw solid transparent;
-	position: relative;
-	margin: 1px;
-}
+
 main>* {
 	display: inline-block;
 	vertical-align: middle;
 }
-#gal_back {
-	border-right: 2vw solid crimson;
-}
-#gal_forward {
-	border-right: 0px solid;
-	border-left: 2vw solid transparent;
-	border-left-color: crimson;
-}
 main>a {
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
+	position: relative;
+	margin: 1px;
 }
 #gal_back {
 	border-right: 21px solid crimson;
 }
 #gal_forward {
+	border-right: 0px solid;
 	border-left: 21px solid crimson;
 }
+
 .no-touchevents #gal_back:hover {
 	border-right-color: royalblue;
 }

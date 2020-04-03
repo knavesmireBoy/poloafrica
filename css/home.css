@@ -38,9 +38,7 @@ h2 span {
 	}
 }
 @media screen and (max-width: 667px) {
-      .js body {
-        background: orange;
-    }
+
 	h2, h2 span {
 		background: none;
 	}

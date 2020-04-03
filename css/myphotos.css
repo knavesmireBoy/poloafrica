@@ -202,15 +202,6 @@ main ul {
 			grid-column: auto / span 6;
 		}
 	}
-	.no-touchevents #gal_back:hover {
-		border-right-color: royalblue;
-	}
-	.no-touchevents #gal_forward:hover {
-		border-left-color: royalblue;
-	}
-	.touchevents main.override>a:active {
-		background: royalblue;
-	}
 	.touchevents .showtime main {
 		padding: 3.5rem 2rem 0;
 	}
@@ -220,54 +211,56 @@ main ul {
 	.touchevents #exit {
 		top: 1rem;
 	}
-    	.flexbox main>a {
+    	.touchevents.flexbox main>a {
+            margin: 0 1%;
 		-webkit-box-flex: 1;
 		-ms-flex: 1 0 2em;
 		-webkit-flex: 1 0 2em;
 		flex: 1 0 2em;
-	}
-	.no-flexbox.flexboxlegacy main {
-		display: table;
-		border-spacing: 9px;
-	}
-	.no-flexbox.flexboxlegacy #gal_back, .no-flexbox.flexboxlegacy #gal_forward {
-		display: table-cell;
-		width: 2em;
-	}
-	.no-flexbox.flexboxlegacy main ul {
-		width: auto;
-	}
-	.flexbox #gal_back, .flexbox #gal_forward {
-		margin: 0 1%;
-		-ms-flex-item-align: stretch;
+        -ms-flex-item-align: stretch;
 		-webkit-align-self: stretch;
 		align-self: stretch;
 	}
-	.override #gal_back, .override #gal_forward {
+	
+	.touchevents #photos main>a {
 		border-width: 0;
 		background-color: hsla(349, 86%, 45%, 100);
         width: 2em;
 		overflow: hidden;
         position: relative;
 	}
-	main>a span {
+	.touchevents main>a span {
 		position: absolute;
 		top: 33%;
 		bottom: 33%;
 		display: block;
 		border: solid 1.1em rgb(240, 240, 245);
 	}
-	#gal_back:hover, #gal_forward:hover {
+	.touchevents #photos main>a:hover {
 		background-color: hsla(349, 86%, 30%, 100);
 	}
-	main>a:hover span {
+	.touchevents main>a:hover span {
 		border: solid 1em rgb(230, 230, 235);
 	}
-}
+}/*667*/
+
+
+
 @media only screen and (max-width: 480px) {
+    /*fix for ipod*/
+    .touchevents.no-flexbox.flexboxlegacy main ul {
+		width: auto;
+	}
+    .touchevents.no-flexbox.flexboxlegacy main {
+		display: table;
+		border-spacing: 9px;
+	}
+	.touchevents.no-flexbox.flexboxlegacy #gal_back, .no-flexbox.flexboxlegacy #gal_forward {
+		display: table-cell;
+		width: 2em;
+	}
 
 }
-/*667*/
 
 @media only screen and (max-width: 480px) and (orientation: portrait) {
 	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {

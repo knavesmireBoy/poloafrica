@@ -21,34 +21,7 @@
 	display: -webkit-flex;
 	display: flex;
 }
-@media screen and (max-width: 667px) {
-    /*
-	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-		.override img, .override section {
-			-webkit-box: 0;
-			-moz-box: 0;
-			-ms-flex: 0 0 100%;
-			-webkit-flex: 0 0 100%;
-			flex: 0 0 100%;
-			width: 100%;
-		}
-		.override img, {
-			border-bottom: solid 1px white;
-		}
-	}
-	.flexwrap img, .flexwrap section {
-		-webkit-box: 0;
-		-moz-box: 0;
-		-ms-flex: 0 0 100%;
-		-webkit-flex: 0 0 100%;
-		flex: 0 0 100%;
-		width: 100%;
-	}
-	.flexwrap main img {
-		border-bottom: solid 1px white;
-	}
-    */
-}
+
 @media screen and (min-width: 890px) {
 	@supports(flex-wrap: wrap) {
 		#place article:nth-child(2), #scholars article:nth-child(4), #scholars article:last-child, #trust article:nth-child(2), #trust article:nth-child(4) {

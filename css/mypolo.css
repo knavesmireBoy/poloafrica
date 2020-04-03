@@ -1,23 +1,6 @@
 @import "flex_mod.css";
 @import "fullflex_mod.css";
-.no-cssgrid article:first-child {
-		display: block;
-}
-    .no-cssgrid h2 {
-        border: 0px;
-    }
 
-.no-cssgrid article:first-child img {
-	clear: both;
-	margin: 1em 0;
-	width: auto;
-}
-.no-cssgrid article:first-child section {
-    width: 71%;
-}
-.no-cssgrid article:first-child img {
-	float: right;
-}
     
 /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
 @media screen and (max-width: 667px) {
@@ -136,7 +119,6 @@
     }
 }
 
-@media screen and (min-width: 1025px) {    
 
 @supports(column-gap: 20px) {
 	article:first-child {
@@ -167,4 +149,3 @@
 	}
 }
     
-}
