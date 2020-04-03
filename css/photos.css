@@ -24,33 +24,33 @@ main>a {
 	position: relative;
 	margin: 1px;
 }
-main > * {
-    display: inline-block;
-    vertical-align: middle;
+main>* {
+	display: inline-block;
+	vertical-align: middle;
 }
 #gal_back {
-	border-right: 2vw solid #444;
+	border-right: 2vw solid crimson;
 }
 #gal_forward {
 	border-right: 0px solid;
 	border-left: 2vw solid transparent;
-	border-left-color: #444;
+	border-left-color: crimson;
 }
 main>a {
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
 }
 #gal_back {
-	border-right: 21px solid #444;
+	border-right: 21px solid crimson;
 }
 #gal_forward {
-	border-left: 21px solid #444;
+	border-left: 21px solid crimson;
 }
 .no-touchevents #gal_back:hover {
-	border-right-color: silver;
+	border-right-color: royalblue;
 }
 .no-touchevents #gal_forward:hover {
-	border-left-color: silver;
+	border-left-color: royalblue;
 }
 /*main ul li, */
 
@@ -68,15 +68,14 @@ main img {
 }
 main ul {
 	padding: 6px;
-    text-align: center;
+	text-align: center;
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
-    -webkit-transition: width 1s ease-in-out;
+	-webkit-transition: width 1s ease-in-out;
 	-o-transition: width 1s ease-in-out;
 	transition: width 1s ease-in-out;
-    overflow: hidden;
+	overflow: hidden;
 }
-
 .showtime main ul {
 	padding: 12px;
 }
@@ -149,8 +148,8 @@ footer {
 	background: url("../images/sticks_sprite_fat.png") no-repeat;
 	background-position: 50% 0%;
 	background-size: 100%;
-    /*override nav block*/
-    border: 0;
+	/*override nav block*/
+	border: 0;
 }
 .js #exit {
 	background-color: white
@@ -306,26 +305,24 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	margin: -1px 0px 0px 5em;
 }
 @media only screen {
-  
 	/*li.width/ul.width(-ul.padding)*/
 	#wrap {
 		max-width: 80em;
 		width: 100%;
 	}
-    
-	.gallery {
+	ul.gallery {
 		padding: .5%;
 	}
-	.gallery li {
+	ul.gallery li {
 		margin: .5%;
 	}
-	.gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait {
+	ul.gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait {
 		width: 24%;
 	}
-	.gallery li.portrait, .gallery li:nth-child(n+5) {
-		width: 15.66%;
+	ul.gallery li:nth-child(n+5), ul.gallery li.portrait {
+		width: 15.6%;
 	}
-	.gallery li:nth-last-child(-n+4) {
+	ul.gallery li:nth-last-child(-n+4) {
 		width: 24%;
 	}
 	.showtime main ul li {
@@ -341,13 +338,11 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		transform: rotate(360deg);
 	}
 }
-
 @media only screen and (-ms-high-contrast: none) {
-  
-    main ul {
-        width: 90%;
-        margin: 0%;
-    }
+	main ul {
+		width: 90%;
+		margin: 0%;
+	}
 }
 @media only screen and (max-width: 1024px) {
 	main ul.portrait {
@@ -360,6 +355,12 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 @media only screen and (max-width: 667px) {
+	main ul {
+		width: 80%;
+	}
+	main {
+		padding: 2em 0 0 0;
+	}
 	h2 {
 		text-shadow: 2px 2px 2px black;
 	}
@@ -370,14 +371,6 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents #wrap .showtime main {
 		display: block;
 	}
-	/*
-    .js main>a {
-	border-top: 2vw solid;
-	border-bottom: 2vw solid;
-	border-color: transparent;
-    color: #444;
-}
-    */
 	.touchevents #controls {
 		font-size: 1.3em;
 	}
@@ -394,25 +387,25 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		padding: 1vw;
 		padding: 1%;
 	}
-	.no-flexwrap .gallery li {
+	.no-flexwrap ul.gallery li {
 		margin: 1.5%;
 		box-sizing: border-box;
 	}
 	.touchevents .gallery li, .touchevents .alt .gallery li {
 		width: 244px;
 		width: 40vw;
-		width: 47.2%;
 	}
-	.touchevents .gallery li, .touchevents .alt .gallery li:nth-child(n+5), .touchevents .alt .gallery li.portrait {
-		width: 47.2%;
+	/*NOTE li:nth-child(n+1) deployed as a convenient way override*/
+	.touchevents .gallery li, .touchevents .alt .gallery li:nth-child(n+1), .touchevents .alt .gallery li.portrait {
+		width: 47.5%;
 	}
 	.touchevents .gallery li.portrait, .touchevents .gallery li:nth-child(n+5) {
 		width: 161px;
 		width: 26.2vw;
-		width: 30.8%;
+		width: 30.7%;
 	}
 	.touchevents .gallery li:nth-last-child(-n+4) {
-		width: 47.2%;
+		width: 47.5%;
 	}
 	.touchevents footer {
 		-webkit-transition: background-position 2s ease;
@@ -425,23 +418,10 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.showtime main ul {
 		margin: 0;
 	}
-	.touchevents main>a:link {
-		color: transparent;
-	}
-	.touchevents main>a {
-		border-top: 1em solid transparent;
-		border-bottom: 1em solid transparent;
-	}
-	.touchevents #gal_back {
-		border-right: 2em solid #444;
-	}
-	.touchevents #gal_forward {
-		border-left: 2em solid #444;
-	}
 }
 /* do min width to save .override h2 */
+
 @media only screen and (min-width: 668px) {
-	
 	h2 {
 		/*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
 		background: none;
@@ -449,9 +429,9 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		text-shadow: none;
 		margin: 0;
 	}
-    h2:hover {
-        color: white;
-    }
+	h2:hover {
+		color: white;
+	}
 	.showtime h2 {
 		display: none;
 	}

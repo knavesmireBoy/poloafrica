@@ -2,6 +2,8 @@
 	text-indent: -2.2em;
 	padding: 0 0 0 2.8em;
 	line-height: 1.2;
+    text-indent: 0;
+    padding: 0 0 0 0;
 }
 
 #presslinks section, article:last-child section  {
@@ -11,6 +13,7 @@ article:last-child nav ul {
 	text-indent: -.8em;
 	padding: 0 0 0 1em;
 	line-height: 1.2;
+	line-height: 1;
 }
 
 #presslinks nav {
@@ -19,6 +22,20 @@ article:last-child nav ul {
 article:last-child nav li::before {
 	content: '» ';
 }
+#presslinks nav li {
+    padding: 0 0 1em 2.5em;
+    margin: 0;  
+    background: url("../images/pdf.png") no-repeat top left;
+    background-size: 2.5%;
+}
+
+#presslinks nav li:first-child, #presslinks nav li:nth-child(4), #presslinks nav li:nth-child(6), #presslinks nav li:nth-child(7), #presslinks nav li:nth-child(8) {
+	background-image: url("../images/pointer.png");
+}
+#presslinks nav li:nth-child(12) {
+	background-image: url("../images/plain.png");
+}
+/*
 #presslinks nav li::before {
 	content: '';
 	display: inline-block;
@@ -26,26 +43,28 @@ article:last-child nav li::before {
 	width: 1.4em;
     padding: 2px 0;
 	background-size: cover;
-	background-image: url("../images/pdf.png");
-	background-repeat: no-repeat;
+	background: red url("../images/pdf.png") no-repeat left top;
 	margin-right: 10px;
-	background-position: center center;
-	vertical-align: middle;
+	vertical-align: top;
 }
+
 #presslinks nav li:first-child::before, #presslinks nav li:nth-child(4)::before, #presslinks nav li:nth-child(6)::before, #presslinks nav li:nth-child(7)::before, #presslinks nav li:nth-child(8)::before {
-	background-image: url("../images/pointer.png");
+	background: url("../images/pointer.png") no-repeat;
     background-size: 140%;
 }
+
 #presslinks nav li:nth-child(12)::before {
-	background-image: url("../images/plain.png");
+	background: url("../images/plain.png") no-repeat;
     background-size: 125%;
 }
+#presslinks nav li:nth-child(12):hover::before {
+	background-position: 100% 0;
+}
+*/
 #presslinks p, article:last-child p {
 	line-height: 1.3;
 }
-#presslinks nav ul li {
-	margin: 0 0 .75em 0;
-}
+
 #presslinks nav ul li a {
 	border: solid 1px;
 	border-width: 0 0 1px 0;

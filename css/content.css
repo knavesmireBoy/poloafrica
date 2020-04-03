@@ -16,6 +16,10 @@ body {
 .no-js body {
 	background-color: mintcream;
 }
+#wrap .override img{
+    border-radius: 4px;
+    box-shadow: 0px 0px 4px #990;
+}
 header {
 	background-image: url(../images/header.png);
 	background-repeat: no-repeat;
@@ -193,6 +197,7 @@ h2 span {
 	h2:hover, h2:active {
 		color: azure;
 	}
+
 	nav#main_nav #nav {
 		font: bold 1em/2  "Arial Back", Arial, Verdana, Helvetica, sans-serif;
 	}

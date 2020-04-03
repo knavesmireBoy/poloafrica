@@ -1,23 +1,21 @@
 @import "flex_mod.css";
 main {
-    display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-	-webkit-box-pack: center;
-	-moz-box-pack: center;
-	-ms-flex-pack: center;
-	-webkit-justify-content: center;
-	justify-content: center;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
 }
 .no-touchevents main {
+	-moz-box-align: center;
 	-webkit-box-align: center;
 	-ms-flex-align: center;
+	-webkit-align-items: center;
 	align-items: center;
 }
 .gallery li {
 	-ms-flex-item-align: start;
+	-webkit-align-self: flex-start;
 	align-self: flex-start;
 }
 .gallery li, .alt .gallery li.portrait, .alt .gallery li:nth-child(n+5) {
@@ -36,17 +34,15 @@ main {
 
 main>a {
 	-webkit-box-flex: 1;
-	-ms-flex: 1 0 24px;
-	flex: 1 0 24px;
+	-ms-flex: 1 0 1em;
+	-webkit-flex: 1 0 1em;
+	flex: 1 0 1em;
 }
 main ul {
 	-webkit-box-flex: 16;
 	-ms-flex: 16 1 auto;
+	-webkit-flex: 16 1 auto;
 	flex: 16 1 auto;
-}
-.flexboxlegacy main>* {
-	display: block;
-	/*fix for ios safari ipod */
 }
 .showtime main.override {
 	display: block;
@@ -54,14 +50,14 @@ main ul {
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 .flexwrap main ul.gallery {
-display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
 	-ms-flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
-    	flex-wrap: wrap;
+	flex-wrap: wrap;
 	/*override % from float layout*/
 	padding: 6px;
 }
@@ -83,10 +79,10 @@ display: -webkit-box;
 		/*override % from float layout*/
 		padding: 6px;
 	}
-    .override .gallery li {
-	margin: 0;
-	border: 6px solid white;
-}
+	.override .gallery li {
+		margin: 0;
+		border: 6px solid white;
+	}
 }
 @supports(column-gap: 20px) {
 	main {
@@ -206,18 +202,14 @@ display: -webkit-box;
 			grid-column: auto / span 6;
 		}
 	}
-	main>a {
-		border-width: 0;
-		background: blue;
-	}
 	.no-touchevents #gal_back:hover {
-		border-right-color: silver;
+		border-right-color: royalblue;
 	}
 	.no-touchevents #gal_forward:hover {
-		border-left-color: silver;
+		border-left-color: royalblue;
 	}
 	.touchevents main.override>a:active {
-		background: blue;
+		background: royalblue;
 	}
 	.touchevents .showtime main {
 		padding: 3.5rem 2rem 0;
@@ -228,6 +220,52 @@ display: -webkit-box;
 	.touchevents #exit {
 		top: 1rem;
 	}
+    	.flexbox main>a {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 0 2em;
+		-webkit-flex: 1 0 2em;
+		flex: 1 0 2em;
+	}
+	.no-flexbox.flexboxlegacy main {
+		display: table;
+		border-spacing: 9px;
+	}
+	.no-flexbox.flexboxlegacy #gal_back, .no-flexbox.flexboxlegacy #gal_forward {
+		display: table-cell;
+		width: 2em;
+	}
+	.no-flexbox.flexboxlegacy main ul {
+		width: auto;
+	}
+	.flexbox #gal_back, .flexbox #gal_forward {
+		margin: 0 1%;
+		-ms-flex-item-align: stretch;
+		-webkit-align-self: stretch;
+		align-self: stretch;
+	}
+	.override #gal_back, .override #gal_forward {
+		border-width: 0;
+		background-color: hsla(349, 86%, 45%, 100);
+        width: 2em;
+		overflow: hidden;
+        position: relative;
+	}
+	main>a span {
+		position: absolute;
+		top: 33%;
+		bottom: 33%;
+		display: block;
+		border: solid 1.1em rgb(240, 240, 245);
+	}
+	#gal_back:hover, #gal_forward:hover {
+		background-color: hsla(349, 86%, 30%, 100);
+	}
+	main>a:hover span {
+		border: solid 1em rgb(230, 230, 235);
+	}
+}
+@media only screen and (max-width: 480px) {
+
 }
 /*667*/
 

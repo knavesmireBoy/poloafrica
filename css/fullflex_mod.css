@@ -22,6 +22,7 @@
 	display: flex;
 }
 @media screen and (max-width: 667px) {
+    /*
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
 		.override img, .override section {
 			-webkit-box: 0;
@@ -46,6 +47,7 @@
 	.flexwrap main img {
 		border-bottom: solid 1px white;
 	}
+    */
 }
 @media screen and (min-width: 890px) {
 	@supports(flex-wrap: wrap) {

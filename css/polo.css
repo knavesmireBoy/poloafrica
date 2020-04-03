@@ -1,11 +1,3 @@
-.override article:nth-child(1) img {
-	clear: both;
-	margin: 1em 0 1em 2em;
-	width: auto;
-}
-.override article:nth-child(1) img {
-	float: right;
-}
 h2 span {
 	background: white 0% 0% url(../images/sub_polo.jpg) no-repeat;
 }
@@ -15,7 +7,7 @@ h2 span {
 	}
 }
 @media screen and (max-width: 667px) {
-	.no-js article:nth-child(1) .read-more-trigger:before {
+	.no-js article:first-child .read-more-trigger:before {
 		content: "Facilities";
 	}
 	.no-js article:nth-child(2) .read-more-trigger:before {
@@ -27,7 +19,7 @@ h2 span {
 	.no-js article:nth-child(4) .read-more-trigger:before {
 		content: "Your polo day";
 	}
-	.override article:nth-child(1) {
+	.override article:first-child {
 		flex-direction: column;
 	}
 	.js .override article.show img {
