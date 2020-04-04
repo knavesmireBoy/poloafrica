@@ -25,15 +25,18 @@ article:last-child nav li::before {
 #presslinks nav li {
     padding: 0 0 1em 2.5em;
     margin: 0;  
-    background: url("../images/pdf.png") no-repeat top left;
-    background-size: 2.5%;
+    background: url("../images/pdf_sprite.png") no-repeat 0 0/3%;   
+}
+
+#presslinks nav li:hover {
+    background-position: 0 110%;
 }
 
 #presslinks nav li:first-child, #presslinks nav li:nth-child(4), #presslinks nav li:nth-child(6), #presslinks nav li:nth-child(7), #presslinks nav li:nth-child(8) {
-	background-image: url("../images/pointer.png");
+	background: url("../images/pointer_sprite.png") no-repeat 0 0/4.5%;
 }
 #presslinks nav li:nth-child(12) {
-	background-image: url("../images/plain.png");
+	background: url("../images/plain_sprite.png") no-repeat 0 0/4%;
 }
 /*
 #presslinks nav li::before {

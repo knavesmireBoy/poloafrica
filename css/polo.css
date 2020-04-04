@@ -1,19 +1,19 @@
 h2 span {
 	background: white 0% 0% url(../images/sub_polo.jpg) no-repeat;
 }
-.override article:first-child {
+.no-cssgrid article:first-child {
     display: block;
 }
 
-.override article:first-child img {
+.no-cssgrid article:first-child img {
 	clear: both;
 	margin: 1em 0 0 2em;
 	width: auto;
 }
-.override article:first-child section {
+.no-cssgrid article:first-child section {
     width: 71%;
 }
-.override article:first-child img {
+.no-cssgrid article:first-child img {
 	float: right;
 }
 @media only screen {
