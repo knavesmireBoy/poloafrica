@@ -25,7 +25,8 @@
 h2 span {
 	background: white 0% 0% url(../images/sub_home.jpg) no-repeat;
 }
-@media screen {
+@media only screen {
+    
 	h2 span {
 		background: white 0% 0% url(../images/sub_home.png) no-repeat;
 		background-size: contain;
@@ -77,11 +78,6 @@ h2 span {
 	}
 }
 @media only screen and (max-width: 410px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
-	.override article h3, article:first-child label {
-		line-height: normal;
-	}
-}
-@media only screen and (max-width: 325px) {
 	.override article h3, article:first-child label {
 		line-height: normal;
 	}

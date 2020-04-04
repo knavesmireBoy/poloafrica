@@ -148,6 +148,7 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
+
     
     #wrap .override img {
     border-radius: 0px;
@@ -250,6 +251,7 @@ header h1, header h1 img, h2 span {
 	article, .override section {
 		margin: 0;
 	}
+
 	.read-more-trigger:before, .no-js article:first-of-type .read-more-state:checked~.read-more-trigger:before {
 		display: block;
 	}
@@ -302,6 +304,7 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media only screen and (max-width: 568px) {
+
 	header h1 {
 		padding: 0 0 8.5vw 0;
 	}
@@ -316,6 +319,7 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media only screen and (max-width: 480px) {
+    
 	header h1, h2 span {
 		width: 58vw;
 	}
@@ -380,7 +384,7 @@ header h1, header h1 img, h2 span {
 		width: 13rem;
 	}
 }
-@media screen and (-ms-high-contrast: none){
+@media only screen and (-ms-high-contrast: none){
 
 .touchevents footer {
 		background: url(../images/sil_bg.png) no-repeat top center;

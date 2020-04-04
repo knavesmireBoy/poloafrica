@@ -190,10 +190,7 @@ h2 span {
 /*@media screen and (max-width: 667px)/*, (not (-ms-high-contrast: none)) {*/
 
 @media only screen and (max-width: 667px){
-	.js #wrap body {
-		margin: 0;
-        background: red;
-	}
+
 	h2:hover, h2:active {
 		color: azure;
 	}
@@ -201,6 +198,9 @@ h2 span {
 	nav#main_nav #nav {
 		font: bold 1em/2  "Arial Back", Arial, Verdana, Helvetica, sans-serif;
 	}
+        .js body {
+        background-color: blueviolet;
+    }
 	footer {
 		background: url(../images/sil_bg.png) no-repeat top center;
 		background-size: cover;

@@ -1,4 +1,10 @@
 .js body {
+    background-color: white;
+}
+
+#photos #wrap main {
+	text-align: center;
+    margin: 0 auto;
 }
 #nav li:nth-child(3){
     *width: 118px;
@@ -16,7 +22,19 @@ main ul {
     width: 754px;
 }
 
-main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
+main ul.portrait {
+    width: auto;
+}
+
+article {
+    clear: left;
+}
+
+main ul.gallery li {
+ width: 176px;   
+}
+
+main .gallery li.portrait, main .gallery li:nth-child(n+5) {
 	width: 146px;
 	width: 113px;
 }
@@ -28,10 +46,21 @@ main ul.gallery li:nth-last-child(-n+4) {
     vertical-align: middle;
 }
 
+#wrap h2 {
+    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+    background-image: none;
+    color: white;
+    margin: 0;
+	}
+
+#wrap h2:hover {
+    color: white; 
+}
+
 #photos main > a {
     *width: 2em;
     *height: 2em;
-    *background: #444;
+    *background: crimson;
 }
 
 #photos main li a {
@@ -40,9 +69,9 @@ main ul.gallery li:nth-last-child(-n+4) {
     _background: none;
 }
 
-	.showtime h2 {
+.showtime h2 {
 		display: none;
-	}
+}
 .js #exit {
     width: 2.3em;
     height: 2.3em;
@@ -81,10 +110,10 @@ main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, fo
 }
 
 #gal_back {
-	*border-right: 2px solid #444;
+	*border-right: 2px solid crimson;
 }
 #gal_forward {
-	*border-left: 2px solid #444;
+	*border-left: 2px solid crimson;
 }
 
 #nav li a {

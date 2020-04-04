@@ -14,22 +14,23 @@ html.js body img, html.no-js body img {
 	display: flex;
 }
 #wrap+footer #footer_girl {
-	-webkit-box-flex: 13;
-	-ms-flex: 13 10 5em;
-	-webkit-flex: 13 10 5em;
-	flex: 13 10 5em;
+	-webkit-box-flex: 20;
+	-ms-flex: 20 1 auto;
+	-webkit-flex: 20 1 auto;
+	flex: 20 1 auto;
 }
 #wrap+footer #fb {
 	-webkit-box-flex: 1;
-	-ms-flex: 1 1 2em;
-	flex: 1 1 2em;
-}
+	-ms-flex: 1 1 6em;
+	-webkit-flex: 1 1 6em;
+	flex: 1 1 6em;
+        }
 #wrap+footer>a {
 	-webkit-box-flex: 0;
-	-ms-flex: 0 0 99%;
-	-webkit-flex: 0 0 99%;
-	flex: 0 0 99%;
-}
+	-ms-flex: 0 0 98%;
+	-webkit-flex: 0 0 98%;
+	flex: 0 0 98%;
+}   
 #wrap+footer {
 	-ms-flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
@@ -46,7 +47,7 @@ html.js body img, html.no-js body img {
 	#wrap+footer #fb {
 		margin: 0 .7em .5rem 0;
 		left: 0;
-		min-width: 7em;
+		min-width: 6em;
 	}
 	#wrap+footer>a {
 		margin: 0;
@@ -82,6 +83,9 @@ html.js body img, html.no-js body img {
 /**/
 
 @media only screen and (max-width: 667px), only screen and (min-width: 1024px) {
+    .js body {
+      background-color: white;
+    }
 	/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
 	/*REMEMBER override class hardcoded in HTML*/
 	article:nth-child(odd) {

@@ -1,22 +1,22 @@
 h2 span {
 	background: white 0% 0% url(../images/sub_polo.jpg) no-repeat;
 }
-article:first-child {
-		display: block;
+.override article:first-child {
+    display: block;
 }
 
-article:first-child img {
+.override article:first-child img {
 	clear: both;
 	margin: 1em 0 0 2em;
 	width: auto;
 }
-article:first-child section {
+.override article:first-child section {
     width: 71%;
 }
-article:first-child img {
+.override article:first-child img {
 	float: right;
 }
-@media screen {
+@media only screen {
 	h2 span {
 		background: white 0% 0%/contain url(../images/sub_polo.png) no-repeat;
 	}

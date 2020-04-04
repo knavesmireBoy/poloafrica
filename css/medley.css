@@ -135,7 +135,7 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 h2 span {
 	background: white 0% 0% url(../images/sub_medley.jpg) no-repeat;
 }
-@media screen {
+@media only screen {
 	h2 span {
 		background: white 0% 0% url(../images/sub_medley.png) no-repeat;
         background-size: contain;

@@ -74,8 +74,8 @@ li#slide, li#paused, li#base {
 	display: block;
 	opacity: 1;
 }
-.no-js main ul li, .no-flexbox main ul li {
-	width: 249px;
+.no-js main li, .no-flexbox main li {
+	width: 176px;
 }
 main ul li {
 	margin: 6px;
@@ -295,8 +295,8 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	border-top: 12px solid #cc6;
 	margin: -1px 0px 0px 5em;
 }
+
 @media only screen {
-	/*li.width/ul.width(-ul.padding)*/
 	#wrap {
 		max-width: 80em;
 		width: 100%;
@@ -329,12 +329,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		transform: rotate(360deg);
 	}
 }
-@media only screen and (-ms-high-contrast: none) {
-	main ul {
-		width: 90%;
-		margin: 0%;
-	}
-}
+
 @media only screen and (max-width: 1024px) {
 	main ul.portrait {
 		margin: 0 20%;
