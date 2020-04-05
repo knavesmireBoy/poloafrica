@@ -100,11 +100,7 @@ footer {
 	margin: -10.1em auto 0;
 	width: 100%;
 }
-#fb {
-	margin: 0 0 .75em -49.5em;
-	width: 7em;
-	left: 100%;
-}
+
 footer div {
 	display: inline-block;
 	vertical-align: bottom;
@@ -120,6 +116,11 @@ footer div img {
 #footer_girl a:first-child {
 	width: 9em;
 	margin: 0 0 -1.5em 0;
+}
+#fb {
+	margin: 0 0 .75em -49.5em;
+	width: 7em;
+	left: 100%;
 }
 footer a:link {
 	display: inline-block;
@@ -146,12 +147,12 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
-
+   
     
     #wrap .override img {
     border-radius: 0px;
     box-shadow: none;
-}
+    }
 	.touchevents body {
 		margin: 0;
 	}

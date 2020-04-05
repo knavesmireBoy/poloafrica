@@ -1,5 +1,3 @@
-/*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
-
 /*https://stackoverflow.com/questions/36822370/flexbox-on-ie11-image-stretched-for-no-reason/36828291*/
 
 html.js body img, html.no-js body img {
@@ -7,87 +5,8 @@ html.js body img, html.no-js body img {
 	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
 }
-#wrap+footer {
-	/*display: -webkit-box; ipod not resizing on orientation*/
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-}
-#wrap+footer #footer_girl {
-	-webkit-box-flex: 20;
-	-ms-flex: 20 1 auto;
-	-webkit-flex: 20 1 auto;
-	flex: 20 1 auto;
-}
-#wrap+footer #fb {
-	-webkit-box-flex: 1;
-	-ms-flex: 1 1 6em;
-	-webkit-flex: 1 1 6em;
-	flex: 1 1 6em;
-        }
-#wrap+footer>a {
-	-webkit-box-flex: 0;
-	-ms-flex: 0 0 98%;
-	-webkit-flex: 0 0 98%;
-	flex: 0 0 98%;
-}   
-#wrap+footer {
-	-ms-flex-wrap: wrap;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	-webkit-box-align: end;
-	-ms-flex-align: end;
-	-webkit-align-items: flex-end;
-	align-items: flex-end;
-}
-@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-	#wrap+footer #footer_girl {
-		margin: 0 0 .25rem 1rem;
-	}
-	#wrap+footer #fb {
-		margin: 0 .7em .5rem 0;
-		left: 0;
-		min-width: 6em;
-	}
-	#wrap+footer>a {
-		margin: 0;
-		padding: .75em 1% .75rem 0;
-	}
-}
-.flexwrap #wrap+footer #footer_girl {
-	margin: 0 0 .25rem 1rem;
-}
-.flexwrap #wrap+footer #fb {
-	margin: 0 1em .5rem 0;
-	left: 0;
-	min-width: 6em;
-}
-.flexwrap #wrap+footer>a {
-	margin: 0;
-	padding: .75em 1% .75rem 0;
-}
-/* fallback layout if javascript disabled AND @support NOT supported*/
 
-.no-js #wrap+footer {
-	display: block;
-}
-.no-js #wrap+footer #fb {
-	margin: 0 0 .75em -49.5em;
-	width: 7em;
-	left: 100%;
-}
-.no-js #wrap+footer #footer_girl {
-	margin: 0 0 .75em 1em;
-	width: 40em;
-}
-/**/
-
-/*@media only screen and (max-width: 667px), only screen and (min-width: 1024px) {*/
-    @media only screen and (min-width: 1024px) {
-    .js body {
-      background-color: white;
-    }
-	/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
+/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
 	/*REMEMBER override class hardcoded in HTML*/
 	article:nth-child(odd) {
 		-webkit-box-orient: horizontal;
@@ -104,13 +23,14 @@ html.js body img, html.no-js body img {
 	}
 	article section {
 		-webkit-box-flex: 6;
-		-ms-flex  : 6 1 1%;
+		-ms-flex: 6 1 1%;
 		-webkit-flex: 6 1 1%;
 		flex: 6 1 1%;
 	}
 	article>img {
 		-webkit-box-flex: 4;
 		-ms-flex: 4 1 1%;
+		-webkit-flex: 4 1 1%;
 		flex: 4 1 1%;
 	}
 	article {
@@ -121,42 +41,71 @@ html.js body img, html.no-js body img {
 		-webkit-flex-wrap: wrap;
 		flex-wrap: wrap;
 	}
-	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
-	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
-		p:first-of-type {
-			margin: 0;
-		}
-		/* by default the border will run up to the floating image, we choose to enable it on flexwrap support*/
-		h3 {
-			border-bottom: solid 1px;
-		}
-		article, .no-js #wrap+footer {
-			display: -webkit-box;
-			display: -webkit-flex;
-			display: -ms-flexbox;
-			display: flex;
-		}
-		.no-js #wrap+footer #footer_girl {
-			margin: 0 0 .25rem 1rem;
-		}
-		.no-js #wrap+footer #fb {
-			margin: 0 1em .5rem 0;
-			left: 0;
-			min-width: 6em;
-		}
-		.no-js #wrap+footer>a {
-			margin: 0;
-			padding: .75em 1% .75rem 0;
-		}
-	}
-	.flexwrap article {
-		display: -webkit-box;
+
+#wrap+footer #footer_girl {
+	-webkit-box-flex: 20;
+	-ms-flex: 20 1 auto;
+	-webkit-flex: 20 1 auto;
+	flex: 20 1 auto;
+    width: auto;
+}
+#wrap+footer #fb {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 6em;
+	-webkit-flex: 1 1 6em;
+	flex: 1 1 6em;
+}
+#wrap+footer>a {
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 98%;
+	-webkit-flex: 0 0 98%;
+	flex: 0 0 98%;
+}
+#wrap+footer {
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	-webkit-align-items: flex-end;
+	align-items: flex-end;
+}
+.flexwrap #wrap+footer {
+	/*display: -webkit-box; ipod not resizing on orientation*/
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.flexwrap #wrap+footer #footer_girl {
+	margin: 0 0 .25rem 1rem;
+}
+.flexwrap #wrap+footer #fb {
+	margin: 0 .7em .5rem 0;
+	left: 0;
+	min-width: 6em;
+}
+.flexwrap #wrap+footer>a {
+	margin: 0;
+	padding: .75em 1% .75rem 0;
+}
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+	#wrap+footer:first-of-type {
+		/*display: -webkit-box; ipod not resizing on orientation*/
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
 	}
-	.flexwrap h3 {
-		border-bottom: solid 1px;
+	#wrap+footer:first-of-type #footer_girl {
+		margin: 0 0 .25rem 1rem;
+	}
+	#wrap+footer:first-of-type #fb {
+		margin: 0 .7em .5rem 0;
+		left: 0;
+		min-width: 6em;
+	}
+	#wrap+footer:first-of-type>a {
+		margin: 0;
+		padding: .75em 1% .75rem 0;
 	}
 }
 @media screen and (max-width: 667px) {
@@ -194,5 +143,41 @@ html.js body img, html.no-js body img {
 	}
 	.flexwrap #wrap+footer>a {
 		padding: .75em 2% .75em 0;
+	}
+}
+/*IF js disbaled and feature queries not supported what to do?*/
+
+
+@media only screen and (min-width: 1024px) {
+	.js body {
+		background-color: white;
+	}
+	.flexwrap article {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	.flexwrap h3 {
+		border-bottom: solid 1px;
+	}
+	.flexwrap p:first-of-type {
+		margin: 0;
+	}
+	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
+	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+		p:first-of-type {
+			margin: 0;
+		}
+		/* by default the border will run up to the floating image, we choose to enable it on flexwrap support*/
+		h3 {
+			border-bottom: solid 1px;
+		}
+		article {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			display: flex;
+		}
 	}
 }

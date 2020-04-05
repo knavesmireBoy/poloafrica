@@ -62,12 +62,11 @@ main ul {
 	padding: 6px;
 }
 /*REPLACE margin with border to support earlier FIREFOX */
-
 .flexwrap .override .gallery li {
 	margin: 0;
 	border: 6px solid white;
 }
-@supports (flex-wrap: wrap) {
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
 	main ul.gallery {
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -156,7 +155,7 @@ main ul {
 		-webkit-flex: 3 1 40%;
 		flex: 3 1 40%;
 	}
-	@supports (column-gap: 20px) {
+	@supports (column-gapp: 20px) {
 		.override .gallery {
 			display: grid;
 			grid-gap: .75em;
