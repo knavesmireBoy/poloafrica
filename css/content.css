@@ -198,9 +198,7 @@ h2 span {
 	nav#main_nav #nav {
 		font: bold 1em/2  "Arial Back", Arial, Verdana, Helvetica, sans-serif;
 	}
-        .js body {
-        background-color: blueviolet;
-    }
+
 	footer {
 		background: url(../images/sil_bg.png) no-repeat top center;
 		background-size: cover;

@@ -82,7 +82,8 @@ html.js body img, html.no-js body img {
 }
 /**/
 
-@media only screen and (max-width: 667px), only screen and (min-width: 1024px) {
+/*@media only screen and (max-width: 667px), only screen and (min-width: 1024px) {*/
+    @media only screen and (min-width: 1024px) {
     .js body {
       background-color: white;
     }
@@ -103,7 +104,7 @@ html.js body img, html.no-js body img {
 	}
 	article section {
 		-webkit-box-flex: 6;
-		-ms-flex: 6 1 1%;
+		-ms-flex  : 6 1 1%;
 		-webkit-flex: 6 1 1%;
 		flex: 6 1 1%;
 	}
@@ -121,7 +122,7 @@ html.js body img, html.no-js body img {
 		flex-wrap: wrap;
 	}
 	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
-	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
 		p:first-of-type {
 			margin: 0;
 		}
