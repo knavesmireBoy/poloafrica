@@ -120,13 +120,13 @@
 						<ul>
 							<li><a href="https://www.prnewswire.com/news-releases/us-polo-assn-collaborates-with-poloafrica-as-apparel-sponsor-for-african-youth-polo-team-touring-united-kingdom-300867172.html" target="_blank">USPA becomes apparel sponsor for Poloafrica youth team touring UK (US Polo Association press release - June 2019)</a>
 							</li>
-							<li><a href="../pdf/Ficksburg%2050th%20Cherry%20Festival%20programme%20Nov%202017.pdf" target="_blank">Horses and a "nutty" English lady (Ficksburg 50th Cherry Festival programme - November 2017)</a>
+							<li><a href="../pdf/Ficksburg%2050th%20Cherry%20Festival%20programme%20Nov%202017.pdf" target="_blank">Horses and a "nutty" English lady (Ficksburg 50th Cherry Festival programme - November 2017 - pdf)</a>
 							</li>
-							<li><a href="../pdf/21%20Talk%20Polo%20Trust%20Africa%20_optimised_high.pdf" target="_blank">Polo Power (Hurlingham Polo magazine - February 2016)</a>
+							<li><a href="../pdf/21%20Talk%20Polo%20Trust%20Africa%20_optimised_high.pdf" target="_blank">Polo Power (Hurlingham Polo magazine - February 2016 - pdf)</a>
 							</li>
 							<li><a href="http://www.laureus.com/news/laureus-poloafrica-sports-charity-bringing-polo-all" target="_blank">A sports charity bringing polo to all (Laureus - August 2014)</a>
 							</li>
-							<li><a href="../pdf/Market115-100-103-REVU2.pdf" target="_blank">Afrique: Le polo pour l'enfance (market.ch - April 2014)</a>
+							<li><a href="../pdf/Market115-100-103-REVU2.pdf" target="_blank">Afrique: Le polo pour l'enfance (market.ch - April 2014 - pdf)</a>
 							</li>
 							<li><a href="http://www.businessdestinations.com/destinations/focus/hope-in-the-form-of-polo/" target="_blank">Hope in the form of polo (Business Destinations - March 2014)</a>
 							</li>
@@ -134,15 +134,15 @@
 							</li>
 							<li><a href="http://www.focus.de/sport/laureus/laureus-projekt-poloafrica-kinder-sollen-ihren-polo-traeumen-naeher-kommen_aid_990858.html?drucken=1" target="_blank">Kinder sollen ihren polo-träumen näher kommen (focus.de - May 2013)</a>
 							</li>
-							<li><a href="../pdf/SAPA%20programme%202012.pdf" target="_blank">Play it forward (SAPA International programme - August 2012)</a>
+							<li><a href="../pdf/SAPA%20programme%202012.pdf" target="_blank">Play it forward (SAPA International programme - August 2012 - pdf)</a>
 							</li>
-							<li><a href="../pdf/Fifth%20Chukker%20Q4%202011%20article.pdf" target="_blank">A sport for all (Fifth Chukker magazine - October 2011)</a>
+							<li><a href="../pdf/Fifth%20Chukker%20Q4%202011%20article.pdf" target="_blank">A sport for all (Fifth Chukker magazine - October 2011 - pdf)</a>
 							</li>
-							<li><a href="../pdf/Poloafrica%20development%20programme%20sapolo%20article.pdf" target="_blank">Development polo in South Africa comes to the fore (International Polo Leisure and Lifestyle magazine - Q1 2011)</a>
+							<li><a href="../pdf/Poloafrica%20development%20programme%20sapolo%20article.pdf" target="_blank">Development polo in South Africa comes to the fore (International Polo Leisure and Lifestyle magazine - Q1 2011 - pdf)</a>
 							</li>
-							<li><a href="../pdf/Polo%20Times%20SA%20section%20Catherine%20Cairns.png" target="_blank">Where local skills shine (Polo Times - January 2010)</a>
+							<li><a href="../pdf/Polo%20Times%20SA%20section%20Catherine%20Cairns.png" target="_blank">Where local skills shine (Polo Times - January 2010 - png) </a>
 							</li>
-							<li><a href="../pdf/05_09_CCairns_SA%20farm%20polo.pdf" target="_blank">Polo's grass roots in South Africa (Cowdray programme - September 2005)</a>
+							<li><a href="../pdf/05_09_CCairns_SA%20farm%20polo.pdf" target="_blank">Polo's grass roots in South Africa (Cowdray programme - September 2005 - pdf)</a>
 							</li>
 						</ul>
 					</nav>
@@ -208,7 +208,7 @@ https://developers.facebook.com/docs/javascript/quickstart/
             <a href="mailto:info@poloafrica.com"><b>email: </b>info@poloafrica.com</a>
 		</div>
         <div id="fb">
-            <a href="https://www.instagram.com/poloafrica/" id="InstagramIcon" target="_blank"><img alt="Instagram icon" src="../images/instagram_white.png"></a> <a href="https://www.facebook.com/Poloafrica-Development-Trust-301491696614583/" id="FacebookBadge" target="_blank"><img alt="Facebook badge" src="../images/like-us-on-facebook-png-black-1.png"></a>
+            <a href="https://www.instagram.com/poloafrica/" id="InstagramIcon" target="_blank"><img alt="Instagram icon" src="../images/instagram_drop.png"></a> <a href="https://www.facebook.com/Poloafrica-Development-Trust-301491696614583/" id="FacebookBadge" target="_blank"><img alt="Facebook badge" src="../images/like-us-on-facebook-png-black-1.png"></a>
         </div>
         <a href="mailto:photos@mwinsight.com">photos by <b>mark ward</b></a>
     </footer>
@@ -218,5 +218,73 @@ https://developers.facebook.com/docs/javascript/quickstart/
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
     <script src="../js/finder.js"></script>
+    <script>
+        function simpleInvoke(o, m, arg) {
+		return o[m](arg);
+	}
+    var mq = Modernizr.mq('only all'),
+        query = '(min-width: 668px)',
+        touch = Modernizr.touchevents,
+        utils = poloAF.Util,
+        con = window.console.log.bind(window),
+		ptL = _.partial,
+		doTwice = utils.curryTwice(),
+		doThrice = utils.curryThrice(),
+        doMatch = doThrice(simpleInvoke)(/\d\)$/)('match'),
+        number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
+		threshold = Number(query.match(number_reg)[1]),
+        getEnvironment = (function () {
+			if (mq) {
+				return _.partial(Modernizr.mq, query);
+			} else {
+				return _.partial(utils.isDesktop, threshold);
+			}
+		}()),
+        negater = function (alternator) {
+			if (!getEnvironment()) {
+				alternator();
+				getEnvironment = _.negate(getEnvironment);
+			}
+		},
+        command = (function(coll){
+            var sub,
+                repl = [];
+            return {
+            render: ptL(_.each, coll, function(a){
+            var copy = utils.drillDown(['innerHTML'])(a);
+            copy = copy.split('(');
+            sub = doMatch(copy[1]) ? 1 : 7;
+            a.innerHTML = copy[0];
+                    repl.push(' '+copy[1].substring(copy[1].length - sub));
+            a.setAttribute('title', copy[1].substring(0, copy[1].length - sub));
+        }),
+            unrender: function(){
+             _.each(coll, function(a, i){
+                if(!repl.length){return;}
+                    a.innerHTML += ('(' + a.getAttribute('title') + repl[i])
+                    a.setAttribute('title', '');
+                });
+                repl = [];
+        }
+            };
+        }(_.compose(ptL(utils.getByTag, 'a'), utils.getZero, ptL(utils.getByTag, 'nav'))(utils.$('presslinks')))),
+        setup = function(){
+            var doAlt = utils.doAlternate(),
+                toggler = doAlt([command.render, command.unrender]),
+                handler = ptL(negater, toggler);
+        utils.addHandler('resize', window, _.throttle(handler, 99));
+        if(getEnvironment()){
+            toggler();
+        }
+        else {
+            getEnvironment = _.negate(getEnvironment);
+        } 
+        };
+        if(!touch){
+            command.render();
+            con(_.compose(utils.drillDown(['firstChild']), utils.getZero,ptL(utils.getByTag, 'li'), utils.getZero, ptL(utils.getByTag, 'nav'))(utils.$('presslinks')))
+        }
+        
+    </script>
 </body>
 </html>

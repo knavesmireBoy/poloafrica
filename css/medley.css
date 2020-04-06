@@ -1,9 +1,13 @@
 /* first assume float layout */
-
 #presslinks nav ul {
 	line-height: 1.3;
 	text-indent: -1em;
 	padding: 0 0 0 1em;
+}
+
+no-touchevents.background-size #presslinks nav ul {
+	text-indent: 0;
+	padding: 0;
 }
 #presslinks nav ul li {
 	margin: .75em 0;
@@ -22,52 +26,30 @@ article:last-child nav ul {
 article:last-child nav li::before, #presslinks nav li::before {
 	content: '» ';
 }
-/*
-#presslinks nav {
-	margin: 1em 0 0;
-}
-#presslinks nav li {
-    padding: 0 0 1em 2.5em;
-    margin: 0;  
-    background: url("../images/pdf_sprite.png") no-repeat 0 0/3%;   
-}
 
-#presslinks nav li:hover {
-    background-position: 0 110%;
-}
-
-#presslinks nav li:first-child, #presslinks nav li:nth-child(4), #presslinks nav li:nth-child(6), #presslinks nav li:nth-child(7), #presslinks nav li:nth-child(8) {
-	background: url("../images/pointer_sprite.png") no-repeat 0 0/4.5%;
-}
-#presslinks nav li:nth-child(12) {
-	background: url("../images/plain_sprite.png") no-repeat 0 0/4%;
-}
-*/
-
-/*
-#presslinks nav li::before {
+.no-touchevents.background-size #presslinks nav li::before {
 	content: '';
-	display: inline-block;
-	height: 1.4em;
-	width: 1.4em;
-    padding: 2px 0;
-	background-size: cover;
-	background: red url("../images/pdf.png") no-repeat left top;
-	margin-right: 10px;
-	vertical-align: top;
+    display: inline-block;
+    position: relative;
+    top: .5em;
+    width: 1.2em;
+    height: 1.5em;
+    margin-right: .5em;
+    background: url(../images/pdf.png);
+    background-size: cover;
 }
 
-#presslinks nav li:first-child::before, #presslinks nav li:nth-child(4)::before, #presslinks nav li:nth-child(6)::before, #presslinks nav li:nth-child(7)::before, #presslinks nav li:nth-child(8)::before {
-	background: url("../images/pointer.png") no-repeat;
-    background-size: 140%;
+/*
+.no-touchevents.backgroundsize #presslinks nav li:first-child::before,  .no-touchevents.backgroundsize #presslinks nav li:nth-child(4)::before, .no-touchevents.backgroundsize #presslinks nav li:nth-child(6)::before, .no-touchevents.backgroundsize #presslinks nav li:nth-child(7)::before, .no-touchevents.backgroundsize #presslinks nav li:nth-child(8)::before {
+	background: url(../images/pointer.png);
+	background: none;
+    content: '» ';
 }
 
-#presslinks nav li:nth-child(12)::before {
-	background: url("../images/plain.png") no-repeat;
-    background-size: 125%;
-}
-#presslinks nav li:nth-child(12):hover::before {
-	background-position: 100% 0;
+.no-touchevents.backgroundsize #presslinks nav li:nth-child(12)::before {
+	background: url("../images/plain.png");
+    background: none;
+    content: '»  ';
 }
 */
 
@@ -95,7 +77,7 @@ article:last-child nav li {
 	width: 27%;
 	float: left;
 }
-#arena_boy {
+.no-flexwrap #arena_boy {
 	width: 15%;
 }
 #tvcoverage iframe, #tvcoverage video {
@@ -252,6 +234,146 @@ h2 span {
 		margin: 0;
 	}
     */
+.no-cssgrid #tvcoverage {
+	/*if not grid, block, NOT flex*/
+	display: block;
+}
+#presslinks img {
+	-webkit-box-flex: 2;
+	-ms-flex: 2 1 1%;
+	-webkit-flex: 2 1 1%;
+	flex: 2 1 1%;
+}
+article:last-child img {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 1%;
+	-webkit-flex: 1 1 1%;
+	flex: 1 1 1%;
+}
+#tvcoverage p {
+	-ms-grid-row: 1;
+	-ms-grid-row-span: 1;
+	grid-row: 1/3;
+	-ms-grid-column: 1;
+	-ms-grid-column-span: 1;
+	grid-column: 1/4;
+	min-width: 0;
+}
+#tvcoverage p:last-of-type {
+	-ms-grid-row: 2;
+	-ms-grid-row-span: 1;
+	grid-row: 3/4;
+}
+#tvcoverage section>*:first-child {
+	-ms-grid-row: 2;
+	-ms-grid-row-span: 1;
+	grid-row: 1/6;
+	grid-column: 4/6;
+}
+#tvcoverage #naledi>a {
+	-ms-grid-column: 1;
+	-ms-grid-column-span: 2;
+	grid-column: 1/6;
+	-ms-grid-row: 1;
+	grid-row: 1/1;
+}
+#tvcoverage #naledi p:last-of-type {
+	-ms-grid-row: 2;
+	-ms-grid-row-span: 1;
+	grid-row: 2/4;
+}
+#naledi>*:nth-child(2) {
+	-ms-grid-column: 2;
+	-ms-grid-column-span: 1;
+	-ms-grid-row: 2;
+	-ms-grid-row-span: 1;
+	grid-row: 2/3;
+	grid-column: 4/6;
+}
+/*
+.flexbox #presslinks section, .flexboxtweener #presslinks section, .flexboxlegacy #presslinks section, .flexbox article:last-child section, .flexboxtweener article:last-child section, .flexboxlegacy article:last-child section {
+	margin-left: 2%;
+	float: right;
+}
+*/
+
+@supports((-moz-column-gap: 20px) or (column-gap: 20px)) {
+	.override #tvcoverage {
+		display: -ms-grid;
+		display: grid;
+	}
+	.override #tvcoverage section {
+		display: -ms-grid;
+		display: grid;
+	}
+}
+.cssgrid #tvcoverage {
+	display: -ms-grid;
+	display: grid;
+}
+.cssgrid #tvcoverage section {
+	display: -ms-grid;
+	display: grid;
+}
+.no-cssgrid #tvcoverage {
+	display: block;
+}
+no-cssgrid #tvcoverage section {
+	display: block;
+}
+/* @media only screen and (max-width: 410px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
+  		article h3, article:first-child label {
+  		line-height: 1;
+  	}
+  }
+*/
+
+@media screen and (max-width: 667px) {
+	article {
+		display: block;
+	}
+	.no-js #presslinks section, .no-js #medley .override article:last-child section {
+		margin: 0 0 0 2%;
+		-webkit-box-flex: 5;
+		-ms-flex: 5 0 1%;
+		flex: 5 0 1%
+	}
+	#medley .override #presslinks, .override #presslinks section, #medley .override article:last-child, #medley .override article:last-child section, #wrap .override #tvcoverage, #wrap .override #tvcoverage section {
+		display: block;
+		float: none;
+		margin: 0;
+	}
+	.flexbox #presslinks section, .flexboxtweener #presslinks section, .flexboxlegacy #presslinks section, .flexbox article:last-child section, .flexboxtweener article:last-child section, .flexboxlegacy article:last-child section {
+		margin-left: 0;
+	}
+}
+@media screen and (min-width: 668px) {
+	.flexwrap #tvcoverage h3 {
+		width: 100%;
+	}
+	@supports(column-gap: 20px) {
+		.override #tvcoverage section iframe, .override #tvcoverage section video {
+			width: 40vw;
+			height: 22.5vw;
+		}
+	}
+	.css-grid #tvcoverage section iframe, .css-grid #tvcoverage section video {
+		width: 40vw;
+		height: 22.5vw;
+	}
+}
+@media only screen and (-ms-high-contrast: none) {
+	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+	#presslinks>img, article:last-child img {
+		-webkit-box-flex: 1;
+		-ms-flex: 2 1 5em;
+		flex: 2 1 5em;
+		-ms-flex-item-align: start;
+		align-self: flex-start;
+		float: none;
+		height: 100%;
+	}
+}
 }
 @media screen and (max-width: 480px) {
 	#wrap article:last-child p {

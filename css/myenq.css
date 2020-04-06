@@ -1,10 +1,12 @@
 @import "flex_mod.css";
-@supports(flex-wrap: wrap) {
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
 	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 	#contactarea {
 		display: -webkit-box;
 		display: -ms-flexbox;
+        display: -webkit-flex;
 		display: flex;
+		-webkit-flex-wrap: wrap;
 		flex-wrap: wrap;
 		align-content: flex-end;
 	}
@@ -32,20 +34,10 @@
 			width: 100%;
 		}
 	}
-	.no-flexwrap #contactarea {
+	#contactarea {
 		display: block;
 	}
-	.no-flexwrap #contactarea form {
-		width: 96%;
-		margin: 2% auto;
-		text-align: center;
-	}
-	.no-flexwrap #contactarea form>* {
-		text-align: left;
-	}
-	#contactarea form {
-		margin: 2%;
-	}
+	
 	/*TRIED flex-wrapping in fieldset: https://stackoverflow.com/questions/46472136/fieldset-as-flex-container-not-working-in-google-chrome*/
 }
 @media screen and (max-width: 504px) {
@@ -134,9 +126,6 @@
 		#contactarea figure {
 			align-self: stretch;
 		}
-		.override #contactarea figure img {
-			object-fit: cover;
-			border-radius: 0;
-		}
+		
 	}
 }

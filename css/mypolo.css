@@ -7,13 +7,11 @@
 		.override article:first-child, .override article:first-child section {
 			display: -webkit-box;
 			display: -ms-flexbox;
-			-webkit-display: flex;
+			display: -webkit-flex;
 			display: flex;
 			-ms-flex-wrap: wrap;
 			-webkit-flex-wrap: wrap;
 			flex-wrap: wrap;
-			/*overrided hardcoded width (section, but no harm done to article) for full screen float layout*/
-			width: 100%;
 		}
 		#facilities, article:first-child p {
 			flex: 1 0 100%;
