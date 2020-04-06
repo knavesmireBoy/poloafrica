@@ -138,6 +138,7 @@
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
 				m = math ? 'addClass' : 'removeClass';
 			utils[m]('portrait', thumbs);
+			utils[m]('portrait', $('wrap'));
 		},
 		makeIterator = function (coll) {
 			var findIndex = ptL(utils.findIndex, coll),

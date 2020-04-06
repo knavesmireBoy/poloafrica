@@ -53,7 +53,6 @@ main img {
 	position: relative;
 	margin: 0;
 	/*to accommodate exit button*/
-	padding: 4em 0 0 0;
 	display: block;
 	/*force override flex ?*/
 }
@@ -126,24 +125,17 @@ main ul li, .inplay main ul li.show, .showtime main>a, .no-js main>a {
 footer {
 	margin: 0 auto;
 }
-.showtime footer {
-	margin: -5em auto;
-}
+
 .js #exit {
-	position: absolute;
-	top: 1em;
-	right: 1em;
 	width: 2em;
 	height: 2em;
 	display: block;
-	background: url("../images/sticks_sprite_fat.png") no-repeat;
+    margin: 1em 0;
+	background: white url("../images/sticks_sprite_fat.png") no-repeat;
 	background-position: 50% 0%;
 	background-size: 100%;
 	/*override nav block*/
 	border: 0;
-}
-.js #exit {
-	background-color: white
 }
 .js #exit:hover {
 	background-position: 50% 106%;
@@ -344,6 +336,13 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	main ul {
 		width: 80%;
 	}
+    .showtime main a span{
+        border-width: 0;
+    }
+    	.showtime main ul {
+		margin: 0;
+            width: auto;
+	}
 	main {
 		padding: 2em 0 0 0;
 	}
@@ -367,7 +366,10 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		top: .2em;
 	}
 	.touchevents #wrap.inplay+footer {
-		background: url(../images/sil_bg.png) no-repeat 60% top;
+		background: url(../images/sil_bg.png) no-repeat 64% top;
+	}
+    .touchevents #wrap.portrait+footer {
+		background: url(../images/sil_bg.png) no-repeat 59% top;
 	}
 	.no-flexwrap .gallery {
 		padding: 1vw;
@@ -400,6 +402,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		transition: background-position 2s ease;
 	}
 }
+    
 @media only screen and (max-width: 480px) {
 	.showtime main ul {
 		margin: 0;

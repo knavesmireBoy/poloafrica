@@ -14,7 +14,6 @@
 article:last-child img {
     max-width: 13em;
 }
-
 #tvcoverage p {
 	-ms-grid-row: 1;
 	-ms-grid-row-span: 1;
@@ -111,6 +110,13 @@ no-cssgrid #tvcoverage section {
 	.flexbox #presslinks section, .flexboxtweener #presslinks section, .flexboxlegacy #presslinks section, .flexbox article:last-child section, .flexboxtweener article:last-child section, .flexboxlegacy article:last-child section {
 		margin-left: 0;
 	}
+   .touchevents #wrap article:last-child nav,  .touchevents #wrap #presslinks nav{
+    margin: 1em;
+    }
+    .touchevents #wrap article:last-child img {
+         margin: 1em;
+    }
+
 }
 @media screen and (min-width: 668px) {
 	.flexwrap #tvcoverage h3 {

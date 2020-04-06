@@ -62,6 +62,7 @@ main ul {
 	padding: 6px;
 }
 /*REPLACE margin with border to support earlier FIREFOX */
+
 .flexwrap .override .gallery li {
 	margin: 0;
 	border: 6px solid white;
@@ -202,31 +203,41 @@ main ul {
 		}
 	}
 	.touchevents .showtime main {
-		padding: 3.5rem 2rem 0;
+		padding: 0rem 6rem 0;
 	}
 	.touchevents.flexboxlegacy main>a, .touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
 		margin: 0 1%;
 	}
-	.touchevents #exit {
-		top: 1rem;
-	}
-    	.touchevents.flexbox main>a {
-            margin: 0 1%;
+        
+	.touchevents.flexbox main>a {
+		margin: 0 1%;
 		-webkit-box-flex: 1;
 		-ms-flex: 1 0 2em;
 		-webkit-flex: 1 0 2em;
 		flex: 1 0 2em;
-        -ms-flex-item-align: stretch;
+		-ms-flex-item-align: stretch;
 		-webkit-align-self: stretch;
 		align-self: stretch;
 	}
-	
 	.touchevents #photos main>a {
 		border-width: 0;
 		background-color: hsla(349, 86%, 45%, 100);
-        width: 2em;
+		width: 2em;
 		overflow: hidden;
-        position: relative;
+		position: relative;
+	}
+	.touchevents #photos.showtime main>a {
+		position: absolute;
+	}
+	.touchevents #photos #exit {
+		position: static;
+		float: right;
+		background-color: white;
+	}
+	#exit:after {
+		content: "";
+		display: table;
+		clear: both;
 	}
 	.touchevents main>a span {
 		position: absolute;
@@ -241,16 +252,37 @@ main ul {
 	.touchevents main>a:hover span {
 		border: solid 1em rgb(230, 230, 235);
 	}
-}/*667*/
+    
+     .showtime footer {
+		margin: -4.1em auto;
+	}
+}
+/*667*/
 
+@media only screen and (max-width: 667px) and (orientation: portrait) {
 
+    .showtime footer {
+		margin: -7.1em auto;
+	}
+    
+     #wrap.portrait+footer {
+		margin: -4.1em auto;
+	}
+   
+}
 
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+	.touchevents .showtime main {
+		padding: 0rem 2rem 0;
+	}
+    
+}
 @media only screen and (max-width: 480px) {
-    /*fix for ipod*/
-    .touchevents.no-flexbox.flexboxlegacy main ul {
+	/*fix for ipod*/
+	.touchevents.no-flexbox.flexboxlegacy main ul {
 		width: auto;
 	}
-    .touchevents.no-flexbox.flexboxlegacy main {
+	.touchevents.no-flexbox.flexboxlegacy main {
 		display: table;
 		border-spacing: 9px;
 	}
@@ -258,14 +290,9 @@ main ul {
 		display: table-cell;
 		width: 2em;
 	}
-
 }
-
 @media only screen and (max-width: 480px) and (orientation: portrait) {
 	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
-		margin: 0 2%;
-	}
-	.touchevents .showtime main {
-		padding: 3.5rem 1rem 0;
+		margin: 0 1%;
 	}
 }

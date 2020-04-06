@@ -5,56 +5,42 @@ html.js body img, html.no-js body img {
 	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
 }
-
 /*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
-	/*REMEMBER override class hardcoded in HTML*/
-	article:nth-child(odd) {
-		-webkit-box-orient: horizontal;
-		-webkit-box-direction: reverse;
-		-moz-box-direction: reverse;
-		-ms-flex-direction: row-reverse;
-		-webkit-flex-direction: row-reverse;
-		flex-direction: row-reverse;
-	}
-	article>* {
-		-ms-flex-item-align: start;
-		-webkit-align-self: flex-start;
-		align-self: flex-start;
-	}
-	article section {
-		-webkit-box-flex: 6;
-		-ms-flex: 6 1 1%;
-		-webkit-flex: 6 1 1%;
-		flex: 6 1 1%;
-	}
-	article>img {
-		-webkit-box-flex: 4;
-		-ms-flex: 4 1 1%;
-		-webkit-flex: 4 1 1%;
-		flex: 4 1 1%;
-	}
 
-	article {
-		-webkit-box-align: start;
-		-ms-flex-align: start;
-		align-items: flex-start;
-		-ms-flex-wrap: wrap;
-		-webkit-flex-wrap: wrap;
-		flex-wrap: wrap;
-	}
+/*REMEMBER override class hardcoded in HTML*/
 
-#wrap+footer #footer_girl {
-	-webkit-box-flex: 20;
-	-ms-flex: 20 1 auto;
-	-webkit-flex: 20 1 auto;
-	flex: 20 1 auto;
-    width: auto;
+article:nth-child(odd) {
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: reverse;
+	-moz-box-direction: reverse;
+	-ms-flex-direction: row-reverse;
+	-webkit-flex-direction: row-reverse;
+	flex-direction: row-reverse;
 }
-#wrap+footer #fb {
-	-webkit-box-flex: 1;
-	-ms-flex: 1 1 6em;
-	-webkit-flex: 1 1 6em;
-	flex: 1 1 6em;
+article>* {
+	-ms-flex-item-align: start;
+	-webkit-align-self: flex-start;
+	align-self: flex-start;
+}
+article section {
+	-webkit-box-flex: 6;
+	-ms-flex: 6 1 1%;
+	-webkit-flex: 6 1 1%;
+	flex: 6 1 1%;
+}
+article>img {
+	-webkit-box-flex: 4;
+	-ms-flex: 4 1 1%;
+	-webkit-flex: 4 1 1%;
+	flex: 4 1 1%;
+}
+article {
+	-webkit-box-align: start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 #wrap+footer>a {
 	-webkit-box-flex: 0;
@@ -77,10 +63,25 @@ html.js body img, html.no-js body img {
 	display: -ms-flexbox;
 	display: flex;
 }
+.flexwrap #wrap+footer #fb {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 6em;
+	-webkit-flex: 1 1 6em;
+	flex: 1 1 6em;
+}
 .flexwrap #wrap+footer #footer_girl {
+	-webkit-box-flex: 20;
+	-ms-flex: 20 1 auto;
+	-webkit-flex: 20 1 auto;
+	flex: 20 1 auto;
+	width: auto;
 	margin: 0 0 .25rem 1rem;
 }
 .flexwrap #wrap+footer #fb {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 6em;
+	-webkit-flex: 1 1 6em;
+	flex: 1 1 6em;
 	margin: 0 .7em .5rem 0;
 	left: 0;
 	min-width: 6em;
@@ -95,6 +96,19 @@ html.js body img, html.no-js body img {
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
+	}
+	#wrap+footer #fb {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 6em;
+		-webkit-flex: 1 1 6em;
+		flex: 1 1 6em;
+	}
+	#wrap+footer:first-of-type #footer_girl {
+		-webkit-box-flex: 20;
+		-ms-flex: 20 1 auto;
+		-webkit-flex: 20 1 auto;
+		flex: 20 1 auto;
+		width: auto;
 	}
 	#wrap+footer:first-of-type #footer_girl {
 		margin: 0 0 .25rem 1rem;
@@ -147,7 +161,6 @@ html.js body img, html.no-js body img {
 	}
 }
 /*IF js disbaled and feature queries not supported what to do?*/
-
 
 @media only screen and (min-width: 1024px) {
 	.js body {
