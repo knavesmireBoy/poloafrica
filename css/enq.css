@@ -74,7 +74,7 @@ form fieldset:first-child input {
 	margin: 0 3em 1.3em 0;
 }
 article:last-child p {
-	margin: 0;
+	margin: 1em 0 0;
 }
 /*layout*/
 
@@ -230,7 +230,7 @@ h2 span {
 		left: -999em;
 	}
 	#contactarea form {
-		width: 90%;
+		width: 100%;
 		float: none;
 		display: block;
 		box-sizing: border-box;
@@ -266,16 +266,17 @@ h2 span {
 	.no-js article:nth-child(3)>label:before {
 		content: "Directions";
 	}
-	.no-js #wrap #post1.read-more-state:checked~section:nth-of-type(1), .no-js #wrap #post2.read-more-state~section:nth-of-type(2), .no-js #wrap #post3.read-more-state~section:nth-of-type(3), .no-js #wrap #post4.read-more-state~section:nth-of-type(1), .no-js #wrap #post5.read-more-state~section:nth-of-type(2) {
-		position: absolute;
-		top: 0px;
+   
+    .no-js input~section p, .no-js #post1.read-more-state:checked~section:nth-of-type(1) p{
+        position: absolute;
 		left: -999em;
-		margin: 0;
-	}
-	.no-js #wrap #post1~section:nth-of-type(1), .no-js #wrap #post2:checked~section:nth-of-type(2), .no-js #wrap #post3:checked~section:nth-of-type(3), .no-js #wrap #post4:checked~section:nth-of-type(1), .no-js #wrap #post5:checked~section:nth-of-type(2), .js #wrap article section.show * {
-		position: static;
+    }
+    
+    .no-js article:first-of-type .read-more-state:checked~section, .no-js #post1~section:nth-of-type(1) p, .no-js #post2.read-more-state:checked~section:nth-of-type(2) p,  .no-js #post3.read-more-state:checked~section:nth-of-type(3) p, .no-js #post5.read-more-state:checked~section:nth-of-type(1) p, .js #wrap article section.show > *{
+       position: static;
 		left: 0em;
-	}
+    }
+    
 }
 /*@*/
 

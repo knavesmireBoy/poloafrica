@@ -39,6 +39,10 @@ h2 span {
 	}
 }
 @media screen and (max-width: 667px) {
+    
+    article {
+        display: block;
+    }
 
 	h2, h2 span {
 		background: none;
