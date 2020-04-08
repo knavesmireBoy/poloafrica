@@ -185,15 +185,3 @@ main ul {
 	}
 }
 /*667*/
-
-/*
-@media only screen and (max-width: 480px) and (orientation: portrait) {
-	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {
-		margin: 0 2%;
-		border-width: 0;
-	}
-	.touchevents .showtime main {
-		padding: 3.5rem 1rem 0;
-	}
-}
-*/

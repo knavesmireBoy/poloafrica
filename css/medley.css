@@ -27,7 +27,7 @@ article:last-child nav li::before, #presslinks nav li::before {
 	content: '» ';
 }
 
-.no-touchevents.background-size #presslinks nav li::before {
+.no-touchevents.backgroundsize #presslinks nav li::before {
 	content: '';
     display: inline-block;
     position: relative;
@@ -35,7 +35,29 @@ article:last-child nav li::before, #presslinks nav li::before {
     width: 1.2em;
     height: 1.5em;
     margin-right: .5em;
-    background: url(../images/pdf.png);
+    background: url(../images/pdf_sq.png) no-repeat center;
+    background-size: 140%;
+}
+.no-touchevents.backgroundsize #presslinks nav li:first-child::before {
+    background-image: url(../images/prne.png);
+    background-size: cover;
+}
+.no-touchevents.backgroundsize #presslinks nav li:nth-child(4)::before {
+    background-image: url(../images/laureus.png);
+    background-size: cover;
+}
+
+.no-touchevents.backgroundsize #presslinks nav li:nth-child(6)::before {
+    background-image: url(../images/bd-logo.png);
+    background-size: contain;
+}
+
+.no-touchevents.backgroundsize #presslinks nav li:nth-child(7)::before {
+    background-image: url(../images/poloplus.png);
+     background-size: contain;
+}
+.no-touchevents.backgroundsize #presslinks nav li:nth-child(8)::before {
+    background-image: url(../images/p5.jpg);
     background-size: cover;
 }
 
@@ -227,13 +249,6 @@ h2 span {
 	#PoloGirls {
 		display: none;
 	}
-	/*
-    	position: absolute;
-		top: 0px;
-		left: -999em;
-		margin: 0;
-	}
-    */
 .no-cssgrid #tvcoverage {
 	/*if not grid, block, NOT flex*/
 	display: block;
