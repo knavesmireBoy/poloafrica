@@ -1,12 +1,5 @@
 @import "flex_mod.css";
-main {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-}
+
 .no-touchevents main {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
@@ -30,19 +23,23 @@ main {
 }
 /*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
 
-main>a {
+.flexbox main {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+.flexbox main .pagenav {
 	-webkit-box-flex: 1;
-	-ms-flex: 1 0 auto;
-	flex: 1 0 auto;
+	-ms-flex: 1 1 1.6em;
+	-webkit-flex: 1 1 1.6em;
+	flex: 1 1 1.6em;
 }
-.flexwrap main ul {
-	-webkit-box-flex: 16;
-	-ms-flex: 16 1 auto;
-	flex: 16 1 auto;
-}
-.flexboxlegacy main>* {
-	display: block;
-	/*fix for ios safari ipod */
+.flexbox main ul {
+	min-width: 0;
+	-webkit-box-flex: 5;
+	-ms-flex: 5 1 50%;
+	flex: 5 1 50%;
 }
 .showtime main.override {
 	display: block;
@@ -56,9 +53,28 @@ main>a {
 	display: flex;
 	-ms-flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+	flex-wrap: wrap;
 }
-
+@supports(display: flex) or (display: -webkit-flex) or (display: -ms-flex) {
+    main {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+    main .pagenav {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 1.6em;
+	-webkit-flex: 1 1 1.6em;
+	flex: 1 1 1.6em;
+}
+main ul {
+	min-width: 0;
+	-webkit-box-flex: 5;
+	-ms-flex: 5 1 50%;
+	flex: 5 1 50%;
+}
+}
 @supports (flex-wrap: wrap) {
 	main ul.gallery {
 		display: -webkit-box;
@@ -67,7 +83,7 @@ main>a {
 		display: flex;
 		-ms-flex-wrap: wrap;
 		-webkit-flex-wrap: wrap;
-        flex-wrap: wrap;
+		flex-wrap: wrap;
 	}
 }
 @supports(column-gapp: 20px) {
@@ -105,14 +121,15 @@ main>a {
 	}
 }
 @media only screen and (max-width: 667px) {
-	main {
-		padding: 2em 0 0 0;
-	}
-	.gallery li, .alt .gallery li.portrait, .alt .gallery li:nth-child(n+5), ul.gallery li:nth-last-child(-n+4)  {
+
+     .touchevents main .pagenav {
+         margin: 0 2%;
+}
+	.override .gallery li, .alt .gallery li.portrait, .alt .gallery li:nth-child(n+5), ul.gallery li:nth-last-child(-n+4) {
 		-webkit-box-flex: 3;
 		-ms-flex: 3 1 auto;
 		-webkit-flex: 3 1 auto;
-		flex: 3 1 1%;
+		flex: 3 1 auto;
 	}
 	.gallery li:nth-child(n+5) {
 		-webkit-box-flex: 2;
@@ -120,7 +137,6 @@ main>a {
 		-webkit-flex: 2 1 auto;
 		flex: 2 1 auto;
 	}
-
 	@supports (column-gapp: 20px) {
 		.override .gallery {
 			display: grid;
@@ -167,9 +183,9 @@ main>a {
 			grid-column: auto / span 6;
 		}
 	}
-
 }
 /*667*/
+
 /*
 @media only screen and (max-width: 480px) and (orientation: portrait) {
 	.touchevents.flexboxlegacy main>a, touchevents.flexbox main>a, .touchevents.flexboxtweener main>a {

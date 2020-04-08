@@ -23,7 +23,7 @@ main>* {
 	display: inline-block;
 	vertical-align: middle;
 }
-.pagenav{
+.pagenav {
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
 	position: relative;
@@ -33,7 +33,7 @@ main>* {
 	border-right: 21px solid crimson;
 }
 #gal_forward {
-    border-left: 21px solid crimson;
+	border-left: 21px solid crimson;
 }
 .pagenav:hover, .pagenav:focus {
 	border-right-color: royalblue;
@@ -124,9 +124,8 @@ footer {
 	background: white url("../images/sticks_sprite_fat.png") no-repeat;
 	background-position: 50% 0%;
 	background-size: 100%;
-    position: relative;
+	position: relative;
 }
-
 .js #exit:hover, .js #exit:focus {
 	background-position: 50% 106%;
 }
@@ -289,7 +288,6 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.gallery li.portrait, .gallery li:nth-child(n+5) {
 		width: 16.666%
 	}
-
 	.showtime main ul li {
 		width: 100%;
 	}
@@ -320,24 +318,21 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 @media only screen and (max-width: 667px) {
-
-    main {
+	main {
 		padding: 2.5em 0 0 0;
 	}
 	main ul {
 		width: 80%;
 	}
-   
-    .showtime main ul {
+	.showtime main ul {
 		width: auto;
-        display: block;
-        margin: 0 8%;
+		display: block;
+		margin: 0 8%;
 	}
-
 	.touchevents .showtime main {
 		padding: .5em 0 0 0;
 	}
-    /*
+	/*
 	.touchevents.flexboxlegacy .pagenav, .touchevents.flexbox .pagenav, .touchevents.flexboxtweener .pagenav {
 		margin: 0 1%;
 	}
@@ -364,7 +359,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents ul.gallery li {
 		border: solid 3px white;
 	}
-	 .override .gallery li, .alt ul.gallery li:nth-child(n+5), .alt ul.gallery li.portrait, main ul.gallery li:nth-last-child(-n+4){
+	.override .gallery li, .alt ul.gallery li:nth-child(n+5), .alt ul.gallery li.portrait, main ul.gallery li:nth-last-child(-n+4) {
 		width: 50%;
 	}
 	ul.gallery li:nth-child(n+5), .override ul.gallery li.portrait {
@@ -376,14 +371,16 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		-o-transition: background-position 2s ease;
 		transition: background-position 2s ease;
 	}
-	
 	.touchevents main.override>a:active {
 		background: blue;
 	}
-}
-/*667*/
-/*
-@media only screen and (max-width: 480px) {
+	/*#photos specificity*/
+	.touchevents #photos a.pagenav {
+		width: 1.6em;
+		border-width: 0;
+		overflow: hidden;
+		background-color: hsla(349, 86%, 45%, 100);
+	}
 	.touchevents a.pagenav:hover, .touchevents a.pagenav:focus {
 		background-color: hsla(349, 86%, 30%, 100);
 	}
@@ -392,41 +389,30 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		top: 33%;
 		bottom: 33%;
 		display: block;
-		border: solid .82em gainsboro;
+		border: solid 2em whitesmoke;
 	}
 	.touchevents a.pagenav:hover span {
-		border: solid .82em silver;
+		border: solid 2em silver;
 	}
-    
-   
-	
-	.touchevents.no-flexbox.flexboxlegacy main {
+}
+/*667*/
+
+@media only screen and (max-width: 480px) {
+	.touchevents.no-flexbox main>* {
+		display: table-cell;
+		position: relative;
+	}
+	.touchevents.no-flexbox main {
 		border-spacing: 9px;
 	}
-	.touchevents.no-flexbox.flexboxlegacy main > * {
-        display: table-cell;
-        position: relative;
+	.touchevents.no-flexbox .showtime main ul {
+		display: block;
 	}
-    
-    .touchevents.no-flexbox.flexboxlegacy .pagenav {
-        width: 1.6em;
-        border-width: 0;
-        margin: 0;
-        overflow: hidden;
-        background-color: hsla(349, 86%, 45%, 100);
+	/*reset */
+	.touchevents.no-flexbox .showtime main {
+		border-spacing: 0 !important;
 	}
-    
-    .touchevents.no-flexbox.flexboxlegacy .showtime main ul {
-        display: block;
-	}
-    
-    .touchevents.no-flexbox.flexboxlegacy .showtime .pagenav {
-        position: absolute;
-	}
-
 }
-*/
-
 /* do min width to save .override h2 */
 
 @media only screen and (min-width: 668px) {
