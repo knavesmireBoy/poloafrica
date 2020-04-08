@@ -1,5 +1,6 @@
 #wrap {
 	width: 832px;
+	background-color: white;
 }
 main {
 	position: relative;
@@ -18,12 +19,11 @@ main img, main ul {
 main img:hover {
 	border-color: indigo;
 }
-
 main>* {
 	display: inline-block;
 	vertical-align: middle;
 }
-main>a {
+.pagenav{
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
 	position: relative;
@@ -33,18 +33,11 @@ main>a {
 	border-right: 21px solid crimson;
 }
 #gal_forward {
-	border-right: 0px solid;
-	border-left: 21px solid crimson;
+    border-left: 21px solid crimson;
 }
-
-.no-touchevents #gal_back:hover {
+.pagenav:hover, .pagenav:focus {
 	border-right-color: royalblue;
 }
-.no-touchevents #gal_forward:hover {
-	border-left-color: royalblue;
-}
-/*main ul li, */
-
 main img {
 	width: 100%;
 }
@@ -53,12 +46,14 @@ main img {
 	position: relative;
 	margin: 0;
 	/*to accommodate exit button*/
+	padding: 4em 0 0 0;
 	display: block;
 	/*force override flex ?*/
 }
 main ul {
-	padding: 6px;
 	text-align: center;
+	padding: 3px;
+	width: 90%;
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
 	-webkit-transition: width 1s ease-in-out;
@@ -66,19 +61,21 @@ main ul {
 	transition: width 1s ease-in-out;
 	overflow: hidden;
 }
-.showtime main ul {
-	padding: 12px;
-}
 li#slide, li#paused, li#base {
 	display: block;
 	opacity: 1;
 }
-.no-js main li, .no-flexbox main li {
-	width: 176px;
+.no-js main ul li, .no-flexbox main ul li {
+	width: 249px;
 }
 main ul li {
-	margin: 6px;
 	float: left;
+	border: solid 6px white;
+}
+main ul li, main ul li img {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .gallery li {
 	width: 225px;
@@ -102,42 +99,35 @@ main ul li {
 }
 .js .showtime main ul li {
 	width: 100%;
-	margin: 0;
 }
 main ul.portrait {
 	margin: 0 30%;
 }
-main ul {
-	margin: 0 5%;
-}
-.flexboxlegacy main ul, .flexboxtweener main ul, .flexbox main ul {
-	margin: 0;
-}
-main ul li, .inplay main ul li.show, .showtime main>a, .no-js main>a {
+main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js .pagenav {
 	position: absolute;
 	top: 0em;
 	left: -9999px;
 }
-.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused, .js #exit {
+.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused {
 	position: relative;
 	left: auto;
 }
 footer {
 	margin: 0 auto;
 }
-
 .js #exit {
 	width: 2em;
 	height: 2em;
+	left: 100%;
+	margin: .5em 0 .5em -2.5em;
 	display: block;
-    margin: 1em 0;
 	background: white url("../images/sticks_sprite_fat.png") no-repeat;
 	background-position: 50% 0%;
 	background-size: 100%;
-	/*override nav block*/
-	border: 0;
+    position: relative;
 }
-.js #exit:hover {
+
+.js #exit:hover, .js #exit:focus {
 	background-position: 50% 106%;
 }
 li#slide, li#paused {
@@ -287,27 +277,19 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	border-top: 12px solid #cc6;
 	margin: -1px 0px 0px 5em;
 }
-
 @media only screen {
+	/*li.width/ul.width(-ul.padding)*/
 	#wrap {
 		max-width: 80em;
 		width: 100%;
 	}
-	ul.gallery {
-		padding: .5%;
+	.gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait, ul.gallery li:nth-last-child(-n+4) {
+		width: 25%;
 	}
-	ul.gallery li {
-		margin: .5%;
+	.gallery li.portrait, .gallery li:nth-child(n+5) {
+		width: 16.666%
 	}
-	ul.gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait {
-		width: 24%;
-	}
-	ul.gallery li:nth-child(n+5), ul.gallery li.portrait {
-		width: 15.6%;
-	}
-	ul.gallery li:nth-last-child(-n+4) {
-		width: 24%;
-	}
+
 	.showtime main ul li {
 		width: 100%;
 	}
@@ -321,7 +303,12 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		transform: rotate(360deg);
 	}
 }
-
+@media only screen and (-ms-high-contrast: none) {
+	main ul {
+		width: 90%;
+		margin: 0%;
+	}
+}
 @media only screen and (max-width: 1024px) {
 	main ul.portrait {
 		margin: 0 20%;
@@ -333,28 +320,34 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 }
 @media only screen and (max-width: 667px) {
+
+    main {
+		padding: 2.5em 0 0 0;
+	}
 	main ul {
 		width: 80%;
 	}
-    .showtime main a span{
-        border-width: 0;
-    }
-    	.showtime main ul {
-		margin: 0;
-            width: auto;
+   
+    .showtime main ul {
+		width: auto;
+        display: block;
+        margin: 0 8%;
 	}
-	main {
-		padding: 2em 0 0 0;
+
+	.touchevents .showtime main {
+		padding: .5em 0 0 0;
 	}
+    /*
+	.touchevents.flexboxlegacy .pagenav, .touchevents.flexbox .pagenav, .touchevents.flexboxtweener .pagenav {
+		margin: 0 1%;
+	}
+    */
 	h2 {
 		text-shadow: 2px 2px 2px black;
 	}
 	.touchevents h2 {
 		position: relative;
 		left: auto;
-	}
-	.touchevents #wrap .showtime main {
-		display: block;
 	}
 	.touchevents #controls {
 		font-size: 1.3em;
@@ -366,34 +359,16 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		top: .2em;
 	}
 	.touchevents #wrap.inplay+footer {
-		background: url(../images/sil_bg.png) no-repeat 64% top;
+		background: url(../images/sil_bg.png) no-repeat 60% top;
 	}
-    .touchevents #wrap.portrait+footer {
-		background: url(../images/sil_bg.png) no-repeat 59% top;
+	.touchevents ul.gallery li {
+		border: solid 3px white;
 	}
-	.no-flexwrap .gallery {
-		padding: 1vw;
-		padding: 1%;
+	 .override .gallery li, .alt ul.gallery li:nth-child(n+5), .alt ul.gallery li.portrait, main ul.gallery li:nth-last-child(-n+4){
+		width: 50%;
 	}
-	.no-flexwrap ul.gallery li {
-		margin: 1.5%;
-		box-sizing: border-box;
-	}
-	.touchevents .gallery li, .touchevents .alt .gallery li {
-		width: 244px;
-		width: 40vw;
-	}
-	/*NOTE li:nth-child(n+1) deployed as a convenient way override*/
-	.touchevents .gallery li, .touchevents .alt .gallery li:nth-child(n+1), .touchevents .alt .gallery li.portrait {
-		width: 47.5%;
-	}
-	.touchevents .gallery li.portrait, .touchevents .gallery li:nth-child(n+5) {
-		width: 161px;
-		width: 26.2vw;
-		width: 30.7%;
-	}
-	.touchevents .gallery li:nth-last-child(-n+4) {
-		width: 47.5%;
+	ul.gallery li:nth-child(n+5), .override ul.gallery li.portrait {
+		width: 33.333%;
 	}
 	.touchevents footer {
 		-webkit-transition: background-position 2s ease;
@@ -401,13 +376,57 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		-o-transition: background-position 2s ease;
 		transition: background-position 2s ease;
 	}
-}
-    
-@media only screen and (max-width: 480px) {
-	.showtime main ul {
-		margin: 0;
+	
+	.touchevents main.override>a:active {
+		background: blue;
 	}
 }
+/*667*/
+/*
+@media only screen and (max-width: 480px) {
+	.touchevents a.pagenav:hover, .touchevents a.pagenav:focus {
+		background-color: hsla(349, 86%, 30%, 100);
+	}
+	.touchevents a.pagenav span {
+		position: absolute;
+		top: 33%;
+		bottom: 33%;
+		display: block;
+		border: solid .82em gainsboro;
+	}
+	.touchevents a.pagenav:hover span {
+		border: solid .82em silver;
+	}
+    
+   
+	
+	.touchevents.no-flexbox.flexboxlegacy main {
+		border-spacing: 9px;
+	}
+	.touchevents.no-flexbox.flexboxlegacy main > * {
+        display: table-cell;
+        position: relative;
+	}
+    
+    .touchevents.no-flexbox.flexboxlegacy .pagenav {
+        width: 1.6em;
+        border-width: 0;
+        margin: 0;
+        overflow: hidden;
+        background-color: hsla(349, 86%, 45%, 100);
+	}
+    
+    .touchevents.no-flexbox.flexboxlegacy .showtime main ul {
+        display: block;
+	}
+    
+    .touchevents.no-flexbox.flexboxlegacy .showtime .pagenav {
+        position: absolute;
+	}
+
+}
+*/
+
 /* do min width to save .override h2 */
 
 @media only screen and (min-width: 668px) {
