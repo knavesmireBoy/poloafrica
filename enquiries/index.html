@@ -5,9 +5,10 @@
 	<meta content="IE=edge" http-equiv="X-UA-Compatible">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<title>Enquiries</title>
-	<link href="../css/standard.css" media="all" rel="stylesheet">
-	<link href="../css/enq.css" media="all" rel="stylesheet">
-	<link href="../css/myenq.css" media="all" rel="stylesheet">
+	<link href="../css/standard.css" media="screen" rel="stylesheet">
+	<link href="../css/enq.css" media="screen" rel="stylesheet">
+	<link href="../css/myenq.css" media="screen" rel="stylesheet">
+    <link href="../css/print.css" media="print" rel="stylesheet">
      	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
@@ -138,8 +139,8 @@
             bridge = function(e) {
 			var el = getTarget(e),
                 mysection = utils.getDomParent(utils.getNodeByTag('section'))(el),
-				hit = utils.getClassList(mysection).contains('show');
-                if(!isHeading){
+				hit = mysection && utils.getClassList(mysection).contains('show');
+                if(!isHeading(el)){
                     return;
                 }
 			_.each(sections, function(sec) {
