@@ -5,10 +5,17 @@ html.js body img, html.no-js body img {
 	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
 }
-/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
+/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO BUT SEPARATE INSTRUCTIONS FROM UNITS*/
 
 /*REMEMBER override class hardcoded in HTML*/
-
+article {
+	-webkit-box-align: start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
 article:nth-child(odd) {
 	-webkit-box-orient: horizontal;
 	-webkit-box-direction: reverse;
@@ -22,32 +29,7 @@ article>* {
 	-webkit-align-self: flex-start;
 	align-self: flex-start;
 }
-article section {
-	-webkit-box-flex: 6;
-	-ms-flex: 6 1 1%;
-	-webkit-flex: 6 1 1%;
-	flex: 6 1 1%;
-}
-article>img {
-	-webkit-box-flex: 4;
-	-ms-flex: 4 1 1%;
-	-webkit-flex: 4 1 1%;
-	flex: 4 1 1%;
-}
-article {
-	-webkit-box-align: start;
-	-ms-flex-align: start;
-	align-items: flex-start;
-	-ms-flex-wrap: wrap;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-}
-#wrap+footer>a {
-	-webkit-box-flex: 0;
-	-ms-flex: 0 0 98%;
-	-webkit-flex: 0 0 98%;
-	flex: 0 0 98%;
-}
+
 #wrap+footer {
 	-ms-flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
@@ -57,6 +39,20 @@ article {
 	-webkit-align-items: flex-end;
 	align-items: flex-end;
 }
+
+.flexwrap article section {
+	-webkit-box-flex: 6;
+	-ms-flex: 6 1 1%;
+	-webkit-flex: 6 1 1%;
+	flex: 6 1 1%;
+}
+.flexwrap article>img {
+	-webkit-box-flex: 4;
+	-ms-flex: 4 1 1%;
+	-webkit-flex: 4 1 1%;
+	flex: 4 1 1%;
+}
+
 .flexwrap #wrap+footer {
 	/*display: -webkit-box; ipod not resizing on orientation*/
 	display: -webkit-flex;
@@ -86,11 +82,29 @@ article {
 	left: 0;
 	min-width: 6em;
 }
+
 .flexwrap #wrap+footer>a {
-	margin: 0;
-	padding: .75em 1% .75rem 0;
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 100%;
+	-webkit-flex: 0 0 100%;
+	flex: 0 0 100%;
+    box-sizing: border-box;
+    padding: .75em 1% .75em 0;
 }
+
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+    article section {
+	-webkit-box-flex: 6;
+	-ms-flex: 6 1 1%;
+	-webkit-flex: 6 1 1%;
+	flex: 6 1 1%;
+}
+article>img {
+	-webkit-box-flex: 4;
+	-ms-flex: 4 1 1%;
+	-webkit-flex: 4 1 1%;
+	flex: 4 1 1%;
+}
 	#wrap+footer:first-of-type {
 		/*display: -webkit-box; ipod not resizing on orientation*/
 		display: -webkit-flex;
@@ -118,10 +132,16 @@ article {
 		left: 0;
 		min-width: 6em;
 	}
-	#wrap+footer:first-of-type>a {
-		margin: 0;
-		padding: .75em 1% .75rem 0;
-	}
+   #wrap+footer > a:first-of-type {
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 100%;
+	-webkit-flex: 0 0 100%;
+	flex: 0 0 100%;
+    box-sizing: border-box;
+    padding: .75em 1% .75em 0;
+    }
+
+
 }
 @media screen and (max-width: 667px) {
 	article {
@@ -133,7 +153,25 @@ article {
 	article>img, .override h3 {
 		border-bottom: solid 1px white;
 	}
-	#wrap+footer #footer_girl {
+	.flexwrap #wrap+footer #footer_girl {
+		-webkit-box-flex: 5;
+		-ms-flex: 5 1 5em;
+		-webkit-flex: 5 1 5em;
+		flex: 5 1 5em;
+	}
+	.flexwrap #wrap+footer #fb {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 2em;
+		-webkit-flex: 1 1 2em;
+		flex: 1 1 2em;
+	}
+    .flexwrap #wrap+footer>a {
+    padding: .75em 2% .75em 0;
+}
+
+	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+
+        #wrap+footer #footer_girl {
 		-webkit-box-flex: 5;
 		-ms-flex: 5 1 5em;
 		-webkit-flex: 5 1 5em;
@@ -145,20 +183,11 @@ article {
 		-webkit-flex: 1 1 2em;
 		flex: 1 1 2em;
 	}
-	#wrap+footer>a {
-		-webkit-box-flex: 0;
-		-ms-flex: 0 0 98%;
-		-webkit-flex: 0 0 98%;
-		flex: 0 0 98%;
+#wrap+footer>a:first-of-type {
+    padding: .75em 2% .75em 0;
+}
 	}
-	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-		#wrap+footer>a {
-			padding: .75em 2% .75em 0;
-		}
-	}
-	.flexwrap #wrap+footer>a {
-		padding: .75em 2% .75em 0;
-	}
+
 }
 /*IF js disbaled and feature queries not supported what to do?*/
 

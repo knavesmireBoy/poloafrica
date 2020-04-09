@@ -178,7 +178,7 @@ article:nth-child(2) {
 
 textarea, #contactarea #dogs {
     display: inline-block;
-    vertical-align: baseline;
+    vertical-align: bottom;
 }
 
 textarea {

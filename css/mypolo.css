@@ -2,8 +2,24 @@
 @import "fullflex_mod.css";
 /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
 
+
 @media only screen and (max-width: 667px) {
+    
+    /*IF wrap not supported*/
+	.override article:first-child img {
+        float: right;
+        margin: 0 0 1em 1em;
+		}
+.override article:first-child img:last-of-type {
+        margin: 0 0 0 1em;
+		}
+
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
+        .override article:first-child img {
+        margin: 0;
+		}
+        
+
 		.override article:first-child, .override article:first-child section {
 			display: -webkit-box;
 			display: -ms-flexbox;
@@ -14,15 +30,21 @@
 			flex-wrap: wrap;
 		}
 		#facilities, article:first-child p {
+			-webkit-box-flex: 1;
+            -ms-flex: 1 0 100%;
+			-webkit-flex: 1 0 100%;
 			flex: 1 0 100%;
 		}
 		#wrap article:first-child img {
+			-webkit-box-flex: 1;
+            -ms-flex: 1 1 15em;
+			-webkit-flex: 1 1 15em;
 			flex: 1 1 15em;
 		}
 		article:first-child img:first-of-type {
 			margin: 1em .5em 0em 0;
 		}
-		article:first-child img:last-of-type {
+		.override article:first-child img:last-of-type {
 			margin: 1em 0 0 .5em;
 		}
 		article:first-child p {
@@ -52,7 +74,10 @@
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 @media only screen and (min-width: 1024px) {
-	@supports((-moz-column-gap: 20px) or (column-gap: 20px)) {
+    article:first-child section {
+            width: 68%;
+        }
+	@supports (column-gap: 20px) {
         
         article:first-child section {
             width: auto;

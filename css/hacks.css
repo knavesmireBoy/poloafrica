@@ -31,15 +31,14 @@ article {
 }
 
 main ul.gallery li {
- width: 176px;   
+ *width: 176px;   
 }
 
 main .gallery li.portrait, main .gallery li:nth-child(n+5) {
-	width: 146px;
-	width: 113px;
+	*width: 113px;
 }
 main ul.gallery li:nth-last-child(-n+4) {
-	width: 176px;
+	*width: 176px;
 }
 
 #photos main > * {

@@ -3,10 +3,12 @@
 .no-touchevents main {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
+	-webkit-align-items: center;
 	align-items: center;
 }
 .flexwrap .gallery li {
 	-ms-flex-item-align: start;
+	-webkit-align-self: flex-start;
 	align-self: flex-start;
 }
 .flexwrap .flexwrap ul.gallery li, .flexwrap .alt ul.gallery li.portrait, .flexwrap .alt ul.gallery li:nth-child(n+5), .flexwrap main ul.gallery li:nth-last-child(-n+4) {
@@ -37,9 +39,10 @@
 }
 .flexbox main ul {
 	min-width: 0;
-	-webkit-box-flex: 5;
-	-ms-flex: 5 1 50%;
-	flex: 5 1 50%;
+	-webkit-box-flex: 10;
+	-ms-flex: 10 1 50%;
+	-webkit-flex: 10 1 50%;
+	flex: 10 1 50%;
 }
 .showtime main.override {
 	display: block;

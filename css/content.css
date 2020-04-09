@@ -283,11 +283,7 @@ h2 span {
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);
 	}
-	/* explicitly set float to none in case browser doesn't support flex/grid*/
-	.no-js article>img, .js section>img {
-		float: none;
-		border-width: 0;
-	}
+
 	ul#nav a {
 		text-align: right;
 	}
