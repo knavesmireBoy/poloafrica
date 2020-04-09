@@ -15,7 +15,8 @@ article:first-child img {
 
 @media only screen {
 	h2 span {
-		background: white 0% 0%/contain url(../images/sub_polo.png) no-repeat;
+		background: white 0% 0% url(../images/sub_polo.png) no-repeat;
+        background-size: contain;
 	}
 }
 

@@ -21,11 +21,12 @@
  	margin: 1em 1em 0;
  }
  h2 span {
- 	background: white 0% 0% url(../images/sub_trust.jpg) no-repeat;
+ 	background: white 0% 50% url(../images/sub_trust.jpg) no-repeat;
  }
  @media only screen {
  	h2 span {
- 		background: white 0% 0%/contain url(../images/sub_trust.png) no-repeat;
+ 		background: white 0% 0% url(../images/sub_trust.png) no-repeat;
+        background-size: contain;
  	}
  }
 

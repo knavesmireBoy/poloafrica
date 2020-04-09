@@ -121,7 +121,7 @@ footer {
 	left: 100%;
 	margin: .5em 0 .5em -2.5em;
 	display: block;
-	background: white url("../images/sticks_sprite_fat.png") no-repeat;
+	background: red url("../images/sticks_sprite_fat.png") no-repeat;
 	background-position: 50% 0%;
 	background-size: 100%;
 	position: relative;
