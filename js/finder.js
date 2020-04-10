@@ -4,40 +4,15 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (mq, query, pass) {
+(function (mq, query) {
 	"use strict";
 
 	function noOp() {
 		//console.log('default')
 	}
 
-	function simpleInvoke(o, m, arg) {
-		return o[m](arg);
-	}
-
-	function thunk(f) {
-		return f.apply(f, _.rest(arguments));
-	}
-
-	function getResult(arg) {
-		return _.isFunction(arg) ? arg() : arg;
-	}
-
 	function undef(x) {
 		return typeof (x) === 'undefined';
-	}
-
-	function getPageOffset(bool) {
-		var w = window,
-			d = document.documentElement || document.body.parentNode || document.body,
-			x = (w.pageXOffset !== undefined) ? w.pageXOffset : d.scrollLeft,
-			y = (w.pageYOffset !== undefined) ? w.pageYOffset : d.scrollTop;
-		return bool ? x : y;
-	}
-
-	function getElementOffset(el) {
-		var elementHeight = el.offsetHeight || el.getBoundingClientRect().height;
-		return poloAF.Util.getElementOffset(el).top + elementHeight;
 	}
 
 	function invokemethod(o, arg, m) {

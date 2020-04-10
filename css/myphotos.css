@@ -1,7 +1,8 @@
 @import "flex_mod.css";
 
-.no-touchevents main {
+main {
 	-webkit-box-align: center;
+	-moz-box-align: center;
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	align-items: center;
@@ -25,19 +26,19 @@
 }
 /*https://tobiasahlin.com/blog/flexbox-break-to-new-row/*/
 
-.flexbox main {
-	display: -webkit-box;
+.flexbox main, .flexboxtweener main, .flexboxlegacy main {
+	/*display: -webkit-box;*/
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
 }
-.flexbox main .pagenav {
+.flexbox ul.gallery .pagenav, .flexboxtweener ul.gallery .pagenav, .flexboxlegacy ul.gallery .pagenav {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 1.6em;
 	-webkit-flex: 1 1 1.6em;
 	flex: 1 1 1.6em;
 }
-.flexbox main ul {
+.flexbox ul.gallery, .flexboxtweener ul.gallery, .flexboxlegacy ul.gallery {
 	min-width: 0;
 	-webkit-box-flex: 10;
 	-ms-flex: 10 1 50%;
@@ -49,8 +50,8 @@
 }
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
-.flexwrap main ul.gallery {
-	display: -webkit-box;
+.flexwrap ul.gallery {
+	/*display: -webkit-box;*/
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
@@ -59,19 +60,20 @@
 	flex-wrap: wrap;
 }
 @supports(display: flex) or (display: -webkit-flex) or (display: -ms-flex) {
+
     main {
-	display: -webkit-box;
+	/*display: -webkit-box;*/
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
 }
-    main .pagenav {
+    #photos ul.gallery .pagenav {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 1.6em;
 	-webkit-flex: 1 1 1.6em;
 	flex: 1 1 1.6em;
 }
-main ul {
+#photos ul.gallery {
 	min-width: 0;
 	-webkit-box-flex: 5;
 	-ms-flex: 5 1 50%;
@@ -79,8 +81,8 @@ main ul {
 }
 }
 @supports (flex-wrap: wrap) {
-	main ul.gallery {
-		display: -webkit-box;
+ul.gallery {
+		/*display: -webkit-box;*/
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;

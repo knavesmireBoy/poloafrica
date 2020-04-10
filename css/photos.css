@@ -1,5 +1,6 @@
 #wrap {
 	width: 832px;
+    background-color: white;
 }
 main {
 	position: relative;
@@ -96,7 +97,7 @@ main ul.portrait {
 	margin: 0 30%;
     width: auto;
 }
-main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js .pagenav {
+main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav {
 	position: absolute;
 	top: 0em;
 	left: -9999px;
@@ -388,6 +389,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents a.pagenav:hover span {
 		border: solid 2em silver;
 	}
+
 }
 /*667*/
 
