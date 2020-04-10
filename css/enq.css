@@ -77,7 +77,7 @@ form fieldset:first-child input {
 .override article p {
 	margin: 0 3em 1.3em 0;
 }
-article:last-child p {
+.override article:last-child p {
 	margin: 1em 0 0;
 }
 /*layout*/
@@ -188,6 +188,10 @@ textarea {
 h2 span {
 	background: white 0% 0% url(../images/sub_enq.jpg) no-repeat;
 }
+#cath img{
+		position: absolute;
+		left: -999em;
+	}
 @media only screen {
 	h2 span {
 		background: white 0% 0%/contain url(../images/sub_enq.png) no-repeat;
@@ -217,7 +221,35 @@ h2 span {
 		width: 100%;
 	}
 }
+
 @media screen and (max-width: 667px) {
+    
+    @supports(column-gap: 20px) {
+        section.show #cath {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            background: #cc6;
+        }
+ 
+    section.show #cath {
+        margin-bottom: 1em;
+        font-size: 1.1em;
+	}
+    #cath address{
+        padding-left: 1em;
+    }   
+        
+    #cath img {
+        position: relative;
+		left: auto;
+        margin: 0 1em 0 0;
+        border-width: 0;
+        width: 100%;
+    }
+    #cath a {
+        color: white;
+    }
+   }
 	h2, h2 span {
 		background: none;
 	}
@@ -301,6 +333,9 @@ h2 span {
 		box-sizing: border-box;
 	}
 	@media screen and (min-width: 668px) {
+        #cath address {
+    font-style: normal;
+}
 		@supports(column-gap: 20px) {
 			/*the textarea form element seems to confuse attempts at a grid layout
             The form expands if textarea is given explicit dimensions either as html attributes, or css.

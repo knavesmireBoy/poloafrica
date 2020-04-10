@@ -151,8 +151,9 @@ footer {
 #footer_girl a:last-child:before {
 	content: " | ";
 }
-#footer_girl a:first-child {
+.cssgradients #footer_girl a:first-child {
     background: radial-gradient(circle at 50%, #cc6, transparent 70%);
+    background: none;
 }
 footer a, footer a:link, footer a:visited {
 	color: white;

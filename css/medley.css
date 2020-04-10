@@ -1,9 +1,14 @@
-/* first assume float layout */
 #presslinks nav ul {
 	line-height: 1.3;
+	text-indent: -.8em;
+	padding: 0 0 0 1em;
+}
+
+.js #presslinks nav ul {
 	text-indent: -1.7em;
 	padding: 0 0 0 1.7em;
 }
+
 
 no-touchevents.background-size #presslinks nav ul {
 	text-indent: 0;

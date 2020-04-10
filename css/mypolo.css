@@ -2,24 +2,19 @@
 @import "fullflex_mod.css";
 /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
 
-
 @media only screen and (max-width: 667px) {
-    
-    /*IF wrap not supported*/
+	/*IF wrap not supported*/
 	.override article:first-child img {
-        float: right;
-        margin: 0 0 1em 1em;
-		}
-.override article:first-child img:last-of-type {
-        margin: 0 0 0 1em;
-		}
-
+		float: right;
+		margin: 0 0 1em 1em;
+	}
+	.override article:first-child img:last-of-type {
+		margin: 0 0 0 1em;
+	}
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
-        .override article:first-child img {
-        margin: 0;
+		.override article:first-child img {
+			margin: 0;
 		}
-        
-
 		.override article:first-child, .override article:first-child section {
 			display: -webkit-box;
 			display: -ms-flexbox;
@@ -28,16 +23,21 @@
 			-ms-flex-wrap: wrap;
 			-webkit-flex-wrap: wrap;
 			flex-wrap: wrap;
+            -webkit-box-align: flex-start;
+            -moz-box-align: flex-start;
+            -ms-flex-align: flex-start;
+            -webkit-align-items: flex-start;
+            align-items: flex-start;
 		}
 		#facilities, article:first-child p {
 			-webkit-box-flex: 1;
-            -ms-flex: 1 0 100%;
+			-ms-flex: 1 0 100%;
 			-webkit-flex: 1 0 100%;
 			flex: 1 0 100%;
 		}
 		#wrap article:first-child img {
 			-webkit-box-flex: 1;
-            -ms-flex: 1 1 15em;
+			-ms-flex: 1 1 15em;
 			-webkit-flex: 1 1 15em;
 			flex: 1 1 15em;
 		}
@@ -53,7 +53,26 @@
 		section p:last-child {
 			margin: 1em 0;
 		}
+        .no-js article:first-child section {
+            -webkit-box-flex: 1;
+			-ms-flex: 1 0 100%;
+			-webkit-flex: 1 0 100%;
+			flex: 1 0 100%;
+        }
+        .no-js article:first-child img:first-of-type {
+            -webkit-order: 2;
+            -ms-flex-order: 2;
+            order: 2;
+        }
+        .no-js article:first-child section  {
+            -webkit-order: 3;
+            -ms-flex-order: 3;
+            order: 3;
+        }
 	}
+    /*            -webkit-box-ordinal-group: $int + 1;
+            -moz-box-ordinal-group: $int + 1;
+    */
 }
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
@@ -70,18 +89,16 @@
 		margin: 1em 1em 0;
 	}
 }
-
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 @media only screen and (min-width: 1024px) {
-    article:first-child section {
-            width: 68%;
-        }
+	article:first-child section {
+		width: 68%;
+	}
 	@supports (column-gap: 20px) {
-        
-        article:first-child section {
-            width: auto;
-        }
+		article:first-child section {
+			width: auto;
+		}
 		.override article:first-child {
 			display: -ms-grid;
 			display: grid;
