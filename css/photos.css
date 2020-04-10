@@ -384,29 +384,32 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		top: 33%;
 		bottom: 33%;
 		display: block;
-		border: solid 2em whitesmoke;
+		border: solid 1.2em whitesmoke;
 	}
-	.touchevents a.pagenav:hover span {
-		border: solid 2em silver;
+	.touchevents a.pagenav:hover span, .touchevents a.pagenav:focus span {
+		border-color: silver;
 	}
 
 }
 /*667*/
 
 @media only screen and (max-width: 480px) {
-	.touchevents.no-flexbox main>* {
+	.touchevents.no-flexbox main {
+        display: table;
+    }
+    .touchevents.no-flexbox main>* {
 		display: table-cell;
 		position: relative;
 	}
 	.touchevents.no-flexbox main {
 		border-spacing: 9px;
 	}
-	.touchevents.no-flexbox .showtime main ul {
+	.touchevents.no-flexbox .showtime main, .touchevents.no-flexbox .showtime main > * {
 		display: block;
 	}
 	/*reset */
 	.touchevents.no-flexbox .showtime main {
-		border-spacing: 0 !important;
+		border-spacing: 0;
 	}
 }
 /* do min width to save .override h2 */
