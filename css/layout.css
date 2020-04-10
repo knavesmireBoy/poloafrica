@@ -110,12 +110,13 @@ footer div img {
 	width: 100%;
 }
 #footer_girl {
-	margin: 0 0 .75em 1em;
+	margin: 0 0 .75em 0em;
 	width: 40em;
 }
 #footer_girl a:first-child {
 	width: 9em;
-	margin: 0 0 -1.5em 0;
+	width: 12em;
+	margin: 0 -1.5em -1.5em 0;
 }
 #fb {
 	margin: 0 0 .75em -49.5em;
