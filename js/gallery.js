@@ -138,6 +138,7 @@
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
 				m = math ? 'addClass' : 'removeClass';
 			utils[m]('portrait', thumbs);
+			utils[m]('portrait', $('wrap'));
 		},
 		makeIterator = function (coll) {
 			var findIndex = ptL(utils.findIndex, coll),
@@ -261,6 +262,7 @@
 				}
 			},
 			countdown = function countdown(cb, x) {
+                var raf = Modernizr.requestanimationframe ? 1 : 11;
 				//restarting counter is delegated to an onDone function, passed as an argument here..
 				function counter() {
 					if (countdown.resume) {
@@ -271,7 +273,7 @@
 						countdown.resume = x;
 						return;
 					}
-					x -= 1;
+					x -= raf;
 					utils.invokeWhen(lessOrEqual(100), ptL(cb, counter), x);
 					if (isPositive(x)) {
 						countdown.progress = window.requestAnimationFrame(counter);

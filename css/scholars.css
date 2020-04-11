@@ -1,15 +1,21 @@
+@import "flex_mod.css";
+@import "fullflex_mod.css";
 #scholars li:nth-child(3):hover ul {
 	left: 0;
 }
 h2 span {
 	background: white 0% 0% url(../images/sub_scholars.jpg) no-repeat;
 }
-@media screen {
+@media only screen {
 	h2 span {
-		background: white 0% 0%/contain url(../images/sub_scholars.png) no-repeat;
+		background: white 0% 0% url(../images/sub_scholars.png) no-repeat;
+        background-size: contain;
 	}
 }
 @media screen and (max-width: 667px) {
+     article {
+        display: block;
+    }
 	h2, h2 span {
 		background: none;
 	}

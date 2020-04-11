@@ -1,11 +1,11 @@
 h3 {
-    border-bottom: solid 1px;
-	}
-#enquiries article:first-child section {
-    margin: 0 38% 0 0;
+	border-bottom: solid 1px;
 }
-#enquiries article:first-child section p{
-    margin: 0 0 1.3em 0;
+#enquiries article:first-child section {
+	margin: 0 38% 0 0;
+}
+#enquiries article:first-child section p {
+	margin: 0 0 1.3em 0;
 }
 form {
 	font-family: Arial, Helvetica, Verdana, sans-serif;
@@ -13,7 +13,7 @@ form {
 	border: solid 1px #000;
 	padding: 1em 0;
 	float: left;
-	width: 70%;
+	width: 72%;
 }
 form fieldset {
 	font-size: 1em;
@@ -44,31 +44,31 @@ form fieldset:first-child input {
 	text-transform: uppercase;
 	border-width: 0;
 }
+.override #contactarea figure img {
+    object-fit: cover;
+    border-radius: 0;
+}
 #enquries #intro {
 	margin: 2em 0 1em 0;
 }
 #enquiries article {
-    display: block;
+	display: block;
 	margin: 1em 0 0;
 }
-
-#enquiries article section > a {
-    flex: 0 0 100%;
+#enquiries article section>a {
+	flex: 0 0 100%;
 }
-
-.no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before  {
-        color: white;
-        text-shadow: 1px 1px 1px black;
-        background-color: hsl(60, 40%, 64%);
-    }
-    
+.no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before {
+	color: white;
+	text-shadow: 1px 1px 1px black;
+	background-color: hsl(60, 40%, 64%);
+}
 .no-js #intro .read-more-state+label:before, .no-js #intro .read-more-state:first-of-type:checked+label:before {
-        color: #993;
-        text-shadow: none;
-        background-color: #E7E7C7;
-        background-color: hsl(60, 40%, 84%);
-	}
-
+	color: #993;
+	text-shadow: none;
+	background-color: #E7E7C7;
+	background-color: hsl(60, 40%, 84%);
+}
 .override article img {
 	width: 33%;
 	float: right;
@@ -77,8 +77,8 @@ form fieldset:first-child input {
 .override article p {
 	margin: 0 3em 1.3em 0;
 }
-article:last-child p {
-	margin: 0;
+.override article:last-child p {
+	margin: 1em 0 0;
 }
 /*layout*/
 
@@ -101,16 +101,16 @@ form label {
 	height: 2em;
 	margin: .1em 0 .1em .5em;
 	width: 84%;
-    *width: 80%;
-    padding: 0 .5em;
-    box-sizing: border-box;
+	*width: 80%;
+	padding: 0 .5em;
+	box-sizing: border-box;
 }
 #contactarea #dogs {
 	margin: 0;
-	position: static;
-	display: block;
+	position: relative;
 	width: 26%;
-	float: right;
+    left: 100%;
+    margin-left: -100%;
 	border: solid 1px white;
 }
 #contactarea fieldset:last-child input:last-child {
@@ -119,10 +119,9 @@ form label {
 }
 textarea {
 	border-width: 0;
-	width: 70%;
+	width: 71%;
 	height: 9.8vw;
 	height: 6.8em;
-	float: left;
 }
 #contactarea figure {
 	border: solid 1px;
@@ -130,7 +129,7 @@ textarea {
 	float: right;
 	box-shadow: none;
 	overflow: hidden;
-	width: 26%;
+	width: 25.5%;
 	align-self: flex-start;
 }
 #contactarea figure img {
@@ -141,9 +140,8 @@ textarea {
 	border-width: 0px;
 	height: 100%;
 }
-
 #enquiries article:last-child {
-    clear: left;
+	clear: left;
 }
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
 article:nth-child(2) {
@@ -178,16 +176,34 @@ article:nth-child(2) {
 }
 */
 
+textarea, #contactarea #dogs {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+textarea {
+    margin: 0 1em 0 0;
+}
+
 h2 span {
 	background: white 0% 0% url(../images/sub_enq.jpg) no-repeat;
 }
-@media screen {
+#cath img{
+		position: absolute;
+		left: -999em;
+	}
+@media only screen {
 	h2 span {
 		background: white 0% 0%/contain url(../images/sub_enq.png) no-repeat;
 	}
 }
-
 @media screen and (max-width: 823px) {
+    
+    form {
+	float: none;
+	width: auto;
+        margin: 0;
+}
 	#enquiries #contactarea figure, #wrap #grooms {
 		position: absolute;
 		left: -999em;
@@ -195,12 +211,10 @@ h2 span {
 	#enquiries article:first-child {
 		margin: 2em 0 0 0;
 	}
-    
-        #enquiries article:first-child section {
-    margin: 0;
-}
-	
-	article section p{
+	#enquiries article:first-child section {
+		margin: 0;
+	}
+	article section p {
 		margin: 0 0 1.3em 0;
 	}
 	#contact_form {
@@ -209,37 +223,65 @@ h2 span {
 }
 
 @media screen and (max-width: 667px) {
+    
+    @supports(column-gap: 20px) {
+        section.show #cath {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            background: #cc6;
+        }
+ 
+    section.show #cath {
+        margin-bottom: 1em;
+        font-size: 1.1em;
+	}
+    #cath address{
+        padding-left: 1em;
+    }   
+        
+    #cath img {
+        position: relative;
+		left: auto;
+        margin: 0 1em 0 0;
+        border-width: 0;
+        width: 100%;
+    }
+    #cath a {
+        color: white;
+    }
+   }
 	h2, h2 span {
 		background: none;
 	}
 	#enquiries article {
 		margin: 0;
 	}
-    
-    #enquiries article:first-child section p{
-    margin: 1em 0 1.3em 0;
-}
-
-     #enquiries section.show h3{
-        color: white;
-        text-shadow: 1px 1px 1px black;
-        background-color: hsl(60, 40%, 64%);
-    }
-   
+	#contactarea form fieldset:first-child input {
+		width: 83.5%;
+	}
+	#enquiries article:first-child section p {
+		margin: 1em 0 1.3em 0;
+	}
+	#enquiries section.show h3 {
+		color: white;
+		text-shadow: 1px 1px 1px black;
+		background-color: hsl(60, 40%, 64%);
+	}
 	#contactarea #dogs {
 		position: absolute;
 		left: -999em;
 	}
 	#contactarea form {
-		width: 90%;
+		width: 100%;
 		float: none;
-        display: block;
-        box-sizing: border-box;
+		display: block;
+		box-sizing: border-box;
 	}
 	textarea {
-		width: 99%;
+		width: 100%;
 		height: 10em;
 		float: none;
+		box-sizing: border-box;
 	}
 	#enquiries #contactarea figure, #wrap #grooms, #contactarea #dogs {
 		position: absolute;
@@ -266,16 +308,17 @@ h2 span {
 	.no-js article:nth-child(3)>label:before {
 		content: "Directions";
 	}
-	.no-js #wrap #post1.read-more-state:checked~section:nth-of-type(1), .no-js #wrap #post2.read-more-state~section:nth-of-type(2), .no-js #wrap #post3.read-more-state~section:nth-of-type(3), .no-js #wrap #post4.read-more-state~section:nth-of-type(1), .no-js #wrap #post5.read-more-state~section:nth-of-type(2) {
-		position: absolute;
-		top: 0px;
+   
+    .no-js input~section p, .no-js #post1.read-more-state:checked~section:nth-of-type(1) p{
+        position: absolute;
 		left: -999em;
-		margin: 0;
-	}
-	.no-js #wrap #post1~section:nth-of-type(1), .no-js #wrap #post2:checked~section:nth-of-type(2), .no-js #wrap #post3:checked~section:nth-of-type(3), .no-js #wrap #post4:checked~section:nth-of-type(1), .no-js #wrap #post5:checked~section:nth-of-type(2), .js #wrap article section.show * {
-		position: static;
+    }
+    
+    .no-js article:first-of-type .read-more-state:checked~section, .no-js #post1~section:nth-of-type(1) p, .no-js #post2.read-more-state:checked~section:nth-of-type(2) p,  .no-js #post3.read-more-state:checked~section:nth-of-type(3) p, .no-js #post5.read-more-state:checked~section:nth-of-type(1) p, .js #wrap article section.show > *{
+       position: static;
 		left: 0em;
-	}
+    }
+    
 }
 /*@*/
 
@@ -290,6 +333,9 @@ h2 span {
 		box-sizing: border-box;
 	}
 	@media screen and (min-width: 668px) {
+        #cath address {
+    font-style: normal;
+}
 		@supports(column-gap: 20px) {
 			/*the textarea form element seems to confuse attempts at a grid layout
             The form expands if textarea is given explicit dimensions either as html attributes, or css.

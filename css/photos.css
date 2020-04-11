@@ -1,5 +1,6 @@
 #wrap {
 	width: 832px;
+    background-color: white;
 }
 main {
 	position: relative;
@@ -8,53 +9,35 @@ main {
 	text-align: center;
 	height: 100%;
 }
-
 main img, main ul {
 	border: 1px solid black;
 }
-
-#wrap .override img{
-    border-radius: 0px;
-    box-shadow: none;
+#wrap .override img {
+	border-radius: 0px;
+	box-shadow: none;
 }
 main img:hover {
 	border-color: indigo;
 }
-main>a {
-	border-top: 1vw solid transparent;
-	border-bottom: 1vw solid transparent;
-	position: relative;
-	margin: 1px;
-    vertical-align: middle;
-    display: inline-block;
+main>* {
+	display: inline-block;
+	vertical-align: middle;
 }
-#gal_back {
-	border-right: 2vw solid #444;
-}
-#gal_forward {
-	border-right: 0px solid;
-	border-left: 2vw solid transparent;
-	border-left-color: #444;
-}
-main>a {
+.pagenav {
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
+	position: relative;
+	margin: 1px;
 }
 #gal_back {
-	border-right: 21px solid #444;
+	border-right: 21px solid crimson;
 }
 #gal_forward {
-	border-left: 21px solid #444;
+	border-left: 21px solid crimson;
 }
-
-.no-touchevents #gal_back:hover {
-	border-right-color: silver;
+.pagenav:hover, .pagenav:focus {
+	border-right-color: royalblue;
 }
-.no-touchevents #gal_forward:hover {
-	border-left-color: silver;
-}
-/*main ul li, */
-
 main img {
 	width: 100%;
 }
@@ -62,104 +45,91 @@ main img {
 	border-width: 0;
 	position: relative;
 	margin: 0;
-	/*to accommodate exit button*/
-	padding: 4em 0 0 0;
+	padding: 0;
 	display: block;
 	/*force override flex ?*/
 }
 main ul {
-	margin: 0;
-	padding: 6px;
+	text-align: center;
+	padding: 3px;
+	width: 90%;
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
-	overflow: hidden;
-
-}
-main ul.gallery {
-	margin: 0 auto;
 	-webkit-transition: width 1s ease-in-out;
 	-o-transition: width 1s ease-in-out;
 	transition: width 1s ease-in-out;
+	overflow: hidden;
 }
-.showtime main ul {
-	padding: 12px;
-}
-
 li#slide, li#paused, li#base {
 	display: block;
 	opacity: 1;
 }
-.no-js main ul li, .no-flexbox main ul li {
-	width: 249px;
-}
+
 main ul li {
-	margin: 6px;
 	float: left;
+	border: solid 6px white;
 }
-main ul.gallery li {
-	width: 225px;
-	width: 176px;
+main ul li, main ul li img {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
-main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
-	width: 146px;
-	width: 113px;
-}
-main ul.gallery li:nth-last-child(-n+4) {
-	width: 176px;
-}
-main ul.gallery li:nth-child(5), main ul.gallery li:nth-child(11), main.alt ul.gallery li:nth-child(9) {
+.gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait, ul.gallery li:nth-last-child(-n+4) {
+		width: 25%;
+	}
+	.gallery li:nth-child(n+5), .gallery li.portrait{
+		width: 16.666%
+	}
+
+.gallery li:nth-child(5), .gallery li:nth-child(11), .alt .gallery li:nth-child(9) {
 	clear: left;
 }
-main.alt ul.gallery li:nth-child(11) {
+.alt .gallery li:nth-child(11) {
 	clear: none;
 }
-main.alt ul.gallery li:nth-last-child(-n+2) {
+.alt .gallery li:nth-last-child(-n+2) {
 	display: none;
 }
 .js .showtime main ul li {
 	width: 100%;
-	margin: 0;
 }
 main ul.portrait {
 	margin: 0 30%;
+    width: auto;
 }
-
-main ul {
-	margin: 0 5%;
-}
-main ul li, .inplay main ul li.show, .showtime main>a, .no-js main>a {
+main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav {
 	position: absolute;
 	top: 0em;
 	left: -9999px;
 }
-main ul.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused, .js #exit {
+.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused {
 	position: relative;
 	left: auto;
 }
-
 footer {
 	margin: 0 auto;
 }
 .showtime footer {
-	margin: -5em auto;
+    margin: -4.1em auto 0;
 }
+
+.backgroundsize .showtime footer:hover {
+    		background:  url(../images/footer_green_ko.png) no-repeat bottom right,
+                url(../images/sky.png) no-repeat top left;
+}
+
 .js #exit {
-	position: absolute;
-	top: 1em;
-	right: 1em;
-	border: 0;
 	width: 2em;
 	height: 2em;
+	left: 100%;
+	margin: .5em 0 .5em -2.5em;
 	display: block;
-	background: transparent url("../images/sticks_sprite_fat.png") no-repeat;
+	background: url("../images/sticks_sprite_fat.png") no-repeat;
 	background-position: 50% 0%;
 	background-size: 100%;
-	display: inline-block;
+	position: relative;
 }
-.js #exit {
-	background-color: transparent;
-}
-.js #exit:hover {
+.js #exit:hover, .js #exit:focus {
 	background-position: 50% 106%;
 }
 li#slide, li#paused {
@@ -204,8 +174,8 @@ li#slide, li#paused {
 }
 #controls button {
 	cursor: pointer;
-	background-color: #556B2F;
-	border: 1px solid #7F9933;
+	background-color: #990;
+	border: 1px solid #cc6;
 	border: 1px solid hsla(75, 50%, 40%, 1);
 	border-radius: .2em;
 	line-height: 1.6;
@@ -232,7 +202,7 @@ li#slide, li#paused {
 	text-shadow: 1px 1px 1px rgba(255, 255, 255, .75);
 }
 #controls button#backbutton {
-	background-position: 50% 14.7%;
+	background-position: 50% 14.9%;
 }
 #controls button#playbutton {
 	background-position: 50% 29%;
@@ -315,23 +285,6 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		max-width: 80em;
 		width: 100%;
 	}
-    
-    main ul.gallery {
-		padding: .5%;
-	}
-	main ul.gallery li {
-		margin: .5%;
-	}
-	main ul.gallery li, main.alt ul.gallery li:nth-child(n+5), main.alt ul.gallery li.portrait {
-		width: 24%;
-	}
-	main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
-		width: 15.66%;
-	}
-	main ul.gallery li:nth-last-child(-n+4) {
-		width: 24%;
-	}
-    
 	.showtime main ul li {
 		width: 100%;
 	}
@@ -347,37 +300,43 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 }
 
 @media only screen and (max-width: 1024px) {
-main ul.portrait {
-	margin: 0 20%;
+	main ul.portrait {
+		margin: 0 20%;
+	}
 }
-}
-
 @media only screen and (max-width: 800px) {
-main ul.portrait {
-	margin: 0 10%;
-}
+	main ul.portrait {
+		margin: 0 10%;
+	}
 }
 
 @media only screen and (max-width: 667px) {
-
-     h2 {
-       text-shadow: 2px 2px 2px black;
+	main {
+		padding: 2.5em 0 0 0;
+	}
+	main ul {
+		width: 80%;
+	}
+	.showtime main ul {
+		width: auto;
+		display: block;
+		margin: 0 8%;
+	}
+	.touchevents .showtime main {
+		padding: .5em 0 0 0;
+	}
+	/*
+	.touchevents.flexboxlegacy .pagenav, .touchevents.flexbox .pagenav, .touchevents.flexboxtweener .pagenav {
+		margin: 0 1%;
+	}
+    */
+	h2 {
+		text-shadow: 2px 2px 2px black;
 	}
 	.touchevents h2 {
 		position: relative;
 		left: auto;
 	}
-	.touchevents #wrap .showtime main {
-		display: block;
-	}
-	/*
-    .js main>a {
-	border-top: 2vw solid;
-	border-bottom: 2vw solid;
-	border-color: transparent;
-    color: #444;
-}
-    */
 	.touchevents #controls {
 		font-size: 1.3em;
 	}
@@ -390,82 +349,86 @@ main ul.portrait {
 	.touchevents #wrap.inplay+footer {
 		background: url(../images/sil_bg.png) no-repeat 60% top;
 	}
-    
-	.no-flexwrap main ul.gallery {
-		padding: 1vw;
-		padding: 1%;
-	}
-	.no-flexwrap main ul.gallery li {
-		margin: 1.5%;
-        box-sizing: border-box;
+	.touchevents ul.gallery li {
+		border: solid 3px white;
 	}
     
-	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li {
-		width: 244px;
-		width: 40vw;
-		width: 47.2%;
+    .override .gallery li, .alt ul.gallery li:nth-child(n+5), .alt ul.gallery li.portrait, main ul.gallery li:nth-last-child(-n+4) {
+		width: 50%;
 	}
-	.touchevents main ul.gallery li, .touchevents main.alt ul.gallery li:nth-child(n+5), .touchevents main.alt ul.gallery li.portrait {
-		width: 47.2%;
+	ul.gallery li:nth-child(n+5), .override ul.gallery li.portrait {
+		width: 33.333%;
 	}
-	.touchevents main ul.gallery li.portrait, .touchevents main ul.gallery li:nth-child(n+5) {
-		width: 161px;
-		width: 26.2vw;
-		width: 30.8%;
-	}
-	.touchevents main ul.gallery li:nth-last-child(-n+4) {
-		width: 47.2%;
-	}
+
 	.touchevents footer {
 		-webkit-transition: background-position 2s ease;
 		-moz-transition: background-position 2s ease;
 		-o-transition: background-position 2s ease;
 		transition: background-position 2s ease;
 	}
-}
-@media only screen and (max-width: 480px) {
-    
-    .showtime main ul {
-	margin: 0;
-}
-	
-	.touchevents main>a:link {
-		color: transparent;
+	.touchevents main.override>a:active {
+		background: blue;
 	}
-	.touchevents main>a {
-		border-top: 1em solid transparent;
-		border-bottom: 1em solid transparent;
+	/*#photos specificity*/
+	.touchevents #photos a.pagenav {
+		width: 1.6em;
+		border-width: 0;
+		overflow: hidden;
+		background-color: hsla(349, 86%, 45%, 100);
 	}
-	.touchevents #gal_back {
-		border-right: 2em solid #444;
+	.touchevents a.pagenav:hover, .touchevents a.pagenav:focus {
+		background-color: hsla(349, 86%, 30%, 100);
 	}
-	.touchevents #gal_forward {
-		border-left: 2em solid #444;
+	.touchevents a.pagenav span {
+		position: absolute;
+		top: 33%;
+		bottom: 33%;
+		display: block;
+		border: solid 1.2em whitesmoke;
 	}
-}
-@media only screen and (min-width: 668px) {/* do min width to save .override h2 */
-h2 {
-    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
-    background: none;
-    color: white;
-    text-shadow: none;
-    margin: 0;
-}
-    
-    .showtime h2 {
-        display: none;
-    }
-}
+	.touchevents a.pagenav:hover span, .touchevents a.pagenav:focus span {
+		border-color: silver;
+	}
 
-/*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/
-@media all and (-ms-high-contrast: none) {
-     main ul {
-        display: inline-block;
-        vertical-align: middle;
-        width: 90%;
-    }
-    .showtime main ul {
-        width: 100%;
-        box-sizing: border-box;
-    }
 }
+/*667*/
+
+@media only screen and (max-width: 480px) {
+	.touchevents.no-flexbox main {
+        display: table;
+    }
+    .touchevents.no-flexbox main>* {
+		display: table-cell;
+		position: relative;
+	}
+	.touchevents.no-flexbox main {
+		border-spacing: 9px;
+	}
+	.touchevents.no-flexbox .showtime main, .touchevents.no-flexbox .showtime main > * {
+		display: block;
+	}
+	/*reset */
+	.touchevents.no-flexbox .showtime main {
+		border-spacing: 0;
+	}
+}
+/* do min width to save .override h2 */
+
+@media only screen and (min-width: 668px) {
+	h2 {
+		/*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+		background: none;
+		color: white;
+		text-shadow: none;
+		margin: 0;
+	}
+	h2:hover {
+		color: white;
+	}
+	.showtime h2 {
+		position: absolute;
+        left: -9999px;
+        top: 0;
+	}
+}
+/*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/

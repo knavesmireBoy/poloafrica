@@ -1,12 +1,18 @@
-        h2 span {
+@import "flex_mod.css";
+@import "fullflex_mod.css";
+h2 span {
         	background: white 0% 0% url(../images/sub_stay.jpg) no-repeat;
         }
-        @media screen {
+        @media only screen {
         	h2 span {
-        		background: white 0% 0%/contain url(../images/sub_stay.png) no-repeat;
+        		background: white 0% 0% url(../images/sub_stay.png) no-repeat;
+                background-size: contain;
         	}
         }
         @media screen and (max-width: 667px) {
+            article {
+                display: block;
+            }
         	h2, h2 span {
         		background: none;
         	}

@@ -77,7 +77,7 @@ if (!window.poloAF) {
                 j = isNaN(j) ? 0 : domod(j += 1);
                 base_el.src = logo_paths[j];
             };
-            poloAF.Util.addHandler('click', $('ani').parentNode, doAlt([exit, enter]));
+            poloAF.Util.addHandler('click', $('ani'), doAlt([exit, enter]));
             
             return function (i) {
                 i -= 1;

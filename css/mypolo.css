@@ -1,154 +1,145 @@
-@import "flex.css";
-@import "fullflex.css";
-@media screen and (min-width: 1025px) {
-
-@supports(column-gap: 20px) {
-	article:nth-child(1) {
-		display: -ms-grid;
-		display: grid;
-		grid-row-gap: 1em;
-		grid-column-gap: 2em;
-	}
-	.override article:nth-child(1) img {
-		width: 100%;
-		margin: 0 2em 0 0em;
-	}
-	article:nth-child(1)>a {
-		grid-column: 1 / 3;
-		grid-row: 1/2;
-	}
-	article:nth-child(1) section {
-		grid-column: 1 / 2;
-		grid-row: 1/6;
-	}
-	article:nth-child(1) img:first-of-type {
-		grid-row: 1/2;
-		grid-column: 2 / 3;
-    }
-	article:nth-child(1) img:last-of-type {
-		grid-row: 3/4;
-		grid-column: 2 / 3;
-	}
-}
-    .no-cssgrid article:nth-child(1) {
-		display: block
-	}
-}
-    
+@import "flex_mod.css";
+@import "fullflex_mod.css";
 /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
-@media screen and (max-width: 667px) {
 
-    @supports(flex-wrap: wrap) {
-        .js article:first-child section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+@media only screen and (max-width: 667px) {
+	/*IF wrap not supported*/
+	.override article:first-child img {
+		float: right;
+		margin: 0 0 1em 1em;
+	}
+	.override article:first-child img:last-of-type {
+		margin: 0 0 0 1em;
+	}
+	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
+		.override article:first-child img {
+			margin: 0;
+		}
+		.override article:first-child, .override article:first-child section {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			-ms-flex-wrap: wrap;
+			-webkit-flex-wrap: wrap;
+			flex-wrap: wrap;
+            -webkit-box-align: flex-start;
+            -moz-box-align: flex-start;
+            -ms-flex-align: flex-start;
+            -webkit-align-items: flex-start;
+            align-items: flex-start;
+		}
+		#facilities, article:first-child p {
+			-webkit-box-flex: 1;
+			-ms-flex: 1 0 100%;
+			-webkit-flex: 1 0 100%;
+			flex: 1 0 100%;
+		}
+		#wrap article:first-child img {
+			-webkit-box-flex: 1;
+			-ms-flex: 1 1 15em;
+			-webkit-flex: 1 1 15em;
+			flex: 1 1 15em;
+		}
+		article:first-child img:first-of-type {
+			margin: 1em .5em 0em 0;
+		}
+		.override article:first-child img:last-of-type {
+			margin: 1em 0 0 .5em;
+		}
+		article:first-child p {
+			margin: 1em 0 0;
+		}
+		section p:last-child {
+			margin: 1em 0;
+		}
+        .no-js article:first-child section {
+            -webkit-box-flex: 1;
+			-ms-flex: 1 0 100%;
+			-webkit-flex: 1 0 100%;
+			flex: 1 0 100%;
         }
-        
-        .js article:first-child section p{
-            margin: .25em 0;
+        .no-js article:first-child img:first-of-type {
+            -webkit-order: 2;
+            -ms-flex-order: 2;
+            order: 2;
         }
-        
-        article section a {
-            flex: 1 1 100%;
+        .no-js article:first-child section  {
+            -webkit-order: 3;
+            -ms-flex-order: 3;
+            order: 3;
         }
-        .override article:first-child img {
-            flex: 1 1 1%;
-            width: 48%;
-            align-self: stretch;
-        }
-        .override article:first-child img:first-of-type {
-            margin: 1em .5em 0 1em;
-        }
-        
-         .override article:first-child img:last-of-type {
-            margin: 1em 1em 0 .5em;
-        }
-         .override section p {
-            flex: 1 1 100%;
-             margin: 1em 0 0;
-        }
-          .override section p:last-child {
-             margin: 1em 0;
-        }
-    }
-	@supports(column-gap: 20px) {
-        
-		.js article:first-child section {
-			display: grid;
-            grid-template-columns: .05fr 1fr .05fr 1fr .05fr;
-            grid-row-gap: 1em;
-            justify-content: space-between;
-		}
-        
-        .js .override article:first-child section a:first-child {
-             grid-column: 1 / -1;
-		}
-      
-        .js .override article:first-child section p {
-            grid-column: 2 / 5;
-            margin: 0;
-            padding: 0;
-		}
-        .js .override article:first-child section p:last-of-type {
-            padding: 0 0 1em 0;
-		}
-        .js .override article:first-child img {
-            width: 100%;
-            margin: 0;
-            align-self: stretch;
-		}
-		.js .override article:first-child img:first-of-type {
-            grid-row: 2/3;
-			grid-column: 2 / 3;
-            
-		}
-		.js .override article:first-child img:last-of-type {
-			grid-row: 2/3;
-            grid-column: 4 / 5;
-		}
-        
-        .no-js article:nth-child(1) {
-            grid-column: 1 / 3;
-		}
-        
-        .no-js article:nth-child(1) label {
-            grid-column: 1 / 3;
-            grid-row: 1/2;
-		}
-       
-		.no-js .override article:nth-child(1) section {
-			grid-column: 1 / 3;
-			grid-row: 2/3;
-            margin: 0;
-		}
-
-		.no-js article:nth-child(1) img:first-of-type {
-			grid-row: 3/4;
-			grid-column: 1 / 2;
-            margin: 0 0 1em 0;
-		}
-		.no-js article:nth-child(1) img:last-of-type {
-			grid-row: 3/4;
-			grid-column: 2 / 3;
-            align-self: stretch;
-            margin: 0 0 1em 0;
-        }
-    }
+	}
+    /*            -webkit-box-ordinal-group: $int + 1;
+            -moz-box-ordinal-group: $int + 1;
+    */
 }
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 @media screen and (max-width: 480px) {
-    .no-flexwrap #polo article:first-child{
-        display: block;
-    }
-    .no-flexwrap #polo .field {
-        float: right;
-        width: 50%;
-        margin: 0em 1em 0;
-    }
-    
-    .no-flexwrap #polo .field:last-of-type {
-        margin: 1em 1em 0;
-    }
- 
+	.no-flexwrap #polo article:first-child {
+		display: block;
+	}
+	.no-flexwrap #polo .field {
+		float: right;
+		width: 50%;
+		margin: 0em 1em 0;
+	}
+	.no-flexwrap #polo .field:last-of-type {
+		margin: 1em 1em 0;
+	}
+}
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+
+@media only screen and (min-width: 1024px) {
+	article:first-child section {
+		width: 68%;
+	}
+	@supports (column-gap: 20px) {
+		article:first-child section {
+			width: auto;
+		}
+		.override article:first-child {
+			display: -ms-grid;
+			display: grid;
+			grid-row-gap: 1em;
+			grid-column-gap: 2em;
+		}
+		article:first-child img {
+			width: 100%;
+			margin: 0;
+		}
+		article:first-child>a {
+			-ms-grid-column: 1;
+			-ms-grid-column-span: 2;
+			grid-column: 1 / 3;
+			-ms-grid-row: 1;
+			-ms-grid-row-span: 1;
+			grid-row: 1/2;
+		}
+		article:first-child section {
+			-ms-grid-column: 1;
+			-ms-grid-column-span: 1;
+			grid-column: 1 / 2;
+			-ms-grid-row: 1;
+			-ms-grid-row-span: 5;
+			grid-row: 1/6;
+		}
+		article:first-child img:first-of-type {
+			-ms-grid-row: 1;
+			-ms-grid-row-span: 1;
+			grid-row: 1/2;
+			-ms-grid-column: 2;
+			-ms-grid-column-span: 1;
+			grid-column: 2 / 3;
+		}
+		article:first-child img:last-of-type {
+			-ms-grid-row: 3;
+			-ms-grid-row-span: 1;
+			grid-row: 3/4;
+			-ms-grid-column: 2;
+			-ms-grid-column-span: 1;
+			grid-column: 2 / 3;
+		}
+	}
 }

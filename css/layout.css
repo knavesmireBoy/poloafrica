@@ -7,16 +7,13 @@ html, body {
 img, #nav a, #fb a, footer>a:link:last-child {
 	display: block;
 }
-#wrap .override img{
-    border-radius: 4px;
-    box-shadow: 0px 0px 3px #993;
-}
+
 #wrap {
 	min-height: 100%;
 }
 #wrap {
 	margin: 0 auto;
-	max-width: 80em;
+	max-width: 84em;
 	min-height: 100%;
 	overflow: hidden;
 	position: relative;
@@ -24,7 +21,7 @@ img, #nav a, #fb a, footer>a:link:last-child {
 main {
 	overflow: hidden;
 	margin: .2em 0 0em;
-	padding: 0 1em 12.2em;
+	padding: 0 1em 10.1em;
 }
 header {
 	position: relative;
@@ -62,12 +59,12 @@ article input, nav input {
 /* direct child selector, otherwise will have to override for animation */
 
 article>img {
-	margin: .5em 2% .5em 0;
+	margin: .5em 2% 1em 0;
 	float: left;
 	width: 40%;
 }
 article:nth-child(odd)>img, #ani {
-	margin: 0em 0 .5em 2%;
+	margin: 0em 0 1em 2%;
 	float: right;
 }
 article:after {
@@ -96,21 +93,14 @@ article:after {
 nav li#current:hover ul, nav li#current.sfhover ul {
 	left: 0;
 }
-main {
-	padding: 0 1em 10.1em;
-}
+
 footer {
 	max-width: 80em;
 	padding: 5em 0 0 0;
 	margin: -10.1em auto 0;
 	width: 100%;
 }
-#fb {
-	margin: 0 0 .75em -49.5em;
-	display: inline-block;
-	width: 7em;
-	left: 100%;
-}
+
 footer div {
 	display: inline-block;
 	vertical-align: bottom;
@@ -120,14 +110,19 @@ footer div img {
 	width: 100%;
 }
 #footer_girl {
-	margin: 0 0 .75em 1em;
+	margin: 0 0 .75em 0em;
 	width: 40em;
 }
 #footer_girl a:first-child {
 	width: 9em;
-	margin: 0 0 -1.5em 0;
+	width: 12em;
+	margin: 0 -1.5em -1.5em 0;
 }
-#footer_girl a:first-child img {}
+#fb {
+	margin: 0 0 .75em -49.5em;
+	width: 7em;
+	left: 100%;
+}
 footer a:link {
 	display: inline-block;
 }
@@ -153,11 +148,12 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
+   
     
     #wrap .override img {
     border-radius: 0px;
     box-shadow: none;
-}
+    }
 	.touchevents body {
 		margin: 0;
 	}
@@ -255,6 +251,7 @@ header h1, header h1 img, h2 span {
 	article, .override section {
 		margin: 0;
 	}
+
 	.read-more-trigger:before, .no-js article:first-of-type .read-more-state:checked~.read-more-trigger:before {
 		display: block;
 	}
@@ -307,6 +304,7 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media only screen and (max-width: 568px) {
+
 	header h1 {
 		padding: 0 0 8.5vw 0;
 	}
@@ -321,6 +319,7 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media only screen and (max-width: 480px) {
+    
 	header h1, h2 span {
 		width: 58vw;
 	}
@@ -385,10 +384,8 @@ header h1, header h1 img, h2 span {
 		width: 13rem;
 	}
 }
-@media screen and (-ms-high-contrast: none){
-    .js body {
-        background-color: palegoldenrod;
-    }
+@media only screen and (-ms-high-contrast: none){
+
 .touchevents footer {
 		background: url(../images/sil_bg.png) no-repeat top center;
 		background-size: cover;

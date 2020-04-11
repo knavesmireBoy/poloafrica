@@ -1,49 +1,58 @@
 /*https://stackoverflow.com/questions/57516373/image-stretching-in-flexbox-in-safari*/
+/*https://stackoverflow.com/questions/36822370/flexbox-on-ie11-image-stretched-for-no-reason/36828291*/
+html.js body img,  html.no-js body img {
+    flex-shrink: 0;
+    }
 
-.flexwrap #wrap+footer #footer_girl {
+@supports(flex-wrap: wrap){
+    header {
+        background-color: rgb(182,182,130);
+}
+
+	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+	#wrap+footer {
+		/*display: -webkit-box;*/
+		display: -ms-flexbox;
+		display: flex;
+	}
+    #wrap+footer #footer_girl {
 	-webkit-box-flex: 13;
 	-ms-flex: 13 10 5em;
 	flex: 13 10 5em;
 	margin: 0 0 .5rem 1em;
 }
-.flexwrap #wrap+footer #fb {
+#wrap+footer #fb {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 2em;
 	flex: 1 1 2em;
 	margin: 0 1em .75rem 0;
 	left: 0;
 }
-.flexwrap #wrap+footer>a {
+#wrap+footer>a {
 	-webkit-box-flex: 0;
 	-ms-flex: 0 0 99%;
 	flex: 0 0 99%;
 	margin: 0;
 	padding: .75em 1% .75em 0;
 }
-.flexwrap #wrap+footer {
+#wrap+footer {
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 	-webkit-box-align: baseline;
 	-ms-flex-align: baseline;
 	align-items: flex-end;
 }
-@supports(flex-wrap: wrap) {
-	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
-	#wrap+footer {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-	}
 }
-.flexwrap #wrap+footer {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-}
+
 @media only screen and (max-width: 667px), only screen and (min-width: 1024px) {
+
 	/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO*/
 	/*REMEMBER override class hardcoded in HTML*/
-	article:nth-child(odd) {
+
+	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
+	@supports(flex-wrap: wrap)  {
+        
+        	article:nth-child(odd) {
 		-webkit-box-orient: horizontal;
 		-webkit-box-direction: reverse;
 		-ms-flex-direction: row-reverse;
@@ -55,21 +64,14 @@
 	}
 	article section {
 		-webkit-box-flex: 6;
-		-ms-flex: 6 0 1%;
+		-ms-flex: 6 1 1%;
 		flex: 6 1 1%;
+
 	}
-	article>img {
+	article>*:nth-child(3) {
 		-webkit-box-flex: 4;
-		-ms-flex: 4 0 1%;
+		-ms-flex: 4 1 1%;
 		flex: 4 1 1%;
-		min-width: 1%;
-		-ms-flex-item-align: start;
-		align-self: flex-start;
-		/*
-        width: 68%;
-        height: auto;
-        float: none;
-        */
 	}
 	article {
 		-webkit-box-align: start;
@@ -78,8 +80,7 @@
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 	}
-	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
-	@supports(flex-wrap: wrap) {
+     
 		/*consequently add some space here*/
 		p:first-of-type {
 			margin: 0;
@@ -88,23 +89,14 @@
 			border-bottom: solid 1px;
 		}
 		article {
-			display: -webkit-box;
+			/*display: -webkit-box;*/
 			display: -ms-flexbox;
 			display: flex;
 		}
 	}
-	/*NO-JS*/
-	.flexwrap article {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-	}
-	.flexwrap h3 {
-		border-bottom: solid 1px;
-	}
 }
 @media screen and (max-width: 667px) {
-	@supports(flex-wrap: wrap) {
+	@supports(flex-wrap: wrap){
 		.override article img, .override article section {
 			-webkit-box-flex: 0;
 			    -ms-flex: 0 0 100%;
@@ -114,36 +106,28 @@
 		section {
 			margin: 1em 0 0 0;
 		}
-		article>img {
+		article>img, h3 {
 			border-bottom: solid 1px white;
 		}
-		.flexwrap #wrap+footer #footer_girl {
+		#wrap+footer #footer_girl {
 			-webkit-box-flex: 5;
 			-ms-flex: 5 1 5em;
 			flex: 5 1 5em;
 		}
-		.flexwrap #wrap+footer #fb {
+		#wrap+footer #fb {
 			-webkit-box-flex: 1;
 			-ms-flex: 1 1 2em;
 			flex: 1 1 2em;
 		}
-		.flexwrap #wrap+footer>a {
+		.#wrap+footer>a {
 			-webkit-box-flex: 0;
 			-ms-flex: 0 0 98%;
 			flex: 0 0 98%;
 			padding: .75em 2% .75em 0;
 		}
-	}
-	/*NO-JS*/
-	/*JS (MODERNIZR)*/
-	.flexwrap h3 {
-		border-bottom: solid 1px white;
-	}
-	.flexwrap article img, .flexwrap article section {
+        article img, article section {
 		flex: 0 0 100%;
 		width: 100%;
 	}
-	.flexwrap article>img {
-		border-bottom: solid 1px white;
 	}
 }

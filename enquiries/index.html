@@ -5,9 +5,10 @@
 	<meta content="IE=edge" http-equiv="X-UA-Compatible">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<title>Enquiries</title>
-	<link href="../css/standard.css" media="all" rel="stylesheet">
-	<link href="../css/enq.css" media="all" rel="stylesheet">
-	<link href="../css/myenq.css" media="all" rel="stylesheet">
+	<link href="../css/standard.css" media="screen" rel="stylesheet">
+	<link href="../css/enq.css" media="screen" rel="stylesheet">
+	<link href="../css/myenq.css" media="screen" rel="stylesheet">
+    <link href="../css/print.css" media="print" rel="stylesheet">
      	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
@@ -38,7 +39,7 @@
                 <ul><li><a href="#donations">donations and sponsorship</a></li>
                     <li><a href="#rates">holiday rates</a></li>
                     <li><a href="#contact">contact us</a></li>
-                    <li><a href="#contactform">directions</a></li>
+                    <li><a href="#contactform">contact form</a></li>
                     <li><a href="#directions">directions</a></li>
 							</ul></li>					
 				<li><a href="../photos" target="_top">photos</a></li>
@@ -64,17 +65,24 @@
             <input class="read-more-state" id="post3" type="checkbox">
             <label class="read-more-trigger" for="post3"></label>
              <section><a href="#contactform" id="contact"><h3>Contact us</h3></a>
+                 
 			<p>If you wish to find out more about the Poloafrica Development Trust and how to support it, or if you wish to enquire about visiting us, please either email, call or write to us or fill out the contact form below. Any information submitted will be treated with utmost confidentiality.</p>
-                 <p>
+               <div id="cath">
+                   <img src='../images/cath.jpg'>
+            <address><p>
 			Uitgedacht Farm<br>
 			PO Box 1315<br>
 			Ficksburg 9730<br>
 			South Africa<br>
             </p>
+                   
             <p>
 			<b>tel: </b>(+27) 84 290 0000<br>
-			<b>email: </b>info@poloafrica.com
-                </p>
+            <b>email: </b><a id="mail" href="mailto:info@poloafrica.com">info@poloafrica.com</a>
+                </p></address>
+                 </div>  
+           
+                 
             </section>
         </article>
           
@@ -138,8 +146,8 @@
             bridge = function(e) {
 			var el = getTarget(e),
                 mysection = utils.getDomParent(utils.getNodeByTag('section'))(el),
-				hit = utils.getClassList(mysection).contains('show');
-                if(!isHeading){
+				hit = mysection && utils.getClassList(mysection).contains('show');
+                if(!isHeading(el)){
                     return;
                 }
 			_.each(sections, function(sec) {

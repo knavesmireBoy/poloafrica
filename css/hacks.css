@@ -1,4 +1,10 @@
 .js body {
+    background-color: white;
+}
+
+#photos #wrap main {
+	text-align: center;
+    margin: 0 auto;
 }
 #nav li:nth-child(3){
     *width: 118px;
@@ -16,24 +22,70 @@ main ul {
     width: 754px;
 }
 
-main ul.gallery li.portrait, main ul.gallery li:nth-child(n+5) {
-	width: 146px;
-	width: 113px;
+main ul.portrait {
+    width: auto;
+}
+
+article {
+    clear: left;
+}
+
+main ul.gallery li {
+ *width: 176px;   
+}
+
+main .gallery li.portrait, main .gallery li:nth-child(n+5) {
+	*width: 113px;
 }
 main ul.gallery li:nth-last-child(-n+4) {
-	width: 176px;
+	*width: 176px;
+}
+
+#photos main > * {
+    vertical-align: middle;
+}
+
+#wrap h2 {
+    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+    background-image: none;
+    color: white;
+    margin: 0;
+	}
+
+#wrap h2:hover {
+    color: white; 
 }
 
 #photos main > a {
     *width: 2em;
     *height: 2em;
-    *background: #444;
+    *background: crimson;
 }
 
 #photos main li a {
     _width: auto;
     _height: auto;
     _background: none;
+}
+
+.showtime h2 {
+		display: none;
+}
+.js #exit {
+    width: 2.3em;
+    height: 2.3em;
+	background: url("../images/sticks_sprite_fat_lowend.png") no-repeat;
+}
+
+#controls button {
+	*background-position: 50% 1%;
+}
+
+#controls button#backbutton {
+	*background-position: 50% 16%;
+}
+#controls button#playbutton {
+	*background-position: 50% 30%;
 }
 
 a:link, a:visited, a:hover, a:active, .no-touchevents a:hover h3, .no-touchevents a:active h3 {
@@ -56,11 +108,32 @@ main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, fo
 	zoom: 1;
 }
 
+.showtime main > * {
+    display: block;
+}
+
+.showtime main > a {
+    display: none;
+}
+
+.showtime main ul {
+    *padding: 12px;
+    *width: auto;
+}
+.showtime main ul li {
+    *width: auto;
+    *border-width: 0;
+}
+main ul li a {
+    
+}
+
+
 #gal_back {
-	*border-right: 2px solid #444;
+	*border-right: 1px solid crimson;
 }
 #gal_forward {
-	*border-left: 2px solid #444;
+	*border-left: 0px solid crimson;
 }
 
 #nav li a {
@@ -71,40 +144,17 @@ header {
 	background-image: url(../images/header.jpg);
 }
 
-h2 {
+#wrap h2 {
+    margin: .8em 0 0 0;
     background: 0% 0% url(../images/grad.jpg) no-repeat;
+    color: #993;
 }
-h2 span {
+#wrap h2 span {
 	padding: 0 0 0 3.5em;
+	padding: 0 0 0 2.9em;
     line-height: normal;
 }
-/*
-#home h2 {
-     background: 0% 0% url(../images/sub-polo-in-africa.jpg) no-repeat;
-}
 
-#trust h2 {
-     background: 0% 0% url(../images/sub-the-trust.jpg) no-repeat;
-}
-#scholars h2 {
-     background: 0% 0% url(../images/sub-the-scholars.jpg) no-repeat;
-}
-#place h2 {
-     background: 0% 0% url(../images/sub-the-place.jpg) no-repeat;
-}
-#stay h2 {
-     background: 0% 0% url(../images/sub-your-stay.jpg) no-repeat;
-}
-#polo h2 {
-     background: 0% 0% url(../images/sub-polo.jpg) no-repeat;
-}
-#medley h2 {
-     background: 0% 0% url(../images/sub-medley.jpg) no-repeat;
-}
-#enquiries h2 {
-     background: 0% 0% url(../images/sub-enquiries.jpg) no-repeat;
-}
-*/
 #footer_girl {
     *float: left;
 }

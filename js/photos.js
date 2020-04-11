@@ -102,5 +102,6 @@ if (!window.poloAF) {
 		},
 		myadvance = advance();
     //report();
+    //main.addEventListener('click', _.debounce(myadvance, 300));
 	utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
 }('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));
