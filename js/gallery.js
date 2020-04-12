@@ -204,9 +204,7 @@
 					//remove exit listener from event_cache
 					var list = poloAF.Eventing.listEvents(),
 						res = _.findIndex(list, function (item) {
-                            console.log(item.el)
                             return item.el.match(/exit/i);
-							//return item.el.match(/a/i);
 						});
 					//is res always 1???
 					if (!failed(res)) {
@@ -214,7 +212,7 @@
 					}
 				},
 				presenter_unrender = ptL(invokemethod, presenter, null, 'unrender'),
-				$exit = makeElement(doTwice(utils.getter)('getElement'), ptL(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf), anCrIn(thumbs, main), always('a')),
+				$exit = makeElement(doTwice(utils.getter)('getElement'), utils.addEvent(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf), anCrIn(thumbs, main), always('a')),
 				$controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
 			comp.add(_.extend(poloAF.Composite(), $thumbs, {
 				unrender: _.compose(ptL(klasRem, 'portrait'), ptL(klasAdd, 'gallery', thumbs))
@@ -282,8 +280,8 @@
 						countdown.resume = x;
 						return;
 					}
-					//x -= raf;
-					x -= 1;
+					x -= raf;
+					//x -= 1;
 					utils.invokeWhen(lessOrEqual(100), ptL(cb, counter), x);
 					if (isPositive(x)) {
 						countdown.progress = window.requestAnimationFrame(counter);
@@ -368,7 +366,6 @@
 							playing: {
 								init: init,
 								render: function () {
-                                    console.log('playing..')
 									mycountdown.progress = 1;
 									counter();
 									pause.unrender(); //dummy pause on initial run
@@ -379,7 +376,6 @@
 							paused: {
 								init: init,
 								render: function () {
-                                    console.log('pausing..')
 									shutdown();
 									pause = pauserender();
 									this.target.changestates(this.target.states.playing);

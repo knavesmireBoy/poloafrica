@@ -101,23 +101,19 @@ if (!window.poloAF) {
         clicker = ptL(utils.addHandler, 'click'),
 		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
 		advance = function () {
-			var twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
-				drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],
+			var twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],/*mid six portrait*/
+				drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],/*mid six portrait*/
 				vyf = [50, 51, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63],
 				vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
 				ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
-				sewe = _.range(83, 97),
+				sewe = _.range(83, 97),/*mid six portrait*/
 				iterator = makeIterator([een, twee, drie, vier, vyf, ses, sewe]),
 				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
-                var mode = utils.getByClass('gallery').length,
-                    tgt = getTarget(e),
-                    exit = tgt.id;
-                console.log(tgt)
-                if (!mode || !getNodeName(tgt).match(/a/i) || exit === 'exit') {
+                var tgt = getTarget(e);
+                if (!getNodeName(tgt).match(/a/i)) {
                     return;
                 }      
-                //doPortraitBridge(e);
 					var m = getID(tgt).match(/back$/) ? 'back' : 'forward',
 						gang = iterator[m](),
 						allpics = utils.getByTag('img', main),
@@ -136,12 +132,12 @@ if (!window.poloAF) {
         addPageNavHandler = _.compose(utils.addEvent(clicker, _.debounce(myadvance, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
         addPageNav = function(myAnCr, id, cb){
             return _.compose(adapterFactory(), cb, anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {id: id, href: '.'}), myAnCr(main), utils.always('a'))), utils.always('span'))();  
-        },
-        nonav = addPageNav(anCr, 'gal_forward', noOp),
-        nav = addPageNav(doInsert, 'gal_back', addPageNavHandler);
-    nav.head = true;
-    window.presenter.get(0).add(nav);
-    utils.$('placeholder').innerHTML = 'PHOTOS';
-	//utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
+        };
+    /*inserts back/forward buttons, returns an REVERSE adpater around a eventListener object,
+    where unrender would restore listener and render would remove listener when entering navigation mode
+    HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
+        addPageNav(anCr, 'gal_forward', noOp),
+        addPageNav(doInsert, 'gal_back', addPageNavHandler);
+    utils.$('placeholder').innerHTML = 'PHOTOS'
 }('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));
 
