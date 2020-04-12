@@ -282,7 +282,8 @@
 						countdown.resume = x;
 						return;
 					}
-					x -= raf;
+					//x -= raf;
+					x -= 1;
 					utils.invokeWhen(lessOrEqual(100), ptL(cb, counter), x);
 					if (isPositive(x)) {
 						countdown.progress = window.requestAnimationFrame(counter);
