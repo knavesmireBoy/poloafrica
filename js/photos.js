@@ -2,6 +2,7 @@
 /*global window: false */
 /*global document: false */
 /*global Modernizr: false */
+/*global poloAF: false */
 /*global _: false */
 if (!window.poloAF) {
 	window.poloAF = {};
@@ -24,8 +25,12 @@ if (!window.poloAF) {
 	function noOp() {
 		//return function (){};
 	}
+    
+     function compare(f, a, b, o){
+        return f(o[a], o[b]);
+    }
 	var utils = window.poloAF.Util,
-		//con = window.console.log.bind(window),
+		con = window.console.log.bind(window),
 		$ = utils.$,
 		ptL = _.partial,
 		report = function (msg, el) {
@@ -33,15 +38,40 @@ if (!window.poloAF) {
 			msg = undef(msg) ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
-		dovier = utils.curryFourFold(),
+        anCr = utils.append(),
+        anCrIn = utils.insert(),
+        setAttrs = utils.setAttributes,
+        klasAdd = utils.addClass,
+		klasRem = utils.removeClass,
+		doVier = utils.curryFourFold(),
 		klasTog = utils.toggleClass,
+        getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
         mytarget = !window.addEventListener ? 'srcElement' : 'target',
 		main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
+        gallery = utils.getNextElement(main.firstChild),
 		doToggle = ptL(klasTog, 'alt', main),
 		makeIterator = function (coll) {
-			var prepIterator = dovier(window.poloAF.Iterator(false));
+			var prepIterator = doVier(window.poloAF.Iterator(false));
 			return prepIterator(ptL(modulo, coll.length))(utils.always(true))(coll)(0);
 		},
+        adaptHandlers = function (subject, adapter, allpairs, override) {
+			adapter = adapter || {};
+			subject = subject || {};
+			adapter = utils.simpleAdapter(allpairs, adapter, subject);
+			adapter[override] = function () {
+				subject.deleteListeners(subject);
+			};
+			return adapter;
+		},
+		handlerpair = ['addListener', 'deleteListeners'],
+		renderpair = ['render', 'unrender'],
+		makeElement = utils.machElement,
+		adapterFactory = function () {
+			//fresh instance of curried function per adapter
+			//return doVier(adaptHandlers)('unrender')([renderpair, handlerpair.slice(0)])(poloAF.Composite());
+            return doVier(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite());
+		},
+        //myrevadapter = doVier(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite()),
 		getNodeName = utils.drillDown(['nodeName']),
 		getID = utils.drillDown(['id']),
 		getTarget = utils.drillDown([mytarget]),
@@ -58,7 +88,7 @@ if (!window.poloAF) {
 			}
 		},
 		doPortrait = function (el) {
-			var m = (el.offsetHeight > el.offsetWidth) ? 'addClass' : 'removeClass';
+			var m = getOrientation(el) ? 'addClass' : 'removeClass';
 			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
 		},
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
@@ -80,9 +110,11 @@ if (!window.poloAF) {
 				iterator = makeIterator([een, twee, drie, vier, vyf, ses, sewe]),
 				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
+                
                 var mode = utils.getByClass('gallery').length,
                     tgt = getTarget(e),
                     exit = tgt.id;
+                console.log(tgt)
                 if (!mode || !getNodeName(tgt).match(/a/i) || exit === 'exit') {
                     return;
                 }      
@@ -100,8 +132,18 @@ if (!window.poloAF) {
 					});
 			};
 		},
-		myadvance = advance();
-    //report();
-    //main.addEventListener('click', _.debounce(myadvance, 300));
-	utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
+		myadvance = advance(),
+        doInsert = ptL(anCrIn, gallery),
+        
+        addPageNavHandler = _.compose(utils.addEvent(clicker, _.debounce(myadvance, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
+                
+        addPageNav = function(myAnCr, id, cb){
+            return _.compose(adapterFactory(), cb, anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {id: id, href: '.'}), myAnCr(main), utils.always('a'))), utils.always('span'))();  
+        },
+        nonav = addPageNav(anCr, 'gal_forward', noOp),
+        nav = addPageNav(doInsert, 'gal_back', addPageNavHandler);
+    nav.head = true;
+    //window.presenter.get(0).add(nav);
+	//utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
 }('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));
+

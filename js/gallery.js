@@ -82,6 +82,9 @@
 			};
 		};
 	}
+     function compare(f, a, b, o){
+        return f(o[a], o[b]);
+    }
 	var utils = poloAF.Util,
 		//con = window.console.log.bind(window),
 		$ = function (str) {
@@ -112,6 +115,7 @@
 		}()),
 		clicker = ptL(utils.addHandler, 'click'),
 		makeElement = utils.machElement,
+        getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
 		getControls = ptL($, 'controls'),
@@ -126,19 +130,21 @@
 			return img.offsetHeight > img.offsetWidth;
 			//return utils.getClassList(el).contains('portrait');
 		}),
-		hideCurrent = _.compose(utils.hide, getCurrentSlide),
-		doShow = function (next) {
-			hideCurrent();
-			utils.show(next);
-		},
-		exitGallery = function () {
-			var current = utils.getByClass('show')[0],
-				img = getDomTargetImg(current),
-				math = (img.offsetHeight > img.offsetWidth),
+        getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
+		exitCurrentImage = function (img) {
+			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
 				m = math ? 'addClass' : 'removeClass';
 			utils[m]('portrait', thumbs);
 			utils[m]('portrait', $('wrap'));
+            return img;
+		},
+        exitGallery = _.compose(exitCurrentImage, getCurrentImage),
+        hideCurrent = _.compose(utils.hide, getCurrentSlide),
+		doShow = function (next) {
+            hideCurrent();
+            utils.show(next);
+            exitGallery();
 		},
 		makeIterator = function (coll) {
 			var findIndex = ptL(utils.findIndex, coll),
@@ -198,7 +204,9 @@
 					//remove exit listener from event_cache
 					var list = poloAF.Eventing.listEvents(),
 						res = _.findIndex(list, function (item) {
-							return item.el.match(/input/i);
+                            console.log(item.el)
+                            return item.el.match(/exit/i);
+							//return item.el.match(/a/i);
 						});
 					//is res always 1???
 					if (!failed(res)) {
@@ -241,8 +249,9 @@
 			gethref = _.compose(drill(['href']), getDomTargetLink),
 			exitShow = function (actions) {
 				return function (flag) {
-					var f = flag ? ptL(thunk, once(1)) : always(false);
-					return utils.getBest(f, actions)();
+					var f = flag ? ptL(thunk, once(1)) : always(false),
+                        res = utils.getBest(f, actions)();
+                    return res;
 				};
 			},
 			fadeNow = function (el, i) {
@@ -313,15 +322,15 @@
 			//https://robdodson.me/take-control-of-your-app-with-the-javascript-state-patten/
 			controller = function (mycountdown, cb, x) {
 				var counter = mycountdown(cb, x),
-					control = getControls(),
 					klas = 'playing',
-					shutdown = _.compose(ptL(setter, mycountdown, 'progress', null), ptL(klasRem, klas, control)),
+					shutdown = _.compose(ptL(setter, mycountdown, 'progress', null), ptL(klasRem, klas, getControls)),
 					pauserender = function () {
 						var clone = getSlide(),
 							pauser = makeElement(ptL(setAttrs, {
 								id: 'paused'
 							}), anCr(thumbs), always(clone)).render(),
 							img = getDomTargetImg(pauser.getElement());
+                        
 						img.onload = fade50(pauser.getElement());
 						img.src = isPortrait(clone) ? '../images/pauseLong.png' : '../images/pause.png';
 						return pauser;
@@ -358,16 +367,18 @@
 							playing: {
 								init: init,
 								render: function () {
+                                    console.log('playing..')
 									mycountdown.progress = 1;
 									counter();
 									pause.unrender(); //dummy pause on initial run
-									klasAdd(klas, control);
+									klasAdd(klas, getControls);
 									this.target.changestates(this.target.states.paused);
 								}
 							},
 							paused: {
 								init: init,
 								render: function () {
+                                    console.log('pausing..')
 									shutdown();
 									pause = pauserender();
 									this.target.changestates(this.target.states.playing);
@@ -634,6 +645,7 @@
 			} catch (e) {
 				$('report').innerHTML = e;
 			}
+            window.presenter = presenter;
 		}());
 	}());
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('h2')[0], document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0]));

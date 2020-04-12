@@ -45,6 +45,7 @@ poloAF.Util = (function () {
 		}
 		return getResult(x) > getResult(y);
 	}
+    
 
 	function lsThan(x, y, flag) {
 		if (flag) {
@@ -752,6 +753,7 @@ poloAF.Util = (function () {
 		getZero: _.partial(byIndex, 0),
 		getter: getter,
 		gtThan: gtThan,
+        getOrientation: function(){},
 		hasFeature: (function () {
 			var html = document.documentElement || document.getElementsByTagName('html')[0];
 			return function (str) {
