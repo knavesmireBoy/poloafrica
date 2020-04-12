@@ -444,7 +444,8 @@
 			play = noOp,
 			toggle_command = (function (klas, cb) {
 				var o = {
-						timer: null
+						static: null,
+                        inplay: null
 					},
 					rem = _.compose(ptL(klasRem, klas), cb),
 					wrap = makeElement(ptL(klasAdd, 'inplay'), always($('wrap'))),
@@ -452,18 +453,21 @@
 						unrender: ptL(klasRem, 'inplay', $('wrap'))
 					}),
 					clear = function () {
-						window.clearTimeout(o.timer);
-						o.timer = null;
-						$wrap.render();
+						window.clearTimeout(o.static);
+						window.clearTimeout(o.inplay);
+						o.static = o.inplay = null;
+						if(countdown.progress){
+                            $wrap.render();
+                        }
 					},
 					preppedAdd = _.compose(ptL(klasAdd, klas), cb),
 					ret = {
 						render: function () {
-							o.timer = window.setTimeout(rem, 3000);
-							window.setTimeout(clear, 3500);
+							o.static = window.setTimeout(rem, 3000);
+							o.inplay = window.setTimeout(clear, 3500);
 						},
 						unrender: function () {
-							_.compose(clear, preppedAdd)();
+                            _.compose(clear, preppedAdd)();
 							$wrap.unrender();
 						}
 					};
