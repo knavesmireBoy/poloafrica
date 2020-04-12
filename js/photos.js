@@ -110,7 +110,6 @@ if (!window.poloAF) {
 				iterator = makeIterator([een, twee, drie, vier, vyf, ses, sewe]),
 				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
-                
                 var mode = utils.getByClass('gallery').length,
                     tgt = getTarget(e),
                     exit = tgt.id;
@@ -134,16 +133,15 @@ if (!window.poloAF) {
 		},
 		myadvance = advance(),
         doInsert = ptL(anCrIn, gallery),
-        
         addPageNavHandler = _.compose(utils.addEvent(clicker, _.debounce(myadvance, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
-                
         addPageNav = function(myAnCr, id, cb){
             return _.compose(adapterFactory(), cb, anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {id: id, href: '.'}), myAnCr(main), utils.always('a'))), utils.always('span'))();  
         },
         nonav = addPageNav(anCr, 'gal_forward', noOp),
         nav = addPageNav(doInsert, 'gal_back', addPageNavHandler);
     nav.head = true;
-    //window.presenter.get(0).add(nav);
+    window.presenter.get(0).add(nav);
+    utils.$('placeholder').innerHTML = 'PHOTOS';
 	//utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
 }('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));
 

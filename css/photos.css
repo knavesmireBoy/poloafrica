@@ -420,7 +420,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		background: none;
 		color: white;
 		text-shadow: none;
-		margin: 0;
+        margin: 0;
 	}
 	h2:hover {
 		color: white;
@@ -430,5 +430,12 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
         left: -9999px;
         top: 0;
 	}
+    .no-js h2, .no-js h2:hover  {
+        color: #444;
+         font: 1.5em normal serif;
+    }
+    .no-js h2 span {;
+        padding: .5em 0;
+    }
 }
 /*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/
