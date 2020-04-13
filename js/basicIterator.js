@@ -93,7 +93,8 @@ poloAF.Composite = (function () {
 			comp_add = function (comp) {
 				intafaces.unshift(comp);
 				poloAF.Intaface.ensures.apply(poloAF.Intaface, intafaces);
-				included.push(intafaces.shift(comp));
+                var m = comp.head ? 'unshift' : 'push';
+				included[m](intafaces.shift(comp));
 				comp.parent = this;
 			},
 			comp_remove = function (comp) {
