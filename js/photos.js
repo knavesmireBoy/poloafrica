@@ -29,10 +29,16 @@ if (!window.poloAF) {
      function compare(f, a, b, o){
         return f(o[a], o[b]);
     }
+    
+    function isEqual(x, y) {
+			return Number(x) === Number(y);
+		}
 	var utils = window.poloAF.Util,
 		con = window.console.log.bind(window),
 		$ = utils.$,
 		ptL = _.partial,
+        doTwice = utils.curryTwice(),
+        doThrice = utils.curryThrice(),
 		report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
 			msg = undef(msg) ? document.documentElement.className : msg;
@@ -97,6 +103,16 @@ if (!window.poloAF) {
 			fixNoNthChild(e.target);
 		},
 		toogleLoop = _.compose(doPortraitLoop, doToggle),
+        doSplice = function(bool, coll){
+            if(coll[13]){
+            var copy = coll.slice(0),
+                res = copy.splice(4, 6);
+            return bool ? res : copy;
+            }
+            return bool ? [] : coll;
+        },
+        getPortrait = ptL(doSplice, true),
+        getLscp = ptL(doSplice, false),
         //clicker = touchevents ? ptL(utils.addHandler, 'touchend') : ptL(utils.addHandler, 'click'),
         clicker = ptL(utils.addHandler, 'click'),
 		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
@@ -107,8 +123,25 @@ if (!window.poloAF) {
 				vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
 				ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
 				sewe = _.range(83, 97),/*mid six portrait*/
-				iterator = makeIterator([een, twee, drie, vier, vyf, ses, sewe]),
-				doNeg = ptL(negator, toogleLoop);
+                all = [een, twee, drie, vier, vyf, ses, sewe],
+                lscp = _.map(all, getLscp),
+                ptrt = _.map(all, getPortrait),
+				iterator = makeIterator(all),
+				doNeg = ptL(negator, toogleLoop),
+                determine = function(i){
+                 var ret = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i)));
+                    return ret[0] ? ptrt.slice(0) : lscp.slice(0);
+                },
+                getSubGallery = function(i){
+                    var coll = determine(i)
+                        var start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(coll, doTwice(_.findIndex)(ptL(isEqual, i)))),
+                        base = coll.slice(0);
+                        base = base.splice(start).concat(base);
+                    coll = base[0];
+                    start = _.findIndex(coll, ptL(isEqual, i));
+                    base[0] = coll.splice(start).concat(coll);
+                    return makeIterator(_.flatten(base));
+                };
 			return function (e) {
                 var tgt = getTarget(e);
                 if (!getNodeName(tgt).match(/a/i)) {
@@ -127,18 +160,11 @@ if (!window.poloAF) {
 					});
 			};
 		},
-<<<<<<< HEAD
-		myadvance = advance();
-    //report();
-    //main.addEventListener('click', _.debounce(myadvance, 300));
-	utils.addEvent(clicker, _.debounce(myadvance, 300))(main);
-}('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));
-=======
 		myadvance = advance(),
         doInsert = ptL(anCrIn, gallery),
         addPageNavHandler = _.compose(utils.addEvent(clicker, _.debounce(myadvance, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
         addPageNav = function(myAnCr, id, cb){
-            return _.compose(adapterFactory(), cb, anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {id: id, href: '.'}), myAnCr(main), utils.always('a'))), utils.always('span'))();  
+            return _.compose(adapterFactory(), cb, ptL(setAttrs, {type: 'checkbox', id: 'range', title: 'Toggle to view entire/per page galery'}), anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {id: id, href: '.'}), myAnCr(main), utils.always('a'))))('input');  
         };
     /*inserts back/forward buttons, returns an REVERSE adpater around a eventListener object,
     where unrender would restore listener and render would remove listener when entering navigation mode
@@ -147,5 +173,3 @@ if (!window.poloAF) {
         addPageNav(doInsert, 'gal_back', addPageNavHandler);
     utils.$('placeholder').innerHTML = 'PHOTOS'
 }('(min-width: 601px)', Modernizr.mq('only all'), Modernizr.touchevents));
-
->>>>>>> gh-pages
