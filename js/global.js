@@ -45,7 +45,6 @@ poloAF.Util = (function () {
 		}
 		return getResult(x) > getResult(y);
 	}
-    
 
 	function lsThan(x, y, flag) {
 		if (flag) {
@@ -584,6 +583,7 @@ poloAF.Util = (function () {
 		return adapter;
 	}
 	var getNewElement = dispatch(curry2(cloneNode)(true), _.bind(document.createElement, document), _.bind(document.createDocumentFragment, document)),
+        
 		removeNodeOnComplete = _.wrap(removeElement, function (f, node) {
 			if (validateRemove(node)) {
 				return f(node);
@@ -753,7 +753,6 @@ poloAF.Util = (function () {
 		getZero: _.partial(byIndex, 0),
 		getter: getter,
 		gtThan: gtThan,
-        getOrientation: function(){},
 		hasFeature: (function () {
 			var html = document.documentElement || document.getElementsByTagName('html')[0];
 			return function (str) {
