@@ -57,6 +57,10 @@
 		o[k] = v;
 	}
 
+	function setterAdapter(k, o, v) {
+		setter(o, k, v);
+	}
+
 	function invokemethod(o, arg, m) {
 		//con(arguments);
 		return o[m](arg);
@@ -90,10 +94,10 @@
 			};
 		};
 	}
-    function isEqual(x, y) {
-        return Number(x) === Number(y);
-    }
 
+	function isEqual(x, y) {
+		return Number(x) === Number(y);
+	}
 	var utils = poloAF.Util,
 		con = window.console.log.bind(window),
 		reporter = function (msg, el) {
@@ -137,7 +141,7 @@
 		getSlide = ptL($, 'slide'),
 		getNodeName = utils.drillDown(['nodeName']),
 		getID = utils.drillDown(['id']),
-        mytarget = !window.addEventListener ? 'srcElement' : 'target',
+		mytarget = !window.addEventListener ? 'srcElement' : 'target',
 		getTarget = utils.drillDown([mytarget]),
 		getLength = utils.drillDown(['length']),
 		gallery = utils.getNextElement(main.firstChild),
@@ -155,7 +159,7 @@
 			//return utils.getClassList(el).contains('portrait');
 		}),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
-        isChecked = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
+		isChecked = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
@@ -235,46 +239,45 @@
 		getPortrait = ptL(doSplice, true),
 		getLscp = ptL(doSplice, false),
 		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
-        twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
-				drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],
-				vyf = [50, 51, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63],
-				vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
-				ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
-				sewe = _.range(83, 97),
-				all = [een, twee, drie, vier, vyf, ses, sewe],
-				lscp = _.map(all, getLscp),
-				ptrt = _.map(all, getPortrait),
-        				getSubGallery = function (i) {
-                    var filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
-                        coll = filtered[0] ? ptrt.slice(0) : lscp.slice(0),
-                        start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(coll, doTwice(_.findIndex)(ptL(isEqual, i)))),
-						base = coll.slice(0);
-					base = base.splice(start).concat(base);
-					coll = base[0];
-					start = _.findIndex(coll, ptL(isEqual, i));
-					base[0] = coll.splice(start).concat(coll);
-					return makeCrossPageIterator(_.flatten(base));
-				},
+		twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
+		drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],
+		vyf = [50, 51, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63],
+		vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
+		ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
+		sewe = _.range(83, 97),
+		all = [een, twee, drie, vier, vyf, ses, sewe],
+		lscp = _.map(all, getLscp),
+		ptrt = _.map(all, getPortrait),
+		getSubGallery = function (i) {
+			var filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
+				coll = filtered[0] ? ptrt.slice(0) : lscp.slice(0),
+				start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(coll, doTwice(_.findIndex)(ptL(isEqual, i)))),
+				base = coll.slice(0);
+			base = base.splice(start).concat(base);
+			coll = base[0];
+			start = _.findIndex(coll, ptL(isEqual, i));
+			base[0] = coll.splice(start).concat(coll);
+			return makeCrossPageIterator(_.flatten(base));
+		},
 		advance = function () {
 			var iterator = makeCrossPageIterator(all),
 				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
 				var tgt = getTarget(e),
-                    allpics = utils.getByTag('img', main),
+					allpics = utils.getByTag('img', main),
 					path = '001',
-                    gang,
-                    m;
-                //con(tgt)
+					gang,
+					m;
+				//con(tgt)
 				if (!getNodeName(tgt).match(/a/i)) {
 					return;
 				}
-                m = getID(tgt).match(/back$/) ? 'back' : 'forward';
-                gang = iterator[m]();
+				m = getID(tgt).match(/back$/) ? 'back' : 'forward';
+				gang = iterator[m]();
 				doNeg(allpics, gang);
 				allpics = utils.getByTag('img', main);
 				_.each(allpics, function (img, j) {
 					path = gang[j] || path;
-					//img.src = "images/0" + path + ".jpg";
 					img.src = makePath(path);
 					img.onload = doPortraitBridge;
 				});
@@ -282,12 +285,12 @@
 		},
 		myadvance = advance(),
 		doInsert = ptL(anCrIn, gallery),
-        pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
+		pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
 		addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
-        pageInputHandler = function(arg){
-            utils.addEvent(clicker, noOp, 'stop')(arg);
-            return arg;
-        },
+		pageInputHandler = function (arg) {
+			utils.addEvent(clicker, noOp, 'stop')(arg);
+			return arg;
+		},
 		addPageNav = function (myAnCr, id, cb) {
 			return _.compose(cb, pageInputHandler, ptL(setAttrs, {
 				type: 'checkbox',
@@ -412,31 +415,59 @@
 				}
 				return counter;
 			},
+			setImageSrc = ptL(setterAdapter, 'src'),
+			setImageAlt = ptL(setterAdapter, 'alt'),
+			setHyperLink = ptL(setterAdapter, 'href'),
+			getMyNextBase = function (checked) {
+				return function (it) {
+					var page = [_.compose(getsrc, it.getNext), _.compose(getalt, it.getCurrent), _.compose(gethref, it.getCurrent)],
+						multi = [_.compose(makePath, it.getNext), _.compose(getDefAlt, it.getCurrent), _.compose(makePath, it.getCurrent)];
+					return checked ? multi : page;
+				};
+			},
+			getMyNextSlide = function (checked) {
+				function bridgeBase(el) {
+					return getDomTargetImg(el).src.match(picnum)[1];
+				}
+				return function (base) {
+					var page = [_.compose(getalt, base), _.compose(gethref, base), _.compose(getsrc, base)],
+						multi = [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePath, bridgeBase, base)];
+					return checked ? multi : page;
+				};
+			},
+			baseTrio = function (doSrc, doAlt, doHref, it) {
+				var headFunctions = getMyNextBase(isChecked().checked)(it),
+					mysrc = _.compose(doSrc, headFunctions[0]),
+					myalt = _.compose(doAlt, headFunctions[1]),
+					myhref = _.compose(doHref, headFunctions[2]);
+				return _.compose(mysrc, myhref, myalt);
+			},
 			baserender = function (it) {
 				return function () {
 					var li = $('base'),
 						link = getDomTargetLink(li),
-						img = getDomTargetImg(li),
-						//mysrc1 = _.compose(ptL(setter, img, 'src'), always('')),
-						mysrc2 = _.compose(ptL(setter, img, 'src'), getsrc, it.getNext),
-						myalt = _.compose(ptL(setter, img, 'alt'), getalt, it.getCurrent),
-						myhref = _.compose(ptL(setter, link, 'href'), gethref, it.getCurrent);
-					return _.compose(mysrc2, myhref, myalt);
+						img = getDomTargetImg(li);
+					return baseTrio(ptL(setImageSrc, img), ptL(setImageAlt, img), ptL(setHyperLink, link), it);
 				};
+			},
+			slideQuartet = function (doSrc, doAlt, doHref, base) {
+				var headFunctions = getMyNextSlide(isChecked().checked)(base),
+					myalt = _.compose(doAlt, headFunctions[0]),
+					myhref = _.compose(doHref, headFunctions[1]),
+					mysrc1 = _.compose(doSrc, always('')),
+					mysrc2 = _.compose(doSrc, headFunctions[2]);
+				_.compose(mysrc2, mysrc1, myhref, myalt)();
 			},
 			sliderender = function () {
 				var li = $('slide'),
 					link = getDomTargetLink(li),
 					img = getDomTargetImg(li),
-					base = always(utils.getPrevious(li)),
-					mysrc1 = _.compose(ptL(setter, img, 'src'), always('')),
-					mysrc2 = _.compose(ptL(setter, img, 'src'), getsrc, base),
-					myalt = _.compose(ptL(setter, img, 'alt'), getalt, base),
-					myhref = _.compose(ptL(setter, link, 'href'), gethref, base);
+					base = always(utils.getPrevious(li));
 				//img.onload = fade100(li);
 				//slide img gets set to base img src.
 				//On first run these are the SAME. So first set src to empty string to trigger onload event
-				_.compose(mysrc2, mysrc1, myhref, myalt)();
+				//_.compose(mysrc2, mysrc1, myhref, myalt)();
+				slideQuartet(ptL(setImageSrc, img), ptL(setImageAlt, img), ptL(setHyperLink, link), base);
 			},
 			//attempted to simplify this using alternate functions, but it's a good example of the state pattern...
 			//https://robdodson.me/take-control-of-your-app-with-the-javascript-state-patten/
@@ -679,11 +710,10 @@
 				};
 			},
 			get_play_iterator = function () {
-                //isChecked().checked ? default_iterator() : 
 				var predicate = utils.getPredicate(getCurrentSlide(), isPortrait),
-                    myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
-                    //return getSubGallery(myint);
-				return makeIterator(_.filter(lis, predicate))();
+					myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
+				//con(getSubGallery(myint).getNext())
+				return isChecked().checked ? getSubGallery(myint) : makeIterator(_.filter(lis, predicate))();
 			},
 			$current = {
 				render: hideCurrent,
@@ -773,10 +803,10 @@
     where unrender would restore listener and render would remove listener when entering navigation mode
     HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
 			addPageNav(anCr, 'gal_forward', noOp);
-            addPageNav(doInsert, 'gal_back', addPageNavHandler);
+			addPageNav(doInsert, 'gal_back', addPageNavHandler);
 			utils.$('placeholder').innerHTML = 'PHOTOS';
 		}());
 	}());
-}(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents,  document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function(path){
-    return "images/0" + path + ".jpg";
+}(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
+	return "images/0" + path + ".jpg";
 }, poloAF.Util.always('')));
