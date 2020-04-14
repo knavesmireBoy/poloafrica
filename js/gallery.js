@@ -159,7 +159,8 @@
 			//return utils.getClassList(el).contains('portrait');
 		}),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
-		isChecked = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
+		allowMultiPage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
+		mixedOrientation = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_back'))),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
@@ -257,7 +258,11 @@
 			coll = base[0];
 			start = _.findIndex(coll, ptL(isEqual, i));
 			base[0] = coll.splice(start).concat(coll);
-			return makeCrossPageIterator(_.flatten(base));
+            base = _.flatten(base);
+            if(mixedOrientation().checked){
+                base = filtered[0] ? base.concat('99', _.flatten(lscp.slice(0))) : base.concat('98', _.flatten(ptrt.slice(0)));
+            }
+			return makeCrossPageIterator(base);
 		},
 		advance = function () {
 			var iterator = makeCrossPageIterator(all),
@@ -291,11 +296,11 @@
 			utils.addEvent(clicker, noOp, 'stop')(arg);
 			return arg;
 		},
-		addPageNav = function (myAnCr, id, cb) {
+		addPageNav = function (myAnCr, title, id, cb) {
 			return _.compose(cb, pageInputHandler, ptL(setAttrs, {
 				type: 'checkbox',
 				id: 'range',
-				title: 'Toggle to view entire/per page galery'
+				title: title,
 			}), anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {
 				id: id,
 				href: '.'
@@ -418,6 +423,12 @@
 			setImageSrc = ptL(setterAdapter, 'src'),
 			setImageAlt = ptL(setterAdapter, 'alt'),
 			setHyperLink = ptL(setterAdapter, 'href'),
+            makePathP = function (initial, path) {
+                return "images/0" + path + ".jpg";
+            },
+             makePathL = function (initial, path) {
+                return "images/0" + path + ".jpg";
+            },
 			getMyNextBase = function (checked) {
 				return function (it) {
 					var page = [_.compose(getsrc, it.getNext), _.compose(getalt, it.getCurrent), _.compose(gethref, it.getCurrent)],
@@ -436,7 +447,7 @@
 				};
 			},
 			baseTrio = function (doSrc, doAlt, doHref, it) {
-				var headFunctions = getMyNextBase(isChecked().checked)(it),
+				var headFunctions = getMyNextBase(allowMultiPage().checked)(it),
 					mysrc = _.compose(doSrc, headFunctions[0]),
 					myalt = _.compose(doAlt, headFunctions[1]),
 					myhref = _.compose(doHref, headFunctions[2]);
@@ -451,7 +462,7 @@
 				};
 			},
 			slideQuartet = function (doSrc, doAlt, doHref, base) {
-				var headFunctions = getMyNextSlide(isChecked().checked)(base),
+				var headFunctions = getMyNextSlide(allowMultiPage().checked)(base),
 					myalt = _.compose(doAlt, headFunctions[0]),
 					myhref = _.compose(doHref, headFunctions[1]),
 					mysrc1 = _.compose(doSrc, always('')),
@@ -713,7 +724,7 @@
 				var predicate = utils.getPredicate(getCurrentSlide(), isPortrait),
 					myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
 				//con(getSubGallery(myint).getNext())
-				return isChecked().checked ? getSubGallery(myint) : makeIterator(_.filter(lis, predicate))();
+				return allowMultiPage().checked ? getSubGallery(myint) : makeIterator(_.filter(lis, predicate))();
 			},
 			$current = {
 				render: hideCurrent,
@@ -802,8 +813,8 @@
 			/*inserts back/forward buttons, returns a REVERSE adpater around a eventListener object,
     where unrender would restore listener and render would remove listener when entering navigation mode
     HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
-			addPageNav(anCr, 'gal_forward', noOp);
-			addPageNav(doInsert, 'gal_back', addPageNavHandler);
+			addPageNav(anCr, 'Enable checkbox to view multi-page gallery', 'gal_forward', noOp);
+			addPageNav(doInsert, 'Enable checkbox to include both orientations', 'gal_back', addPageNavHandler);
 			utils.$('placeholder').innerHTML = 'PHOTOS';
 		}());
 	}());
