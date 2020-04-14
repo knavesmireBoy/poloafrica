@@ -130,7 +130,6 @@ window.poloAF.Eventing = (function (eventing) {
 					return e || window.event;
 				},
 				prevent: function (e) {
-					e.preventDefault();
 					e = this.getEventObject(e);
 					if (e && e.preventDefault) {
 						e.preventDefault();
@@ -140,6 +139,23 @@ window.poloAF.Eventing = (function (eventing) {
 						e.cancelBubble = true;
 					}
 				},
+                preventOnly: function (e) {
+					e = this.getEventObject(e);
+					if (e && e.preventDefault) {
+						e.preventDefault();
+					} else {
+						e.returnValue = false;
+					}
+				},
+                stop: function (e) {
+					e = this.getEventObject(e);
+					if (e && e.stopPropagation) {
+						e.stopPropagation();
+					} else {
+						e.cancelBubble = true;
+					}
+				},
+               
 				getEventTarget: function (e) {
 					e = this.getEventObject(e);
 					return e.target || e.srcElement;
@@ -149,6 +165,7 @@ window.poloAF.Eventing = (function (eventing) {
 		}([]));
 	if (window.addEventListener) {
 		eventing.init = function (type, el, fn, context) {
+            //console.log(arguments)
             //var inta = new poloAF.Intaface('Element', ['setAttribute']);
 			//poloAF.Intaface.ensures(config.element, inta);
 			var config = sortArgs(fn, el, context),
@@ -166,7 +183,7 @@ window.poloAF.Eventing = (function (eventing) {
 			this.getElement = function () {
 				return config.element;
 			};
-			_.each(['prevent', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));
+			_.each(['prevent', 'preventOnly', 'stop', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));
 			this.el = config.element + '_' + window.poloAF.Eventing.listEvents().length + '_' + (count += 1) + '__' + config.element.id;
 			return _.extendOwn({}, this);
 		};
@@ -190,7 +207,7 @@ window.poloAF.Eventing = (function (eventing) {
 				return config.element;
 			};
             this.el = config.element + '_' + (count += 1);
-			_.each(['prevent', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));
+			_.each(['prevent', 'preventOnly', 'stop', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));
 			return _.extendOwn({}, this);
 		};
 	} else { // older browsers
@@ -211,7 +228,7 @@ window.poloAF.Eventing = (function (eventing) {
 				return config.element;
 			};
 			this.el = config.element + '_' + (count += 1);
-			_.each(['prevent', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));
+			_.each(['prevent', 'preventOnly', 'stop', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));
 			return _.extendOwn({}, this);
 		};
 	}

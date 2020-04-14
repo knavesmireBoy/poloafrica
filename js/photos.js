@@ -33,17 +33,13 @@ if (!window.poloAF) {
     function isEqual(x, y) {
 			return Number(x) === Number(y);
 		}
-	var utils = window.poloAF.Util,
+	var utils = window.poloAF.Util,//
 		con = window.console.log.bind(window),
-		$ = utils.$,
-		ptL = _.partial,
-        doTwice = utils.curryTwice(),
-        doThrice = utils.curryThrice(),
-		report = function (msg, el) {
-			el = el || utils.getByTag('h2', document)[0];
-			msg = undef(msg) ? document.documentElement.className : msg;
-			el.innerHTML = msg;
-		},
+		$ = utils.$,//
+
+		ptL = _.partial,//
+        doTwice = utils.curryTwice(),//
+        doThrice = utils.curryThrice(),//
         anCr = utils.append(),
         anCrIn = utils.insert(),
         setAttrs = utils.setAttributes,

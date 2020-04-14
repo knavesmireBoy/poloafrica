@@ -24,22 +24,24 @@ main>* {
 	vertical-align: middle;
 }
 .pagenav {
-	border-top: 18px solid transparent;
-	border-bottom: 18px solid transparent;
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
 	position: relative;
 	margin: 1px;
 }
 #gal_back {
-	border-right: 29px solid crimson;
+	border-right: 31px solid crimson;
 }
 #gal_forward {
-	border-left: 29px solid crimson;
+	border-left: 31px solid crimson;
 }
-#gal_forward input {
+.pagenav input {
     position: absolute;
-    top: -8px;
-    left: -26px;
-    background-color: crimson;
+    top: -7px;
+    left: -27px;
+}
+.pagenav:first-child input{
+    left: 14px;
 }
 .pagenav:hover, .pagenav:focus {
 	border-right-color: royalblue;

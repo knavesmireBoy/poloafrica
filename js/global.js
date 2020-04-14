@@ -114,7 +114,7 @@ poloAF.Util = (function () {
 	}
 
 	function mittleInvoke(m, arg, o) {
-		return o[m](arg);
+		return getResult(o)[m](arg);
 	}
 
 	function applyFunction(f, args) {
@@ -521,12 +521,14 @@ poloAF.Util = (function () {
 		return _.compose.apply(null, args)(select());
 	}
 
-	function prepareListener(handler, fn, el) {
+	function prepareListener(extent){
+    return function(handler, fn, el) {
 		var listener,
 			wrapper = function (func) {
 				var args = _.rest(arguments),
 					e = _.last(arguments);
-				listener.prevent(e);
+                    extent = extent || 'prevent';
+				listener[extent](e);
 				//avoid sending Event object as it may wind up as the useCapture argument in the listener
 				func.apply(el || null, args.splice(-1, 1));
 			},
@@ -534,12 +536,13 @@ poloAF.Util = (function () {
 		//calls addHandler which calls addListener which invokes the addEventListener/attachEvent method
 		listener = handler(wrapped);
 		return listener;
-	}
+	};
+}
 
 	function addHandler(type, func, el) {
-		//console.log(arguments)
 		return poloAF.Eventing.init.call(poloAF.Eventing, type, func, el).addListener();
 	}
+    
 
 	function validator(message, fun) {
 		var f = function () {
@@ -643,10 +646,10 @@ poloAF.Util = (function () {
 		addClass: _.partial(setFromArray, always(true), 'add'),
 		/*handlers MAY need wrapping in a function that calls prevent default, stop propagation etc..
 		which needs to be cross browser see EventCache.prevent */
-		addEvent: function (handler, func) {
+		addEvent: function (handler, func, extent) {
 			return function (el) {
-				var partial = el ? _.partial(handler, el) : _.partial(handler);
-				return prepareListener(partial, func, el);
+				var partial = el && _.isElement(el) ? _.partial(handler, el) : _.partial(handler);
+				return prepareListener(extent)(partial, func, el);
 			};
 		},
 		addHandler: addHandler,

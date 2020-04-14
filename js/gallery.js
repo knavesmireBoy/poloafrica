@@ -4,18 +4,30 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (doc, visiblity, mq, query, cssanimations, touchevents, report, main, footer) {
+(function (doc, visiblity, mq, query, cssanimations, touchevents, main, footer, q2, picnum, makePath, getDefAlt) {
 	"use strict";
+
+	function modulo(n, i) {
+		return i % n;
+	}
+
+	function undef(x) {
+		return typeof (x) === 'undefined';
+	}
+
+	function partial(f, el) {
+		return _.partial(f, el);
+	}
+
+	function compare(f, a, b, o) {
+		return f(o[a], o[b]);
+	}
 
 	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
 	}
 
 	function noOp() {}
-
-	function undef(x) {
-		return typeof (x) === 'undefined';
-	}
 
 	function isPositive(x) {
 		return (x >= 0) ? !undef(x) : undefined;
@@ -39,10 +51,6 @@
 
 	function greaterOrEqual(a, b) {
 		return getResult(a) >= getResult(b);
-	}
-
-	function modulo(n, i) {
-		return i % n;
 	}
 
 	function setter(o, k, v) {
@@ -82,11 +90,17 @@
 			};
 		};
 	}
-     function compare(f, a, b, o){
-        return f(o[a], o[b]);
+    function isEqual(x, y) {
+        return Number(x) === Number(y);
     }
+
 	var utils = poloAF.Util,
-		//con = window.console.log.bind(window),
+		con = window.console.log.bind(window),
+		reporter = function (msg, el) {
+			el = el || utils.getByTag('h2', document)[0];
+			msg = undef(msg) ? document.documentElement.className : msg;
+			el.innerHTML = msg;
+		},
 		$ = function (str) {
 			return document.getElementById(str);
 		},
@@ -95,17 +109,20 @@
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
 		doQuart = utils.curryFourFold(),
+		doVier = utils.curryFourFold(),
 		doTwiceDefer = utils.curryTwice(true),
 		doThriceDefer = utils.curryThrice(true),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
 		drill = utils.drillDown,
 		invokeWhen = utils.invokeWhen,
-		setAttrs = utils.setAttributes,
 		cssopacity = poloAF.getOpacity().getKey(),
 		anCr = utils.append(),
+		anCrIn = utils.insert(),
+		setAttrs = utils.setAttributes,
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
+		klasTog = utils.toggleClass,
 		isDesktop = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
@@ -115,14 +132,21 @@
 		}()),
 		clicker = ptL(utils.addHandler, 'click'),
 		makeElement = utils.machElement,
-        getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
-		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
-		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
+		doToggle = ptL(klasTog, 'alt', main),
 		getControls = ptL($, 'controls'),
 		getSlide = ptL($, 'slide'),
+		getNodeName = utils.drillDown(['nodeName']),
+		getID = utils.drillDown(['id']),
+        mytarget = !window.addEventListener ? 'srcElement' : 'target',
+		getTarget = utils.drillDown([mytarget]),
+		getLength = utils.drillDown(['length']),
+		gallery = utils.getNextElement(main.firstChild),
+		allpics = utils.getByTag('img', main),
+		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
+		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
+		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
 		//thumbs = $('thumbnails'),
 		thumbs = utils.getByClass('gallery')[0],
-		//main = _.compose(utils.getZero, _.partial(utils.getByTag, 'main', document))(),
 		lis = _.toArray(thumbs.getElementsByTagName('li')),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
 		isPortrait = ptL(function (el) {
@@ -130,27 +154,32 @@
 			return img.offsetHeight > img.offsetWidth;
 			//return utils.getClassList(el).contains('portrait');
 		}),
-        getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
+		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
+        isChecked = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
-				m = math ? 'addClass' : 'removeClass';
+			m = math ? 'addClass' : 'removeClass';
 			utils[m]('portrait', thumbs);
 			utils[m]('portrait', $('wrap'));
-            return img;
+			return img;
 		},
-        exitGallery = _.compose(exitCurrentImage, getCurrentImage),
-        hideCurrent = _.compose(utils.hide, getCurrentSlide),
+		exitGallery = _.compose(exitCurrentImage, getCurrentImage),
+		hideCurrent = _.compose(utils.hide, getCurrentSlide),
 		doShow = function (next) {
-            hideCurrent();
-            utils.show(next);
-            exitGallery();
+			hideCurrent();
+			utils.show(next);
+			exitGallery();
 		},
 		makeIterator = function (coll) {
 			var findIndex = ptL(utils.findIndex, coll),
 				prepIterator = doQuart(poloAF.Iterator(false)),
 				doIterator = prepIterator(ptL(modulo, coll.length))(always(true))(coll);
 			return _.compose(doIterator, findIndex, doTwice(utils.isEqual), getCurrentSlide);
+		},
+		makeCrossPageIterator = function (coll) {
+			var prepIterator = doVier(window.poloAF.Iterator(false));
+			return prepIterator(ptL(modulo, coll.length))(utils.always(true))(coll)(0);
 		},
 		Element = poloAF.Intaface('Display', ['render', 'unrender']),
 		makeLeafComp = function (obj) {
@@ -170,7 +199,105 @@
 			//fresh instance of curried function per adapter
 			return doQuart(adaptHandlers)('unrender')([renderpair, handlerpair.slice(0)])(poloAF.Composite());
 		},
+		adapterFactoryRev = function () {
+			//fresh instance of curried function per adapter
+			//return doVier(adaptHandlers)('unrender')([renderpair, handlerpair.slice(0)])(poloAF.Composite());
+			return doVier(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite());
+		},
 		myrevadapter = doQuart(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite()),
+		neg = function (a, b) {
+			return getLength(a) !== getLength(b);
+		},
+		negator = function (cb, a, b) {
+			if (neg(a, b)) {
+				cb();
+				neg = _.negate(neg);
+			}
+		},
+		doPortrait = function (el) {
+			var m = getOrientation(el) ? 'addClass' : 'removeClass';
+			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
+		},
+		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
+		doPortraitLoop = ptL(_.each, allpics, fixNoNthChild),
+		doPortraitBridge = function (e) {
+			fixNoNthChild(e.target);
+		},
+		toogleLoop = _.compose(doPortraitLoop, doToggle),
+		doSplice = function (bool, coll) {
+			if (coll[13]) {
+				var copy = coll.slice(0),
+					res = copy.splice(4, 6);
+				return bool ? res : copy;
+			}
+			return bool ? [] : coll;
+		},
+		getPortrait = ptL(doSplice, true),
+		getLscp = ptL(doSplice, false),
+		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
+        twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
+				drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],
+				vyf = [50, 51, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63],
+				vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
+				ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
+				sewe = _.range(83, 97),
+				all = [een, twee, drie, vier, vyf, ses, sewe],
+				lscp = _.map(all, getLscp),
+				ptrt = _.map(all, getPortrait),
+        				getSubGallery = function (i) {
+                    var filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
+                        coll = filtered[0] ? ptrt.slice(0) : lscp.slice(0),
+                        start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(coll, doTwice(_.findIndex)(ptL(isEqual, i)))),
+						base = coll.slice(0);
+					base = base.splice(start).concat(base);
+					coll = base[0];
+					start = _.findIndex(coll, ptL(isEqual, i));
+					base[0] = coll.splice(start).concat(coll);
+					return makeCrossPageIterator(_.flatten(base));
+				},
+		advance = function () {
+			var iterator = makeCrossPageIterator(all),
+				doNeg = ptL(negator, toogleLoop);
+			return function (e) {
+				var tgt = getTarget(e),
+                    allpics = utils.getByTag('img', main),
+					path = '001',
+                    gang,
+                    m;
+                //con(tgt)
+				if (!getNodeName(tgt).match(/a/i)) {
+					return;
+				}
+                m = getID(tgt).match(/back$/) ? 'back' : 'forward';
+                gang = iterator[m]();
+				doNeg(allpics, gang);
+				allpics = utils.getByTag('img', main);
+				_.each(allpics, function (img, j) {
+					path = gang[j] || path;
+					//img.src = "images/0" + path + ".jpg";
+					img.src = makePath(path);
+					img.onload = doPortraitBridge;
+				});
+			};
+		},
+		myadvance = advance(),
+		doInsert = ptL(anCrIn, gallery),
+        pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
+		addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
+        pageInputHandler = function(arg){
+            utils.addEvent(clicker, noOp, 'stop')(arg);
+            return arg;
+        },
+		addPageNav = function (myAnCr, id, cb) {
+			return _.compose(cb, pageInputHandler, ptL(setAttrs, {
+				type: 'checkbox',
+				id: 'range',
+				title: 'Toggle to view entire/per page galery'
+			}), anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {
+				id: id,
+				href: '.'
+			}), myAnCr(main), utils.always('a'))))('input');
+		},
 		presenter = (function (inc) {
 			return poloAF.Composite(inc);
 		}([])),
@@ -183,12 +310,6 @@
 				getDomTargetList = utils.getDomParent(utils.getNodeByTag('li')),
 				//all arguments must be functions...hence always
 				$thumbs = makeElement(_.debounce(exitGallery, 300), ptL(klasRem, 'gallery'), always(thumbs)),
-				//$thumbs2 = makeElement(ptL(klasAdd, 'portrait'), always(thumbs)),
-				/*
-             comp.add(_.extend(poloAF.Composite(), $thumbs2, {
-				unrender: ptL(klasRem, 'portrait', thumbs)
-			}));
-            */
 				$body = makeElement(ptL(klasAdd, 'showtime'), always(utils.getBody)),
 				$wrap = makeElement(always($('wrap'))),
 				$show = makeElement(ptL(utils.show), getDomTargetList, drill(['target'])),
@@ -204,7 +325,7 @@
 					//remove exit listener from event_cache
 					var list = poloAF.Eventing.listEvents(),
 						res = _.findIndex(list, function (item) {
-                            return item.el.match(/exit/i);
+							return item.el.match(/exit/i);
 						});
 					//is res always 1???
 					if (!failed(res)) {
@@ -248,8 +369,8 @@
 			exitShow = function (actions) {
 				return function (flag) {
 					var f = flag ? ptL(thunk, once(1)) : always(false),
-                        res = utils.getBest(f, actions)();
-                    return res;
+						res = utils.getBest(f, actions)();
+					return res;
 				};
 			},
 			fadeNow = function (el, i) {
@@ -269,7 +390,7 @@
 				}
 			},
 			countdown = function countdown(cb, x) {
-                var raf = Modernizr.requestanimationframe ? 1 : 11;
+				var raf = Modernizr.requestanimationframe ? 1 : 11;
 				//restarting counter is delegated to an onDone function, passed as an argument here..
 				function counter() {
 					if (countdown.resume) {
@@ -329,7 +450,6 @@
 								id: 'paused'
 							}), anCr(thumbs), always(clone)).render(),
 							img = getDomTargetImg(pauser.getElement());
-                        
 						img.onload = fade50(pauser.getElement());
 						img.src = isPortrait(clone) ? '../images/pauseLong.png' : '../images/pause.png';
 						return pauser;
@@ -440,8 +560,8 @@
 			play = noOp,
 			toggle_command = (function (klas, cb) {
 				var o = {
-						static: null,
-                        inplay: null
+						statik: null,
+						inplay: null
 					},
 					rem = _.compose(ptL(klasRem, klas), cb),
 					wrap = makeElement(ptL(klasAdd, 'inplay'), always($('wrap'))),
@@ -449,21 +569,21 @@
 						unrender: ptL(klasRem, 'inplay', $('wrap'))
 					}),
 					clear = function () {
-						window.clearTimeout(o.static);
+						window.clearTimeout(o.statik);
 						window.clearTimeout(o.inplay);
-						o.static = o.inplay = null;
-						if(countdown.progress){
-                            $wrap.render();
-                        }
+						o.statik = o.inplay = null;
+						if (countdown.progress) {
+							$wrap.render();
+						}
 					},
 					preppedAdd = _.compose(ptL(klasAdd, klas), cb),
 					ret = {
 						render: function () {
-							o.static = window.setTimeout(rem, 3000);
+							o.statik = window.setTimeout(rem, 3000);
 							o.inplay = window.setTimeout(clear, 3500);
 						},
 						unrender: function () {
-                            _.compose(clear, preppedAdd)();
+							_.compose(clear, preppedAdd)();
 							$wrap.unrender();
 						}
 					};
@@ -559,7 +679,10 @@
 				};
 			},
 			get_play_iterator = function () {
-				var predicate = utils.getPredicate(getCurrentSlide(), isPortrait);
+                //isChecked().checked ? default_iterator() : 
+				var predicate = utils.getPredicate(getCurrentSlide(), isPortrait),
+                    myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
+                    //return getSubGallery(myint);
 				return makeIterator(_.filter(lis, predicate))();
 			},
 			$current = {
@@ -646,7 +769,14 @@
 			} catch (e) {
 				$('report').innerHTML = e;
 			}
-            window.presenter = presenter;
+			/*inserts back/forward buttons, returns a REVERSE adpater around a eventListener object,
+    where unrender would restore listener and render would remove listener when entering navigation mode
+    HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
+			addPageNav(anCr, 'gal_forward', noOp);
+            addPageNav(doInsert, 'gal_back', addPageNavHandler);
+			utils.$('placeholder').innerHTML = 'PHOTOS';
 		}());
 	}());
-}(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('h2')[0], document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0]));
+}(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents,  document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function(path){
+    return "images/0" + path + ".jpg";
+}, poloAF.Util.always('')));
