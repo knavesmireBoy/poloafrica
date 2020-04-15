@@ -11,6 +11,12 @@
 		return i % n;
 	}
 
+	function shuffle(coll) {
+		return function (start) {
+			return coll.splice(start).concat(coll);
+		};
+	}
+
 	function undef(x) {
 		return typeof (x) === 'undefined';
 	}
@@ -165,8 +171,7 @@
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
 			m = math ? 'addClass' : 'removeClass';
-			utils[m]('portrait', thumbs);
-			utils[m]('portrait', $('wrap'));
+			_.map([thumbs, $('wrap')], ptL(utils[m], 'portrait'));
 			return img;
 		},
 		exitGallery = _.compose(exitCurrentImage, getCurrentImage),
@@ -204,11 +209,6 @@
 			//fresh instance of curried function per adapter
 			return doQuart(adaptHandlers)('unrender')([renderpair, handlerpair.slice(0)])(poloAF.Composite());
 		},
-		adapterFactoryRev = function () {
-			//fresh instance of curried function per adapter
-			//return doVier(adaptHandlers)('unrender')([renderpair, handlerpair.slice(0)])(poloAF.Composite());
-			return doVier(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite());
-		},
 		myrevadapter = doQuart(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite()),
 		neg = function (a, b) {
 			return getLength(a) !== getLength(b);
@@ -239,6 +239,31 @@
 		},
 		getPortrait = ptL(doSplice, true),
 		getLscp = ptL(doSplice, false),
+		doThePath = function (inbound, outbound, klas, b1, b2) {
+			return function (path) {
+				var action = utils.getBest(function (agg) {
+					return agg[0]();
+				}, _.zip([ptL(utils.isEqual, b1, path), ptL(utils.isEqual, b2, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, klas)), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, klas)), noOp]));
+				action[1]();
+			};
+		},
+        remFirst = [klasRem, klasAdd],
+        //doThePathPrep = ptL(doThePath, klasRem, klasAdd, 'portrait', '99'),
+        makePathPlus = function(path){
+            var action;
+            if(utils.getByClass('portrait')){
+             action = doThePath.apply(null, remFirst.concat(['portrait', '98', '97']));   
+            }
+            else {
+                action = doThePath.apply(null, remFirst.reverse().concat(['portrait', '97', '98'], path)); 
+            }
+            makePathPlus = function(path){
+                action(path);
+                action(path);
+                return "images/0" + path + ".jpg";
+            }
+            return "images/0" + path + ".jpg";
+                },
 		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
 		twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
 		drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],
@@ -246,7 +271,7 @@
 		vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
 		ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
 		sewe = _.range(83, 97),
-		all = [een, twee, drie, vier, vyf, ses, sewe],
+		all = [een/*, twee, drie, vier, vyf, ses, sewe*/],
 		lscp = _.map(all, getLscp),
 		ptrt = _.map(all, getPortrait),
 		getSubGallery = function (i) {
@@ -258,10 +283,11 @@
 			coll = base[0];
 			start = _.findIndex(coll, ptL(isEqual, i));
 			base[0] = coll.splice(start).concat(coll);
-            base = _.flatten(base);
-            if(mixedOrientation().checked){
-                base = filtered[0] ? base.concat('99', _.flatten(lscp.slice(0))) : base.concat('98', _.flatten(ptrt.slice(0)));
-            }
+			base = _.flatten(base);
+            //[i, 2,3,4, 98, 5,6,7,9, 98, i]
+			if (mixedOrientation().checked) {
+				base = filtered[0] ? base.concat('98', _.flatten(lscp.slice(0)), '97', '99') : base.concat('97','99', _.flatten(ptrt.slice(0)), '98', '80');
+			}
 			return makeCrossPageIterator(base);
 		},
 		advance = function () {
@@ -300,7 +326,7 @@
 			return _.compose(cb, pageInputHandler, ptL(setAttrs, {
 				type: 'checkbox',
 				id: 'range',
-				title: title,
+				title: title
 			}), anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {
 				id: id,
 				href: '.'
@@ -423,12 +449,6 @@
 			setImageSrc = ptL(setterAdapter, 'src'),
 			setImageAlt = ptL(setterAdapter, 'alt'),
 			setHyperLink = ptL(setterAdapter, 'href'),
-            makePathP = function (initial, path) {
-                return "images/0" + path + ".jpg";
-            },
-             makePathL = function (initial, path) {
-                return "images/0" + path + ".jpg";
-            },
 			getMyNextBase = function (checked) {
 				return function (it) {
 					var page = [_.compose(getsrc, it.getNext), _.compose(getalt, it.getCurrent), _.compose(gethref, it.getCurrent)],
@@ -442,7 +462,7 @@
 				}
 				return function (base) {
 					var page = [_.compose(getalt, base), _.compose(gethref, base), _.compose(getsrc, base)],
-						multi = [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePath, bridgeBase, base)];
+						multi = [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePathPlus, bridgeBase, base)];
 					return checked ? multi : page;
 				};
 			},
@@ -458,6 +478,7 @@
 					var li = $('base'),
 						link = getDomTargetLink(li),
 						img = getDomTargetImg(li);
+                     console.log('base');
 					return baseTrio(ptL(setImageSrc, img), ptL(setImageAlt, img), ptL(setHyperLink, link), it);
 				};
 			},
@@ -474,6 +495,7 @@
 					link = getDomTargetLink(li),
 					img = getDomTargetImg(li),
 					base = always(utils.getPrevious(li));
+                console.log('slide');
 				//img.onload = fade100(li);
 				//slide img gets set to base img src.
 				//On first run these are the SAME. So first set src to empty string to trigger onload event
