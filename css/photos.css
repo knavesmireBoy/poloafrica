@@ -102,7 +102,7 @@ main ul li, main ul li img {
 	box-sizing: border-box;
     object-fit: fill;
 }
-main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"]  {
+main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="80"]   {
     border-color: white;
 }
 .gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait, ul.gallery li:nth-last-child(-n+4) {

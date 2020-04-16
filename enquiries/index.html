@@ -91,12 +91,13 @@
         <label class="read-more-trigger" for="post4"></label>
        <section id="contactarea" class="alt">
            <a href="#" id="contact_form"><h3>Poloafrica contact form</h3></a>
-           <form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">
+           <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
+           <form action="" id="contactform" method="post" name="contactform">
 				<fieldset>
 					<legend>&nbsp;Poloafrica contact form&nbsp;</legend>
-						<label for="ID_namefield_BF7EF605">name</label><input id="ID_namefield_BF7EF605" tabindex="1" type="text">
-                        <label for="ID_phonefield_BF7EF6A0">phone</label><input id="ID_phonefield_BF7EF6A0" tabindex="2" type="text">
-                        <label for="ID_emailfield_BF7EF6A8">email</label><input id="ID_emailfield_BF7EF6A8" maxlength="100" name="Email" tabindex="3" type="text"><label for="ID_adfield_BF7EF6B4">address</label><input id="ID_adfield_BF7EF6B4" maxlength="100" name="Address Line_1"  tabindex="4" type="text"><label for="ID_adfield2_BF7EF6BC">address</label><input id="ID_adfield2_BF7EF6BC" name="Address Line_2" tabindex="5" type="text">
+						<label for="ID_namefield_BF7EF605">name</label><input id="ID_namefield_BF7EF605" tabindex="1" type="text" required pattern ="\S+\s\S{2,}">
+                        <label for="ID_phonefield_BF7EF6A0">phone</label><input id="ID_phonefield_BF7EF6A0" tabindex="2" type="tel" pattern ="\d{7,}">
+                        <label for="ID_emailfield_BF7EF6A8">email</label><input id="ID_emailfield_BF7EF6A8" type="email" name="Email" tabindex="3" required><label for="ID_adfield_BF7EF6B4">address</label><input id="ID_adfield_BF7EF6B4"  name="Address Line_1"  tabindex="4" type="text"><label for="ID_adfield2_BF7EF6BC">address</label><input id="ID_adfield2_BF7EF6BC" name="Address Line_2" tabindex="5" type="text">
 				</fieldset>
                <fieldset>
                    <textarea id="ID_Hols_BF72B5B7" name="Text" tabindex="6">Use this area for comments or questions</textarea><input alt="" src="../images/dogsform.gif" tabindex="9" type="image" id="dogs">
