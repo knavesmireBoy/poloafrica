@@ -10,6 +10,23 @@ main {
 	text-align: center;
 	height: 100%;
 }
+/*
+main > form {
+    flex: 0 0 100%;
+    display: grid;
+    font: .7em Courier;
+    text-align: left;
+    grid-template-columns: repeat(8, 1fr);
+}
+main > form  > label{
+    grid-column: 2/3;
+    text-align: right;
+}
+
+main > form  > input, progress{
+    grid-column: 3/8;
+}
+*/
 main img, main ul {
 	border: 1px solid black;
 }
@@ -54,6 +71,7 @@ main>* {
     position: absolute;
     top: -7px;
     left: -27px;
+    opacity: 0.5;
 }
 
 .pagenav input[type='checkbox']:checked {
@@ -100,7 +118,6 @@ main ul li, main ul li img {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-    object-fit: fill;
 }
 main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="80"]   {
     border-color: white;

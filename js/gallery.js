@@ -11,9 +11,12 @@
 		return i % n;
 	}
 
-	function shuffle(coll) {
-		return function (start) {
-			return coll.splice(start).concat(coll);
+	function shuffle(coll, flag) {
+		return function (start, deleteCount) {
+            deleteCount = isNaN(deleteCount) ? 0 : deleteCount;
+            start = isNaN(start) ? 0 : start;
+            var res = coll.splice(start, deleteCount);
+			return flag ? res.concat(coll) : coll.concat(res);
 		};
 	}
 
@@ -239,26 +242,26 @@
 		},
 		getPortrait = ptL(doSplice, true),
 		getLscp = ptL(doSplice, false),
-		doThePath = function (inbound, outbound, klas, b1, b2) {
+		doThePath = function (inbound, outbound, enter, exit) {
 			return function (path) {
+                con(enter, exit)
 				var action = utils.getBest(function (agg) {
 					return agg[0]();
-				}, _.zip([ptL(utils.isEqual, b1, path), ptL(utils.isEqual, b2, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, klas)), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, klas)), noOp]));
+				}, _.zip([ptL(utils.isEqual, enter, path), ptL(utils.isEqual, exit, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, 'portrait')), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, 'portrait')), noOp]));
 				action[1]();
 			};
 		},
-        remFirst = [klasRem, klasAdd],
-        //doThePathPrep = ptL(doThePath, klasRem, klasAdd, 'portrait', '99'),
+        
+        getDisplayRoute = function(coll, triggers, predicate){
+            var actions = utils.getBest(predicate, [coll, coll.slice(0).reverse()]),
+                metriggers = utils.getBest(predicate, triggers);
+            return actions.concat(metriggers);
+        },  
         makePathPlus = function(path){
-            var action;
-            if(utils.getByClass('portrait')){
-             action = doThePath.apply(null, remFirst.concat(['portrait', '98', '97']));   
-            }
-            else {
-                action = doThePath.apply(null, remFirst.reverse().concat(['portrait', '97', '98'], path)); 
-            }
+            var args = getDisplayRoute([klasRem, klasAdd], [['97', '98'], ['80', '99']], _.compose(utils.getZero, ptL(utils.getByClass, 'portrait'))),
+                action = doThePath.apply(null, args);   
+                con(args);
             makePathPlus = function(path){
-                action(path);
                 action(path);
                 return "images/0" + path + ".jpg";
             }
@@ -272,6 +275,7 @@
 		ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
 		sewe = _.range(83, 97),
 		all = [een/*, twee, drie, vier, vyf, ses, sewe*/],
+		//all = [een, twee, drie, vier, vyf, ses, sewe],
 		lscp = _.map(all, getLscp),
 		ptrt = _.map(all, getPortrait),
 		getSubGallery = function (i) {
@@ -286,7 +290,7 @@
 			base = _.flatten(base);
             //[i, 2,3,4, 98, 5,6,7,9, 98, i]
 			if (mixedOrientation().checked) {
-				base = filtered[0] ? base.concat('98', _.flatten(lscp.slice(0)), '97', '99') : base.concat('97','99', _.flatten(ptrt.slice(0)), '98', '80');
+				base = filtered[0] ? base.concat('97',_.flatten(lscp.slice(0)), '98') : base.concat('80', '97', _.flatten(ptrt.slice(0)), '99');
 			}
 			return makeCrossPageIterator(base);
 		},
@@ -479,7 +483,6 @@
 					var li = $('base'),
 						link = getDomTargetLink(li),
 						img = getDomTargetImg(li);
-                     console.log('base');
 					return baseTrio(ptL(setImageSrc, img), ptL(setImageAlt, img), ptL(setHyperLink, link), it);
 				};
 			},
@@ -496,7 +499,6 @@
 					link = getDomTargetLink(li),
 					img = getDomTargetImg(li),
 					base = always(utils.getPrevious(li));
-                console.log('slide');
 				//img.onload = fade100(li);
 				//slide img gets set to base img src.
 				//On first run these are the SAME. So first set src to empty string to trigger onload event
@@ -745,9 +747,15 @@
 			},
 			get_play_iterator = function () {
 				var predicate = utils.getPredicate(getCurrentSlide(), isPortrait),
-					myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
-				//con(getSubGallery(myint).getNext())
-				return allowMultiPage().checked ? getSubGallery(myint) : makeIterator(_.filter(lis, predicate))();
+					myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]),
+                    res = _.filter(lis, predicate);
+                if(allowMultiPage().checked){
+                    return getSubGallery(myint);
+                }
+                if(mixedOrientation().checked){
+                    return makeCrossPageIterator(shuffle(lis, res.length === 6)(4, 6));
+                }
+                return makeIterator(res)();
 			},
 			$current = {
 				render: hideCurrent,
