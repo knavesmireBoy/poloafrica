@@ -290,6 +290,8 @@
 			base = _.flatten(base);
             //[i, 2,3,4, 98, 5,6,7,9, 98, i]
 			if (mixedOrientation().checked) {
+                /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
+                the '98' signal undoes the original action '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
 				base = filtered[0] ? base.concat('97',_.flatten(lscp.slice(0)), '98') : base.concat('80', '97', _.flatten(ptrt.slice(0)), '99');
 			}
 			return makeCrossPageIterator(base);
