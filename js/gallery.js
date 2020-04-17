@@ -261,9 +261,14 @@
 		//all = [een, twee, drie, vier, vyf, ses, sewe],
 		lscp = _.map(all, getLscpPics),
 		ptrt = _.map(all, getPortraitPics),
+        mixer = function(predicate, coll){
+            /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
+                the '98' signal undoes the original action.
+                '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
+				return predicate() ? coll.concat('97', '80',_.flatten(lscp.slice(0)), '98') : coll.concat('80', '97', _.flatten(ptrt.slice(0)), '99');
+        },
         performSwap = function (inbound, outbound, enter, exit) {
 			return function (path) {
-                con(path)
 				var action = utils.getBest(function (agg) {
 					return agg[0]();
 				}, _.zip([ptL(utils.isEqual, enter, path), ptL(utils.isEqual, exit, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, 'portrait')), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, 'portrait')), noOp]));
@@ -274,7 +279,7 @@
 			var filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
 				coll = filtered[0] ? ptrt.slice(0) : lscp.slice(0),
 				start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(coll, doTwice(_.findIndex)(ptL(isEqual, i)))),
-				base = coll.slice(0),
+				cloned = coll.slice(0),
                 getDisplayRoute = function(coll, triggers){
                     var actions = utils.getBest(inPortraitMode, [coll, coll.slice(0).reverse()]),
                         metriggers = utils.getBest(inPortraitMode, triggers);
@@ -285,19 +290,12 @@
                 action(path);
                 return func(path);
             });
-			base = base.splice(start).concat(base);
-			coll = base[0];
+			cloned = cloned.splice(start).concat(cloned);
+			coll = cloned[0];
 			start = _.findIndex(coll, ptL(isEqual, i));
-			base[0] = coll.splice(start).concat(coll);
-			base = _.flatten(base);
-            //[i, 2,3,4, 98, 5,6,7,9, 98, i]
-			if (mixedOrientation().checked) {            
-                /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
-                the '98' signal undoes the original action.
-                '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
-				base = filtered[0] ? base.concat('97', '80',_.flatten(lscp.slice(0)), '98') : base.concat('80', '97', _.flatten(ptrt.slice(0)), '99');
-			}
-			return makeCrossPageIterator(base);
+			cloned[0] = coll.splice(start).concat(coll);
+			cloned = mixedOrientation().checked ? mixer(utils.always(filtered[0]), _.flatten(cloned)) : _.flatten(cloned);
+			return makeCrossPageIterator(cloned);
 		},
 		advance = function () {
 			var iterator = makeCrossPageIterator(all),
