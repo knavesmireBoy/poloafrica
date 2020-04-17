@@ -13,7 +13,7 @@
 
 	function shuffle(coll, flag) {
 		return function (start, deleteCount) {
-            deleteCount = isNaN(deleteCount) ? 0 : deleteCount;
+            deleteCount = isNaN(deleteCount) ? coll.length-1 : deleteCount;
             start = isNaN(start) ? 0 : start;
             var res = coll.splice(start, deleteCount);
 			return flag ? res.concat(coll) : coll.concat(res);
@@ -257,15 +257,27 @@
 		vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
 		ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
 		sewe = _.range(83, 97),
-		all = [een/*, twee, drie, vier, vyf, ses, sewe*/],
-		//all = [een, twee, drie, vier, vyf, ses, sewe],
-		lscp = _.map(all, getLscpPics),
-		ptrt = _.map(all, getPortraitPics),
-        mixer = function(predicate, coll){
+		//all = [een, twee/*, drie, vier, vyf, ses, sewe*/],
+		all = [een, twee, drie, vier, vyf, ses, sewe],
+		//lscp = _.map(all, getLscpPics),
+		//ptrt = _.map(all, getPortraitPics),
+        mixer = function(predicate, leader, trailer){
             /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
                 the '98' signal undoes the original action.
-                '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
-				return predicate() ? coll.concat('97', '80',_.flatten(lscp.slice(0)), '98') : coll.concat('80', '97', _.flatten(ptrt.slice(0)), '99');
+                '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic 
+				return predicate() ? leader.concat('97', '80',_.flatten(lscp.slice(0)), '98') : leader.concat('80', '97', _.flatten(ptrt.slice(0)), '99');*/
+            var active = _.every([leader, trailer], function(arr){
+                return arr[0];
+            });
+            //con(active, leader, trailer)
+            if(active){
+                return predicate() ? leader.concat('97', '80',_.flatten(trailer.slice(0)), '98') : leader.concat('80', '97', _.flatten(trailer.slice(0)), '99');
+            }
+            return leader[0] ? leader : trailer;
+
+        },
+        mixer2 = function(pred, zipped){
+            return mixer.apply(null, [pred, zipped[0], zipped[1]]);
         },
         performSwap = function (inbound, outbound, enter, exit) {
 			return function (path) {
@@ -275,26 +287,46 @@
 				return action[1]();
 			};
 		},
+        getLeadingGroup = function(i, portrait, landscape){
+            var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
+                leader = filtered[0] ? portrait : landscape,
+                trailer = filtered[0] ? landscape : portrait;
+            //mixedOrientation().checked ? 
+				return [leader, trailer];
+        },
 		getSubGallery = function (i) {
-			var filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
-				coll = filtered[0] ? ptrt.slice(0) : lscp.slice(0),
-				start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(coll, doTwice(_.findIndex)(ptL(isEqual, i)))),
-				cloned = coll.slice(0),
-                getDisplayRoute = function(coll, triggers){
-                    var actions = utils.getBest(inPortraitMode, [coll, coll.slice(0).reverse()]),
+            //con(_.zip(ptrt, lscp))
+			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
+                reordered = shuffle(all.slice(0), true)(sub),
+                lscp = _.map(reordered, getLscpPics),
+                ptrt = _.map(reordered, getPortraitPics),
+                filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
+                coll,
+				group = getLeadingGroup(i, ptrt.slice(0), lscp.slice(0)),
+				start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(group[0], doTwice(_.findIndex)(ptL(isEqual, i)))),
+				cloned = group[0].slice(0),
+                getDisplayRoute = function(gang, triggers){
+                    var actions = utils.getBest(inPortraitMode, [gang, gang.slice(0).reverse()]),
                         metriggers = utils.getBest(inPortraitMode, triggers);
                     return actions.concat(metriggers);
                 },
                 action = mixedOrientation().checked ? performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [['97', '98'], ['80', '99']])) : noOp;
+                
             makePathWrap = _.wrap(makePath, function(func, path){
                 action(path);
                 return func(path);
             });
-			cloned = cloned.splice(start).concat(cloned);
+            //re-order main array
 			coll = cloned[0];
 			start = _.findIndex(coll, ptL(isEqual, i));
+            //re-order leading sub array
 			cloned[0] = coll.splice(start).concat(coll);
-			cloned = mixedOrientation().checked ? mixer(utils.always(filtered[0]), _.flatten(cloned)) : _.flatten(cloned);
+            coll =_.map(_.zip(cloned, group[1]), ptL(mixer2, utils.always(filtered[0])));
+            /*
+			cloned = mixedOrientation().checked ? mixer(utils.always(filtered[0]), _.flatten(cloned), _.flatten(group[1])) : _.flatten(cloned);
+            */
+            con(coll)
+            cloned = _.flatten(coll);
 			return makeCrossPageIterator(cloned);
 		},
 		advance = function () {
@@ -306,7 +338,6 @@
 					path = '001',
 					gang,
 					m;
-				//con(tgt)
 				if (!getNodeName(tgt).match(/a/i)) {
 					return;
 				}
