@@ -179,8 +179,8 @@
 		},
         inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
-		allowMultiPage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
-		mixedOrientation = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_back'))),
+		singlePage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
+		groupByOrientation = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_back'))),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
@@ -264,19 +264,17 @@
         mixer = function(predicate, leader, trailer){
             /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
                 the '98' signal undoes the original action.
-                '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic 
-				return predicate() ? leader.concat('97', '80',_.flatten(lscp.slice(0)), '98') : leader.concat('80', '97', _.flatten(ptrt.slice(0)), '99');*/
+                '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
             var active = _.every([leader, trailer], function(arr){
                 return arr[0];
             });
-            //con(active, leader, trailer)
             if(active){
-                return predicate() ? leader.concat('97', '80',_.flatten(trailer.slice(0)), '98') : leader.concat('80', '97', _.flatten(trailer.slice(0)), '99');
+                 return predicate() ? leader.concat('97', '80', trailer, '98') : leader.concat('80', '97', trailer, '99');
             }
             return leader[0] ? leader : trailer;
 
         },
-        mixer2 = function(pred, zipped){
+        mixerBridge = function(pred, zipped){
             return mixer.apply(null, [pred, zipped[0], zipped[1]]);
         },
         performSwap = function (inbound, outbound, enter, exit) {
@@ -291,7 +289,11 @@
             var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
                 leader = filtered[0] ? portrait : landscape,
                 trailer = filtered[0] ? landscape : portrait;
-            //mixedOrientation().checked ? 
+            
+            if(singlePage().checked){
+                leader = [leader[0]] || [[]];
+                trailer = [trailer[0]] || [[]];
+            }
 				return [leader, trailer];
         },
 		getSubGallery = function (i) {
@@ -301,33 +303,30 @@
                 lscp = _.map(reordered, getLscpPics),
                 ptrt = _.map(reordered, getPortraitPics),
                 filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
-                coll,
-				group = getLeadingGroup(i, ptrt.slice(0), lscp.slice(0)),
+				group = getLeadingGroup(i, ptrt, lscp),
 				start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(group[0], doTwice(_.findIndex)(ptL(isEqual, i)))),
-				cloned = group[0].slice(0),
+				leader = group[0].slice(0),
                 getDisplayRoute = function(gang, triggers){
                     var actions = utils.getBest(inPortraitMode, [gang, gang.slice(0).reverse()]),
                         metriggers = utils.getBest(inPortraitMode, triggers);
                     return actions.concat(metriggers);
                 },
-                action = mixedOrientation().checked ? performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [['97', '98'], ['80', '99']])) : noOp;
-                
+                action = performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [['97', '98'], ['80', '99']])),
+                tmp;
             makePathWrap = _.wrap(makePath, function(func, path){
                 action(path);
                 return func(path);
             });
-            //re-order main array
-			coll = cloned[0];
-			start = _.findIndex(coll, ptL(isEqual, i));
-            //re-order leading sub array
-			cloned[0] = coll.splice(start).concat(coll);
-            coll =_.map(_.zip(cloned, group[1]), ptL(mixer2, utils.always(filtered[0])));
-            /*
-			cloned = mixedOrientation().checked ? mixer(utils.always(filtered[0]), _.flatten(cloned), _.flatten(group[1])) : _.flatten(cloned);
-            */
-            con(coll)
-            cloned = _.flatten(coll);
-			return makeCrossPageIterator(cloned);
+			tmp = leader[0];
+			start = _.findIndex(tmp, ptL(isEqual, i));
+			leader[0] = tmp.splice(start).concat(tmp);
+            if(groupByOrientation().checked){
+                tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1]));//orientation
+            }
+            else {
+               tmp =_.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0])));//page
+            }
+			return makeCrossPageIterator(_.flatten(tmp));
 		},
 		advance = function () {
 			var iterator = makeCrossPageIterator(all),
@@ -435,9 +434,6 @@
 			}([])),
 			allow = !touchevents ? 2 : 0,
 			isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName'])),
-			getsrc = _.compose(drill(['src']), getDomTargetImg),
-			getalt = _.compose(drill(['alt']), getDomTargetImg),
-			gethref = _.compose(drill(['href']), getDomTargetLink),
 			exitShow = function (actions) {
 				return function (flag) {
 					var f = flag ? ptL(thunk, once(1)) : always(false),
@@ -488,26 +484,17 @@
 			setImageSrc = ptL(setterAdapter, 'src'),
 			setImageAlt = ptL(setterAdapter, 'alt'),
 			setHyperLink = ptL(setterAdapter, 'href'),
-			getMyNextBase = function (checked) {
-				return function (it) {
-					var page = [_.compose(getsrc, it.getNext), _.compose(getalt, it.getCurrent), _.compose(gethref, it.getCurrent)],
-						multi = [_.compose(makePath, it.getNext), _.compose(getDefAlt, it.getCurrent), _.compose(makePath, it.getCurrent)];
-					return checked ? multi : page;
-				};
+			getMyNextBase = function (it) {
+					return [_.compose(makePath, it.getNext), _.compose(getDefAlt, it.getCurrent), _.compose(makePath, it.getCurrent)];
 			},
-			getMyNextSlide = function (checked) {
-				function bridgeBase(el) {
+            bridgeBase = function(el) {
 					return getDomTargetImg(el).src.match(picnum)[1];
-				}
-               
-				return function (base) {
-					var page = [_.compose(getalt, base), _.compose(gethref, base), _.compose(getsrc, base)],
-						multi = [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePathWrap, bridgeBase, base)];
-					return checked ? multi : page;
-				};
-			},
+				},
+			getMyNextSlide = function (base) {
+					return [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePathWrap, bridgeBase, base)];
+				},
 			baseTrio = function (doSrc, doAlt, doHref, iterator) {
-				var headFunctions = getMyNextBase(allowMultiPage().checked)(iterator),
+				var headFunctions = getMyNextBase(iterator),
 					mysrc = _.compose(doSrc, headFunctions[0]),
 					myalt = _.compose(doAlt, headFunctions[1]),
 					myhref = _.compose(doHref, headFunctions[2]);
@@ -522,7 +509,7 @@
 				};
 			},
 			slideQuartet = function (doSrc, doAlt, doHref, base) {
-				var headFunctions = getMyNextSlide(allowMultiPage().checked)(base),
+				var headFunctions = getMyNextSlide(base),
 					myalt = _.compose(doAlt, headFunctions[0]),
 					myhref = _.compose(doHref, headFunctions[1]),
 					mysrc1 = _.compose(doSrc, always('')),
@@ -781,16 +768,8 @@
 				};
 			},
 			get_play_iterator = function () {
-				var predicate = utils.getPredicate(getCurrentSlide(), isPortrait),
-					myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]),
-                    res = _.filter(lis, predicate);
-                if(allowMultiPage().checked){
+				var myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
                     return getSubGallery(myint);
-                }
-                if(mixedOrientation().checked){
-                    return makeCrossPageIterator(shuffle(lis, res.length === 6)(4, 6));
-                }
-                return makeIterator(res)();
 			},
 			$current = {
 				render: hideCurrent,
@@ -879,8 +858,8 @@
 			/*inserts back/forward buttons, returns a REVERSE adpater around a eventListener object,
     where unrender would restore listener and render would remove listener when entering navigation mode
     HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
-			addPageNav(anCr, 'Enable checkbox to view multi-page gallery', 'gal_forward', noOp);
-			addPageNav(doInsert, 'Enable checkbox to include both orientations', 'gal_back', addPageNavHandler);
+			addPageNav(anCr, 'Enable checkbox to restrict to a single page', 'gal_forward', noOp);
+			addPageNav(doInsert, 'Enable checkbox to group pictures by orientation', 'gal_back', addPageNavHandler);
 			utils.$('placeholder').innerHTML = 'PHOTOS';
 		}());
 	}());
