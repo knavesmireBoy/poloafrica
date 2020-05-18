@@ -179,12 +179,12 @@
 		},
         inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
-		singlePage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
-		groupByOrientation = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_back'))),
+		//singlePage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
+		//groupByOrientation = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_back'))),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
-			m = math ? 'addClass' : 'removeClass';
+            m = math ? 'addClass' : 'removeClass';
 			_.map([thumbs, $('wrap')], ptL(utils[m], 'portrait'));
 			return img;
 		},
@@ -233,7 +233,6 @@
 				neg = _.negate(neg);
 			}
 		},
-		
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
 		doPortraitLoop = ptL(_.each, allpics, fixNoNthChild),
 		doPortraitBridge = function (e) {
@@ -289,11 +288,11 @@
             var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
                 leader = filtered[0] ? portrait : landscape,
                 trailer = filtered[0] ? landscape : portrait;
-            
+            /*
             if(singlePage().checked){
                 leader = [leader[0]] || [[]];
                 trailer = [trailer[0]] || [[]];
-            }
+            }*/
 				return [leader, trailer];
         },
 		getSubGallery = function (i) {
@@ -320,7 +319,8 @@
 			tmp = leader[0];
 			start = _.findIndex(tmp, ptL(isEqual, i));
 			leader[0] = tmp.splice(start).concat(tmp);
-            if(groupByOrientation().checked){
+            //if(groupByOrientation().checked){
+            if(Modernizr.deviceorientation){
                 tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1]));//orientation
             }
             else {
@@ -361,13 +361,15 @@
 		},
 		addPageNav = function (myAnCr, title, id, cb) {
 			return _.compose(cb, pageInputHandler, ptL(setAttrs, {
-				type: 'checkbox',
-				id: 'range',
+				/*id: 'range'
+                type: 'checkbox',
+				id: 'range'
 				title: title
+                */
 			}), anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {
 				id: id,
 				href: '.'
-			}), myAnCr(main), utils.always('a'))))('input');
+			}), myAnCr(main), utils.always('a'))))('span');
 		},
 		presenter = (function (inc) {
 			return poloAF.Composite(inc);
@@ -649,7 +651,7 @@
 			play = noOp,
 			toggle_command = (function (klas, cb) {
 				var o = {
-						statik: null,
+						statik: null,/*can't use static reserved word*/
 						inplay: null
 					},
 					rem = _.compose(ptL(klasRem, klas), cb),

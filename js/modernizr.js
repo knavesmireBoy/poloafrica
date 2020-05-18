@@ -1,6 +1,6 @@
 /*!
  * modernizr v3.5.0
- * Build https://modernizr.com/download?-borderradius-cssremunit-cssvhunit-cssvmaxunit-cssvminunit-cssvwunit-bgpositionshorthand-boxshadow-hsla-rgba-textshadow-backgroundsize-cssanimations-cssgrid_cssgridlegacy-cssmask-flexbox-flexboxlegacy-flexboxtweener-flexwrap-nthchild-opacity-requestanimationframe-svgasimg-svgfilters-addtest-atrule-domprefixes-hasevent-mq-prefixed-prefixedcss-prefixedcssvalue-prefixes-printshiv-setclasses-testallprops-testprop-teststyles-dontmin
+ * Build https://modernizr.com/download?-borderradius-cssremunit-cssvhunit-cssvmaxunit-cssvminunit-cssvwunit-bgpositionshorthand-boxshadow-hsla-rgba-textshadow-backgroundsize-cssanimations-cssgrid_cssgridlegacy-cssmask-devicemotion_deviceorientation-flexbox-flexboxlegacy-flexboxtweener-flexwrap-nthchild-opacity-requestanimationframe-svgasimg-svgfilters-addtest-atrule-domprefixes-hasevent-mq-prefixed-prefixedcss-prefixedcssvalue-prefixes-printshiv-setclasses-testallprops-testprop-teststyles-dontmin
  *
  * Copyright (c)
  *  Faruk Ates
@@ -85,6 +85,37 @@
   // Leak modernizr globally when you `require` it rather than force it here.
   // Overwrite name so constructor name is nicer :D
   Modernizr = new Modernizr();
+    
+    /*!
+{
+  "name": "Orientation and Motion Events",
+  "property": ["devicemotion", "deviceorientation"],
+  "caniuse": "deviceorientation",
+  "notes": [{
+    "name": "W3C Editor's Draft",
+    "href": "http://w3c.github.io/deviceorientation/spec-source-orientation.html"
+  },{
+    "name": "Implementation by iOS Safari (Orientation)",
+    "href": "http://goo.gl/fhce3"
+  },{
+    "name": "Implementation by iOS Safari (Motion)",
+    "href": "http://goo.gl/rLKz8"
+  }],
+  "authors": ["Shi Chuan"],
+  "tags": ["event"],
+  "builderAliases": ["event_deviceorientation_motion"]
+}
+!*/
+/* DOC
+Part of Device Access aspect of HTML5, same category as geolocation.
+
+`devicemotion` tests for Device Motion Event support, returns boolean value true/false.
+
+`deviceorientation` tests for Device Orientation Event support, returns boolean value true/false
+*/
+
+  Modernizr.addTest('devicemotion', 'DeviceMotionEvent' in window);
+  Modernizr.addTest('deviceorientation', 'DeviceOrientationEvent' in window);
 
   
 /*!

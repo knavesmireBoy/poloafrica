@@ -48,7 +48,7 @@ main>* {
 	margin: 1px;
 }
 
-
+/*
 @keyframes myright {
   from {border-right-color: mediumvioletred;}
   to {border-right-color: crimson;}
@@ -58,14 +58,14 @@ main>* {
   from {border-left-color: mediumvioletred;}
   to {border-left-color: crimson;}
 }
-
+*/
 #gal_back {
 	border-right: 31px solid crimson;
-    animation: myright 5s infinite;
+    /*animation: myright 5s infinite;*/
 }
 #gal_forward {
 	border-left: 31px solid crimson;
-    animation: myleft 5s infinite;
+    /*animation: myleft 5s infinite;*/
 }
 .pagenav input {
     position: absolute;
@@ -441,7 +441,6 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents a.pagenav:hover span, .touchevents a.pagenav:focus span {
 		border-color: silver;
 	}
-
 }
 /*667*/
 

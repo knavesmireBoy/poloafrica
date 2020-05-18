@@ -92,12 +92,12 @@
        <section id="contactarea" class="alt">
            <a href="#" id="contact_form"><h3>Poloafrica contact form</h3></a>
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
-           <form action="" id="contactform" method="post" name="contactform">
+           <form action="action.php" id="contactform" method="post" name="contactform">
 				<fieldset>
 					<legend>&nbsp;Poloafrica contact form&nbsp;</legend>
-						<label for="ID_namefield_BF7EF605">name</label><input id="ID_namefield_BF7EF605" tabindex="1" type="text" required pattern ="\S+\s\S{2,}">
-                        <label for="ID_phonefield_BF7EF6A0">phone</label><input id="ID_phonefield_BF7EF6A0" tabindex="2" type="tel" pattern ="\d{7,}">
-                        <label for="ID_emailfield_BF7EF6A8">email</label><input id="ID_emailfield_BF7EF6A8" type="email" name="Email" tabindex="3" required><label for="ID_adfield_BF7EF6B4">address</label><input id="ID_adfield_BF7EF6B4"  name="Address Line_1"  tabindex="4" type="text"><label for="ID_adfield2_BF7EF6BC">address</label><input id="ID_adfield2_BF7EF6BC" name="Address Line_2" tabindex="5" type="text">
+						<label for="ID_namefield_BF7EF605">name</label><input id="ID_namefield_BF7EF605" tabindex="1" type="text" name="contactName" required pattern ="\S+\s\S{2,}">
+                        <label for="ID_phonefield_BF7EF6A0">phone</label><input id="ID_phonefield_BF7EF6A0" tabindex="2" type="tel" name="contactTel" pattern ="\d{7,}">
+                        <label for="ID_emailfield_BF7EF6A8">email</label><input id="ID_emailfield_BF7EF6A8" type="email" name="contactEmail" tabindex="3" required><label for="ID_adfield_BF7EF6B4">address</label><input id="ID_adfield_BF7EF6B4"  name="AddressLine1"  tabindex="4" type="text"><label for="ID_adfield2_BF7EF6BC">address</label><input id="ID_adfield2_BF7EF6BC" name="AddressLine2" tabindex="5" type="text">
 				</fieldset>
                <fieldset>
                    <textarea id="ID_Hols_BF72B5B7" name="Text" tabindex="6">Use this area for comments or questions</textarea><input alt="" src="../images/dogsform.gif" tabindex="9" type="image" id="dogs">
@@ -161,6 +161,128 @@
         utils.addHandler('click', bridge, main);
         dum[tgt] = sections[0].getElementsByTagName('h3')[0];
 	bridge(dum);
+           
+           function found(i){
+               return i >= 0;
+           }
+           
+           function isSingle(char, str){
+              return _.isString(str) && found(str.indexOf(char)) ? str : undefined;
+           }
+            function isDouble(char, str){
+                if(!str){
+                    return false;
+                }
+               return str.indexOf(char) !== str.lastIndexOf(char);
+           }
+           
+           var myU = _.partial(isSingle, 'u'),
+               myDbU = _.partial(isDouble, 'u'),
+               determineContent = _.compose(myDbU, myU);
+           
+           var makeTyper = function(typ, count){
+               function concat(arg){
+                   return typ + arg;
+               }
+               function always(arg){
+                   return arg;
+               }
+               function check(arg){
+                    return arg === typ;
+               }
+               function doOp(arg){
+                   var cache = count % 2;
+                   count += 1;
+                   return ops[cache](arg);
+                   }
+               function current(arg){
+                   return ops[count % 2](arg || '');
+               }
+               var ops = [always, concat];
+               
+               return {
+                   handle: function(arg){
+                      if(!check(arg)){
+                          if(this.next){
+                              return this.next.handle(arg);
+                          }
+                          return current();
+                      }
+                       return doOp(arg);
+                   },
+                   setNext: function(next){
+                       this.next = next;       
+                   },
+                   current: current
+               };
+               
+           },
+               makeAssembler = function(){
+                   var o = {},
+                       str = '',
+                       noOp = function(){},
+                       empty = function(){
+                           return '';
+                       },
+                       dummy = {
+                           handle: empty,
+                           setNext: noOp,
+                           current: empty
+                       },
+                       doSplit = function(arg){
+                           return str.split(arg);
+                       },
+                       same = function(arg){
+                          return str.split().length === str.split(arg).length;
+                       },
+                       found = function(arg){
+                           return str.split(arg).length > 1;
+                       };
+                   return {
+                   set: function(arg){
+                       o[arg] = o[arg] || makeTyper(arg, 0);
+                       return this;
+                   },
+                   get: function(arg){
+                       return o[arg] || dummy;
+                   },
+                      handle: function(arg){
+                           var p,
+                               pass = same(arg);
+                           for(p in o){
+                               if(o.hasOwnProperty(p)){
+                                  if(p === arg){
+                                      str += o[p].handle(p);
+                                  }
+                                   else {
+                                       str += o[p].current();
+                                   }
+                               }
+                           }
+                          return str;
+                       }
+                   };
+               };
+           
+           
+           var a = makeAssembler().set('f').set('t').set('u'),
+               f = a.get('f'),
+               t = a.get('t'),
+               u = a.get('u');
+           f.setNext(t);
+           t.setNext(u);
+           
+           var tryme = function(arg){
+               var current = '',
+                   arr = current.split(arg),
+                   res = _.every(arr, function(str){
+                       return str;
+                   });
+               return res && arr.length !== 1;
+           };
+           
+           console.log(determineContent('ufu'));
+
     </script>
 </body>
 </html>
