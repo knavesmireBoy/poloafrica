@@ -30,6 +30,19 @@ poloAF.Util = (function () {
 	function noOp() {
 		return function () {};
 	}
+    
+    function sum(x,y){
+    return getResult(x) + getResult(y);
+}
+
+function subtract(a, b){
+    return b - a;
+}
+
+function divideBy(a, b){
+    return a/b;
+}
+
 
 	function gtEq(x, y) {
 		return getResult(x) >= getResult(y);
@@ -638,7 +651,43 @@ poloAF.Util = (function () {
 					return el;
 				}
 			};
-		};
+		},
+        SimpleXhrFactory = (function() {
+	// The three branches.
+	var standard = {
+			createXhrObject: function() {
+				return new XMLHttpRequest();
+			}
+		},
+		activeXNew = {
+			createXhrObject: function() {
+				return new ActiveXObject('Msxml2.XMLHTTP');
+			}
+		},
+		activeXOld = {
+			createXhrObject: function() {
+				return new ActiveXObject('Microsoft.XMLHTTP');
+			}
+		},
+		// To assign the branch, try each method; return whatever doesn't fail.
+		testObject;
+	try {
+		testObject = standard.createXhrObject();
+		return standard; // Return this if no error was thrown.
+	} catch (e) {
+		try {
+			testObject = activeXNew.createXhrObject();
+			return activeXNew; // Return this if no error was thrown.
+		} catch (e) {
+			try {
+				testObject = activeXOld.createXhrObject();
+				return activeXOld; // Return this if no error was thrown.
+			} catch (e) {
+				throw new Error('No XHR object found in this environment.');
+			}
+		}
+	}
+})();
 	return {
 		$: function (str) {
 			return document.getElementById(str);
@@ -715,6 +764,26 @@ poloAF.Util = (function () {
 		},
 		doWhen: doWhen,
 		drillDown: drillDown,
+        fadeUp: function(element, red, green, blue) {
+            var fromFull = curry2(subtract)(255),
+                byTen = curry2(divideBy)(10),
+                mysums = _.map([red, green, blue], curry2(sum)),
+                ceil = _.compose(Math.ceil, byTen, fromFull),
+                terminate = curry2(poloAF.Util.isEqual)(255),
+                repeat;
+		if (element.fade) {
+			window.clearTimeout(element.fade);
+		}
+            element.style.backgroundColor = "rgb(" + red + "," + green + "," + blue + ")";
+        if(_.every([red,green,blue], terminate)){ return; }
+		mysums = [red, green, blue].map(ceil).map(function(n,i){
+                return mysums[i](n);
+            });
+            repeat = function() {
+                poloAF.Util.fadeUp.apply(null, [element].concat(mysums));
+		};
+		element.fade = window.setTimeout(repeat, 100);
+        },
 		findIndex: function (collection, predicate) {
 			return _.findIndex(collection, predicate || always(true));
 		},
@@ -845,6 +914,7 @@ poloAF.Util = (function () {
 		setter: setter,
 		show: _.partial(setFromArray, always(true), 'add', ['show']),
 		simpleAdapter: simpleAdapter,
+        SimpleXhrFactory: SimpleXhrFactory,
 		toggleClass: _.partial(setFromArray, always(true), 'toggle'),
 		toggle: _.partial(setFromArray, always(true), 'toggle', ['show']),
 		validator: validator,
