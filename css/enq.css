@@ -192,11 +192,17 @@ h2 span {
 		position: absolute;
 		left: -999em;
 	}
+
+#response p {
+    margin: 0;
+    color: purple;
+}
 @media only screen {
 	h2 span {
 		background: white 0% 0%/contain url(../images/sub_enq.png) no-repeat;
 	}
 }
+
 @media screen and (max-width: 823px) {
     
     form {

@@ -47,10 +47,11 @@ $headers = 'From: info@poloafrica.com' . "\r\n" .
                exit('<p>Email could not be sent.</p>');  
            }
 ?>
-<section><?php
-
-               foreach($_POST as $post){
-                   echo "<p>$post</p>\r\n";
-               }
-    ?></section>
+<div id="response">
+    <h3>Thankyou for your enquiry</h3>
+    <?php
+    foreach($_POST as $post){
+        echo "<p>$post</p>\r\n";
+    }
+    ?></div>
            

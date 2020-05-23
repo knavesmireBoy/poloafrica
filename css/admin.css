@@ -1,0 +1,57 @@
+
+#admin table tr > *{
+    table-layout: fixed;
+    border: 1px solid black;
+    padding: .5em;
+    line-height: normal;
+}
+
+#admin h2 {
+    background: none;
+    text-shadow: none;
+    color: black;
+    padding: 0;
+    margin: 0 0 .5em;
+    line-height: 1;
+    border: solid 0px #cc6;
+    border-width: 0 0 6px;
+    display: inline-block;
+}
+
+#admin h3 {
+    display: inline-block; 
+}
+
+
+#admin form li {
+    margin: .5em 0;
+}
+
+#admin form {
+    background-color: hsl(54, 50%, 66%);
+    float: none;
+}
+
+
+#admin form li > * {
+    line-height: normal;
+    margin: 0;
+    vertical-align: top;
+    width: 80%;
+}
+
+#admin form label {
+    width: 16%;
+    margin: 0 1% 0 0;
+    background-color: transparent;
+    border: solid 0px white;
+    border-width: 0 0 4px;
+    word-spacing: normal;
+    letter-spacing: normal;
+}
+.buttons {
+    margin: 0 0 0 18%;
+}
+.buttons input {
+    margin: 0 !important;
+}
