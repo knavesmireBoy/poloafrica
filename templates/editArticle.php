@@ -33,12 +33,15 @@
 
           <li>
             <label for="summary">Article Summary</label>
-            <textarea name="summary" id="summary" placeholder="Brief description of the article" maxlength="1000" style="height: 5em;"><?php echo htmlspecialchars( $results['article']->summary )?></textarea>
+            <textarea name="summary" id="summary" placeholder="Brief description of the article" maxlength="1000" style="height: 5em;"><?php htmlout($results['article']->summary);?></textarea>
           </li>
-
+            <li>
+            <label for="attr_id">Article ID</label>
+            <input name="attr_id" id="attr_id" maxlength="10" value="<?php htmlout($results['article']->attrID); ?>">
+          </li>
           <li>
             <label for="content">Article Content</label>
-            <textarea name="content" id="content" placeholder="The HTML content of the article" required maxlength="100000" style="height: 30em;"><?php echo htmlspecialchars( $results['article']->content )?></textarea>
+            <textarea name="content" id="content" placeholder="The HTML content of the article" required maxlength="100000" style="height: 30em;"><?php htmlout($results['article']->content);?></textarea>
           </li>
 
           <li>

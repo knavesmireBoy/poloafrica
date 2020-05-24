@@ -17,18 +17,18 @@ no-touchevents.background-size #presslinks nav ul {
 #presslinks nav ul li {
 	margin: .75em 0;
 }
-#presslinks section img {
+#presslinks article img {
 	margin-right: 2%;
 }
-#presslinks section, article:last-child section {
+#presslinks article, section:last-child article {
 	margin: 0 0 0 0%;
 }
-article:last-child nav ul {
+section:last-child nav ul {
 	text-indent: -.8em;
 	padding: 0 0 0 1em;
 	line-height: 1.2;
 }
-article:last-child nav li::before, #presslinks nav li::before {
+section:last-child nav li::before, #presslinks nav li::before {
 	content: '» ';
 }
 
@@ -80,24 +80,24 @@ article:last-child nav li::before, #presslinks nav li::before {
 }
 */
 
-#presslinks p, article:last-child p {
+#presslinks p, section:last-child p {
 	line-height: 1.3;
 }
 #presslinks nav ul li a {
 	border: solid 1px;
 	border-width: 0 0 1px 0;
 }
-article:last-child nav {
+section:last-child nav {
 	margin: 0 0 1em 0;
 }
-article:last-child nav ul {
+section:last-child nav ul {
 	padding: 0em 0 0em 1em;
 	line-height: 1;
 }
-article:last-child p {
+section:last-child p {
 	text-align: left;
 }
-article:last-child nav li {
+section:last-child nav li {
 	margin: .5em 0;
 }
 #PoloGirls, #arena_boy {
@@ -115,14 +115,14 @@ article:last-child nav li {
 	float: right;
 	clear: both;
 }
-#tvcoverage section {
+#tvcoverage article {
 	/*fix float*/
 	overflow: hidden;
 	margin: 0 0 1.5em 0;
 	padding: 0 0 1.5em 0;
 	border-bottom: dotted 1px #444;
 }
-#tvcoverage section:last-child {
+#tvcoverage article:last-child {
 	margin: 0;
 	padding: 0;
 	border-width: 0;
@@ -143,10 +143,10 @@ article:last-child nav li {
 #medley #nav li:nth-child(7) we use #presslinks HERE to override (so can do this #medley li:nth-child(7))
 was only effecting the 7th child as in #medley li:nth-child(7), which can also refer to the presslinks ul*/
 
-#presslinks li:nth-child(odd) a, #presslinks li:nth-child(odd) a:link, article:last-child li:nth-child(odd) a:link {
+#presslinks li:nth-child(odd) a, #presslinks li:nth-child(odd) a:link, section:last-child li:nth-child(odd) a:link {
 	color: #900;
 }
-#presslinks li:nth-child(odd) a:hover, article:last-child li:nth-child(odd) a:hover {
+#presslinks li:nth-child(odd) a:hover, section:last-child li:nth-child(odd) a:hover {
 	color: #306;
 }
 h2 span {
@@ -162,46 +162,46 @@ h2 span {
 	h2, h2 span {
 		background: none;
 	}
-	article nav ul {
+	section nav ul {
 		padding: 0 0 1em 1em;
 	}
-	.no-js article:nth-child(1) .read-more-trigger:before {
+	.no-js section:nth-child(1) .read-more-trigger:before {
 		content: "Laureus";
 	}
-	.no-js article:nth-child(2) .read-more-trigger:before {
+	.no-js section:nth-child(2) .read-more-trigger:before {
 		content: "Community";
 	}
-	.no-js article:nth-child(3) .read-more-trigger:before {
+	.no-js section:nth-child(3) .read-more-trigger:before {
 		content: "Beekeeping";
 	}
-	.no-js article:nth-child(4) .read-more-trigger:before {
+	.no-js section:nth-child(4) .read-more-trigger:before {
 		content: "Activities on the farm";
 	}
-	.no-js article:nth-child(5) .read-more-trigger:before {
+	.no-js section:nth-child(5) .read-more-trigger:before {
 		content: "Activities around the farm";
 	}
 	.no-js #presslinks .read-more-trigger:before {
 		content: "Press Coverage";
 	}
-	.no-js article:nth-child(7) .read-more-trigger:before {
+	.no-js section:nth-child(7) .read-more-trigger:before {
 		content: "TV and video coverage";
 	}
-	.no-js article:last-child .read-more-trigger:before {
+	.no-js section:last-child .read-more-trigger:before {
 		content: "Links";
 	}
-	.no-js #presslinks section {
+	.no-js #presslinks article {
 		margin: 0 0 0 30%;
 	}
-	.js #presslinks section, .js article:last-child section {
+	.js #presslinks article, .js section:last-child article {
 		margin: 0;
 	}
-	.override #presslinks section>p {
+	.override #presslinks article>p {
 		text-align: left;
 	}
-	.override article:last-child section>a {
+	.override section:last-child article>a {
 		margin: 0 0 1em 0;
 	}
-	.js #medley article:last-child p {
+	.js #medley section:last-child p {
 		margin: 1em;
 	}
 	.js #presslinks p {
@@ -214,10 +214,10 @@ h2 span {
 	#arena_boy {
 		width: 27%;
 	}
-	.js #medley #presslinks nav, .js #medley article:last-child nav {
+	.js #medley #presslinks nav, .js #medley section:last-child nav {
 		margin: 1em 0 0;
 	}
-	#presslinks section img {
+	#presslinks article img {
 		margin: 1em 0 1em 1em;
 	}
 	#tvcoverage p:first-of-type {
@@ -241,12 +241,12 @@ h2 span {
 	#tvcoverage iframe:first-of-type {
 		margin: 1em auto;
 	}
-	#tvcoverage section {
+	#tvcoverage article {
 		margin: 0;
 		padding: 0;
 		border-width: 0;
 	}
-	#tvcoverage section p:last-child {
+	#tvcoverage article p:last-child {
 		margin: 0 0 1em;
 	}
 }
@@ -264,7 +264,7 @@ h2 span {
 	-webkit-flex: 2 1 1%;
 	flex: 2 1 1%;
 }
-article:last-child img {
+section:last-child img {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 1%;
 	-webkit-flex: 1 1 1%;
@@ -284,7 +284,7 @@ article:last-child img {
 	-ms-grid-row-span: 1;
 	grid-row: 3/4;
 }
-#tvcoverage section>*:first-child {
+#tvcoverage article>*:first-child {
 	-ms-grid-row: 2;
 	-ms-grid-row-span: 1;
 	grid-row: 1/6;
@@ -311,7 +311,7 @@ article:last-child img {
 	grid-column: 4/6;
 }
 /*
-.flexbox #presslinks section, .flexboxtweener #presslinks section, .flexboxlegacy #presslinks section, .flexbox article:last-child section, .flexboxtweener article:last-child section, .flexboxlegacy article:last-child section {
+.flexbox #presslinks article, .flexboxtweener #presslinks article, .flexboxlegacy #presslinks article, .flexbox section:last-child article, .flexboxtweener section:last-child article, .flexboxlegacy section:last-child article {
 	margin-left: 2%;
 	float: right;
 }
@@ -322,7 +322,7 @@ article:last-child img {
 		display: -ms-grid;
 		display: grid;
 	}
-	.override #tvcoverage section {
+	.override #tvcoverage article {
 		display: -ms-grid;
 		display: grid;
 	}
@@ -331,39 +331,39 @@ article:last-child img {
 	display: -ms-grid;
 	display: grid;
 }
-.cssgrid #tvcoverage section {
+.cssgrid #tvcoverage article {
 	display: -ms-grid;
 	display: grid;
 }
 .no-cssgrid #tvcoverage {
 	display: block;
 }
-no-cssgrid #tvcoverage section {
+no-cssgrid #tvcoverage article {
 	display: block;
 }
 /* @media only screen and (max-width: 410px), (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) {
-  		article h3, article:first-child label {
+  		section h3, section:first-child label {
   		line-height: 1;
   	}
   }
 */
 
 @media screen and (max-width: 667px) {
-	article {
+	section {
 		display: block;
 	}
-	.no-js #presslinks section, .no-js #medley .override article:last-child section {
+	.no-js #presslinks article, .no-js #medley .override section:last-child article {
 		margin: 0 0 0 2%;
 		-webkit-box-flex: 5;
 		-ms-flex: 5 0 1%;
 		flex: 5 0 1%
 	}
-	#medley .override #presslinks, .override #presslinks section, #medley .override article:last-child, #medley .override article:last-child section, #wrap .override #tvcoverage, #wrap .override #tvcoverage section {
+	#medley .override #presslinks, .override #presslinks article, #medley .override section:last-child, #medley .override section:last-child article, #wrap .override #tvcoverage, #wrap .override #tvcoverage article {
 		display: block;
 		float: none;
 		margin: 0;
 	}
-	.flexbox #presslinks section, .flexboxtweener #presslinks section, .flexboxlegacy #presslinks section, .flexbox article:last-child section, .flexboxtweener article:last-child section, .flexboxlegacy article:last-child section {
+	.flexbox #presslinks article, .flexboxtweener #presslinks article, .flexboxlegacy #presslinks article, .flexbox section:last-child article, .flexboxtweener section:last-child article, .flexboxlegacy section:last-child article {
 		margin-left: 0;
 	}
 }
@@ -372,19 +372,19 @@ no-cssgrid #tvcoverage section {
 		width: 100%;
 	}
 	@supports(column-gap: 20px) {
-		.override #tvcoverage section iframe, .override #tvcoverage section video {
+		.override #tvcoverage article iframe, .override #tvcoverage article video {
 			width: 40vw;
 			height: 22.5vw;
 		}
 	}
-	.css-grid #tvcoverage section iframe, .css-grid #tvcoverage section video {
+	.css-grid #tvcoverage article iframe, .css-grid #tvcoverage article video {
 		width: 40vw;
 		height: 22.5vw;
 	}
 }
 @media only screen and (-ms-high-contrast: none) {
 	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
-	#presslinks>img, article:last-child img {
+	#presslinks>img, section:last-child img {
 		-webkit-box-flex: 1;
 		-ms-flex: 2 1 5em;
 		flex: 2 1 5em;
@@ -396,12 +396,12 @@ no-cssgrid #tvcoverage section {
 }
 }
 @media screen and (max-width: 480px) {
-	#wrap article:last-child p {
+	#wrap section:last-child p {
 		margin: 0;
 		padding: .5em;
 		background-color: #444
 	}
-	#wrap article:last-child p {
+	#wrap section:last-child p {
 		color: white;
 	}
 	#arena_boy {
@@ -410,7 +410,7 @@ no-cssgrid #tvcoverage section {
 	}
 }
 @media only screen and (max-width: 360px) {
-	.override article:nth-child(5) h3, .override article:nth-child(5) label {
+	.override section:nth-child(5) h3, .override section:nth-child(5) label {
 		line-height: 1.2;
 	}
 	#arena_boy {

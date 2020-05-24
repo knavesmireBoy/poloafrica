@@ -1,21 +1,21 @@
-@import "flex_mod.css";
+w@import "flex_mod.css";
 @import "fullflex_mod.css";
-.override article:last-child img {
+.override section:last-child img {
  	-webkit-box-flex: 1;
  	-ms-flex: 1 1 %;
  	-webkit-flex: 1 1 1%;
  	flex: 1 1 1%;
  }
- .override article:last-child section {
+ .override section:last-child article {
  	-webkit-box-flex: 6;
  	-ms-flex: 6 1 1%;
  	-webkit-flex: 6 1 1%;
  	flex: 6 1 1%;
  }
- .no-flexwrap .override article:last-child {
+ .no-flexwrap .override section:last-child {
  	display: block;
  }
- .override article:last-child img {
+ .override section:last-child img {
  	float: right;
  	width: 20%;
  	margin: 1em 1em 0;
@@ -31,30 +31,30 @@
  }
 
  @media screen and (max-width: 667px) {
- 	.no-js article:nth-child(1) .read-more-trigger:before {
+ 	.no-js section:nth-child(1) .read-more-trigger:before {
  		content: "History";
  	}
- 	.no-js article:nth-child(2) .read-more-trigger:before {
+ 	.no-js section:nth-child(2) .read-more-trigger:before {
  		content: "Transformation";
  	}
- 	.no-js article:nth-child(3) .read-more-trigger:before {
+ 	.no-js section:nth-child(3) .read-more-trigger:before {
  		content: "Development";
  	}
- 	.no-js article:nth-child(4) .read-more-trigger:before {
+ 	.no-js section:nth-child(4) .read-more-trigger:before {
  		content: "Economic impact";
  	}
- 	.no-js article:nth-child(5) .read-more-trigger:before {
+ 	.no-js section:nth-child(5) .read-more-trigger:before {
  		content: "Social change";
  	}
  	h2, h2 span {
  		background: none;
  	}
-     .override article:last-child img {
+     .override section:last-child img {
  	margin: 1em 0 1em 1em;
  }
  }
  @media screen and (max-width: 480px) {
- 	.override article:nth-child(5) section img {
+ 	.override section:nth-child(5) article img {
  		width: 40%;
  	}
  }

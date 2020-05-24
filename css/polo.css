@@ -3,11 +3,11 @@ h2 span {
 }
 
 /* NO FLEX PLEASE WE'RE BRITISH*/
-.override article:first-child {
+.override section:first-child {
     display: block;
         }
  
-article:first-child img {
+section:first-child img {
 	clear: both;
     width: 30%;
 	margin: 1em 0 1m 0;
@@ -21,29 +21,29 @@ article:first-child img {
 }
 
 @media screen and (max-width: 888px) {
-    article:first-child img {
+    section:first-child img {
     width: 40%;
 }
 }
 
 @media screen and (max-width: 667px) {
-	.no-js article:first-child .read-more-trigger:before {
+	.no-js section:first-child .read-more-trigger:before {
 		content: "Facilities";
 	}
-	.no-js article:nth-child(2) .read-more-trigger:before {
+	.no-js section:nth-child(2) .read-more-trigger:before {
 		content: "Ponies";
 	}
-	.no-js article:nth-child(3) .read-more-trigger:before {
+	.no-js section:nth-child(3) .read-more-trigger:before {
 		content: "Our team";
 	}
-	.no-js article:nth-child(4) .read-more-trigger:before {
+	.no-js section:nth-child(4) .read-more-trigger:before {
 		content: "Your polo day";
 	}
     /*
-    	.override article:first-child {
+    	.override section:first-child {
 		flex-direction: column;
 	}
-	.js .override article.show img {
+	.js .override section.show img {
 		position: static;
 		left: 0;
 	}

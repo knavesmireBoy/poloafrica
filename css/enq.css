@@ -1,10 +1,10 @@
 h3 {
 	border-bottom: solid 1px;
 }
-#enquiries article:first-child section {
+#enquiries section:first-child article {
 	margin: 0 38% 0 0;
 }
-#enquiries article:first-child section p {
+#enquiries section:first-child article p {
 	margin: 0 0 1.3em 0;
 }
 form {
@@ -51,11 +51,11 @@ form fieldset:first-child input {
 #enquries #intro {
 	margin: 2em 0 1em 0;
 }
-#enquiries article {
+#enquiries section {
 	display: block;
 	margin: 1em 0 0;
 }
-#enquiries article section>a {
+#enquiries section article>a {
 	flex: 0 0 100%;
 }
 .no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before {
@@ -69,15 +69,15 @@ form fieldset:first-child input {
 	background-color: #E7E7C7;
 	background-color: hsl(60, 40%, 84%);
 }
-.override article img {
+.override section img {
 	width: 33%;
 	float: right;
 	margin: 1em 0 0 0em;
 }
-.override article p {
+.override section p {
 	margin: 0 3em 1.3em 0;
 }
-.override article:last-child p {
+.override section:last-child p {
 	margin: 1em 0 0;
 }
 /*layout*/
@@ -140,11 +140,11 @@ textarea {
 	border-width: 0px;
 	height: 100%;
 }
-#enquiries article:last-child {
+#enquiries section:last-child {
 	clear: left;
 }
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
-article:nth-child(2) {
+section:nth-child(2) {
 	clear:left;
 	float:left;
 	width:100%;
@@ -214,13 +214,13 @@ h2 span {
 		position: absolute;
 		left: -999em;
 	}
-	#enquiries article:first-child {
+	#enquiries section:first-child {
 		margin: 2em 0 0 0;
 	}
-	#enquiries article:first-child section {
+	#enquiries section:first-child article {
 		margin: 0;
 	}
-	article section p {
+	section article p {
 		margin: 0 0 1.3em 0;
 	}
 	#contact_form {
@@ -231,13 +231,13 @@ h2 span {
 @media screen and (max-width: 667px) {
     
     @supports(column-gap: 20px) {
-        section.show #cath {
+        article.show #cath {
             display: grid;
             grid-template-columns: 2fr 3fr;
             background: #cc6;
         }
  
-    section.show #cath {
+    article.show #cath {
         margin-bottom: 1em;
         font-size: 1.1em;
 	}
@@ -259,16 +259,16 @@ h2 span {
 	h2, h2 span {
 		background: none;
 	}
-	#enquiries article {
+	#enquiries section {
 		margin: 0;
 	}
 	#contactarea form fieldset:first-child input {
 		width: 83.5%;
 	}
-	#enquiries article:first-child section p {
+	#enquiries section:first-child article p {
 		margin: 1em 0 1.3em 0;
 	}
-	#enquiries section.show h3 {
+	#enquiries article.show h3 {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);
@@ -299,28 +299,28 @@ h2 span {
 		display: block;
 		margin: 0 auto;
 	}
-	.no-js article>label:nth-of-type(1):before {
+	.no-js section>label:nth-of-type(1):before {
 		content: "Donations and sponsorship";
 	}
-	.no-js article>label:nth-of-type(2):before {
+	.no-js section>label:nth-of-type(2):before {
 		content: "Holiday rates";
 	}
-	.no-js article>label:nth-of-type(3):before {
+	.no-js section>label:nth-of-type(3):before {
 		content: "Contact us";
 	}
-	.no-js #wrap article:nth-child(2)>label:before {
+	.no-js #wrap section:nth-child(2)>label:before {
 		content: "Poloafrica contact form";
 	}
-	.no-js article:nth-child(3)>label:before {
+	.no-js section:nth-child(3)>label:before {
 		content: "Directions";
 	}
    
-    .no-js input~section p, .no-js #post1.read-more-state:checked~section:nth-of-type(1) p{
+    .no-js input~article p, .no-js #post1.read-more-state:checked~article:nth-of-type(1) p{
         position: absolute;
 		left: -999em;
     }
     
-    .no-js article:first-of-type .read-more-state:checked~section, .no-js #post1~section:nth-of-type(1) p, .no-js #post2.read-more-state:checked~section:nth-of-type(2) p,  .no-js #post3.read-more-state:checked~section:nth-of-type(3) p, .no-js #post5.read-more-state:checked~section:nth-of-type(1) p, .js #wrap article section.show > *{
+    .no-js section:first-of-type .read-more-state:checked~article, .no-js #post1~article:nth-of-type(1) p, .no-js #post2.read-more-state:checked~article:nth-of-type(2) p,  .no-js #post3.read-more-state:checked~article:nth-of-type(3) p, .no-js #post5.read-more-state:checked~article:nth-of-type(1) p, .js #wrap section article.show > *{
        position: static;
 		left: 0em;
     }
@@ -329,7 +329,7 @@ h2 span {
 /*@*/
 
 @media only screen and (max-width: 360px) {
-	.override article:first-child h3, .override article:first-child label {
+	.override section:first-child h3, .override section:first-child label {
 		line-height: 1.2;
 	}
 }

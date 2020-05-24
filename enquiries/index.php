@@ -6,10 +6,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
 include_once '../myconfig.php';
 $results = ['page_title' => 'Enquiries'];
+$style = 'enq';
 include "../templates/header.php";
 ?>
 <?php
-$results = Article::getList();
+$articles = Article::getListByPage(8);
+$count = 1;
 ?>
 <body id="enquiries">
     <div id="wrap">
@@ -40,33 +42,28 @@ $results = Article::getList();
 				<span>enquiries</span>
 			</h2>
 	<main class="override">
-		<article id=intro>
-            <input class="read-more-state" id="post1" type="checkbox">
-            <label class="read-more-trigger" for="post1"></label>            
-             <?php
-            $n = 2;
-            $cur = '';
-            foreach ( $results['results'] as $article ): 
-            if($article->summary): ?>
-               <?php $imagePaths = $article->getImagePath();
-            foreach($imagePaths as $image) : ?>
-            <img id="<?php htmlout($image['id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
-            <?php endforeach; ?>
-            <input class="read-more-state" id="<?php echo $cur?>" type="checkbox">
-            <label class="read-more-trigger" for="<?php echo $cur?>"></label>
-            <section> 
-            <?php echo $article->mdcontent; ?>
-                </section>
+        <section id="intro">
+<input class="read-more-state" id="post1" type="checkbox">
+<label class="read-more-trigger" for="post1"></label>
             <?php
-            $cur = 'post' . $n++;
-            ?>
-            <?php endif; ?>
-            <?php endforeach; ?>
-        </article>
-        <article id="post">
+        $article = $articles['Donations and sponsorship'];
+         $imagePaths = $article->getImagePath();
+       foreach($imagePaths as $image) : ?>
+    <img id="<?php htmlout($image['id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
+    <?php endforeach;
+         include '../templates/article_sans.php';
+        $article = $articles['Holiday rates'];
+        $count += 1;
+        include '../templates/article_alt.php';
+            $article = $articles['Contact us'];
+        $count += 1;
+        include '../templates/article_alt.php'
+        ?>
+        
+        </section><section id="post">
         <input class="read-more-state" id="post4" type="checkbox">
         <label class="read-more-trigger" for="post4"></label>
-       <section id="contactarea" class="alt">
+       <article id="contactarea" class="alt">
            <?php if(!isset($_POST['email'])) { ?>
            <a href="#" id="contact_form"><h3>Poloafrica contact form</h3></a>
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
@@ -84,16 +81,14 @@ $results = Article::getList();
             </form><figure><img alt="cat" src="../images/cat.jpg" id="cat"></figure>
            <?php }
            else { include "response.php"; } ?>
-                </section>
-        
-        </article>
-        <article>
-        <input class="read-more-state" id="post5" type="checkbox">
-            <label class="read-more-trigger" for="post5"></label>            
-            <section>
-                <?php echo $results['results']['Directions']->mdcontent; ?>
-            </section>
                 </article>
+        </section>
+        <?php
+            $article = $articles['Directions'];
+                $count = 5;
+                include '../templates/article.php';
+         ?>
+       
         </main></div>
 <?php include "../templates/footer.php" ?>
     <script src="../js/viewportSize.js"></script>

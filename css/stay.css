@@ -10,25 +10,25 @@ h2 span {
         	}
         }
         @media screen and (max-width: 667px) {
-            article {
+            section {
                 display: block;
             }
         	h2, h2 span {
         		background: none;
         	}
-        	.no-js article:nth-child(1) .read-more-trigger:before {
+        	.no-js section:nth-child(1) .read-more-trigger:before {
         		content: "Timing";
         	}
-        	.no-js article:nth-child(2) .read-more-trigger:before {
+        	.no-js section:nth-child(2) .read-more-trigger:before {
         		content: "Living";
         	}
-        	.no-js article:nth-child(3) .read-more-trigger:before {
+        	.no-js section:nth-child(3) .read-more-trigger:before {
         		content: "Relaxing";
         	}
-        	.no-js article:nth-child(4) .read-more-trigger:before {
+        	.no-js section:nth-child(4) .read-more-trigger:before {
         		content: "Dining";
         	}
-        	.no-js article:nth-child(5) .read-more-trigger:before {
+        	.no-js section:nth-child(5) .read-more-trigger:before {
         		content: "Day visiting";
         	}
         }

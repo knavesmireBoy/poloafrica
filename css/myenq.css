@@ -24,13 +24,13 @@
 }
 @media screen and (max-width: 823px) {
 	@supports(column-gap: 20px) {
-		#intro section {
+		#intro article {
 			grid-column: 1 / 20;
 		}
-		.override article p {
+		.override section p {
 			margin: 0 0 1.3em 0;
 		}
-		article:first-child h3 {
+		section:first-child h3 {
 			width: 100%;
 		}
 	}
@@ -66,7 +66,7 @@
 	}
 }
 @media screen and (max-width: 667px) {
-	article {
+	section {
 		display: block;
 	}
 }
@@ -76,7 +76,7 @@
 			position: absolute;
 			left: -999em;
 		}
-		article {
+		section {
 			margin: 0em 0 0;
 		}
 		/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
@@ -89,7 +89,7 @@
 		#wrap #intro>* {
 			width: 100%;
 		}
-		#intro section {
+		#intro article {
 			-ms-grid-row: 1;
 			-ms-grid-row-span: 2;
 			-ms-grid-column: 1;
@@ -111,7 +111,7 @@
 			grid-template-columns: repeat(9, 1fr);
 			grid-gap: 1em;
 		}
-		#enquiries article:nth-child(2) section>* {
+		#enquiries section:nth-child(2) article>* {
 			width: 100%;
 		}
 		#contactarea>a {

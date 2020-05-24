@@ -2,7 +2,7 @@ h2, h2 span, footer{
 background: none;
 	}
 
-header, article input, article label, footer img, #footer_girl a:first-child, img#ani, #contactarea, iframe, video, #polo article:first-child img:last-of-type {
+header, section input, section label, footer img, #footer_girl a:first-child, img#ani, #contactarea, iframe, video, #polo section:first-child img:last-of-type {
     display: none;
 }
 
@@ -20,28 +20,28 @@ h2 span {
     padding: 0 0 0 0em;
 }
 
-article {
+section {
     display: block;
 }
 
-article p {
+section p {
     text-align: justify;
     font-size: 10pt;
     color: black;
 }
 
-#wrap article a {
+#wrap section a {
     text-decoration: none;
     color: #444;
 }
 
-article img {
+section img {
     width: 20%;
     float: right;
     text-shadow: none;
 }
 
-article section {
+section article {
     margin-right: 23%;
 }
 

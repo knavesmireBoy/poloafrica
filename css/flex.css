@@ -52,28 +52,28 @@ html.js body img,  html.no-js body img {
 	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 	@supports(flex-wrap: wrap)  {
         
-        	article:nth-child(odd) {
+        	section:nth-child(odd) {
 		-webkit-box-orient: horizontal;
 		-webkit-box-direction: reverse;
 		-ms-flex-direction: row-reverse;
 		flex-direction: row-reverse;
 	}
-	article>* {
+	section>* {
 		-ms-flex-item-align: start;
 		align-self: flex-start;
 	}
-	article section {
+	section article {
 		-webkit-box-flex: 6;
 		-ms-flex: 6 1 1%;
 		flex: 6 1 1%;
 
 	}
-	article>*:nth-child(3) {
+	section>*:nth-child(3) {
 		-webkit-box-flex: 4;
 		-ms-flex: 4 1 1%;
 		flex: 4 1 1%;
 	}
-	article {
+	section {
 		-webkit-box-align: start;
 		-ms-flex-align: start;
 		align-items: flex-start;
@@ -88,7 +88,7 @@ html.js body img,  html.no-js body img {
 		h3 {
 			border-bottom: solid 1px;
 		}
-		article {
+		section {
 			/*display: -webkit-box;*/
 			display: -ms-flexbox;
 			display: flex;
@@ -97,16 +97,16 @@ html.js body img,  html.no-js body img {
 }
 @media screen and (max-width: 667px) {
 	@supports(flex-wrap: wrap){
-		.override article img, .override article section {
+		.override section img, .override section article {
 			-webkit-box-flex: 0;
 			    -ms-flex: 0 0 100%;
 			        flex: 0 0 100%;
 			width: 100%;
 		}
-		section {
+		article {
 			margin: 1em 0 0 0;
 		}
-		article>img, h3 {
+		section>img, h3 {
 			border-bottom: solid 1px white;
 		}
 		#wrap+footer #footer_girl {
@@ -125,7 +125,7 @@ html.js body img,  html.no-js body img {
 			flex: 0 0 98%;
 			padding: .75em 2% .75em 0;
 		}
-        article img, article section {
+        section img, section article {
 		flex: 0 0 100%;
 		width: 100%;
 	}

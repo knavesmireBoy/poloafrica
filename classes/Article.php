@@ -35,6 +35,7 @@ class Article
     public $content = null;
     public $mdcontent = null;
     public $page = null;
+    public $attrID = null;
 
     //public static $assets = self::$assets ? self::$assets  : array();
     
@@ -83,6 +84,9 @@ class Article
         if (isset($data['page'])){
             $this->page = $data['page'];
         }
+        if (isset($data['attr_id'])){
+            $this->attrID = $data['attr_id'];
+        }
     }
 
     /**
@@ -108,9 +112,8 @@ class Article
 
     public static function getById($id)
     {
-        //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
          $conn = getConn();
-        $sql = "SELECT id, title, summary, pubDate, content, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE id = :id";
+        $sql = "SELECT id, title, summary, pubDate, content, attr_id, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE id = :id";
         $st = $conn->prepare($sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         $st->execute();
@@ -133,15 +136,12 @@ class Article
 
     public static function getList($numRows = 1000000)
     {
-        //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $conn = getConn();
         $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles ORDER BY pubDate DESC LIMIT :numRows";
-       
         $st = $conn->prepare($sql);
         $st->bindValue(":numRows", $numRows, PDO::PARAM_INT);
         $st->execute();
         $list = array();
-
         while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {
             $article = new Article($row);
@@ -161,7 +161,7 @@ class Article
     public static function getListByPage($id){
         $conn = getConn();
         $list = array();
-        $sql = "SELECT articles.id, title, summary, content, UNIX_TIMESTAMP(pubDate) AS pubDate, pages.name AS page FROM articles INNER JOIN page_article ON articles.id = page_article.article_id INNER JOIN pages ON pages.id = page_article.page_id WHERE page_id = :id";
+        $sql = "SELECT articles.id, title, summary, content, attr_id, UNIX_TIMESTAMP(pubDate) AS pubDate, pages.name AS page FROM articles INNER JOIN page_article ON articles.id = page_article.article_id INNER JOIN pages ON pages.id = page_article.page_id WHERE page_id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving articles for this page');
@@ -187,12 +187,13 @@ class Article
         // Insert the Article
         //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
          $conn = getConn();
-        $sql = "INSERT INTO articles ( pubDate, title, summary, content) VALUES ( FROM_UNIXTIME(:pubDate), :title, :summary, :content)";
+        $sql = "INSERT INTO articles (pubDate, title, summary, content, attr_id) VALUES ( FROM_UNIXTIME(:pubDate), :title, :summary, :content, :attr)";
         $st = $conn->prepare($sql);
         $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
         $st->bindValue(":title", $this->title, PDO::PARAM_STR);
         $st->bindValue(":summary", $this->summary, PDO::PARAM_STR);
         $st->bindValue(":content", $this->content, PDO::PARAM_STR);
+        $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
         $st->execute();
         $this->id = $conn->lastInsertId();
         $conn = null;
@@ -213,12 +214,13 @@ class Article
         // Update the Article
         //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
          $conn = getConn();
-        $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content WHERE id = :id";
+        $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr WHERE id = :id";
         $st = $conn->prepare($sql);
         $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
         $st->bindValue(":title", $this->title, PDO::PARAM_STR);
         $st->bindValue(":summary", $this->summary, PDO::PARAM_STR);
         $st->bindValue(":content", $this->content, PDO::PARAM_STR);
+        $st->bindValue(":attr", $this->attrID, PDO::PARAM_INT);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         $st->execute();
         $conn = null;

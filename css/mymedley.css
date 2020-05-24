@@ -13,11 +13,11 @@
 	-webkit-flex: 2 1 1%;
 	flex: 2 1 1%;
 }
-article:last-child img {
+section:last-child img {
 	max-width: 13em;
 }
 /*
-.flexbox #presslinks section, .flexboxtweener #presslinks section, .flexboxlegacy #presslinks section, .flexbox article:last-child section, .flexboxtweener article:last-child section, .flexboxlegacy article:last-child section {
+.flexbox #presslinks article, .flexboxtweener #presslinks article, .flexboxlegacy #presslinks article, .flexbox section:last-child article, .flexboxtweener section:last-child article, .flexboxlegacy section:last-child article {
 	margin-left: 2%;
 	float: right;
 }
@@ -28,7 +28,7 @@ article:last-child img {
 		display: -ms-grid;
 		display: grid;
 	}
-	.override #tvcoverage section {
+	.override #tvcoverage article {
 		display: -ms-grid;
 		display: grid;
 	}
@@ -46,7 +46,7 @@ article:last-child img {
 		-ms-grid-row-span: 1;
 		grid-row: 3/4;
 	}
-	#tvcoverage section>*:first-child {
+	#tvcoverage article>*:first-child {
 		-ms-grid-row: 2;
 		-ms-grid-row-span: 1;
 		grid-row: 1/6;
@@ -78,31 +78,31 @@ article:last-child img {
 .no-cssgrid #tvcoverage {
 	display: block;
 }
-no-cssgrid #tvcoverage section {
+no-cssgrid #tvcoverage article {
 	display: block;
 }
 @media screen and (max-width: 667px) {
-	article {
+	section {
 		display: block;
 	}
-	.no-js #presslinks section, .no-js #medley .override article:last-child section {
+	.no-js #presslinks article, .no-js #medley .override section:last-child article {
 		margin: 0 0 0 2%;
 		-webkit-box-flex: 5;
 		-ms-flex: 5 0 1%;
 		flex: 5 0 1%
 	}
-	#medley .override #presslinks, .override #presslinks section, #medley .override article:last-child, #medley .override article:last-child section, #wrap .override #tvcoverage, #wrap .override #tvcoverage section {
+	#medley .override #presslinks, .override #presslinks article, #medley .override section:last-child, #medley .override section:last-child article, #wrap .override #tvcoverage, #wrap .override #tvcoverage article {
 		display: block;
 		float: none;
 		margin: 0;
 	}
-	.flexbox #presslinks section, .flexboxtweener #presslinks section, .flexboxlegacy #presslinks section, .flexbox article:last-child section, .flexboxtweener article:last-child section, .flexboxlegacy article:last-child section {
+	.flexbox #presslinks article, .flexboxtweener #presslinks article, .flexboxlegacy #presslinks article, .flexbox section:last-child article, .flexboxtweener section:last-child article, .flexboxlegacy section:last-child article {
 		margin-left: 0;
 	}
-	.touchevents #wrap article:last-child nav, .touchevents #wrap #presslinks nav {
+	.touchevents #wrap section:last-child nav, .touchevents #wrap #presslinks nav {
 		margin: 1em;
 	}
-	.touchevents #wrap article:last-child img {
+	.touchevents #wrap section:last-child img {
 		margin: 1em;
 	}
 }
@@ -111,19 +111,19 @@ no-cssgrid #tvcoverage section {
 		width: 100%;
 	}
 	@supports(column-gap: 20px) {
-		.override #tvcoverage section iframe, .override #tvcoverage section video {
+		.override #tvcoverage article iframe, .override #tvcoverage article video {
 			width: 40vw;
 			height: 22.5vw;
 		}
 	}
-	.css-grid #tvcoverage section iframe, .css-grid #tvcoverage section video {
+	.css-grid #tvcoverage article iframe, .css-grid #tvcoverage article video {
 		width: 40vw;
 		height: 22.5vw;
 	}
 }
 @media only screen and (-ms-high-contrast: none) {
 	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
-	#presslinks>img, article:last-child img {
+	#presslinks>img, section:last-child img {
 		-webkit-box-flex: 1;
 		-ms-flex: 2 1 5em;
 		flex: 2 1 5em;

@@ -1,33 +1,33 @@
 @import "flex_mod.css";
 @import "fullflex_mod.css";
 /*
-article:nth-child(5) img {
+section:nth-child(5) img {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 10em;
     -webkit-flex: 1 1 10em;
     flex: 1 1 10em;
     box-shadow: none;
         }
-        article:nth-child(5) section {
+        section:nth-child(5) article {
             -webkit-box-flex: 1;
             -ms-flex: 1 1 20em;
             -webkit-flex: 1 1 20em;
             flex: 1 1 20em;
         }
 */
-.override article:last-child img {
+.override section:last-child img {
  	-webkit-box-flex: 1;
  	-ms-flex: 1 1 %;
  	-webkit-flex: 1 1 1%;
  	flex: 1 1 1%;
  }
- .override article:last-child section {
+ .override section:last-child article {
  	-webkit-box-flex: 6;
  	-ms-flex: 6 1 1%;
  	-webkit-flex: 6 1 1%;
  	flex: 6 1 1%;
  }
-        .override article:nth-child(5) img {
+        .override section:nth-child(5) img {
         	width: 20%;
         }
         h2 span {
@@ -43,41 +43,41 @@ article:nth-child(5) img {
             h2, h2 span {
         		background: none;
         	}
-        	.override article:nth-child(5) {
+        	.override section:nth-child(5) {
         		display: block;
         	}
-        	.override article:nth-child(5) img {
+        	.override section:nth-child(5) img {
         		width: auto;
         		margin: 1em 0 0 1em;
         		/* floats are explicitly disabled in "mobile layout", so re-apply where reqd"*/
         		float: right;
         	}
-        	.no-js article:nth-child(1) .read-more-trigger:before {
+        	.no-js section:nth-child(1) .read-more-trigger:before {
         		content: "The setting";
         	}
-        	.no-js article:nth-child(2) .read-more-trigger:before {
+        	.no-js section:nth-child(2) .read-more-trigger:before {
         		content: "Farm life";
         	}
-        	.no-js article:nth-child(3) .read-more-trigger:before {
+        	.no-js section:nth-child(3) .read-more-trigger:before {
         		content: "Climate";
         	}
-        	.no-js article:nth-child(4) .read-more-trigger:before {
+        	.no-js section:nth-child(4) .read-more-trigger:before {
         		content: "Connectivity";
         	}
-        	.no-js article:nth-child(5) .read-more-trigger:before {
+        	.no-js section:nth-child(5) .read-more-trigger:before {
         		content: "Location";
         	}
-        	.override article:nth-child(5) section img {
+        	.override section:nth-child(5) article img {
         		float: right;
         		width: 30%;
         		margin: 1em 0 1em 1em;
         	}
         }
         @media screen and (max-width: 370px) {
-        	.override article:nth-child(5) section img {
+        	.override section:nth-child(5) article img {
         		width: 37%;
         	}
-        	article:nth-child(5) section p:first-of-type {
+        	section:nth-child(5) article p:first-of-type {
         		text-align: left;
         	}
         }

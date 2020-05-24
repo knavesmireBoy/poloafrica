@@ -86,7 +86,7 @@ h2:hover, h2:focus, h2:active {
 }
 /* direct child selector, otherwise will have to override for animation */
 
-article>img {
+section>img {
 	border: solid 1px white;
 	/*box-shadow: 0px 0px 12px indigo;*/
 }
@@ -101,7 +101,7 @@ article>img {
 	border: solid 1px #ccc;
 	border-color: #ccc #000 #449 #ccc;
 }
-section a {
+article a {
 	font-weight: bold;
 	outline: none;
 }
@@ -227,10 +227,10 @@ h2 span {
 		background-size: cover;
 	}
 
-	.touchevents article section p {
+	.touchevents section article p {
 		padding: 0 1em;
 	}
-    .override article section p {
+    .override section article p {
 		line-height: 1.55;
 	}
 	.menu {
@@ -264,24 +264,24 @@ h2 span {
 		font-weight: bold;
 	}
 	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
-	.js h3, .no-js article .read-more-trigger:before {
+	.js h3, .no-js section .read-more-trigger:before {
 		padding: .5em .6em .4em;
 		border-bottom: solid 1px white;
 	}
-	.read-more-trigger:before, .no-js article:first-of-type .read-more-state:checked~.read-more-trigger:before {
+	.read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before {
 		color: #993;
 		text-shadow: none;
 		background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
 	}
-	.js article img {
+	.js section img {
 		border-bottom: solid 1px white;
 	}
-	.no-js article .read-more-trigger:before:hover {
+	.no-js section .read-more-trigger:before:hover {
 		background-color: white;
 		color: #993;
 	}
-	article.show h3, .read-more-state:checked~.read-more-trigger:before, .no-js article:first-of-type .read-more-state~.read-more-trigger:before {
+	section.show h3, .read-more-state:checked~.read-more-trigger:before, .no-js section:first-of-type .read-more-state~.read-more-trigger:before {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);

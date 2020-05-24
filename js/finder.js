@@ -32,8 +32,8 @@
 			msg = undef(msg) ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
-		articles = document.getElementsByTagName('article'),
-		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, articles, ptL(utils.getByTag, 'img')))(),
+		sections = document.getElementsByTagName('section'),
+		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
 		animation = utils.$("ani"),
 		polo = utils.$("polo") && !Modernizr.cssgrid,
 		doAlt = utils.doAlternate(),
@@ -64,14 +64,14 @@
         dummy = {},
 		bridge = function (e) {
             var tgt = getTarget(e),
-				el = tgt && utils.getDomParent(utils.getNodeByTag('article'))(tgt),
+				el = tgt && utils.getDomParent(utils.getNodeByTag('section'))(tgt),
 				hit = el && utils.getClassList(el).contains('show');
 			if (!el || !isHeading(tgt)) {
 				return;
 			}
 			
-			_.each(articles, function (article) {
-				utils.hide(article);
+			_.each(sections, function (section) {
+				utils.hide(section);
 			});
 			if (!hit) {
 				utils.show(el);
@@ -82,7 +82,7 @@
 				return utils.getNext(el);
 			}
          
-			return utils.getSibling(utils.getNodeByTag('section'))(el);
+			return utils.getSibling(utils.getNodeByTag('article'))(el);
 		},
 		floaters = function (els) {
 			var conditions = [doTwice(utils.getter)('id'), doWrap, utils.always(true)],
@@ -90,26 +90,26 @@
 					return elem && zipped[0](elem);
 				};
 			return _.map(els, function (el) {
-				var section = getSib(el),
+				var article = getSib(el),
 					outbound = function () {
-						//console.log(el, utils.getNextElement(section.firstChild))
-                        var tgt = polo ? section.lastChild : section.firstChild;
+						//console.log(el, utils.getNextElement(article.firstChild))
+                        var tgt = polo ? article.lastChild : article.firstChild;
 						utils.insertAfter(el, utils.getNextElement(tgt));
 					},
 					inbound = function () {
-						section.parentNode.insertBefore(el, section);
+						article.parentNode.insertBefore(el, article);
 					},
 					move = function () {
-						var p = utils.getSibling(utils.getNodeByTag('p'))(section.firstChild);
+						var p = utils.getSibling(utils.getNodeByTag('p'))(article.firstChild);
                         if(polo && utils.getClassList(el).contains('field')){
                             utils.insertAfter(el, utils.getNextElement(p))
                         }
                         else {
-                            section.insertBefore(el, p);
+                            article.insertBefore(el, p);
                         }
 					},
 					unmove = function () {
-						section.parentNode.insertBefore(el, section);
+						article.parentNode.insertBefore(el, article);
 					},
 					standard = [move, unmove],
 					floater = [outbound, inbound],
@@ -138,7 +138,7 @@
 		        doBest = function (actions, el){
 		           return utils.getBest(ptL(doScroll, el), actions);
 		        },
-		        mapped = _.map(articles, ptL(doBest, [utils.show, utils.hide])),
+		        mapped = _.map(sections, ptL(doBest, [utils.show, utils.hide])),
 		        scroller = function () {
 		            var smile = function (f){
 		                    var isNotEq = _.negate(utils.isEqual),
@@ -154,7 +154,7 @@
 		                reducer = function (champ, contender){
 		                    return doScroll(contender) ? contender : champ;
 		                },
-		                primed = ptL(_.reduce, articles, reducer),
+		                primed = ptL(_.reduce, sections, reducer),
 		                throttled = _.throttle(_.compose(getResult, ptL(thunk, smile, primed)), 100);
 				},
 		        */
@@ -164,7 +164,7 @@
 	*/
 	//main.addEventListener('click', bridge);
 	utils.addHandler('click', main, bridge);
-    dummy[mytarget] = articles[0].getElementsByTagName('h3')[0];
+    dummy[mytarget] = sections[0].getElementsByTagName('h3')[0];
 	bridge(dummy);
 	if (utils.$('enquiries')) {
 		return;
@@ -180,7 +180,7 @@
 	float_handler();
 	/*
 	if (Modernizr.touchevents) {
-		utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
+		utils.setScrollHandlers(sections, doTwice(utils.getScrollThreshold)(0.1));
 	}
     */
 	//console.log(utils.getByTag('header', document)[0])
