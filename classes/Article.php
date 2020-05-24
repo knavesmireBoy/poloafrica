@@ -34,6 +34,7 @@ class Article
      */
     public $content = null;
     public $mdcontent = null;
+    public $page = null;
 
     //public static $assets = self::$assets ? self::$assets  : array();
     
@@ -79,6 +80,9 @@ class Article
             $this->content = $data['content'];
             $this->mdcontent = MarkdownExtra::defaultTransform($data['content']);
         }
+        if (isset($data['page'])){
+            $this->page = $data['page'];
+        }
     }
 
     /**
@@ -106,7 +110,7 @@ class Article
     {
         //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
          $conn = getConn();
-        $sql = "SELECT *, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE id = :id";
+        $sql = "SELECT id, title, summary, pubDate, content, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE id = :id";
         $st = $conn->prepare($sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         $st->execute();
@@ -132,7 +136,7 @@ class Article
         //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $conn = getConn();
         $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles ORDER BY pubDate DESC LIMIT :numRows";
-
+       
         $st = $conn->prepare($sql);
         $st->bindValue(":numRows", $numRows, PDO::PARAM_INT);
         $st->execute();
@@ -152,6 +156,21 @@ class Article
             "results" => $list,
             "totalRows" => $totalRows[0]
         ));
+    }
+    
+    public static function getListByPage($id){
+        $conn = getConn();
+        $list = array();
+        $sql = "SELECT articles.id, title, summary, content, UNIX_TIMESTAMP(pubDate) AS pubDate, pages.name AS page FROM articles INNER JOIN page_article ON articles.id = page_article.article_id INNER JOIN pages ON pages.id = page_article.page_id WHERE page_id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retreiving articles for this page');
+        while ($row = $st->fetch(PDO::FETCH_ASSOC))
+        {
+            $article = new Article($row);
+            $list[$article->title] = $article;
+        }
+        return $list;
     }
     /**
      * Inserts the current Article object into the database, and sets its ID property.

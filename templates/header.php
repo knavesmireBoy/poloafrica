@@ -6,8 +6,10 @@
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<title><?php htmlout($results['page_title']); ?></title>
         <link href="../css/standard.css" media="screen" rel="stylesheet">
-        <link href="../css/enq.css" media="screen" rel="stylesheet">
-        <link href="../css/myenq.css" media="screen" rel="stylesheet">
+    <?php if(isset($style)): ?>
+        <link href="../css/<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
+        <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
+    <?php endif; ?>
         <link href="../css/admin.css" media="screen" rel="stylesheet">
         <link href="../css/print.css" media="print" rel="stylesheet">
      	<script>

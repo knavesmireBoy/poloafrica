@@ -28,6 +28,5 @@ function handleException( $exception ) {
 
 set_exception_handler( 'handleException' );
 */
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
-use Michelf\Markdown;
+
 ?>

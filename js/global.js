@@ -127,6 +127,7 @@ function divideBy(a, b){
 	}
 
 	function mittleInvoke(m, arg, o) {
+        console.log(arguments);
 		return getResult(o)[m](arg);
 	}
 
