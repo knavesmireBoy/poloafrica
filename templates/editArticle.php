@@ -48,19 +48,29 @@
             <label for="pubDate">Publication Date</label>
             <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo $results['article']->pubDate ? date( "Y-m-d", $results['article']->pubDate ) : "" ?>" />
           </li>
-
-          <?php if ( $results['article']): 
-                   $imagePaths = $results['article']->getImagePath();
-                       foreach($imagePaths as $imagepath) : ?>
-          <li class="articleImage">
-            <img  src="<?php echo $imagepath['src'] ?>" alt="Article Image" title=""/>
-              <!--<label><?php $path = Article::getFileName($imagepath['src']); echo $path?></label>-->
-              <input type="checkbox" title= "Delete Image" name="deleteImages[]" id="<?php echo explode('.', $path)[0]; ?>" value="<?php echo explode('.', $path)[0]; ?>"/>
+          <?php if ($results['article']): 
+                   $filepaths = $results['article']->getFilePath();
+                   foreach($filepaths as $filepath) : ?>
+            <li class="asset">
+              <?php
+              if(isset($filepath['src'])){
+              $path = Article::getFileName($filepath['src']);
+              $name = explode('.', $path)[0];
+              ?>
+            <img src="<?php echo $filepath['src']; ?>" title=""/>
+                <?php }
+                else {
+                    $path = Article::getFileName($filepath['path']);
+                    $name = explode('.', $path)[0];
+                }
+                ?>
+                <span><?php htmlout($path); ?></span>
+                <input type="checkbox" title= "Delete Asset" name="deleteAsset[]" id="<?php htmlout($filepath['id']); ?>" value="<?php htmlout($filepath['id']); ?>"/>
           </li>
           <?php endforeach; endif; ?>
           <li>
-            <label for="image">New Image</label>
-            <input type="file" name="image" id="image" placeholder="Choose an image to upload" maxlength="255" />
+            <label for="image">New Asset</label>
+            <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
           </li>
 
         </ul>

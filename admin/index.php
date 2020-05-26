@@ -23,7 +23,6 @@ $error = 'Only Account Administrators may access this page.';
 header("Location: ?error='Only Account Administrators may access this page.'");
 }
     
-    
 if(isset($_POST['action']) && $_POST['action'] == 'Delete Article'){
     if (!$article = Article::getById((int)$_POST['articleId'])) {
         header("Location: ?error=articleNotFound");
@@ -44,14 +43,14 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'editArticle'){
             header("Location: ?error=articleNotFound");
         }
         $article->storeFormValues($_POST);
-        if (isset($_POST['deleteImages'])) {
-            foreach ($_POST['deleteImages'] as $id) {
-                $article->deleteImages($id);
+        if (isset($_POST['deleteAsset'])) {
+            foreach ($_POST['deleteAsset'] as $id) {
+                $article->deleteAssets($id);
             }
         }
         $article->update();
-        if (isset($_FILES['image'])) {
-            $article->storeUploadedFile($_FILES['image']);
+        if (isset($_FILES['asset'])) {
+            $article->storeUploadedFile($_FILES['asset']);
             header( "Location: ?status=changesSaved" );
         }
     }

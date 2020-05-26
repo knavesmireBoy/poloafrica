@@ -36,6 +36,8 @@ class Article
     public $mdcontent = null;
     public $page = null;
     public $attrID = null;
+    protected $ext = null;
+    protected $img_extensions = array('.gif', '.jpg', '.jpeg', '.pjpeg', '.png', '.x-png');
 
     //public static $assets = self::$assets ? self::$assets  : array();
     
@@ -53,8 +55,20 @@ class Article
         };
         }
     
-    protected function removeAssets(){
-        
+    protected function isImage($ext){
+        return in_array($ext, $this->img_extensions);
+    }
+    
+     protected function getPageName(){
+        $conn = getConn();
+        $sql = "SELECT name FROM pages INNER JOIN page_article ON page_article.page_id = pages.id INNER JOIN articles ON articles.id = page_article.article_id WHERE articles.id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retreiving the name for this page');
+        return $st->fetch()[0];
+    }
+    
+    protected function removeAssets1(){
         $remove = $this->doUnlink(unlinker(IMG_TYPE_FULLSIZE, "Couldn't delete image file."), unlinker(IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
         
         //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -121,7 +135,7 @@ class Article
         $conn = null;
         /*AJS: note returns a fresh instance, I was attemting to keep a reference to the series of images an article would deploy 
         but no mechanism would work when the previous instance is destroyed the persistance is in the database 
-        The class is but a convenient wrapper around SQL queries*/
+        Turns out this class is but a convenient wrapper around SQL queries*/
         if ($row) {
             return new Article($row);
         }
@@ -183,7 +197,6 @@ class Article
         {
             trigger_error("Article::insert(): Attempt to insert an Article object that already has its ID property set (to $this->id).", E_USER_ERROR);
         }
-
         // Insert the Article
         //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
          $conn = getConn();
@@ -204,13 +217,11 @@ class Article
 
     public function update()
     {
-
         // Does the Article object have an ID?
         if (is_null($this->id))
         {
             trigger_error("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
         }
-
         // Update the Article
         //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
          $conn = getConn();
@@ -228,7 +239,6 @@ class Article
     /**
      * Deletes the current Article object from the database.
      */
-
     public function delete()
     {
         // Does the Article object have an ID?
@@ -244,44 +254,64 @@ class Article
         $st->execute();
         $conn = null;
     }
-    public function getImagePath($flag = false)
+    public function getFilePath($flag = false)
     {
-        //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-         $conn = getConn();
-        $sql = "SELECT assets.id, assets.extension, assets.alt, assets.attr_id FROM article_asset LEFT JOIN articles ON articles.id = article_asset.article_id LEFT JOIN assets ON article_asset.asset_id = assets.id WHERE articles.id = :id";
+        $conn = getConn();
+        $sql = "SELECT assets.id, assets.extension, assets.alt, assets.attr_id, assets.name FROM article_asset LEFT JOIN articles ON articles.id = article_asset.article_id LEFT JOIN assets ON article_asset.asset_id = assets.id WHERE articles.id = :id";
         $st = $conn->prepare($sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         $st->execute();
         $paths = [];
         $uber = [];
         $pathtype = $flag ? IMG_TYPE_THUMB : IMG_TYPE_FULLSIZE;
+        $src = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/';        
+        //isImage
         while ($row = $st->fetch(PDO::FETCH_NUM))
         {
-            $paths['src'] = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/' . $row[0] . $row[1];
-            $paths['alt'] = $row[2];
-            $paths['id'] = $row[3];
+            if($this->isImage($row[1])){
+                $paths['src'] = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/' . $row[0] . $row[1];
+                $paths['alt'] = $row[2];
+                $paths['id'] = $row[3];
+            }
+            else {
+                $paths['path'] = ARTICLE_ASSETS_PATH . '/' . $this->getPageName() . '/' . $row[4] . $row[1];
+                $paths['id'] = $row[0];
+            }
             $uber[] = $paths;
         }
         return $uber;
     }
     public function storeUploadedFile($image)
     {
-        $img = new Asset($this->id);
-        $img->storeUploadedFile($image);
+        $asset = new Asset($this->id);
+        $asset->storeUploadedFile($image);
     }
 
     static public function getFileName($path)
     {
         return substr(strrchr($path, "/\d+/") , 1);
     }
+    
+    protected function removeAssets(){
+        $conn = getConn();
+        $sql = "SELECT id FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error fetching asset list');
+        while($row = $st->fetch(PDO::FETCH_NUM)){
+            $asset = new Asset($this->id);
+            $asset->delete($row[0]);
+        }
+        $conn = null;
+    }
+    
     public function deleteAssets($id)
     {
+        $this->removeAssets();
         $conn = getConn();
-        $sql = "DELETE assets, article_image FROM assets, article_image WHERE assets.id = article_image.imageID AND assets.id = :id";
+        $sql = "DELETE assets, article_asset FROM assets, article_asset WHERE assets.id = article_asset.asset_id AND assets.id = :id";
         $st = $conn->prepare($sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         $st->execute();
-        $remove = $this->doUnlink(unlinker(IMG_TYPE_FULLSIZE, "Couldn't delete image file."), unlinker(IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
-        $remove($id);
     }
 }

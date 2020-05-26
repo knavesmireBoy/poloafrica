@@ -30,6 +30,7 @@
 #admin form {
     background-color: hsl(54, 50%, 66%);
     float: none;
+    padding: 1em;
 }
 
 
@@ -38,6 +39,19 @@
     margin: 0;
     vertical-align: top;
     width: 80%;
+    display: inline-block;
+}
+
+#admin form li span {
+    width: auto;
+}
+
+#admin form li.asset {
+    background: white;
+}
+
+#admin form li.asset > *{
+    vertical-align: middle;
 }
 
 #admin form label {
@@ -48,6 +62,7 @@
     border-width: 0 0 4px;
     word-spacing: normal;
     letter-spacing: normal;
+    font-size: 1.2em;
 }
 .buttons {
     margin: 0 0 0 18%;

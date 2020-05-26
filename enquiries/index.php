@@ -47,7 +47,7 @@ $count = 1;
 <label class="read-more-trigger" for="post1"></label>
             <?php
         $article = $articles['Donations and sponsorship'];
-         $imagePaths = $article->getImagePath();
+         $imagePaths = $article->getFilePath();
        foreach($imagePaths as $image) : ?>
     <img id="<?php htmlout($image['id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
     <?php endforeach;
