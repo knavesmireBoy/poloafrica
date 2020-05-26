@@ -57,22 +57,32 @@
               $path = Article::getFileName($filepath['src']);
               $name = explode('.', $path)[0];
               ?>
-            <img src="<?php echo $filepath['src']; ?>" title=""/>
+            <img src="<?php htmlout($filepath['src']); ?>" alt="<?php htmlout($filepath['alt']); ?>" id="<?php htmlout($filepath['dom_id']); ?>"/>
                 <?php }
                 else {
                     $path = Article::getFileName($filepath['path']);
                     $name = explode('.', $path)[0];
                 }
                 ?>
-                <span><?php htmlout($path); ?></span>
+                <span title="<?php htmlout($filepath['alt']); ?>"><?php htmlout($path); ?></span>
                 <input type="checkbox" title= "Delete Asset" name="deleteAsset[]" id="<?php htmlout($filepath['id']); ?>" value="<?php htmlout($filepath['id']); ?>"/>
           </li>
-          <?php endforeach; endif; ?>
+            <?php include "../templates/attributes.php";
+            endforeach; endif; ?>
+            <div id="neue">
           <li>
             <label for="image">New Asset</label>
             <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
           </li>
-
+            <?php 
+            if ($results['article']){
+            if(!$results['article']->getFilePath()){
+            $filepath = array('alt' => '', 'dom_id' => '');
+            include "../templates/attributes.php";
+            }
+            }
+            ?>
+</div>
         </ul>
 
         <div class="buttons">

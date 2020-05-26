@@ -67,21 +67,6 @@ class Article
         doPreparedQuery($st, 'Error retreiving the name for this page');
         return $st->fetch()[0];
     }
-    
-    protected function removeAssets1(){
-        $remove = $this->doUnlink(unlinker(IMG_TYPE_FULLSIZE, "Couldn't delete image file."), unlinker(IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
-        
-        //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-         $conn = getConn();
-        $sql = "SELECT asset_id FROM article_asset LEFT JOIN articles ON articles.id = article_asset.article_id WHERE articles.id = :id";
-        $st = $conn->prepare($sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        $st->execute();
-        while($row = $st->fetch(PDO::FETCH_NUM)){
-           array_map($remove, $row); 
-        }
-        $conn = null;
-    }
 
     public function __construct($data = array())
     {
@@ -271,20 +256,23 @@ class Article
             if($this->isImage($row[1])){
                 $paths['src'] = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/' . $row[0] . $row[1];
                 $paths['alt'] = $row[2];
-                $paths['id'] = $row[3];
+                $paths['id'] = $row[0];
+                $paths['dom_id'] = $row[3];
             }
             else {
                 $paths['path'] = ARTICLE_ASSETS_PATH . '/' . $this->getPageName() . '/' . $row[4] . $row[1];
                 $paths['id'] = $row[0];
+                $paths['alt'] = $row[2];
+                $paths['dom_id'] = $row[3];
             }
             $uber[] = $paths;
         }
         return $uber;
     }
-    public function storeUploadedFile($image)
+    public function storeUploadedFile($image, $extra = array())
     {
         $asset = new Asset($this->id);
-        $asset->storeUploadedFile($image);
+        $asset->storeUploadedFile($image, $extra);
     }
 
     static public function getFileName($path)

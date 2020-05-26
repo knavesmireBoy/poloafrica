@@ -46,10 +46,6 @@
     width: auto;
 }
 
-#admin form li.asset {
-    background: white;
-}
-
 #admin form li.asset > *{
     vertical-align: middle;
 }
@@ -69,4 +65,36 @@
 }
 .buttons input {
     margin: 0 !important;
+}
+
+#admin input#alt {
+    width: 58%;
+}
+
+#admin input#dom_id {
+    width: 14%;
+}
+
+#admin label[for="dom_id"] {
+    width: 6%;
+    margin: 0 0 0 1%;
+}
+
+#admin label[for="alt"] {
+    text-align: right;
+}
+
+#admin #neue {
+    background-color: rgba(255,255,255, 0.5);
+    padding: 0 0 0.5em;
+}
+
+#admin #neue label {
+    text-align: right;
+    border-width: 0;
+}
+
+#admin #neue li {
+    margin: 0;
+    padding: 0.5em 0 0;
 }

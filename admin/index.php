@@ -50,7 +50,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'editArticle'){
         }
         $article->update();
         if (isset($_FILES['asset'])) {
-            $article->storeUploadedFile($_FILES['asset']);
+            $article->storeUploadedFile($_FILES['asset'], $_POST);
             header( "Location: ?status=changesSaved" );
         }
     }
