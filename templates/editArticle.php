@@ -43,10 +43,11 @@
             <label for="content">Article Content</label>
             <textarea name="content" id="content" placeholder="The HTML content of the article" required maxlength="100000" style="height: 30em;"><?php htmlout($results['article']->content);?></textarea>
           </li>
-
-          <li>
+          <li id="datepage">
             <label for="pubDate">Publication Date</label>
             <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo $results['article']->pubDate ? date( "Y-m-d", $results['article']->pubDate ) : "" ?>" />
+              <label for="page">Page</label>
+              <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php htmlout($results['article']->page); ?>">
           </li>
           <?php if ($results['article']): 
                    $filepaths = $results['article']->getFilePath();

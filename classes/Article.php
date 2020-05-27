@@ -67,25 +67,37 @@ class Article
         doPreparedQuery($st, 'Error retreiving the name for this page');
         return $st->fetch()[0];
     }
+    
+    protected function setPageName($pagename){
+        $conn = getConn();
+        $sql = "UPDATE pages, page_article, articles SET pages.name = :name WHERE pages.id = page_article.page_id AND page_article.article_id = articles.id AND articles.id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        $st->bindValue(":name", $pagename, PDO::PARAM_STR);
+        doPreparedQuery($st, 'Error setting page name');
+    }
 
     public function __construct($data = array())
     {
         //echo($i);
         if (isset($data['id'])) $this->id = (int)$data['id'];
         if (isset($data['pubDate'])) $this->pubDate = (int)$data['pubDate'];
-        if (isset($data['title'])) $this->title = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['title']);
-        if (isset($data['summary'])) $this->summary = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['summary']);
+        if (isset($data['title'])) $this->title = preg_replace($this->reg, "", $data['title']);
+        if (isset($data['summary'])) $this->summary = preg_replace($this->reg, "", $data['summary']);
         if (isset($data['content']))
         {
             $this->content = $data['content'];
             $this->mdcontent = MarkdownExtra::defaultTransform($data['content']);
         }
-        if (isset($data['page'])){
-            $this->page = $data['page'];
+        if(isset($data['page'])){
+            $this->setPageName(preg_replace($this->reg, "", $data['page']));
+            $this->page = $this->getPageName();
         }
-        if (isset($data['attr_id'])){
-            $this->attrID = $data['attr_id'];
+        if (isset($data['asset'])){
+        $asset = new Asset($this->id);
+        $asset->update($data);
         }
+        
     }
 
     /**
@@ -113,6 +125,9 @@ class Article
     {
          $conn = getConn();
         $sql = "SELECT id, title, summary, pubDate, content, attr_id, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE id = :id";
+        
+        $sql = "SELECT articles.id, title, summary, pubDate, content, attr_id, UNIX_TIMESTAMP(pubDate) AS pubDate, name AS page FROM articles, page_article AS PA, pages AS PP WHERE articles.id = PA.article_id AND PA.page_id = PP.id AND articles.id = :id";
+        
         $st = $conn->prepare($sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         $st->execute();
@@ -125,7 +140,6 @@ class Article
             return new Article($row);
         }
     }
-
     /**
      * Returns all (or a range of) Article objects in the DB
      *
@@ -194,6 +208,12 @@ class Article
         $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
         $st->execute();
         $this->id = $conn->lastInsertId();
+        
+        $sql = "INSERT INTO page_article (page_id, article_id) VALUES (:page, :article)";
+        $st = $conn->prepare($sql);
+        $st->bindValue(":page", $this->page, PDO::PARAM_INT);
+        $st->bindValue(":article", $this->id, PDO::PARAM_INT);
+        $st->execute();
         $conn = null;
     }
     /**
@@ -208,17 +228,18 @@ class Article
             trigger_error("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
         }
         // Update the Article
-        //$conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
          $conn = getConn();
+        
         $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr WHERE id = :id";
-        $st = $conn->prepare($sql);
+        
+        $st = prepSQL($conn, $sql);        
         $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
         $st->bindValue(":title", $this->title, PDO::PARAM_STR);
         $st->bindValue(":summary", $this->summary, PDO::PARAM_STR);
         $st->bindValue(":content", $this->content, PDO::PARAM_STR);
-        $st->bindValue(":attr", $this->attrID, PDO::PARAM_INT);
+        $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        $st->execute();
+        doPreparedQuery($st, 'Error updating article');
         $conn = null;
     }
     /**
@@ -280,22 +301,28 @@ class Article
         return substr(strrchr($path, "/\d+/") , 1);
     }
     
-    protected function removeAssets(){
+    protected function removeAssets($id){
         $conn = getConn();
         $sql = "SELECT id FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error fetching asset list');
-        while($row = $st->fetch(PDO::FETCH_NUM)){
+        if($id){
             $asset = new Asset($this->id);
-            $asset->delete($row[0]);
+            $asset->delete($id);
+        }
+        else {
+            while ($row = $st->fetch(PDO::FETCH_NUM)){
+                $asset = new Asset($this->id);
+                $asset->delete($row[0]);
+            }
         }
         $conn = null;
     }
     
     public function deleteAssets($id)
     {
-        $this->removeAssets();
+        $this->removeAssets($id);
         $conn = getConn();
         $sql = "DELETE assets, article_asset FROM assets, article_asset WHERE assets.id = article_asset.asset_id AND assets.id = :id";
         $st = $conn->prepare($sql);

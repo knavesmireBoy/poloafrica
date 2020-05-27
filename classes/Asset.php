@@ -9,8 +9,9 @@ class Asset
     /**
      * @var string The filename extension of the article's full-size and thumbnail images (empty string means the article has no image)
      */
-    public $extension = "";
+    
     public $articleID = null;
+    protected $extension = "";
     protected $article = null;
     protected $alt_text = "";
     protected $dom_id = "";
@@ -28,7 +29,6 @@ class Asset
     public function __construct($articleID /*, Article $article*/)
     {
         $this->articleID = $articleID;
-        $this->setPropertiesFromQuery();
     }
 
     protected function setPropertiesFromUpload($asset, $extra)
@@ -38,17 +38,38 @@ class Asset
         $this->alt_text = isset($extra['alt']) ? $extra['alt'] : '';
         $this->dom_id = isset($extra['dom_id']) ? $extra['dom_id'] : '';
     }
+    
+        protected function removeFile($id)
+    {
+         
+        if ($this->isImage())
+        {
+            $exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
+            $exec($id);
+        }
+        else
+        {
+            $exec = $this->unlinkAsset(unlinker(ARTICLE_ASSETS_PATH, $this->getPageName() , "Couldn't delete the asset."));
+            $exec($this->getNameFromId());
+        }
+    }
 
-    protected function setPropertiesFromQuery()
+    public function delete($id)
     {
         $conn = getConn();
         $sql = "SELECT id, extension FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving the name for this page');
-        $res = $st->fetch(PDO::FETCH_NUM);
-        $this->id = $res[0];
-        $this->extension = $res[1];
+        
+         while($row = $st->fetch(PDO::FETCH_NUM)){
+             $this->id = $row[0];
+             //set the extension used in ::isImage to determine delete path
+             $this->extension = $row[1];
+            if($id == $row[0]){
+                $this->removeFile($id);
+            }
+        }
     }
 
     protected function getNameFromId()
@@ -176,7 +197,6 @@ class Asset
     }
     public function getFilePath($type = IMG_TYPE_FULLSIZE)
     {
-
         if ($this->id && $this->extension && !in_array($this->extension, $this->img_extensions))
         {
             $page = $this->getPageName();
@@ -207,9 +227,10 @@ class Asset
         $sql = "INSERT INTO assets (extension, name, alt, attr_id) VALUES (:extension, :name, :alt, :domid)";
         $st = $conn->prepare($sql);
         $st->bindValue(":extension", $this->extension, PDO::PARAM_STR);
-        $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
         $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
         $st->bindValue(":domid", $this->dom_id, PDO::PARAM_STR);
+        $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
+
         $st->execute();
         $this->id = $conn->lastInsertId();
         $sql = "INSERT INTO article_asset (article_id, asset_id) VALUES (:aID, :id)";
@@ -219,20 +240,26 @@ class Asset
         $st->execute();
         $conn = null;
     }
-    public function update()
+    public function update($data)
     {
-    }
-    public function delete($id)
-    {
-        if ($this->isImage())
-        {
-            $exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
-            $exec($id);
+        if (isset($data['dom_id'])){
+            $this->dom_id = $data['dom_id'];
         }
-        else
-        {
-            $exec = $this->unlinkAsset(unlinker(ARTICLE_ASSETS_PATH, $this->getPageName() , "Couldn't delete the asset."));
-            $exec($this->getNameFromId());
+        if (isset($data['alt'])){
+            $this->alt_text = $data['alt'];
         }
+        if (isset($data['extension'])){
+            $this->extension = $data['extension'];
+        }
+        $conn = getConn();
+        $sql = "UPDATE assets INNER JOIN article_asset ON article_asset.asset_id = assets.id SET alt=:alt, attr_id=:attr, extension=:ext WHERE article_asset.article_id = :id";
+        $st = $conn->prepare($sql);
+        $st->bindValue(":ext", $this->extension, PDO::PARAM_STR);
+        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
+        $st->bindValue(":attr", $this->dom_id, PDO::PARAM_STR);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_STR);
+        $st->execute();
+        $conn = null;        
     }
+
 }
