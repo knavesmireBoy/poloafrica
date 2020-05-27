@@ -30,6 +30,7 @@ if(isset($_POST['action']) && $_POST['action'] == 'Delete Article'){
     }
     $article->delete();
     header("Location: ?status=articleDeleted");
+    exit();
 }
 
 if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'editArticle'){
@@ -81,13 +82,13 @@ if(isset($_GET['action']) && $_GET['action'] == 'newArticle'){
         $article->storeFormValues($_POST);
         $article->insert();
 
-        if (isset($_FILES['image']))
+        if (isset($_FILES['asset']))
         {
-            $img = new Asset($article->id);
-            $img->storeUploadedFile($_FILES['image']);
+            $article->storeUploadedFile($_FILES['asset'], $_POST);
             header("Location: ?status=changesSaved");
             exit();
         }
+        header( "Location: ?status=changesSaved" );
     }
     elseif (isset($_POST['cancel'])) {
         // User has cancelled their edits: return to the article list
@@ -102,7 +103,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'newArticle'){
     }
         exit();
 }
-
 
 
 if(isset($_POST['useraction']) && $_POST['useraction'] == 'Delete') {
@@ -137,14 +137,11 @@ $data = Article::getList();
          $results['errorMessage'] = $_GET['error'];
      }
   }
-
     if (isset($_GET['status'])) {
         if ($_GET['status'] == "changesSaved") $results['statusMessage'] = "Your changes have been saved.";
         if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
     }
-?>
-    
-    
+?>    
 
     <?php
 require ( "../templates/listArticles.php");

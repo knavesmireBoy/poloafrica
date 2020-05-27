@@ -68,6 +68,24 @@ class Article
         return $st->fetch()[0];
     }
     
+    protected function getPageProp($i){
+        $conn = getConn();
+        $sql = "SELECT PP.id, PP.name FROM pages AS PP, page_article AS PA, articles AS A WHERE PA.page_id = PP.id AND A.id = PA.article_id AND A.id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retreiving page id');
+        return $st->fetch()[$i];
+    }
+    
+     protected function getPageId(){
+        $conn = getConn();
+        $sql = "SELECT pages.id FROM pages WHERE pages.name = :page";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":page", $this->page, PDO::PARAM_STR);
+        doPreparedQuery($st, 'Error retreiving page id');
+        return $st->fetch()[0];
+    }
+    
     protected function setPageName($pagename){
         $conn = getConn();
         $sql = "UPDATE pages, page_article, articles SET pages.name = :name WHERE pages.id = page_article.page_id AND page_article.article_id = articles.id AND articles.id = :id";
@@ -90,14 +108,14 @@ class Article
             $this->mdcontent = MarkdownExtra::defaultTransform($data['content']);
         }
         if(isset($data['page'])){
-            $this->setPageName(preg_replace($this->reg, "", $data['page']));
-            $this->page = $this->getPageName();
+            $this->page = preg_replace($this->reg, "", $data['page']);
+            //$this->setPageName(preg_replace($this->reg, "", $data['page']));
+            //$this->page = $this->getPageName();
         }
         if (isset($data['asset'])){
         $asset = new Asset($this->id);
         $asset->update($data);
         }
-        
     }
 
     /**
@@ -189,7 +207,7 @@ class Article
      * Inserts the current Article object into the database, and sets its ID property.
      */
 
-    public function insert()
+    public function insert($data = array())
     {
         // Does the Article object already have an ID?
         if (!is_null($this->id))
@@ -208,10 +226,11 @@ class Article
         $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
         $st->execute();
         $this->id = $conn->lastInsertId();
-        
+        //$this->setPageName(preg_replace($this->reg, "", $data['page']));
+        //$this->page = $this->getPageProp(1);
         $sql = "INSERT INTO page_article (page_id, article_id) VALUES (:page, :article)";
         $st = $conn->prepare($sql);
-        $st->bindValue(":page", $this->page, PDO::PARAM_INT);
+        $st->bindValue(":page", $this->getPageId(), PDO::PARAM_INT);
         $st->bindValue(":article", $this->id, PDO::PARAM_INT);
         $st->execute();
         $conn = null;
@@ -254,7 +273,8 @@ class Article
         }        
         $this->removeAssets();
         $conn = getConn();
-        $sql = "DELETE articles, assets, article_asset FROM articles LEFT JOIN article_asset ON articles.id = article_asset.article_id LEFT JOIN assets ON assets.id = article_asset.asset_id WHERE articles.id = :id";
+        $sql = "DELETE articles, assets, article_asset FROM articles LEFT JOIN article_asset ON articles.id = article_asset.article_id LEFT JOIN assets ON assets.id = article_asset.asset_id WHERE assets.id = article_asset.asset_id AND articles.id = :id";
+        
         $st = $conn->prepare($sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         $st->execute();
@@ -281,7 +301,7 @@ class Article
                 $paths['dom_id'] = $row[3];
             }
             else {
-                $paths['path'] = ARTICLE_ASSETS_PATH . '/' . $this->getPageName() . '/' . $row[4] . $row[1];
+                $paths['path'] = ARTICLE_ASSETS_PATH . '/' . $this->getPageProp(1) . '/' . $row[4] . $row[1];
                 $paths['id'] = $row[0];
                 $paths['alt'] = $row[2];
                 $paths['dom_id'] = $row[3];
@@ -301,7 +321,7 @@ class Article
         return substr(strrchr($path, "/\d+/") , 1);
     }
     
-    protected function removeAssets($id){
+    protected function removeAssets($id = null){
         $conn = getConn();
         $sql = "SELECT id FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
         $st = prepSQL($conn, $sql);

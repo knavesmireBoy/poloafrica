@@ -48,8 +48,8 @@ $count = 1;
             <?php
         $article = $articles['Donations and sponsorship'];
          $imagePaths = $article->getFilePath();
-       foreach($imagePaths as $image) : ?>
-    <img id="<?php htmlout($image['id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
+            foreach($imagePaths as $image) : ?>
+    <img id="<?php htmlout($image['dom_id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
     <?php endforeach;
          include '../templates/article_sans.php';
         $article = $articles['Holiday rates'];
