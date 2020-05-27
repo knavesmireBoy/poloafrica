@@ -273,8 +273,11 @@ class Article
         }        
         $this->removeAssets();
         $conn = getConn();
-        $sql = "DELETE articles, assets, article_asset FROM articles LEFT JOIN article_asset ON articles.id = article_asset.article_id LEFT JOIN assets ON assets.id = article_asset.asset_id WHERE assets.id = article_asset.asset_id AND articles.id = :id";
-        
+        $sql = "DELETE assets FROM articles INNER JOIN article_asset AS AA ON articles.id = AA.article_id INNER JOIN assets ON assets.id = AA.asset_id WHERE AA.article_id = :id";
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        $st->execute();
+                
+        $sql = "DELETE FROM articles WHERE id = :id";
         $st = $conn->prepare($sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         $st->execute();
