@@ -10,7 +10,7 @@ $style = 'medley';
 include "../templates/header.php";
 ?>
 <?php
-$articles = Article::getListByPage(7);
+$articles = Article::getListByPage('medley');
 $count = 0;
 ?>
 <body id="medley">
@@ -47,11 +47,14 @@ $count = 0;
               <?php
         
             foreach ($articles as $article){
-                if(!$article->summary){
                 $count += 1;
+                if(!$article->summary){
                 include '../templates/article.php';
+                        }
+            else {
+            include '../templates/video.php';
             }
-        } ?>
+            }?>
 		</main></div>
    <?php include '../templates/footer.php'; ?>
     <script src="../js/viewportSize.js"></script>

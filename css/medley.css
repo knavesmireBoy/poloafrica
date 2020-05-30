@@ -143,10 +143,10 @@ section:last-child nav li {
 #medley #nav li:nth-child(7) we use #presslinks HERE to override (so can do this #medley li:nth-child(7))
 was only effecting the 7th child as in #medley li:nth-child(7), which can also refer to the presslinks ul*/
 
-#presslinks li:nth-child(odd) a, #presslinks li:nth-child(odd) a:link, section:last-child li:nth-child(odd) a:link {
+#presslinks li:nth-child(odd) a, #presslinks li:nth-child(odd) a:link, section:last-child ul li:nth-child(odd) a:link {
 	color: #900;
 }
-#presslinks li:nth-child(odd) a:hover, section:last-child li:nth-child(odd) a:hover {
+#presslinks li:nth-child(odd) a:hover, section:last-child ul li:nth-child(odd) a:hover {
 	color: #306;
 }
 h2 span {

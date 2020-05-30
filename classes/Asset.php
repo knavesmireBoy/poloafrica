@@ -25,18 +25,38 @@ class Asset
         '.png',
         '.x-png'
     );
+    protected $video_extensions = array('.mp4','.avi');
 
-    public function __construct($articleID /*, Article $article*/)
+    public function __construct($articleID/*, $page*/)
     {
         $this->articleID = $articleID;
+        //$this->page = $page;
+    }
+    
+    
+    protected function exists($o, $p1, $p2){
+        return !empty($o[$p1]) ? $o[$p1] : !empty($o[$p2]) ? $o[$p2] : '';
+    }
+    
+    protected function getStoredProperty($prop)
+    {
+        $conn = getConn();
+        $sql = "SELECT extension, name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        doPreparedQuery($st, "Error retreiving $prop for this file");
+        $res = $st->fetch(PDO::FETCH_ASSOC);
+        return $res[$prop];
     }
 
-    protected function setPropertiesFromUpload($asset, $extra)
+    protected function setPropertiesFromUpload($asset, $extra = array())
     {
-        $this->filename = strtolower(explode('.', trim($asset['name'])) [0]);
-        $this->extension = strtolower(strrchr($asset['name'], '.'));
-        $this->alt_text = isset($extra['alt']) ? $extra['alt'] : '';
-        $this->dom_id = isset($extra['dom_id']) ? $extra['dom_id'] : '';
+        $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
+        $this->extension = !empty($asset) ? strtolower(strrchr($asset['name'], '.')) : $this->getStoredProperty('extension');
+        $this->alt_text = !empty($extra['alt']) ? $extra['alt'] : !empty($extra['edit_alt']) ? $extra['edit_alt'] : 'vv';
+        $this->dom_id = !empty($extra['dom_id']) ? $extra['dom_id'] : !empty($extra['edit_dom_id']) ? $extra['edit_dom_id'] : 'vvv';
+        //$this->alt_text = isset($extra['alt']) ? $extra['alt'] : isset($extra['edit_alt']) ? $extra['edit_alt'] : '';
+        //$this->dom_id = isset($extra['dom_id']) ? $extra['dom_id'] : isset($extra['edit_dom_id']) ? $extra['edit_dom_id'] : '';
     }
     
         protected function removeFile($id)
@@ -103,6 +123,10 @@ class Asset
     protected function isImage()
     {
         return in_array($this->extension, $this->img_extensions);
+    }
+    
+     protected function isVideo($ext){
+        return in_array($ext, $this->video_extensions);
     }
 
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
@@ -182,38 +206,57 @@ class Asset
      */
     public function storeUploadedFile($asset, $extra = array())
     {
+       
         if ($asset['error'] == UPLOAD_ERR_OK)
         {
+            var_dump($asset['error']);
             // Does the Image object have an ID?
-            if (is_null($this->articleID))
+            if (is_null($this->id))
             {
                 trigger_error("Asset::storeUploadedFile(): Attempt to upload an image for an Article object that does not have its ID property set.", E_USER_ERROR);
             }
-            $this->setPropertiesFromUpload($asset, $extra);
+             $this->setPropertiesFromUpload($asset, $extra);
             $this->insert();
             $this->validate($asset);
             $this->createImage($asset);
         }
+        else if(!empty($extra)){
+            $this->setPropertiesFromUpload(array(), $extra);
+            $this->update($extra);
+        }
     }
-    public function getFilePath($type = IMG_TYPE_FULLSIZE)
+    public function getFilePath1($type = IMG_TYPE_FULLSIZE)
     {
         if ($this->id && $this->extension && !in_array($this->extension, $this->img_extensions))
         {
-            $page = $this->getPageName();
             return ARTICLE_ASSETS_PATH . "/$page/" . $this->filename . $this->extension;
         }
         return ($this->id && $this->extension) ? (ARTICLE_IMAGE_PATH . "/$type/" . $this->id . $this->extension) : $this->id;
     }
-
-    protected function getPageName()
+    
+      public function getFilePath($type = IMG_TYPE_FULLSIZE)
+    {
+          $page = $this->getPageName();
+        if ($this->id && $this->extension && in_array($this->extension, $this->img_extensions))
+        {
+            return ARTICLE_IMAGE_PATH . "/$type/" . $this->id . $this->extension;
+        }
+          elseif ($this->id && $this->extension && in_array($this->extension, $this->video_extensions)){
+              return ARTICLE_VIDEO_PATH . "/$page/" . $this->filename . $this->extension;
+          }
+        return ARTICLE_ASSETS_PATH . "/$page/" . $this->filename . $this->extension;
+    }
+    
+     protected function getPageName()
     {
         $conn = getConn();
-        $sql = "SELECT name FROM pages INNER JOIN page_article ON page_article.page_id = pages.id INNER JOIN articles ON articles.id = page_article.article_id WHERE articles.id = :id";
-        $st = prepSQL($conn, $sql);
+         $sql = "SELECT page FROM articles INNER JOIN article_asset ON article_asset.article_id = articles.id INNER JOIN assets ON article_asset.asset_id = assets.id WHERE articles.id = :id";
+         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving the name for this page');
         return $st->fetch() [0];
     }
+    
     /* IMAGES CAN EITHER BE INSERTED OR DELETED */
     public function insert()
     {
@@ -242,12 +285,8 @@ class Asset
     }
     public function update($data)
     {
-        if (isset($data['dom_id'])){
-            $this->dom_id = $data['dom_id'];
-        }
-        if (isset($data['alt'])){
-            $this->alt_text = $data['alt'];
-        }
+        $this->dom_id = $this->exists($data, 'dom_id', 'edit_dom_id');
+        $this->alt_text = $this->exists($data, 'alt', 'edit_alt');
         if (isset($data['extension'])){
             $this->extension = $data['extension'];
         }
@@ -261,5 +300,4 @@ class Asset
         $st->execute();
         $conn = null;        
     }
-
 }

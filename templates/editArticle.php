@@ -19,7 +19,7 @@
       <h3><?php echo $results['pageTitle']?></h3>
 
       <form action="?action=<?php echo $results['formAction']?>" method="post" enctype="multipart/form-data" onsubmit="closeKeepAlive()" class="content">
-        <input type="hidden" name="articleId" value="<?php echo $results['article']->id ?>"/>
+        <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>"/>
 
 <?php if ( isset( $results['errorMessage'] ) ) { ?>
         <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
@@ -49,39 +49,44 @@
               <label for="page">Page</label>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php strtolower(htmlout($results['article']->page)); ?>">
           </li>
-          <?php if ($results['article']): 
-                   $filepaths = $results['article']->getFilePath();
-                   foreach($filepaths as $filepath) : ?>
+          <?php if ($results['article']): ?>
             <li class="asset">
+                <?php
+                   $filepaths = $results['article']->getFilePath(true);
+                   foreach($filepaths as $filepath) : ?>
+            
+                <figure>
               <?php
               if(isset($filepath['src'])){
               $path = Article::getFileName($filepath['src']);
               $name = explode('.', $path)[0];
               ?>
-            <img src="<?php htmlout($filepath['src']); ?>" alt="<?php htmlout($filepath['alt']); ?>" id="<?php htmlout($filepath['dom_id']); ?>"/>
+            <img src="<?php htmlout($filepath['src']); ?>" alt="<?php htmlout($filepath['alt']); ?>" id="<?php htmlout($filepath['dom_id']); ?>">
                 <?php }
-                else {
+                else if(isset($filepath['path'])){
                     $path = Article::getFileName($filepath['path']);
-                    $name = explode('.', $path)[0];
+                    $name = explode('.', $path)[0]; ?>
+                    <img src="../images/pdf.png" alt="" class="pdf_icon">
+                    <?php
                 }
                 ?>
-                <span title="<?php htmlout($filepath['alt']); ?>"><?php htmlout($path); ?></span>
-                <input type="checkbox" title= "Delete Asset" name="deleteAsset[]" id="<?php htmlout($filepath['id']); ?>" value="<?php htmlout($filepath['id']); ?>"/>
-          </li>
-            <?php include "../templates/attributes.php";
-            endforeach; endif; ?>
+                    <figcaption>
+                <span title="<?php htmlout($filepath['alt']); ?>">Delete</span>
+                <input type="checkbox" title= "<?php htmlout($path); ?>" name="deleteAsset[]" id="<?php htmlout($filepath['id']); ?>" value="<?php htmlout($filepath['id']); ?>"/>
+            <?php include "../templates/attributes_edit.php"; ?>
+                    </figcaption></figure>
+            <?php
+            endforeach; ?>
+            </li>
+                <?php endif; ?>
             <div id="neue">
           <li>
-            <label for="image">New Asset</label>
+            <label for="image">Add New Asset</label>
             <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
           </li>
             <?php 
-            if ($results['article']){
-            if(!$results['article']->getFilePath()){
-            $filepath = array('alt' => '', 'dom_id' => '');
+            $filepath = $filepath || array('alt' => '', 'dom_id' => '');
             include "../templates/attributes.php";
-            }
-            }
             ?>
 </div>
         </ul>

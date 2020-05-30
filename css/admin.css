@@ -98,3 +98,44 @@
     margin: 0;
     padding: 0.5em 0 0;
 }
+
+#admin .asset figure img {
+    margin: 0;
+    width: 100%;
+}
+#admin .asset figure img.pdf_icon {
+    width: auto;
+    display: inline;
+}
+#admin .asset {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+#admin .asset figure  {
+    flex: 0 1 15em;
+    font-size: .75em;
+    width: 1%;
+    border: solid 1px;
+    margin: .5em;
+    padding: 1em;
+    background-color: rgba(255,255,255, 0.5);
+}
+#admin .asset {
+    margin: 0 0 0 18%;
+}
+#admin .asset figure label, #admin .asset figure input   {
+    display: block;
+    width: 100% !important;
+    text-align: left;
+    border-width: 0px;
+}
+
+#admin .asset figure input[type="checkbox"]{
+    width: auto !important;
+    display: inline-block;
+}
+
+#admin .asset figcaption > * {
+    margin: .25em 0;
+}

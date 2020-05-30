@@ -43,14 +43,19 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'editArticle'){
         if (!$article = Article::getById((int)$_POST['articleId'])) {
             header("Location: ?error=articleNotFound");
         }
+        
         $article->storeFormValues($_POST);
+        
         if (isset($_POST['deleteAsset'])) {
             foreach ($_POST['deleteAsset'] as $id) {
                 $article->deleteAssets($id);
             }
         }
+        
         $article->update();
+        
         if (isset($_FILES['asset'])) {
+            //exit(var_dump($_POST));
             $article->storeUploadedFile($_FILES['asset'], $_POST);
             header( "Location: ?status=changesSaved" );
         }

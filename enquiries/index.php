@@ -10,7 +10,7 @@ $style = 'enq';
 include "../templates/header.php";
 ?>
 <?php
-$articles = Article::getListByPage(8);
+$articles = Article::getListByPage("enquiries");
 $count = 1;
 ?>
 <body id="enquiries">
@@ -46,7 +46,8 @@ $count = 1;
 <input class="read-more-state" id="post1" type="checkbox">
 <label class="read-more-trigger" for="post1"></label>
             <?php
-        $article = $articles['Donations and sponsorship'];
+            
+            $article = $articles['Donations and sponsorship'];
          $imagePaths = $article->getFilePath();
             foreach($imagePaths as $image) : ?>
     <img id="<?php htmlout($image['dom_id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">

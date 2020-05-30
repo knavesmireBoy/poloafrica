@@ -27,3 +27,5 @@
 <p><a href="?action=newArticle">Add a New Article</a></p>
 <p><a href="../user/?action=manageUsers">Manage Users</a></p>
 <p><a href="../enquiries/">Home</a></p>
+
+<?php

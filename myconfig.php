@@ -12,7 +12,7 @@ define( "ADMIN_PASSWORD", "mypass" );
 
 define( "ARTICLE_IMAGE_PATH", "../images/articles" );
 define( "ARTICLE_PDF_PATH", "../pdf/articles" );
-define( "ARTICLE_VIDEO_PATH", "../pdf/articles" );
+define( "ARTICLE_VIDEO_PATH", "../video" );
 define( "ARTICLE_ASSETS_PATH", "../assets" );
 define( "HEADER_PATH", "../header.php" );
 define( "IMG_TYPE_FULLSIZE", "fullsize" );
