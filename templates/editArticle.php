@@ -28,16 +28,11 @@
         <ul id="editList">
           <li>
             <label for="title">Article Title</label>
-            <input type="text" name="title" id="title" placeholder="Name of the article" required autofocus maxlength="255" value="<?php echo htmlspecialchars( $results['article']->title )?>" />
+            <input type="text" name="title" id="title" placeholder="Name of the article" required autofocus maxlength="255" value="<?php htmlout($results['article']->title)?>" />
           </li>
-
           <li>
             <label for="summary">Article Summary</label>
             <textarea name="summary" id="summary" placeholder="Brief description of the article" maxlength="1000" style="height: 5em;"><?php htmlout($results['article']->summary);?></textarea>
-          </li>
-            <li>
-            <label for="attr_id">Article ID</label>
-            <input name="attr_id" id="attr_id" maxlength="10" value="<?php htmlout($results['article']->attrID); ?>">
           </li>
           <li>
             <label for="content">Article Content</label>
@@ -48,24 +43,29 @@
             <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo $results['article']->pubDate ? date( "Y-m-d", $results['article']->pubDate ) : "" ?>" />
               <label for="page">Page</label>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php strtolower(htmlout($results['article']->page)); ?>">
+              <label for="attr_id">Article ID</label>
+            <input name="attr_id" id="attr_id" maxlength="10" value="<?php htmlout($results['article']->attrID); ?>">
           </li>
-          <?php if ($results['article']): ?>
+             <li>
+            
+          </li>
+          <?php if ($results['article']):
+            $filepath = array('alt' => '', 'dom_id' => ''); ?>
             <li class="asset">
                 <?php
                    $filepaths = $results['article']->getFilePath(true);
                    foreach($filepaths as $filepath) : ?>
-            
                 <figure>
               <?php
               if(isset($filepath['src'])){
               $path = Article::getFileName($filepath['src']);
-              $name = explode('.', $path)[0];
+              //$name = explode('.', $path)[0];
               ?>
             <img src="<?php htmlout($filepath['src']); ?>" alt="<?php htmlout($filepath['alt']); ?>" id="<?php htmlout($filepath['dom_id']); ?>">
                 <?php }
                 else if(isset($filepath['path'])){
                     $path = Article::getFileName($filepath['path']);
-                    $name = explode('.', $path)[0]; ?>
+                    //$name = explode('.', $path)[0]; ?>
                     <img src="../images/pdf.png" alt="" class="pdf_icon">
                     <?php
                 }
@@ -85,7 +85,6 @@
             <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
           </li>
             <?php 
-            $filepath = $filepath || array('alt' => '', 'dom_id' => '');
             include "../templates/attributes.php";
             ?>
 </div>

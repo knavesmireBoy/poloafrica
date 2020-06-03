@@ -53,12 +53,12 @@ class Article
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error fetching asset list');
         if($id){
-            $asset = new Asset($this->id);
+            $asset = new Asset($this->id, $this->page);
             $asset->delete($id);
         }
         else {
             while ($row = $st->fetch(PDO::FETCH_NUM)){
-                $asset = new Asset($this->id);
+                $asset = new Asset($this->id, $this->page);
                 $asset->delete($row[0]);
             }
         }
@@ -89,7 +89,7 @@ class Article
             $this->page = preg_replace($this->reg, "", $data['page']);
         }
         if (isset($data['asset'])){
-        $asset = new Asset($this->id);
+        $asset = new Asset($this->id, $this->page);
         $asset->update($data);
         }
     }
@@ -151,6 +151,25 @@ class Article
             "totalRows" => $totalRows[0]
         ));
     }
+    
+     public static function getTitles($pp){
+         $conn = getConn();
+         $sql = "SELECT title FROM articles WHERE page = :pp";
+         $st = prepSQL($conn, $sql);
+         $st->bindValue(":pp", $pp, PDO::PARAM_INT);
+         doPreparedQuery($st, 'Error retreiving articles for this page');
+         return $st->fetchAll(PDO::FETCH_ASSOC);
+     }
+    
+    public static function getPages($pp){
+        $conn = getConn();
+        $list = array();
+        $sql = "SELECT page FROM articles GROUP BY page;";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":pp", $pp, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error fetching list of pages');
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+     }
     
     public static function getListByPage($pp){
         $conn = getConn();
@@ -268,10 +287,11 @@ class Article
         }
         return $uber;
     }
-    public function storeUploadedFile($uploaded, $extra = array())
+    public function storeUploadedFile($uploaded, $attrs = array())
     {
-        $asset = new Asset($this->id);
-        $asset->storeUploadedFile($uploaded, $extra);
+        //var_dump($attrs);
+        $asset = new Asset($this->id, $this->page);
+        $asset->storeUploadedFile($uploaded, $attrs);
     }
     
     public function deleteAssets($id)

@@ -1,13 +1,17 @@
 <?php
+//session_start();
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Paginator.php';
 require_once '../includes/db.inc.php';
 require_once '../includes/access.inc.php';
 require_once '../myconfig.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : "";
+$display = 10;
 
 $results['page_title'] = 'Admin';
 include "../templates/header.php"; ?>
@@ -32,6 +36,11 @@ if(isset($_POST['action']) && $_POST['action'] == 'Delete Article'){
     header("Location: ?status=articleDeleted");
     exit();
 }
+    
+    if (isset($_GET['s']) and is_numeric($_GET['s'])){
+        //exit(999);
+        $_SESSION["paginator"]->setStart($_GET['s']);
+    }
 
 if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'editArticle'){
     $results = array();
@@ -78,7 +87,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'newArticle'){
         $results = array();
     $results['pageTitle'] = "New Article";
     $results['formAction'] = "newArticle";
-
     
     //form action
     if (isset($_POST['saveChanges'])) {
@@ -133,6 +141,13 @@ $data = Article::getList();
     $results['articles'] = $data['results'];
     $results['totalRows'] = $data['totalRows'];
     $results['pageTitle'] = "All Articles";
+    
+    if (!isset($_SESSION["paginator"])) {
+        $_SESSION["paginator"] = new Paginator(10, $data['totalRows']);
+    }
+    else {
+        $_SESSION["paginator"]->setRecords($data['totalRows']);
+    }
 
  if ( isset( $_GET['error'] ) ) {
     if ( $_GET['error'] == "articleNotFound" ) {
