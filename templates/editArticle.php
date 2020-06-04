@@ -43,7 +43,7 @@
             <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo $results['article']->pubDate ? date( "Y-m-d", $results['article']->pubDate ) : "" ?>" />
               <label for="page">Page</label>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php strtolower(htmlout($results['article']->page)); ?>">
-              <label for="attr_id">Article ID</label>
+              <label for="attr_id">Article DOM ID</label>
             <input name="attr_id" id="attr_id" maxlength="10" value="<?php htmlout($results['article']->attrID); ?>">
           </li>
              <li>
@@ -92,7 +92,13 @@
 
         <div class="buttons">
           <input type="submit" name="saveChanges" value="Save Changes">
-            <?php if ( $results['article']->id ) { ?>
+            
+            <?php if (isset($remove)) {
+            echo "<p>$remove <strong>{$results['article']->title}</strong> ?</p>"; ?>
+            <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
+            <input type="submit" name="action" value="Confirm">
+            <?php } 
+            elseif ( $results['article']->id ) { ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
             <input type="submit" name="action" value="Delete Article">
             <?php } ?>

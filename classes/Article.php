@@ -11,7 +11,7 @@ class Article
     // Properties
     protected $ext = null;
     protected $img_extensions = array(
-        '.gif',
+        //'.gif',
         '.jpg',
         '.jpeg',
         '.pjpeg',
@@ -40,6 +40,10 @@ class Article
     
     protected function isImage($ext){
         return in_array($ext, $this->img_extensions);
+    }
+    
+    protected function isGif($ext){
+        return $ext == '.gif';
     }
     
     protected function isVideo($ext){
@@ -73,7 +77,6 @@ class Article
 
     public function __construct($data = array())
     {
-        //echo($i);
         if (isset($data['id'])) $this->id = (int)$data['id'];
         if (isset($data['pubDate'])) $this->pubDate = (int)$data['pubDate'];
         if (isset($data['title'])) $this->title = preg_replace($this->reg, "", $data['title']);
@@ -89,14 +92,16 @@ class Article
             $this->page = preg_replace($this->reg, "", $data['page']);
         }
         if (isset($data['asset'])){
-        $asset = new Asset($this->id, $this->page);
-        $asset->update($data);
+        //$asset = new Asset($this->id, $this->page);
+        //$asset->update($data);
         }
     }
     public function storeFormValues($params)
     {
         // Store all the parameters
         $this->__construct($params);
+               var_dump($params);
+
         // Parse and store the publication date
         $this->pubDate = formatDate($params['pubDate']);
     }
@@ -258,14 +263,15 @@ class Article
         $st->execute();
         $paths = [];
         $uber = [];
-        $pathtype = $flag ? IMG_TYPE_THUMB : IMG_TYPE_FULLSIZE;
-        $src = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/';        
+        $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
+        //$src = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/';
+        $assetpath = ARTICLE_ASSETS_PATH . '/' . $this->page . '/';
         //isImage
         while ($row = $st->fetch(PDO::FETCH_NUM))
         {
             $paths = [];
             if($this->isImage($row[1])){
-                $paths['src'] = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/' . $row[0] . $row[1];
+                $paths['src'] = ARTICLE_IMAGE_PATH  . $pathtype . $row[0] . $row[1];
                 $paths['alt'] = $row[2];
                 $paths['id'] = $row[0];
                 $paths['dom_id'] = $row[3];
@@ -278,10 +284,18 @@ class Article
                 $paths['dom_id'] = $row[3];
             }
             else {
-                $paths['path'] = ARTICLE_ASSETS_PATH . '/' . $this->page . '/' . $row[4] . $row[1];
+                $paths['path'] = $assetpath . $row[4] . $row[1];
                 $paths['id'] = $row[0];
                 $paths['alt'] = $row[2];
                 $paths['dom_id'] = $row[3];
+                if($this->isGif($row[1])){
+                    $paths['src'] = $assetpath . $row[4] . $row[1];
+                }
+                else {
+                    
+                }
+                //$paths['path'] = ARTICLE_ASSETS_PATH . '/' . $this->page . '/' . $row[4] . $row[1];
+                
             }
             $uber[] = $paths;
         }

@@ -26,8 +26,22 @@ if (!userHasRole('Account Administrator') && !isset($_GET['error'])) {
 $error = 'Only Account Administrators may access this page.';
 header("Location: ?error='Only Account Administrators may access this page.'");
 }
+        if(isset($_GET['action']) && $_GET['action'] == 'removeArticle'){
+        $remove = 'Are you sure you want to remove the article: ';
+        $article = Article::getById((int)$_GET['articleId']);
+        }
     
-if(isset($_POST['action']) && $_POST['action'] == 'Delete Article'){
+    if(isset($_POST['action']) && $_POST['action'] == 'Delete Article'){
+    
+    if (!$article = Article::getById((int)$_POST['articleId'])) {
+        header("Location: ?error=articleNotFound");
+        return;
+    }
+    header("Location: ?action=removeArticle&articleId=" . $article->id);
+    exit();
+}
+    
+    if(isset($_POST['action']) && $_POST['action'] == 'Confirm'){
     if (!$article = Article::getById((int)$_POST['articleId'])) {
         header("Location: ?error=articleNotFound");
         return;
@@ -42,7 +56,7 @@ if(isset($_POST['action']) && $_POST['action'] == 'Delete Article'){
         $_SESSION["paginator"]->setStart($_GET['s']);
     }
 
-if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'editArticle'){
+if(isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQUEST['action'] == 'removeArticle')){
     $results = array();
     $results['pageTitle'] = "Edit Article";
     $results['formAction'] = "editArticle";
@@ -60,11 +74,10 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'editArticle'){
                 $article->deleteAssets($id);
             }
         }
-        
+                
         $article->update();
         
         if (isset($_FILES['asset'])) {
-            //exit(var_dump($_POST));
             $article->storeUploadedFile($_FILES['asset'], $_POST);
             header( "Location: ?status=changesSaved" );
         }

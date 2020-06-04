@@ -18,7 +18,7 @@ class Asset
     public $id = null;
     protected $filename = null;
     protected $img_extensions = array(
-        '.gif',
+        //'.gif',
         '.jpg',
         '.jpeg',
         '.pjpeg',
@@ -57,6 +57,7 @@ class Asset
     {
         $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
         $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']), '.')) : $this->getStoredProperty('extension');
+                
         $this->alt_text = '';
         $this->dom_id = '';
         if(isset($attrs['alt'])){
@@ -77,6 +78,7 @@ class Asset
     protected function removeFile($id)
     {
 
+
         if ($this->isImage())
         {
             $exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
@@ -85,7 +87,8 @@ class Asset
         else
         {
             $exec = $this->unlinkAsset(unlinker(ARTICLE_ASSETS_PATH, $this->page , "Couldn't delete the asset."));
-            $exec($this->getNameFromId());
+            //exit($this->filename . '∞∞∞');
+            $exec($this->getNameFromId($id));
         }
     }
 
@@ -131,9 +134,9 @@ class Asset
 
     protected function unlinkAsset($f1)
     {
-        return function () use ($f1)
+        return function ($fname) use ($f1)
         {
-            $f1($this->filename);
+            $f1($fname);
         };
     }
 
@@ -152,7 +155,7 @@ class Asset
     {
         if (!$this->isImage())
         {
-            return;
+            return $this->getFilePath();
         }
         // Get the image size and type
         $source_image = $this->getFilePath();

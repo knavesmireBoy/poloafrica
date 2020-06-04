@@ -3,6 +3,7 @@
 /*global document: false */
 /*global poloAF: false */
 /*global setTimeout: false */
+/*global _: false */
 if (!window.poloAF) {
 	window.poloAF = {};
 }
@@ -28,6 +29,12 @@ if (!window.poloAF) {
 			};
 		};
 	}
+    
+    function always(val) {
+		return function () {
+			return val;
+		};
+	}
 	var sfHover = function () {
 			var sfEls = document.getElementsByTagName("nav")[0].getElementsByTagName("LI"),
 				i;
@@ -43,6 +50,30 @@ if (!window.poloAF) {
 		$ = function (str) {
 			return document.getElementById(str);
 		},
+        utils = poloAF.Util,
+		ptL = _.partial,
+        anCr = utils.append(),
+        anCrIn = utils.insert(),
+        makeElement = utils.machElement,
+        setAttrs = utils.setAttributes,        
+        ani = (function(){
+            var section = utils.getByTag('section', document),
+                ancr = section[section.length-1],
+                article = utils.getByTag('article', ancr)[0],
+                ret = makeElement(ptL(setAttrs, {
+				id: 'ani',
+			}), anCrIn(article, ancr), always('aside'));
+            ret.render();
+        }()),
+        flower = (function(){
+            var ret = makeElement(ptL(setAttrs, {
+				id: 'flower',
+                src: '../images/poloafrica_flower_logo.jpg',
+                alt: ''
+			}),
+                        anCr(utils.$('ani')), always('img'));
+            ret.render();
+        }()),
         h2 = poloAF.Util.getByTag('h2', document)[0],
         doAlt = poloAF.Util.doAlternate(),
 		fader = (function () {
@@ -65,7 +96,7 @@ if (!window.poloAF) {
             var base_el = poloAF.Util.getDomChild(poloAF.Util.getNodeByTag('img'))($('ani')),
                 fade_el = base_el.cloneNode(),
                 parent = base_el.parentNode,
-                logo_paths = ["images/poloafrica_flower_logo.jpg", "images/polo150yrs_squared_logo.jpg", "images/polo_armed_forces_logo.jpg"],
+                logo_paths = ["../images/poloafrica_flower_logo.jpg", "../images/polo150yrs_squared_logo.jpg", "../images/polo_armed_forces_logo.jpg"],
                 domod = curry2(modulo)(3),
                 j = 0,
                 timer;
