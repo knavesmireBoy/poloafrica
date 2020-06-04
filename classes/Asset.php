@@ -17,6 +17,7 @@ class Asset
     protected $dom_id = "";
     public $id = null;
     protected $filename = null;
+    protected $misql = "SELECT id, extension, name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
     protected $img_extensions = array(
         //'.gif',
         '.jpg',
@@ -34,12 +35,16 @@ class Asset
     {
         $this->articleID = $articleID;
         $this->page = $page;
-        
     }
 
     protected function exists($o, $p1, $p2)
-    {
-        return !empty($o[$p1]) ? $o[$p1] : !empty($o[$p2]) ? $o[$p2] : '';
+    {        
+        if(isset($o[$p1]) && !empty($o[$p1])){
+            return $o[$p1];
+        }
+        elseif(isset($o[$p2]) && !empty($o[$p2])){
+            return $o[$p2];
+        }
     }
 
     protected function getStoredProperty($prop)
@@ -50,35 +55,22 @@ class Asset
         $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
         doPreparedQuery($st, "Error retreiving $prop for this file");
         $res = $st->fetch(PDO::FETCH_ASSOC);
-        return $res[$prop];
+        return isset($res[$prop]) ? $res[$prop] : "";
     }
 
     protected function setProperties($asset, $attrs = array())
     {
         $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
         $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']), '.')) : $this->getStoredProperty('extension');
-                
-        $this->alt_text = '';
-        $this->dom_id = '';
-        if(isset($attrs['alt'])){
-          $this->alt_text = $attrs['alt'];  
-        }
-        elseif(isset($attrs['edit_alt'])){
-            $this->alt_text = $attrs['edit_alt']; 
-        }
         
-         if(isset($attrs['dom_id'])){
-          $this->dom_id = $attrs['dom_id'];  
-        }
-        elseif(isset($attrs['edit_dom_id'])){
-            $this->dom_id = $attrs['edit_dom_id']; 
-        }
+        if(isset($attrs['alt'])){//insert
+            $this->alt_text = $attrs['alt'];
+            $this->dom_id = $attrs['dom_id'];
+        }    
     }
 
     protected function removeFile($id)
     {
-
-
         if ($this->isImage())
         {
             $exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
@@ -95,10 +87,9 @@ class Asset
     public function delete($id)
     {
         $conn = getConn();
-        $sql = "SELECT id, extension FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
-        $st = prepSQL($conn, $sql);
+        $st = prepSQL($conn, $this->misql);
         $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retreiving the name for this page');
+        doPreparedQuery($st, 'Error retreiving record');
 
         while ($row = $st->fetch(PDO::FETCH_NUM))
         {
@@ -244,7 +235,14 @@ class Asset
         else if (!empty($attrs))
         {//modify img attributes, updating
             $this->setProperties(array() , $attrs);
-            $this->update($attrs);
+              if(isset($attrs['edit_alt']) && isset($attrs['editAsset'])){
+                foreach ($attrs['editAsset'] as $id){
+                    $this->alt_text = $attrs['edit_alt'][$id];
+                    $this->dom_id = $attrs['edit_dom_id'][$id];
+                    $this->id = $id;
+                    $this->update();
+                }
+              }            
         }
     }
 
@@ -287,21 +285,15 @@ class Asset
         $st->execute();
         $conn = null;
     }
-    public function update($data)
+    public function update()
     {
-        $this->dom_id = $this->exists($data, 'dom_id', 'edit_dom_id');
-        $this->alt_text = $this->exists($data, 'alt', 'edit_alt');
-        if (isset($data['extension']))
-        {
-            $this->extension = $data['extension'];
-        }
         $conn = getConn();
-        $sql = "UPDATE assets INNER JOIN article_asset ON article_asset.asset_id = assets.id SET alt=:alt, attr_id=:attr, extension=:ext WHERE article_asset.article_id = :id";
+        $sql = "UPDATE assets INNER JOIN article_asset ON article_asset.asset_id = assets.id SET alt=:alt, attr_id=:attr WHERE article_asset.article_id = :art AND assets.id = :id";
         $st = $conn->prepare($sql);
-        $st->bindValue(":ext", $this->extension, PDO::PARAM_STR);
         $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
         $st->bindValue(":attr", $this->dom_id, PDO::PARAM_STR);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_STR);
+        $st->bindValue(":art", $this->articleID, PDO::PARAM_INT);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         $st->execute();
         $conn = null;
     }

@@ -91,28 +91,15 @@ class Article
         if(isset($data['page'])){
             $this->page = preg_replace($this->reg, "", $data['page']);
         }
-        if (isset($data['asset'])){
-        //$asset = new Asset($this->id, $this->page);
-        //$asset->update($data);
-        }
     }
+    /* direct Article attrs */
     public function storeFormValues($params)
     {
         // Store all the parameters
         $this->__construct($params);
-               var_dump($params);
-
         // Parse and store the publication date
         $this->pubDate = formatDate($params['pubDate']);
     }
-
-    /**
-     * Returns an Article object matching the given article ID
-     *
-     * @param int The article ID
-     * @return Article|false The article object, or false if the record was not found or there was a problem
-     */
-
     public static function getById($id)
     {
         $conn = getConn();        

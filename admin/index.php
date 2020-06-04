@@ -76,8 +76,9 @@ if(isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQU
         }
                 
         $article->update();
-        
+        /* this will always be true due to enctype="multipart/form-data" */
         if (isset($_FILES['asset'])) {
+            /* if the file wasn't an upload (UPLOAD_ERR_OK != 0) Asset will only update the attributes */
             $article->storeUploadedFile($_FILES['asset'], $_POST);
             header( "Location: ?status=changesSaved" );
         }
@@ -94,6 +95,7 @@ if(isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQU
     }
     exit();
 }
+    
 
     //newArticle present in queryString
 if(isset($_GET['action']) && $_GET['action'] == 'newArticle'){
