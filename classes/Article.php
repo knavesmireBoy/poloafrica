@@ -251,38 +251,27 @@ class Article
         $paths = [];
         $uber = [];
         $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
-        //$src = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/';
         $assetpath = ARTICLE_ASSETS_PATH . '/' . $this->page . '/';
         //isImage
         while ($row = $st->fetch(PDO::FETCH_NUM))
         {
             $paths = [];
+            $paths['id'] = $row[0];
+            $paths['alt'] = $row[2];
+            $paths['edit_alt'] = $row[2];
+            $paths['dom_id'] = $row[3];
+            
             if($this->isImage($row[1])){
                 $paths['src'] = ARTICLE_IMAGE_PATH  . $pathtype . $row[0] . $row[1];
-                $paths['alt'] = $row[2];
-                $paths['id'] = $row[0];
-                $paths['dom_id'] = $row[3];
             }
             elseif($this->isVideo($row[1])){
                 $paths['src'] = ARTICLE_VIDEO_PATH . '/' . $this->page . '/' . $row[4] . $row[1];
-                $paths['alt'] = $row[2];
-                $paths['edit_alt'] = $row[2];
-                $paths['id'] = $row[0];
-                $paths['dom_id'] = $row[3];
             }
             else {
                 $paths['path'] = $assetpath . $row[4] . $row[1];
-                $paths['id'] = $row[0];
-                $paths['alt'] = $row[2];
-                $paths['dom_id'] = $row[3];
                 if($this->isGif($row[1])){
                     $paths['src'] = $assetpath . $row[4] . $row[1];
-                }
-                else {
-                    
-                }
-                //$paths['path'] = ARTICLE_ASSETS_PATH . '/' . $this->page . '/' . $row[4] . $row[1];
-                
+                }                
             }
             $uber[] = $paths;
         }
@@ -290,7 +279,6 @@ class Article
     }
     public function storeUploadedFile($uploaded, $attrs = array())
     {
-        //var_dump($attrs);
         $asset = new Asset($this->id, $this->page);
         $asset->storeUploadedFile($uploaded, $attrs);
     }

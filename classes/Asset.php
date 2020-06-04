@@ -31,89 +31,6 @@ class Asset
         '.avi'
     );
 
-    public function __construct($articleID, $page)
-    {
-        $this->articleID = $articleID;
-        $this->page = $page;
-    }
-
-    protected function exists($o, $p1, $p2)
-    {        
-        if(isset($o[$p1]) && !empty($o[$p1])){
-            return $o[$p1];
-        }
-        elseif(isset($o[$p2]) && !empty($o[$p2])){
-            return $o[$p2];
-        }
-    }
-
-    protected function getStoredProperty($prop)
-    {
-        $conn = getConn();
-        $sql = "SELECT extension, name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
-        doPreparedQuery($st, "Error retreiving $prop for this file");
-        $res = $st->fetch(PDO::FETCH_ASSOC);
-        return isset($res[$prop]) ? $res[$prop] : "";
-    }
-
-    protected function setProperties($asset, $attrs = array())
-    {
-        $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
-        $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']), '.')) : $this->getStoredProperty('extension');
-        
-        if(isset($attrs['alt'])){//insert
-            $this->alt_text = $attrs['alt'];
-            $this->dom_id = $attrs['dom_id'];
-        }    
-    }
-
-    protected function removeFile($id)
-    {
-        if ($this->isImage())
-        {
-            $exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
-            $exec($id);
-        }
-        else
-        {
-            $exec = $this->unlinkAsset(unlinker(ARTICLE_ASSETS_PATH, $this->page , "Couldn't delete the asset."));
-            //exit($this->filename . '∞∞∞');
-            $exec($this->getNameFromId($id));
-        }
-    }
-
-    public function delete($id)
-    {
-        $conn = getConn();
-        $st = prepSQL($conn, $this->misql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retreiving record');
-
-        while ($row = $st->fetch(PDO::FETCH_NUM))
-        {
-            $this->id = $row[0];
-            //set the extension used in ::isImage to determine delete path
-            $this->extension = $row[1];
-            if ($id == $row[0])
-            {
-                $this->removeFile($id);
-            }
-        }
-    }
-
-    protected function getNameFromId()
-    {
-        $conn = getConn();
-        $sql = "SELECT name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retreiving the name for this file');
-        $res = $st->fetch(PDO::FETCH_NUM);
-        return $res[0];
-    }
-
     protected function unlinkImages($f1, $f2)
     {
         return function ($id) use ($f1, $f2)
@@ -139,6 +56,52 @@ class Asset
     protected function isVideo($ext)
     {
         return in_array($ext, $this->video_extensions);
+    }
+
+    protected function getStoredProperty($prop)
+    {
+        $conn = getConn();
+        $sql = "SELECT extension, name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        doPreparedQuery($st, "Error retreiving $prop for this file");
+        $res = $st->fetch(PDO::FETCH_ASSOC);
+        return isset($res[$prop]) ? $res[$prop] : "";
+    }
+
+    protected function setProperties($asset, $attrs = array())
+    {
+        $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
+        $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']) , '.')) : $this->getStoredProperty('extension');
+
+        if (isset($attrs['alt']))
+        { //insert
+            $this->alt_text = $attrs['alt'];
+            $this->dom_id = $attrs['dom_id'];
+        }
+    }
+    protected function getNameFromId()
+    {
+        $conn = getConn();
+        $sql = "SELECT name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retreiving the name for this file');
+        $res = $st->fetch(PDO::FETCH_NUM);
+        return $res[0];
+    }
+
+    protected function getFilePath($type = IMG_TYPE_FULLSIZE)
+    {
+        if ($this->id && $this->extension && in_array($this->extension, $this->img_extensions))
+        {
+            return ARTICLE_IMAGE_PATH . "/$type/" . $this->id . $this->extension;
+        }
+        elseif ($this->id && $this->extension && in_array($this->extension, $this->video_extensions))
+        {
+            return ARTICLE_VIDEO_PATH . "/$this->page/" . $this->filename . $this->extension;
+        }
+        return ARTICLE_ASSETS_PATH . "/$this->page/" . $this->filename . $this->extension;
     }
 
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
@@ -201,16 +164,83 @@ class Asset
     {
         if (is_uploaded_file(trim($asset['tmp_name'])))
         {
-            if (!(move_uploaded_file($asset['tmp_name'], $this->getFilePath())))
+            if (!(move_uploaded_file(trim($asset['tmp_name']) , $this->getFilePath())))
             {
+                $this->deleteAsset($this->id);
                 trigger_error("Asset::storeUploadedFile(): Couldn't move uploaded file.", E_USER_ERROR);
             }
-            if (!(chmod($this->getFilePath() , 0666)))
+            if (!(chmod($this->getFilePath(), 0666)))
             {
+                $this->deleteAsset($this->id);
                 trigger_error("Asset::storeUploadedFile(): Couldn't set permissions on uploaded file.", E_USER_ERROR);
             }
         }
     }
+
+    protected function deleteAsset()
+    {
+        $conn = getConn();
+        $sql = "DELETE assets, article_asset FROM assets, article_asset WHERE assets.id = article_asset.asset_id AND assets.id = :id";
+        $st = $conn->prepare($sql);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        $st->execute();
+    }
+
+    protected function removeFile($id)
+    {
+        if ($this->isImage())
+        {
+            $exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
+            $exec($id);
+        }
+        else
+        {
+            $exec = $this->unlinkAsset(unlinker(ARTICLE_ASSETS_PATH, $this->page, "Couldn't delete the asset."));
+            $exec($this->getNameFromId($id));
+        }
+    }
+
+    protected function update()
+    {
+        //Does the Asset object have an ID?
+        if (is_null($this->id)) trigger_error("Asset::update(): Attempt to update an Asset object that does not have its ID property set.", E_USER_ERROR);
+
+        $conn = getConn();
+        $sql = "UPDATE assets INNER JOIN article_asset ON article_asset.asset_id = assets.id SET alt=:alt, attr_id=:attr WHERE article_asset.article_id = :art AND assets.id = :id";
+        $st = $conn->prepare($sql);
+        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
+        $st->bindValue(":attr", $this->dom_id, PDO::PARAM_STR);
+        $st->bindValue(":art", $this->articleID, PDO::PARAM_INT);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        $st->execute();
+        $conn = null;
+    }
+
+    public function __construct($articleID, $page)
+    {
+        $this->articleID = $articleID;
+        $this->page = $page;
+    }
+
+    public function delete($id)
+    {
+        $conn = getConn();
+        $st = prepSQL($conn, $this->misql);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retreiving record');
+
+        while ($row = $st->fetch(PDO::FETCH_NUM))
+        {
+            //$this->id = $row[0];
+            //set the extension used in ::isImage to determine delete path
+            $this->extension = $row[1];
+            if ($id == $row[0])
+            {
+                $this->removeFile($id);
+            }
+        }
+    }
+
     /**
      * Stores any image uploaded from the edit form
      *
@@ -218,11 +248,9 @@ class Asset
      */
     public function storeUploadedFile($asset, $attrs = array())
     {
-
         if ($asset['error'] == UPLOAD_ERR_OK)
-        {//fresh upload, inserting
-            //var_dump($asset['error']);
-            // Does the Image object have an ID?
+        { //fresh upload, inserting
+            // Does the Image object have an articleID?
             if (is_null($this->articleID))
             {
                 trigger_error("Asset::storeUploadedFile(): Attempt to upload an image for an Asset object that does not have its articleID property set.", E_USER_ERROR);
@@ -233,33 +261,22 @@ class Asset
             $this->createImage($asset);
         }
         else if (!empty($attrs))
-        {//modify img attributes, updating
+        { //modify img attributes, updating
             $this->setProperties(array() , $attrs);
-              if(isset($attrs['edit_alt']) && isset($attrs['editAsset'])){
-                foreach ($attrs['editAsset'] as $id){
+
+            if (isset($attrs['edit_alt']) && isset($attrs['editAsset']))
+            {
+                foreach ($attrs['editAsset'] as $id)
+                {
                     $this->alt_text = $attrs['edit_alt'][$id];
                     $this->dom_id = $attrs['edit_dom_id'][$id];
                     $this->id = $id;
                     $this->update();
                 }
-              }            
+            }
         }
     }
 
-    public function getFilePath($type = IMG_TYPE_FULLSIZE)
-    {
-        if ($this->id && $this->extension && in_array($this->extension, $this->img_extensions))
-        {
-            return ARTICLE_IMAGE_PATH . "/$type/" . $this->id . $this->extension;
-        }
-        elseif ($this->id && $this->extension && in_array($this->extension, $this->video_extensions))
-        {
-            return ARTICLE_VIDEO_PATH . "/$this->page/" . $this->filename . $this->extension;
-        }
-        return ARTICLE_ASSETS_PATH . "/$this->page/" . $this->filename . $this->extension;
-    }
-
-    /* IMAGES CAN EITHER BE INSERTED OR DELETED */
     public function insert()
     {
         // Does the Image object already have an ID?
@@ -277,22 +294,10 @@ class Asset
         $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
         $st->execute();
         $this->id = $conn->lastInsertId();
-        
+
         $sql = "INSERT INTO article_asset (article_id, asset_id) VALUES (:aID, :id)";
         $st = $conn->prepare($sql);
         $st->bindValue(":aID", $this->articleID, PDO::PARAM_INT);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        $st->execute();
-        $conn = null;
-    }
-    public function update()
-    {
-        $conn = getConn();
-        $sql = "UPDATE assets INNER JOIN article_asset ON article_asset.asset_id = assets.id SET alt=:alt, attr_id=:attr WHERE article_asset.article_id = :art AND assets.id = :id";
-        $st = $conn->prepare($sql);
-        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
-        $st->bindValue(":attr", $this->dom_id, PDO::PARAM_STR);
-        $st->bindValue(":art", $this->articleID, PDO::PARAM_INT);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         $st->execute();
         $conn = null;

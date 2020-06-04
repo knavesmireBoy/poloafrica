@@ -5,10 +5,7 @@ $cur = 'post' . $count; ?>
 <input class="read-more-state" id="<?php echo $cur?>" type="checkbox">
     <?php $imagePaths = $article->getFilePath();
        foreach($imagePaths as $image) : 
-    if(isset($image['src'])){ 
-           //var_dump($image);?>
-
-    <img id="<?php htmlout($image['dom_id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
+    if(isset($image['src'])){ ?>    <img id="<?php htmlout($image['dom_id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
     <?php }     
        endforeach; ?>
     <article> 

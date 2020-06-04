@@ -50,29 +50,27 @@
             
           </li>
           <?php if ($results['article']):
-            $filepath = array('alt' => '', 'dom_id' => ''); ?>
+            $attribute = array('alt' => '', 'dom_id' => '', 'path' => ''); ?>
             <li class="asset">
                 <?php
-                   $filepaths = $results['article']->getFilePath(true);
-                   foreach($filepaths as $filepath) : ?>
+                   $attributes = $results['article']->getFilePath(true);
+                   foreach($attributes as $attribute) : ?>
                 <figure>
               <?php
-              if(isset($filepath['src'])){
-              $path = Article::getFileName($filepath['src']);
-              //$name = explode('.', $path)[0];
+              if(isset($attribute['src'])){
+              $path = Article::getFileName($attribute['src']);
               ?>
-            <img src="<?php htmlout($filepath['src']); ?>" alt="<?php htmlout($filepath['alt']); ?>" id="<?php htmlout($filepath['dom_id']); ?>">
+            <img src="<?php htmlout($attribute['src']); ?>" alt="<?php htmlout($attribute['alt']); ?>" id="<?php htmlout($attribute['dom_id']); ?>">
                 <?php }
-                else if(isset($filepath['path'])){
-                    $path = Article::getFileName($filepath['path']);
-                    //$name = explode('.', $path)[0]; ?>
+                else if(isset($attribute['path'])){
+                    $path = Article::getFileName($attribute['path']); ?>
                     <img src="../images/pdf.png" alt="" class="pdf_icon">
                     <?php
                 }
                 ?>
                     <figcaption>
-                <span title="<?php htmlout($filepath['alt']); ?>">Delete</span>
-                <input type="checkbox" title= "<?php htmlout($path); ?>" name="deleteAsset[]" id="<?php htmlout($filepath['id']); ?>" value="<?php htmlout($filepath['id']); ?>"/>
+                <span title="<?php htmlout($attribute['alt']); ?>">Delete</span>
+                <input type="checkbox" title= "<?php htmlout($path); ?>" name="deleteAsset[]" id="<?php htmlout($attribute['id']); ?>" value="<?php htmlout($attribute['id']); ?>"/>
             <?php include "../templates/attributes_edit.php"; ?>
                     </figcaption></figure>
             <?php
