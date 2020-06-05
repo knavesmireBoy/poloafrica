@@ -6,49 +6,21 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
 include_once '../myconfig.php';
 $results = ['page_title' => 'Enquiries'];
-$style = 'enq';
+$style = 'enquiries';
 include "../templates/header.php";
 ?>
 <?php
 $articles = Article::getListByPage("enquiries");
 $count = 1;
+include "../templates/nav.php"
 ?>
-<body id="enquiries">
-    <div id="wrap">
-     <header>
-                <a href=".">
-			<h1>POLOAFRICA<img src="../images/logo_alt.png"></h1></a>
-                <nav id="main_nav">
-                       <label class="menu" for="menu-toggle"></label>
-                <input id="menu-toggle" type="checkbox">
-			<ul id="nav">
-				<li><a href="..">home</a></li>				
-				<li><a href="../trust">the trust</a></li>
-				<li><a href="../scholars">the scholars</a></li>				
-				<li><a href="../place">the place</a></li>				
-				<li><a href="../stay">your stay</a></li>		
-				<li><a href="../polo">polo</a></li>
-				<li><a href="../medley">medley</a></li>					
-				<li><a href=".">enquiries</a>
-                <ul><li><a href="#donations">donations and sponsorship</a></li>
-                    <li><a href="#rates">holiday rates</a></li>
-                    <li><a href="#contact">contact us</a></li>
-                    <li><a href="#contactform">contact form</a></li>
-                    <li><a href="#directions">directions</a></li>
-							</ul></li>					
-				<li><a href="../photos" target="_top">photos</a></li>
-			</ul></nav></header>
-        	<h2>
-				<span>enquiries</span>
-			</h2>
-	<main class="override">
-        <section id="intro">
+<main class="override">
+<section id="intro">
 <input class="read-more-state" id="post1" type="checkbox">
 <label class="read-more-trigger" for="post1"></label>
             <?php
-            
             $article = $articles['Donations and sponsorship'];
-         $imagePaths = $article->getFilePath();
+            $imagePaths = $article->getFilePath();
             foreach($imagePaths as $image) : ?>
     <img id="<?php htmlout($image['dom_id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
     <?php endforeach;

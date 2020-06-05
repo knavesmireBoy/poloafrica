@@ -1,46 +1,59 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
+    
+    function concatt($nm){
+        return function($a, $i) use($nm) {
+        return ucfirst($nm[$i]) . ' ' . ucfirst($a);
+    };
+    }
 
-$decorate = prefixer('the ', array('trust', 'scholars', 'place'));
-function F($str){
-    $pp = Article::getPages($style);
+function whitelist($wl){
+  return function($str) use ($wl){
+      for($i=0; $i < count($wl); $i++){
+          if(stristr($wl[$i], $str)){
+              return $wl[$i];
+          }
+      }
+      return ucfirst($str);
+  };  
+}
+$whitey = array_map(concatt(array('your', 'the', 'the', 'the')), array('stay', 'trust', 'scholars', 'place'), array(0,1,2,3));
+
+function F($style, $deco){
+    $pp = array_reverse(Article::getPages($style));
     $titles = Article::getTitles($style);
     foreach($pp as $p){
-    
-    if($p === $style){
-        echo "<li><a href='.'>$style</a><ul>";
+        if($p['page'] === $style){
+            $tt = strtolower($deco($style));
+            echo "<li><a href='.'>$tt</a><ul>";
         foreach ($titles as $t){
-            $id = '#' . strip($t);
-            $title = $decorate($t);
-            echo "<li><a href='$id'>$title</a></li>";
+            $tt = strtolower($t['title']);
+            $id = '#' . str_replace(' ', '', $tt);
+            $id = str_replace('the', '', $id);
+            $title = $deco($t['title']);
+            echo "<li><a href='$id'>$tt</a></li>";
         }
-        echo '</ul></li> ';
-    }
+            echo '</ul></li> ';
+        }
         else {
-            echo "<li><a href='../$t'>$t</a></li>";
+            $page = $p['page'];
+            $mypage = strtolower($deco($page));
+            echo "<li><a href='../$page'>$mypage</a></li>\n";
         }
+    }
 }
-}
-?><nav id="main_nav">
-                    <label class="menu" for="menu-toggle"></label>
-                    <input id="menu-toggle" type="checkbox">
-                    <ul id="nav">
-						<li><a href="..">home</a></li>
-						<li><a href="../trust">the trust</a></li>
-						<li><a href="../scholars">the scholars</a></li>
-						<li><a href="../place">the place</a></li>						
-						<li><a href="../stay">your stay</a></li>						
-						<li><a href=".">polo</a>
-								<ul>
-								<li><a href="#facilities">facilities</a></li>
-								<li><a href="#ponies">ponies</a></li>
-								<li><a href="#team">our team</a></li>
-								<li><a href="#poloday">your polo day</a></li>								
-								</ul>
-								</li>
-						<li><a href="../medley">medley</a></li>
-						<li><a href="../enquiries">enquiries</a></li>
-						<li><a href="../photos">photos</a></li>
-			</ul>
-                    </nav>
+?>
+<body id="<?php htmlout($style); ?>">
+	<div id="wrap">
+         <header>
+             <a href=".">
+			<h1>POLOAFRICA<img src="../images/logo_alt.png"></h1></a>
+             <nav id="main_nav">
+                 <label class="menu" for="menu-toggle"></label>
+                 <input id="menu-toggle" type="checkbox">
+                 <ul id="nav">
+                     <?php F($style, whitelist($whitey)); ?>
+                 </ul>
+             </nav></header>
+        <h2><span><?php htmlout($style); ?></span></h2>

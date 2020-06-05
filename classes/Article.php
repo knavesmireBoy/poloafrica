@@ -162,6 +162,7 @@ class Article
         doPreparedQuery($st, 'Error fetching list of pages');
         return $st->fetchAll(PDO::FETCH_ASSOC);
      }
+     
     
     public static function getListByPage($pp){
         $conn = getConn();

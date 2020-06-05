@@ -7,7 +7,7 @@
 	<title><?php htmlout($results['page_title']); ?></title>
         <link href="../css/standard.css" media="screen" rel="stylesheet">
     <?php if(isset($style)): 
-   $my = glob("../my$style.css");?>
+   $my = glob("../css/my$style.css"); ?>
     <link href="../css/<?php echo "$style.css" ?>" media="screen" rel="stylesheet"> 
     <?php if(!empty($my)){ ?>
       <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
