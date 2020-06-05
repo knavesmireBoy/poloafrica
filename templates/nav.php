@@ -24,6 +24,7 @@ function outputWhen($output, $lookup){
     if(isset($lookup[$t])){
        if(!empty($lookup[$t])){
            $output['title'] = $lookup[$t];
+           $output['id'] = '#' . str_replace(' ', '', $lookup[$t]);
            return $output;
        }
           return false;

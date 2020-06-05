@@ -44,7 +44,7 @@
               <label for="page">Page</label>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php strtolower(htmlout($results['article']->page)); ?>">
               <label for="attr_id">Article DOM ID</label>
-            <input name="attr_id" id="attr_id" maxlength="10" value="<?php htmlout($results['article']->attrID); ?>">
+            <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
           </li>
              <li>
             
