@@ -27,9 +27,8 @@ class Paginator {
     
      public function setPages($pp){
         $this->determine('pages', $pp);
-            $records = $this->getRecords();
-            if($records > $this->display){
-                $this->pages = ceil($records/$this->display);
+            if($this->records > $this->display){
+                $this->pages = ceil($this->records/$this->display);
             }
         else {
             $this->pages = 1;
@@ -37,21 +36,13 @@ class Paginator {
         return $this;
     }
     
-     protected function getRecords(){
-         return $this->records;
-        $conn = getConn();
-         $sql = "SELECT COUNT(id) AS total FROM articles";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
-        doPreparedQuery($st, "Error obtaining a total count of articles");
-        $res = $st->fetch(PDO::FETCH_NUM)[0];
-        $conn = null;
-        $this->records = $res;
-    }
-    
     public function setRecords($r){
         $this->records = $r;
         $this->setPages(1);
+    }
+    
+    public function getRecords(){
+        return $this->records;
     }
     
     protected function setProps($data){
@@ -66,16 +57,22 @@ class Paginator {
         }
     }
     
-    public function getList(){
+    public function getList($pp = true){
         //$this->setStart($i);
         $conn = getConn();
-        $sql = "SELECT UNIX_TIMESTAMP(pubDate) AS pubDate, id, title FROM articles ORDER BY ";
-        $sql .= "pubDate ASC ";
+        $where = is_string($pp) ? "WHERE page = :pp " : "WHERE true ";
+        $sql = "SELECT UNIX_TIMESTAMP(pubDate) AS pubDate, id, title FROM articles ";
+        $sql .= $where;
+        $sql .= " ORDER BY pubDate ASC ";
         $sql .= "LIMIT $this->start, $this->display";
         $st = prepSQL($conn, $sql);
+        $st->bindValue(":pp", $pp, PDO::PARAM_STR);
         doPreparedQuery($st, "Error obtaining results from of articles");
         $data = $st->fetchAll(PDO::FETCH_ASSOC);
         $this->setProps($data);
+        if(is_string($pp)){
+            $this->setRecords(count($data));
+        }
         return $data;
     }
     

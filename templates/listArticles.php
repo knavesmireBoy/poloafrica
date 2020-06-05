@@ -10,11 +10,12 @@
         <div class="statusMessage"><?php echo $results['statusMessage'] ?></div>
 <?php } 
 
-$articles = $results['articles'];
 $paginator = $_SESSION["paginator"];
+$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : true;
 
-$articles = $paginator->getList();
-
+$articles = $paginator->getList($page);
+$pp = array_reverse(Article::getPages());
+include "pages_dropdown.php";
 ?>
  <table>
         <tr>
@@ -25,14 +26,16 @@ $articles = $paginator->getList();
         <tr>
             <td><?php echo date('j M Y', $article['pubDate']); ?></td>
           <td>
-            <a href="?action=editArticle&amp;articleId=<?php htmlout($article['id']); ?>"><?php htmlout($article['title']); ?></a>
+              <?php $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : ''; ?>
+            <a href="?action=editArticle&amp;articleId=<?php htmlout($article['id']); ?>&amp;page=<?php htmlout($page)?>"><?php htmlout($article['title']); ?></a>
           </td>
         </tr>
 <?php } ?>
 </table>
 
 <?php $paginator->doNav(); ?>
-<p><?php echo $results['totalRows']?> article<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total</p>
+
+<p><?php echo $paginator->getRecords(); ?> article<?php echo doPlural($paginator->getRecords()); ?> in total</p>
 
 <p><a href="?action=newArticle">Add a New Article</a></p>
 

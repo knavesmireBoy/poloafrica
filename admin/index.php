@@ -55,6 +55,10 @@ header("Location: ?error='Only Account Administrators may access this page.'");
         //exit(999);
         $_SESSION["paginator"]->setStart($_GET['s']);
     }
+    
+    if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'choose'){
+        require ( "../templates/listArticles.php");
+    }
 
 if(isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQUEST['action'] == 'removeArticle')){
     $results = array();
@@ -80,7 +84,8 @@ if(isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQU
         if (isset($_FILES['asset'])) {
             /* if the file wasn't an upload (UPLOAD_ERR_OK != 0) Asset will only update the attributes */
             $article->storeUploadedFile($_FILES['asset'], $_POST);
-            header( "Location: ?status=changesSaved" );
+            $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : ''; 
+            header( "Location: ?status=changesSaved&page=$page" );
         }
     }
     elseif (isset($_POST['cancel'])) {

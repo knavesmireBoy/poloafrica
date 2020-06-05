@@ -153,14 +153,18 @@ class Article
          return $st->fetchAll(PDO::FETCH_ASSOC);
      }
     
-    public static function getPages($pp){
+    public static function getPages(){
         $conn = getConn();
         $list = array();
         $sql = "SELECT page FROM articles GROUP BY page;";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":pp", $pp, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error fetching list of pages');
-        return $st->fetchAll(PDO::FETCH_ASSOC);
+        $ret = array();
+        while($row = $st->fetch(PDO::FETCH_NUM)){
+            $res[] = $row[0];
+        }
+        return $res;
+        //return $st->fetchAll(PDO::FETCH_NUM);
      }
      
     

@@ -2,7 +2,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
     
-    function concatt($first){
+    function doConcat($first){
         return function($second, $i) use($first) {
         return ucfirst($first[$i]) . ' ' . ucfirst($second);
     };
@@ -36,7 +36,7 @@ function prepareHeading($title, $deco){
     return isset($lookup[strtolower($title)]) ? $lookup[strtolower($title)] : $deco($title);
 }
 
-$whitey = array_map(concatt(array('your', 'the', 'the', 'the')), array('stay', 'trust', 'scholars', 'place'), array(0,1,2,3));
+$whitey = array_map(doConcat(array('your', 'the', 'the', 'the')), array('stay', 'trust', 'scholars', 'place'), array(0,1,2,3));
 
 function performOutput($title, $deco, $flag = false){
     $token = $flag ? '#' : '';
@@ -46,18 +46,18 @@ function performOutput($title, $deco, $flag = false){
 
 function prepareNav($style, $deco){
     //prepared pages in reverse order (ie order entered into db), fix ?
-    $pp = array_reverse(Article::getPages($style));
+    $pp = array_reverse(Article::getPages());
     $titles = Article::getTitles($style);
     $tv = array('beautiful news' => 'tv coverage', 'news24' => '', 'sport1' => '');
 
     foreach($pp as $p){
-        if($p['page'] === $style){
+        if($p === $style){
             //if $style (ie: stay) is found in lookup array return decorated title
-            $output = performOutput($p['page'], $deco, true);
+            $output = performOutput($p, $deco);
             echo '<li><a href=".">' . $output['title'] . '</a><ul>';
         foreach ($titles as $t){
             //tv articles get represented by one subnav heading
-            $output = outputWhen(performOutput($t['title'], $deco), $tv);
+            $output = outputWhen(performOutput($t['title'], $deco, true), $tv);
             if($output){
                 echo '<li><a href="' . $output['id'] . '">' . $output['title'] . '</a></li>';
             }
@@ -65,7 +65,7 @@ function prepareNav($style, $deco){
             echo '</ul></li>';
         }
         else {
-            $output = performOutput($p['page'], $deco);
+            $output = performOutput($p, $deco);
             echo '<li><a href="../' . $output['id'] . '">' . $output['title'] . '</a></li>';
         }
     }

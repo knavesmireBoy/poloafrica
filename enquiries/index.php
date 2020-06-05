@@ -40,7 +40,7 @@ include "../templates/nav.php"
            <?php if(!isset($_POST['email'])) { ?>
            <a href="#" id="contact_form"><h3>Poloafrica contact form</h3></a>
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
-           <form action="?" method="post" id="contactform"  name="contactform" >
+           <form action="?" method="post" id="poloafricacontactform"  name="poloafricacontactform" >
 				<fieldset>
 					<legend>&nbsp;Poloafrica contact form&nbsp;</legend>
 						<label for="name">name</label><input id="name" tabindex="1" type="text" name="name" required pattern ="\S+\s\S{2,}">
