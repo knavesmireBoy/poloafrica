@@ -2,9 +2,9 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
     
-    function concatt($nm){
-        return function($a, $i) use($nm) {
-        return ucfirst($nm[$i]) . ' ' . ucfirst($a);
+    function concatt($first){
+        return function($second, $i) use($first) {
+        return ucfirst($first[$i]) . ' ' . ucfirst($second);
     };
     }
 
@@ -18,28 +18,55 @@ function whitelist($wl){
       return ucfirst($str);
   };  
 }
+
+function outputWhen($output, $lookup){
+    $t = strtolower($output['title']);
+    if(isset($lookup[$t])){
+       if(!empty($lookup[$t])){
+           $output['title'] = $lookup[$t];
+           return $output;
+       }
+          return false;
+    }
+       return $output;
+}
+
+function prepareHeading($title, $deco){
+   $lookup = array('home' => 'Polo In Africa'); 
+    return isset($lookup[strtolower($title)]) ? $lookup[strtolower($title)] : $deco($title);
+}
+
 $whitey = array_map(concatt(array('your', 'the', 'the', 'the')), array('stay', 'trust', 'scholars', 'place'), array(0,1,2,3));
 
-function F($style, $deco){
+function performOutput($title, $deco, $flag = false){
+    $token = $flag ? '#' : '';
+    $id = str_replace('the', '', $token . str_replace(' ', '', strtolower($title)));
+    return array( 'id' => $id, 'title' => strtolower($deco($title)));
+}
+
+function prepareNav($style, $deco){
+    //prepared pages in reverse order (ie order entered into db), fix ?
     $pp = array_reverse(Article::getPages($style));
     $titles = Article::getTitles($style);
+    $tv = array('beautiful news' => 'tv coverage', 'news24' => '', 'sport1' => '');
+
     foreach($pp as $p){
         if($p['page'] === $style){
-            $tt = strtolower($deco($style));
-            echo "<li><a href='.'>$tt</a><ul>";
+            //if $style (ie: stay) is found in lookup array return decorated title
+            $output = performOutput($p['page'], $deco, true);
+            echo '<li><a href=".">' . $output['title'] . '</a><ul>';
         foreach ($titles as $t){
-            $tt = strtolower($t['title']);
-            $id = '#' . str_replace(' ', '', $tt);
-            $id = str_replace('the', '', $id);
-            $title = $deco($t['title']);
-            echo "<li><a href='$id'>$tt</a></li>";
+            //tv articles get represented by one subnav heading
+            $output = outputWhen(performOutput($t['title'], $deco), $tv);
+            if($output){
+                echo '<li><a href="' . $output['id'] . '">' . $output['title'] . '</a></li>';
+            }
         }
-            echo '</ul></li> ';
+            echo '</ul></li>';
         }
         else {
-            $page = $p['page'];
-            $mypage = strtolower($deco($page));
-            echo "<li><a href='../$page'>$mypage</a></li>\n";
+            $output = performOutput($p['page'], $deco);
+            echo '<li><a href="../' . $output['id'] . '">' . $output['title'] . '</a></li>';
         }
     }
 }
@@ -53,7 +80,10 @@ function F($style, $deco){
                  <label class="menu" for="menu-toggle"></label>
                  <input id="menu-toggle" type="checkbox">
                  <ul id="nav">
-                     <?php F($style, whitelist($whitey)); ?>
+                     <?php prepareNav($style, whitelist($whitey)); ?>
                  </ul>
              </nav></header>
-        <h2><span><?php htmlout($style); ?></span></h2>
+        <h2><span><?php 
+            //run heading through a lookup check
+            htmlout(prepareHeading($style, whitelist($whitey)));
+            ?></span></h2>
