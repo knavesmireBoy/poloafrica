@@ -42,6 +42,13 @@
     display: inline-block;
 }
 
+#admin form li > div, #admin form li > div+textarea {
+    display: block;
+    margin: 0 0 0 17%;
+    background-color: floralwhite;
+}
+
+
 #admin form li span {
     width: auto;
 }
