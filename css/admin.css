@@ -155,3 +155,8 @@
 #pp a:hover {
     color: black;
 }
+
+form#page_select{
+    background-color: white;
+    padding: 1em 0;
+}

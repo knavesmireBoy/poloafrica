@@ -40,7 +40,10 @@
           </li>
           <li id="datepage">
             <label for="pubDate">Publication Date</label>
-            <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo $results['article']->pubDate ? date( "Y-m-d", $results['article']->pubDate ) : "" ?>" />
+              <?php 
+              $now = new DateTime();
+              ?>
+            <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date( "Y-m-d", $now->getTimestamp()) ;?>" />
               <label for="page">Page</label>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php strtolower(htmlout($results['article']->page)); ?>">
               <label for="attr_id">Article DOM ID</label>
@@ -104,3 +107,4 @@
         </div>
       </form>
 <a href="..">Home</a>
+<script src="../js/markup.js"></script>

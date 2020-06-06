@@ -1,4 +1,4 @@
-<form action="." method="get">
+<form action="." method="get" id="page_select">
     <select id="page" name="page">
 <option value="">Select Page</option>
 <?php  foreach ($pp as $p): ?>

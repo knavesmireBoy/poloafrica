@@ -57,7 +57,10 @@ header("Location: ?error='Only Account Administrators may access this page.'");
     }
     
     if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'choose'){
+        if(!empty($_REQUEST['page'])){
         require ( "../templates/listArticles.php");
+        exit();
+        }
     }
 
 if(isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQUEST['action'] == 'removeArticle')){
