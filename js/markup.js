@@ -20,9 +20,6 @@ var $ = function(str){
     Maker = function(tx, inp){
         var endlink = /\[(\d)+\]:.+/g,
             i = 0,
-            ws1 = /^\s+.+/,
-            ws2 = /\s+$/,
-            wrap = /.+\n+(.+)/g,
             getReg = function(n){
                 return new RegExp('\\[' + n + '\\]:');
             },
@@ -36,7 +33,22 @@ var $ = function(str){
                     return ret.replace('the', '');
                 }
                 return '';
-            }
+            },
+            fixFrom = function(str, from){
+                if(/^\s+.+/.test(str)){
+                    return from+1;
+                }
+                return from;
+            },
+            fixTo = function(str, to){
+                if(/\s+$/.test(str)){
+                    return to-1;
+                }
+                return to;
+            },
+            isSelected = function(a, b){
+                return a != b;
+            };
         return {
             link: function(){
                 var res = window.prompt('Enter hyperlink'),
@@ -44,8 +56,13 @@ var $ = function(str){
                     from = tx.selectionStart,
                     to = tx.selectionEnd,
                     cur = tx.value.slice(from, to);
-                from = ws1.test(cur) ? from+=1 : from;
-                to = ws2.test(cur) ? to-=1 : to;
+                
+                 if(!isSelected(from, to)){
+                    return;
+                }
+                
+                from = fixFrom(cur, from);
+                to = fixTo(cur, to);
                 if(res){
                     i = getCurrent(cur);
                     mybreak = (i === 1) ? '\n\n[' : mybreak;
@@ -61,14 +78,18 @@ var $ = function(str){
                     from = tx.selectionStart,
                     to = tx.selectionEnd,
                     cur = tx.value.slice(from, to);
-                from = ws1.test(cur) ? from+=1 : from;
-                to = ws2.test(cur) ? to-=1 : to;
+                
+                 if(!isSelected(from, to)){
+                    return;
+                }
+                
+                
+                from = fixFrom(cur, from);
+                to = fixTo(cur, to);
                 cur = tx.value.slice(from, to);
                 n = cur.slice(-2, -1);
                 end = tx.value.search(getReg(n));
-                
                 n = n === 1 ? 7 : 6;
-                
                 tx.value = tx.value.slice(0, from) + cur.slice(1, -4) + tx.value.slice(to);
                 tx.value = tx.value.slice(0, end-n);
             },
@@ -77,6 +98,9 @@ var $ = function(str){
                     to = tx.selectionEnd,
                     cur = tx.value.slice(from, to);
                 
+                 if(!isSelected(from, to)){
+                    return;
+                }
                                                 
                 if(cur.charAt(0) === '-'){
                      tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/^-/g, '\n') + tx.value.slice(to);
@@ -86,21 +110,84 @@ var $ = function(str){
                     tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/(\n)/g, '$1- ') + tx.value.slice(to);
                 }
             },
+            
+            bold: function(){
+                var from = tx.selectionStart,
+                    to = tx.selectionEnd,
+                    cur = tx.value.slice(from, to);
+                
+                
+                 if(!isSelected(from, to)){
+                    return;
+                }
+                
+                from = fixFrom(cur, from);
+                to = fixTo(cur, to);
+                cur = tx.value.slice(from, to);
+                                
+                if(cur.charAt(0) === '*'){
+                     tx.value = tx.value.slice(0, from) + cur.replace(/^\*\*(.+)\*\*$/g, '$1') + tx.value.slice(to);
+                }
+                else {
+                    tx.value = tx.value.slice(0, from) + '**' + cur + '**' + tx.value.slice(to);
+                }
+            },
+            
+            italics: function(){
+                var lookahead,
+                    lookbehind,
+                    res,
+                    from = tx.selectionStart,
+                    to = tx.selectionEnd,
+                    cur = tx.value.slice(from, to);
+                
+                 if(!isSelected(from, to)){
+                    return;
+                }
+                
+                from = fixFrom(cur, from);
+                to = fixTo(cur, to);
+                cur = tx.value.slice(from, to);
+               
+                //lookahead = tx.value.slice(from, to+1);
+                ///lookbehind = tx.value.slice(from-1, to);
+                //res = lookahead.match(new RegExp(cur.substr(-1) + '(?=\\*)'))[0];
+               //lookbehind.match(new RegExp(cur.substr(1) + '(?<=\\*)'));
+                
+                
+                if(cur.charAt(0) === '_' || cur.charAt(0) === '*'){
+                    if(cur.match(/_/)){
+                     tx.value = tx.value.slice(0, from) + cur.replace(/^(\**)_(.+)_(\**)$/g, '$1$2$3') + tx.value.slice(to);
+                    }
+                    else {
+                      tx.value = tx.value.slice(0, from) + '_' + cur + '_' + tx.value.slice(to);  
+                    }
+                }
+                else {
+                    tx.value = tx.value.slice(0, from) + '_' + cur + '_' + tx.value.slice(to);
+                }
+                
+            },
+            
             setCount: function(count){
                 this.count = count;
             }
-        }
+        };//ret
     },
     
     linkeroo = function(maker){
         return function(e){
-            maker[e.target.innerHTML.toLowerCase()]();
+           var txt = e.target.innerHTML.toLowerCase(),
+               func = maker[txt];
+            if(func){
+                func();
+            }
         };
     }
 
 window.addEventListener('load', function(){
     var div = document.createElement('div'),
-        tags = ['LINK', 'UNLINK', 'ULIST', 'B'],
+        tags = ['LINK', 'UNLINK', 'ULIST', 'BOLD', 'ITALICS'],
         prep = function(cb, ancr, tag){
             return function(txt){
                 cb(ancr, tag, txt);

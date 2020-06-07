@@ -84,7 +84,6 @@ class Paginator {
     }    
     
     public function doNav(){
-        
         if($this->records <= $this->display){
             return;
         }
