@@ -12,8 +12,9 @@
 
 $paginator = $_SESSION["paginator"];
 $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : true;
-
+$articles = $paginator->setStart(0);
 $articles = $paginator->getList($page);
+
 $pp = array_reverse(Article::getPages());
 include "pages_dropdown.php";
 ?>

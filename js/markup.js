@@ -5,13 +5,24 @@
 var $ = function(str){
     return document.getElementById(str);
 },
+    create = function(ancr, tag, txt){
+        if(!ancr || ! txt){
+           return document.createElement('div');
+        }
+    var el = document.createElement(tag);
+        if(txt){
+            el.appendChild(document.createTextNode(txt));
+        }
+        ancr.appendChild(el);
+        return el;
+    },
     
     Maker = function(tx, inp){
-        var regex = /\[[^\]]+\]\[\d+\]/,
-            endlink = /\[(\d)+\]:.+/g,
+        var endlink = /\[(\d)+\]:.+/g,
             i = 0,
             ws1 = /^\s+.+/,
             ws2 = /\s+$/,
+            wrap = /.+\n+(.+)/g,
             getReg = function(n){
                 return new RegExp('\\[' + n + '\\]:');
             },
@@ -21,7 +32,8 @@ var $ = function(str){
             },
             prepareId = function(str){
                 if(str === inp.value){
-                    return '{id=' + str.replace(/\s/g, '').toLowerCase() + '}';
+                   var ret = '{id=' + str.replace(/\s/g, '').toLowerCase() + '}';
+                    return ret.replace('the', '');
                 }
                 return '';
             }
@@ -33,7 +45,7 @@ var $ = function(str){
                     to = tx.selectionEnd,
                     cur = tx.value.slice(from, to);
                 from = ws1.test(cur) ? from+=1 : from;
-                to = ws2.test(cur) ? to-=1 : to;  
+                to = ws2.test(cur) ? to-=1 : to;
                 if(res){
                     i = getCurrent(cur);
                     mybreak = (i === 1) ? '\n\n[' : mybreak;
@@ -60,6 +72,20 @@ var $ = function(str){
                 tx.value = tx.value.slice(0, from) + cur.slice(1, -4) + tx.value.slice(to);
                 tx.value = tx.value.slice(0, end-n);
             },
+            ulist: function(){
+                var from = tx.selectionStart,
+                    to = tx.selectionEnd,
+                    cur = tx.value.slice(from, to);
+                
+                                                
+                if(cur.charAt(0) === '-'){
+                     tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/^-/g, '\n') + tx.value.slice(to);
+                     tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/\n-/g, '\n') + tx.value.slice(to);
+                }
+                else {
+                    tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/(\n)/g, '$1- ') + tx.value.slice(to);
+                }
+            },
             setCount: function(count){
                 this.count = count;
             }
@@ -74,12 +100,14 @@ var $ = function(str){
 
 window.addEventListener('load', function(){
     var div = document.createElement('div'),
-        a = document.createElement('a');
-    a.appendChild(document.createTextNode('LINK'));
-    div.appendChild(a);
-    a = document.createElement('a');
-     a.appendChild(document.createTextNode('UNLINK'));
-    div.addEventListener('click', linkeroo(Maker($('content'), $('title'))));
-    div.appendChild(a);
-    $('content').parentNode.insertBefore(div, $('content'));
+        tags = ['LINK', 'UNLINK', 'ULIST', 'B'],
+        prep = function(cb, ancr, tag){
+            return function(txt){
+                cb(ancr, tag, txt);
+        };
+        };
+            tags.forEach(prep(create, div, 'a'));
+
+div.addEventListener('click', linkeroo(Maker($('content'), $('title'))));
+$('content').parentNode.insertBefore(div, $('content'));
 });

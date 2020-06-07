@@ -11,6 +11,7 @@
     <link href="../css/<?php echo "$style.css" ?>" media="screen" rel="stylesheet"> 
     <?php if(!empty($my)){ ?>
       <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <?php
                          }
               endif; ?>
