@@ -52,36 +52,40 @@
              <li>
             
           </li>
-          <?php if ($results['article']):
-            $attribute = array('alt' => '', 'dom_id' => '', 'path' => ''); ?>
+          <?php if ($results['article']) {
+            $attribute = array('alt' => '', 'dom_id' => '', 'path' => ''); 
+            $path = null; ?>
+            <?php
+            $attributes = $results['article']->getFilePath(true);
+            //could be empty set
+            if(isset($attributes[0])){ ?>
             <li class="asset">
                 <?php
-                   $attributes = $results['article']->getFilePath(true);
                    foreach($attributes as $attribute) : ?>
                 <figure>
               <?php
               if(isset($attribute['src'])){
               $path = Article::getFileName($attribute['src']);
+                  //$path = '../../../filestore/poloafrica/thumb/029.jpg';
               ?>
             <img src="<?php htmlout($attribute['src']); ?>" alt="<?php htmlout($attribute['alt']); ?>" id="<?php htmlout($attribute['dom_id']); ?>">
                 <?php }
                 else if(isset($attribute['path'])){
                     $path = Article::getFileName($attribute['path']); ?>
                     <img src="../images/pdf.png" alt="" class="pdf_icon">
-                    <?php
-                }
-                ?>
+                    <?php } ?>
                     <figcaption>
                 <span title="<?php htmlout($attribute['alt']); ?>">Delete</span>
                 <input type="checkbox" title= "<?php htmlout($path); ?>" name="deleteAsset[]" id="<?php htmlout($attribute['id']); ?>" value="<?php htmlout($attribute['id']); ?>"/>
             <?php include "../templates/attributes_edit.php"; ?>
                     </figcaption></figure>
-            <?php
-            endforeach; ?>
+                <?php  endforeach; ?>
             </li>
-                <?php endif; ?>
+            <?php
+            } }?>
             <div id="neue">
           <li>
+              
             <label for="image">Add New Asset</label>
             <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
           </li>

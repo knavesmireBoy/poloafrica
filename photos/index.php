@@ -17,7 +17,7 @@ include "../templates/nav.php";
     foreach ($articles as $article){
         $count += 1;
         if(!$article->summary){
-            include '../templates/article.php';
+            include '../templates/photos.php';
         }
     }
 echo '</main></div>';
