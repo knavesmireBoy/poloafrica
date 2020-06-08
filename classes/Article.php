@@ -164,7 +164,6 @@ class Article
             $res[] = $row[0];
         }
         return $res;
-        //return $st->fetchAll(PDO::FETCH_NUM);
      }
      
     

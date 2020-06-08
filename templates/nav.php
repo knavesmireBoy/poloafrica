@@ -33,7 +33,7 @@ function outputWhen($output, $lookup){
 }
 
 function prepareHeading($title, $deco){
-   $lookup = array('home' => 'Polo In Africa'); 
+   $lookup = array('home' => 'Polo In Africa', 'photos' => 'Please enable javascript to navigate the gallery or play a slideshow'); 
     return isset($lookup[strtolower($title)]) ? $lookup[strtolower($title)] : $deco($title);
 }
 

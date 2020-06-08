@@ -1,16 +1,25 @@
 <?php
 $GLOBALS['loginError'] = '';
 
+$required = array('loggedIn', 'email', 'password');
+
+
+function doUnset(){
+session_start();
+    foreach($required as $r){
+       unset($_SESSION[$r]);
+    }
+}
+
 function userIsLoggedIn() {
 if (isset($_POST['action']) and $_POST['action'] == 'login') {
 if (!isset($_POST['email']) or $_POST['email'] == '' or !isset($_POST['password']) or $_POST['password'] == '') {
 $GLOBALS['loginError'] = 'Please fill in both fields';
 return FALSE;
 }
-$password = md5($_POST['password'] . 'poloafrica');
+$password = md5($_POST['password'] . DB_SALT);
     
 if (databaseContainsUser($_POST['email'], $password)) {
-    //andrewsykes@btinternet.com
 session_start();
 $_SESSION['loggedIn'] = TRUE;
 $_SESSION['email'] = $_POST['email'];
@@ -71,10 +80,9 @@ return FALSE;
 }
 
 function userHasRole($role) {
-//include 'db.inc.php';
-    $pdo = getConn();
+$pdo = getConn();
 try {    
-$sql = "SELECT COUNT(*) FROM user
+$sql = "SELECT COUNT(*), user.id, user.name FROM user
 INNER JOIN userrole ON user.id = userrole.user_id
 INNER JOIN role ON userrole.role_id = role.id
 WHERE email = :email AND role.description = :roleId";    
@@ -88,8 +96,10 @@ $error = 'Error searching for user innit';
 include 'error.html.php';
 exit();
 }
-$row = $s->fetch();
+$row = $s->fetch(PDO::FETCH_NUM);
 if ($row[0] > 0) {
+    //var_dump($row);
+    //$users = array(array('email' =>  $_SESSION['email'], 'id' => $row[1], 'name' => $row[2]));
 return TRUE;
 }
 else {

@@ -36,7 +36,7 @@
           </li>
           <li>
             <label for="content">Article Content</label>
-            <textarea name="content" id="content" placeholder="The HTML content of the article" required maxlength="100000" style="height: 30em;"><?php htmlout($results['article']->content);?></textarea>
+            <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="100000" style="height: 30em;"><?php htmlout($results['article']->content);?></textarea>
           </li>
           <li id="datepage">
             <label for="pubDate">Publication Date</label>

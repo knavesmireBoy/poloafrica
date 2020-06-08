@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8"><!-- IE compatibility mode issue -->
-	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<title><?php htmlout($results['page_title']); ?></title>
         <link href="../css/standard.css" media="screen" rel="stylesheet">
@@ -12,6 +12,7 @@
     <?php if(!empty($my)){ ?>
       <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/fonts.css">
     <?php
                          }
               endif; ?>
@@ -27,8 +28,3 @@
 <link href="../css/hacks.css" media="screen" rel="stylesheet">
 <![endif]-->
 </head>
-    <!--<body id='<?php //echo "$style.css"; ?>'>
-		<div id="wrap">
-            <header>
-			<a href=".">
-			<h1>POLOAFRICA<img src="../images/logo_alt.png"></h1></a>-->
