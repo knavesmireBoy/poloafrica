@@ -68,6 +68,10 @@ class Asset
      }
 
    protected function getRepo(){
+         return $this->page ==='photos' ? ARTICLE_UPLOAD_PATH : ARTICLE_IMAGE_PATH;
+     }
+    
+    protected function getLocalRepo(){
          return $this->page ==='photos' ? ARTICLE_GALLERY_PATH : ARTICLE_IMAGE_PATH;
      }
 
@@ -85,10 +89,8 @@ class Asset
    {
        $conn = getConn();
        $foreign = $this->getForeignTable();
-       //$sql = "SELECT extension, name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
        $linker = $this->getLinkTable();
-       $onclause = $this->page === 'photos' ? 'AA.gallery_id' : 'AA.asset_id';
-       $sql = "SELECT extension, name FROM $foreign AS repo INNER JOIN $linker AS AA ON repo.id = $onclause WHERE AA.article_id = :id";
+       $sql = "SELECT extension, name FROM $foreign AS repo INNER JOIN $linker AS AA ON repo.id = AA.asset_id WHERE AA.article_id = :id";
        $st = prepSQL($conn, $sql);
        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
        doPreparedQuery($st, "Error retreiving $prop for this file");
@@ -114,8 +116,7 @@ class Asset
        $conn = getConn();
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
-       $onclause = $this->page === 'photos' ? 'AA.gallery_id' : 'AA.asset_id';
-       //$sql = "SELECT name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
+       $onclause = $this->page === 'photos' ? 'AA.asset_id' : 'AA.asset_id';
        $sql = "SELECT name FROM $foreign AS repo INNER JOIN $linker AS AA ON repo.id = $onclause WHERE AA.article_id = :id";
        $st = prepSQL($conn, $sql);
        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
@@ -124,12 +125,11 @@ class Asset
        return $res[0];
    }
 
-   protected function getFilePath($type = IMG_TYPE_FULLSIZE)
+   protected function getFilePath($type, $repo)
    {
        if ($this->id && $this->extension && in_array($this->extension, $this->img_extensions))
        {
-           //return ARTICLE_IMAGE_PATH . "/$type/" . $this->id . $this->extension;
-           return $this->getRepo() . "/$type/" . $this->storeName() . $this->extension;
+           return $repo . "/$type/" . $this->storeName() . $this->extension;
        }
        elseif ($this->id && $this->extension && in_array($this->extension, $this->video_extensions))
        {
@@ -137,73 +137,31 @@ class Asset
        }
        return ARTICLE_ASSETS_PATH . "/$this->page/" . $this->filename . $this->extension;
    }
-
    /* https://www.elated.com/add-image-uploading-to-your-cms/ */
    protected function createImage($image)
    {
        if (!$this->isImage())
        {
-           return $this->getFilePath();
+           return $this->getFilePath(IMG_TYPE_FULLSIZE, $this->getRepo());
        }
        // Get the image size and type
-       $source_image = $this->getFilePath();
-       $attrs = getimagesize($source_image);
-       /*
-       $imageWidth = imagesx($image);
-       $imageHeight = imagesy($image);
-       $imageType = exif_imagetype($image);
-       */
-
-       $imageWidth = $attrs[0];
-       $imageHeight = $attrs[1];
-       $imageType = $attrs[2];
-       // Load the image into memory
-       switch ($imageType)
-       {
-           case IMAGETYPE_GIF:
-               $imageResource = imagecreatefromgif($this->getFilePath());
-           break;
-           case IMAGETYPE_JPEG:
-               $imageResource = imagecreatefromjpeg($this->getFilePath());
-           break;
-           case IMAGETYPE_PNG:
-               $imageResource = imagecreatefrompng($this->getFilePath());
-           break;
-           default:
-               trigger_error("Asset::storeUploadedFile(): Unhandled or unknown image type ($imageType)", E_USER_ERROR);
-       }
-       //Copy and resize the image to create the thumbnail
-       $thumbHeight = intval($imageHeight / $imageWidth * IMG_THUMB_WIDTH);
-       $thumbResource = imagecreatetruecolor(IMG_THUMB_WIDTH, $thumbHeight);
-       imagecopyresampled($thumbResource, $imageResource, 0, 0, 0, 0, IMG_THUMB_WIDTH, $thumbHeight, $imageWidth, $imageHeight);
-
-       //Save the thumbnail
-       switch ($imageType)
-       {
-           case IMAGETYPE_GIF:
-               imagegif($thumbResource, $this->getFilePath(IMG_TYPE_THUMB));
-           break;
-           case IMAGETYPE_JPEG:
-               imagejpeg($thumbResource, $this->getFilePath(IMG_TYPE_THUMB) , JPEG_QUALITY);
-           break;
-           case IMAGETYPE_PNG:
-               imagepng($thumbResource, $this->getFilePath(IMG_TYPE_THUMB));
-           break;
-           default:
-               trigger_error("Asset::storeUploadedFile(): Unhandled or unknown image type ($imageType)", E_USER_ERROR);
-       }
+       $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, $this->getRepo());
+       buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, $this->getLocalRepo()));
+       buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, $this->getLocalRepo()), JPEG_QUALITY, IMG_THUMB_WIDTH);
    }
 
    protected function validate($asset)
    {
+      $repo = $this->getFilePath(IMG_TYPE_FULLSIZE, $this->getRepo());
        if (is_uploaded_file(trim($asset['tmp_name'])))
        {
-           if (!(move_uploaded_file(trim($asset['tmp_name']) , $this->getFilePath())))
+           
+           if (!(move_uploaded_file(trim($asset['tmp_name']), $repo)))
            {
                $this->deleteAsset($this->id);
                trigger_error("Asset::storeUploadedFile(): Couldn't move uploaded file.", E_USER_ERROR);
            }
-           if (!(chmod($this->getFilePath(), 0666)))
+           if (!(chmod($repo, 0666)))
            {
                $this->deleteAsset($this->id);
                trigger_error("Asset::storeUploadedFile(): Couldn't set permissions on uploaded file.", E_USER_ERROR);
@@ -216,10 +174,7 @@ class Asset
        $conn = getConn();
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
-       $onclause = $this->page === 'photos' ? 'AA.gallery_id' : 'AA.asset_id';
-       //$sql = "DELETE assets, article_asset FROM assets, article_asset WHERE assets.id = article_asset.asset_id AND assets.id = :id";
-       //$sql = "DELETE $foreign AS repo, $linker AS AA FROM $foreign, AA WHERE repo.id = $onclause AND repo.id = :id";
-       $sql = "DELETE gallery, article_gallery FROM gallery, article_gallery WHERE gallery.id = article_gallery.gallery_id AND gallery.id = :id";
+       $sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA WHERE repo.id = AA.asset_id AND repo.id = :id";
        $st = $conn->prepare($sql);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
        $st->execute();
@@ -233,7 +188,10 @@ class Asset
            $exec($id);
            */
 
-           $exec = $this->unlinkImages(unlinker($this->getRepo(), IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker($this->getRepo(), IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
+           $exec = $this->unlinkImages(unlinker($this->getLocalRepo(), IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker($this->getLocalRepo(), IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
+           $exec($id);
+           
+           $exec = $this->unlinkAsset(unlinker($this->getRepo(), IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
            $exec($id);
        }
        else
@@ -251,9 +209,7 @@ class Asset
        $conn = getConn();
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
-       $onclause = $this->page === 'photos' ? 'AA.gallery_id' : 'AA.asset_id';
-       //$sql = "UPDATE assets INNER JOIN article_asset ON article_asset.asset_id = assets.id SET alt=:alt, attr_id=:attr WHERE article_asset.article_id = :art AND assets.id = :id";
-       $sql = "UPDATE $foreign AS repo INNER JOIN $linker AS AA ON $onclause = repo.id SET alt=:alt, attr_id=:attr WHERE AA.article_id = :art AND repo.id = :id";
+       $sql = "UPDATE $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id SET alt=:alt, attr_id=:attr WHERE AA.article_id = :art AND repo.id = :id";
        $st = $conn->prepare($sql);
        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
        $st->bindValue(":attr", $this->dom_id, PDO::PARAM_STR);
@@ -270,9 +226,13 @@ class Asset
    }
 
    public function delete($id)
+       
    {
        $conn = getConn();
-       $st = prepSQL($conn, $this->misql);
+       $foreign = $this->getForeignTable();
+       $linker = $this->getLinkTable();
+       $sql = "SELECT repo.id, repo.attr_id, extension FROM $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id INNER JOIN articles ON AA.article_id = articles.id WHERE articles.id = :id";
+       $st = prepSQL($conn, $sql);
        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error retreiving record');
 
@@ -280,10 +240,13 @@ class Asset
        {
            //$this->id = $row[0];
            //set the extension used in ::isImage to determine delete path
-           $this->extension = $row[1];
+           $this->extension = $row[2];
            if ($id == $row[0])
            {
                $this->removeFile($id);
+           }
+           if("0$id" == $row[1]){
+               $this->removeFile("0$id");
            }
        }
    }
@@ -344,9 +307,8 @@ class Asset
        $st->execute();
        $this->id = $conn->lastInsertId();
        $linker = $this->getLinkTable();
-       $col = $this->page === 'photos' ? 'gallery_id' : 'asset_id';
 
-       $sql = "INSERT INTO $linker (article_id, $col) VALUES (:aID, :id)";
+       $sql = "INSERT INTO $linker (article_id, asset_id) VALUES (:aID, :id)";
        $st = $conn->prepare($sql);
        $st->bindValue(":aID", $this->articleID, PDO::PARAM_INT);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);

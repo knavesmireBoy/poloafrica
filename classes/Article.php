@@ -66,9 +66,7 @@ class Article
        $conn = getConn();
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
-       $onclause = $this->page === 'photos' ? 'AA.gallery_id' : 'AA.asset_id';
-       //$sql = "SELECT id FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
-       $sql = "SELECT id FROM $foreign AS repo INNER JOIN $linker AS AA ON repo.id = $onclause WHERE AA.article_id = :id";
+       $sql = "SELECT id FROM $foreign AS repo INNER JOIN $linker AS AA ON repo.id = AA.asset_id WHERE AA.article_id = :id";
        $st = prepSQL($conn, $sql);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error fetching asset list');
@@ -255,10 +253,7 @@ class Article
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
        $onclause = $this->page === 'photos' ? 'AA.gallery_id' : 'AA.asset_id';
-       $sql = "DELETE repo FROM articles INNER JOIN $linker AS AA ON articles.id = AA.article_id INNER JOIN $foreign AS repo ON repo.id = $onclause WHERE AA.article_id = :id";
-       /*
-       $sql = "DELETE assets FROM articles INNER JOIN article_asset AS AA ON articles.id = AA.article_id INNER JOIN assets ON assets.id = AA.asset_id WHERE AA.article_id = :id";
-       */
+       $sql = "DELETE repo FROM articles INNER JOIN $linker AS AA ON articles.id = AA.article_id INNER JOIN $foreign AS repo ON repo.id = AA.asset_id WHERE AA.article_id = :id";
        $st = $conn->prepare($sql);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
        $st->execute();
@@ -274,17 +269,9 @@ class Article
        $conn = getConn();
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
-       $onclause = $this->page === 'photos' ? 'article_gallery.gallery_id' : 'article_asset.asset_id';
-       //$onclause = $this->page === 'photos' ? 'article_gallery.gallery_id' : 'article_asset.asset_id';
-       /*$sql = "SELECT assets.id, assets.extension, assets.alt, assets.attr_id, assets.name FROM article_asset LEFT JOIN articles ON articles.id = article_asset.article_id LEFT JOIN assets ON article_asset.asset_id = assets.id WHERE articles.id = :id";
-       */
-
-       //$sql = "SELECT repo.id, repo.extension, repo.alt, repo.attr_id, repo.name FROM article_asset LEFT JOIN articles ON articles.id = article_asset.article_id LEFT JOIN $foreign AS repo ON article_asset.asset_id = repo.id WHERE articles.id = :id";
-
-       $sql = "SELECT repo.id, repo.extension, repo.alt, repo.attr_id, repo.name FROM $linker LEFT JOIN articles ON articles.id = $onclause LEFT JOIN $foreign AS repo ON $onclause = repo.id WHERE articles.id = :id";
+        $sql = "SELECT gallery.id, gallery.extension, gallery.alt, gallery.attr_id, gallery.name FROM article_gallery LEFT JOIN articles ON articles.id = article_gallery.article_id LEFT JOIN gallery ON article_gallery.asset_id = gallery.id WHERE articles.id = :id";
        
-        $sql = "SELECT gallery.id, gallery.extension, gallery.alt, gallery.attr_id, gallery.name FROM article_gallery LEFT JOIN articles ON articles.id = article_gallery.article_id LEFT JOIN gallery ON article_gallery.gallery_id = gallery.id WHERE articles.id = :id";
-       
+       $sql = "SELECT repo.id, repo.extension, repo.alt, repo.attr_id, repo.name FROM $linker AS AA LEFT JOIN articles ON articles.id = AA.article_id LEFT JOIN $foreign AS repo ON AA.asset_id = repo.id WHERE articles.id = :id";
 
        $st = $conn->prepare($sql);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
@@ -330,11 +317,11 @@ class Article
    {
        $this->removeAssets($id);
         $foreign = $this->getForeignTable();
+       $linker = $this->getLinkTable();
        $conn = getConn();
-       //$sql = "DELETE assets, article_asset FROM assets, article_asset WHERE assets.id = article_asset.asset_id AND assets.id = :id";
-       //$sql = "DELETE repo, article_asset FROM $foreign AS repo, article_asset WHERE repo.id = article_asset.asset_id AND repo.id = :id";
+       $sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA WHERE repo.id = AA.asset_id AND repo.id = :id";
        /*USING FOREIGN KEY ON article_asset SO THIS QUERY WILL SUFFICE*/
-       $sql = "DELETE FROM $foreign AS repo WHERE repo.id = :id";
+       //$sql = "DELETE FROM $foreign AS repo WHERE repo.id = :id";
        $st = $conn->prepare($sql);
        $st->bindValue(":id", $id, PDO::PARAM_INT);
        $st->execute();
