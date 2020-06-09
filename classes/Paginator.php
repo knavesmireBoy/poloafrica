@@ -1,10 +1,14 @@
 <?php
-class Paginator {
+require_once "PaginatorInterface.php";
+
+class Paginator implements PaginatorInterface {
     
     protected $display = null;
+    protected $property = null;
     public $pages = null;
     protected $start = null;
     protected $reg = "/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/";
+    
     function __construct($display, $records){
         $this->display = $display;
         $this->records = $records;
@@ -23,6 +27,18 @@ class Paginator {
     
     protected function getCurrentPage(){
         return ($this->start/$this->display) + 1;
+    }
+    //encaps
+    protected function setProps($data){
+        if (isset($data['id'])) {
+            $this->id = (int)$data['id'];
+        }
+        if (isset($data['pubDate'])) {
+            $this->pubDate = (int)$data['pubDate'];
+        }
+        if (isset($data['title'])) {
+            $this->title = preg_replace($this->reg, "", $data['title']);
+        }
     }
     
      public function setPages($pp){
@@ -43,22 +59,9 @@ class Paginator {
     
     public function getRecords(){
         return $this->records;
-    }
-    
-    protected function setProps($data){
-        if (isset($data['id'])) {
-            $this->id = (int)$data['id'];
-        }
-        if (isset($data['pubDate'])) {
-            $this->pubDate = (int)$data['pubDate'];
-        }
-        if (isset($data['title'])) {
-            $this->title = preg_replace($this->reg, "", $data['title']);
-        }
-    }
-    
+    }    
+    //encaps
     public function getList($pp = true){
-        //$this->setStart($i);
         $conn = getConn();
         $where = is_string($pp) ? "WHERE page = :pp " : "WHERE true ";
         $sql = "SELECT UNIX_TIMESTAMP(pubDate) AS pubDate, id, title FROM articles ";
@@ -87,12 +90,10 @@ class Paginator {
         if($this->records <= $this->display){
             return;
         }
-        
          echo '<nav id="pp">';
         if($this->getCurrentPage() != 1){
            echo '<a href=".?s=' . ($this->start - $this->display) . '">Previous</a>';
         }
-        
         
         for($i = 1; $i <= $this->pages; $i++){
             if($i != $this->getCurrentPage()){
@@ -102,10 +103,9 @@ class Paginator {
                 echo '<span>' . $i . '</span>';
             }
         }
-            if($this->getCurrentPage() != $this->pages){
+        if($this->getCurrentPage() != $this->pages){
             echo '<a href=".?s=' . ($this->start + $this->display) . '">Next</a>';
         }
         echo '</nav>';
     }
-    
 }

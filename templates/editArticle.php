@@ -1,3 +1,9 @@
+<?php
+ function getHeight($str){
+        return $str == 'photos' ? '5em' : '30em';
+    }
+?>
+
 <script>
       // Prevents file upload hangs in Mac Safari
       // Inspired by http://airbladesoftware.com/notes/note-to-self-prevent-uploads-hanging-in-safari
@@ -9,7 +15,8 @@
           xhr.send();
         }
       }
-      </script>
+    
+   </script>
 
       <div id="adminHeader">
         <h2>Poloafrica Admin</h2>
@@ -22,7 +29,7 @@
         <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>"/>
 
 <?php if ( isset( $results['errorMessage'] ) ) { ?>
-        <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
+        <div class="errorMessage"><?php echo $results['errorMessage']; ?></div>
 <?php } ?>
 
         <ul id="editList">
@@ -36,7 +43,7 @@
           </li>
           <li>
             <label for="content">Article Content</label>
-            <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="100000" style="height: 30em;"><?php htmlout($results['article']->content);?></textarea>
+            <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="100000" style="height:<?php getHeight(strtolower(htmlout($results['article']->page))); ?>"><?php htmlout($results['article']->content);?></textarea>
           </li>
           <li id="datepage">
             <label for="pubDate">Publication Date</label>
@@ -49,55 +56,34 @@
               <label for="attr_id">Article DOM ID</label>
             <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
           </li>
-             <li>
-            
-          </li>
-          <?php if ($results['article']) {
-            $attribute = array('alt' => '', 'dom_id' => '', 'path' => ''); 
-            $path = null; ?>
-            <?php
+            <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
             //could be empty set
-            if(isset($attributes[0])){ ?>
-            <li class="asset">
-                <?php
-                   foreach($attributes as $attribute) : ?>
-                <figure>
-              <?php
-              if(isset($attribute['src'])){
-              $path = Article::getFileName($attribute['src']);
-                  //$path = '../../../filestore/poloafrica/thumb/029.jpg';
-              ?>
-            <img src="<?php htmlout($attribute['src']); ?>" alt="<?php htmlout($attribute['alt']); ?>" id="<?php htmlout($attribute['dom_id']); ?>">
-                <?php }
-                else if(isset($attribute['path'])){
-                    $path = Article::getFileName($attribute['path']); ?>
-                    <img src="../images/pdf.png" alt="" class="pdf_icon">
-                    <?php } ?>
-                    <figcaption>
-                <span title="<?php htmlout($attribute['alt']); ?>">Delete</span>
-                <input type="checkbox" title= "<?php htmlout($path); ?>" name="deleteAsset[]" id="<?php htmlout($attribute['id']); ?>" value="<?php htmlout($attribute['id']); ?>"/>
-            <?php include "../templates/attributes_edit.php"; ?>
-                    </figcaption></figure>
-                <?php  endforeach; ?>
-            </li>
-            <?php
-            } }?>
+            if(isset($attributes[0])):
+            //$page = $results['article']->page;
+            echo "<li class='asset {$results['article']->page}'>";
+            foreach($attributes as $attribute) :
+            echo '<figure>';
+            include "../templates/attributes_route.php";
+            include "../templates/attributes_edit.php";
+            echo '</figure>';
+            endforeach;
+            echo '</li>';
+            endif;//$attributes[0]
+            endif//$results['article']
+            ?>
             <div id="neue">
           <li>
-              
             <label for="image">Add New Asset</label>
             <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
           </li>
             <?php 
             include "../templates/attributes.php";
-            ?>
-</div>
-        </ul>
-
+                ?>
+            </div>
+          </ul>
         <div class="buttons">
           <input type="submit" name="saveChanges" value="Save Changes">
-            
             <?php if (isset($remove)) {
             echo "<p>$remove <strong>{$results['article']->title}</strong> ?</p>"; ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">

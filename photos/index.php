@@ -5,7 +5,7 @@ include_once '../includes/db.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
 include_once '../myconfig.php';
-$results = ['page_title' => 'Welcome'];
+$results = ['page_title' => 'Gallery!'];
 $style = 'photos';
 include "../templates/header.php";
 $articles = Article::getListByPage($style);
@@ -27,6 +27,6 @@ include '../templates/footer.php'; ?>
     <script src="../js/eventing.js"></script>
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
-    <script src="../js/hover.js"></script>
-    <script src="../js/finder.js"></script>
+    <!--<script src="../js/hover.js"></script>
+    <script src="../js/finder.js"></script>-->
  <?php echo '</body></html>';

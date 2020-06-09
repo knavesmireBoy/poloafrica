@@ -66,6 +66,14 @@
     letter-spacing: normal;
     font-size: 1.2em;
 }
+
+li.asset label {
+    font-size: 1em;
+}
+
+.asset figcaption {
+    margin: .2em 0;
+}
 .buttons {
     margin: 0 0 0 18%;
 }
@@ -119,27 +127,30 @@
     align-content: flex-start;
 }
 .admin .asset figure  {
-    flex: 0 1 15em;
-    font-size: .75em;
+    flex: 0 1 10em;
     width: 1%;
     border: solid 1px;
     margin: .5em;
-    padding: 1em;
+    padding: .5em;
     background-color: rgba(255,255,255, 0.5);
 }
-.admin .asset {
-    margin: 0 0 0 18%;
+.admin .photos figure {
+    flex: 0 1 6em;
 }
-.admin .asset figure label, .admin .asset figure input   {
-    display: block;
-    width: 100% !important;
+.admin .asset {
+    margin: 0 0 0 17%;
+}
+.admin .asset figure label, .admin .asset figure input{
     text-align: left;
     border-width: 0px;
 }
+.admin .asset figure input {
+    margin: 0 0 .4em;
+}
 
-.admin .asset figure input[type="checkbox"]{
-    width: auto !important;
-    display: inline-block;
+.admin .asset figure > *:nth-child(n+5) {
+    display: block;
+    width: 100% !important;
 }
 
 .admin .asset figcaption > * {
