@@ -1,6 +1,6 @@
 <?php
- function getHeight($str){
-        return $str == 'photos' ? '5em' : '30em';
+ function getTheHeight($str){
+     return strtolower($str) == 'photos' ? '5em' : '30em';
     }
 ?>
 
@@ -43,7 +43,8 @@
           </li>
           <li>
             <label for="content">Article Content</label>
-            <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="100000" style="height:<?php getHeight(strtolower(htmlout($results['article']->page))); ?>"><?php htmlout($results['article']->content);?></textarea>
+              <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height: <?php htmlout(getTheHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?>
+              </textarea>
           </li>
           <li id="datepage">
             <label for="pubDate">Publication Date</label>
@@ -58,11 +59,13 @@
           </li>
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
+            $sets = count($attributes);
             //could be empty set
             if(isset($attributes[0])):
+            var_dump($attributes);
             //$page = $results['article']->page;
             echo "<li class='asset {$results['article']->page}'>";
-            foreach($attributes as $attribute) :
+            foreach($attributes as $attribute):
             echo '<figure>';
             include "../templates/attributes_route.php";
             include "../templates/attributes_edit.php";

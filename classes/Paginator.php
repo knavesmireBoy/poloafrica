@@ -1,21 +1,16 @@
 <?php
 require_once "PaginatorInterface.php";
 
-class Paginator implements PaginatorInterface {
+abstract class Paginator implements PaginatorInterface {
     
     protected $display = null;
     protected $property = null;
-    public $pages = null;
     protected $start = null;
+    public $page = null;
     protected $reg = "/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/";
-    
-    function __construct($display, $records){
-        $this->display = $display;
-        $this->records = $records;
-        $this->setPages(0)->setStart(0);
-    }
-    
-    protected function determine($property, $prop){
+    public $pages = null;
+
+  protected function determine($property, $prop){
           if(isset($prop) && is_numeric($prop)){
             $this->$property = $prop;
               return true;
@@ -27,18 +22,12 @@ class Paginator implements PaginatorInterface {
     
     protected function getCurrentPage(){
         return ($this->start/$this->display) + 1;
-    }
-    //encaps
-    protected function setProps($data){
-        if (isset($data['id'])) {
-            $this->id = (int)$data['id'];
-        }
-        if (isset($data['pubDate'])) {
-            $this->pubDate = (int)$data['pubDate'];
-        }
-        if (isset($data['title'])) {
-            $this->title = preg_replace($this->reg, "", $data['title']);
-        }
+    }    
+        
+    function __construct($display, $records){
+        $this->display = $display;
+        $this->records = $records;
+        $this->setPages(0)->setStart(0);
     }
     
      public function setPages($pp){
@@ -60,24 +49,6 @@ class Paginator implements PaginatorInterface {
     public function getRecords(){
         return $this->records;
     }    
-    //encaps
-    public function getList($pp = true){
-        $conn = getConn();
-        $where = is_string($pp) ? "WHERE page = :pp " : "WHERE true ";
-        $sql = "SELECT UNIX_TIMESTAMP(pubDate) AS pubDate, id, title FROM articles ";
-        $sql .= $where;
-        $sql .= " ORDER BY pubDate ASC ";
-        $sql .= "LIMIT $this->start, $this->display";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":pp", $pp, PDO::PARAM_STR);
-        doPreparedQuery($st, "Error obtaining results from of articles");
-        $data = $st->fetchAll(PDO::FETCH_ASSOC);
-        $this->setProps($data);
-        if(is_string($pp)){
-            $this->setRecords(count($data));
-        }
-        return $data;
-    }
     
     public function setStart($start){
         $this->determine('start', $start);

@@ -12,7 +12,8 @@
 
 $paginator = $_SESSION["paginator"];
 $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : true;
-$articles = $paginator->setStart(0);
+$start = isset($_REQUEST['s']) ? $_REQUEST['s'] :  0;
+$articles = $paginator->setStart($start);
 $articles = $paginator->getList($page);
 
 $pp = array_reverse(Article::getPages());

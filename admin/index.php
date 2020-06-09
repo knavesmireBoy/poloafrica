@@ -4,7 +4,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Paginator.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PagePaginator.php';
 require_once '../../../innocent/poloafricaDB.txt';
 require_once '../includes/db.inc.php';
 require_once '../includes/access.inc.php';
@@ -191,7 +191,7 @@ $results['pageTitle'] = "All Articles";
 
 if (!isset($_SESSION["paginator"]))
 {
-    $_SESSION["paginator"] = new Paginator(10, $data['totalRows']);
+    $_SESSION["paginator"] = new PagePaginator(10, $data['totalRows']);
 }
 else
 {
