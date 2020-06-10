@@ -52,7 +52,9 @@ function always(val) {
 	};
 }
 
-function fromPost(form) {
+window.poloAF.Hijax = function() {
+    
+    function fromPost(form) {
 	var i,
 		query = '';
 	for (i = 0; i < form.elements.length; i++) {
@@ -68,14 +70,18 @@ function fromGet(url, links) {
 	var i,
         query = '';
 	for (i = 0; i < links.length; i++) {
-		links[i].onclick = function() {
+        
+        if(links[i].id){
+            console.log(links[i]);
+		links[i].onclick = function(e) {
 			query = this.getAttribute("href").split("?")[1];
 			url += "?" + query;
+            return !start();
 		};
+        }
         return url;
 	}
-}
-window.poloAF.Hijax = function() {
+}    
 	var container,
 		url,
 		canvas,
@@ -154,7 +160,8 @@ window.poloAF.Hijax = function() {
 				};
 			} else {
 				var links = container.getElementsByTagName("a");
-                url = fromGet(url, links);
+                fromGet(url, links);
+                //url = fromGet(url, links);
 				data = null;
 				links = null;
 			}

@@ -23,7 +23,7 @@ function setLimitB($cur){
 $images = $article->getFilePath();
     $start = 0;
     $limit = setLimitF($start);
-//$outcomes = array('f'=> 'setLimitF');
+
 if(isset($_REQUEST['f'])){
     $start = $_REQUEST['f'];
     $limit = setLimitF($start);
@@ -37,6 +37,8 @@ elseif(isset($_REQUEST['b'])){
         $start = setLimitB($start);
     }
 }
+
+if(($limit-$start) % 14){}
 ?>
 
 <a id="gal_back" href=".?b=<?php echo $start; ?>" class="pagenav"><span></span></a>
@@ -52,3 +54,5 @@ for($start; $start < $limit; $start++):
 endfor; ?>
 </ul>
 <a id="gal_forward" href=".?f=<?php echo $limit; ?>" class="pagenav"><span></span></a>
+<script>
+</script>

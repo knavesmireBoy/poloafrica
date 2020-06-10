@@ -10,10 +10,13 @@ $results = ['page_title' => 'Gallery!'];
 $style = 'photos';
 include "../templates/header.php";
 $articles = Article::getListByPage($style);
-$count = 0;
+//$count = 0;
+var_dump($articles);
 include "../templates/nav.php";
 ?>
+
 <main class="override">
+
     <?php
     foreach ($articles as $article){
         if(!$article->summary){
@@ -27,6 +30,14 @@ include '../templates/footer.php'; ?>
     <script src="../js/eventing.js"></script>
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
+    <script>
+        var element = document.getElementById("gal_forward").parentNode;
+        bolt.setContainer(element);
+        bolt.setCanvas(element);
+        bolt.captureData();
+    </script>
+        
     <!--<script src="../js/hover.js"></script>
     <script src="../js/finder.js"></script>-->
+
  <?php echo '</body></html>';
