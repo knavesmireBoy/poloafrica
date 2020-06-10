@@ -5,5 +5,7 @@ public function setRecords($r);
 public function getRecords();
 public function getList($pp = true);
 public function setStart($start);
+public function setDisplay($display);
+public function getDisplay();
 public function doNav();
 }

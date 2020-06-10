@@ -24,9 +24,10 @@ abstract class Paginator implements PaginatorInterface {
         return ($this->start/$this->display) + 1;
     }    
         
-    function __construct($display, $records){
+    function __construct($display, $records, $looper = array()){
         $this->display = $display;
         $this->records = $records;
+        $this->looper = $looper;
         $this->setPages(0)->setStart(0);
     }
     
@@ -44,6 +45,13 @@ abstract class Paginator implements PaginatorInterface {
     public function setRecords($r){
         $this->records = $r;
         $this->setPages(1);
+    }
+    
+    public function setDisplay($d){
+        $this->display = $d;
+    }
+    public function getDisplay(){
+        return $this->display;
     }
     
     public function getRecords(){

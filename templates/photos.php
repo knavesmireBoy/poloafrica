@@ -1,45 +1,48 @@
    <?php
 
-function setLimitF($cur){
-        $displays = [0, 14, 28, 42, 54, 66, 78, 92];
-        $i = array_search($cur, $displays);
-        $j = $i+1;
-    if(!isset($displays[$j])){
-        return setLimitF(0);
-    }
-        return $displays[$j];
-    }
-
-function setLimitB($cur){
-        $displays = [0, 14, 28, 42, 54, 66, 78, 92];
-        $i = array_search($cur, $displays);
+function makePrev($arr){
+    
+return function ($cur) use ($arr) {
+        $d = $arr;
+        $i = array_search($cur, $d);
         $j = $i-1;
-    if(!isset($displays[$j])){
-        return $displays[count($displays)-1];
+    if(!isset($d[$j])){
+        return $d[count($d)-1];
     }
-        return $displays[$j];
+        return $d[$j];
+    };
+}
+
+function makeNext($arr){
+    
+return function ($cur) use ($arr){
+        $d = $arr;
+        $i = array_search($cur, $d);
+        $j = $i+1;
+    if(!isset($d[$j])){
+        return $d[1];
     }
+        return $d[$j];
+    };
+}
 
 $images = $article->getFilePath();
-    $start = 0;
-    $limit = setLimitF($start);
+$paginator = new GalleryPaginator(14, count($images), array('f'=>makeNext([0, 14, 28, 42, 54, 66, 78, 92]), 'b'=>makePrev([0, 14, 28, 42, 54, 66, 78, 92])));
 
-if(isset($_REQUEST['f'])){
-    $start = $_REQUEST['f'];
-    $limit = setLimitF($start);
-    $start = $start >= $limit ? 0 : $start;
-}
-elseif(isset($_REQUEST['b'])){
-    $limit = $_REQUEST['b'];
-    $start = setLimitB($limit);
-    if($start > $limit){
-        $limit = $start;
-        $start = setLimitB($start);
-    }
+$paginator->setStart(0);
+$start = $paginator->getStart();
+$limit = $paginator->getDisplay();
+
+if(($limit-$start) % 14){ 
+    echo '<main class="override alt">';
+ }
+else {
+    echo '<main class="override">';
 }
 
-if(($limit-$start) % 14){}
 ?>
+
+
 
 <a id="gal_back" href=".?b=<?php echo $start; ?>" class="pagenav"><span></span></a>
 <ul class="gallery">
@@ -54,5 +57,12 @@ for($start; $start < $limit; $start++):
 endfor; ?>
 </ul>
 <a id="gal_forward" href=".?f=<?php echo $limit; ?>" class="pagenav"><span></span></a>
-<script>
-</script>
+
+<?php if(($limit-$start) % 14){ ?>
+<script type="text/javascript">
+    function run(){
+        alert("hello world");
+    }
+    <?php echo "run();";?>
+       </script>
+<?php } ?>

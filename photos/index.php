@@ -5,17 +5,15 @@ include_once '../includes/db.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
 //include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PhotoPaginator.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/GalleryPaginator.php';
 include_once '../myconfig.php';
 $results = ['page_title' => 'Gallery!'];
 $style = 'photos';
 include "../templates/header.php";
 $articles = Article::getListByPage($style);
 //$count = 0;
-var_dump($articles);
 include "../templates/nav.php";
 ?>
-
-<main class="override">
 
     <?php
     foreach ($articles as $article){
@@ -34,7 +32,7 @@ include '../templates/footer.php'; ?>
         var element = document.getElementById("gal_forward").parentNode;
         bolt.setContainer(element);
         bolt.setCanvas(element);
-        bolt.captureData();
+        //bolt.captureData();
     </script>
         
     <!--<script src="../js/hover.js"></script>
