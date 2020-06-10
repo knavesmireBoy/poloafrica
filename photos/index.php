@@ -3,7 +3,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 include_once '../includes/db.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
+//include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PhotoPaginator.php';
 include_once '../myconfig.php';
 $results = ['page_title' => 'Gallery!'];
 $style = 'photos';
@@ -15,7 +16,6 @@ include "../templates/nav.php";
 <main class="override">
     <?php
     foreach ($articles as $article){
-        $count += 1;
         if(!$article->summary){
             include '../templates/photos.php';
         }

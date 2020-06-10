@@ -4,33 +4,49 @@ require_once "Paginator.php";
 
 class PhotoPaginator extends Paginator implements PaginatorInterface {
 
-    protected function setProps($data){
+    protected function setQS($v){
+        $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+        return explode('?', setQueryString($url, 's', $v))[1];
+    }
+
+    public function setProps($data){
         if (isset($data['id'])) {
             $this->id = (int)$data['id'];
         }
-        if (isset($data['pubDate'])) {
-            $this->pubDate = (int)$data['pubDate'];
+        if (isset($data['src'])) {
+            $this->src = (int)$data['src'];
         }
-        if (isset($data['title'])) {
-            $this->title = preg_replace($this->reg, "", $data['title']);
+        if (isset($data['alt'])) {
+            $this->title = preg_replace($this->reg, "", $data['alt']);
+        }
+        
+        if (isset($data['dom_id'])) {
+            $this->fname = preg_replace($this->reg, "", $data['dom_id']);
         }
     }
 
-    public function getList($pp = true){
-        $conn = getConn();
-        $where = is_string($pp) ? "WHERE page = :pp " : "WHERE true ";
-        $sql = "SELECT UNIX_TIMESTAMP(pubDate) AS pubDate, id, title FROM articles ";
-        $sql .= $where;
-        $sql .= " ORDER BY title ASC ";
-        $sql .= "LIMIT $this->start, $this->display";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":pp", $pp, PDO::PARAM_STR);
-        doPreparedQuery($st, "Error obtaining results from of articles");
-        $data = $st->fetchAll(PDO::FETCH_ASSOC);
-        $this->setProps($data);
-        if(is_string($pp)){
-            $this->setRecords(count($data));
+    public function getList($pp = true){}
+    public function doNav(){
+        if($this->records <= $this->display){
+            return;
         }
-        return $data;
+         echo '<nav id="pp">';
+        if($this->getCurrentPage() != 1){
+           echo '<a href=".?' . $this->setQS($this->start - $this->display) . '">Previous</a>';
+        }
+        
+        for($i = 1; $i <= $this->pages; $i++){
+            if($i != $this->getCurrentPage()){
+            echo '<a href=".?' .  $this->setQS(($this->display * ($i - 1))) . '">' . $i . '</a>';
+        }
+            else {
+                echo '<span>' . $i . '</span>';
+            }
+        }
+        if($this->getCurrentPage() != $this->pages){
+            echo '<a href=".?' . $this->setQS($this->start + $this->display) . '">Next</a>';
+        }
+        echo '</nav>';
     }
+    
 }

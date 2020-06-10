@@ -1,13 +1,14 @@
 <?php
- function getTheHeight($str){
+ function getTextAreaHeight($str){
      return strtolower($str) == 'photos' ? '5em' : '30em';
     }
+ function getDisplayLimit($str){
+     return strtolower($str) == 'photos' ? 8 : 5;
+    }
 ?>
-
 <script>
       // Prevents file upload hangs in Mac Safari
       // Inspired by http://airbladesoftware.com/notes/note-to-self-prevent-uploads-hanging-in-safari
-
       function closeKeepAlive() {
         if ( /AppleWebKit|MSIE/.test( navigator.userAgent) ) {
           var xhr = new XMLHttpRequest();
@@ -15,14 +16,11 @@
           xhr.send();
         }
       }
-    
    </script>
-
       <div id="adminHeader">
         <h2>Poloafrica Admin</h2>
         <p>You are logged in with email: <b><?php htmlout( $_SESSION['email']) ?></b>. <a href="?action=logout"?>Log out</a></p>
       </div>
-
       <h3><?php echo $results['pageTitle']?></h3>
 
       <form action="?action=<?php echo $results['formAction']?>" method="post" enctype="multipart/form-data" onsubmit="closeKeepAlive()" class="content">
@@ -43,7 +41,7 @@
           </li>
           <li>
             <label for="content">Article Content</label>
-              <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height: <?php htmlout(getTheHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?>
+              <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height: <?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?>
               </textarea>
           </li>
           <li id="datepage">
@@ -59,21 +57,30 @@
           </li>
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
-            $sets = count($attributes);
+            
             //could be empty set
             if(isset($attributes[0])):
-            var_dump($attributes);
-            //$page = $results['article']->page;
+            $limit = getDisplayLimit($results['article']->title);
+            $paginator = new PhotoPaginator($limit, count($attributes));
+            $i = isset($_REQUEST['s']) ? $_REQUEST['s'] :  0;
+            $paginator->setStart($i);
+            //use the minimum of total count dataset OR display limit
+            $end = min($i+$limit, count($attributes));
+            
             echo "<li class='asset {$results['article']->page}'>";
-            foreach($attributes as $attribute):
+            for($i; $i < $end; $i++):
+            $attribute = $attributes[$i];
             echo '<figure>';
             include "../templates/attributes_route.php";
             include "../templates/attributes_edit.php";
             echo '</figure>';
-            endforeach;
+            //endforeach;
+            endfor;
             echo '</li>';
+            $paginator->doNav();
             endif;//$attributes[0]
-            endif//$results['article']
+            endif;//$results['article']
+            
             ?>
             <div id="neue">
           <li>

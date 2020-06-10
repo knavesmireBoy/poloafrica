@@ -48,6 +48,10 @@ abstract class Paginator implements PaginatorInterface {
     
     public function getRecords(){
         return $this->records;
+    }
+    
+    public function getStart(){
+        return $this->start;
     }    
     
     public function setStart($start){
@@ -57,26 +61,5 @@ abstract class Paginator implements PaginatorInterface {
         }
     }    
     
-    public function doNav(){
-        if($this->records <= $this->display){
-            return;
-        }
-         echo '<nav id="pp">';
-        if($this->getCurrentPage() != 1){
-           echo '<a href=".?s=' . ($this->start - $this->display) . '">Previous</a>';
-        }
-        
-        for($i = 1; $i <= $this->pages; $i++){
-            if($i != $this->getCurrentPage()){
-            echo '<a href=".?s=' . (($this->display * ($i - 1))) . '">' . $i . '</a>';
-        }
-            else {
-                echo '<span>' . $i . '</span>';
-            }
-        }
-        if($this->getCurrentPage() != $this->pages){
-            echo '<a href=".?s=' . ($this->start + $this->display) . '">Next</a>';
-        }
-        echo '</nav>';
-    }
+    abstract public function doNav();
 }

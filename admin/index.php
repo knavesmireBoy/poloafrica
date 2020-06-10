@@ -5,6 +5,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PagePaginator.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PhotoPaginator.php';
+
 require_once '../../../innocent/poloafricaDB.txt';
 require_once '../includes/db.inc.php';
 require_once '../includes/access.inc.php';
