@@ -22,14 +22,14 @@ echo '</main></div>'; ?>
     <script src="../js/global.js"></script>
     <script src="../js/basicIterator.js"></script>
     <script src="../js/tooltips.js"></script>
-    <script src="../js/gallery.js"></script>
     <script>
         bolt.setContainer(document.querySelector('main'));
         bolt.setCanvas(document.querySelector('main'));
         bolt.setUrl('../templates/photos.php');
         //document.getElementsByTagName('h2')[0].setAttribute
-        bolt.captureData();
+        bolt.captureData();        
     </script>
+     <script src="../js/gallery.js"></script>
 <!--<script src="../js/hover.js"></script>
 <script src="../js/finder.js"></script>-->
 

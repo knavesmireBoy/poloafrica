@@ -165,7 +165,7 @@ window.poloAF.Eventing = (function (eventing) {
 		}([]));
 	if (window.addEventListener) {
 		eventing.init = function (type, el, fn, context) {
-            //console.log(arguments)
+            console.log(arguments)
             //var inta = new poloAF.Intaface('Element', ['setAttribute']);
 			//poloAF.Intaface.ensures(config.element, inta);
 			var config = sortArgs(fn, el, context),

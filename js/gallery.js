@@ -189,8 +189,12 @@
 			utils.show(next);
 			exitGallery();
 		},
-		makeIterator = function (coll) {
-			var findIndex = ptL(utils.findIndex, coll),
+		makeIterator = function () {
+            /* the CMS version loads a new set of 'lis' per page so we now simply query the DOM to obtain
+            the lateset set of 'lis' rather than relay on supplying a collection as before
+            */
+			var coll = _.toArray(thumbs.getElementsByTagName('li')),
+                findIndex = ptL(utils.findIndex, coll),
 				prepIterator = doQuart(poloAF.Iterator(false)),
 				doIterator = prepIterator(ptL(modulo, coll.length))(always(true))(coll);
 			return _.compose(doIterator, findIndex, doTwice(utils.isEqual), getCurrentSlide);
@@ -320,30 +324,6 @@
                tmp =_.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0])));//page
             }
 			return makeCrossPageIterator(_.flatten(tmp));
-		},
-		advance = function () {
-			var iterator = makeCrossPageIterator(all),
-				doNeg = ptL(negator, toogleLoop);
-			return function (e) {
-                console.log(328);
-				var tgt = getTarget(e),
-					allpics = utils.getByTag('img', main),
-					path = '001',
-					gang,
-					m;
-				if (!getNodeName(tgt).match(/a/i)) {
-					return;
-				}
-				m = getID(tgt).match(/back$/) ? 'back' : 'forward';
-				gang = iterator[m]();
-				doNeg(allpics, gang);
-				allpics = utils.getByTag('img', main);
-				_.each(allpics, function (img, j) {
-					path = gang[j] || path;
-					img.src = makePath(path);
-					img.onload = doPortraitBridge;
-				});
-			};
 		},
 		presenter = (function (inc) {
 			return poloAF.Composite(inc);
@@ -692,7 +672,7 @@
 				};
 			},
 			initplay = ptL(invokeWhen, once(1)),
-			default_iterator = makeIterator(lis),
+			default_iterator = makeIterator(),
 			prepareNavHandlers = function () {
 				var iterator = default_iterator(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
