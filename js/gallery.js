@@ -345,28 +345,6 @@
 				});
 			};
 		},
-		//myadvance = advance(),
-		//doInsert = ptL(anCrIn, gallery),
-		//pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
-		//addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
-		pageInputHandler = function (arg) {
-			utils.addEvent(clicker, noOp, 'stop')(arg);
-			return arg;
-		},
-        /*
-		addPageNav = function (myAnCr, title, id, cb) {
-			return _.compose(cb, pageInputHandler, ptL(setAttrs, {
-				/*id: 'range'
-                type: 'checkbox',
-				id: 'range'
-				title: title
-                */
-			}), anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {
-				id: id,
-				href: '.'
-			}), myAnCr(main), utils.always('a'))))('span');
-		},
-            */
 		presenter = (function (inc) {
 			return poloAF.Composite(inc);
 		}([])),
