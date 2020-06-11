@@ -265,7 +265,6 @@
                  return predicate() ? leader.concat('97', '80', trailer, '98') : leader.concat('80', '97', trailer, '99');
             }
             return leader[0] ? leader : trailer;
-
         },
         mixerBridge = function(pred, zipped){
             return mixer.apply(null, [pred, zipped[0], zipped[1]]);
@@ -326,6 +325,7 @@
 			var iterator = makeCrossPageIterator(all),
 				doNeg = ptL(negator, toogleLoop);
 			return function (e) {
+                console.log(328);
 				var tgt = getTarget(e),
 					allpics = utils.getByTag('img', main),
 					path = '001',
@@ -345,14 +345,15 @@
 				});
 			};
 		},
-		myadvance = advance(),
-		doInsert = ptL(anCrIn, gallery),
-		pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
-		addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
+		//myadvance = advance(),
+		//doInsert = ptL(anCrIn, gallery),
+		//pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
+		//addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
 		pageInputHandler = function (arg) {
 			utils.addEvent(clicker, noOp, 'stop')(arg);
 			return arg;
 		},
+        /*
 		addPageNav = function (myAnCr, title, id, cb) {
 			return _.compose(cb, pageInputHandler, ptL(setAttrs, {
 				/*id: 'range'
@@ -365,6 +366,7 @@
 				href: '.'
 			}), myAnCr(main), utils.always('a'))))('span');
 		},
+            */
 		presenter = (function (inc) {
 			return poloAF.Composite(inc);
 		}([])),
