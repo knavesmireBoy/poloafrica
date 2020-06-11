@@ -77,17 +77,21 @@ function fromGet(links) {
             return !start();
 		};
         }
-	}
+    }
 }  
-    
+    /* LISTENER required on PERSISTENT ELEMENT then delegated as forward/back links are RE-CREATED by PHP TEMPLATE on pagination*/
     function neueGet(){
         var query = '';
         container.onclick = function(e){
+            if(e.target.getAttribute("href")){
             query = e.target.getAttribute("href").split("?")[1];
             url += "?" + query;
             return !start();
+            }
+            return true;
         };
     }
+
 	var container,
 		url,
 		canvas,
@@ -130,8 +134,9 @@ function fromGet(links) {
 		if (request.readyState == 4) {
 			if (request.status == 200 || request.status == 304) {
 				if (canvas) {
-                    //console.log(request.responseText);
-					canvas.innerHTML = request.responseText;
+                    if(request.responseText){
+                        canvas.innerHTML = request.responseText;
+                    }
 				}
 				callback();
 			}
@@ -148,6 +153,7 @@ function fromGet(links) {
 		} else {
 			request.open("GET", url, true);
 			request.send(null);
+            //reset query
             url = url.split('?')[0];
 
 		}

@@ -83,12 +83,6 @@
 	function thunk(f) {
 		return f.apply(f, _.rest(arguments));
 	}
-    
-    function funk(f1, f2) {
-        console.log(f1, f2(), 88)
-		return f1.apply(f1, f2());
-	}
-    
 
 	function always(val) {
 		return function () {
@@ -860,9 +854,10 @@
 			/*inserts back/forward buttons, returns a REVERSE adpater around a eventListener object,
     where unrender would restore listener and render would remove listener when entering navigation mode
     HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
-			addPageNav(anCr, 'Enable checkbox to restrict to a single page', 'gal_forward', noOp);
-			addPageNav(doInsert, 'Enable checkbox to group pictures by orientation', 'gal_back', addPageNavHandler);
-			utils.$('placeholder').innerHTML = 'PHOTOS';
+			//addPageNav(anCr, 'Enable checkbox to restrict to a single page', 'gal_forward', noOp);
+			//addPageNav(doInsert, 'Enable checkbox to group pictures by orientation', 'gal_back', addPageNavHandler);
+			//utils.$('placeholder').innerHTML = 'PHOTOS';
+			utils.getByTag('span', document)[0].innerHTML = 'PHOTOS';
 		}());
 	}());
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
