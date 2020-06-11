@@ -10,6 +10,7 @@ class GalleryPaginator extends Paginator implements PaginatorInterface {
     }
     public function setStart($start){
         if(isset($_REQUEST['f'])){
+            echo 'uuu';
             $start = $_REQUEST['f'];
             $this->display = $this->looper['f']($start);
             $this->start = $start >= $this->display ? 0 : $start;
@@ -24,7 +25,7 @@ class GalleryPaginator extends Paginator implements PaginatorInterface {
         }
         else {
             $this->start = 0;
-            $this->setDisplay($this->looper['f'](0));
+            $this->display = ($this->looper['f'](0));
         }
     }
     
@@ -44,27 +45,38 @@ class GalleryPaginator extends Paginator implements PaginatorInterface {
         }
     }
 
-    public function getList($pp = true){}
-    public function doNav(){
-        if($this->records <= $this->display){
-            return;
-        }
-         echo '<nav id="pp">';
-        if($this->getCurrentPage() != 1){
-           echo '<a href=".?' . $this->setQS($this->start - $this->display) . '">Previous</a>';
-        }
-        
-        for($i = 1; $i <= $this->pages; $i++){
-            if($i != $this->getCurrentPage()){
-            echo '<a href=".?' .  $this->setQS(($this->display * ($i - 1))) . '">' . $i . '</a>';
-        }
-            else {
-                echo '<span>' . $i . '</span>';
-            }
-        }
-        if($this->getCurrentPage() != $this->pages){
-            echo '<a href=".?' . $this->setQS($this->start + $this->display) . '">Next</a>';
-        }
-        echo '</nav>';
+     public function getList($pp = true){
+         $conn = getConn();
+         $limit = $this->display - $this->start;
+        $sql = "SELECT attr_id AS src, extension AS ext, alt FROM gallery ";
+        $sql .= "LIMIT $this->start, $limit";
+        $st = prepSQL($conn, $sql);
+        doPreparedQuery($st, "Error list of images");
+        $data = $st->fetchAll(PDO::FETCH_ASSOC);
+        $this->setRecords(count($data));
+         $start = $this->start;
+         return (array(
+             "list" => $data,
+             "path" => '../images/gallery/fullsize/',
+             "start" => $this->start,
+             "limit" => $this->display
+       ));
     }
+    public function doNav(){
+        $images = $this->getList();
+ ?>
+<a id="gal_back" href=".?b=<?php echo $this->start; ?>" class="pagenav"><span></span></a>
+<ul class="gallery">
+<?php
+foreach($images as $image): 
+    $src = $path . $image['src'] . $image['ext']; ?>
+    <li>
+        <a href="<?php htmlout($src); ?>">
+        <img src="<?php htmlout($src); ?>" alt="<?php htmlout($image['alt']); ?>"></a>
+    </li>
+<?php endforeach; ?>
+</ul>
+<a id="gal_forward" href=".?f=<?php echo $this->display; ?>" class="pagenav"><span></span></a>
+<?php
+}
 }

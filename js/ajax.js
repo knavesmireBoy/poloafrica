@@ -70,17 +70,16 @@ function fromGet(url, links) {
 	var i,
         query = '';
 	for (i = 0; i < links.length; i++) {
-        
         if(links[i].id){
-            console.log(links[i]);
-		links[i].onclick = function(e) {
+		links[i].onclick = function() {
 			query = this.getAttribute("href").split("?")[1];
 			url += "?" + query;
+            console.log(url);
             return !start();
 		};
         }
-        return url;
 	}
+    return url;
 }    
 	var container,
 		url,
@@ -124,6 +123,7 @@ function fromGet(url, links) {
 		if (request.readyState == 4) {
 			if (request.status == 200 || request.status == 304) {
 				if (canvas) {
+                    //console.log(request.responseText);
 					canvas.innerHTML = request.responseText;
 				}
 				callback();
@@ -160,8 +160,8 @@ function fromGet(url, links) {
 				};
 			} else {
 				var links = container.getElementsByTagName("a");
-                fromGet(url, links);
-                //url = fromGet(url, links);
+                //fromGet(url, links);
+                url = fromGet(url, links);
 				data = null;
 				links = null;
 			}
