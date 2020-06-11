@@ -1,4 +1,4 @@
-<a id="gal_back" href=".?b=<?php echo $results['start']; ?>" class="pagenav"><span></span></a>
+<a id="gal_back" href="?b=<?php echo $results['start']; ?>" class="pagenav"><span></span></a>
 <ul class="gallery">
 <?php
 foreach($results['list'] as $image): 
@@ -9,6 +9,6 @@ foreach($results['list'] as $image):
     </li>
 <?php endforeach; ?>
 </ul>
-<a id="gal_forward" href=".?f=<?php echo $results['limit']; ?>" class="pagenav"><span></span></a>
+<a id="gal_forward" href="?f=<?php echo $results['limit']; ?>" class="pagenav"><span></span></a>
 </main></div>
 

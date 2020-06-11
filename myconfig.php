@@ -13,6 +13,10 @@ require_once '../../../innocent/poloafricaDB.txt';
 define( "ARTICLE_ASSETS_PATH", "../assets" );
 define( "ARTICLE_UPLOAD_PATH", "../../../filestore/poloafrica" );
 define( "ARTICLE_GALLERY_PATH", "../images/gallery" );
+define( "ARTICLE_GALLERY_PATH_FULL", "../images/gallery/fullsize/" );
+
+define( "GALLERY_DISPLAY_COUNT", 14 );
+define( "GALLERY_TOTAL_COUNT", 92 );
 
 define( "HEADER_PATH", "../header.php" );
 define( "IMG_TYPE_FULLSIZE", "fullsize" );

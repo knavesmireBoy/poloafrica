@@ -24,7 +24,7 @@ abstract class Paginator implements PaginatorInterface {
         return ($this->start/$this->display) + 1;
     }    
         
-    function __construct($display, $records, $looper = array()){
+    function __construct($display, $records, $looper = null){
         $this->display = $display;
         $this->records = $records;
         $this->looper = $looper;

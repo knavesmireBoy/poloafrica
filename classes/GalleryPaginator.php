@@ -1,6 +1,7 @@
 <?php
 require_once "PaginatorInterface.php";
 require_once "Paginator.php";
+require_once "Looper.php";
 
 class GalleryPaginator extends Paginator implements PaginatorInterface {
 
@@ -10,22 +11,21 @@ class GalleryPaginator extends Paginator implements PaginatorInterface {
     }
     public function setStart($start){
         if(isset($_REQUEST['f'])){
-            echo 'uuu';
             $start = $_REQUEST['f'];
-            $this->display = $this->looper['f']($start);
+            $this->display = $this->looper->getNext($start);
             $this->start = $start >= $this->display ? 0 : $start;
         }
         elseif(isset($_REQUEST['b'])){
             $this->display = $_REQUEST['b'];
-            $this->start = $this->looper['b']($_REQUEST['b']);
+            $this->start = $this->looper->getPrevious($_REQUEST['b']);
             if($this->start > $this->display){
                 $this->display = $this->start;
-                $this->start = $this->looper['b']($this->start);
+                $this->start = $this->looper->getPrevious($this->start);
             }
         }
         else {
             $this->start = 0;
-            $this->display = ($this->looper['f'](0));
+            $this->display = $this->looper->getNext($start);
         }
     }
     

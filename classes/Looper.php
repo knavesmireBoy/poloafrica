@@ -1,25 +1,29 @@
 <?php
-function makeLooper($displays){
+class Looper {
     
-function getPrev($cur) use ($displays) {
-        $d = $displays;
-        $i = array_search($cur, $d);
+    protected $collection = array();
+    
+    public function __construct($c){
+        $this->collection = $c;
+    }
+    
+    public function getPrevious($cur) {
+        $c = $this->collection;
+        $i = array_search($cur, $c);
         $j = $i-1;
-    if(!isset($d[$j])){
-        return $d[count($d)-1];
+    if(!isset($c[$j])){
+        return $c[count($c)-1];
     }
-        return $d[$j];
+        return $c[$j];
     }
     
-function getNext($cur) use ($displays){
-        $d = $this->displays;
-        $i = array_search($cur, $d);
+    public function getNext($cur){
+        $c = $this->collection;
+        $i = array_search($cur, $c);
         $j = $i+1;
-    if(!isset($d[$j])){
-        return getNext(0);
+        if(!isset($c[$j])){
+            return $this->getNext(0);
+        }
+        return $c[$j];
     }
-        return $d[$j];
-    }
-    
-    return array('f'=> 'getNext', 'b'=>'gePrev');
 }

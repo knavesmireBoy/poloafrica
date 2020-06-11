@@ -66,7 +66,7 @@ window.poloAF.Hijax = function() {
 	return query;
 }
 
-function fromGet(url, links) {
+function fromGet(links) {
 	var i,
         query = '';
 	for (i = 0; i < links.length; i++) {
@@ -74,13 +74,20 @@ function fromGet(url, links) {
 		links[i].onclick = function() {
 			query = this.getAttribute("href").split("?")[1];
 			url += "?" + query;
-            console.log(url);
             return !start();
 		};
         }
 	}
-    return url;
-}    
+}  
+    
+    function neueGet(){
+        var query = '';
+        container.onclick = function(e){
+            query = e.target.getAttribute("href").split("?")[1];
+            url += "?" + query;
+            return !start();
+        };
+    }
 	var container,
 		url,
 		canvas,
@@ -114,7 +121,7 @@ function fromGet(url, links) {
 		if (!request || !url) {
 			return false;
 		} else {
-			initiateRequest();
+            initiateRequest();
 			return true;
 		}
 	}
@@ -141,6 +148,8 @@ function fromGet(url, links) {
 		} else {
 			request.open("GET", url, true);
 			request.send(null);
+            url = url.split('?')[0];
+
 		}
 	}
 	var ret = {
@@ -159,11 +168,11 @@ function fromGet(url, links) {
                     return true;
 				};
 			} else {
-				var links = container.getElementsByTagName("a");
-                //fromGet(url, links);
-                url = fromGet(url, links);
+				//var links = container.getElementsByTagName("a");
+                //fromGet(links);
+                neueGet();
 				data = null;
-				links = null;
+				//links = null;
 			}
 		},
 		validate: always(true),//override

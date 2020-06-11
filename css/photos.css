@@ -135,9 +135,13 @@ main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"],
 .alt .gallery li:nth-child(11) {
 	clear: none;
 }
+
+/* ON THE NON CMS VERSION THE LAST TWO LI's WERE SUPERFLUOUS WHEN IN ALT MODE (ie displaying 12 pictures not 14)
+ON THE CMS VERSION LI'S ARE LIMITED BY DATABASE RESULTS, MAYBE FIX NON-CMS TO REMOVE/REINSTATE LI'S AS REQD
 .alt .gallery li:nth-last-child(-n+2) {
 	display: none;
 }
+*/
 .js .showtime main ul li {
 	width: 100%;
 }
