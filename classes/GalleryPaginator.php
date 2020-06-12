@@ -9,6 +9,14 @@ class GalleryPaginator extends Paginator implements PaginatorInterface {
         $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
         return explode('?', setQueryString($url, 's', $v))[1];
     }
+    
+    /*instances of class Paginator expect a display property (the extent of items to display)
+    but this property is not fixed, display in GalleryPaginator an end value
+    the display is calculated from subtracting start value from end value
+    eg start 15, display 28
+    so display is an end value LIMIT 15, (28-15)
+    */
+    //signature expects an integer
     public function setStart($start){
         if(isset($_REQUEST['f'])){
             $start = $_REQUEST['f'];
@@ -29,21 +37,7 @@ class GalleryPaginator extends Paginator implements PaginatorInterface {
         }
     }
     
-    public function setProps($data){
-        if (isset($data['id'])) {
-            $this->id = (int)$data['id'];
-        }
-        if (isset($data['src'])) {
-            $this->src = (int)$data['src'];
-        }
-        if (isset($data['alt'])) {
-            $this->title = preg_replace($this->reg, "", $data['alt']);
-        }
-        
-        if (isset($data['dom_id'])) {
-            $this->fname = preg_replace($this->reg, "", $data['dom_id']);
-        }
-    }
+    public function setProps($data){}
 
      public function getList($pp = true){
          $conn = getConn();

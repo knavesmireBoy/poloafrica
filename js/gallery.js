@@ -8,7 +8,7 @@
 	"use strict";
     
     /*
-    NOTE: IN THIS VERSION all variable is produced by
+    NOTE: IN THIS VERSION the all variable is produced by PHP see (photos/index.php)
     een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
 		twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
 		drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],

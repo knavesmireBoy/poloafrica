@@ -18,7 +18,6 @@ class Asset
    public $id = null;
    public $page = null;
    protected $filename = null;
-   //protected $misql = "SELECT id, extension, name FROM assets INNER JOIN article_asset ON assets.id = asset_id WHERE article_asset.article_id = :id";
    protected $img_extensions = array(
        //'.gif',
        '.jpg',
@@ -168,29 +167,15 @@ class Asset
            }
        }
    }
-
-   protected function deleteAsset()
+    
+    protected function removeFile($id)
    {
-       $conn = getConn();
-       $foreign = $this->getForeignTable();
-       $linker = $this->getLinkTable();
-       $sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA WHERE repo.id = AA.asset_id AND repo.id = :id";
-       $st = $conn->prepare($sql);
-       $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-       $st->execute();
-   }
-
-   protected function removeFile($id)
-   {
+       //CURRENTLY image files ar uploaded to two locations, may change, and may to decide to delete from only one location
        if ($this->isImage())
        {
-           /*$exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
-           $exec($id);
-           */
-
            $exec = $this->unlinkImages(unlinker($this->getLocalRepo(), IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker($this->getLocalRepo(), IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
            $exec($id);
-           
+           //optional delete?
            $exec = $this->unlinkAsset(unlinker($this->getRepo(), IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
            $exec($id);
        }
@@ -199,6 +184,17 @@ class Asset
            $exec = $this->unlinkAsset(unlinker(ARTICLE_ASSETS_PATH, $this->page, "Couldn't delete the asset."));
            $exec($this->getNameFromId($id));
        }
+   }
+   protected function deleteAsset()
+   {
+       $conn = getConn();
+       $foreign = $this->getForeignTable();
+       $linker = $this->getLinkTable();
+       $sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA WHERE repo.id = AA.asset_id AND repo.id = :id";
+       $st = prepSQL($conn, $sql);
+       $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+       doPreparedQuery($st, 'Error deleting asset from tables');
+       $conn = null;
    }
 
    protected function update()
@@ -210,12 +206,12 @@ class Asset
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
        $sql = "UPDATE $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id SET alt=:alt, attr_id=:attr WHERE AA.article_id = :art AND repo.id = :id";
-       $st = $conn->prepare($sql);
+        $st = prepSQL($conn, $sql);
        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
        $st->bindValue(":attr", $this->dom_id, PDO::PARAM_STR);
        $st->bindValue(":art", $this->articleID, PDO::PARAM_INT);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-       $st->execute();
+       doPreparedQuery($st, 'Error updating asset');
        $conn = null;
    }
 
@@ -299,28 +295,27 @@ class Asset
        $conn = getConn();
        $foreign = $this->getForeignTable();
        $sql = "INSERT INTO $foreign (extension, name, alt, attr_id) VALUES (:extension, :name, :alt, :domid)";
-       $st = $conn->prepare($sql);
+       $st = prepSQL($conn, $sql);       
        $st->bindValue(":extension", $this->extension, PDO::PARAM_STR);
        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
        $st->bindValue(":domid", $this->dom_id, PDO::PARAM_STR);
        $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
-       $st->execute();
+       doPreparedQuery($st, "Error inserting record into $foreign table");
        $this->id = $conn->lastInsertId();
        $linker = $this->getLinkTable();
 
        $sql = "INSERT INTO $linker (article_id, asset_id) VALUES (:aID, :id)";
-       $st = $conn->prepare($sql);
+       $st = prepSQL($conn, $sql);   
        $st->bindValue(":aID", $this->articleID, PDO::PARAM_INT);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-       $st->execute();
+       doPreparedQuery($st, "Error inserting record into $linker table");
        if($this->page == 'photos'){
            $this->dom_id = $this->setDomId();
            $sql = "UPDATE gallery SET attr_id = :aID WHERE id = :id"; 
-           $st = $conn->prepare($sql);
-           
-       $st->bindValue(":aID", $this->dom_id, PDO::PARAM_STR);
-       $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-           $st->execute();
+           $st = prepSQL($conn, $sql);     
+           $st->bindValue(":aID", $this->dom_id, PDO::PARAM_STR);
+           $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+           doPreparedQuery($st, "Error updating record in gallery table");
        }
        $conn = null;
    }

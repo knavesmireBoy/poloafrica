@@ -125,5 +125,4 @@ if(isset($_POST['action']) && $_POST['action'] == 'selecteduser') {
         $users = $user->getById($_POST['user']);
     }
 }
-
 include ("users.html.php");

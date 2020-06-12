@@ -118,9 +118,9 @@ class Article
    {
        $conn = getConn();        
        $sql = "SELECT id, title, summary, content, attr_id, page, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE id = :id";
-       $st = $conn->prepare($sql);
-       $st->bindValue(":id", $id, PDO::PARAM_INT);
-       $st->execute();
+       $st = prepSQL($conn, $sql);
+       $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+       doPreparedQuery($st, 'Error fetching data from article');
        $row = $st->fetch(PDO::FETCH_ASSOC);
        $conn = null;
        if ($row) {
@@ -138,9 +138,9 @@ class Article
    {
        $conn = getConn();
        $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles ORDER BY pubDate DESC LIMIT :numRows";
-       $st = $conn->prepare($sql);
+        $st = prepSQL($conn, $sql);
        $st->bindValue(":numRows", $numRows, PDO::PARAM_INT);
-       $st->execute();
+       doPreparedQuery($st, 'Error fetching list from articles');
        $list = array();
        while ($row = $st->fetch(PDO::FETCH_ASSOC))
        {
@@ -205,14 +205,14 @@ class Article
        // Insert the Article
         $conn = getConn();
        $sql = "INSERT INTO articles (pubDate, title, summary, content, attr_id, page) VALUES ( FROM_UNIXTIME(:pubDate), :title, :summary, :content, :attr, :page)";
-       $st = $conn->prepare($sql);
+       $st = prepSQL($conn, $sql);
        $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
        $st->bindValue(":title", $this->title, PDO::PARAM_STR);
        $st->bindValue(":summary", $this->summary, PDO::PARAM_STR);
        $st->bindValue(":content", $this->content, PDO::PARAM_STR);
        $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
        $st->bindValue(":page", $this->page, PDO::PARAM_STR);
-       $st->execute();
+       doPreparedQuery($st, 'Error inserting article');
        $this->id = $conn->lastInsertId();
        $conn = null;
    }
@@ -247,21 +247,19 @@ class Article
            trigger_error("Article::delete(): Attempt to delete an Article object that does not have its ID property set", E_USER_ERROR);
        }        
        $this->removeAssets();
-
-       $conn = getConn();
-
+       
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
-       $onclause = $this->page === 'photos' ? 'AA.gallery_id' : 'AA.asset_id';
+       $conn = getConn();
        $sql = "DELETE repo FROM articles INNER JOIN $linker AS AA ON articles.id = AA.article_id INNER JOIN $foreign AS repo ON repo.id = AA.asset_id WHERE AA.article_id = :id";
-       $st = $conn->prepare($sql);
+       $st = prepSQL($conn, $sql);  
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-       $st->execute();
+       doPreparedQuery($st, 'Error deleting asset');
 
        $sql = "DELETE FROM articles WHERE id = :id";
-       $st = $conn->prepare($sql);
+       $st = prepSQL($conn, $sql);  
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-       $st->execute();
+       doPreparedQuery($st, 'Error deleting article');
        $conn = null;
    }
    public function getFilePath($flag = false)
@@ -269,13 +267,11 @@ class Article
        $conn = getConn();
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
-        $sql = "SELECT gallery.id, gallery.extension, gallery.alt, gallery.attr_id, gallery.name FROM article_gallery LEFT JOIN articles ON articles.id = article_gallery.article_id LEFT JOIN gallery ON article_gallery.asset_id = gallery.id WHERE articles.id = :id";
-       
        $sql = "SELECT repo.id, repo.extension, repo.alt, repo.attr_id, repo.name FROM $linker AS AA LEFT JOIN articles ON articles.id = AA.article_id LEFT JOIN $foreign AS repo ON AA.asset_id = repo.id WHERE articles.id = :id";
 
-       $st = $conn->prepare($sql);
+       $st = prepSQL($conn, $sql);  
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-       $st->execute();
+       doPreparedQuery($st, 'Error retrieving filepath');
        $paths = [];
        $uber = [];
        $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
@@ -322,8 +318,8 @@ class Article
        $sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA WHERE repo.id = AA.asset_id AND repo.id = :id";
        /*USING FOREIGN KEY ON article_asset SO THIS QUERY WILL SUFFICE*/
        //$sql = "DELETE FROM $foreign AS repo WHERE repo.id = :id";
-       $st = $conn->prepare($sql);
-       $st->bindValue(":id", $id, PDO::PARAM_INT);
-       $st->execute();
+         $st = prepSQL($conn, $sql);  
+       $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+       doPreparedQuery($st, 'Error deleting asset from tables');
    }
 }

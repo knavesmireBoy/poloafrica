@@ -53,11 +53,6 @@ echo '</main></div>'; ?>
         
         var all = <?php echo json_encode(sortArray(trimString($iZero, 1, 2))) ?>;
     </script>
- 
-    
-
     
 <script src="../js/gallery.js"></script>
-
-
  <?php echo '</body></html>';

@@ -1,108 +1,124 @@
 <?php
 $GLOBALS['loginError'] = '';
 
-$required = array('loggedIn', 'email', 'password');
-
-
-function doUnset(){
-session_start();
-    foreach($required as $r){
-       unset($_SESSION[$r]);
+function doUnset($required)
+{
+    session_start();
+    foreach ($required as $r)
+    {
+        unset($_SESSION[$r]);
     }
+    $_SESSION = array();
+    session_destroy();
 }
 
-function userIsLoggedIn() {
-if (isset($_POST['action']) and $_POST['action'] == 'login') {
-if (!isset($_POST['email']) or $_POST['email'] == '' or !isset($_POST['password']) or $_POST['password'] == '') {
-$GLOBALS['loginError'] = 'Please fill in both fields';
-return FALSE;
-}
-$password = md5($_POST['password'] . DB_SALT);
-    
-if (databaseContainsUser($_POST['email'], $password)) {
-session_start();
-$_SESSION['loggedIn'] = TRUE;
-$_SESSION['email'] = $_POST['email'];
-$_SESSION['password'] = $password;
-return TRUE;
-}
-else {
-session_start();
-unset($_SESSION['loggedIn']);
-unset($_SESSION['email']);
-unset($_SESSION['password']);
-$GLOBALS['loginError'] = 'The specified email address or password was incorrect.';
-//$results['pageTitle'] = 'crumbs';
-return FALSE;
-}
-}//loggedin
-//else if (isset($_POST['action']) and $_POST['action'] == 'logout') {
-else if (isset($_GET['action']) and $_GET['action'] == 'logout') {
-session_start();
-unset($_SESSION['loggedIn']);
-unset($_SESSION['email']);
-unset($_SESSION['password']);
-header('Location: .');
-exit();
-}//logout
-else {
-session_start();
-if (isset($_SESSION['loggedIn'])) {
-return databaseContainsUser($_SESSION['email'], $_SESSION['password']);
-}
-}//default
-}//userLogged
-
-function databaseContainsUser($email, $password) {
-$pdo = getConn();
-try {
-$sql = 'SELECT COUNT(*) FROM user
-WHERE email = :email AND password = :password';    
-$s = $pdo->prepare($sql);
-$s->bindValue(':email', $email);
-$s->bindValue(':password', $password);
-$s->execute();
-}
-catch (PDOException $e){
-$error = 'Error searching for user1.' . $e;
-$results = 'Error searching for user2.' . $e;
-$GLOBALS['loginError'] =  'Error searching for user3.' . $e;
-header('Location: . ');
-exit();
-}
-$row = $s->fetch();
-if ($row[0] > 0){
-return TRUE;
-}
-else {
-return FALSE;
-}
+function databaseHasEmail($email)
+{
+    $conn = getConn();
+    $sql = 'SELECT email FROM user WHERE email = :email';
+    $st = prepSQL($conn, $sql);
+    $st->bindValue(':email', $email);
+    doPreparedQuery($st, 'Error retreiving user details');
+    $row = $st->fetch();
+    return $row[0];
 }
 
-function userHasRole($role) {
-$pdo = getConn();
-try {    
-$sql = "SELECT COUNT(*), user.id, user.name FROM user
+function databaseContainsUser($email, $password)
+{
+    $myemail = databaseHasEmail($email);
+    $conn = getConn();
+    $sql = 'SELECT COUNT(*) FROM user WHERE email = :email AND password = :password';
+    $st = prepSQL($conn, $sql);
+    $st->bindValue(':email', $email);
+    $st->bindValue(':password', $password);
+    doPreparedQuery($st, 'Error retreiving user details');
+    $row = $st->fetch();
+    return $row[0] > 0 ? true : $myemail;
+}
+
+function userHasRole($role)
+{
+    $conn = getConn();
+    $sql = "SELECT COUNT(*), user.id, user.name FROM user
 INNER JOIN userrole ON user.id = userrole.user_id
 INNER JOIN role ON userrole.role_id = role.id
-WHERE email = :email AND role.description = :roleId";    
-$s = $pdo->prepare($sql);
-$s->bindValue(':email', $_SESSION['email']);
-$s->bindValue(':roleId', $role);
-$s->execute();
+WHERE email = :email AND role.description = :roleId";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(':email', $_SESSION['email']);
+        $st->bindValue(':roleId', $role);
+        doPreparedQuery($st, 'Error retreiving information');
+    $row = $st->fetch(PDO::FETCH_NUM);
+    return $row[0] > 0 ? true : false;
 }
-catch (PDOException $e) {
-$error = 'Error searching for user innit';
-include 'error.html.php';
-exit();
-}
-$row = $s->fetch(PDO::FETCH_NUM);
-if ($row[0] > 0) {
-    //var_dump($row);
-    //$users = array(array('email' =>  $_SESSION['email'], 'id' => $row[1], 'name' => $row[2]));
-return TRUE;
-}
-else {
-return FALSE;
-}
-}
+
+function userIsLoggedIn()
+{
+    if (isset($_POST['action']) and $_POST['action'] == 'login')
+    {
+        if (!isset($_POST['email']) or $_POST['email'] == '' or !isset($_POST['password']) or $_POST['password'] == '')
+        {
+            $GLOBALS['loginError'] = 'Please fill in both fields';
+            return false;
+        }
+        $password = md5($_POST['password'] . DB_SALT);
+
+        if (databaseContainsUser($_POST['email'], $password))
+        {
+            $myemail = databaseContainsUser($_POST['email'], $password);
+            if(!is_bool($myemail)){
+                doUnset(array(
+                'loggedIn',
+                'email',
+                'password',
+                'agent'
+            ));
+                if($myemail){
+                    $GLOBALS['myemail'] = $myemail;  
+                    $GLOBALS['loginError'] = 'The specified password was incorrect.';
+                }
+                else {
+                    $GLOBALS['loginError'] = 'The specified email address or password was incorrect.';
+                }
+            return false;
+            }
+            session_start();
+            $_SESSION['loggedIn'] = true;
+            $_SESSION['email'] = $_POST['email'];
+            $_SESSION['password'] = $password;
+            $_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+            return true;
+        }
+        else
+        {
+            doUnset(array(
+                'loggedIn',
+                'email',
+                'password',
+                'agent'
+            ));
+            //used in login.html
+            $GLOBALS['loginError'] = 'The specified email address or password was incorrect.';
+            return false;
+        }
+    } //loggedin
+    else if (isset($_GET['action']) and $_GET['action'] == 'logout')
+    {
+        doUnset(array(
+            'loggedIn',
+            'email',
+            'password',
+            'agent'
+        ));
+        header('Location: .');
+        exit();
+    } //logout
+    else
+    {
+        session_start();
+        if (isset($_SESSION['loggedIn']))
+        {
+            return databaseContainsUser($_SESSION['email'], $_SESSION['password']);
+        }
+    } //default
+    
+} //userLogged

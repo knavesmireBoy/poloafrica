@@ -41,6 +41,7 @@ include "../templates/nav.php"
            <?php if(!isset($_POST['email'])) { ?>
            <a href="#" id="contact_form"><h3>Poloafrica contact form</h3></a>
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
+           <!-- The form is the ONLY 'article' that remains HARDCODED-->
            <form action="?" method="post" id="poloafricacontactform"  name="poloafricacontactform" >
 				<fieldset>
 					<legend>&nbsp;Poloafrica contact form&nbsp;</legend>
@@ -62,9 +63,8 @@ include "../templates/nav.php"
                 $count = 5;
                 include '../templates/article.php';
          ?>
-       
-        </main></div>
-<?php include "../templates/footer.php" ?>
+        </main>
+<?php echo '</div>'; include "../templates/footer.php" ?>
     <script src="../js/viewportSize.js"></script>
     <script src="../js/underscore.js"></script>
     <script src="../js/eventing.js"></script>

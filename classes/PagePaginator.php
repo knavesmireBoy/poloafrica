@@ -59,5 +59,4 @@ class PagePaginator extends Paginator implements PaginatorInterface {
         }
         echo '</nav>';
     }
-    
 }

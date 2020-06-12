@@ -13,13 +13,20 @@ require_once '../includes/access.inc.php';
 require_once '../myconfig.php';
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $display = 10;
-
-//include '../templates/header.php'
-
 $results['page_title'] = 'Admin';
 include "../templates/header.php"; ?>
 <body class="admin">
     <?php
+    
+    
+    if (isset($_GET['loginError']))
+{
+        $loginError = $_GET['loginError'];
+        include '../templates/login.html.php';
+        exit();
+}
+
+    
 if (!userIsLoggedIn())
 {
     include '../templates/login.html.php';
