@@ -23,6 +23,14 @@ define( "IMG_TYPE_FULLSIZE", "fullsize" );
 define( "IMG_TYPE_THUMB", "thumb" );
 define( "IMG_THUMB_WIDTH", 120 );
 define( "JPEG_QUALITY", 85 );
+
+function getGalleryPageSets(){
+    return array(14,14,14,12,12,12,14);
+}
+
+function getGalleryPageBreaks(){
+    return array(0, 14, 28, 42, 54, 66, 78, 92);
+}
 /*
 require( CLASS_PATH . "/Article.php" );
 require( CLASS_PATH . "/Asset.php" );

@@ -16,7 +16,7 @@ function threshold($n){
 
 if (!isset($_SESSION["gallery_paginator"]))
 {
-    $_SESSION["gallery_paginator"] = new GalleryPaginator(GALLERY_DISPLAY_COUNT, GALLERY_TOTAL_COUNT, new Looper(array(0, 14, 28, 42, 54, 66, 78, 92)));
+    $_SESSION["gallery_paginator"] = new GalleryPaginator(GALLERY_DISPLAY_COUNT, GALLERY_TOTAL_COUNT, new Looper(getGalleryPageBreaks()));
 }
 
 $_SESSION["gallery_paginator"]->setStart(0);
@@ -33,6 +33,5 @@ foreach($results['list'] as $image):
         <a href="<?php htmlout($src); ?>">
         <img src="<?php htmlout($src); ?>" alt="<?php htmlout($image['alt']); ?>"></a>
     </li>
-<?php endforeach; ?>
-</ul>
+<?php endforeach; echo '</ul>';?>
 <a id="gal_forward" href="?f=<?php echo $results['limit']; ?>" class="pagenav"><span></span></a>
