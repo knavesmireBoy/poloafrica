@@ -6,7 +6,7 @@
 /*global _: false */
 (function (doc, visiblity, mq, query, cssanimations, touchevents, main, footer, q2, picnum, makePath, makePathWrap, getDefAlt) {
 	"use strict";
-
+    
 	function modulo(n, i) {
 		return i % n;
 	}
@@ -247,17 +247,6 @@
 		},
 		getPortraitPics = ptL(doSplice, true),
 		getLscpPics = ptL(doSplice, false),
-		een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
-		twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
-		drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],
-		vyf = [50, 51, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63],
-		vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
-		ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
-		sewe = _.range(83, 97),
-		//all = [een, twee/*, drie, vier, vyf, ses, sewe*/],
-		all = [een, twee, drie, vier, vyf, ses, sewe],
-		//lscp = _.map(all, getLscpPics),
-		//ptrt = _.map(all, getPortraitPics),
         mixer = function(predicate, leader, trailer){
             /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
                 the '98' signal undoes the original action.
@@ -821,5 +810,6 @@
 		}());
 	}());
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
-	return "images/0" + path + ".jpg";
+	//return "../images/gallery/fullsize/013.jpg";
+	return "../images/gallery/fullsize/0" + path + ".jpg";
 }, function(){}, poloAF.Util.always('')));
