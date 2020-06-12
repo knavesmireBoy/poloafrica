@@ -250,12 +250,12 @@
         mixer = function(predicate, leader, trailer){
             /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
                 the '98' signal undoes the original action.
-                '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
+                '96' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
             var active = _.every([leader, trailer], function(arr){
                 return arr[0];
             });
             if(active){
-                 return predicate() ? leader.concat('97', '80', trailer, '98') : leader.concat('80', '97', trailer, '99');
+                 return predicate() ? leader.concat('97', '96', trailer, '98') : leader.concat('96', '97', trailer, '99');
             }
             return leader[0] ? leader : trailer;
         },
@@ -296,7 +296,7 @@
                         metriggers = utils.getBest(inPortraitMode, triggers);
                     return actions.concat(metriggers);
                 },
-                action = performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [['97', '98'], ['80', '99']])),
+                action = performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [['97', '98'], ['96', '99']])),
                 tmp;
             makePathWrap = _.wrap(makePath, function(func, path){
                 action(path);
