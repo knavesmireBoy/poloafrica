@@ -12,6 +12,7 @@ function doUnset($required)
     session_destroy();
 }
 
+//a kindness if email is correct but password is forgotten
 function databaseHasEmail($email)
 {
     $conn = getConn();
@@ -25,7 +26,6 @@ function databaseHasEmail($email)
 
 function databaseContainsUser($email, $password)
 {
-    $myemail = databaseHasEmail($email);
     $conn = getConn();
     $sql = 'SELECT COUNT(*) FROM user WHERE email = :email AND password = :password';
     $st = prepSQL($conn, $sql);
@@ -33,7 +33,7 @@ function databaseContainsUser($email, $password)
     $st->bindValue(':password', $password);
     doPreparedQuery($st, 'Error retreiving user details');
     $row = $st->fetch();
-    return $row[0] > 0 ? true : $myemail;
+    return $row[0] > 0 ? true : databaseHasEmail($email);
 }
 
 function userHasRole($role)

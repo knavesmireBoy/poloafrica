@@ -19,34 +19,34 @@ include "../templates/header.php"; ?>
     <?php
     
     
-    if (isset($_GET['loginError']))
+if (isset($_GET['loginError']))
 {
         $loginError = $_GET['loginError'];
         include '../templates/login.html.php';
         exit();
 }
-
     
 if (!userIsLoggedIn())
 {
     include '../templates/login.html.php';
     exit();
 }
-
+    
 if (!userHasRole('Account Administrator') && !isset($_GET['error']))
 {
-    $error = 'Only Account Administrators may access this page.';
-    header("Location: ?error='Only Account Administrators may access this page.'");
+    $e = urlencode('Only Account Administrators may access this page.');
+    header("Location: ?error=$e");
 }
+    
+    
 if (isset($_GET['action']) && $_GET['action'] == 'removeArticle')
 {
     $remove = 'Are you sure you want to remove the article: ';
     $article = Article::getById((int)$_GET['articleId']);
 }
-
+    
 if (isset($_POST['action']) && $_POST['action'] == 'Delete Article')
 {
-
     if (!$article = Article::getById((int)$_POST['articleId']))
     {
         header("Location: ?error=articleNotFound");
@@ -70,10 +70,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
 
 if (isset($_GET['s']) and is_numeric($_GET['s']))
 {
-    //exit(999);
     $_SESSION["paginator"]->setStart($_GET['s']);
 }
 
+    //user has selected articles from a specific page
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'choose')
 {
     if (!empty($_REQUEST['page']))
@@ -130,7 +130,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
         require ("../templates/editArticle.php");
     }
     exit();
-}
+}//edit article
 
 //newArticle present in queryString
 if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
@@ -169,12 +169,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
         require ("../templates/editArticle.php");
     }
     exit();
-}
+}//new article
 
-if (isset($_POST['useraction']) && $_POST['useraction'] == 'Delete')
-{
-    exit('bolt');
-}
+    /*
 
 if (isset($_POST['action']) && $_POST['action'] == 'selectuser')
 {
@@ -190,7 +187,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newUser')
     include ("../templates/admin/users.html.php");
     exit();
 }
-
+*/
 $results = array();
 $data = Article::getList();
 
@@ -225,7 +222,6 @@ if (isset($_GET['status']))
 }
 ?>    
 
-    <?php
-require ("../templates/listArticles.php");
+<?php
+require ("listArticles.html.php");
 ?>
-    </body>

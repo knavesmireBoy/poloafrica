@@ -1,3 +1,6 @@
+<div id="adminHeader"><h2>Poloafrica Admin</h2></div>
+<h3>Log In</h3>
+
 <form action="." method="post" id="loginform">
     <ul>
         <li>

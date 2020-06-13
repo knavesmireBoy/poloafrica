@@ -10,6 +10,7 @@ class Article
 {
    // Properties
    protected $ext = null;
+    //wanted to exclude animated gifs review
    protected $img_extensions = array(
        //'.gif',
        '.jpg',
@@ -86,7 +87,6 @@ class Article
    static public function getFileName($path)
    {
        return substr(strrchr($path, "/\d+/") , 1);
-       //return $path;
    }
 
    public function __construct($data = array())
@@ -119,7 +119,7 @@ class Article
        $conn = getConn();        
        $sql = "SELECT id, title, summary, content, attr_id, page, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE id = :id";
        $st = prepSQL($conn, $sql);
-       $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+       $st->bindValue(":id", $id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error fetching data from article');
        $row = $st->fetch(PDO::FETCH_ASSOC);
        $conn = null;
