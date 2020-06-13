@@ -65,13 +65,6 @@ include "../templates/nav.php"
          ?>
         </main>
 <?php echo '</div>'; include "../templates/footer.php" ?>
-    <script src="../js/viewportSize.js"></script>
-    <script src="../js/underscore.js"></script>
-    <script src="../js/eventing.js"></script>
-    <script src="../js/classlist.js"></script>
-    <script src="../js/ajax.js"></script>
-    <script src="../js/global.js"></script>
-    
         <script>        
         var utils = poloAF.Util,
     	ptL = _.partial,
@@ -111,9 +104,4 @@ include "../templates/nav.php"
             utils.addEvent(clicker, relocate)(myform);
                             
     </script>
-       <script>
-
-
-    </script>
-</body>
-</html>
+<?php echo '</body></html>';

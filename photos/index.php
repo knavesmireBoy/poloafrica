@@ -29,14 +29,7 @@ echo '</main></div>'; ?>
     }
     $iZero = array_values(preg_grep("/\..{3,4}$/", scandir('../images/gallery/fullsize/')));
 ?>
-    
-    <script src="../js/viewportSize.js"></script>
-    <script src="../js/shims.js"></script>
     <script src="../js/intaface.js"></script>
-    <script src="../js/underscore.js"></script>
-    <script src="../js/eventing.js"></script>
-    <script src="../js/classlist.js"></script>
-    <script src="../js/global.js"></script>
     <script src="../js/basicIterator.js"></script>
     <script src="../js/tooltips.js"></script>
     <script>
@@ -46,13 +39,15 @@ echo '</main></div>'; ?>
         hijax.setUrl('../templates/photos.php');
         hijax.captureData();
         //preload images
-        var imgs = <?php echo json_encode($iZero) ?>;
+        var all,
+            imgs = <?php echo json_encode($iZero) ?>;
+        
+        //preload
         _.each(imgs, function(path){
             new Image().src = '../images/gallery/fullsize/'+path;
-        })
+        });
         
-        var all = <?php echo json_encode(sortArray(trimString($iZero, 1, 2))) ?>;
+        all = <?php echo json_encode(sortArray(trimString($iZero, 1, 2))) ?>;
     </script>
-    
-<script src="../js/gallery.js"></script>
+    <script src="../js/gallery.js"></script>
  <?php echo '</body></html>';

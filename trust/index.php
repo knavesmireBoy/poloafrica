@@ -22,12 +22,6 @@ include "../templates/nav.php";
             include '../templates/article.php';
         }
     }
-echo '</main></div>';
-    include '../templates/footer.php'; ?>
-    <script src="../js/viewportSize.js"></script>
-    <script src="../js/underscore.js"></script>
-    <script src="../js/eventing.js"></script>
-    <script src="../js/classlist.js"></script>
-    <script src="../js/global.js"></script>
-    <script src="../js/finder.js"></script>
- <?php echo '</body></html>';
+    echo '</main></div>';
+    include '../templates/footer.php';
+    echo '</body></html>';

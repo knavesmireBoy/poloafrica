@@ -22,11 +22,5 @@ include "../templates/nav.php";
     }
 echo '</main></div>';
 include '../templates/footer.php'; ?>
-     <script src="../js/viewportSize.js"></script>
-    <script src="../js/underscore.js"></script>
-    <script src="../js/eventing.js"></script>
-    <script src="../js/classlist.js"></script>
-    <script src="../js/global.js"></script>
-    <script src="../js/hover.js"></script>
-    <script src="../js/finder.js"></script>
- <?php echo '</body></html>';
+<script src="../js/hover.js"></script>
+<?php echo '</body></html>';
