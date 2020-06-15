@@ -312,14 +312,21 @@ class Article
    public function deleteAssets($id)
    {
        $this->removeAssets($id);
-        $foreign = $this->getForeignTable();
+       $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
        $conn = getConn();
-       $sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA WHERE repo.id = AA.asset_id AND repo.id = :id";
+       //$sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA, articles INNER JOIN AA ON AA.article_id = articles.id INNER JOIN repo ON repo.id = AA.asset_id AND articles.id = :id";
+       //exit($sql);
+       //$sql = "DELETE repo, AA FROM $foreign INNER JOIN $linker AS AA ON AA.article_id = articles.id INNER JOIN assets AS repo ON repo.id = AA.asset_id WHERE articles.id = :id AND repo.id = :repo";
+       
+       $sql = "DELETE repo, AA FROM $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND repo.id = :repo";
+       
        /*USING FOREIGN KEY ON article_asset SO THIS QUERY WILL SUFFICE*/
        //$sql = "DELETE FROM $foreign AS repo WHERE repo.id = :id";
-         $st = prepSQL($conn, $sql);  
+     //$st = prepSQL($conn, "DELETE FROM assets AS repo WHERE repo.id = :id");  
+     $st = prepSQL($conn, $sql);  
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+       $st->bindValue(":repo", $id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error deleting asset from tables');
    }
 }

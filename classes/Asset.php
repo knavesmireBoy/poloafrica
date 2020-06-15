@@ -192,6 +192,7 @@ class Asset
        $linker = $this->getLinkTable();
        $sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA WHERE repo.id = AA.asset_id AND repo.id = :id";
        $st = prepSQL($conn, $sql);
+       exit($sql);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error deleting asset from tables');
        $conn = null;

@@ -19,10 +19,11 @@ include "../templates/header.php"; ?>
 <?php    
 if (isset($_GET['loginError']))
 {
-        $loginError = $_GET['loginError'];
+    $loginError = $_GET['loginError'];
     include 'admin.html.php';
-        include '../templates/login.html.php';
-        exit();
+    include '../templates/login.html.php';
+    header("Location: ?error=$loginError");
+    exit();
 }
     
 if (!userIsLoggedIn())
@@ -143,7 +144,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
             header("Location: ?status=changesSaved");
             exit();
         }
-        header("connection: close");
+        //header("connection: close");
         header("Location: ?status=changesSaved");
     }
     elseif (isset($_POST['cancel']))
