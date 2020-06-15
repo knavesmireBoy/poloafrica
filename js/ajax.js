@@ -1,8 +1,5 @@
 /*jslint browser: true*/
 /*global window: false */
-/*global document: false */
-/*global Modernizr: false */
-/*global _: false */
 /*global poloAF: false */
 if (!window.poloAF) {
 	window.poloAF = {};
@@ -51,35 +48,56 @@ function always(val) {
 		return val;
 	};
 }
-
 window.poloAF.Hijax = function() {
-    
-    function fromPost(form) {
-	var i,
-		query = '';
-	for (i = 0; i < form.elements.length; i++) {
-		query += form.elements[i].name;
-		query += "=";
-		query += encodeURI(form.elements[i].value);
-		query += "&";
+	function fromPost(form) {
+		var i,
+			query = '';
+		for (i = 0; i < form.elements.length; i++) {
+			query += form.elements[i].name;
+			query += "=";
+			query += encodeURI(form.elements[i].value);
+			query += "&";
+		}
+		return query;
 	}
-	return query;
-}
+	/* LISTENER required on PERSISTENT ELEMENT then delegated as forward/back links are RE-CREATED by PHP TEMPLATE on pagination*/
+	function fromGet() {
+		var query = '',
+			that = this;
+		container.onclick = function(e) {
+			if (e.target.getAttribute("href") && that.validate(e.target)) {
+				query = e.target.getAttribute("href").split("?")[1];
+				url += "?" + query;
+				return !start();
+			}
+			return true;
+		};
+	}
 
-    /* LISTENER required on PERSISTENT ELEMENT then delegated as forward/back links are RE-CREATED by PHP TEMPLATE on pagination*/
-    function fromGet(){
-        var query = '',
-            that = this;
-        container.onclick = function(e){
-            if(e.target.getAttribute("href") && that.validate(e.target)){
-            query = e.target.getAttribute("href").split("?")[1];
-            url += "?" + query;
-            return !start();
-            }
-            return true;
-        };
-    }
-
+	function captureData() {
+		if (!container) {
+			return true;
+		}
+		var query = '',
+			that = this;
+		container.onsubmit = function(e) {
+			data = fromPost(e.target);
+			/*https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only
+			for browsers that don't support the min attribute*/
+			if (ret.validate(data)) {
+				return !start(); //needs to return false to cancel default action, so success will cancel
+			}
+			return true;
+		};
+		container.onclick = function(e) {
+			if (e.target.getAttribute("href") && that.validate(e.target)) {
+				query = e.target.getAttribute("href").split("?")[1];
+				url += "?" + query;
+				return !start();
+			}
+			return true;
+		};
+	}
 	var container,
 		url,
 		canvas,
@@ -110,22 +128,21 @@ window.poloAF.Hijax = function() {
 
 	function start() {
 		request = poloAF.SimpleXhrFactory.createXhrObject();
-        console.log(url);
 		if (!request || !url) {
 			return false;
 		} else {
-            initiateRequest();
+			initiateRequest();
 			return true;
 		}
 	}
-    
+
 	function completeRequest() {
 		if (request.readyState == 4) {
 			if (request.status == 200 || request.status == 304) {
 				if (canvas) {
-                    if(request.responseText){
-                        canvas.innerHTML = request.responseText;
-                    }
+					if (request.responseText) {
+						canvas.innerHTML = request.responseText;
+					}
 				}
 				callback();
 			}
@@ -142,35 +159,32 @@ window.poloAF.Hijax = function() {
 		} else {
 			request.open("GET", url, true);
 			request.send(null);
-            //reset query
-            url = url.split('?')[0];
-
 		}
+		//reset url
+		url = url.split('?')[0];
 	}
 	var ret = {
-		captureData: function() {
-        if(!container){
-            return true;
-        }
+		captureData1: function() {
+			if (!container) {
+				return true;
+			}
 			if (container.nodeName.toLowerCase() === "form") {
-				container.onsubmit = function(){
-                    data = fromPost(container);
+				container.onsubmit = function() {
+					data = fromPost(container);
 					/*https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only
 					for browsers that don't support the min attribute*/
-                    if(ret.validate(data)){
-                        return !start(); //needs to return false to cancel default action, so success will cancel
-                    }
-                    return true;
+					if (ret.validate(data)) {
+						return !start(); //needs to return false to cancel default action, so success will cancel
+					}
+					return true;
 				};
 			} else {
-				//var links = container.getElementsByTagName("a");
-                //fromGet(links);
-                fromGet.call(this);
+				fromGet.call(this);
 				data = null;
-				//links = null;
 			}
 		},
-		validate: always(true),//override
+		captureData: captureData,
+		validate: always(true), //override
 		setContainer: setContainer,
 		setUrl: setUrl,
 		setCanvas: setCanvas,

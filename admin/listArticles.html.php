@@ -5,8 +5,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PagePaginator.php';
 require_once '../../../innocent/poloafricaDB.txt';
 require_once '../includes/db.inc.php';
-include 'admin.html.php';
-include 'pagesDropDown.php';
+
 
 if(!isset($_SESSION['email'])){
 session_start();
@@ -16,7 +15,8 @@ $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['pag
 $start = isset($_REQUEST['s']) ? $_REQUEST['s'] :  0;
 $articles = $paginator->setStart($start);
 $articles = $paginator->getList($page);
-$pp = array_reverse(Article::getPages()); ?> 
+$pp = array_reverse(Article::getPages()); 
+include 'pagesDropDown.php'; ?>
 
  <table>
         <tr>

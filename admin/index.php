@@ -193,18 +193,29 @@ if (isset($_GET['status']))
     if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
 }
     
-require "listArticles.html.php";
+include 'admin.html.php'; ?>
+
+<?php require "listArticles.html.php";
 ?>
 </main>
 <script>
+    
+    function prepareNavLinks(){
         var hijax = window.poloAF.Hijax();
         hijax.setContainer(document.querySelector('main'));
         hijax.setCanvas(document.querySelector('main'));
-        hijax.setUrl('listArticles.html.php');
-    hijax.validate = function(tgt){
+        hijax.setUrl('.');
+        
+        hijax.validate = function(tgt){
+            if(tgt.href){
         return tgt.parentNode.id === "pp";
+            }
+            return true;
     }
         hijax.captureData();
+    }
+    prepareNavLinks();
+    
     </script>
     </body>
     
