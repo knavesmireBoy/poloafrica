@@ -19,7 +19,7 @@
      	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
-	<script src="../js/modernizr.js"></script>
+	<script src="../js/modernizr.js"></script>   
      <script src="../js/ajax.js"></script>
     <!--[if (gte IE 6)&(lte IE 8)]>
 <script src="../js/jquery.js"></script>

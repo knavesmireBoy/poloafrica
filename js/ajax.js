@@ -41,6 +41,14 @@ window.poloAF.SimpleXhrFactory = (function() {
 	}
 })();
 
+  function closeKeepAlive() {
+        if ( /AppleWebKit|MSIE/.test(navigator.userAgent)) {
+          var xhr = new XMLHttpRequest();
+          xhr.open( "GET", "/ping/close", false );
+          xhr.send();
+        }
+      }
+
 function dummy() {}
 
 function always(val) {
@@ -60,20 +68,6 @@ window.poloAF.Hijax = function() {
 		}
 		return query;
 	}
-	/* LISTENER required on PERSISTENT ELEMENT then delegated as forward/back links are RE-CREATED by PHP TEMPLATE on pagination*/
-	function fromGet() {
-		var query = '',
-			that = this;
-		container.onclick = function(e) {
-			if (e.target.getAttribute("href") && that.validate(e.target)) {
-				query = e.target.getAttribute("href").split("?")[1];
-				url += "?" + query;
-				return !start();
-			}
-			return true;
-		};
-	}
-
 	function captureData() {
 		if (!container) {
 			return true;
@@ -81,18 +75,21 @@ window.poloAF.Hijax = function() {
 		var query = '',
 			that = this;
 		container.onsubmit = function(e) {
+            if (ret.validate(e.target)) {
 			data = fromPost(e.target);
 			/*https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only
 			for browsers that don't support the min attribute*/
-			if (ret.validate(data)) {
+			//if (ret.validate(data)) {
 				return !start(); //needs to return false to cancel default action, so success will cancel
-			}
+			//}
+            }
 			return true;
 		};
 		container.onclick = function(e) {
 			if (e.target.getAttribute("href") && that.validate(e.target)) {
 				query = e.target.getAttribute("href").split("?")[1];
 				url += "?" + query;
+                //closeKeepAlive();
 				return !start();
 			}
 			return true;
@@ -164,27 +161,8 @@ window.poloAF.Hijax = function() {
 		url = url.split('?')[0];
 	}
 	var ret = {
-		captureData1: function() {
-			if (!container) {
-				return true;
-			}
-			if (container.nodeName.toLowerCase() === "form") {
-				container.onsubmit = function() {
-					data = fromPost(container);
-					/*https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only
-					for browsers that don't support the min attribute*/
-					if (ret.validate(data)) {
-						return !start(); //needs to return false to cancel default action, so success will cancel
-					}
-					return true;
-				};
-			} else {
-				fromGet.call(this);
-				data = null;
-			}
-		},
 		captureData: captureData,
-		validate: always(true), //override
+		validate: always(true), //override as required
 		setContainer: setContainer,
 		setUrl: setUrl,
 		setCanvas: setCanvas,

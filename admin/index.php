@@ -51,6 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Delete Article')
         header("Location: ?error=articleNotFound");
         return;
     }
+    //var_dump($_POST);
     header("Location: ?action=removeArticle&articleId=" . $article->id);
     exit();
 }
@@ -116,7 +117,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     {
         // User has not posted the article edit form yet: display the form
         $results['article'] = Article::getById((int)$_GET['articleId']);
-        require ("../templates/editArticle.php");
+        require ("editArticle.html.php");
     }
     exit();
 }//edit article
@@ -142,6 +143,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
             header("Location: ?status=changesSaved");
             exit();
         }
+        header("connection: close");
         header("Location: ?status=changesSaved");
     }
     elseif (isset($_POST['cancel']))
@@ -155,7 +157,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
         // User has not posted the article edit form yet: display the form
         $results['article'] = new Article;
         //require (TEMPLATE_PATH . "/admin/editArticle.php");
-        require ("../templates/editArticle.php");
+        require ("editArticle.html.php");
     }
     exit();
 }//new article
@@ -207,14 +209,18 @@ include 'admin.html.php'; ?>
         hijax.setUrl('.');
         
         hijax.validate = function(tgt){
-            if(tgt.href){
-        return tgt.parentNode.id === "pp";
+            if(tgt.elements){
+        return tgt.id === "page_select";
+            }
+            else if(tgt.href){
+                return true;
             }
             return true;
-    }
+        }
+        
         hijax.captureData();
     }
-    prepareNavLinks();
+    //prepareNavLinks();
     
     </script>
     </body>
