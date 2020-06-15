@@ -199,3 +199,7 @@ form#page_select{
     font: 1em Merriweather, Georgia serif;
     border-width: 0;
 }
+
+#pp span {
+    background-color: hsl(54, 50%, 50%)
+}

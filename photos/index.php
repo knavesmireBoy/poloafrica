@@ -34,7 +34,7 @@ echo '</main></div>'; ?>
     <script src="../js/tooltips.js"></script>
     <script>
         var hijax = window.poloAF.Hijax();
-        hijax.setContainer(document.querySelector('main'));
+        hijax.setContainer(document.getElementById('pp'));
         hijax.setCanvas(document.querySelector('main'));
         hijax.setUrl('../templates/photos.php');
         hijax.captureData();

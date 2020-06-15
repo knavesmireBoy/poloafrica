@@ -15,13 +15,12 @@ $action = isset($_GET['action']) ? $_GET['action'] : "";
 $display = 10;
 $results['page_title'] = 'Admin';
 include "../templates/header.php"; ?>
-<body class="admin">
-    <?php
-    
-    
+<body class="admin"><main>
+<?php    
 if (isset($_GET['loginError']))
 {
         $loginError = $_GET['loginError'];
+    include 'admin.html.php';
         include '../templates/login.html.php';
         exit();
 }
@@ -71,16 +70,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
 if (isset($_GET['s']) and is_numeric($_GET['s']))
 {
     $_SESSION["paginator"]->setStart($_GET['s']);
-}
-
-    //user has selected articles from a specific page
-if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'choose')
-{
-    if (!empty($_REQUEST['page']))
-    {
-        require ("../templates/listArticles.php");
-        exit();
-    }
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQUEST['action'] == 'removeArticle'))
@@ -171,23 +160,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     exit();
 }//new article
 
-    /*
-
-if (isset($_POST['action']) && $_POST['action'] == 'selectuser')
-{
-    $user = new Admin();
-    $users = $user->getId($_POST['user']);
-    include ("../templates/admin/users.html.php");
-}
-
-if (isset($_GET['action']) && $_GET['action'] == 'newUser')
-{
-    $user = new Admin();
-    $users = $user->getList();
-    include ("../templates/admin/users.html.php");
-    exit();
-}
-*/
 $results = array();
 $data = Article::getList();
 
@@ -220,8 +192,19 @@ if (isset($_GET['status']))
     if ($_GET['status'] == "changesSaved") $results['statusMessage'] = "Your changes have been saved.";
     if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
 }
-?>    
-
-<?php
-require ("listArticles.html.php");
+    
+require "listArticles.html.php";
 ?>
+</main>
+<script>
+        var hijax = window.poloAF.Hijax();
+        hijax.setContainer(document.querySelector('main'));
+        hijax.setCanvas(document.querySelector('main'));
+        hijax.setUrl('listArticles.html.php');
+    hijax.validate = function(tgt){
+        return tgt.parentNode.id === "pp";
+    }
+        hijax.captureData();
+    </script>
+    </body>
+    

@@ -1,24 +1,23 @@
-<div id="adminHeader">
-        <h2>Poloafrica Admin</h2>
-        <p>You are logged in with email: <b><?php htmlout($_SESSION['email']) ?></b> <a href="?action=logout"?> <strong>Log out</strong></a></p></div>
-<h3>Article List</h3>
+<?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PagePaginator.php';
+require_once '../../../innocent/poloafricaDB.txt';
+require_once '../includes/db.inc.php';
+include 'admin.html.php';
+include 'pagesDropDown.php';
 
-<?php if ( isset( $results['errorMessage'] ) ) { ?>
-        <div class="errorMessage"><?php htmlout($results['errorMessage']) ?></div>
-<?php exit(); } ?>
-<?php if ( isset( $results['statusMessage'] ) ) { ?>
-        <div class="statusMessage"><?php htmlout($results['statusMessage']) ?></div>
-<?php } 
-
-$paginator = $_SESSION["paginator"];
+if(!isset($_SESSION['email'])){
+session_start();
+}
+$paginator = $_SESSION["paginator"];    
 $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : true;
 $start = isset($_REQUEST['s']) ? $_REQUEST['s'] :  0;
 $articles = $paginator->setStart($start);
 $articles = $paginator->getList($page);
+$pp = array_reverse(Article::getPages()); ?> 
 
-$pp = array_reverse(Article::getPages());
-include "pages_dropdown.php";
-?>
  <table>
         <tr>
           <th>Publication Date</th>
@@ -40,7 +39,5 @@ include "pages_dropdown.php";
 <p><?php htmlout($paginator->getRecords()); ?> article<?php htmlout(doPlural($paginator->getRecords())); ?> in total</p>
 
 <p><a href="?action=newArticle">Add a New Article</a></p>
-
 <p><a href="../user/?action=manageUsers">Manage Users</a></p>
 <p><a href="../enquiries/">Home</a></p>
-<?php echo '</body>';

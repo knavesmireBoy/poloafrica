@@ -66,24 +66,12 @@ window.poloAF.Hijax = function() {
 	return query;
 }
 
-function fromGet(links) {
-	var i,
-        query = '';
-	for (i = 0; i < links.length; i++) {
-        if(links[i].id){
-		links[i].onclick = function() {
-			query = this.getAttribute("href").split("?")[1];
-			url += "?" + query;
-            return !start();
-		};
-        }
-    }
-}  
     /* LISTENER required on PERSISTENT ELEMENT then delegated as forward/back links are RE-CREATED by PHP TEMPLATE on pagination*/
-    function neueGet(){
-        var query = '';
+    function fromGet(){
+        var query = '',
+            that = this;
         container.onclick = function(e){
-            if(e.target.getAttribute("href")){
+            if(e.target.getAttribute("href") && that.validate(e.target)){
             query = e.target.getAttribute("href").split("?")[1];
             url += "?" + query;
             return !start();
@@ -122,6 +110,7 @@ function fromGet(links) {
 
 	function start() {
 		request = poloAF.SimpleXhrFactory.createXhrObject();
+        console.log(url);
 		if (!request || !url) {
 			return false;
 		} else {
@@ -176,7 +165,7 @@ function fromGet(links) {
 			} else {
 				//var links = container.getElementsByTagName("a");
                 //fromGet(links);
-                neueGet();
+                fromGet.call(this);
 				data = null;
 				//links = null;
 			}
