@@ -160,7 +160,7 @@ class Article
 
     public static function getTitles($pp){
         $conn = getConn();
-        $sql = "SELECT title FROM articles WHERE page = :pp";
+        $sql = "SELECT title FROM articles WHERE page = :pp ORDER BY id ASC";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":pp", $pp, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving articles for this page');
