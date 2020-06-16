@@ -32,6 +32,9 @@ h3, label {
 	font-size: 1.75em;
 	word-spacing: 1px;
 	letter-spacing: 1px;
+    color: #990;
+    color: hsl(58, 60%, 40%);
+
 }
 a:link, a:visited, a:hover, a:active {
 	color: #990;
@@ -44,7 +47,7 @@ a:hover, a:active {
 p a:hover, p a:active {
 	text-decoration: underline;
 }
-.no-touchevents a:hover h3, .no-touchevents a:active h3 {
+.no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
     color: hsl(58, 60%, 40%);
 }
@@ -218,7 +221,7 @@ h2 span {
 	#home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
 		color: #cc6;
 	}
-	.no-touchevents a:hover h3 {
+	.no-touchevents h3 a:hover{
 		color: #fff;
 	}
 	header {

@@ -202,7 +202,8 @@ section>img {
 		display: flex;
 	}
 	.flexwrap h3 {
-		border-bottom: solid 1px;
+		border-bottom: solid #990 1px;
+        border-bottom: solid hsl(58, 60%, 40%) 1px;
 	}
 	.flexwrap p:first-of-type {
 		margin: 0;

@@ -266,7 +266,7 @@ header h1, header h1 img, h2 span {
 		left: -999em;
 		margin: 0;
 	}
-	.no-js section:first-of-type .read-more-state~article, .no-js section:first-of-type .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article a:first-child {
+	.no-js section:first-of-type .read-more-state~article, .no-js section:first-of-type .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article a:first-of-type {
 		position: static;
 		left: 0em;
 	}
