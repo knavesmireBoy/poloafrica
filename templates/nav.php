@@ -46,8 +46,10 @@ function performOutput($title, $deco, $flag = false){
 }
 
 function prepareNav($style, $deco){
-    //prepared pages in reverse order (ie order entered into db), fix ?
+    //prepared pages in reverse order APART from photos(ie order entered into db), fix ?
     $pp = array_reverse(Article::getPages());
+    $tmp = array_splice($pp, 0, 1);
+    $pp = array_merge($pp, $tmp);
     $titles = Article::getTitles($style);
     $tv = array('beautiful news' => 'tv coverage', 'news24' => '', 'sport1' => '');
 

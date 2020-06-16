@@ -209,6 +209,13 @@ include 'admin.html.php'; ?>
         hijax.setCanvas(document.querySelector('section'));
         hijax.setUrl('.');
         hijax.captureData();
+        
+         hijax.validate = function(tgt){
+           if(tgt.parentNode.id === "pp"){
+                return true;
+            }
+            return false;
+        };
     }
     
     function prepareDropDown(){

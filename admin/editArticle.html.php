@@ -18,23 +18,22 @@
         }
       }
    </script>
+<script src="../js/markup.js"></script>
+
       <div id="adminHeader">
         <h2>Poloafrica Admin</h2>
-        <p>You are logged in with email: <b><?php htmlout( $_SESSION['email']) ?></b>. <a href="?action=logout"?>Log out</a></p>
+        <p>You are logged in with email: <b><?php htmlout($_SESSION['email']) ?></b>.<a href="?action=logout"?>Log out</a></p>
       </div>
       <h3><?php echo $results['pageTitle']?></h3>
-
       <form action="?action=<?php echo $results['formAction']?>" method="post" enctype="multipart/form-data" class="content">
         <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>"/>
-
-<?php if ( isset( $results['errorMessage'] ) ) { ?>
-        <div class="errorMessage"><?php echo $results['errorMessage']; ?></div>
-<?php } ?>
-
+          <?php if ( isset( $results['errorMessage'] ) ) { ?>
+          <div class="errorMessage"><?php echo $results['errorMessage']; ?></div>
+          <?php } ?>
         <ul id="editList">
           <li>
             <label for="title">Article Title</label>
-            <input type="text" name="title" id="title" placeholder="Name of the article" required autofocus maxlength="255" value="<?php htmlout($results['article']->title)?>" />
+            <input type="text" name="title" id="title" placeholder="Name of the article" required autofocus maxlength="255" value="<?php htmlout($results['article']->title)?>">
           </li>
           <li>
             <label for="summary">Article Summary</label>
@@ -49,15 +48,14 @@
               <?php 
               $now = new DateTime();
               ?>
-            <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date( "Y-m-d", $now->getTimestamp()) ;?>" />
+            <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
               <label for="page">Page</label>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php strtolower(htmlout($results['article']->page)); ?>">
               <label for="attr_id">Article DOM ID</label>
             <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
-          </li>
+            </li>
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
-            
             //could be empty set
             if(isset($attributes[0])):
             $limit = getDisplayLimit($results['article']->title);
@@ -66,7 +64,6 @@
             $paginator->setStart($i);
             //use the minimum of total count dataset OR display limit
             $end = min($i+$limit, count($attributes));
-            
             echo "<li class='asset {$results['article']->page}'>";
             for($i; $i < $end; $i++):
             $attribute = $attributes[$i];
@@ -80,7 +77,6 @@
             $paginator->doNav();
             endif;//$attributes[0]
             endif;//$results['article']
-            
             ?>
             <div id="neue">
           <li>
@@ -92,14 +88,14 @@
                 ?>
             </div>
           </ul>
-        <div class="buttons">
+          <div class="buttons">
           <input type="submit" name="saveChanges" value="Save Changes">
             <?php if (isset($remove)) {
             echo "<p>$remove <strong>{$results['article']->title}</strong> ?</p>"; ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
             <input type="submit" name="action" value="Confirm">
             <?php } 
-            elseif ( $results['article']->id ) { ?>
+            elseif ($results['article']->id) { ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
             <input type="submit" name="action" value="Delete Article">
             <?php } ?>
@@ -107,4 +103,3 @@
         </div>
       </form>
 <a href="..">Home</a>
-<script src="../js/markup.js"></script>

@@ -16,12 +16,22 @@ include "../templates/nav.php";
 ?>
 <main class="override">
     <?php
-    foreach ($articles as $article){
-        $count += 1;
-        if(!$article->summary){
-            include '../templates/article.php';
-        }
-    }
+    $article = $articles['The setting'];
+    $count += 1;
+    include '../templates/article.php';
+    $article = $articles['Farm life'];
+    $count += 1;
+    include '../templates/article.php';
+    $article = $articles['Climate'];
+    $count += 1;
+    include '../templates/article.php';
+    $article = $articles['Connectivity'];
+    $count += 1;
+    include '../templates/article.php';
+    $article = $articles['Location'];
+    $count += 1;
+    include '../templates/article.php';
+    
 echo '</main></div>';
 include '../templates/footer.php'; ?>
 <script src="../js/finder.js"></script>

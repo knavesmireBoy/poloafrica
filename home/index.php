@@ -14,12 +14,15 @@ include "../templates/nav.php";
 ?>
 <main class="override">
     <?php
-    foreach ($articles as $article){
-        $count += 1;
-        if(!$article->summary){
-            include '../templates/article.php';
-        }
-    }
+     $article = $articles['The Poloafrica Development Trust'];
+    $count += 1;
+    include '../templates/article.php';
+    $article = $articles['The Uitgedacht experience'];
+    $count += 1;
+    include '../templates/article.php';
+    $article = $articles['The Poloafrica Polo 150 tour to England'];
+    $count += 1;
+    include '../templates/article.php';
 echo '</main></div>';
 include '../templates/footer.php'; ?>
 <script src="../js/hover.js"></script>

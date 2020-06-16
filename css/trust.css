@@ -1,4 +1,4 @@
-w@import "flex_mod.css";
+@import "flex_mod.css";
 @import "fullflex_mod.css";
 .override section:last-child img {
  	-webkit-box-flex: 1;

@@ -32,13 +32,28 @@ include "../templates/nav.php";
     $count += 1;
     $article = $articles['Press coverage'];
     include '../templates/article.php';
+    
+    $count += 1;
+    $article = $articles['Beautiful News'];
+    include '../templates/video.php';
+    
+    $count += 1;
+    $article = $articles['News24'];
+    include '../templates/video.php';
+    
+    $count += 1;
+    $article = $articles['Sport1'];
+    include '../templates/video.php';
+    
+    /*
      foreach ($articles as $article){
         $count += 1;
         if($article->summary){
             include '../templates/video.php';
         }
     }
-     $count += 1;
+    */
+     $count += 1;    
     $article = $articles['Links'];
     include '../templates/article.php';
     
