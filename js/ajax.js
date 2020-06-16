@@ -72,28 +72,28 @@ window.poloAF.Hijax = function() {
 		if (!container) {
 			return true;
 		}
-		var query = '',
-			that = this;
-		container.onsubmit = function(e) {
-            if (ret.validate(e.target)) {
-			data = fromPost(e.target);
-			/*https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only
-			for browsers that don't support the min attribute*/
-			//if (ret.validate(data)) {
-				return !start(); //needs to return false to cancel default action, so success will cancel
-			//}
-            }
-			return true;
-		};
-		container.onclick = function(e) {
-			if (e.target.getAttribute("href") && that.validate(e.target)) {
+		var query = '';
+        
+        if(container.nodeName.toLowerCase() === 'section'){
+            container.onclick = function(e) {
+			if (e.target.getAttribute("href") && ret.validate(e.target)) {
 				query = e.target.getAttribute("href").split("?")[1];
 				url += "?" + query;
-                //closeKeepAlive();
+                console.log(url);
 				return !start();
 			}
 			return true;
 		};
+        }
+        else if(container.nodeName.toLowerCase() === 'main'){
+           container.onsubmit = function(e) {
+            if (ret.validate(e.target)) {
+			data = fromPost(e.target);
+				return !start(); //needs to return false to cancel default action, so success will cancel
+            }
+			//return true;
+		};
+        }
 	}
 	var container,
 		url,
@@ -138,6 +138,7 @@ window.poloAF.Hijax = function() {
 			if (request.status == 200 || request.status == 304) {
 				if (canvas) {
 					if (request.responseText) {
+                        //console.log(request.responseText);
 						canvas.innerHTML = request.responseText;
 					}
 				}
@@ -171,3 +172,5 @@ window.poloAF.Hijax = function() {
 	};
 	return ret;
 }
+
+/*https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only for browsers that don't support the min attribute*/

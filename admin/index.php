@@ -15,7 +15,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : "";
 $display = 10;
 $results['page_title'] = 'Admin';
 include "../templates/header.php"; ?>
-<body class="admin"><main>
+<body class="admin"><main><section>
 <?php    
 if (isset($_GET['loginError']))
 {
@@ -199,30 +199,35 @@ if (isset($_GET['status']))
 include 'admin.html.php'; ?>
 
 <?php require "listArticles.html.php";
+    echo '</section></main>';
 ?>
-</main>
 <script>
     
     function prepareNavLinks(){
+        var hijax = window.poloAF.Hijax();
+        hijax.setContainer(document.querySelector('section'));
+        hijax.setCanvas(document.querySelector('section'));
+        hijax.setUrl('.');
+        hijax.captureData();
+    }
+    
+    function prepareDropDown(){
         var hijax = window.poloAF.Hijax();
         hijax.setContainer(document.querySelector('main'));
         hijax.setCanvas(document.querySelector('main'));
         hijax.setUrl('.');
         
         hijax.validate = function(tgt){
-            if(tgt.elements){
-        return tgt.id === "page_select";
-            }
-            else if(tgt.href){
+           if(tgt.id === "page_select"){
                 return true;
             }
-            return true;
-        }
+            return false;
+        };
         
         hijax.captureData();
     }
-    //prepareNavLinks();
+    prepareNavLinks();
+    prepareDropDown();
     
     </script>
     </body>
-    

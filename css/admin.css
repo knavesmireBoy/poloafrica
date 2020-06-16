@@ -140,6 +140,12 @@ li.asset label {
 .admin .asset {
     margin: 0 0 0 17%;
 }
+
+/*overrides default hiding of inouts which are used in no-js scenario*/
+.admin section input {
+    position: relative;
+    left: 0;
+}
 .admin .asset figure label, .admin .asset figure input{
     text-align: left;
     border-width: 0px;
