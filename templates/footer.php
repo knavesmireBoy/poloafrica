@@ -15,4 +15,3 @@
     <script src="../js/eventing.js"></script>
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
-    <script src="../js/finder.js"></script>

@@ -34,10 +34,10 @@ echo '</main></div>'; ?>
     <script src="../js/tooltips.js"></script>
     <script>
         var hijax = window.poloAF.Hijax();
-        hijax.setContainer(document.getElementById('pp'));
+        hijax.setContainer(document.querySelector('main'));
         hijax.setCanvas(document.querySelector('main'));
         hijax.setUrl('../templates/photos.php');
-        hijax.captureData();
+        hijax.captureData(true);
         //preload images
         var all,
             imgs = <?php echo json_encode($iZero) ?>;

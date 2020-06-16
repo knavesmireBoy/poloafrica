@@ -68,33 +68,60 @@ window.poloAF.Hijax = function() {
 		}
 		return query;
 	}
-	function captureData() {
+	function captureDataEvent() {
 		if (!container) {
 			return true;
 		}
 		var query = '';
-        
         if(container.nodeName.toLowerCase() === 'section'){
+            container.addEventListener('click', function(e) {
+			if (e.target.getAttribute("href") && ret.validate(e.target)) {
+                e.preventDefault();
+				query = e.target.getAttribute("href").split("?")[1];
+				url += "?" + query;
+				start();
+			}
+		});
+        }
+        else if(container.nodeName.toLowerCase() === 'main'){
+            container.addEventListener('submit', function(e) {
+			if (ret.validate(e.target)) {
+                e.preventDefault();
+                data = fromPost(e.target);
+				start();
+			}
+		});
+        }
+	}
+    
+    function captureDataOnClick(flag) {
+        //flag to override defaults
+		if (!container) {
+			return true;
+		}
+		var query = '';
+        /* persisting with onclick for simplicites sake, setting click on inner element and subit on outer, the reverse prevents click from working*/
+        if(container.nodeName.toLowerCase() === 'section' || flag){
             container.onclick = function(e) {
 			if (e.target.getAttribute("href") && ret.validate(e.target)) {
 				query = e.target.getAttribute("href").split("?")[1];
 				url += "?" + query;
-                console.log(url);
 				return !start();
 			}
 			return true;
 		};
         }
-        else if(container.nodeName.toLowerCase() === 'main'){
+        else if(container.nodeName.toLowerCase() === 'main' && !flag){
            container.onsubmit = function(e) {
             if (ret.validate(e.target)) {
 			data = fromPost(e.target);
 				return !start(); //needs to return false to cancel default action, so success will cancel
             }
-			//return true;
+			return true;
 		};
         }
 	}
+    
 	var container,
 		url,
 		canvas,
@@ -134,7 +161,8 @@ window.poloAF.Hijax = function() {
 	}
 
 	function completeRequest() {
-		if (request.readyState == 4) {
+        try {
+		if (request.readyState == request.DONE /*4*/) {
 			if (request.status == 200 || request.status == 304) {
 				if (canvas) {
 					if (request.responseText) {
@@ -146,6 +174,8 @@ window.poloAF.Hijax = function() {
 			}
 		}
 	}
+        catch(e) { true; }
+    }
 
 	function initiateRequest() {
 		loading();
@@ -162,7 +192,7 @@ window.poloAF.Hijax = function() {
 		url = url.split('?')[0];
 	}
 	var ret = {
-		captureData: captureData,
+		captureData: captureDataOnClick,
 		validate: always(true), //override as required
 		setContainer: setContainer,
 		setUrl: setUrl,

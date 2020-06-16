@@ -20,7 +20,6 @@ if (!isset($_SESSION["gallery_paginator"]))
     $_SESSION["gallery_paginator"] = new GalleryPaginator(GALLERY_DISPLAY_COUNT, GALLERY_TOTAL_COUNT, new Looper(getGalleryPageBreaks()));
 }
 
-
 $_SESSION["gallery_paginator"]->setStart(0);
 $start = $_SESSION["gallery_paginator"]->getStart();
 $limit = $_SESSION["gallery_paginator"]->getDisplay();

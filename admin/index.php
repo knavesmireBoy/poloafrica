@@ -228,6 +228,12 @@ include 'admin.html.php'; ?>
     }
     prepareNavLinks();
     prepareDropDown();
+    /*
+    document.getElementById('page').addEventListener('change',  function(e){
+        //e.preventDefault();
+        this.form.submit();
+    });
+    */
     
     </script>
-    </body>
+    <?php echo '</body>';

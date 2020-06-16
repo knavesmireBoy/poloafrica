@@ -65,6 +65,7 @@ include "../templates/nav.php"
          ?>
         </main>
 <?php echo '</div>'; include "../templates/footer.php" ?>
+    <script src="../js/finder.js"></script>
         <script>        
         var utils = poloAF.Util,
     	ptL = _.partial,

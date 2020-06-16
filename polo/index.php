@@ -23,5 +23,6 @@ include "../templates/nav.php";
         }
     }
 echo '</main></div>';
-include '../templates/footer.php';
-echo '</body></html>';
+include '../templates/footer.php';?>
+<script src="../js/finder.js"></script>
+<?php echo '</body></html>';
