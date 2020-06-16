@@ -247,11 +247,13 @@ class Article
            trigger_error("Article::delete(): Attempt to delete an Article object that does not have its ID property set", E_USER_ERROR);
        }        
        $this->removeAssets();
-       
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
        $conn = getConn();
-       $sql = "DELETE repo FROM articles INNER JOIN $linker AS AA ON articles.id = AA.article_id INNER JOIN $foreign AS repo ON repo.id = AA.asset_id WHERE AA.article_id = :id";
+       /* IF NOT USING FOREIGN KEY ON article_asset */
+        //$sql = "DELETE repo, AA FROM $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND repo.id = :repo";
+       
+       $sql = "DELETE repo FROM articles INNER JOIN $linker AS AA ON articles.id = AA.article_id INNER JOIN $foreign AS repo ON repo.id = AA.asset_id WHERE AA.article_id = :id";       
        $st = prepSQL($conn, $sql);  
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error deleting asset');
@@ -315,18 +317,13 @@ class Article
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
        $conn = getConn();
-       //$sql = "DELETE repo, AA FROM $foreign AS repo, $linker AS AA, articles INNER JOIN AA ON AA.article_id = articles.id INNER JOIN repo ON repo.id = AA.asset_id AND articles.id = :id";
-       //exit($sql);
-       //$sql = "DELETE repo, AA FROM $foreign INNER JOIN $linker AS AA ON AA.article_id = articles.id INNER JOIN assets AS repo ON repo.id = AA.asset_id WHERE articles.id = :id AND repo.id = :repo";
+       //$sql = "DELETE repo, AA FROM $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND repo.id = :repo";
        
-       $sql = "DELETE repo, AA FROM $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND repo.id = :repo";
-       
-       /*USING FOREIGN KEY ON article_asset SO THIS QUERY WILL SUFFICE*/
-       //$sql = "DELETE FROM $foreign AS repo WHERE repo.id = :id";
-     //$st = prepSQL($conn, "DELETE FROM assets AS repo WHERE repo.id = :id");  
-     $st = prepSQL($conn, $sql);  
-       $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-       $st->bindValue(":repo", $id, PDO::PARAM_INT);
+       /*USING FOREIGN KEY ON article_asset SO THIS QUERY WILL DELETE FROM BOTH TABLES HOWEVER THE ABOVE IS A GOOD EXAMPLE OF THE USE OF ALIAS*/
+       $sql = "DELETE FROM $foreign AS repo WHERE repo.id = :id";
+       $st = prepSQL($conn, $sql);  
+       $st->bindValue(":id", $id, PDO::PARAM_INT);
+       //$st->bindValue(":repo", $id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error deleting asset from tables');
    }
 }
