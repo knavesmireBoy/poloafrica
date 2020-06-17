@@ -66,7 +66,7 @@
         $selectedRoles = array();
         foreach ($st as $row)
         {
-            $selectedRoles[] = $row['roleID'];
+            $selectedRoles[] = $row['role_id'];
         }
         $st = prepSQL($conn, 'SELECT * FROM role');
         doPreparedQuery($st, 'Error fetching list of roles.');

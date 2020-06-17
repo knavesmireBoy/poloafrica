@@ -22,7 +22,10 @@ session_start();
 
 if ( isset( $results['errorMessage'] ) ) { ?>
         <div class="errorMessage"><?php htmlout($results['errorMessage']) ?></div>
-<?php exit(); } ?>
+<div><a href="../user">User</a></div>
+<?php
+    exit(); } ?>
 <?php if ( isset( $results['statusMessage'] ) ) { ?>
         <div class="statusMessage"><?php htmlout($results['statusMessage']) ?></div>
-<?php } 
+<?php } ?>
+

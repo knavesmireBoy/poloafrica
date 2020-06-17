@@ -17,4 +17,4 @@
 <?php
 if (isset($loginError)): ?>
 <p><?php htmlout($loginError); ?></p>
-<?php endif;
+<?php endif; ?>

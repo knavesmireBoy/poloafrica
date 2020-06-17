@@ -32,9 +32,9 @@ if (!userIsLoggedIn())
     exit();
 }
     
-if (!userHasRole('Account Administrator') && !isset($_GET['error']))
+if (!userHasRole('Content Editor') && !isset($_GET['error']))
 {
-    $e = urlencode('Only Account Administrators may access this page.');
+    $e = urlencode("Only Content Editor's may access this page.");
     header("Location: ?error=$e");
 }
     

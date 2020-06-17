@@ -24,7 +24,10 @@ if(!isset($_POST['action'])): ?>
 <input type="submit" value="Edit"/>
 </form>
 
-<?php else : ?>
+<?php else : 
+
+//exit(var_dump($users));
+?>
 
 <form action="" method="post" class="manage">
 <label><?php htmlout($users['name']); ?></label>
@@ -38,4 +41,4 @@ endif;
 if(!isset($_GET['add'])){ ?>
 <a href="?add">Add a New User</a>
 <?php } ?>
-<div><a href="../admin">Return</a></div>
+<div><a href="../admin">Admin</a></div>
