@@ -32,28 +32,30 @@
           <?php } ?>
         <ul id="editList">
           <li>
-            <label for="title">Article Title</label>
+            <label for="title">title</label>
             <input type="text" name="title" id="title" placeholder="Name of the article" required autofocus maxlength="255" value="<?php htmlout($results['article']->title)?>">
           </li>
           <li>
-            <label for="summary">Article Summary</label>
+            <label for="summary">summary</label>
             <textarea name="summary" id="summary" placeholder="Brief description of the article" maxlength="1000" style="height: 5em;"><?php htmlout($results['article']->summary);?></textarea>
           </li>
           <li>
-            <label for="content">Article Content</label>
+            <label for="content">content</label>
               <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
           </li>
+            <fieldset class="neue">
           <li id="datepage">
-            <label for="pubDate">Publication Date</label>
+            <label for="pubDate">publication date</label>
               <?php 
               $now = new DateTime();
               ?>
             <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
-              <label for="page">Page</label>
+              <label for="page">page</label>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php strtolower(htmlout($results['article']->page)); ?>">
-              <label for="attr_id">Article DOM ID</label>
+              <label for="attr_id">identity</label>
             <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
             </li>
+            </fieldset>            
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
             //could be empty set
@@ -78,17 +80,17 @@
             endif;//$attributes[0]
             endif;//$results['article']
             ?>
-            <div id="neue">
+            <fieldset class="neue"><legend>add asset...</legend>
           <li>
-            <label for="image">Add New Asset</label>
+            <label for="image">upload</label>
             <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
           </li>
             <?php 
             include "../templates/attributes.php";
                 ?>
-            </div>
+            </fieldset>
           </ul>
-          <div class="buttons">
+          <fieldset class="buttons">
           <input type="submit" name="saveChanges" value="Save Changes">
             <?php if (isset($remove)) {
             echo "<p>$remove <strong>{$results['article']->title}</strong> ?</p>"; ?>
@@ -100,6 +102,14 @@
             <input type="submit" name="action" value="Delete Article">
             <?php } ?>
             <input type="submit" formnovalidate name="cancel" value="Cancel">
-        </div>
+            <label for="insert">INSERT</label><input type="text" name="insert" id="insert">
+        </fieldset>
       </form>
-<a href="..">Home</a>
+<script>
+document.querySelector('.asset').addEventListener('change',  function(e){
+        if(e.target.type === 'checkbox'){
+            this.classList.toggle('edit');
+        }
+    });
+</script>
+<a href=".">Admin</a>

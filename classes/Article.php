@@ -83,6 +83,17 @@ class Article
        }
        $conn = null;
    }
+    
+    protected function move($id){
+        $conn = getConn();
+        $sql = "UPDATE articles SET id = :max WHERE id = :id";
+        $st = prepSQL($conn, $sql);
+        $max = $conn->query("SELECT MAX(id) FROM articles")->fetch()[0]+1;
+        $st->bindValue(":id", $id, PDO::PARAM_INT);
+        $st->bindValue(":max", $max, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error updating article');
+        $conn = null;
+    }
 
    static public function getFileName($path)
    {
@@ -216,7 +227,8 @@ class Article
        $this->id = $conn->lastInsertId();
        $conn = null;
    }
-   public function update()
+    
+   public function update($flag)
    {
        // Does the Article object have an ID?
        if (is_null($this->id))
@@ -224,8 +236,9 @@ class Article
            trigger_error("Article::update(): Attempt to update an Article object that does not have its ID property set.", E_USER_ERROR);
        }
        // Update the Article
-        $conn = getConn();
-
+       
+       $conn = getConn();
+       if(!$flag){
        $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr, page=:page WHERE id = :id";
 
        $st = prepSQL($conn, $sql);        
@@ -238,15 +251,83 @@ class Article
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error updating article');
        $conn = null;
+       }
+       else {
+           //exit($flag);
+           if($flag == 'end'){
+                $conn = null;
+               $this->move($this->id);
+           }
+           
+           else if ($flag !== 'end'){
+               $this->move($this->id);
+               $sql = "SELECT id FROM articles WHERE title = :title";
+               $st = prepSQL($conn, $sql);
+               $st->bindValue(":title", $flag, PDO::PARAM_INT);
+               doPreparedQuery($st, 'Error selecting id from title');
+               $id = $conn->query($st->fetch()[0]);
+               $sql = "SELECT id FROM articles WHERE id >= :id AND page = :page";
+               $st = prepSQL($conn, $sql); 
+               $st->bindValue(":id", $id, PDO::PARAM_INT);
+               $st->bindValue(":page", $this->page, PDO::PARAM_STR);
+               doPreparedQuery($st, 'Error updating article');
+               while ($row = $st->fetch(PDO::FETCH_NUM)){
+                   $this->move($row[0]);
+               }
+               
+           }
+           /*
+           else {
+           $sql = "SELECT id FROM articles WHERE id > :id AND page = :page";
+           $st = prepSQL($conn, $sql); 
+           $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+           $st->bindValue(":page", $this->page, PDO::PARAM_STR);
+           doPreparedQuery($st, 'Error updating article');
+           
+           exit($conn->query("SELECT MAX(id) FROM articles")->fetch()[0]);
+           
+           $sql = "INSERT INTO articles (pubDate, title, summary, content, attr_id, page) SELECT pubDate, CONCAT('_', title), summary, content, attr_id, page FROM articles WHERE id= :id";
+           $st = prepSQL($conn, $sql); 
+           $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+           doPreparedQuery($st, 'Error updating article');
+           $id = $conn->lastInsertId();
+           
+           $sql = "SELECT asset_id FROM article_asset WHERE article_id = :id";
+           $st = prepSQL($conn, $sql); 
+           $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+           doPreparedQuery($st, "Error selecting asset id's");
+           
+           while ($row = $st->fetch(PDO::FETCH_NUM)){
+           $sql = "INSERT INTO article_asset VALUES(:words, :pics)";
+           $st = prepSQL($conn, $sql); 
+           $st->bindValue(":words", $id, PDO::PARAM_INT);
+           $st->bindValue(":pics", $row[0], PDO::PARAM_INT);
+           doPreparedQuery($st, 'Error inserting into article_asset');
+           }
+           
+           $sql = "DELETE FROM article_asset WHERE article_asset.article_id = :id";
+           $st = prepSQL($conn, $sql); 
+           $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+           doPreparedQuery($st, 'Error deleting from article_asset');
+           
+           $sql = "DELETE FROM articles WHERE id = :id";
+           $st = prepSQL($conn, $sql); 
+           $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+           doPreparedQuery($st, "Error deleting article");
+           $conn = null;
+       }*/
+       }
    }
-   public function delete()
+   public function delete($flag)
    {
        // Does the Article object have an ID?
        if (is_null($this->id))
        {
            trigger_error("Article::delete(): Attempt to delete an Article object that does not have its ID property set", E_USER_ERROR);
        }        
-       $this->removeAssets();
+       if(!$flag){
+           $this->removeAssets();
+       }
        $foreign = $this->getForeignTable();
        $linker = $this->getLinkTable();
        $conn = getConn();

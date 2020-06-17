@@ -14,50 +14,15 @@ include "../templates/nav.php";
 ?>
 <main class="override">
     <?php
-    $count += 1;
-    $article = $articles['Laureus'];
-    include '../templates/article.php';
-    $count += 1;
-     $article = $articles['Community'];
-    include '../templates/article.php';
-    $count += 1;
-    $article = $articles['Beekeeping'];
-    include '../templates/article.php';
-    $count += 1;
-     $article = $articles['Activities on the farm'];
-    include '../templates/article.php';
-    $count += 1;
-    $article = $articles['Activities around the farm'];
-    include '../templates/article.php';
-    $count += 1;
-    $article = $articles['Press coverage'];
-    include '../templates/article.php';
-    
-    $count += 1;
-    $article = $articles['Beautiful News'];
-    include '../templates/video.php';
-    
-    $count += 1;
-    $article = $articles['News24'];
-    include '../templates/video.php';
-    
-    $count += 1;
-    $article = $articles['Sport1'];
-    include '../templates/video.php';
-    
-    /*
-     foreach ($articles as $article){
+    foreach ($articles as $article){
         $count += 1;
-        if($article->summary){
+        if(!$article->summary){
+            include '../templates/article.php';
+        }
+        else {
             include '../templates/video.php';
         }
-    }
-    */
-     $count += 1;    
-    $article = $articles['Links'];
-    include '../templates/article.php';
-    
-   
+    }   
 echo '</main></div>';
 include '../templates/footer.php'; ?>
     <script src="../js/finder.js"></script>

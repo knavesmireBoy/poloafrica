@@ -3,11 +3,11 @@ h2 span {
 }
 
 /* NO FLEX PLEASE WE'RE BRITISH*/
-.override section:first-child {
+.override #facilities {
     display: block;
         }
  
-section:first-child img {
+#facilities img {
 	clear: both;
     width: 30%;
 	margin: 1em 0 1m 0;
@@ -21,7 +21,7 @@ section:first-child img {
 }
 
 @media screen and (max-width: 888px) {
-    section:first-child img {
+    #facilities img {
     width: 40%;
 }
 }

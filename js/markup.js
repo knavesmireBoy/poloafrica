@@ -194,7 +194,6 @@ window.addEventListener('load', function(){
         };
         };
             tags.forEach(prep(create, div, 'a'));
-    
     div.setAttribute('className', 'editor-toolbar');
 
 div.addEventListener('click', linkeroo(Maker($('content'), $('title'))));

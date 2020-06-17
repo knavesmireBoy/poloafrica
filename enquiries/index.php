@@ -103,6 +103,5 @@ include "../templates/nav.php"
             };
             window.onload = prepareAjax;            
             utils.addEvent(clicker, relocate)(myform);
-                            
     </script>
 <?php echo '</body></html>';

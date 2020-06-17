@@ -97,8 +97,8 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
                 $article->deleteAssets($id);
             }
         }
-
-        $article->update();
+        
+        $article->update($_POST['insert']);
         /* this will always be true due to enctype="multipart/form-data" */
         if (isset($_FILES['asset']))
         {
@@ -240,7 +240,7 @@ include 'admin.html.php'; ?>
         //e.preventDefault();
         this.form.submit();
     });
-    */
+    */    
     
     </script>
     <?php echo '</body>';

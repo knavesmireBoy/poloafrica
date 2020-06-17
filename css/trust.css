@@ -1,21 +1,21 @@
 @import "flex_mod.css";
 @import "fullflex_mod.css";
-.override section:last-child img {
+.override #social img {
  	-webkit-box-flex: 1;
  	-ms-flex: 1 1 %;
  	-webkit-flex: 1 1 1%;
  	flex: 1 1 1%;
  }
- .override section:last-child article {
+ .override #social article {
  	-webkit-box-flex: 6;
  	-ms-flex: 6 1 1%;
  	-webkit-flex: 6 1 1%;
  	flex: 6 1 1%;
  }
- .no-flexwrap .override section:last-child {
+ .no-flexwrap .override #social {
  	display: block;
  }
- .override section:last-child img {
+ .override #social img {
  	float: right;
  	width: 20%;
  	margin: 1em 1em 0;
@@ -49,7 +49,7 @@
  	h2, h2 span {
  		background: none;
  	}
-     .override section:last-child img {
+     .override #social img {
  	margin: 1em 0 1em 1em;
  }
  }
