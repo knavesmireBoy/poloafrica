@@ -127,7 +127,7 @@ li.asset label {
     width: 100%;
 }
 
-.admin .asset figure > * {
+.js .asset figure > * {
     position: absolute;
     left: -999px;
 }

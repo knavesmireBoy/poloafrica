@@ -13,6 +13,7 @@ require_once '../includes/access.inc.php';
 require_once '../myconfig.php';
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $display = 10;
+$default_placement = "current position";
 $results['page_title'] = 'Admin';
 include "../templates/header.php"; ?>
 <body class="admin"><main><section>
@@ -134,6 +135,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     $results = array();
     $results['pageTitle'] = "New Article";
     $results['formAction'] = "newArticle";
+    $default_placement = "select position";
 
     //form action
     if (isset($_POST['saveChanges']))

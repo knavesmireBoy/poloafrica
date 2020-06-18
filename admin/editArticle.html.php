@@ -1,5 +1,4 @@
 <?php
-
 $insert_action = "to place this article before another article enter the first three characters of the target article title. ";
 $mypage = '';
  function getTextAreaHeight($str){
@@ -54,7 +53,8 @@ $mypage = '';
               ?>
             <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
               <label for="page">page</label>
-              <?php if(isset($_GET['page'])) {  $mypage = strtolower(html($_GET['page'])); }
+              <?php if(!empty($_GET['page'])) {  $mypage = strtolower(html($_GET['page'])); }
+              else if(!empty($results['article']->page)) {  $mypage = strtolower($results['article']->page); }
               /*strtolower(htmlout($results['article']->page));*/?>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php echo $mypage; ?>">
               <label for="attr_id">identity</label>
@@ -108,17 +108,20 @@ $mypage = '';
             <input type="submit" name="action" value="Delete Article">
             <?php } ?>
             <input type="submit" formnovalidate name="cancel" value="Cancel">
-            <label for="insert">INSERT BEFORE:</label>
+            
               <?php
+                    if(!empty($_GET['page'])){
+                        echo '<label for="insert">INSERT BEFORE:</label>';
                     $rows = Article::getTitles(html($_GET['page']), true);
-                    echo '<select name="insert" id="insert"><option value="">current position</option>';
+                    echo "<select name='insert' id='insert'><option value=''>$default_placement</option>";
                     foreach($rows as $k => $v){
                         echo "<option value='$k'>$v</option>";
                     }
                     echo '<option value="*">insert at end</option></select>'
                   ?>
                     
-              <?php } ?>
+              <?php }
+                   } ?>
         </fieldset>
       </form>
 <script>
