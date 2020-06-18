@@ -38,6 +38,8 @@ include 'pagesDropDown.php'; ?>
 
 <p><?php htmlout($paginator->getRecords()); ?> article<?php htmlout(doPlural($paginator->getRecords())); ?> in total</p>
 
-<p><a href="?action=newArticle">Add a New Article</a></p>
+<p><a href="?action=newArticle&page=<?php if(isset($_REQUEST['page'])){
+    htmlout($_REQUEST['page']);
+}?>">Add a New Article</a></p>
 <p><a href="../user/?action=manageUsers">Manage Users</a></p>
 <p><a href="../enquiries/">Home</a></p>

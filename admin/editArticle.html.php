@@ -1,4 +1,7 @@
 <?php
+
+$insert_action = "to place this article before another article enter the first three characters of the target article title. ";
+$mypage = '';
  function getTextAreaHeight($str){
      return strtolower($str) == 'photos' ? '5em' : '30em';
     }
@@ -51,7 +54,9 @@
               ?>
             <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
               <label for="page">page</label>
-              <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php strtolower(htmlout($results['article']->page)); ?>">
+              <?php if(isset($_GET['page'])) {  $mypage = strtolower(html($_GET['page'])); }
+              /*strtolower(htmlout($results['article']->page));*/?>
+              <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php echo $mypage; ?>">
               <label for="attr_id">identity</label>
             <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
             </li>
@@ -91,25 +96,39 @@
             </fieldset>
           </ul>
           <fieldset class="buttons">
-          <input type="submit" name="saveChanges" value="Save Changes">
-            <?php if (isset($remove)) {
-            echo "<p>$remove <strong>{$results['article']->title}</strong> ?</p>"; ?>
+              <?php if (isset($remove)) {
+            echo "<legend>$remove <strong>{$results['article']->title}</strong> ?</legend>"; ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
             <input type="submit" name="action" value="Confirm">
-            <?php } 
-            elseif ($results['article']->id) { ?>
+            <?php }
+              else { ?>
+              <input type="submit" name="saveChanges" value="Save Changes">
+            <?php if ($results['article']->id) { ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
             <input type="submit" name="action" value="Delete Article">
             <?php } ?>
             <input type="submit" formnovalidate name="cancel" value="Cancel">
-            <label for="insert">INSERT</label><input type="text" name="insert" id="insert">
+            <label for="insert">INSERT BEFORE:</label>
+              <?php
+                    $rows = Article::getTitles(html($_GET['page']), true);
+                    echo '<select name="insert" id="insert"><option value="">current position</option>';
+                    foreach($rows as $k => $v){
+                        echo "<option value='$k'>$v</option>";
+                    }
+                    echo '<option value="*">insert at end</option></select>'
+                  ?>
+                    
+              <?php } ?>
         </fieldset>
       </form>
 <script>
-document.querySelector('.asset').addEventListener('change',  function(e){
+    var asset = document.querySelector('.asset');
+    if(asset){
+        asset.addEventListener('change',  function(e){
         if(e.target.type === 'checkbox'){
             this.classList.toggle('edit');
         }
-    });
+        });
+    }
 </script>
 <a href=".">Admin</a>

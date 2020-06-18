@@ -16,7 +16,10 @@ $display = 10;
 $results['page_title'] = 'Admin';
 include "../templates/header.php"; ?>
 <body class="admin"><main><section>
-<?php    
+<?php
+$insert_action_plus = "";
+//$insert_placeholder = "";
+
 if (isset($_GET['loginError']))
 {
     $loginError = $_GET['loginError'];
@@ -79,6 +82,8 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     $results = array();
     $results['pageTitle'] = "Edit Article";
     $results['formAction'] = "editArticle";
+    $insert_action_plus = "to place as last article enter any single character, to maintain present placement leave blank";
+    //$insert_placeholder = "*";
 
     if (isset($_POST['saveChanges']))
     {
@@ -137,6 +142,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
         $article = new Article();
         $article->storeFormValues($_POST);
         $article->insert();
+        $article->placeArticle($_POST['insert']);
 
         if (isset($_FILES['asset']))
         {

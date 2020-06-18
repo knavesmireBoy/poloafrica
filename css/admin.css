@@ -89,6 +89,14 @@ li.asset label {
 .buttons input:hover {
     color: red;
 }
+
+.admin .buttons label {
+    border: 1px solid silver;
+    font: .8em Arial;
+    padding: .45em;
+    background-color: rgb(233,233,233);
+    
+}
 .admin input#alt {
     width: 58%;
 }
@@ -222,13 +230,14 @@ li.asset label {
 }
 
 .admin legend {
-    padding: 0 0.5em;
-    font-size: 1.5em;
+    padding: 0.25em 1em;
+    font: 1em Arial;
     margin-left: 1em;
     background-color: olive;
     background-color: hsl(51, 50%, 30%);
     border: solid 1px black;
-    color: hsl(54, 50%, 66%);
+    color: hsl(54, 50%, 77%);
+    text-transform: uppercase;
 }
 
 #pp > * {

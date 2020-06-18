@@ -50,7 +50,7 @@ function prepareNav($style, $deco){
     $pp = array_reverse(Article::getPages());
     $tmp = array_splice($pp, 0, 1);
     $pp = array_merge($pp, $tmp);
-    $titles = Article::getTitles($style);
+    $titles = Article::getTitles($style, false);
     $tv = array('beautiful news' => 'tv coverage', 'news24' => '', 'sport1' => '');
 
     foreach($pp as $p){
