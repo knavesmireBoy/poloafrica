@@ -10,9 +10,10 @@ require_once '../includes/db.inc.php';
 if(!isset($_SESSION['email'])){
 session_start();
 }
-$paginator = $_SESSION["paginator"];    
-$articles = $paginator->getList($page);
-$pp = array_reverse(Article::getPages()); 
+
+$pp = array_reverse(Article::getPages());
+    $tmp = array_splice($pp, 0, 1);
+    $pp = array_merge($pp, $tmp);
 include 'pages_dropdown.php'; 
 ?>
  <table>

@@ -208,33 +208,35 @@ else
 {
     if(isset($_SESSION["paginator"]->page)){
         //echo 'existingpp : ';
-        $count = PagePaginator::calculate($_SESSION["paginator"]->page);
+        $count = $_SESSION["paginator"]->getRecords();
         $page = $_SESSION["paginator"]->page;
     }
+    //override if new page
     if(!empty($_REQUEST['page'])){
         //echo 'newpp : ';
-        $count = PagePaginator::calculate($_REQUEST['page']);
+        $count = PagePaginator::getPageCount($_REQUEST['page']);
         $_SESSION["paginator"] = new PagePaginator(10, $count);
         $page = $_REQUEST['page'];
-        $_SESSION["paginator"]->page = $page;
-        //echo $_SERVER['REQUEST_URI'];
-       // echo $_SERVER['QUERY_STRING'];
+        $_SESSION["paginator"]->setPage($page);
+        //echo $_SERVER['REQUEST_URI']$_SERVER['QUERY_STRING'];
     }
-
+    //or clearing page selection
     if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'choose' && !$_REQUEST['page']){
-        //echo 'emptypp : ';
         $count = $data['totalRows'];
         $page = null;
-        $_SESSION["paginator"] = new PagePaginator(10, $data['totalRows']);
+        $_SESSION["paginator"] = new PagePaginator(10, $count);
     }
-    
-    $_SESSION["paginator"]->setRecords($count);
+    //$_SESSION["paginator"]->setRecords($count);
+    //$page var set on index
+
 }
     
-    if (isset($_GET['s']) and is_numeric($_GET['s']))
+if (isset($_GET['s']) and is_numeric($_GET['s']))
 {
     $_SESSION["paginator"]->setStart($_GET['s']);
 }
+    $paginator = $_SESSION["paginator"];    
+$articles = $paginator->getList($page);
       
 $results['errorMessage'] = isset($_GET['error']) ? getMsg($_GET['error']) : null;
 $results['statusMessage'] = isset($_GET['status']) ? getMsg($_GET['status']) : null;
@@ -276,7 +278,7 @@ echo '</section></main>';
         hijax.captureData();
     }
     prepareNavLinks();
-    //prepareDropDown();
+    prepareDropDown();
     /*
     document.getElementById('page').addEventListener('change',  function(e){
         //e.preventDefault();

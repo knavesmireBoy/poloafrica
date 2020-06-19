@@ -19,7 +19,13 @@ abstract class Paginator implements PaginatorInterface {
             return false;
         }
     }
-    static public function calculate($pp = true){}
+    static public function getPageCount($pp = true){
+        $conn = getConn();
+        $where = is_string($pp) ? "WHERE page = '$pp' " : "WHERE true ";
+        $sql = "SELECT COUNT(id) FROM articles ";
+        $sql .= $where;
+        return $conn->query($sql)->fetch()[0];
+    }
     
     protected function getCurrentPage(){
         return ($this->start/$this->display) + 1;
@@ -68,7 +74,14 @@ abstract class Paginator implements PaginatorInterface {
         if(!isset($this->start)){
             $this->start = 0;
         }
-    }    
+    } 
     
+    public function setPage($page){
+        $this->page = $page;
+    } 
+    public function getPage(){
+        return $this->page;
+    } 
+
     abstract public function doNav();
 }
