@@ -21,17 +21,23 @@ $mypage = '';
       }
    </script>
 <script src="../js/markup.js"></script>
+<?php $results['heading'] = 'Edit Article';
+include "admin.html.php"; ?>
 
-      <div id="adminHeader">
-        <h2>Poloafrica Admin</h2>
-        <p>You are logged in with email: <b><?php htmlout($_SESSION['email']) ?></b>.<a href="?action=logout"?>Log out</a></p>
-      </div>
-      <h3><?php echo $results['pageTitle']?></h3>
       <form action="?action=<?php echo $results['formAction']?>" method="post" enctype="multipart/form-data" class="content">
         <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>"/>
           <?php if ( isset( $results['errorMessage'] ) ) { ?>
           <div class="errorMessage"><?php echo $results['errorMessage']; ?></div>
-          <?php } ?>
+          <?php } 
+
+             if (isset($remove)) { ?>
+            <div class='buttons'> <?php echo $remove . "<strong>{$results['article']->title}</strong>?";?>
+                <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
+                <input type="hidden" name="page" value="<?php htmlout($results['article']->page); ?>">
+                <input type="submit" name="action" value="Confirm">
+                <input type="submit" id="abort" name="abort" value="Abort"></div>
+            <?php } ?>
+          
         <ul id="editList">
           <li>
             <label for="title">title</label>
@@ -53,7 +59,7 @@ $mypage = '';
               ?>
             <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
               <label for="page">page</label>
-              <?php if(!empty($_GET['page'])) {  $mypage = strtolower(html($_GET['page'])); }
+              <?php if(!empty($_REQUEST['page'])) {  $mypage = strtolower(html($_REQUEST['page'])); }
               else if(!empty($results['article']->page)) {  $mypage = strtolower($results['article']->page); }
               /*strtolower(htmlout($results['article']->page));*/?>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php echo $mypage; ?>">
@@ -95,24 +101,19 @@ $mypage = '';
                 ?>
             </fieldset>
           </ul>
-          <fieldset class="buttons">
-              <?php if (isset($remove)) {
-            echo "<legend>$remove <strong>{$results['article']->title}</strong> ?</legend>"; ?>
-            <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
-            <input type="submit" name="action" value="Confirm">
-            <?php }
-              else { ?>
-              <input type="submit" name="saveChanges" value="Save Changes">
+             
+              <?php if(!isset($remove)) { ?>
+                    <fieldset class="buttons">
+                        <input type="submit" name="saveChanges" value="Save Changes">
             <?php if ($results['article']->id) { ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
             <input type="submit" name="action" value="Delete Article">
             <?php } ?>
-            <input type="submit" formnovalidate name="cancel" value="Cancel">
-            
+            <input type="submit" name="cancel" formnovalidate value="Cancel">
               <?php
-                    if(!empty($_GET['page'])){
+                    if(isset($mypage)){
                         echo '<label for="insert">INSERT BEFORE:</label>';
-                    $rows = Article::getTitles(html($_GET['page']), true);
+                    $rows = Article::getTitles($mypage, true);
                     echo "<select name='insert' id='insert'><option value=''>$default_placement</option>";
                     foreach($rows as $k => $v){
                         echo "<option value='$k'>$v</option>";

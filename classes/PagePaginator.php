@@ -32,12 +32,24 @@ class PagePaginator extends Paginator implements PaginatorInterface {
         $data = $st->fetchAll(PDO::FETCH_ASSOC);
         $this->setProps($data);
         if(is_string($pp)){
-            $this->setRecords(count($data));
+            //$this->setRecords(count($data));
         }
         return $data;
     }
+    
+    static public function calculate($pp = true){
+        $conn = getConn();
+        $where = is_string($pp) ? "WHERE page = :pp " : "WHERE true ";
+        $sql = "SELECT UNIX_TIMESTAMP(pubDate) AS pubDate, id, title FROM articles ";
+        $sql .= $where;
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":pp", $pp, PDO::PARAM_STR);
+        doPreparedQuery($st, "Error obtaining results from of articles");
+        $data = $st->fetchAll(PDO::FETCH_ASSOC);
+        return count($data);
+    }
+    
     public function doNav(){
-        
         if($this->records <= $this->display){
             return;
         }

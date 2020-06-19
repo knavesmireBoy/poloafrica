@@ -11,10 +11,34 @@ require_once '../../../innocent/poloafricaDB.txt';
 require_once '../includes/db.inc.php';
 require_once '../includes/access.inc.php';
 require_once '../myconfig.php';
+
+$results['errorMessage'] = '';
+
+function findArticle($id){
+    return Article::getById((int)$id);
+}
+
+function getMsg($str){
+    $lookup = array('articleNotFound' => 'Article not found', 'changesSaved' => "Your changes have been saved.", 'articleDeleted' => "Article deleted.");
+    return isset($lookup[$str]) ?  $lookup[$str] : $str;
+}
+
+function redirect($arr){
+    $str = '?';
+    for($i=0; $i < count($arr); $i++){
+        if($i !== 0){
+           $str .= '&'; 
+        }
+        $str .= implode('=', $arr[$i]);
+    }
+    header("Location: $str");
+}
+
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $display = 10;
 $default_placement = "current position";
 $results['page_title'] = 'Admin';
+$results['heading'] = 'Article List';
 include "../templates/header.php"; ?>
 <body class="admin"><main><section>
 <?php
@@ -36,12 +60,12 @@ if (!userIsLoggedIn())
     exit();
 }
     
-if (!userHasRole('Content Editor') && !isset($_GET['error']))
+if (!userHasRole('Content Editor'))
 {
-    $e = urlencode("Only Content Editor's may access this page.");
-    header("Location: ?error=$e");
+    $results['errorMessage'] = "Only Content Editor's may access this page.";
+    include 'admin.html.php';
+    exit();
 }
-    
     
 if (isset($_GET['action']) && $_GET['action'] == 'removeArticle')
 {
@@ -53,29 +77,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'Delete Article')
 {
     if (!$article = Article::getById((int)$_POST['articleId']))
     {
-        header("Location: ?error=articleNotFound");
-        return;
+        redirect(array(array('error', 'articleNotFound')));
     }
-    //var_dump($_POST);
-    header("Location: ?action=removeArticle&articleId=" . $article->id);
+    else {
+    redirect(array(array('action', 'removeArticle'), array('articleId', $article->id)));
     exit();
+    }
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
 {
-    if (!$article = Article::getById((int)$_POST['articleId']))
-    {
-        header("Location: ?error=articleNotFound");
-        return;
-    }
-    $article->delete();
-    header("Location: ?status=articleDeleted");
+    $results['article'] = Article::getById((int)$_POST['articleId']);
+    $results['article']->delete();
+    redirect(array(array('status', 'articleDeleted')));
     exit();
-}
-
-if (isset($_GET['s']) and is_numeric($_GET['s']))
-{
-    $_SESSION["paginator"]->setStart($_GET['s']);
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQUEST['action'] == 'removeArticle'))
@@ -83,15 +98,13 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     $results = array();
     $results['pageTitle'] = "Edit Article";
     $results['formAction'] = "editArticle";
-    $insert_action_plus = "to place as last article enter any single character, to maintain present placement leave blank";
-    //$insert_placeholder = "*";
 
     if (isset($_POST['saveChanges']))
     {
         // User has posted the article edit form: save the article changes
         if (!$article = Article::getById((int)$_POST['articleId']))
         {
-            header("Location: ?error=articleNotFound");
+           redirect(array(array('error', 'articleNotFound')));
         }
 
         $article->storeFormValues($_POST);
@@ -111,19 +124,20 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
             /* if the file wasn't an upload (UPLOAD_ERR_OK != 0) Asset will only update the attributes */
             $article->storeUploadedFile($_FILES['asset'], $_POST);
             $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
-            header("Location: ?status=changesSaved&page=$page");
+            redirect(array(array('status', 'changesSaved'), array('page', $page)));
         }
     }
     elseif (isset($_POST['cancel']))
     {
         // User has cancelled their edits: return to the article list
-        header('Location: .');
+        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+        redirect(array(array('page', $page)));
         exit();
     }
     else
     {
         // User has not posted the article edit form yet: display the form
-        $results['article'] = Article::getById((int)$_GET['articleId']);
+        $results['article'] = Article::getById((int)$_REQUEST['articleId']);
         require ("editArticle.html.php");
     }
     exit();
@@ -149,31 +163,35 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
         if (isset($_FILES['asset']))
         {
             $article->storeUploadedFile($_FILES['asset'], $_POST);
-            header("Location: ?status=changesSaved");
+            $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+            redirect(array(array('status', 'changesSaved'), array('page', $page)));
+            //header("Location: ?status=changesSaved");
             exit();
         }
         //header("connection: close");
-        header("Location: ?status=changesSaved");
+        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+            redirect(array(array('status', 'changesSaved'), array('page', $page)));
+        //header("Location: ?status=changesSaved");
     }
     elseif (isset($_POST['cancel']))
     {
         // User has cancelled their edits: return to the article list
-        header("Location: .");
+        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+        redirect(array(array('page', $page)));
         exit();
     }
     else
     {
         // User has not posted the article edit form yet: display the form
         $results['article'] = new Article;
-        //require (TEMPLATE_PATH . "/admin/editArticle.php");
-        require ("editArticle.html.php");
+        require "editArticle.html.php";
     }
     exit();
 }//new article
 
 $results = array();
 $data = Article::getList();
-
+    
 $results['articles'] = $data['results'];
 $results['totalRows'] = $data['totalRows'];
 $results['pageTitle'] = "All Articles";
@@ -186,31 +204,21 @@ else
 {
     $_SESSION["paginator"]->setRecords($data['totalRows']);
 }
-
-if (isset($_GET['error']))
-{
-    if ($_GET['error'] == "articleNotFound")
-    {
-        $results['errorMessage'] = "Error: Article not found.";
-    }
-    else
-    {
-        $results['errorMessage'] = $_GET['error'];
-    }
-}
-if (isset($_GET['status']))
-{
-    if ($_GET['status'] == "changesSaved") $results['statusMessage'] = "Your changes have been saved.";
-    if ($_GET['status'] == "articleDeleted") $results['statusMessage'] = "Article deleted.";
-}
     
-include 'admin.html.php'; ?>
-
-<?php require "listArticles.html.php";
-    echo '</section></main>';
+    if (isset($_GET['s']) and is_numeric($_GET['s']))
+{
+    $_SESSION["paginator"]->setStart($_GET['s']);
+}
+      
+$results['errorMessage'] = isset($_GET['error']) ? getMsg($_GET['error']) : null;
+$results['statusMessage'] = isset($_GET['status']) ? getMsg($_GET['status']) : null;
+    
+$results['heading'] = 'Article List';   
+include 'admin.html.php'; 
+require "listArticles.html.php";
+echo '</section></main>';
 ?>
 <script>
-    
     function prepareNavLinks(){
         var hijax = window.poloAF.Hijax();
         hijax.setContainer(document.querySelector('section'));

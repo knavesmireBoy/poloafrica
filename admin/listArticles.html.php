@@ -10,14 +10,16 @@ require_once '../includes/db.inc.php';
 if(!isset($_SESSION['email'])){
 session_start();
 }
+//$_SESSION["paginator"] = new PagePaginator(10, $_SESSION["paginator"]::calculate($page));
+
 $paginator = $_SESSION["paginator"];    
 $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : true;
 $start = isset($_REQUEST['s']) ? $_REQUEST['s'] :  0;
 $articles = $paginator->setStart($start);
 $articles = $paginator->getList($page);
 $pp = array_reverse(Article::getPages()); 
-include 'pagesDropDown.php'; ?>
-
+include 'pagesDropDown.php'; 
+?>
  <table>
         <tr>
           <th>Publication Date</th>
@@ -34,7 +36,9 @@ include 'pagesDropDown.php'; ?>
 <?php } ?>
 </table>
 
-<?php $paginator->doNav(); ?>
+<?php 
+
+$paginator->doNav(); ?>
 
 <p><?php htmlout($paginator->getRecords()); ?> article<?php htmlout(doPlural($paginator->getRecords())); ?> in total</p>
 

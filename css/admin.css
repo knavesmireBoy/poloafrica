@@ -68,6 +68,7 @@
     word-spacing: normal;
     letter-spacing: normal;
     font-size: 1.2em;
+    text-align: right;
 }
 
 li.asset label {
@@ -78,9 +79,15 @@ li.asset label {
     margin: .2em 0;
 }
 .buttons {
-    margin: 0 0 0 18%;
+    margin: 0 0 0 17.3%;
     padding: .3em;
+    color: white;
+    width: 80%;
     background-color: rgba(0,0,0,.66);
+}
+
+#loginform .buttons {
+    background-color: transparent;
 }
 .buttons input {
     margin: 0 .5em 0 0;
@@ -285,4 +292,16 @@ form#page_select{
 
 #pp span {
     background-color: hsl(54, 50%, 50%)
+}
+
+.errorMessage {
+    background-color: red;
+    width: auto;
+    padding: 0.1em;
+}
+
+.statusMessage {
+    background-color: cornflowerblue;
+    width: auto;
+    padding: 0.1em;
 }

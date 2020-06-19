@@ -19,6 +19,7 @@ abstract class Paginator implements PaginatorInterface {
             return false;
         }
     }
+    static public function calculate($pp = true){}
     
     protected function getCurrentPage(){
         return ($this->start/$this->display) + 1;

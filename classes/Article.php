@@ -241,16 +241,16 @@ class Article
     public static function getPages()
     {
         $conn = getConn();
-        $list = array();
+        //$list = array();
         $sql = "SELECT page FROM articles GROUP BY page;";
         $st = prepSQL($conn, $sql);
         doPreparedQuery($st, 'Error fetching list of pages');
         $ret = array();
         while ($row = $st->fetch(PDO::FETCH_NUM))
         {
-            $res[] = $row[0];
+            $ret[] = $row[0];
         }
-        return $res;
+        return $ret;
     }
 
     public static function getListByPage($pp)
