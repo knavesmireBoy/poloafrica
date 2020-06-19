@@ -103,6 +103,7 @@ window.poloAF.Hijax = function() {
         /* persisting with onclick for simplicites sake, setting click on inner element and subit on outer, the reverse prevents click from working*/
         if(container.nodeName.toLowerCase() === 'section' || flag){
             container.onclick = function(e) {
+                console.log('ajaxclick');
 			if (e.target.getAttribute("href") && ret.validate(e.target)) {
 				query = e.target.getAttribute("href").split("?")[1];
 				url += "?" + query;
@@ -113,9 +114,10 @@ window.poloAF.Hijax = function() {
         }
         else if(container.nodeName.toLowerCase() === 'main' && !flag){
            container.onsubmit = function(e) {
+               console.log('ajaxsubmit');
             if (ret.validate(e.target)) {
-			data = fromPost(e.target);
-				return !start(); //needs to return false to cancel default action, so success will cancel
+                data = fromPost(e.target);
+                return !start(); //needs to return false to cancel default action, so success will cancel
             }
 			return true;
 		};

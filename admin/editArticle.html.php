@@ -101,8 +101,7 @@ include "admin.html.php"; ?>
                 ?>
             </fieldset>
           </ul>
-             
-              <?php if(!isset($remove)) { ?>
+          <?php if(!isset($remove)) { ?>
                     <fieldset class="buttons">
                         <input type="submit" name="saveChanges" value="Save Changes">
             <?php if ($results['article']->id) { ?>

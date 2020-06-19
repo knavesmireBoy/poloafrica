@@ -71,7 +71,13 @@ if (!userHasRole('Content Editor'))
 if (isset($_GET['action']) && $_GET['action'] == 'removeArticle')
 {
     $remove = 'Are you sure you want to remove the article: ';
+    //echo $_COOKIE['articleId'];
     $article = Article::getById((int)$_GET['articleId']);
+    if(isset($_SESSION["paginator"]->page)){
+        //reset page count
+        $count = PagePaginator::getPageCount($_SESSION["paginator"]->page);
+        $_SESSION["paginator"] = new PagePaginator(10, $count);
+    }
 }
     
 if (isset($_POST['action']) && $_POST['action'] == 'Delete Article')
@@ -81,6 +87,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Delete Article')
         redirect(array(array('error', 'articleNotFound')));
     }
     else {
+        //setcookie('articleId', $article->id);
     redirect(array(array('action', 'removeArticle'), array('articleId', $article->id)));
     exit();
     }
@@ -132,7 +139,8 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     elseif (isset($_POST['cancel']))
     {
         // User has cancelled their edits: return to the article list
-        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+        //preserve page selection when exiting form
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
         redirect(array(array('page', $page)));
         exit();
     }
@@ -210,6 +218,7 @@ else
         //echo 'existingpp : ';
         $count = $_SESSION["paginator"]->getRecords();
         $page = $_SESSION["paginator"]->page;
+        
     }
     //override if new page
     if(!empty($_REQUEST['page'])){
@@ -226,16 +235,14 @@ else
         $page = null;
         $_SESSION["paginator"] = new PagePaginator(10, $count);
     }
-    //$_SESSION["paginator"]->setRecords($count);
-    //$page var set on index
-
 }
     
 if (isset($_GET['s']) and is_numeric($_GET['s']))
 {
     $_SESSION["paginator"]->setStart($_GET['s']);
 }
-    $paginator = $_SESSION["paginator"];    
+$paginator = $_SESSION["paginator"]; 
+    //has to follow setStart
 $articles = $paginator->getList($page);
       
 $results['errorMessage'] = isset($_GET['error']) ? getMsg($_GET['error']) : null;
@@ -260,6 +267,7 @@ echo '</section></main>';
             }
             return false;
         };
+        
     }
     
     function prepareDropDown(){
@@ -267,6 +275,9 @@ echo '</section></main>';
         hijax.setContainer(document.querySelector('main'));
         hijax.setCanvas(document.querySelector('main'));
         hijax.setUrl('.');
+        hijax.setCallback(function(){
+            console.log(document.querySelector('.statusMessage'));
+        });
         
         hijax.validate = function(tgt){
            if(tgt.id === "page_select"){
