@@ -32,7 +32,7 @@ class PagePaginator extends Paginator implements PaginatorInterface {
         $data = $st->fetchAll(PDO::FETCH_ASSOC);
         $this->setProps($data);
         if(is_string($pp)){
-            //$this->setRecords(count($data));
+            $this->page = $pp;
         }
         return $data;
     }
@@ -55,19 +55,19 @@ class PagePaginator extends Paginator implements PaginatorInterface {
         }
          echo '<nav id="pp">';
         if($this->getCurrentPage() != 1){
-           echo '<a href=".?s=' . ($this->start - $this->display) . '">Previous</a>';
+           echo '<a href=".?s=' . ($this->start - $this->display) . '&pp=' . $this->pages .'">Previous</a>';
         }
         
         for($i = 1; $i <= $this->pages; $i++){
             if($i != $this->getCurrentPage()){
-            echo '<a href=".?s=' . (($this->display * ($i - 1))) . '">' . $i . '</a>';
+            echo '<a href=".?s=' . (($this->display * ($i - 1))) . '&pp=' . $this->pages .'">' . $i . '</a>';
         }
             else {
                 echo '<span>' . $i . '</span>';
             }
         }
         if($this->getCurrentPage() != $this->pages){
-            echo '<a href=".?s=' . ($this->start + $this->display) . '">Next</a>';
+            echo '<a href=".?s=' . ($this->start + $this->display) . '&pp=' . $this->pages .'">Next</a>';
         }
         echo '</nav>';
     }

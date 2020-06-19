@@ -36,6 +36,7 @@ function redirect($arr){
 
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $display = 10;
+$page = null;
 $default_placement = "current position";
 $results['page_title'] = 'Admin';
 $results['heading'] = 'Article List';
@@ -90,6 +91,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
     $results['article'] = Article::getById((int)$_POST['articleId']);
     $results['article']->delete();
     redirect(array(array('status', 'articleDeleted')));
+    $_SESSION["paginator"]->setStart(0);
     exit();
 }
 
@@ -191,10 +193,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
 
 $results = array();
 $data = Article::getList();
+$count = null;
     
 $results['articles'] = $data['results'];
 $results['totalRows'] = $data['totalRows'];
-$results['pageTitle'] = "All Articles";
+$results['pageTitle'] = "All Articles";  
+$count = $data['totalRows'];
 
 if (!isset($_SESSION["paginator"]))
 {
@@ -202,7 +206,29 @@ if (!isset($_SESSION["paginator"]))
 }
 else
 {
-    $_SESSION["paginator"]->setRecords($data['totalRows']);
+    if(isset($_SESSION["paginator"]->page)){
+        //echo 'existingpp : ';
+        $count = PagePaginator::calculate($_SESSION["paginator"]->page);
+        $page = $_SESSION["paginator"]->page;
+    }
+    if(!empty($_REQUEST['page'])){
+        //echo 'newpp : ';
+        $count = PagePaginator::calculate($_REQUEST['page']);
+        $_SESSION["paginator"] = new PagePaginator(10, $count);
+        $page = $_REQUEST['page'];
+        $_SESSION["paginator"]->page = $page;
+        //echo $_SERVER['REQUEST_URI'];
+       // echo $_SERVER['QUERY_STRING'];
+    }
+
+    if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'choose' && !$_REQUEST['page']){
+        //echo 'emptypp : ';
+        $count = $data['totalRows'];
+        $page = null;
+        $_SESSION["paginator"] = new PagePaginator(10, $data['totalRows']);
+    }
+    
+    $_SESSION["paginator"]->setRecords($count);
 }
     
     if (isset($_GET['s']) and is_numeric($_GET['s']))
@@ -250,7 +276,7 @@ echo '</section></main>';
         hijax.captureData();
     }
     prepareNavLinks();
-    prepareDropDown();
+    //prepareDropDown();
     /*
     document.getElementById('page').addEventListener('change',  function(e){
         //e.preventDefault();

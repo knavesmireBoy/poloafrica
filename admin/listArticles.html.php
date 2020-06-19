@@ -10,15 +10,10 @@ require_once '../includes/db.inc.php';
 if(!isset($_SESSION['email'])){
 session_start();
 }
-//$_SESSION["paginator"] = new PagePaginator(10, $_SESSION["paginator"]::calculate($page));
-
 $paginator = $_SESSION["paginator"];    
-$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : true;
-$start = isset($_REQUEST['s']) ? $_REQUEST['s'] :  0;
-$articles = $paginator->setStart($start);
 $articles = $paginator->getList($page);
 $pp = array_reverse(Article::getPages()); 
-include 'pagesDropDown.php'; 
+include 'pages_dropdown.php'; 
 ?>
  <table>
         <tr>

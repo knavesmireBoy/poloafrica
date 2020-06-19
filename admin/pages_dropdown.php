@@ -1,12 +1,10 @@
-<form action="." method="get" id="page_select">
+<form action="?" method="get" id="page_select">
     <select id="page" name="page">
 <option value="">Select Page</option>
 <?php  foreach ($pp as $p): ?>
 <option value="<?php htmlout($p); ?>"
     <?php
-    if(isset($_REQUEST['page']) && $_REQUEST['page'] == $p){
-        echo ' selected';
-    }
+if($page && $page == $p){ echo ' selected'; }
     ?>
 ><?php htmlout($p); ?></option>
     <?php endforeach; ?>
