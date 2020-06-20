@@ -69,6 +69,8 @@ include "admin.html.php"; ?>
             </fieldset>            
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
+                        //exit(var_dump($attributes));
+
             //could be empty set
             if(isset($attributes[0])):
             $limit = getDisplayLimit($results['article']->title);
