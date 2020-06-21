@@ -91,8 +91,7 @@ class Gallery extends Asset implements AssetInterface
    protected function deleteAsset()
    {
        $conn = getConn();
-
-       $sql = "DELETE FROM gallery WHERE gallery.id = :id";
+       $sql = "DELETE FROM gallery WHERE gallery.id = :id LIMIT 1";
        $st = prepSQL($conn, $sql);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error deleting asset from tables');
@@ -139,7 +138,7 @@ class Gallery extends Asset implements AssetInterface
            //set the extension used in ::isImage to determine delete path
            $this->extension = $row[2];
            if("0$id" == $row[1]){
-               $this->removeFile("0$id");
+               //$this->removeFile("0$id");
            }
        }
    }

@@ -1,4 +1,5 @@
 <?php
+require_once 'ArticleInterface.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/MarkdownExtra.inc.php';
 use Michelf\MarkdownExtra;
 
@@ -6,7 +7,7 @@ use Michelf\MarkdownExtra;
  * Class to handle articles
  */
 
-class Article
+absstract class Article implements ArticleInterface
 {
     // Properties
     protected $ext = null;
@@ -44,16 +45,6 @@ class Article
         };
     }
 
-    protected function getForeignTable()
-    {
-        return $this->page === 'photos' ? 'gallery' : 'assets';
-    }
-
-    protected function getLinkTable()
-    {
-        return $this->page === 'photos' ? 'article_gallery' : 'article_asset';
-    }
-
     protected function getRepo()
     {
         return $this->page === 'photos' ? ARTICLE_GALLERY_PATH : ARTICLE_IMAGE_PATH;
@@ -82,98 +73,14 @@ class Article
         return $id;
     }
 
-    protected function removeAssets($id = null)
-    {
-        $conn = getConn();
-        $foreign = $this->getForeignTable();
-        $linker = $this->getLinkTable();
-        $sql = "SELECT id FROM $foreign AS repo INNER JOIN $linker AS AA ON repo.id = AA.asset_id WHERE AA.article_id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error fetching asset list');
-        if ($id)
-        {
-            $asset = new Asset($this->id, $this->page);
-            $asset->delete($id);
-        }
-        else
-        {
-            while ($row = $st->fetch(PDO::FETCH_NUM))
-            {
-                $asset = new Asset($this->id, $this->page);
-                $asset->delete($row[0]);
-            }
-        }
-        $conn = null;
-    }
+    abstract protected function removeAssets($id = null);
 
-    protected function move($id)
-    {
-        $conn = getConn();
-        $max = $conn->query("SELECT MAX(id) FROM articles")
-            ->fetch() [0] + 1;
-        $sql = "UPDATE articles SET id = :max WHERE id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $id, PDO::PARAM_INT);
-        $st->bindValue(":max", $max, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error updating article');
-        $conn = null;
-        return $max;
-    }
-
-    protected function shuffleArticles($title)
-    {
-        $conn = getConn();
-        $max = $this->move($this->id);
-        $min = $this->getIdFromTitle($title);
-        $sql = "SELECT id FROM articles WHERE page = :page";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":page", $this->page, PDO::PARAM_STR);
-        doPreparedQuery($st, 'Error updating article innit');
-
-        while ($row = $st->fetch(PDO::FETCH_NUM))
-        {
-            if ($row[0] >= $min && $row[0] < $max)
-            {
-                $this->move($row[0]);
-            }
-        }
-    }
-
-    static public function getFileName($path)
+    
+     static public function getFileName($path)
     {
         return substr(strrchr($path, "/\d+/") , 1);
     }
-
-    public function __construct($data = array())
-    {
-        if (isset($data['id'])) $this->id = (int)$data['id'];
-        if (isset($data['pubDate'])) $this->pubDate = (int)$data['pubDate'];
-        if (isset($data['title'])) $this->title = preg_replace($this->reg, "", $data['title']);
-        if (isset($data['summary'])) $this->summary = preg_replace($this->reg, "", $data['summary']);
-        if (isset($data['attr_id']))
-        {
-            $this->attrID = $data['attr_id'];
-        }
-
-        if (isset($data['content']))
-        {
-            $this->content = $data['content'];
-            $this->mdcontent = MarkdownExtra::defaultTransform($data['content']);
-        }
-        if (isset($data['page']))
-        {
-            $this->page = preg_replace($this->reg, "", $data['page']);
-        }
-    }
-    /* direct Article attrs */
-    public function storeFormValues($params)
-    {
-        // Store all the parameters
-        $this->__construct($params);
-        // Parse and store the publication date
-        $this->pubDate = formatDate($params['pubDate']);
-    }
+    
     public static function getById($id)
     {
         $conn = getConn();
@@ -227,7 +134,7 @@ class Article
         $st->bindValue(":pp", $pp, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving articles for this page');
         $rows = $st->fetchAll(PDO::FETCH_ASSOC);
-        
+        //('mya'=>'myarticle', 'you'=>'yourearticle)...dropDown for selecting a target position for insertion of new/updated article
         if($flag){
             return array_combine(array_map(function($str){
             return strtolower(substr($str['title'], 0, 3));
@@ -241,7 +148,6 @@ class Article
     public static function getPages()
     {
         $conn = getConn();
-        //$list = array();
         $sql = "SELECT page FROM articles GROUP BY page;";
         $st = prepSQL($conn, $sql);
         doPreparedQuery($st, 'Error fetching list of pages');
@@ -268,19 +174,38 @@ class Article
         }
         return $list;
     }
-    
-     public function placeArticle($title)
+
+    public function __construct($data)
     {
-        if ($title && strlen($title) < 3)
+        if (isset($data['id'])) $this->id = (int)$data['id'];
+        if (isset($data['pubDate'])) $this->pubDate = (int)$data['pubDate'];
+        if (isset($data['title'])) $this->title = preg_replace($this->reg, "", $data['title']);
+        if (isset($data['summary'])) $this->summary = preg_replace($this->reg, "", $data['summary']);
+        if (isset($data['attr_id']))
         {
-            $this->move($this->id);
+            $this->attrID = $data['attr_id'];
         }
-        elseif ($title)
+
+        if (isset($data['content']))
         {
-            $this->shuffleArticles($title);
+            $this->content = $data['content'];
+            $this->mdcontent = MarkdownExtra::defaultTransform($data['content']);
+        }
+        if (isset($data['page']))
+        {
+            $this->page = preg_replace($this->reg, "", $data['page']);
         }
     }
     
+    /* direct Article attrs */
+    public function storeFormValues($params)
+    {
+        // Store all the parameters
+        $this->__construct($params);
+        // Parse and store the publication date
+        $this->pubDate = formatDate($params['pubDate']);
+    }
+        
     public function insert($data = array())
     {
         // Does the Article object already have an ID?
@@ -340,96 +265,11 @@ class Article
               $sql = "DELETE FROM article_asset WHERE article_asset.article_id = :id";
               //current article id
               $sql = "DELETE FROM articles WHERE id = :id";*/
-    public function delete($flag)
-    {
-        // Does the Article object have an ID?
-        if (is_null($this->id))
-        {
-            trigger_error("Article::delete(): Attempt to delete an Article object that does not have its ID property set", E_USER_ERROR);
-        }
-        if (!$flag)
-        {
-            $this->removeAssets();
-        }
-        $foreign = $this->getForeignTable();
-        $linker = $this->getLinkTable();
-        $conn = getConn();
-        /* IF NOT USING FOREIGN KEY ON article_asset */
-        //$sql = "DELETE repo, AA FROM $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND repo.id = :repo";
-        $sql = "DELETE repo FROM articles INNER JOIN $linker AS AA ON articles.id = AA.article_id INNER JOIN $foreign AS repo ON repo.id = AA.asset_id WHERE AA.article_id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error deleting asset');
 
-        $sql = "DELETE FROM articles WHERE id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error deleting article');
-        $conn = null;
-    }
-    public function getFilePath($flag = false)
-    {
-        $conn = getConn();
-        $foreign = $this->getForeignTable();
-        $linker = $this->getLinkTable();
-        $sql = "SELECT repo.id, repo.extension, repo.alt, repo.attr_id, repo.name FROM $linker AS AA LEFT JOIN articles ON articles.id = AA.article_id LEFT JOIN $foreign AS repo ON AA.asset_id = repo.id WHERE articles.id = :id";
 
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retrieving filepath');
-        $paths = [];
-        $uber = [];
-        $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
-        $assetpath = ARTICLE_ASSETS_PATH . '/' . $this->page . '/';
-        //isImage
-        while ($row = $st->fetch(PDO::FETCH_NUM))
-        {
-            $paths = [];
-            $paths['id'] = $row[0];
-            $paths['alt'] = $row[2];
-            $paths['edit_alt'] = $row[2];
-            $paths['dom_id'] = $row[3];
-
-            if ($this->isImage($row[1]))
-            {
-                $int = $this->page === 'photos' ? 3 : 0;
-                //$paths['src'] = ARTICLE_IMAGE_PATH  . $pathtype . $row[0] . $row[1];
-                $paths['src'] = $this->getRepo() . $pathtype . $row[$int] . $row[1];
-            }
-            elseif ($this->isVideo($row[1]))
-            {
-                $paths['src'] = ARTICLE_VIDEO_PATH . '/' . $this->page . '/' . $row[4] . $row[1];
-            }
-            else
-            {
-                $paths['path'] = $assetpath . $row[4] . $row[1];
-                if ($this->isGif($row[1]))
-                {
-                    $paths['src'] = $assetpath . $row[4] . $row[1];
-                }
-            }
-            $uber[] = $paths;
-        }
-        return $uber;
-    }
     public function storeUploadedFile($uploaded, $attrs = array())
     {
-        $asset = new Asset($this->id, $this->page);
+        $asset = AssetFactory::createAsset($this->id, $this->page);
         $asset->storeUploadedFile($uploaded, $attrs);
-    }
-
-    public function deleteAssets($id)
-    {
-        $this->removeAssets($id);
-        $foreign = $this->getForeignTable();
-        $linker = $this->getLinkTable();
-        $conn = getConn();
-        //$sql = "DELETE repo, AA FROM $foreign AS repo INNER JOIN $linker AS AA ON AA.asset_id = repo.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND repo.id = :repo";
-        /*USING FOREIGN KEY ON article_asset SO THIS QUERY WILL DELETE FROM BOTH TABLES HOWEVER THE ABOVE IS A GOOD EXAMPLE OF THE USE OF ALIAS*/
-        $sql = "DELETE FROM $foreign AS repo WHERE repo.id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $id, PDO::PARAM_INT);
-        //$st->bindValue(":repo", $id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error deleting asset from tables');
     }
 }
