@@ -127,6 +127,10 @@ class StandardArticle extends Article implements ArticleInterface
         }
         return $uber;
     }
+    
+    public function getFilePathw($flag = false){
+        return array(array('src' => '../images/resource/bd-logo.png'));
+    }
 
     public function deleteAssets($id)
     {
@@ -151,5 +155,4 @@ class StandardArticle extends Article implements ArticleInterface
             $this->shuffleArticles($title);//insert eg <option value="uit">uitgedacht</option>
         }
     }
-    
 }

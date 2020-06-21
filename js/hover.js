@@ -68,7 +68,7 @@ if (!window.poloAF) {
         flower = (function(){
             var ret = makeElement(ptL(setAttrs, {
 				id: 'flower',
-                src: '../images/poloafrica_flower_logo.jpg',
+                src: '../images/resource/poloafrica_flower_logo.jpg',
                 alt: ''
 			}),
                         anCr(utils.$('ani')), always('img'));
@@ -96,7 +96,7 @@ if (!window.poloAF) {
             var base_el = poloAF.Util.getDomChild(poloAF.Util.getNodeByTag('img'))($('ani')),
                 fade_el = base_el.cloneNode(),
                 parent = base_el.parentNode,
-                logo_paths = ["../images/poloafrica_flower_logo.jpg", "../images/polo150yrs_squared_logo.jpg", "../images/polo_armed_forces_logo.jpg"],
+                logo_paths = ["../images/resource/poloafrica_flower_logo.jpg", "../images/resource/polo150yrs_squared_logo.jpg", "../images/resource/polo_armed_forces_logo.jpg"],
                 domod = curry2(modulo)(3),
                 j = 0,
                 timer;

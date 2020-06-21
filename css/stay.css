@@ -1,11 +1,11 @@
 @import "flex_mod.css";
 @import "fullflex_mod.css";
 h2 span {
-        	background: white 0% 0% url(../images/sub_stay.jpg) no-repeat;
+        	background: white 0% 0% url(../images/resource/sub_stay.jpg) no-repeat;
         }
         @media only screen {
         	h2 span {
-        		background: white 0% 0% url(../images/sub_stay.png) no-repeat;
+        		background: white 0% 0% url(../images/resource/sub_stay.png) no-repeat;
                 background-size: contain;
         	}
         }

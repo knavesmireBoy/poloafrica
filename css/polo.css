@@ -1,5 +1,5 @@
 h2 span {
-	background: white 0% 0% url(../images/sub_polo.jpg) no-repeat;
+	background: white 0% 0% url(../images/resource/sub_polo.jpg) no-repeat;
 }
 
 /* NO FLEX PLEASE WE'RE BRITISH*/
@@ -15,7 +15,7 @@ h2 span {
 
 @media only screen {
 	h2 span {
-		background: white 0% 0% url(../images/sub_polo.png) no-repeat;
+		background: white 0% 0% url(../images/resource/sub_polo.png) no-repeat;
         background-size: contain;
 	}
 }

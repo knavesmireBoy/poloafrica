@@ -1,7 +1,5 @@
 <?php
 require_once 'ArticleInterface.php';
-require_once 'StandardArticle.php';
-require_once 'ArticleFactory.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/MarkdownExtra.inc.php';
 use Michelf\MarkdownExtra;
 
@@ -89,7 +87,7 @@ abstract class Article implements ArticleInterface
         $conn = null;
         if ($row)
         {
-            return ArticleFactory::createArticle($row);
+            return ArticleFactory::createArticle($row, $row['page']);
         }
     }
     /**
@@ -109,7 +107,7 @@ abstract class Article implements ArticleInterface
         $list = array();
         while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {
-            $article = ArticleFactory::createArticle($row);
+            $article = ArticleFactory::createArticle($row, $row['page']);
             /* AJS assoc array */
             $list[$article->title] = $article;
         }
@@ -145,7 +143,7 @@ abstract class Article implements ArticleInterface
     public static function getPages()
     {
         $conn = getConn();
-        $sql = "SELECT page FROM articles GROUP BY page;";
+        $sql = "SELECT name FROM pages;";
         $st = prepSQL($conn, $sql);
         doPreparedQuery($st, 'Error fetching list of pages');
         $ret = array();
@@ -166,7 +164,7 @@ abstract class Article implements ArticleInterface
         doPreparedQuery($st, 'Error retreiving articles for this page');
         while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {
-            $article = ArticleFactory::createArticle($row);
+            $article = ArticleFactory::createArticle($row, $row['page']);
             $list[$article->title] = $article;
         }
         return $list;

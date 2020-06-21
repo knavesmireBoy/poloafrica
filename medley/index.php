@@ -2,8 +2,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 include_once '../includes/db.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/ArticleFactory.php';
 include_once '../myconfig.php';
 $results = ['page_title' => 'Medley'];
 $style = 'medley';

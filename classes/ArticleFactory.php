@@ -7,9 +7,9 @@ require_once 'GalleryArticle.php';
 
 class ArticleFactory
 {
-    static public function createArticle($data = array(), $page = 'bond')
+    static public function createArticle($data = array(), $page = 'photos')
     {
-        if($page === 'bond'){
+        if($page === 'photos'){
             return new GalleryArticle($data);
         }
         return new StandardArticle($data);

@@ -3,8 +3,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 require_once '../../../innocent/poloafricaDB.txt';
 include_once '../includes/db.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/ArticleFactory.php';
 include_once '../myconfig.php';
 $results = ['page_title' => 'Enquiries'];
 $style = 'enquiries';
@@ -51,9 +50,9 @@ include "../templates/nav.php"
                     <label for="postcode">postcode</label><input id="postcode" name="postcode" tabindex="8" type="text">
 				</fieldset>
                <fieldset>
-                   <textarea id="msg" name="msg" tabindex="9">Use this area for comments or questions</textarea><input alt="" src="../images/dogsform.gif" tabindex="10" type="image" name="dogs" id="dogs">
+                   <textarea id="msg" name="msg" tabindex="9">Use this area for comments or questions</textarea><input alt="" src="../images/resource/dogsform.gif" tabindex="10" type="image" name="dogs" id="dogs">
                <input type="submit"></fieldset>
-            </form><figure><img alt="cat" src="../images/cat.jpg" id="cat"></figure>
+            </form><figure><img alt="cat" src="../images/resource/cat.jpg" id="cat"></figure>
            <?php }
            else { include "response.php"; } ?>
                 </article>

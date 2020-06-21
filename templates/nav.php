@@ -46,10 +46,7 @@ function performOutput($title, $deco, $flag = false){
 }
 
 function prepareNav($style, $deco){
-    //prepared pages in reverse order APART from photos(ie order entered into db), fix ?
-    $pp = array_reverse(Article::getPages());
-    $tmp = array_splice($pp, 0, 1);
-    $pp = array_merge($pp, $tmp);
+    $pp = Article::getPages();
     $titles = Article::getTitles($style, false);
     $tv = array('beautiful news' => 'tv coverage', 'news24' => '', 'sport1' => '');
 
@@ -78,7 +75,7 @@ function prepareNav($style, $deco){
 	<div id="wrap">
          <header>
              <a href=".">
-			<h1>POLOAFRICA<img src="../images/logo_alt.png"></h1></a>
+			<h1>POLOAFRICA<img src="../images/resource/logo_alt.png"></h1></a>
              <nav id="main_nav">
                  <label class="menu" for="menu-toggle"></label>
                  <input id="menu-toggle" type="checkbox">
