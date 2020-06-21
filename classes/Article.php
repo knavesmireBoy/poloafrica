@@ -1,5 +1,7 @@
 <?php
 require_once 'ArticleInterface.php';
+//require_once 'StandardArticle.php';
+require_once 'ArticleFactory.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/MarkdownExtra.inc.php';
 use Michelf\MarkdownExtra;
 
@@ -7,7 +9,7 @@ use Michelf\MarkdownExtra;
  * Class to handle articles
  */
 
-absstract class Article implements ArticleInterface
+abstract class Article implements ArticleInterface
 {
     // Properties
     protected $ext = null;
@@ -92,7 +94,7 @@ absstract class Article implements ArticleInterface
         $conn = null;
         if ($row)
         {
-            return new Article($row);
+            return ArticleFactory::createArticle($row);
         }
     }
     /**
@@ -112,7 +114,7 @@ absstract class Article implements ArticleInterface
         $list = array();
         while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {
-            $article = new Article($row);
+            $article = ArticleFactory::createArticle($row);
             /* AJS assoc array */
             $list[$article->title] = $article;
         }
@@ -169,7 +171,7 @@ absstract class Article implements ArticleInterface
         doPreparedQuery($st, 'Error retreiving articles for this page');
         while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {
-            $article = new Article($row);
+            $article = ArticleFactory::createArticle($row);
             $list[$article->title] = $article;
         }
         return $list;

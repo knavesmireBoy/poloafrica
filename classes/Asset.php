@@ -149,9 +149,9 @@ class Asset
        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, $this->getLocalRepo()), JPEG_QUALITY, IMG_THUMB_WIDTH);
    }
 
-   protected function validate($asset)
+   protected function doValidate($asset, $repo)
    {
-      $repo = $this->getFilePath(IMG_TYPE_FULLSIZE, $this->getRepo());
+      //$repo = $this->getFilePath(IMG_TYPE_FULLSIZE, $this->getRepo());
        if (is_uploaded_file(trim($asset['tmp_name'])))
        {
            

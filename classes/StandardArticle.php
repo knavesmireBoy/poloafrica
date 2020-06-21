@@ -41,8 +41,6 @@ class StandardArticle extends Article implements ArticleInterface
     protected function removeAssets($id = null)
     {
         $conn = getConn();
-        $foreign = $this->getForeignTable();
-        article_asset = $this->getLinkTable();
         $sql = "SELECT id FROM assets INNER JOIN article_asset AS AA ON assets.id = AA.asset_id WHERE AA.article_id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
@@ -78,7 +76,7 @@ class StandardArticle extends Article implements ArticleInterface
         $conn = getConn();
         /* IF NOT USING FOREIGN KEY ON article_asset */
         //$sql = "DELETE repo, AA FROM assets INNER JOIN article_asset AS AA ON AA.asset_id = assets.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND assets.id = :repo";
-        $sql = "DELETE FROM assets INNER JOIN article_asset AS AA ON assets.id = AA.asset_id INNER JOIN articles ON articles.id = AA.articles_id WHERE articles.id = :id";
+        $sql = "DELETE assets FROM assets INNER JOIN article_asset AS AA ON assets.id = AA.asset_id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error deleting asset');
@@ -93,7 +91,6 @@ class StandardArticle extends Article implements ArticleInterface
     {
         $conn = getConn();
         $sql = "SELECT assets.id, assets.extension, assets.alt, assets.attr_id, assets.name FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
-
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retrieving filepath');
@@ -134,8 +131,6 @@ class StandardArticle extends Article implements ArticleInterface
     public function deleteAssets($id)
     {
         $this->removeAssets($id);
-        $foreign = $this->getForeignTable();
-        article_asset = $this->getLinkTable();
         $conn = getConn();
         //$sql = "DELETE repo, AA FROM assets INNER JOIN article_asset AS AA ON AA.asset_id = assets.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND assets.id = :id";
         /*USING FOREIGN KEY ON article_asset SO THIS QUERY WILL DELETE FROM BOTH TABLES HOWEVER THE ABOVE IS A GOOD EXAMPLE OF THE USE OF ALIAS*/

@@ -1,5 +1,7 @@
 <?php
+require_once 'AssetInterface.php';
 require_once 'Asset.php';
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
 use Michelf\MarkdownExtra;
 /**
@@ -88,7 +90,7 @@ class Image extends Asset implements AssetInterface
            return $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_ASSETS_PATH);
        }
        // Get the image size and type
-       $source_image = $this->getFilePath();
+       $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH);
        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH));
        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_IMAGE_PATH), JPEG_QUALITY, IMG_THUMB_WIDTH);
    }

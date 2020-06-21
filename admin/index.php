@@ -2,7 +2,7 @@
 //session_start();
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/ArticleFactory.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PagePaginator.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PhotoPaginator.php';
@@ -165,7 +165,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     if (isset($_POST['saveChanges']))
     {
         // User has posted the article edit form: save the new article
-        $article = new Article();
+        $article = ArticleFactory::createArticle(array(), null);
         $article->storeFormValues($_POST);
         $article->insert();
         $article->placeArticle($_POST['insert']);
@@ -193,7 +193,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     else
     {
         // User has not posted the article edit form yet: display the form
-        $results['article'] = new Article;
+        $results['article'] = ArticleFactory::createArticle(array(), null);
         require "editArticle.html.php";
     }
     exit();

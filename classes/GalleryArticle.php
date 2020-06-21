@@ -58,8 +58,6 @@ class GalleryArticle extends Article implements ArticleInterface
     public function getFilePath($flag = false)
     {
         $conn = getConn();
-        $foreign = $this->getForeignTable();
-        $linker = $this->getLinkTable();
         $sql = "SELECT gallery.id, gallery.extension, gallery.alt, gallery.attr_id, gallery.name FROM gallery WHERE gallery.article_id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
@@ -89,5 +87,9 @@ class GalleryArticle extends Article implements ArticleInterface
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error deleting gallery from tables');
+    }
+    
+    public function placeArticle($title){
+        
     }
 }
