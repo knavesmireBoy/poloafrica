@@ -7,7 +7,7 @@ include_once '../myconfig.php';
 $results = ['page_title' => 'Medley'];
 $style = 'medley';
 include "../templates/header.php";
-$articles = Article::getListByPage('medley');
+$articles = ArticleFactory::getListByPage('medley');
 $count = 0;
 include "../templates/nav.php";
 ?>

@@ -46,8 +46,8 @@ function performOutput($title, $deco, $flag = false){
 }
 
 function prepareNav($style, $deco){
-    $pp = Article::getPages();
-    $titles = Article::getTitles($style, false);
+    $pp = ArticleFactory::getPages();
+    $titles = ArticleFactory::getTitles($style, false);
     $tv = array('beautiful news' => 'tv coverage', 'news24' => '', 'sport1' => '');
 
     foreach($pp as $p){

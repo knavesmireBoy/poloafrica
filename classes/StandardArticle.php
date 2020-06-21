@@ -4,7 +4,6 @@ require_once 'AssetFactory.php';
 
 class StandardArticle extends Article implements ArticleInterface
 {
-    
     protected function move($id)
     {
         $conn = getConn();
@@ -126,10 +125,6 @@ class StandardArticle extends Article implements ArticleInterface
             $uber[] = $paths;
         }
         return $uber;
-    }
-    
-    public function getFilePathw($flag = false){
-        return array(array('src' => '../images/resource/bd-logo.png'));
     }
 
     public function deleteAssets($id)

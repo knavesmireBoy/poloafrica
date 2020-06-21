@@ -10,7 +10,7 @@ $style = 'enquiries';
 include "../templates/header.php";
 ?>
 <?php
-$articles = Article::getListByPage("enquiries");
+$articles = ArticleFactory::getListByPage("enquiries");
 $count = 1;
 include "../templates/nav.php"
 ?>

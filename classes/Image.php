@@ -81,9 +81,8 @@ class Image extends Asset implements AssetInterface
        protected function validate($asset) {
            $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH));
        }
-        
        /* https://www.elated.com/add-image-uploading-to-your-cms/ */
-   protected function createImage($image)
+    protected function createImage($image)
    {
        if (!$this->isImage())
        {

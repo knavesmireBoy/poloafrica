@@ -9,7 +9,7 @@ $style = 'place';
 include "../templates/header.php";
 ?>
 <?php
-$articles = Article::getListByPage($style);
+$articles = ArticleFactory::getListByPage($style);
 $count = 0;
 include "../templates/nav.php";
 ?>

@@ -54,22 +54,16 @@ class GalleryArticle extends Article implements ArticleInterface
     public function getFilePath($flag = false)
     {
         $conn = getConn();
-        $sql = "SELECT gallery.id, gallery.extension, gallery.alt, gallery.attr_id, gallery.name FROM gallery WHERE gallery.article_id = :id";
+        $sql = "SELECT gallery.id, extension AS ext, alt, gallery.attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE gallery.article_id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retrieving filepath');
-        $paths = [];
         $uber = [];
         $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
-        while ($row = $st->fetch(PDO::FETCH_NUM))
+        while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {
-            $paths = [];
-            $paths['id'] = $row[0];
-            $paths['alt'] = $row[2];
-            $paths['edit_alt'] = $row[2];
-            $paths['dom_id'] = $row[3];
-            $paths['src'] = ARTICLE_GALLERY_PATH . $pathtype . $row[3] . $row[1];
-            $uber[] = $paths;
+            $row['src'] = ARTICLE_GALLERY_PATH . $pathtype . $row['dom_id'] . $row['ext'];
+            $uber[] = $row;
         }
         return $uber;
     }

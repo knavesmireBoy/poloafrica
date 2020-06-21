@@ -9,7 +9,7 @@ $style = 'polo';
 include "../templates/header.php";
 ?>
 <?php
-$articles = Article::getListByPage('polo');
+$articles = ArticleFactory::getListByPage('polo');
 $count = 0;
 include "../templates/nav.php";
 ?>

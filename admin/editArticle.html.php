@@ -113,7 +113,7 @@ include "admin.html.php"; ?>
               <?php
                     if(isset($mypage)){
                         echo '<label for="insert">INSERT BEFORE:</label>';
-                    $rows = Article::getTitles($mypage, true);
+                    $rows = ArticleFactory::getTitles($mypage, true);
                     echo "<select name='insert' id='insert'><option value=''>$default_placement</option>";
                     foreach($rows as $k => $v){
                         echo "<option value='$k'>$v</option>";

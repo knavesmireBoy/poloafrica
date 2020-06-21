@@ -15,7 +15,7 @@ require_once '../myconfig.php';
 $results['errorMessage'] = '';
 
 function findArticle($id){
-    return Article::getById((int)$id);
+    return ArticleFactory::getById((int)$id);
 }
 
 function getMsg($str){
@@ -72,7 +72,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'removeArticle')
 {
     $remove = 'Are you sure you want to remove the article: ';
     //echo $_COOKIE['articleId'];
-    $article = Article::getById((int)$_GET['articleId']);
+    $article = ArticleFactory::getById((int)$_GET['articleId']);
     if(isset($_SESSION["paginator"]->page)){
         //reset page count
         $count = PagePaginator::getPageCount($_SESSION["paginator"]->page);
@@ -82,7 +82,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'removeArticle')
     
 if (isset($_POST['action']) && $_POST['action'] == 'Delete Article')
 {
-    if (!$article = Article::getById((int)$_POST['articleId']))
+    if (!$article = ArticleFactory::getById((int)$_POST['articleId']))
     {
         redirect(array(array('error', 'articleNotFound')));
     }
@@ -95,7 +95,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Delete Article')
 
 if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
 {
-    $results['article'] = Article::getById((int)$_POST['articleId']);
+    $results['article'] = ArticleFactory::getById((int)$_POST['articleId']);
     $results['article']->delete();
     redirect(array(array('status', 'articleDeleted')));
     $_SESSION["paginator"]->setStart(0);
@@ -111,7 +111,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     if (isset($_POST['saveChanges']))
     {
         // User has posted the article edit form: save the article changes
-        if (!$article = Article::getById((int)$_POST['articleId']))
+        if (!$article = ArticleFactory::getById((int)$_POST['articleId']))
         {
            redirect(array(array('error', 'articleNotFound')));
         }
@@ -147,7 +147,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     else
     {
         // User has not posted the article edit form yet: display the form
-        $results['article'] = Article::getById((int)$_REQUEST['articleId']);
+        $results['article'] = ArticleFactory::getById((int)$_REQUEST['articleId']);
         require ("editArticle.html.php");
     }
     exit();
@@ -200,7 +200,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
 }//new article
 
 $results = array();
-$data = Article::getList();
+$data = ArticleFactory::getList();
 $count = null;
     
 $results['articles'] = $data['results'];
