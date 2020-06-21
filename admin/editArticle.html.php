@@ -64,12 +64,12 @@ include "admin.html.php"; ?>
               /*strtolower(htmlout($results['article']->page));*/?>
               <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php echo $mypage; ?>">
               <label for="attr_id">identity</label>
-            <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
+              <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
             </li>
             </fieldset>            
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
-                        //exit(var_dump($attributes));
+            //exit(var_dump($attributes));
             //could be empty set
             if(isset($attributes[0])):
             $limit = getDisplayLimit($results['article']->title);
@@ -129,8 +129,8 @@ include "admin.html.php"; ?>
     var asset = document.querySelector('.asset');
     if(asset){
         asset.addEventListener('change',  function(e){
-        if(e.target.type === 'checkbox'){
-            this.classList.toggle('edit');
+        if(e.target.type === 'checkbox' && e.target.name === 'editAsset[]'){
+            e.target.parentNode.classList.toggle('edit');
         }
         });
     }

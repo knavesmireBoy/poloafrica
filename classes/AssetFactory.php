@@ -7,7 +7,7 @@ class AssetFactory
 {
     static public function createAsset($id, $page)
     {
-        if($page === 'photos'){
+        if($page === 'bond'){
             return new Gallery($id, $page);
         }
         return new Image($id, $page);

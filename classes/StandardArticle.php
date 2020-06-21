@@ -109,7 +109,7 @@ class StandardArticle extends Article implements ArticleInterface
 
             if ($this->isImage($row[1]))
             {
-                $paths['src'] = $this->getRepo() . $pathtype . $row[0] . $row[1];
+                $paths['src'] = ARTICLE_IMAGE_PATH . $pathtype . $row[0] . $row[1];
             }
             elseif ($this->isVideo($row[1]))
             {

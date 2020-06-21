@@ -165,7 +165,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     if (isset($_POST['saveChanges']))
     {
         // User has posted the article edit form: save the new article
-        $article = ArticleFactory::createArticle(array(), null);
+        $article = ArticleFactory::createArticle(array(), $_REQUEST['page']);
         $article->storeFormValues($_POST);
         $article->insert();
         $article->placeArticle($_POST['insert']);

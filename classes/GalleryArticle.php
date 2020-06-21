@@ -8,10 +8,8 @@ class GalleryArticle extends Article implements ArticleInterface
     protected function removeAssets($id = null)
     {
         $conn = getConn();
-        $foreign = $this->getForeignTable();
-        $linker = $this->getLinkTable();
         //temp limit to 1
-        $sql = "SELECT id FROM gallery WHERE gallery.article_id = :id LIMIT 1";
+        $sql = "SELECT id FROM gallery WHERE gallery.article_id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error fetching gallery list');
@@ -31,7 +29,7 @@ class GalleryArticle extends Article implements ArticleInterface
         $conn = null;
     }
 
-    public function delete($flag)
+    public function delete($flag = false)
     {
         // Does the Article object have an ID?
         if (is_null($this->id))
@@ -42,14 +40,12 @@ class GalleryArticle extends Article implements ArticleInterface
         {
             $this->removeAssets();
         }
-        $foreign = $this->getForeignTable();
-        $linker = $this->getLinkTable();
         $conn = getConn();
-        $sql = "DELETE FROM gallery WHERE articles.id = :id LIMIT 1";
+        $sql = "DELETE gallery FROM gallery INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error deleting gallery');
-        $sql = "DELETE FROM articles WHERE id = :id LIMIT 1";
+        $sql = "DELETE FROM articles WHERE id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error deleting article');
@@ -72,7 +68,7 @@ class GalleryArticle extends Article implements ArticleInterface
             $paths['alt'] = $row[2];
             $paths['edit_alt'] = $row[2];
             $paths['dom_id'] = $row[3];
-            $paths['src'] = $this->getRepo() . $pathtype . $row[3] . $row[1];
+            $paths['src'] = ARTICLE_GALLERY_PATH . $pathtype . $row[3] . $row[1];
             $uber[] = $paths;
         }
         return $uber;
@@ -80,16 +76,12 @@ class GalleryArticle extends Article implements ArticleInterface
     public function deleteAssets($id)
     {
         $this->removeAssets($id);
-        $foreign = $this->getForeignTable();
-        $linker = $this->getLinkTable();
         $conn = getConn();
-        $sql = "DELETE FROM gallery WHERE gallery.id = :id LIMIT 1";
+        $sql = "DELETE FROM gallery WHERE gallery.id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error deleting gallery from tables');
     }
     
-    public function placeArticle($title){
-        
-    }
+    public function placeArticle($title){}
 }

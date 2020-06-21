@@ -6,22 +6,12 @@ use Michelf\MarkdownExtra;
 */
 class Gallery extends Asset implements AssetInterface
 {
-    /*
-   protected function getForeignTable(){
-         return $this->page === 'photos' ? 'gallery' : 'assets';
-     }
-
-   protected function getLinkTable(){
-         return $this->page === 'photos' ? 'article_gallery' : 'article_asset';
-     }
-*/
+    
     protected $onclause = " INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
-
     protected function storeName(){}
-
-   protected function setDomId(){
-          if(strlen($this->id) < 3){
-         return str_pad($this->id, 3, "0", STR_PAD_LEFT);
+    protected function setDomId(){
+        if(strlen($this->id) < 3){
+            return str_pad($this->id, 3, "0", STR_PAD_LEFT);
         }
         return $this->id;
      }
@@ -68,17 +58,14 @@ class Gallery extends Asset implements AssetInterface
            return $repo . "/$type/" . $this->setDomId() . $this->extension;
        }
    }
-            
-       /* https://www.elated.com/add-image-uploading-to-your-cms/ */
-   protected function createImage($image)
+    /* https://www.elated.com/add-image-uploading-to-your-cms/ */
+    protected function createImage($image)
    {
        // Get the image size and type
        $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH);
        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH));
        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), JPEG_QUALITY, IMG_THUMB_WIDTH);
    }
-
-    
     protected function removeFile($id)
    {
         //CURRENTLY image files ar uploaded to two locations, may change, and may to decide to delete from only one location
@@ -91,7 +78,7 @@ class Gallery extends Asset implements AssetInterface
    protected function deleteAsset()
    {
        $conn = getConn();
-       $sql = "DELETE FROM gallery WHERE gallery.id = :id LIMIT 1";
+       $sql = "DELETE FROM gallery WHERE gallery.id = :id";
        $st = prepSQL($conn, $sql);
        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error deleting asset from tables');
@@ -102,7 +89,6 @@ class Gallery extends Asset implements AssetInterface
    {
        //Does the Asset object have an ID?
        if (is_null($this->id)) trigger_error("Asset::update(): Attempt to update an Asset object that does not have its ID property set.", E_USER_ERROR);
-
        $conn = getConn();
        $sql = "UPDATE gallery SET alt = :alt, attr_id = :attr WHERE gallery.id = :id";
        $st = prepSQL($conn, $sql);
@@ -124,7 +110,6 @@ class Gallery extends Asset implements AssetInterface
    }
 
    public function delete($id)
-       
    {
        $conn = getConn();       
        $sql = "SELECT gallery.id, gallery.attr_id, extension FROM gallery $this->onclause";
@@ -132,13 +117,12 @@ class Gallery extends Asset implements AssetInterface
        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
        doPreparedQuery($st, 'Error retreiving record');
 
-       
        while ($row = $st->fetch(PDO::FETCH_NUM))
        {
            //set the extension used in ::isImage to determine delete path
            $this->extension = $row[2];
            if("0$id" == $row[1]){
-               //$this->removeFile("0$id");
+               $this->removeFile("0$id");
            }
        }
    }
@@ -159,7 +143,7 @@ class Gallery extends Asset implements AssetInterface
        $st->bindValue(":domid", $this->dom_id, PDO::PARAM_STR);
        $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
        $st->bindValue(":articleID", $this->articleID, PDO::PARAM_STR);
-       doPreparedQuery($st, "Error inserting record into $foreign table");
+       doPreparedQuery($st, "Error inserting record into gallery table");
        $this->id = $conn->lastInsertId();
            $this->dom_id = $this->setDomId();
            $sql = "UPDATE gallery SET attr_id = :aID WHERE id = :id"; 

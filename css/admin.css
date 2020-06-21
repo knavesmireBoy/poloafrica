@@ -147,15 +147,15 @@ li.asset label {
     display: inline-block;
 }
 
-.admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset.edit figure > *{
+.admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset figure.edit > *{
    position: relative;
     left: 0;
 }
-.admin .asset.edit figure input{
+.admin .asset figure.edit input{
    width: 100%;
 }
 
-.admin .asset.edit figure input[type=checkbox]{
+.admin .asset figure.edit input[type=checkbox]{
    width: auto;
 }
 

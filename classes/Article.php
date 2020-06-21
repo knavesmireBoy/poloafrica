@@ -1,6 +1,6 @@
 <?php
 require_once 'ArticleInterface.php';
-//require_once 'StandardArticle.php';
+require_once 'StandardArticle.php';
 require_once 'ArticleFactory.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/MarkdownExtra.inc.php';
 use Michelf\MarkdownExtra;
@@ -45,11 +45,6 @@ abstract class Article implements ArticleInterface
             //NESTED $f1 returns same arg to $f2
             $f2($f1($id));
         };
-    }
-
-    protected function getRepo()
-    {
-        return $this->page === 'photos' ? ARTICLE_GALLERY_PATH : ARTICLE_IMAGE_PATH;
     }
 
     protected function isImage($ext)
