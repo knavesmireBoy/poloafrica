@@ -4,7 +4,7 @@ require_once 'AssetFactory.php';
 
 class GalleryArticle extends Article implements ArticleInterface
 {
-
+    
     protected function removeAssets($id = null)
     {
         $conn = getConn();
@@ -51,7 +51,7 @@ class GalleryArticle extends Article implements ArticleInterface
         doPreparedQuery($st, 'Error deleting article');
         $conn = null;
     }
-    public function getFilePath($flag = false)
+    public function getFilePath1($flag = false)
     {
         $conn = getConn();
         $sql = "SELECT gallery.id, extension AS ext, alt, gallery.attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE gallery.article_id = :id";
@@ -66,6 +66,11 @@ class GalleryArticle extends Article implements ArticleInterface
             $uber[] = $row;
         }
         return $uber;
+    }
+    
+    public function getFilePath($flag = false){
+        $asset = AssetFactory::createAsset($this->id, $this->page);
+        return $asset->getAttributes($flag);
     }
     public function deleteAssets($id)
     {

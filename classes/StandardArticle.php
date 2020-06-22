@@ -46,15 +46,17 @@ class StandardArticle extends Article implements ArticleInterface
         doPreparedQuery($st, 'Error fetching asset list');
         if ($id)
         {
-            $asset = AssetFactory::createAsset($this->id, $this->page);
-            $asset->delete($id);
+            $this->doRemoveAsset($id);
+            //$asset = AssetFactory::createAsset($this->id, $this->page);
+            //$asset->delete($id);
         }
         else
         {
             while ($row = $st->fetch(PDO::FETCH_NUM))
             {
-                $asset = AssetFactory::createAsset($this->id, $this->page);
-                $asset->delete($row[0]);
+                //$asset = AssetFactory::createAsset($this->id, $this->page);
+                //$asset->delete($row[0]);
+                $this->doRemoveAsset($row[0]);
             }
         }
         $conn = null;
@@ -88,45 +90,10 @@ class StandardArticle extends Article implements ArticleInterface
     }
     public function getFilePath($flag = false)
     {
-        $conn = getConn();
-        $sql = "SELECT assets.id, assets.extension, assets.alt, assets.attr_id, assets.name FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retrieving filepath');
-        $paths = [];
-        $uber = [];
-        $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
-        $assetpath = ARTICLE_ASSETS_PATH . '/' . $this->page . '/';
-        //isImage
-        while ($row = $st->fetch(PDO::FETCH_NUM))
-        {
-            $paths = [];
-            $paths['id'] = $row[0];
-            $paths['alt'] = $row[2];
-            $paths['edit_alt'] = $row[2];
-            $paths['dom_id'] = $row[3];
-
-            if ($this->isImage($row[1]))
-            {
-                $paths['src'] = ARTICLE_IMAGE_PATH . $pathtype . $row[0] . $row[1];
-            }
-            elseif ($this->isVideo($row[1]))
-            {
-                $paths['src'] = ARTICLE_VIDEO_PATH . '/' . $this->page . '/' . $row[4] . $row[1];
-            }
-            else
-            {
-                $paths['path'] = $assetpath . $row[4] . $row[1];
-                if ($this->isGif($row[1]))
-                {
-                    $paths['src'] = $assetpath . $row[4] . $row[1];
-                }
-            }
-            $uber[] = $paths;
-        }
-        return $uber;
+        $asset = $this->handle();
+        return $asset->getAttributes($flag);
     }
-
+    
     public function deleteAssets($id)
     {
         $this->removeAssets($id);

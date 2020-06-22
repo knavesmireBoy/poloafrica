@@ -67,6 +67,18 @@ abstract class Article implements ArticleInterface
         $conn = null;
         return $id;
     }
+    
+     protected function doRemoveAsset($id){
+        $asset = $this->createAsset();
+        $asset->delete($id);
+    }
+    
+    protected function createAsset($path = ''){
+        if($path){
+            $path = explode('/', $path)[3];
+        }
+        return AssetFactory::createAsset($this->id, $this->page, $path);
+    }
 
     abstract protected function removeAssets($id = null);
 
@@ -147,7 +159,28 @@ abstract class Article implements ArticleInterface
     }
     public function storeUploadedFile($uploaded, $attrs = array())
     {
-        $asset = AssetFactory::createAsset($this->id, $this->page);
+        $asset = $this->createAsset($uploaded['name']);
         $asset->storeUploadedFile($uploaded, $attrs);
+    }
+    
+     public function handle(){
+         //SHOULD BE CHAIN OF REPONSIBILITY
+         $fname = glob(ARTICLE_ASSETS_PATH . "/" . $this->page  . "/" . "*");
+         if(!$fname[0]){ $fname = null; }
+         if(!$fname){
+             $fname = glob(ARTICLE_VIDEO_PATH . "/" . $this->page  . "/" .  "*");
+             if(!$fname[0]){ $fname = null; }
+         }
+         if(!$fname){
+             $fname = glob(ARTICLE_IMAGE_PATH . "/" . IMG_TYPE_FULLSIZE  . "/" .  "*");
+             if(!$fname[0]){ $fname = null; }
+         }
+         if($fname){
+             //any filename with correct extension will suffice to determine type
+             return $this->createAsset($fname[0]);
+         }
+         //defaults to gallery that does not require a third argument
+         //AssetFactory::createAsset($this->id, $this->page, $filename);
+         return $this->createAsset();
     }
 }

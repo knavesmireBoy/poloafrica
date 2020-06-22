@@ -267,7 +267,6 @@ echo '</section></main>';
             }
             return false;
         };
-        
     }
     
     function prepareDropDown(){
@@ -276,7 +275,7 @@ echo '</section></main>';
         hijax.setCanvas(document.querySelector('main'));
         hijax.setUrl('.');
         hijax.setCallback(function(){
-            console.log(document.querySelector('.statusMessage'));
+            //console.log(document.querySelector('.statusMessage'));
         });
         
         hijax.validate = function(tgt){

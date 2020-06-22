@@ -12,6 +12,19 @@ class Image extends Asset implements AssetInterface
    protected function setDomId(){
          return $this->id;
      }
+    
+    protected $path2file = ARTICLE_IMAGE_PATH . '/';
+
+    
+    protected $queryAttrs = "SELECT assets.id, extension, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
+    
+    protected function queryAttributes(){
+        $conn = getConn();
+        $st = prepSQL($conn, $this->$queryAttrs);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retrieving filepath');
+        return $st;
+    }
 
    protected function getStoredProperty($prop)
    {
@@ -22,6 +35,17 @@ class Image extends Asset implements AssetInterface
        doPreparedQuery($st, "Error retreiving $prop for this file");
        $res = $st->fetch(PDO::FETCH_ASSOC);
        return isset($res[$prop]) ? $res[$prop] : "";
+   }
+    
+     protected function setProperties($asset, $attrs = array())
+   {
+       $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name']))[0]) : $this->getStoredProperty('name');
+       $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']) , '.')) : $this->getStoredProperty('extension');
+       if (isset($attrs['alt']))
+       { //insert
+           $this->alt_text = $attrs['alt'];
+           $this->dom_id = $attrs['dom_id'];
+       }
    }
 
    protected function getNameFromId()
@@ -145,4 +169,18 @@ class Image extends Asset implements AssetInterface
        doPreparedQuery($st, "Error inserting record into article_asset table");
        $conn = null;
    }
-}
+    
+      public function getAttributes($flag = false){
+        $uber = [];
+        $st = $this->queryAttributes();
+          $pathtype = $flag ?  . IMG_TYPE_THUMB  :  IMG_TYPE_FULLSIZE;
+        while ($row = $st->fetch(PDO::FETCH_ASSOC))
+        {
+            $row['src'] = $this->path2file . $pathtype . '/' . $row['id'] . $row['ext'];
+            $uber[] = $row;
+        }
+        return $uber;
+    }
+    
+    
+    }

@@ -4,7 +4,7 @@ use Michelf\MarkdownExtra;
 /**
 * Class to handle assets
 */
-class Gallery extends Asset implements AssetInterface
+class Gallery extends Image implements AssetInterface
 {
     
     protected $onclause = " INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
@@ -15,6 +15,10 @@ class Gallery extends Asset implements AssetInterface
         }
         return $this->id;
      }
+    
+    protected $queryAttrs = "SELECT gallery.id, extension AS ext, alt, gallery.attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE gallery.article_id = :id"
+        
+    protected $path2file = ARTICLE_GALLERY_PATH . '/';
 
    protected function getStoredProperty($prop)
    {
@@ -58,6 +62,25 @@ class Gallery extends Asset implements AssetInterface
            return $repo . "/$type/" . $this->setDomId() . $this->extension;
        }
    }
+    
+    public function getAttributes($flag = false)
+    {
+        $conn = getConn();
+        $sql = "SELECT gallery.id, extension AS ext, alt, gallery.attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE gallery.article_id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retrieving filepath');
+        $uber = [];
+        $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
+        while ($row = $st->fetch(PDO::FETCH_ASSOC))
+        {
+            $row['src'] = ARTICLE_GALLERY_PATH . $pathtype . $row['dom_id'] . $row['ext'];
+            $uber[] = $row;
+        }
+        return $uber;
+    }
+    
+    
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
     protected function createImage($image)
    {
@@ -153,4 +176,16 @@ class Gallery extends Asset implements AssetInterface
            doPreparedQuery($st, "Error updating record in gallery table");
        $conn = null;
    }
+     public function getAttributes($flag = false)
+    {
+        $uber = [];
+        $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
+        $st = $this->queryAttributes();
+        while ($row = $st->fetch(PDO::FETCH_ASSOC))
+        {
+            $row['src'] = $path2file . $pathtype . '/' . $row['dom_id'] . $row['ext'];
+            $uber[] = $row;
+        }
+        return $uber;
+    }
 }
