@@ -51,27 +51,7 @@ class GalleryArticle extends Article implements ArticleInterface
         doPreparedQuery($st, 'Error deleting article');
         $conn = null;
     }
-    public function getFilePath1($flag = false)
-    {
-        $conn = getConn();
-        $sql = "SELECT gallery.id, extension AS ext, alt, gallery.attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE gallery.article_id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retrieving filepath');
-        $uber = [];
-        $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
-        while ($row = $st->fetch(PDO::FETCH_ASSOC))
-        {
-            $row['src'] = ARTICLE_GALLERY_PATH . $pathtype . $row['dom_id'] . $row['ext'];
-            $uber[] = $row;
-        }
-        return $uber;
-    }
     
-    public function getFilePath($flag = false){
-        $asset = AssetFactory::createAsset($this->id, $this->page);
-        return $asset->getAttributes($flag);
-    }
     public function deleteAssets($id)
     {
         $this->removeAssets($id);

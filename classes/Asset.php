@@ -59,20 +59,6 @@ abstract class Asset implements AssetInterface
        return in_array($ext, $this->video_extensions);
    }
 
-   protected function getFilePath($type, $repo)
-   {
-       if ($this->id && $this->extension && in_array($this->extension, $this->img_extensions))
-       {
-           return $repo . "/$type/" . $this->id . $this->extension;
-       }
-       elseif ($this->id && $this->extension && in_array($this->extension, $this->video_extensions))
-       {
-           return ARTICLE_VIDEO_PATH . "/$this->page/" . $this->filename . $this->extension;
-       }
-       return ARTICLE_ASSETS_PATH . "/$this->page/" . $this->filename . $this->extension;
-   }
-    
-
    protected function doValidate($asset, $repo)
    {
        if (is_uploaded_file(trim($asset['tmp_name'])))
@@ -96,7 +82,6 @@ abstract class Asset implements AssetInterface
        $this->page = $page;
    }
     
-
    public function storeUploadedFile($asset, $attrs = array())
    {
        if ($asset['error'] == UPLOAD_ERR_OK)
@@ -127,8 +112,7 @@ abstract class Asset implements AssetInterface
                }
            }
        }
-   },
-    
-    abstract public function getAtributes();
- 
+   }
+    abstract public function getAttributes($flag = false);
+    abstract protected function getFilePath($type, $repo); 
 }

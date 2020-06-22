@@ -16,8 +16,14 @@ include "../templates/nav.php";
     foreach ($articles as $article){
         $count += 1;
         if(!$article->summary){
-            include '../templates/article.php';
+            if($count === 6){
+            include '../templates/article_nav.php';
         }
+            else {
+            include '../templates/article.php';
+            }
+        }
+        
         else {
             include '../templates/video.php';
         }

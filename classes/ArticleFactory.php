@@ -1,7 +1,5 @@
 <?php
-require_once 'Asset.php';
-require_once 'Image.php';
-require_once 'Gallery.php';
+
 require_once 'StandardArticle.php';
 require_once 'GalleryArticle.php';
 

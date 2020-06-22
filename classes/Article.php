@@ -3,30 +3,11 @@ require_once 'ArticleInterface.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/MarkdownExtra.inc.php';
 use Michelf\MarkdownExtra;
 
-/**
- * Class to handle articles
- */
-
 abstract class Article implements ArticleInterface
 {
     // Properties
     protected $ext = null;
-    //wanted to exclude animated gifs review
-    protected $img_extensions = array(
-        //'.gif',
-        '.jpg',
-        '.jpeg',
-        '.pjpeg',
-        '.png',
-        '.x-png'
-    );
-
-    protected $video_extensions = array(
-        '.mp4',
-        '.avi'
-    );
     protected $reg = "/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/";
-
     public $id = null;
     public $pubDate = null;
     public $title = null;
@@ -35,6 +16,8 @@ abstract class Article implements ArticleInterface
     public $mdcontent = null;
     public $page = null;
     public $attrID = null;
+    
+        protected $queryExt = "SELECT extension AS ext FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
 
     protected function doUnlink($f1, $f2)
     {
@@ -45,19 +28,56 @@ abstract class Article implements ArticleInterface
         };
     }
 
-    protected function isImage($ext)
+    protected function handle()
     {
-        return in_array($ext, $this->img_extensions);
+        //SHOULD BE CHAIN OF REPONSIBILITY?? use array_map??
+        $fname = glob(ARTICLE_ASSETS_PATH . "/" . $this->page . "/" . "*");
+        if (!isset($fname[0]))
+        {
+            $fname = null;
+        }
+        if (!isset($fname[0]))
+        {
+            $fname = glob(ARTICLE_VIDEO_PATH . "/" . $this->page . "/" . "*");
+            if (!isset($fname[0]))
+            {
+                $fname = null;
+            }
+        }
+        if (!isset($fname[0]))
+        {
+            $fname = glob(ARTICLE_IMAGE_PATH . "/" . IMG_TYPE_FULLSIZE . "/" . "*");
+            if (!isset($fname[0]))
+            {
+                $fname = null;
+            }
+        }
+        if (isset($fname[0]))
+        {
+            //any filename with correct extension will suffice to determine type
+            return $this->createAsset($fname[0]);
+        }
+        //defaults to gallery that does not require a third argument
+        //AssetFactory::createAsset($this->id, $this->page, $filename);
+        return $this->createAsset();
     }
-
-    protected function isGif($ext)
+    
+    
+    protected function handle2($str)
     {
-        return $ext == '.gif';
-    }
-
-    protected function isVideo($ext)
-    {
-        return in_array($ext, $this->video_extensions);
+        
+        switch ($str) {
+    case 0:
+        echo "i equals 0";
+        break;
+    case 1:
+        echo "i equals 1";
+        break;
+    case 2:
+        echo "i equals 2";
+        break;
+}
+        
     }
 
     protected function getIdFromTitle($title)
@@ -67,17 +87,25 @@ abstract class Article implements ArticleInterface
         $conn = null;
         return $id;
     }
-    
-     protected function doRemoveAsset($id){
+
+    protected function doRemoveAsset($id)
+    {
         $asset = $this->createAsset();
         $asset->delete($id);
     }
-    
-    protected function createAsset($path = ''){
+
+    protected function createAsset1($path = '')
+    {
         if($path){
-            $path = explode('/', $path)[3];
+            $arr = explode('/', $path);
         }
-        return AssetFactory::createAsset($this->id, $this->page, $path);
+        $path = end($arr) || null;
+        return AssetFactory::createAsset($this->id, $this->page, end($arr));
+    }
+    
+    protected function createAsset($ext)
+    {
+        return AssetFactory::createAsset($this->id, $this->page, $ext);
     }
 
     abstract protected function removeAssets($id = null);
@@ -103,7 +131,7 @@ abstract class Article implements ArticleInterface
             $this->page = preg_replace($this->reg, "", $data['page']);
         }
     }
-    
+
     /* direct Article attrs */
     public function storeFormValues($params)
     {
@@ -112,7 +140,7 @@ abstract class Article implements ArticleInterface
         // Parse and store the publication date
         $this->pubDate = formatDate($params['pubDate']);
     }
-        
+
     public function insert($data = array())
     {
         // Does the Article object already have an ID?
@@ -162,25 +190,20 @@ abstract class Article implements ArticleInterface
         $asset = $this->createAsset($uploaded['name']);
         $asset->storeUploadedFile($uploaded, $attrs);
     }
-    
-     public function handle(){
-         //SHOULD BE CHAIN OF REPONSIBILITY
-         $fname = glob(ARTICLE_ASSETS_PATH . "/" . $this->page  . "/" . "*");
-         if(!$fname[0]){ $fname = null; }
-         if(!$fname){
-             $fname = glob(ARTICLE_VIDEO_PATH . "/" . $this->page  . "/" .  "*");
-             if(!$fname[0]){ $fname = null; }
-         }
-         if(!$fname){
-             $fname = glob(ARTICLE_IMAGE_PATH . "/" . IMG_TYPE_FULLSIZE  . "/" .  "*");
-             if(!$fname[0]){ $fname = null; }
-         }
-         if($fname){
-             //any filename with correct extension will suffice to determine type
-             return $this->createAsset($fname[0]);
-         }
-         //defaults to gallery that does not require a third argument
-         //AssetFactory::createAsset($this->id, $this->page, $filename);
-         return $this->createAsset();
+
+    public function getFilePath($flag = false)
+    {
+        $conn = getConn();
+        $st = prepSQL($conn, $this->queryExt);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error updating article');
+        $rows = $st->fetchAll(PDO::FETCH_NUM);
+        $uber = array();
+        foreach($rows as $row){
+            $uber[] = $this->createAsset($row[0])->getAttributes();
+            //$uber[] = $row[0];
+        }
+        //var_dump($uber);
+        return isset($uber[0]) ? $uber : array();
     }
 }

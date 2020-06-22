@@ -1,7 +1,5 @@
 <?php
-require_once 'AssetInterface.php';
 require_once 'Asset.php';
-
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
 use Michelf\MarkdownExtra;
 /**
@@ -14,14 +12,23 @@ class Image extends Asset implements AssetInterface
      }
     
     protected $path2file = ARTICLE_IMAGE_PATH . '/';
+    
+      protected function getFilePath($type, $repo)
+      {
+           return $repo . "/$type/" . $this->id . $this->extension;
+      }
 
+    protected $queryAttrs1 = "SELECT assets.id, extension AS ext, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
     
-    protected $queryAttrs = "SELECT assets.id, extension, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
+     protected $fuckingID = "SELECT assets.id FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
     
-    protected function queryAttributes(){
+    protected $queryAttrs = "SELECT assets.id, extension AS ext, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM assets WHERE id = :id";
+    
+    protected function queryAttributes($sql){
         $conn = getConn();
-        $st = prepSQL($conn, $this->$queryAttrs);
+        $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        //$st->bindValue(":aid", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retrieving filepath');
         return $st;
     }
@@ -173,14 +180,22 @@ class Image extends Asset implements AssetInterface
       public function getAttributes($flag = false){
         $uber = [];
         $st = $this->queryAttributes();
-          $pathtype = $flag ?  . IMG_TYPE_THUMB  :  IMG_TYPE_FULLSIZE;
-        while ($row = $st->fetch(PDO::FETCH_ASSOC))
+          $pathtype = $flag ?  IMG_TYPE_THUMB  :  IMG_TYPE_FULLSIZE;
+          while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {
             $row['src'] = $this->path2file . $pathtype . '/' . $row['id'] . $row['ext'];
             $uber[] = $row;
         }
         return $uber;
     }
-    
+    public function getAttributes($flag = false){
+        $st = $this->queryAttributes($this->fuckingID);
+        $id = $st->fetch(PDO::FETCH_NUM)[0];
+        $pathtype = $flag ?  IMG_TYPE_THUMB  :  IMG_TYPE_FULLSIZE;
+        $row = $st->fetch(PDO::FETCH_ASSOC)[0];
+        $row['src'] = $this->path2file . $pathtype . '/' . $row['id'] . $row['ext'];
+        $uber[] = $row;
+        return $row;
+    }
     
     }

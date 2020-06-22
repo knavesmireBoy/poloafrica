@@ -1,6 +1,6 @@
 <?php
 require_once 'AssetInterface.php';
-require_once 'Asset.php';
+require_once 'Image.php';
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
 use Michelf\MarkdownExtra;
@@ -10,16 +10,23 @@ use Michelf\MarkdownExtra;
 class Doc extends Image implements AssetInterface
 {
     
-    protected $path2file = ARTICLE_ASSETS_PATH . '/' . $this->page . '/';
+    protected $path2file = ARTICLE_ASSETS_PATH . '/';
+    
+    
+      protected function getFilePath($type, $repo)
+   {
+       return $path2file . $this->page . '/' . $this->filename . $this->extension;
+   }
     
      public function getAttributes($flag = false){
         $uber = [];
         $st = $this->queryAttributes();
         while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {
-            $row['src'] = $this->path2file . $row['name'] . $row['ext'];
+            $row['path'] = $this->path2file . $this->page . '/' . $row['name'] . $row['ext'];
             $uber[] = $row;
         }
+         //var_dump($uber);
         return $uber;
     }
     

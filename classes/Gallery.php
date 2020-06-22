@@ -1,4 +1,5 @@
 <?php
+require_once 'Image.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
 use Michelf\MarkdownExtra;
 /**
@@ -6,7 +7,6 @@ use Michelf\MarkdownExtra;
 */
 class Gallery extends Image implements AssetInterface
 {
-    
     protected $onclause = " INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
     protected function storeName(){}
     protected function setDomId(){
@@ -16,7 +16,7 @@ class Gallery extends Image implements AssetInterface
         return $this->id;
      }
     
-    protected $queryAttrs = "SELECT gallery.id, extension AS ext, alt, gallery.attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE gallery.article_id = :id"
+    protected $queryAttrs = "SELECT gallery.id, extension AS ext, alt, gallery.attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE gallery.article_id = :id";
         
     protected $path2file = ARTICLE_GALLERY_PATH . '/';
 
@@ -57,29 +57,9 @@ class Gallery extends Image implements AssetInterface
 
    protected function getFilePath($type, $repo)
    {
-       if ($this->id && $this->extension && in_array($this->extension, $this->img_extensions))
-       {
-           return $repo . "/$type/" . $this->setDomId() . $this->extension;
-       }
+       //currently storing images in root folder of site and out of root folder $repo refers to one or other locations
+       return $repo . "/$type/" . $this->setDomId() . $this->extension;
    }
-    
-    public function getAttributes($flag = false)
-    {
-        $conn = getConn();
-        $sql = "SELECT gallery.id, extension AS ext, alt, gallery.attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE gallery.article_id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retrieving filepath');
-        $uber = [];
-        $pathtype = $flag ? '/' . IMG_TYPE_THUMB . '/' : '/' . IMG_TYPE_FULLSIZE . '/';
-        while ($row = $st->fetch(PDO::FETCH_ASSOC))
-        {
-            $row['src'] = ARTICLE_GALLERY_PATH . $pathtype . $row['dom_id'] . $row['ext'];
-            $uber[] = $row;
-        }
-        return $uber;
-    }
-    
     
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
     protected function createImage($image)
@@ -146,6 +126,9 @@ class Gallery extends Image implements AssetInterface
            $this->extension = $row[2];
            if("0$id" == $row[1]){
                $this->removeFile("0$id");
+           }
+           elseif($id == $row[1]){//ie filenames from 100
+               $this->removeFile($id);
            }
        }
    }

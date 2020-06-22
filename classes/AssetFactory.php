@@ -2,15 +2,15 @@
 require_once 'Asset.php';
 require_once 'Image.php';
 require_once 'Gallery.php';
+require_once 'Doc.php';
+require_once 'Video.php';
 
 class AssetFactory
 {
-
     static public function createAsset($id, $page, $filename = null)
     {
-        
         $img = array(
-       //'.gif',
+       '.gif',
        '.jpg',
        '.jpeg',
        '.pjpeg',
@@ -21,7 +21,6 @@ class AssetFactory
        '.mp4',
        '.avi'
    );
-        
         if($page === 'photos'){
             return new Gallery($id, $page);
         }
@@ -34,5 +33,4 @@ class AssetFactory
         }
         else return new Doc($id, $page);        
         }
-
 }

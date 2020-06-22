@@ -4,6 +4,7 @@ require_once 'AssetFactory.php';
 
 class StandardArticle extends Article implements ArticleInterface
 {
+    
     protected function move($id)
     {
         $conn = getConn();
@@ -88,12 +89,7 @@ class StandardArticle extends Article implements ArticleInterface
         doPreparedQuery($st, 'Error deleting article');
         $conn = null;
     }
-    public function getFilePath($flag = false)
-    {
-        $asset = $this->handle();
-        return $asset->getAttributes($flag);
-    }
-    
+  
     public function deleteAssets($id)
     {
         $this->removeAssets($id);
