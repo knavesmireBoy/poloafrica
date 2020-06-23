@@ -5,6 +5,8 @@ require_once 'AssetFactory.php';
 class StandardArticle extends Article implements ArticleInterface
 {
     
+     protected $queryExt = "SELECT assets.id, extension AS ext FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
+    
     protected function move($id)
     {
         $conn = getConn();

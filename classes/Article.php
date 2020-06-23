@@ -17,8 +17,6 @@ abstract class Article implements ArticleInterface
     public $page = null;
     public $attrID = null;
     
-        protected $queryExt = "SELECT extension AS ext FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
-
     protected function doUnlink($f1, $f2)
     {
         return function ($id) use ($f1, $f2)
@@ -26,58 +24,6 @@ abstract class Article implements ArticleInterface
             //NESTED $f1 returns same arg to $f2
             $f2($f1($id));
         };
-    }
-
-    protected function handle()
-    {
-        //SHOULD BE CHAIN OF REPONSIBILITY?? use array_map??
-        $fname = glob(ARTICLE_ASSETS_PATH . "/" . $this->page . "/" . "*");
-        if (!isset($fname[0]))
-        {
-            $fname = null;
-        }
-        if (!isset($fname[0]))
-        {
-            $fname = glob(ARTICLE_VIDEO_PATH . "/" . $this->page . "/" . "*");
-            if (!isset($fname[0]))
-            {
-                $fname = null;
-            }
-        }
-        if (!isset($fname[0]))
-        {
-            $fname = glob(ARTICLE_IMAGE_PATH . "/" . IMG_TYPE_FULLSIZE . "/" . "*");
-            if (!isset($fname[0]))
-            {
-                $fname = null;
-            }
-        }
-        if (isset($fname[0]))
-        {
-            //any filename with correct extension will suffice to determine type
-            return $this->createAsset($fname[0]);
-        }
-        //defaults to gallery that does not require a third argument
-        //AssetFactory::createAsset($this->id, $this->page, $filename);
-        return $this->createAsset();
-    }
-    
-    
-    protected function handle2($str)
-    {
-        
-        switch ($str) {
-    case 0:
-        echo "i equals 0";
-        break;
-    case 1:
-        echo "i equals 1";
-        break;
-    case 2:
-        echo "i equals 2";
-        break;
-}
-        
     }
 
     protected function getIdFromTitle($title)
@@ -103,9 +49,10 @@ abstract class Article implements ArticleInterface
         return AssetFactory::createAsset($this->id, $this->page, end($arr));
     }
     
-    protected function createAsset($ext)
+    protected function createAsset($ext, $attrs = array())
     {
-        return AssetFactory::createAsset($this->id, $this->page, $ext);
+        //var_dump($attrs);
+        return AssetFactory::createAsset($this->id, $this->page, $ext, $attrs);
     }
 
     abstract protected function removeAssets($id = null);
@@ -197,13 +144,13 @@ abstract class Article implements ArticleInterface
         $st = prepSQL($conn, $this->queryExt);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error updating article');
-        $rows = $st->fetchAll(PDO::FETCH_NUM);
+        $rows = $st->fetchAll(PDO::FETCH_ASSOC);
         $uber = array();
         foreach($rows as $row){
-            $uber[] = $this->createAsset($row[0])->getAttributes();
-            //$uber[] = $row[0];
+            //create an asset for every...
+            $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes();
         }
-        //var_dump($uber);
+        //exit(var_dump($uber));
         return isset($uber[0]) ? $uber : array();
     }
 }

@@ -1,7 +1,7 @@
 <?php
 require_once 'AssetInterface.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
-use Michelf\MarkdownExtra;
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
+//use Michelf\MarkdownExtra;
 /**
 * Class to handle assets
 */
@@ -31,6 +31,11 @@ abstract class Asset implements AssetInterface
        '.mp4',
        '.avi'
    );
+    
+     protected function setDomId()
+    {
+        return $this->id;
+    }
 
    protected function unlinkImages($f1, $f2)
    {
@@ -48,7 +53,7 @@ abstract class Asset implements AssetInterface
            $f1($fname);
        };
    }
-
+    /*
    protected function isImage()
    {
        return in_array($this->extension, $this->img_extensions);
@@ -58,6 +63,8 @@ abstract class Asset implements AssetInterface
    {
        return in_array($ext, $this->video_extensions);
    }
+    */
+   
 
    protected function doValidate($asset, $repo)
    {
@@ -76,10 +83,11 @@ abstract class Asset implements AssetInterface
        }
    }
 
-   public function __construct($articleID, $page)
+   public function __construct($articleID, $page, $id)
    {
        $this->articleID = $articleID;
        $this->page = $page;
+       $this->id = isset($id) ? $id : null;//only available on update not insert
    }
     
    public function storeUploadedFile($asset, $attrs = array())

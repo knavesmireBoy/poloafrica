@@ -7,7 +7,7 @@ require_once 'Video.php';
 
 class AssetFactory
 {
-    static public function createAsset($id, $page, $filename = null)
+    static public function createAsset($articleId, $page, $filename = null, $attrs = array())
     {
         $img = array(
        '.gif',
@@ -21,16 +21,17 @@ class AssetFactory
        '.mp4',
        '.avi'
    );
+        $id = isset($attrs['id']) ? $attrs['id'] : '';
         if($page === 'photos'){
-            return new Gallery($id, $page);
+            return new Gallery($articleId, $page, $id);
         }
         if(in_array(strrchr($filename,'.'), $img)){
-            return new Image($id, $page);
+            return new Image($articleId, $page, $id);
         }
         
         elseif(in_array(strrchr($filename,'.'), $video)){
-            return new Video($id, $page);
+            return new Video($articleId, $page, $id);
         }
-        else return new Doc($id, $page);        
+        else return new Doc($articleId, $page, $id);        
         }
 }
