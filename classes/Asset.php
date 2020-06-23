@@ -19,19 +19,7 @@ abstract class Asset implements AssetInterface
    public $id = null;
    public $page = null;
    protected $filename = null;
-   protected $img_extensions = array(
-       //'.gif',
-       '.jpg',
-       '.jpeg',
-       '.pjpeg',
-       '.png',
-       '.x-png'
-   );
-   protected $video_extensions = array(
-       '.mp4',
-       '.avi'
-   );
-    
+
      protected function setDomId()
     {
         return $this->id;
@@ -53,19 +41,6 @@ abstract class Asset implements AssetInterface
            $f1($fname);
        };
    }
-    /*
-   protected function isImage()
-   {
-       return in_array($this->extension, $this->img_extensions);
-   }
-
-   protected function isVideo($ext)
-   {
-       return in_array($ext, $this->video_extensions);
-   }
-    */
-   
-
    protected function doValidate($asset, $repo)
    {
        if (is_uploaded_file(trim($asset['tmp_name'])))
@@ -103,7 +78,6 @@ abstract class Asset implements AssetInterface
            $this->insert();
            $this->validate($asset);
            $this->createImage($asset);
-           
        }
        else if (!empty($attrs))
        { //modify img attributes, updating
@@ -123,4 +97,5 @@ abstract class Asset implements AssetInterface
    }
     abstract public function getAttributes($flag = false);
     abstract protected function getFilePath($type, $repo); 
+    abstract protected function createImage($asset); 
 }

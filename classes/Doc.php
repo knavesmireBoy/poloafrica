@@ -12,12 +12,12 @@ class Doc extends Image implements AssetInterface
     
     protected $path2file = ARTICLE_ASSETS_PATH . '/';
     
-    /*
       protected function getFilePath($type, $repo)
    {
-       return $path2file . $this->page . '/' . $this->filename . $this->extension;
-   }
-   */
+       return $this->path2file . $this->page . '/' . $this->filename . $this->extension;
+   }    
+   
+    protected function createImage($asset){}
     
     public function getAttributes($flag = false){
         $st = $this->queryAttributes($this->queryAttrs);
@@ -28,10 +28,13 @@ class Doc extends Image implements AssetInterface
     }
     
      protected function removeFile($id)
-    {
+     {
+         //exit('rem');
          $exec = $this->unlinkAsset(unlinker(ARTICLE_ASSETS_PATH, $this->page, "Couldn't delete the asset."));
-         //$exec($this->getNameFromId($id));
-         $exec($this->getStoredProperty(['name']));
+         $exec($this->getStoredProperty('name'));
+         //exit($id);
+         //exit(var_dump($this->getStoredProperty('name')));
+         //$exec($this->getStoredProperty());
     }
     
 }

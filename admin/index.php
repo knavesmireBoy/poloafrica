@@ -125,7 +125,6 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
                 $article->deleteAssets($id);
             }
         }
-        
         $article->update($_POST['insert']);
         /* this will always be true due to enctype="multipart/form-data" */
         if (isset($_FILES['asset']))
@@ -138,7 +137,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     }
     elseif (isset($_POST['cancel']))
     {
-        // User has cancelled their edits: return to the article list
+        //User has cancelled their edits: return to the article list
         //preserve page selection when exiting form
         $page = isset($_GET['page']) ? $_GET['page'] : '';
         redirect(array(array('page', $page)));
@@ -180,7 +179,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
         }
         //header("connection: close");
         $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
-            redirect(array(array('status', 'changesSaved'), array('page', $page)));
+            //redirect(array(array('status', 'changesSaved'), array('page', $page)));
         //header("Location: ?status=changesSaved");
     }
     elseif (isset($_POST['cancel']))

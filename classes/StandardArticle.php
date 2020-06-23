@@ -50,15 +50,11 @@ class StandardArticle extends Article implements ArticleInterface
         if ($id)
         {
             $this->doRemoveAsset($id);
-            //$asset = AssetFactory::createAsset($this->id, $this->page);
-            //$asset->delete($id);
         }
         else
         {
             while ($row = $st->fetch(PDO::FETCH_NUM))
             {
-                //$asset = AssetFactory::createAsset($this->id, $this->page);
-                //$asset->delete($row[0]);
                 $this->doRemoveAsset($row[0]);
             }
         }
@@ -84,7 +80,6 @@ class StandardArticle extends Article implements ArticleInterface
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error deleting asset');
-
         $sql = "DELETE FROM articles WHERE id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
@@ -94,6 +89,7 @@ class StandardArticle extends Article implements ArticleInterface
   
     public function deleteAssets($id)
     {
+        //exit($id . ':92');
         $this->removeAssets($id);
         $conn = getConn();
         //$sql = "DELETE repo, AA FROM assets INNER JOIN article_asset AS AA ON AA.asset_id = assets.id INNER JOIN articles ON articles.id = AA.article_id WHERE articles.id = :id AND assets.id = :id";

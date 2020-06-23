@@ -10,12 +10,7 @@ require_once 'Doc.php';
 class Video extends Doc implements AssetInterface
 {
     protected $path2file = ARTICLE_VIDEO_PATH . '/' ;
-    /*
-      protected function getFilePath($type, $repo)
-      {
-          return $this->path2file . $this->filename . $this->extension;
-       }
-    */
+
      public function getAttributes($flag = false){
         $st = $this->queryAttributes($this->queryAttrs);
         $pathtype = $flag ?  IMG_TYPE_THUMB  :  IMG_TYPE_FULLSIZE;

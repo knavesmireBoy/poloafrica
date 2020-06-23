@@ -21,6 +21,8 @@ class AssetFactory
        '.mp4',
        '.avi'
    );
+        
+        //exit(var_dump(strrchr($filename,'.')));
         $id = isset($attrs['id']) ? $attrs['id'] : '';
         if($page === 'photos'){
             return new Gallery($articleId, $page, $id);
@@ -34,4 +36,6 @@ class AssetFactory
         }
         else return new Doc($articleId, $page, $id);        
         }
+    
+    
 }

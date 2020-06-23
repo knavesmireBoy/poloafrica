@@ -29,29 +29,26 @@ abstract class Article implements ArticleInterface
     protected function getIdFromTitle($title)
     {
         $conn = getConn();
-        $id = $conn->query("SELECT id FROM articles WHERE title LIKE '$title%'")->fetch() [0];
+        $id = $conn->query("SELECT id FROM articles WHERE title LIKE '$title%'")->fetch()[0];
         $conn = null;
         return $id;
     }
 
     protected function doRemoveAsset($id)
     {
-        $asset = $this->createAsset();
+        $asset = $this->createAsset(null, array('id' => $id));
         $asset->delete($id);
-    }
-
-    protected function createAsset1($path = '')
-    {
-        if($path){
-            $arr = explode('/', $path);
-        }
-        $path = end($arr) || null;
-        return AssetFactory::createAsset($this->id, $this->page, end($arr));
     }
     
     protected function createAsset($ext, $attrs = array())
-    {
-        //var_dump($attrs);
+    {        
+        if(empty($ext) && isset($attrs['id'])){
+            $conn = getConn();
+            $sql = "SELECT extension FROM assets WHERE id = {$attrs['id']}";
+            $ext = $conn->query($sql)->fetch(PDO::FETCH_NUM)[0];
+            $conn = null;
+        }
+        
         return AssetFactory::createAsset($this->id, $this->page, $ext, $attrs);
     }
 

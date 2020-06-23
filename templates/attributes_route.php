@@ -7,5 +7,5 @@
 else if(isset($attribute['path'])){
     $path = ArticleFactory::getFileName($attribute['path']);
     $attr = 'Title'; ?>
-<img src="../images/pdf.png" alt="" class="pdf_icon" title="<?php htmlout($path); ?>">
+<img src="../images/resource/pdf.png" alt="" class="pdf_icon" title="<?php htmlout($path); ?>">
 <?php } ?>

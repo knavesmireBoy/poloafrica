@@ -13,6 +13,8 @@ class Image extends Asset implements AssetInterface
     {
         return $repo . "/$type/" . $this->id . $this->extension;
     }
+    
+    protected $path2file = ARTICLE_IMAGE_PATH . '/' ;
 
     protected $queryAttrs = "SELECT assets.id, extension AS ext, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM assets WHERE id = :id";
 
@@ -25,19 +27,19 @@ class Image extends Asset implements AssetInterface
         doPreparedQuery($st, 'Error retrieving filepath');
         return $st;
     }
-    
     protected function getStoredProperty($prop)
     {
         $conn = getConn();
-        $sql = "SELECT extension, name FROM assets INNER JOIN article_asset AS AA ON assets.id = AA.asset_id WHERE AA.article_id = :id";
+        $sql = "SELECT extension, name FROM assets WHERE id = :id";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, "Error retreiving $prop for this file");
         $res = $st->fetch(PDO::FETCH_ASSOC);
+        //exit(var_dump($res));
         return isset($res[$prop]) ? $res[$prop] : "";
     }
-    /*
-     protected function getNameFromId()
+    
+     protected function  getNameFromId()
     {
         $conn = getConn();
         $sql = "SELECT name FROM assets INNER JOIN article_asset AS AA ON assets.id = AA.asset_id WHERE AA.article_id = :id";
@@ -47,7 +49,7 @@ class Image extends Asset implements AssetInterface
         $res = $st->fetch(PDO::FETCH_NUM);
         return $res[0];
     }
-*/
+
     protected function setProperties($asset, $attrs = array())
     {
         $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
@@ -61,11 +63,11 @@ class Image extends Asset implements AssetInterface
 
     protected function removeFile($id)
     {
-        //CURRENTLY image files ar uploaded to two locations, may change, and may to decide to delete from only one location
+        //exit($id .'66');//CURRENTLY image files ar uploaded to two locations, may change, and may to decide to delete from only one location
         $exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."), unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
             $exec($id);
             //optional delete/archive?
-            $exec = $this->unlinkAsset(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
+            $exec = $this->unlinkAsset(unlinker(ARTICLE_UPLOAD_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
             $exec($id);
     }
     protected function deleteAsset()
@@ -93,35 +95,33 @@ class Image extends Asset implements AssetInterface
         doPreparedQuery($st, 'Error updating asset');
         $conn = null;
     }
-
     protected function validate($asset)
     {
-        $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH));
+        $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH));
     }
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
     protected function createImage($image)
     {
         // Get the image size and type
-        $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH);
+        $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH);
         buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH));
         buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_IMAGE_PATH) , JPEG_QUALITY, IMG_THUMB_WIDTH);
     }
     public function delete($id)
-
     {
         $conn = getConn();
         $sql = "SELECT assets.id, assets.attr_id, extension FROM assets INNER JOIN article_asset AS AA ON AA.asset_id = assets.id INNER JOIN articles ON AA.article_id = articles.id WHERE articles.id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving record');
-
+        
         while ($row = $st->fetch(PDO::FETCH_NUM))
         {
             //set the extension used in ::isImage to determine delete path
-            $this->extension = $row[2];
+            //$this->extension = $row[2];
             if ($id == $row[0])
             {
-                $this->removeFile($id);
+             $this->removeFile($id);
             }
         }
     }
@@ -129,7 +129,7 @@ class Image extends Asset implements AssetInterface
     public function insert()
     {
         // Does the Image object already have an ID?
-        if (!is_null($this->id))
+        if (!empty($this->id))
         {
             trigger_error("Asset::insert(): Attempt to insert an Asset object that already has its ID property set (to $this->id).", E_USER_ERROR);
         }
