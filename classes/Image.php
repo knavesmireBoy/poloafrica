@@ -17,16 +17,7 @@ class Image extends Asset implements AssetInterface
     protected $path2file = ARTICLE_IMAGE_PATH . '/' ;
 
     protected $queryAttrs = "SELECT assets.id, extension AS ext, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM assets WHERE id = :id";
-
-    protected function queryAttributes($sql)
-    {
-        $conn = getConn();
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        //$st->bindValue(":aid", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retrieving filepath');
-        return $st;
-    }
+  
     protected function getStoredProperty($prop)
     {
         $conn = getConn();

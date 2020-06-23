@@ -7,6 +7,18 @@ class StandardArticle extends Article implements ArticleInterface
     
      protected $queryExt = "SELECT assets.id, extension AS ext FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
     
+         protected function createAsset($ext, $attrs = array())
+    {        
+        if(empty($ext) && isset($attrs['id'])){
+            $conn = getConn();
+            $sql = "SELECT extension FROM assets WHERE id = {$attrs['id']}";
+            $ext = $conn->query($sql)->fetch(PDO::FETCH_NUM)[0];
+            $conn = null;
+        }
+        
+        return AssetFactory::createAsset($this->id, $this->page, $ext, $attrs);
+    }
+    
     protected function move($id)
     {
         $conn = getConn();

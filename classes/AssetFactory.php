@@ -24,7 +24,7 @@ class AssetFactory
         
         //exit(var_dump(strrchr($filename,'.')));
         $id = isset($attrs['id']) ? $attrs['id'] : '';
-        if($page === 'photos'){
+        if($page === 'photos' || $page === 'bond'){
             return new Gallery($articleId, $page, $id);
         }
         if(in_array(strrchr($filename,'.'), $img)){

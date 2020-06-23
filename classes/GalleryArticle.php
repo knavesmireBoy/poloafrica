@@ -4,7 +4,21 @@ require_once 'AssetFactory.php';
 
 class GalleryArticle extends Article implements ArticleInterface
 {
+
+    protected $queryExt = "SELECT gallery.id, extension AS ext FROM gallery INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
     
+    protected function createAsset($ext, $attrs = array())
+    {
+        if (empty($ext) && isset($attrs['id']))
+        {
+            $conn = getConn();
+            $sql = "SELECT extension FROM gallery WHERE id = {$attrs['id']}";
+            $ext = $conn->query($sql)->fetch(PDO::FETCH_NUM) [0];
+            $conn = null;
+        }
+        return AssetFactory::createAsset($this->id, $this->page, $ext, $attrs);
+    }
+
     protected function removeAssets($id = null)
     {
         $conn = getConn();
@@ -51,7 +65,7 @@ class GalleryArticle extends Article implements ArticleInterface
         doPreparedQuery($st, 'Error deleting article');
         $conn = null;
     }
-    
+
     public function deleteAssets($id)
     {
         $this->removeAssets($id);
@@ -61,6 +75,8 @@ class GalleryArticle extends Article implements ArticleInterface
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error deleting gallery from tables');
     }
-    
-    public function placeArticle($title){}
+
+    public function placeArticle($title)
+    {
+    }
 }

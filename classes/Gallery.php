@@ -133,7 +133,7 @@ class Gallery extends Image implements AssetInterface
     public function insert()
     {
         // Does the Image object already have an ID?
-        if (!is_null($this->id))
+        if (!empty($this->id))
         {
             trigger_error("Asset::insert(): Attempt to insert an Asset object that already has its ID property set (to $this->id).", E_USER_ERROR);
         }
@@ -156,4 +156,15 @@ class Gallery extends Image implements AssetInterface
         doPreparedQuery($st, "Error updating record in gallery table");
         $conn = null;
     }
+    
+    public function getAttributes($flag = false)
+    {
+        $st = $this->queryAttributes($this->queryAttrs);
+        $pathtype = $flag ? IMG_TYPE_THUMB : IMG_TYPE_FULLSIZE;
+        $row = $st->fetch(PDO::FETCH_ASSOC);
+        $row['src'] = $this->path2file . $pathtype . '/' . $row['dom_id'] . $row['ext'];
+        return $row;
+    }
+
+    
 }

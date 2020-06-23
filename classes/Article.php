@@ -36,22 +36,12 @@ abstract class Article implements ArticleInterface
 
     protected function doRemoveAsset($id)
     {
+        //null: delegate determining extension to subclass
+        //on upload an array of attribures is expected so maintain that signature by wrapping id in array
         $asset = $this->createAsset(null, array('id' => $id));
         $asset->delete($id);
     }
     
-    protected function createAsset($ext, $attrs = array())
-    {        
-        if(empty($ext) && isset($attrs['id'])){
-            $conn = getConn();
-            $sql = "SELECT extension FROM assets WHERE id = {$attrs['id']}";
-            $ext = $conn->query($sql)->fetch(PDO::FETCH_NUM)[0];
-            $conn = null;
-        }
-        
-        return AssetFactory::createAsset($this->id, $this->page, $ext, $attrs);
-    }
-
     abstract protected function removeAssets($id = null);
 
     public function __construct($data)
@@ -115,7 +105,7 @@ abstract class Article implements ArticleInterface
         }
         // Update the Article
         $conn = getConn();
-        $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr, page=:page WHERE id = :id";
+        $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr, page=:page WHERE articles.id = :id";
 
         $st = prepSQL($conn, $sql);
         $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
@@ -143,11 +133,12 @@ abstract class Article implements ArticleInterface
         doPreparedQuery($st, 'Error updating article');
         $rows = $st->fetchAll(PDO::FETCH_ASSOC);
         $uber = array();
+        //exit(var_dump($rows, '140', $this->queryExt));
         foreach($rows as $row){
             //create an asset for every...
             $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes();
         }
-        //exit(var_dump($uber));
+        //exit(var_dump($uber, '140'));
         return isset($uber[0]) ? $uber : array();
     }
 }

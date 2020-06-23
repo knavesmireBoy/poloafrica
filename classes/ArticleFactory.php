@@ -7,7 +7,7 @@ class ArticleFactory
 {
     public static function createArticle($data = array(), $page = 'photos')
     {
-        if($page === 'photos'){
+        if($page === 'photos' || $page === 'bond'){
             return new GalleryArticle($data);
         }
         return new StandardArticle($data);

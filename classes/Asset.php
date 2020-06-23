@@ -95,6 +95,15 @@ abstract class Asset implements AssetInterface
            }
        }
    }
+    
+      protected function queryAttributes($sql)
+    {
+        $conn = getConn();
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retrieving filepath');
+        return $st;
+    }
     abstract public function getAttributes($flag = false);
     abstract protected function getFilePath($type, $repo); 
     abstract protected function createImage($asset); 
