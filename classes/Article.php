@@ -16,6 +16,7 @@ abstract class Article implements ArticleInterface
     public $mdcontent = null;
     public $page = null;
     public $attrID = null;
+
     
     protected function doUnlink($f1, $f2)
     {
@@ -25,6 +26,17 @@ abstract class Article implements ArticleInterface
             $f2($f1($id));
         };
     }
+    
+    protected function convertToAssoc($arr){
+    if(!is_array($arr)){
+        return array();
+    }
+    $gang = array();
+    for($i = 0; $i < count($arr); $i++){
+        $gang[":$arr[$i]"] = $this->$arr[$i];
+    }
+    return $gang;
+}
 
     protected function getIdFromTitle($title)
     {
@@ -108,6 +120,7 @@ abstract class Article implements ArticleInterface
         $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr, page=:page WHERE articles.id = :id";
 
         $st = prepSQL($conn, $sql);
+        
         $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
         $st->bindValue(":title", $this->title, PDO::PARAM_STR);
         $st->bindValue(":summary", $this->summary, PDO::PARAM_STR);
@@ -115,7 +128,11 @@ abstract class Article implements ArticleInterface
         $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
         $st->bindValue(":page", $this->page, PDO::PARAM_STR);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        
+        
+        //$prep = $this->convertToAssoc(array('pubDate', 'title', 'summary', 'content', 'attr', 'page', 'id'));
         doPreparedQuery($st, 'Error updating article');
+        //doPreparedQueryInput($st, 'Error updating article', $prep);
         $conn = null;
         $this->placeArticle($title);
     }

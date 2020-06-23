@@ -19,7 +19,6 @@ class Video extends Doc implements AssetInterface
         return $row;
     }
     
-    
       protected function removeFile($id)
      {
          $exec = $this->unlinkAsset(unlinker(ARTICLE_VIDEO_PATH, $this->page, "Couldn't delete the asset."));

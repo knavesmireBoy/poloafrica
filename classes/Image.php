@@ -14,6 +14,18 @@ class Image extends Asset implements AssetInterface
         return $repo . "/$type/" . $this->id . $this->extension;
     }
     
+    protected function doBind($st, $props){
+        
+    foreach($props as $prop){
+        $st->bindValue(":$prop", $this->$prop, PDO::PARAM_STR);
+    }
+        /*$st->bindValue(":extension", $this->extension, PDO::PARAM_STR);
+        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
+        $st->bindValue(":domid", $this->dom_id, PDO::PARAM_STR);
+        $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
+        */
+    }
+    
     protected $path2file = ARTICLE_IMAGE_PATH . '/' ;
 
     protected $queryAttrs = "SELECT assets.id, extension AS ext, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM assets WHERE id = :id";
@@ -108,8 +120,6 @@ class Image extends Asset implements AssetInterface
         
         while ($row = $st->fetch(PDO::FETCH_NUM))
         {
-            //set the extension used in ::isImage to determine delete path
-            //$this->extension = $row[2];
             if ($id == $row[0])
             {
              $this->removeFile($id);

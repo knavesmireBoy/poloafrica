@@ -42,19 +42,6 @@ class Gallery extends Image implements AssetInterface
             $this->dom_id = $attrs['dom_id'];
         }
     }
-    /*
-    protected function getNameFromId()
-    {
-        $conn = getConn();
-        $sql = "SELECT name FROM gallery $this->onclause";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retreiving the name for this file');
-        $res = $st->fetch(PDO::FETCH_NUM);
-        return $res[0];
-    }
-    */
-
     protected function getFilePath($type, $repo)
     {
         //currently storing images in root folder of site and out of root folder $repo refers to one or other locations
@@ -165,6 +152,5 @@ class Gallery extends Image implements AssetInterface
         $row['src'] = $this->path2file . $pathtype . '/' . $row['dom_id'] . $row['ext'];
         return $row;
     }
-
     
 }
