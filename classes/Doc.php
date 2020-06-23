@@ -29,12 +29,8 @@ class Doc extends Image implements AssetInterface
     
      protected function removeFile($id)
      {
-         //exit('rem');
          $exec = $this->unlinkAsset(unlinker(ARTICLE_ASSETS_PATH, $this->page, "Couldn't delete the asset."));
          $exec($this->getStoredProperty('name'));
-         //exit($id);
-         //exit(var_dump($this->getStoredProperty('name')));
-         //$exec($this->getStoredProperty());
     }
     
 }
