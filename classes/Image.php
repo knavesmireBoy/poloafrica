@@ -103,6 +103,7 @@ class Image extends Asset implements AssetInterface
         $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH));
     }
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
+    //https://stackoverflow.com/questions/46027710/display-image-from-outside-the-web-root-public-html
     protected function createImage($image)
     {
         // Get the image size and type
@@ -132,14 +133,15 @@ class Image extends Asset implements AssetInterface
     public function delete($id)
     {
         $conn = getConn();
-        $sql = "SELECT id, attr_id FROM $this->table WHERE id = :id";
+        $sql = "SELECT id, attr_id FROM assets WHERE id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving record');
         $row = $st->fetch(PDO::FETCH_NUM);
         $this->removeFile($row[0]);
-        $this->removeFile($row[1]);        
     }
+    
+    
 
     public function insert()
     {

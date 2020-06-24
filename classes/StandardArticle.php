@@ -54,17 +54,18 @@ class StandardArticle extends Article implements ArticleInterface
 
     protected function removeAssets($id = null)
     {
-        $conn = getConn();
-        $sql = "SELECT id FROM assets INNER JOIN article_asset AS AA ON assets.id = AA.asset_id WHERE AA.article_id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error fetching asset list');
+        
         if ($id)
         {
             $this->doRemoveAsset($id);
         }
         else
         {
+        $conn = getConn();
+        $sql = "SELECT id FROM assets INNER JOIN article_asset AS AA ON assets.id = AA.asset_id WHERE AA.article_id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error fetching asset list');
             while ($row = $st->fetch(PDO::FETCH_NUM))
             {
                 $this->doRemoveAsset($row[0]);

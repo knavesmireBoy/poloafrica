@@ -21,21 +21,20 @@ class GalleryArticle extends Article implements ArticleInterface
 
     protected function removeAssets($id = null)
     {
-        $conn = getConn();
-        //temp limit to 1
-        $sql = "SELECT id FROM gallery WHERE gallery.article_id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error fetching gallery list');
         if ($id)
         {
             $this->doRemoveAsset($id);
         }
         else
         {
+            $conn = getConn();
+            $sql = "SELECT id FROM gallery WHERE article_id = :id";
+            $st = prepSQL($conn, $sql);
+            $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+            doPreparedQuery($st, 'Error fetching gallery list');            
             while ($row = $st->fetch(PDO::FETCH_NUM))
             {
-                $this->doRemoveAsset($id);
+                $this->doRemoveAsset($row[0]);
             }
         }
         $conn = null;

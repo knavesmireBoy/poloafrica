@@ -65,7 +65,8 @@ class Gallery extends Image implements AssetInterface
         $exec = $this->unlinkAsset(unlinker(ARTICLE_UPLOAD_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
         $exec($id);
     }
-    protected function deleteAsset()
+      
+     protected function deleteAsset()
     {
         $conn = getConn();
         $sql = "DELETE FROM gallery WHERE gallery.id = :id";
@@ -93,11 +94,11 @@ class Gallery extends Image implements AssetInterface
     {
         $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH));
     }
-
-    public function delete($id)
+    
+     public function delete($id)
     {
         $conn = getConn();
-        $sql = "SELECT id, attr_id FROM $this->table WHERE id = :id";
+        $sql = "SELECT id, attr_id FROM gallery WHERE id = :id";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving record');
@@ -141,5 +142,4 @@ class Gallery extends Image implements AssetInterface
         $row['src'] = $this->path2file . $pathtype . '/' . $row['dom_id'] . $row['ext'];
         return $row;
     }
-    
 }

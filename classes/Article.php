@@ -49,7 +49,7 @@ abstract class Article implements ArticleInterface
     protected function doRemoveAsset($id)
     {
         //null: delegate determining extension to subclass
-        //on upload an array of attribures is expected so maintain that signature by wrapping id in array
+        //on upload an array of attributes is expected so maintain that signature by wrapping id in array
         $asset = $this->createAsset(null, array('id' => $id));
         $asset->delete($id);
     }
@@ -116,7 +116,7 @@ abstract class Article implements ArticleInterface
         $conn = getConn();
         $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr, page=:page WHERE articles.id = :id";
         $st = prepSQL($conn, $sql);
-        $prep = $this->convertToAssoc(array('pubDate', 'title', 'summary', 'content', 'attr', 'page', 'id'));
+        $prep = $this->convertToAssoc(array('pubDate', 'title', 'summary', 'content', 'attrID', 'page', 'id'));
         //doPreparedQuery($st, 'Error updating article');
         doPreparedQueryInput($st, 'Error updating article', $prep);
         $conn = null;
