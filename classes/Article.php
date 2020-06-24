@@ -27,6 +27,15 @@ abstract class Article implements ArticleInterface
         };
     }
     
+    protected function doBind($st){
+        $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
+        $st->bindValue(":title", $this->title, PDO::PARAM_STR);
+        $st->bindValue(":summary", $this->summary, PDO::PARAM_STR);
+        $st->bindValue(":content", $this->content, PDO::PARAM_STR);
+        $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
+        $st->bindValue(":page", $this->page, PDO::PARAM_STR);
+    }
+    
     protected function convertToAssoc($arr){
     if(!is_array($arr)){
         return array();
@@ -98,10 +107,8 @@ abstract class Article implements ArticleInterface
         $conn = getConn();
         $sql = "INSERT INTO articles (pubDate, title, summary, content, attr_id, page) VALUES ( FROM_UNIXTIME(:pubDate), :title, :summary, :content, :attr, :page)";
         $st = prepSQL($conn, $sql);
-        //$st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT); //defaults to PDO::PARAM_STR which means mysql must cast to int
-        $prep = $this->convertToAssoc(array('pubDate', 'title', 'summary', 'content', 'attr', 'page'));
-        doPreparedQueryInput($st, 'Error updating article', $prep);
-        //doPreparedQuery($st, 'Error inserting article');
+        $this->doBind($st);
+        doPreparedQuery($st, 'Error inserting article');
         $this->id = $conn->lastInsertId();
         $conn = null;
     }
@@ -116,9 +123,9 @@ abstract class Article implements ArticleInterface
         $conn = getConn();
         $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr, page=:page WHERE articles.id = :id";
         $st = prepSQL($conn, $sql);
-        $prep = $this->convertToAssoc(array('pubDate', 'title', 'summary', 'content', 'attrID', 'page', 'id'));
-        //doPreparedQuery($st, 'Error updating article');
-        doPreparedQueryInput($st, 'Error updating article', $prep);
+        $this->doBind($st);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error updating article');
         $conn = null;
         $this->placeArticle($title);
     }

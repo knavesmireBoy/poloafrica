@@ -99,7 +99,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
     $results['article']->delete();
     redirect(array(array('status', 'articleDeleted')));
     $_SESSION["paginator"]->setStart(0);
-    exit();
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQUEST['action'] == 'removeArticle'))
