@@ -135,4 +135,4 @@ include "admin.html.php"; ?>
         });
     }
 </script>
-<a href=".">Admin</a>
+<a href=".">Article List</a>

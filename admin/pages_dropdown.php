@@ -1,5 +1,5 @@
 <form action="?" method="get" id="page_select">
-    <select id="page" name="page">
+<select id="page" name="page">
 <option value="">Select Page</option>
 <?php  foreach ($pp as $p): ?>
 <option value="<?php htmlout($p); ?>"

@@ -23,6 +23,7 @@ function getMsg($str){
     return isset($lookup[$str]) ?  $lookup[$str] : $str;
 }
 
+
 function redirect($arr){
     $str = '?';
     for($i=0; $i < count($arr); $i++){
@@ -97,8 +98,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
 {
     $results['article'] = ArticleFactory::getById((int)$_POST['articleId']);
     $results['article']->delete();
-    redirect(array(array('status', 'articleDeleted')));
+    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+    $outer = array();    
+    $outer[] = array('status', 'articleDeleted');
+    $outer[] = array('page', false);//set page so we don't get an undefined index, but set to falsy
     $_SESSION["paginator"]->setStart(0);
+    //simulate selecting.. 
+    if(!in_array($page, ArticleFactory::getPages())){
+       $outer[] = array('action', 'choose');
+        }
+        redirect($outer);
 }
 
 if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQUEST['action'] == 'removeArticle'))
@@ -178,7 +187,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
         }
         //header("connection: close");
         $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
-            //redirect(array(array('status', 'changesSaved'), array('page', $page)));
+        redirect(array(array('status', 'changesSaved'), array('page', $page)));
         //header("Location: ?status=changesSaved");
     }
     elseif (isset($_POST['cancel']))
@@ -229,7 +238,7 @@ else
     }
     //or clearing page selection
     if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'choose' && !$_REQUEST['page']){
-        $count = $data['totalRows'];
+         $count = $data['totalRows'];
         $page = null;
         $_SESSION["paginator"] = new PagePaginator(10, $count);
     }
