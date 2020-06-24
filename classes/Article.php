@@ -98,13 +98,10 @@ abstract class Article implements ArticleInterface
         $conn = getConn();
         $sql = "INSERT INTO articles (pubDate, title, summary, content, attr_id, page) VALUES ( FROM_UNIXTIME(:pubDate), :title, :summary, :content, :attr, :page)";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
-        $st->bindValue(":title", $this->title, PDO::PARAM_STR);
-        $st->bindValue(":summary", $this->summary, PDO::PARAM_STR);
-        $st->bindValue(":content", $this->content, PDO::PARAM_STR);
-        $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
-        $st->bindValue(":page", $this->page, PDO::PARAM_STR);
-        doPreparedQuery($st, 'Error inserting article');
+        //$st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT); //defaults to PDO::PARAM_STR which means mysql must cast to int
+        $prep = $this->convertToAssoc(array('pubDate', 'title', 'summary', 'content', 'attr', 'page'));
+        doPreparedQueryInput($st, 'Error updating article', $prep);
+        //doPreparedQuery($st, 'Error inserting article');
         $this->id = $conn->lastInsertId();
         $conn = null;
     }
@@ -118,21 +115,10 @@ abstract class Article implements ArticleInterface
         // Update the Article
         $conn = getConn();
         $sql = "UPDATE articles SET pubDate=FROM_UNIXTIME(:pubDate), title=:title, summary=:summary, content=:content, attr_id=:attr, page=:page WHERE articles.id = :id";
-
         $st = prepSQL($conn, $sql);
-        
-        $st->bindValue(":pubDate", $this->pubDate, PDO::PARAM_INT);
-        $st->bindValue(":title", $this->title, PDO::PARAM_STR);
-        $st->bindValue(":summary", $this->summary, PDO::PARAM_STR);
-        $st->bindValue(":content", $this->content, PDO::PARAM_STR);
-        $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
-        $st->bindValue(":page", $this->page, PDO::PARAM_STR);
-        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
-        
-        
-        //$prep = $this->convertToAssoc(array('pubDate', 'title', 'summary', 'content', 'attr', 'page', 'id'));
-        doPreparedQuery($st, 'Error updating article');
-        //doPreparedQueryInput($st, 'Error updating article', $prep);
+        $prep = $this->convertToAssoc(array('pubDate', 'title', 'summary', 'content', 'attr', 'page', 'id'));
+        //doPreparedQuery($st, 'Error updating article');
+        doPreparedQueryInput($st, 'Error updating article', $prep);
         $conn = null;
         $this->placeArticle($title);
     }
@@ -150,12 +136,10 @@ abstract class Article implements ArticleInterface
         doPreparedQuery($st, 'Error updating article');
         $rows = $st->fetchAll(PDO::FETCH_ASSOC);
         $uber = array();
-        //exit(var_dump($rows, '140', $this->queryExt));
         foreach($rows as $row){
-            //create an asset for every...
+            //create an asset object for every asset
             $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes();
         }
-        //exit(var_dump($uber, '140'));
         return isset($uber[0]) ? $uber : array();
     }
 }

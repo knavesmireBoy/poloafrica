@@ -19,6 +19,18 @@ abstract class Asset implements AssetInterface
    public $id = null;
    public $page = null;
    protected $filename = null;
+   protected $table = 'assets';
+    
+      protected function convertToAssoc($arr){
+    if(!is_array($arr)){
+        return array();
+    }
+    $gang = array();
+    for($i = 0; $i < count($arr); $i++){
+        $gang[":$arr[$i]"] = $this->$arr[$i];
+    }
+    return $gang;
+}
 
      protected function setDomId()
     {
@@ -60,6 +72,7 @@ abstract class Asset implements AssetInterface
 
    public function __construct($articleID, $page, $id)
    {
+       //var_dump(func_get_args());
        $this->articleID = $articleID;
        $this->page = $page;
        $this->id = isset($id) ? $id : null;//only available on update not insert

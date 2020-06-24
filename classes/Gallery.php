@@ -4,6 +4,7 @@ require_once 'Image.php';
 class Gallery extends Image implements AssetInterface
 {
     protected $onclause = " INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
+    protected $table = "gallery";
 
     protected function setDomId()
     {
@@ -15,7 +16,6 @@ class Gallery extends Image implements AssetInterface
     }
 
     protected $path2file = ARTICLE_GALLERY_PATH . '/';
-
     protected $queryAttrs = "SELECT id, extension AS ext, alt, attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE id = :id";
 
     protected function getStoredProperty($prop)
@@ -97,24 +97,13 @@ class Gallery extends Image implements AssetInterface
     public function delete($id)
     {
         $conn = getConn();
-        $sql = "SELECT gallery.id, gallery.attr_id, extension FROM gallery $this->onclause";
+        $sql = "SELECT id, attr_id FROM $this->table WHERE id = :id";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        $st->bindValue(":id", $id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retreiving record');
-
-        while ($row = $st->fetch(PDO::FETCH_NUM))
-        {
-            //set the extension used in ::isImage to determine delete path
-            $this->extension = $row[2];
-            if ("0$id" == $row[1])
-            {
-                $this->removeFile("0$id");
-            }
-            elseif ($id == $row[1])
-            { //ie filenames from 100
-                $this->removeFile($id);
-            }
-        }
+        $row = $st->fetch(PDO::FETCH_NUM);
+        $this->removeFile($row[0]);
+        $this->removeFile($row[1]);        
     }
 
     public function insert()

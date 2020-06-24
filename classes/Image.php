@@ -110,6 +110,7 @@ class Image extends Asset implements AssetInterface
         buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH));
         buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_IMAGE_PATH) , JPEG_QUALITY, IMG_THUMB_WIDTH);
     }
+    /*
     public function delete($id)
     {
         $conn = getConn();
@@ -125,6 +126,19 @@ class Image extends Asset implements AssetInterface
              $this->removeFile($id);
             }
         }
+    }
+    */
+    
+    public function delete($id)
+    {
+        $conn = getConn();
+        $sql = "SELECT id, attr_id FROM $this->table WHERE id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retreiving record');
+        $row = $st->fetch(PDO::FETCH_NUM);
+        $this->removeFile($row[0]);
+        $this->removeFile($row[1]);        
     }
 
     public function insert()

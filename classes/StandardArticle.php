@@ -9,7 +9,7 @@ class StandardArticle extends Article implements ArticleInterface
     
          protected function createAsset($ext, $attrs = array())
     {        
-        if(empty($ext) && isset($attrs['id'])){
+             if(empty($ext) && isset($attrs['id'])){
             $conn = getConn();
             $sql = "SELECT extension FROM assets WHERE id = {$attrs['id']}";
             $ext = $conn->query($sql)->fetch(PDO::FETCH_NUM)[0];

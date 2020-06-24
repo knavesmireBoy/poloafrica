@@ -29,15 +29,13 @@ class GalleryArticle extends Article implements ArticleInterface
         doPreparedQuery($st, 'Error fetching gallery list');
         if ($id)
         {
-            $asset = AssetFactory::createAsset($this->id, $this->page);
-            $asset->delete($id);
+            $this->doRemoveAsset($id);
         }
         else
         {
             while ($row = $st->fetch(PDO::FETCH_NUM))
             {
-                $asset = AssetFactory::createAsset($this->id, $this->page);
-                $asset->delete($row[0]);
+                $this->doRemoveAsset($id);
             }
         }
         $conn = null;
