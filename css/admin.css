@@ -251,6 +251,7 @@ li.asset label {
     padding: .33em 1em;
     margin: 0 .33em;
     background-color: hsl(54, 50%, 66%);
+    border: solid 1px white;
     color: white;
 }
 #pp > *:first-child {

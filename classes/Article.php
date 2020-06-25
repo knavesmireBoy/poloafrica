@@ -35,22 +35,11 @@ abstract class Article implements ArticleInterface
         $st->bindValue(":attr", $this->attrID, PDO::PARAM_STR);
         $st->bindValue(":page", $this->page, PDO::PARAM_STR);
     }
-    
-    protected function convertToAssoc($arr){
-    if(!is_array($arr)){
-        return array();
-    }
-    $gang = array();
-    for($i = 0; $i < count($arr); $i++){
-        $gang[":$arr[$i]"] = $this->$arr[$i];
-    }
-    return $gang;
-}
 
     protected function getIdFromTitle($title)
     {
         $conn = getConn();
-        $id = $conn->query("SELECT id FROM articles WHERE title LIKE '$title%'")->fetch()[0];
+        $id = $conn->query("SELECT id FROM articles WHERE title LIKE '%$title%'")->fetch()[0];
         $conn = null;
         return $id;
     }

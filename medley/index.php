@@ -9,6 +9,7 @@ $style = 'medley';
 include "../templates/header.php";
 $articles = ArticleFactory::getListByPage('medley');
 $count = 0;
+$poster = 0;
 include "../templates/nav.php";
 ?>
 <main class="override">
@@ -19,6 +20,7 @@ include "../templates/nav.php";
         include '../templates/article.php';
         }
         else {
+            $poster +=1;
             include '../templates/video.php';
         }
     }   

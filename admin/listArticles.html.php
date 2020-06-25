@@ -11,9 +11,7 @@ if(!isset($_SESSION['email'])){
 session_start();
 }
 
-$pp = array_reverse(ArticleFactory::getPages());
-    //$tmp = array_splice($pp, 0, 1);
-    //$pp = array_merge($pp, $tmp);
+$pp = ArticleFactory::getPages();
 include 'pages_dropdown.php'; 
 ?>
  <table>
@@ -33,11 +31,8 @@ include 'pages_dropdown.php';
 </table>
 
 <?php 
-
 $paginator->doNav(); ?>
-
 <p><?php htmlout($paginator->getRecords()); ?> article<?php htmlout(doPlural($paginator->getRecords())); ?> in total</p>
-
 <p><a href="?action=newArticle&amp;page=<?php if(isset($_REQUEST['page'])){
     htmlout($_REQUEST['page']);
 }?>">Add a New Article</a></p>

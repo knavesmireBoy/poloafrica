@@ -19,11 +19,6 @@ class Image extends Asset implements AssetInterface
     foreach($props as $prop){
         $st->bindValue(":$prop", $this->$prop, PDO::PARAM_STR);
     }
-        /*$st->bindValue(":extension", $this->extension, PDO::PARAM_STR);
-        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
-        $st->bindValue(":domid", $this->dom_id, PDO::PARAM_STR);
-        $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
-        */
     }
     
     protected $path2file = ARTICLE_IMAGE_PATH . '/' ;

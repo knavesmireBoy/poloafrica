@@ -71,18 +71,22 @@ class ArticleFactory
         doPreparedQuery($st, 'Error retreiving articles for this page');
         $rows = $st->fetchAll(PDO::FETCH_ASSOC);
         //('mya'=>'myarticle', 'you'=>'yourearticle)...dropDown for selecting a target position for insertion of new/updated article
-        if($flag){
+         if($flag){
             return array_combine(array_map(function($str){
-            return strtolower(substr($str['title'], 0, 3));
+                //see myconfig: repeating words
+            return strtolower(substr(preg_replace('/'.XDEF.'?'.XACT.'?'.XPOLOAF.'?'.XPOLO.'?'.'(\b)/i', '$5', $str['title']), 0, 3));
         }, $rows), array_map(function($str){
             return strtolower($str['title']);
-        }, $rows));
-        }
+        }, $rows));        
+    }
+        
         return $rows;
     }
 
     public static function getPages()
     {
+        //$pt = '/The (Poloafrica\s)?(\b)/i';
+        //echo preg_replace($pt, '$1', 'The Uity Expo');
         $conn = getConn();
         $sql = "SELECT name FROM pages;";
         $st = prepSQL($conn, $sql);

@@ -10,7 +10,7 @@ h2 span {
 #facilities img {
 	clear: both;
     width: 30%;
-	margin: 1em 0 1m 0;
+	margin: 1em 0 1em 1em;
 }
 
 @media only screen {

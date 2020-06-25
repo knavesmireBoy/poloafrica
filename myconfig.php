@@ -24,6 +24,16 @@ define( "IMG_TYPE_THUMB", "thumb" );
 define( "IMG_THUMB_WIDTH", 120 );
 define( "JPEG_QUALITY", 85 );
 
+/*repeating words*/
+/*these are used in a preg_replace to strip out words from the beginning of titles which start with similar patterns
+ie "'Activities on the farm', 'Activities around the farm'" from the result we extract the first three characters which becomes a unique identifier as the value in an <option> tag
+so Should future article titles confound this process, put em here
+*/
+define("XDEF", "(The |a )");
+define("XACT", "(activities )");
+define("XPOLO", "(polo )");
+define("XPOLOAF", "(poloafrica )");
+
 function getGalleryPageSets(){
     return array(14,14,14,12,12,12,14);
 }

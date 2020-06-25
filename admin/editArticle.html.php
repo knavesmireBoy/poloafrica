@@ -62,7 +62,7 @@ include "admin.html.php"; ?>
               <?php if(!empty($_REQUEST['page'])) {  $mypage = strtolower(html($_REQUEST['page'])); }
               else if(!empty($results['article']->page)) {  $mypage = strtolower($results['article']->page); }
               /*strtolower(htmlout($results['article']->page));*/?>
-              <input name="page" id="page" placeholder="pagename" required maxlength="20" value="<?php echo $mypage; ?>">
+              <input name="page" id="page" placeholder="archive"  required maxlength="20" value="<?php echo $mypage; ?>">
               <label for="attr_id">identity</label>
               <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
             </li>
@@ -116,7 +116,10 @@ include "admin.html.php"; ?>
                     $rows = ArticleFactory::getTitles($mypage, true);
                     echo "<select name='insert' id='insert'><option value=''>$default_placement</option>";
                     foreach($rows as $k => $v){
-                        echo "<option value='$k'>$v</option>";
+                        //exclude present title from dropdown list, nice
+                       if($v != strtolower($results['article']->title)) {
+                           echo "<option value='$k'>$v</option>";
+                       }
                     }
                     echo '<option value="*">insert at end</option></select>'
                   ?>
