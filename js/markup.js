@@ -20,11 +20,6 @@ var $ = function (str) {
 			return arg === char;
 		};
 	},
-    notEqual = function (char) {
-		return function (arg) {
-			return arg !== char;
-		};
-	},
 	Maker = function (tx, inp) {
 		var endlink = /\[(\d)+\]:.+/g,
 			i = 0,
@@ -73,8 +68,28 @@ var $ = function (str) {
 			isSelected = function (a, b) {
 				return a != b;
 			},
+            
+            fixSelection = function(){
+                var from = tx.selectionStart,
+					to = tx.selectionEnd,
+					cur = tx.value.slice(from, to),
+					selected = isSelected(from, to);
+				if (selected) {
+					from = trimFrom(cur, from);
+					to = trimTo(cur, to);
+					cur = tx.value.slice(from, to);
+				}
+				//expand
+				from -= fixFrom(tx, from, isSpace);
+				to += fixTo(tx, to, isSpace);
+                return {from: from, to: to};
+            },
+            setTextArea = function(from, to, cur){
+                tx.value = tx.value.slice(0, from) + cur + tx.value.slice(to);
+            },
 			mdBold = isEqual('*'),
-			isSpace = isEqual(' ');
+			isSpace = isEqual(' '),
+            emphasis = /\**([^\*]+)\**/g;
 		return {
 			link: function () {
 				var res = window.prompt('Enter hyperlink'),
@@ -127,91 +142,42 @@ var $ = function (str) {
 				}
 			},
 			bold: function () {
-				var from = tx.selectionStart,
-					to = tx.selectionEnd,
-					cur = tx.value.slice(from, to),
-					boldtext = /\**([^\*]+)\**/g,
-					selected = isSelected(from, to);
-				if (selected) {
-					from = trimFrom(cur, from);
-					to = trimTo(cur, to);
-					cur = tx.value.slice(from, to);
-				}
-				//expand
-				from -= fixFrom(tx, from, isSpace);
-				to += fixTo(tx, to, isSpace);
-				cur = tx.value.slice(from, to);
+				var o = fixSelection(),
+                    from = o.from,
+                    to = o.to,
+                    cur = tx.value.slice(from, to);
+                
 				if (mdBold(cur.charAt(0))) { //bold, italics, both
 					if (!mdBold(cur.charAt(1))) { //italics
-						tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '***$1***') + tx.value.slice(to);
+                        setTextArea(from, to, cur.replace(emphasis, '***$1***'));
 					} else if (mdBold(cur.charAt(2))) { //bold italics
-						tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '*$1*') + tx.value.slice(to);
+                        setTextArea(from, to, cur.replace(emphasis, '*$1*'));
 					} else { //bold
-						tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '$1') + tx.value.slice(to);
+                        setTextArea(from, to, cur.replace(emphasis, '$1'));
 					}
 				} else { //normal
-					tx.value = tx.value.slice(0, from) + '**' + cur + '**' + tx.value.slice(to);
+                    setTextArea(from, to, '**' + cur + '**');
 				}
 			},
             
             italics: function(){
-                var from = tx.selectionStart,
-					to = tx.selectionEnd,
-                    boldtext = /\**([^\*]+)\**/g,
-                    selected = isSelected(from, to),
-					cur = tx.value.slice(from, to);
-                 if (selected) {
-					from = trimFrom(cur, from);
-					to = trimTo(cur, to);
-					cur = tx.value.slice(from, to);
-				}
-                from -= fixFrom(tx, from, isSpace);
-				to += fixTo(tx, to, isSpace);
-				cur = tx.value.slice(from, to);
-                if (mdBold(cur.charAt(0))) { //bold, italics, both
-                    if (!mdBold(cur.charAt(1))) { //italics
-                        tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '$1') + tx.value.slice(to);
-                    }
-                     else if (mdBold(cur.charAt(2))) { //bold italics
-						tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '*$1*') + tx.value.slice(to);
-                    }
-                 else { //bold
-						tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '***$1***') + tx.value.slice(to);
-					}
-                }
-                else {
-                    tx.value = tx.value.slice(0, from) + '*' + cur + '*' + tx.value.slice(to);
-                }
+                var o = fixSelection(),
+                    from = o.from,
+                    to = o.to,
+                    cur = tx.value.slice(from, to);
                 
-            },
-            
-            
-			italics1: function () {
-				var lookahead,
-					lookbehind,
-					res,
-					from = tx.selectionStart,
-					to = tx.selectionEnd,
-                    
-					cur = tx.value.slice(from, to);
-			
-				from = trimFrom(cur, from);
-				to = trimTo(cur, to);
-				cur = tx.value.slice(from, to);
-				//lookahead = tx.value.slice(from, to+1);
-				///lookbehind = tx.value.slice(from-1, to);
-				//res = lookahead.match(new RegExp(cur.substr(-1) + '(?=\\*)'))[0];
-				//lookbehind.match(new RegExp(cur.substr(1) + '(?<=\\*)'));
-				if (cur.charAt(0) === '_' || cur.charAt(0) === '*') {
-					if (cur.match(/_/)) {
-						tx.value = tx.value.slice(0, from) + cur.replace(/^(\**)_(.+)_(\**)$/g, '$1$2$3') + tx.value.slice(to);
-					} else {
-						tx.value = tx.value.slice(0, from) + '_' + cur + '_' + tx.value.slice(to);
+               if (mdBold(cur.charAt(0))) { //bold, italics, both
+					if (!mdBold(cur.charAt(1))) { //italics
+                        setTextArea(from, to, cur.replace(emphasis, '$1'));
+					} else if (mdBold(cur.charAt(2))) { //bold italics
+                        setTextArea(from, to, cur.replace(emphasis, '*$1*'));
+					} else { //bold
+                        setTextArea(from, to, cur.replace(emphasis, '***$1***'));
 					}
-				} else {
-					tx.value = tx.value.slice(0, from) + '_' + cur + '_' + tx.value.slice(to);
+				} else { //normal
+                    setTextArea(from, to, '*' + cur + '*');
 				}
-			},
+            },
 			setCount: function (count) {
 				this.count = count;
 			}
