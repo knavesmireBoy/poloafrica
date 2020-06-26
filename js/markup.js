@@ -17,6 +17,12 @@ var $ = function(str){
         return el;
     },
     
+    isEqual = function(char){
+        return function(arg){
+            return arg === char;
+        };
+    },
+    
     Maker = function(tx, inp){
         var endlink = /\[(\d)+\]:.+/g,
             i = 0,
@@ -48,7 +54,8 @@ var $ = function(str){
             },
             isSelected = function(a, b){
                 return a != b;
-            };
+            },
+            mdBold = isEqual('*');
         return {
             link: function(){
                 var res = window.prompt('Enter hyperlink'),
@@ -114,9 +121,14 @@ var $ = function(str){
             bold: function(){
                 var from = tx.selectionStart,
                     to = tx.selectionEnd,
-                    cur = tx.value.slice(from, to);
-                
-                
+                    last,
+                    cur = tx.value.slice(from, to),
+                    p1 = /^__(.+)__*$/g,
+                    p2 = /_*([^_]+)_*/g,
+                    p3 = /\**([^*]+)\**/g,
+                    lazy,
+                    supa_lazy;
+                                    
                  if(!isSelected(from, to)){
                     return;
                 }
@@ -124,9 +136,28 @@ var $ = function(str){
                 from = fixFrom(cur, from);
                 to = fixTo(cur, to);
                 cur = tx.value.slice(from, to);
-                                
-                if(cur.charAt(0) === '*'){
-                     tx.value = tx.value.slice(0, from) + cur.replace(/^\*\*(.+)\*\*$/g, '$1') + tx.value.slice(to);
+                lazy = mdBold(tx.value.slice(from-1, from));
+                supa_lazy = mdBold(tx.value.slice(from-2, from-1));
+                if(supa_lazy){
+                   from -=2;
+                }
+                else if(lazy){
+                    from-=1;
+                }
+                //currently bolded       
+                if(mdBold(cur.charAt(0)) || lazy  || supa_lazy){
+                    //last char is text
+                    supa_lazy = !mdBold(tx.value.slice(to-1, to));
+                    lazy = mdBold(tx.value.slice(to, to+1));
+                    if(supa_lazy){
+                        to +=2;
+                    }
+                    else if(lazy){
+                        to +=1;
+                    }
+                    
+                    
+                     tx.value = tx.value.slice(0, from) + cur.replace(p3, '$1') + tx.value.slice(to);
                 }
                 else {
                     tx.value = tx.value.slice(0, from) + '**' + cur + '**' + tx.value.slice(to);
