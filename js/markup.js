@@ -88,10 +88,29 @@ var $ = function(str){
                 }
                 return to;
             },
+            
+            fixMeFrom = function(tx, from, func){
+        var i = 0;
+        while(!func(tx.value.slice(from-1, from))){
+            i++;
+            from -= 1;
+        }
+        return i;
+    },
+    
+    fixMeTo = function(tx, to, func){
+        var i = 0;
+        while(!func(tx.value.slice(to, to+1))){
+            i++;
+            to += 1;
+        }
+        return i;
+    },
             isSelected = function(a, b){
                 return a != b;
             },
-            mdBold = isEqual('*');
+            mdBold = isEqual('*'),
+            isSpace = isEqual(' ');
         return {
             link: function(){
                 var res = window.prompt('Enter hyperlink'),
@@ -126,7 +145,6 @@ var $ = function(str){
                     return;
                 }
                 
-                
                 from = fixFrom(cur, from);
                 to = fixTo(cur, to);
                 cur = tx.value.slice(from, to);
@@ -159,20 +177,17 @@ var $ = function(str){
                     to = tx.selectionEnd,
                     cur = tx.value.slice(from, to),
                     boldtext = /\**([^\*]+)\**/g,
-                    tmp,
-                    lazy,
-                    supa_lazy;
+                    selected = isSelected(from, to);
                                     
-                 if(!isSelected(from, to)){
-                    return;
+                if(selected){
+                    //trim
+                    from = fixFrom(cur, from);
+                    to = fixTo(cur, to);
+                    cur = tx.value.slice(from, to);
                 }
-                
-                from = fixFrom(cur, from);
-                to = fixTo(cur, to);
-                cur = tx.value.slice(from, to);
-                
-                from -= fix4Bold(tx, from, isEqual('*'));
-                to += fix2Bold(tx, to, isEqual('*'));
+                //expand
+                from -= fixMeFrom(tx, from, isSpace);
+                to += fixMeTo(tx, to, isSpace);
                 cur = tx.value.slice(from, to);
                 
                 if(mdBold(cur.charAt(0))){//bold, italics, both
@@ -182,11 +197,11 @@ var $ = function(str){
                     else if(mdBold(cur.charAt(2))){//bold italics
                     tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '*$1*') + tx.value.slice(to);
                 }
-                    else {
+                    else {//bold
                         tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '$1') + tx.value.slice(to);
                     }
                 }
-                else {
+                else {//normal
                     tx.value = tx.value.slice(0, from) + '**'+cur+'**' + tx.value.slice(to);
                 }
                 
