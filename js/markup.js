@@ -23,6 +23,42 @@ var $ = function(str){
         };
     },
     
+    fixFromBold = function(tx, from, func){
+        var i =0,
+            lazy = func(tx.value.slice(from-1, from)),
+            supa_lazy = func(tx.value.slice(from-2, from-1)),
+            em = func(tx.value.slice(from-3, from-2));
+                if(em){
+                    i =3;
+                }
+                if(supa_lazy){
+                   i = 2;
+                }
+                else if(lazy){
+                    i = 1;
+                }
+            return i;
+    },
+    
+    fix4Bold = function(tx, from, func){
+        var i = 0;
+            while(func(tx.value.slice(from-1, from))){
+            i++;
+            from -= 1;
+        }
+        return i;
+    },
+
+    fix2Bold = function(tx, to, func){
+        var i = 0;
+        while(func(tx.value.slice(to, to+1))){
+            i++;
+            to += 1;
+        }
+        
+        return i;
+    },
+    
     Maker = function(tx, inp){
         var endlink = /\[(\d)+\]:.+/g,
             i = 0,
@@ -121,11 +157,9 @@ var $ = function(str){
             bold: function(){
                 var from = tx.selectionStart,
                     to = tx.selectionEnd,
-                    last,
                     cur = tx.value.slice(from, to),
-                    p1 = /^__(.+)__*$/g,
-                    p2 = /_*([^_]+)_*/g,
-                    p3 = /\**([^*]+)\**/g,
+                    boldtext = /\**([^\*]+)\**/g,
+                    tmp,
                     lazy,
                     supa_lazy;
                                     
@@ -136,32 +170,26 @@ var $ = function(str){
                 from = fixFrom(cur, from);
                 to = fixTo(cur, to);
                 cur = tx.value.slice(from, to);
-                lazy = mdBold(tx.value.slice(from-1, from));
-                supa_lazy = mdBold(tx.value.slice(from-2, from-1));
-                if(supa_lazy){
-                   from -=2;
+                
+                from -= fix4Bold(tx, from, isEqual('*'));
+                to += fix2Bold(tx, to, isEqual('*'));
+                cur = tx.value.slice(from, to);
+                
+                if(mdBold(cur.charAt(0))){//bold, italics, both
+                   if(!mdBold(cur.charAt(1))){//italics
+                    tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '***$1***') + tx.value.slice(to);
                 }
-                else if(lazy){
-                    from-=1;
+                    else if(mdBold(cur.charAt(2))){//bold italics
+                    tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '*$1*') + tx.value.slice(to);
                 }
-                //currently bolded       
-                if(mdBold(cur.charAt(0)) || lazy  || supa_lazy){
-                    //last char is text
-                    supa_lazy = !mdBold(tx.value.slice(to-1, to));
-                    lazy = mdBold(tx.value.slice(to, to+1));
-                    if(supa_lazy){
-                        to +=2;
+                    else {
+                        tx.value = tx.value.slice(0, from) + cur.replace(boldtext, '$1') + tx.value.slice(to);
                     }
-                    else if(lazy){
-                        to +=1;
-                    }
-                    
-                    
-                     tx.value = tx.value.slice(0, from) + cur.replace(p3, '$1') + tx.value.slice(to);
                 }
                 else {
-                    tx.value = tx.value.slice(0, from) + '**' + cur + '**' + tx.value.slice(to);
+                    tx.value = tx.value.slice(0, from) + '**'+cur+'**' + tx.value.slice(to);
                 }
+                
             },
             
             italics: function(){
