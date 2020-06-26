@@ -79,7 +79,7 @@ var $ = function (str) {
 					to = trimTo(cur, to);
 					cur = tx.value.slice(from, to);
 				}
-				//expand
+				//expand selection
 				from -= fixFrom(tx, from, isSpace);
 				to += fixTo(tx, to, isSpace);
                 return {from: from, to: to};
@@ -87,7 +87,7 @@ var $ = function (str) {
             setTextArea = function(from, to, cur){
                 tx.value = tx.value.slice(0, from) + cur + tx.value.slice(to);
             },
-			mdBold = isEqual('*'),
+			hasEmphasis = isEqual('*'),
 			isSpace = isEqual(' '),
             emphasis = /\**([^\*]+)\**/g;
 		return {
@@ -125,6 +125,7 @@ var $ = function (str) {
 				end = tx.value.search(getReg(n));
 				n = n === 1 ? 7 : 6;
 				tx.value = tx.value.slice(0, from) + cur.slice(1, -4) + tx.value.slice(to);
+                //setTextArea(from, to, cur.slice(1, -4))
 				tx.value = tx.value.slice(0, end - n);
 			},
 			ulist: function () {
@@ -136,9 +137,12 @@ var $ = function (str) {
 				}
 				if (cur.charAt(0) === '-') {
 					tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/^-/g, '\n') + tx.value.slice(to);
+                    //setTextArea(from, to, tx.value.slice(from, to).replace(/^-/g, '\n'))
 					tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/\n-/g, '\n') + tx.value.slice(to);
+                    //setTextArea(from, to, tx.value.slice(from, to).replace(/\n-/g, '\n'))
 				} else {
 					tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/(\n)/g, '$1- ') + tx.value.slice(to);
+                    //setTextArea(from, to, tx.value.slice(from, to).replace(/(\n)/g, '$1- '))
 				}
 			},
 			bold: function () {
@@ -147,10 +151,10 @@ var $ = function (str) {
                     to = o.to,
                     cur = tx.value.slice(from, to);
                 
-				if (mdBold(cur.charAt(0))) { //bold, italics, both
-					if (!mdBold(cur.charAt(1))) { //italics
+				if (hasEmphasis(cur.charAt(0))) { //bold, italics, both
+					if (!hasEmphasis(cur.charAt(1))) { //italics
                         setTextArea(from, to, cur.replace(emphasis, '***$1***'));
-					} else if (mdBold(cur.charAt(2))) { //bold italics
+					} else if (hasEmphasis(cur.charAt(2))) { //bold italics
                         setTextArea(from, to, cur.replace(emphasis, '*$1*'));
 					} else { //bold
                         setTextArea(from, to, cur.replace(emphasis, '$1'));
@@ -166,10 +170,10 @@ var $ = function (str) {
                     to = o.to,
                     cur = tx.value.slice(from, to);
                 
-               if (mdBold(cur.charAt(0))) { //bold, italics, both
-					if (!mdBold(cur.charAt(1))) { //italics
+               if (hasEmphasis(cur.charAt(0))) { //bold, italics, both
+					if (!hasEmphasis(cur.charAt(1))) { //italics
                         setTextArea(from, to, cur.replace(emphasis, '$1'));
-					} else if (mdBold(cur.charAt(2))) { //bold italics
+					} else if (hasEmphasis(cur.charAt(2))) { //bold italics
                         setTextArea(from, to, cur.replace(emphasis, '*$1*'));
 					} else { //bold
                         setTextArea(from, to, cur.replace(emphasis, '***$1***'));
@@ -194,7 +198,7 @@ var $ = function (str) {
 	}
 window.addEventListener('load', function () {
 	var div = document.createElement('div'),
-		tags = ['LINK', 'UNLINK', 'ULIST', 'BOLD', 'ITALICS'],
+		tags = ['LINK', 'UNLINK', 'BOLD', 'ITALICS', 'ULIST'],
 		prep = function (cb, ancr, tag) {
 			return function (txt) {
 				cb(ancr, tag, txt);
