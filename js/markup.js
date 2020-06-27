@@ -144,20 +144,29 @@ var $ = function (str) {
 				tx.value = tx.value.slice(0, end - n);
 			},
 			ulist: function () {
+                /*
 				var from = tx.selectionStart,
 					to = tx.selectionEnd,
 					cur = tx.value.slice(from, to);
+                    */
+                
+                var o = fixSelection(isLine, isLine),
+                    from = o.from,
+                    to = o.to,
+                    cur = tx.value.slice(from, to);
+                                
 				if (!isSelected(from, to)) {
 					return;
 				}
 				if (cur.charAt(0) === '-') {
-					tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/^-/g, '\n') + tx.value.slice(to);
+                    alert(999);
+					//tx.value = tx.value.slice(0, from) + cur.replace(/^-/g, 'G') + tx.value.slice(to);
                     //setTextArea(from, to, tx.value.slice(from, to).replace(/^-/g, '\n'))
-					tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/\n-/g, '\n') + tx.value.slice(to);
-                    //setTextArea(from, to, tx.value.slice(from, to).replace(/\n-/g, '\n'))
+					//tx.value = tx.value.slice(0, from) + cur.replace(/\n-/g, '\n') + tx.value.slice(to);
+                    setTextArea(from, to, tx.value.slice(from-1, to).replace(/\n-\s?/g, '\n'))
 				} else {
-					tx.value = tx.value.slice(0, from) + tx.value.slice(from, to).replace(/(\n)/g, '$1- ') + tx.value.slice(to);
-                    //setTextArea(from, to, tx.value.slice(from, to).replace(/(\n)/g, '$1- '))
+                    cur = tx.value.slice(from-1, to);
+                    setTextArea(from, to, cur.replace(/(\n)/g, '$1- '))
 				}
 			},
 			bold: function () {
