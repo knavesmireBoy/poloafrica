@@ -69,7 +69,19 @@ var $ = function (str) {
 				return a != b;
 			},
             
-            fixSelection = function(){
+            charCount = function(str, char){
+                var i = 0;
+                if(!char){
+                    return;
+                }
+                while (str.charAt(i) === char){
+                    i+=1;
+                }
+                return i;
+            },
+            
+            fixSelection = function(doFrom, doTo){
+                doTo = doTo || doFrom;
                 var from = tx.selectionStart,
 					to = tx.selectionEnd,
 					cur = tx.value.slice(from, to),
@@ -80,8 +92,8 @@ var $ = function (str) {
 					cur = tx.value.slice(from, to);
 				}
 				//expand selection
-				from -= fixFrom(tx, from, isSpace);
-				to += fixTo(tx, to, isSpace);
+				from -= fixFrom(tx, from, doFrom);
+				to += fixTo(tx, to, doTo);
                 return {from: from, to: to};
             },
             setTextArea = function(from, to, cur){
@@ -89,7 +101,10 @@ var $ = function (str) {
             },
 			hasEmphasis = isEqual('*'),
 			isSpace = isEqual(' '),
-            emphasis = /\**([^\*]+)\**/g;
+			isLine = isEqual('\n'),
+			isStop = isEqual('.'),
+            emphasis = /\**([^\*]+)\**/g,
+            header = 0;
 		return {
 			link: function () {
 				var res = window.prompt('Enter hyperlink'),
@@ -146,7 +161,7 @@ var $ = function (str) {
 				}
 			},
 			bold: function () {
-				var o = fixSelection(),
+				var o = fixSelection(isSpace, isSpace),
                     from = o.from,
                     to = o.to,
                     cur = tx.value.slice(from, to);
@@ -165,7 +180,7 @@ var $ = function (str) {
 			},
             
             italics: function(){
-                var o = fixSelection(),
+                var o = fixSelection(isSpace, isSpace),
                     from = o.from,
                     to = o.to,
                     cur = tx.value.slice(from, to);
@@ -184,7 +199,30 @@ var $ = function (str) {
             },
 			setCount: function (count) {
 				this.count = count;
-			}
+			},
+            para: function(){
+                var o = fixSelection(isSpace, isStop);
+                //advance cursor to keep period and space with
+                setTextArea(o.from, o.to+2, tx.value.slice(o.from, o.to+2) + '\n\n');
+            },
+            line: function(){
+                var o = fixSelection(isSpace, isStop);
+                //console.log(tx.value.slice(o.from, o.to));
+                setTextArea(o.from, o.to+2, tx.value.slice(o.from, o.to+2) + '  \n');
+            },
+            head: function(){
+                var o = fixSelection(isLine);
+                header = charCount(tx.value.slice(o.from, o.to), '#');
+                header+=1;                
+                if(header === 7){
+                    setTextArea(o.from, o.to, '#' + tx.value.slice(o.from, o.to).replace(/#/g, '')); 
+                    header = 1;
+                }
+                else {
+                setTextArea(o.from, o.to, '#' + tx.value.slice(o.from, o.to));
+                }
+                tx.focus();
+            }
 		}; //ret
 	},
 	linkeroo = function (maker) {
@@ -198,7 +236,7 @@ var $ = function (str) {
 	}
 window.addEventListener('load', function () {
 	var div = document.createElement('div'),
-		tags = ['LINK', 'UNLINK', 'BOLD', 'ITALICS', 'ULIST'],
+		tags = ['HEAD', 'LINK', 'UNLINK', 'BOLD', 'ITALICS', 'ULIST', 'PARA', 'LINE'],
 		prep = function (cb, ancr, tag) {
 			return function (txt) {
 				cb(ancr, tag, txt);
