@@ -152,21 +152,15 @@ var $ = function (str) {
                 
                 var o = fixSelection(isLine, isLine),
                     from = o.from,
-                    to = o.to,
-                    cur = tx.value.slice(from, to);
+                    to = o.to;
                                 
 				if (!isSelected(from, to)) {
 					return;
 				}
-				if (cur.charAt(0) === '-') {
-                    alert(999);
-					//tx.value = tx.value.slice(0, from) + cur.replace(/^-/g, 'G') + tx.value.slice(to);
-                    //setTextArea(from, to, tx.value.slice(from, to).replace(/^-/g, '\n'))
-					//tx.value = tx.value.slice(0, from) + cur.replace(/\n-/g, '\n') + tx.value.slice(to);
+				if (tx.value.slice(from, to).charAt(0) === '-') {
                     setTextArea(from, to, tx.value.slice(from-1, to).replace(/\n-\s?/g, '\n'))
 				} else {
-                    cur = tx.value.slice(from-1, to);
-                    setTextArea(from, to, cur.replace(/(\n)/g, '$1- '))
+                    setTextArea(from, to, tx.value.slice(from-1, to).replace(/(\n)/g, '$1- '))
 				}
 			},
 			bold: function () {
@@ -245,7 +239,7 @@ var $ = function (str) {
 	}
 window.addEventListener('load', function () {
 	var div = document.createElement('div'),
-		tags = ['HEAD', 'LINK', 'UNLINK', 'BOLD', 'ITALICS', 'ULIST', 'PARA', 'LINE'],
+		tags = ['HEAD', 'BOLD', 'ITALICS', 'PARA', 'LINE', 'LINK', 'UNLINK', 'ULIST'],
 		prep = function (cb, ancr, tag) {
 			return function (txt) {
 				cb(ancr, tag, txt);
