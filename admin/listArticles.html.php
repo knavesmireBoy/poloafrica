@@ -32,7 +32,7 @@ include 'pages_dropdown.php';
 
 <?php 
 $paginator->doNav(); ?>
-<p><?php htmlout($paginator->getRecords()); ?> article<?php htmlout(doPlural($paginator->getRecords())); ?> in total</p>
+<p>Total Article<?php htmlout(doPlural($paginator->getRecords())); ?>: <strong><?php htmlout($paginator->getRecords()); ?></strong></p>
 <p><a href="?action=newArticle&amp;page=<?php if(isset($_REQUEST['page'])){
     htmlout($_REQUEST['page']);
 }?>">Add a New Article</a></p>

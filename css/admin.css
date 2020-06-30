@@ -311,10 +311,11 @@ input#attr_id, input#dom_id{
 
 
 #pp > * {
-    padding: .33em 1em;
+    padding: .33em 1em .44em 1em;
     margin: 0 .33em;
     background-color: hsl(54, 50%, 66%);
     border: solid 1px white;
+    border-radius: 5px;
     color: white;
 }
 #pp > *:first-child {
@@ -322,6 +323,11 @@ input#attr_id, input#dom_id{
 }
 #pp {
     margin: 1em 0;
+    font: 1em Arial, sans-serif;
+}
+
+#editList #pp {
+    margin: 1em 0 1em 17%;
 }
 #pp a:hover {
     color: black;
@@ -333,7 +339,8 @@ form#page_select{
 }
 
 #pp span {
-    background-color: hsl(54, 50%, 50%)
+    background-color: hsl(54, 50%, 50%);
+    font-weight: bold;
 }
 
 .msg {
@@ -458,6 +465,7 @@ form#page_select{
         width: auto;
         text-align: left;
         background: none;
+        margin: .3em 0;
     }
     
     .admin .neue label {
