@@ -6,11 +6,35 @@
     font-weight: bold;
 }
 
+.admin a:link, .admin a:active, .admin a:visited {
+color: hsl(283, 100%, 25%);
+}
+
+.admin a:hover  {
+    color: hsl(283, 50%, 45%);
+}
+
+.admin table {
+    border: solid 1px black;
+}
+
+table a {
+    font-weight: bold;
+}
 .admin table tr > *{
     table-layout: fixed;
-    border: 1px solid black;
+    border: 0px solid black;
     padding: .5em;
     line-height: normal;
+}
+
+.admin table tr:nth-child(odd){
+    background-color: hsl(283, 15%, 95%);
+}
+
+.admin table tr:first-child {
+    background-color: black;
+    color: hsl(283, 15%, 85%);
 }
 
 #adminHeader h2 {
@@ -20,19 +44,21 @@
     padding: 0;
     margin: 0 0 .5em;
     line-height: 1;
-    border: solid 0px #cc6;
+    border: solid 0px hsl(283, 45%, 44%);
     border-width: 0 0 6px;
     display: inline-block;
-    font: 3em Georgia, serif;
+    font-size: 3em;
 }
 
 .admin form label, .admin fieldset {
     font: 1em 'Arial Black', Arial, sans-serif;
     color: #333;
+    color: hsl(283, 25%, 24%);
+    color: black;
 }
 
 .admin form input {
-    font: .8rem/1.5 Arial, sans-serif;
+    font: .8rem/1.5 Optima Arial, sans-serif;
     color: #444;
 }
 
@@ -66,6 +92,7 @@ form.manage {
 
 .admin form.editor fieldset legend {
     background-color: hsl(54, 50%, 75%);
+    background-color: hsl(283, 25%, 74%);
     padding: .5em;
 }
 
@@ -82,6 +109,8 @@ form.manage + form.manage{
 
 .admin form {
     background-color: hsl(54, 50%, 75%);
+    background-color: #af8dbb;
+    background-color: hsl(283, 25%, 74%);
     float: none;
     padding: 1%;
     box-sizing: border-box;
@@ -138,6 +167,7 @@ textarea {
 
 #controls li:hover {
      background-color: hsl(51, 50%, 30%);
+    background-color: hsl(283, 25%, 44%);
 }
 
 #controls li img{
@@ -249,7 +279,7 @@ textarea {
     left: 0;
 }
 .admin .asset figure.edit input{
-   width: 97%;
+   width: 99%;
 }
 
 .admin .asset figure.edit input[type=checkbox]{
@@ -267,13 +297,17 @@ textarea {
 
 .admin .asset figure {
     width: 6em;
-    padding: .1em;
+    padding: .2em;
     border: solid 1px;
-    background-color: hsl(54, 50%, 77%);
+    background-color: rgba(255,255,255, .8);
 }
 
 .admin .asset figure.edit {
     width: 18em;
+}
+
+figcaption.del label{
+    color: red;
 }
 
 .admin .neue label {
@@ -314,6 +348,8 @@ input#attr_id, input#dom_id{
     padding: .33em 1em .44em 1em;
     margin: 0 .33em;
     background-color: hsl(54, 50%, 66%);
+    background-color: #444;
+    background-color: rgba(77,55,77,.35);
     border: solid 1px white;
     border-radius: 5px;
     color: white;
@@ -322,7 +358,11 @@ input#attr_id, input#dom_id{
     margin: 0 .33em 0 0;
 }
 #pp {
-    margin: 1em 0;
+    margin: 2em 0;
+    border: solid 1px black;
+    display: inline-block;
+    padding: 1em .7em;
+    border-radius: 10px;
     font: 1em Arial, sans-serif;
 }
 
@@ -340,6 +380,7 @@ form#page_select{
 
 #pp span {
     background-color: hsl(54, 50%, 50%);
+    background-color: rgba(77,55,77, .77);
     font-weight: bold;
 }
 
@@ -348,20 +389,20 @@ form#page_select{
     padding: .3em 1em;
     border-radius: 8px 1px;
     background-color: #444;
+    background-color: hsl(283, 100%, 15%);
     font: italic 1.2em serif;
     margin: 0 0 .5em;
 }
 
 
 .errorMessage {
-    color: hsl(54, 50%, 50%);
+    color: hsl(285, 35%, 85%);
     font: bold italic 1.2em serif;
 }
 
 .statusMessage {
     color: #af8dbb;
-    color: hsl(285, 65%, 25%);
-    color: lightgreen;
+    color: hsl(285, 35%, 85%);
 }
 
 #upload {
@@ -401,6 +442,7 @@ form#page_select{
 }
 .buttons input:hover {
     color: red;
+    color: hsl(283, 77%, 50%);
 }
 .admin .buttons label {
     border: 1px solid silver;

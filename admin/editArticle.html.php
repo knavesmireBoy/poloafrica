@@ -133,6 +133,9 @@ include "admin.html.php"; ?>
         if(e.target.type === 'checkbox' && e.target.name === 'editAsset[]'){
             e.target.parentNode.classList.toggle('edit');
         }
+            if(e.target.type === 'checkbox' && e.target.name === 'deleteAsset[]'){
+            e.target.parentNode.classList.toggle('del');
+        }
         });
     }
 </script>
