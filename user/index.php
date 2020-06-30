@@ -25,9 +25,7 @@ $style = 'admin';
 include ("../templates/header.php");
 ?>
 <body class="admin"> 
-    <?php
-
-
+<?php
 if (!userIsLoggedIn()){
 include '../templates/login.html.php';
 exit();
@@ -35,19 +33,19 @@ exit();
 
 if (!userHasRole('Account Administrator') && !isset($_GET['error'])) {
 $error = 'Only Account Administrators may access this page.';
-header("Location: ?error='Only Account Administrators may access this page.'");
+header("Location: ?error=Only Account Administrators may access this page!");
 }
-
+    
+    
 if (isset($_POST['action']) and $_POST['action'] == 'Edit') {
     $admin = new Admin();
-    $results = $admin->getById($_POST['id']);
+    $results = $admin->getById($_POST['id']);        
     $results['page_title'] = "Admin | Edit User";
     $results['formaction'] = 'editform';
     $results['button'] = 'Update User';
     $results['required'] = '';
     $roles = $admin->getUserRole($_POST['id']);
-    include 'form.html.php';
-    exit();
+    $form = true;
 }
 
 if (isset($_POST['confirm']) && $_POST['confirm'] === 'No' || isset($_POST['abort'])) {
@@ -56,21 +54,21 @@ if (isset($_POST['confirm']) && $_POST['confirm'] === 'No' || isset($_POST['abor
 }
 
 if (isset($_GET['add'])) {
-    $user = new Admin();
-    $tmproles = $user->getRoles();
+    $admin = new Admin();
+    $tmproles = $admin->getRoles();
     $roles = array();
     /* do this to avoid undefined index warning on the add version of the form */
     foreach($tmproles as $role){
         $role['selected'] = '';
         $roles[] = $role;
     }
-    include 'form.html.php';
-    exit();
+    //include form
+    $form = true;
 }
 
 if (isset($_GET['addform'])) {
-    $user = new Admin();
-    $user->insert();
+    $admin = new Admin();
+    $admin->insert();
     header("Location: ?status=added");
     exit();
 }
@@ -81,9 +79,10 @@ if (isset($_GET['editform'])) {
     header("Location: ?status=updated");
     exit();
 }
+    
+if(isset($_POST['action']) && $_POST['action'] == 'login'){
 
-$user = new Admin();
-$users = $user->getList();
+}
 
 if($arg = $setstatus('deleted')){
     $results['statusMessage'] = "$onsuccess $arg!";
@@ -111,8 +110,7 @@ if (isset($_POST['confirm']) && $_POST['confirm'] === 'Yes'){
 if(isset($_POST['action']) && $_POST['action'] == 'Delete') {
     $admin = new Admin();
     $user = $admin->getById($_POST['id']);
-    include 'prompt.html.php';
-    exit();
+    $prompt = true;
 }
 
 if(isset($_POST['action']) && $_POST['action'] == 'selecteduser') {
@@ -120,9 +118,13 @@ if(isset($_POST['action']) && $_POST['action'] == 'selecteduser') {
           $results['statusMessage'] = 'Please select a user';  
         }
     else {
-        ///only overwrite $results on selection
         $user = new Admin();
-        $users = $user->getById($_POST['user']);
+        $user = $user->getById($_POST['user']);
     }
 }
+    if(!isset($user)){
+    $admin = new Admin();
+    $users = $admin->getList();
+    }
+
 include ("users.html.php");

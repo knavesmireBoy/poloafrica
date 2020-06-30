@@ -64,7 +64,7 @@ if (!userIsLoggedIn())
     
 if (!userHasRole('Content Editor'))
 {
-    $results['errorMessage'] = "Only Content Editor's may access this page.";
+    $results['errorMessage'] = "Only Content Editor's may access this page!";
     include 'admin.html.php';
     exit();
 }
@@ -260,6 +260,7 @@ include 'admin.html.php';
 require "listArticles.html.php";
 echo '</section></main>';
 ?>
+
 <script>
     function prepareNavLinks(){
         var hijax = window.poloAF.Hijax();

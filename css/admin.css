@@ -1,3 +1,11 @@
+.admin p {
+    text-align: left;
+}
+
+.admin th {
+    font-weight: bold;
+}
+
 .admin table tr > *{
     table-layout: fixed;
     border: 1px solid black;
@@ -15,100 +23,161 @@
     border: solid 0px #cc6;
     border-width: 0 0 6px;
     display: inline-block;
+    font: 3em Georgia, serif;
 }
+
+.admin form label, .admin fieldset {
+    font: 1em 'Arial Black', Arial, sans-serif;
+    color: #333;
+}
+
+.admin form input {
+    font: .8rem/1.5 Arial, sans-serif;
+    color: #444;
+}
+
 .admin h3 {
-    display: inline-block; 
     color: black;
 }
 
-.admin form li {
+.admin table, #loginform, .manage {
+    width: 40%;
+}
+
+#loginform li {
     margin: .5em 0;
 }
 
-.admin form {
-    background-color: hsl(54, 50%, 66%);
-    float: none;
+form.manage {
+    border-radius: 8px 8px 0px 0px;
     padding: 1em;
 }
 
-#loginform label {
-    color: black;
+.admin form.editor {
+    padding: 1.75em;
+    border: solid 1px white;
+    box-shadow: 0px 0px 6px black;
+    margin: 1em 0;
+}
+
+.admin form.editor fieldset {
+    margin: .75em 0;
+}
+
+.admin form.editor fieldset legend {
+    background-color: hsl(54, 50%, 75%);
+    padding: .5em;
+}
+
+form.manage + form.manage{
+    border-radius: 0;
+}
+.admin main {
+    padding: 1em;
+}
+
+#editList li {
+    margin: 1em 0;
+}
+
+.admin form {
+    background-color: hsl(54, 50%, 75%);
+    float: none;
+    padding: 1%;
+    box-sizing: border-box;
 }
 
 .admin form li > * {
-    line-height: normal;
-    margin: 0;
-    vertical-align: top;
-    width: 80%;
-    display: inline-block;
-}
-
-.admin form li > div, .admin form li > div+textarea {
-    display: block;
-    margin: 0 0 0 17%;
-    background-color: floralwhite;
-}
-
-
-.admin form li span {
-    width: auto;
-}
-
-.admin form li.asset > *{
+    line-height: 1.5;
+    margin: 0 0 0 2%;
     vertical-align: middle;
+    width: 81%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.admin form .neue li input {
+    margin: 0;
+}
+
+.admin form li label {
+    margin: 0;
+    line-height: 1;
+}
+
+textarea {
+    padding: 1%;
+    font: 1.1em/1.2 'Courier New', Courier, monospace;
+}
+#controls, #content, #editList .asset, #editList fieldset, .buttons {
+    margin: 0 0 2% 17%;
+    width: 83%;
+    box-sizing: border-box;
+}
+
+#controls {
+    margin: 0 0 0% 17%; 
+}
+
+#editList fieldset li {
+    margin: 0;
+}
+
+#controls li {
+    display: inline-block;
+    width: 3em;
+    margin: 0 .25em;
+    box-shadow: 1px 1px 2px black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#controls li img {
+    border-radius: 5px;
+}
+
+#controls li:hover {
+     background-color: hsl(51, 50%, 30%);
+}
+
+#controls li img{
+    display: block;
+    width: 100%;
+}
+#editList {
+    width: 100%;
+}
+
+#editList input, #editList textarea {
+    box-sizing: border-box;
+    border: 0;
 }
 
 .admin form label {
     width: 16%;
-    margin: 0 1% 0 0;
-    background-color: transparent;
-    color: black;
-    border: solid 0px white;
-    border-width: 0 0 4px;
+    text-align: right;
     word-spacing: normal;
     letter-spacing: normal;
-    font-size: 1.2em;
-    text-align: right;
 }
 
-li.asset label {
-    font-size: 1em;
+#editList > li > label {
+    margin: 0;
+    border: solid 0px white;
+    border-width: 0 0 4px;
 }
 
-.asset figcaption {
-    margin: .2em 0;
+.manage div input {
+    width: 100%;
 }
-.buttons {
-    margin: 0 0 0 17.3%;
-    padding: .3em;
-    color: white;
-    width: 80%;
-    background-color: rgba(0,0,0,.66);
+.manage input[type="checkbox"] {
+    width: auto;
 }
 
-#loginform .buttons {
-    background-color: transparent;
+#editList input#alt {
+    width: 60%;
 }
-.buttons input {
-    margin: 0 .5em 0 0;
-    text-transform: uppercase;
-}
-.buttons input:hover {
-    color: red;
-}
-
-.admin .buttons label {
-    border: 1px solid silver;
-    font: .8em Arial;
-    padding: .45em;
-    background-color: rgb(233,233,233);
-    
-}
-.admin input#alt {
-    width: 58%;
-}
-.admin input#dom_id {
-    width: 14%;
+#editList input#dom_id {
+    width: 10%;
 }
 
 .admin label[for="dom_id"] {
@@ -120,18 +189,26 @@ li.asset label {
     text-align: right;
 }
 
-.admin .neue {
-    background-color: rgba(255,255,255, 0.5);
-    padding: 0 0 0.5em;
-    margin: 0 0 1em;
+.admin fieldset {
+    padding: 0.5em;
+    border: solid 1px white;
+}
+
+
+.photos img {
+    width: 100%;
 }
 
 .asset {
     border: solid 1px white;
 }
 
-.photos img {
-    width: 100%;
+.admin form li.asset > * {
+    vertical-align: middle;
+}
+
+.asset figcaption {
+    margin: .2em 0;
 }
 
 .js .asset figure > * {
@@ -147,38 +224,6 @@ li.asset label {
     display: inline-block;
 }
 
-.admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset figure.edit > *{
-   position: relative;
-    left: 0;
-}
-.admin .asset figure.edit input{
-   width: 100%;
-}
-
-.admin .asset figure.edit input[type=checkbox]{
-   width: auto;
-}
-
-.admin .neue label {
-    text-align: right;
-    border-width: 0;
-    margin: 0 1%;
-}
-
-.admin .neue li > *{
-    width: auto;
-}
-
-.admin .neue label:first-of-type{
-    width: 16%;
-    margin: 0 1% 0 0;
-}
-
-.admin .neue li {
-    margin: 0;
-    padding: 0.5em 0 0;
-}
-
 .admin .asset figure img {
     margin: 0;
     width: 100%;
@@ -187,29 +232,66 @@ li.asset label {
     width: auto;
     display: inline;
 }
-.admin .asset {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-}
-.admin .asset figure  {
-    flex: 0 1 10em;
-    width: 1%;
-    border: solid 1px;
-    margin: .5em;
-    padding: .5em;
-    background-color: rgba(255,255,255, 0.5);
-}
 
-.admin .photos figure {
-    flex: 0 1 6em;
+.admin .asset figure input {
+    margin: 0 0 .4em .2em;
 }
-.admin .asset {
-    margin: 0 0 0 17%;
+.admin .asset figcaption > * {
+    margin: .25em 0;
 }
 
 .admin .asset label {
     width: auto;
+}
+
+.admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset figure.edit > *{
+   position: relative;
+    left: 0;
+}
+.admin .asset figure.edit input{
+   width: 97%;
+}
+
+.admin .asset figure.edit input[type=checkbox]{
+   width: auto;
+}
+
+.admin .asset figure label, .admin .asset figure input{
+    text-align: left;
+    border-width: 0px;
+}
+
+.admin .asset {
+    padding: .5em 0;
+}
+
+.admin .asset figure {
+    width: 6em;
+    padding: .1em;
+    border: solid 1px;
+    background-color: hsl(54, 50%, 77%);
+}
+
+.admin .asset figure.edit {
+    width: 18em;
+}
+
+.admin .neue label {
+    text-align: right;
+    border-width: 0;
+}
+
+#editList .neue li label, #editList .neue li input{
+    width: auto;
+}
+
+input#attr_id, input#dom_id{
+    width: 10%;
+}
+
+.admin .neue li {
+    margin: 0;
+    padding: 0.5em;
 }
 
 /*overrides default hiding of inouts which are used in no-js scenario*/
@@ -217,35 +299,16 @@ li.asset label {
     position: relative;
     left: 0;
 }
-.admin .asset figure label, .admin .asset figure input{
-    text-align: left;
-    border-width: 0px;
-}
-.admin .asset figure input {
-    margin: 0 0 .4em;
-}
-
-/*
-.admin .asset figure > *:nth-child(n+5) {
-    display: block;
-    width: 100% !important;
-}
-*/
-
-.admin .asset figcaption > * {
-    margin: .25em 0;
-}
 
 .admin legend {
-    padding: 0.25em 1em;
-    font: 1em Arial;
-    margin-left: 1em;
-    background-color: olive;
-    background-color: hsl(51, 50%, 30%);
-    border: solid 1px black;
-    color: hsl(54, 50%, 77%);
+    margin-left: .5em;
     text-transform: uppercase;
 }
+
+.admin legend img {
+ border-radius: 5px;
+}
+
 
 #pp > * {
     padding: .33em 1em;
@@ -269,40 +332,211 @@ form#page_select{
     padding: 1em 0;
 }
 
-.editor-toolbar a {
-    display: inline-block;
-    text-align: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-#loginform {
-    width: 30%;
-}
-
-.manage {
-    width: 20%;
-}
-
-#loginform label{
-    font: 1em Merriweather, Georgia serif;
-    border-width: 0;
-}
-
 #pp span {
     background-color: hsl(54, 50%, 50%)
 }
 
+.msg {
+    display: inline-block;
+    padding: .3em 1em;
+    border-radius: 8px 1px;
+    background-color: #444;
+    font: italic 1.2em serif;
+    margin: 0 0 .5em;
+}
+
+
 .errorMessage {
-    background-color: red;
-    width: auto;
-    padding: 0.1em;
+    color: hsl(54, 50%, 50%);
+    font: bold italic 1.2em serif;
 }
 
 .statusMessage {
-    background-color: cornflowerblue;
-    width: auto;
-    padding: 0.1em;
+    color: #af8dbb;
+    color: hsl(285, 65%, 25%);
+    color: lightgreen;
 }
+
+#upload {
+    width: 6em;
+    display: inline-block;
+}
+#upload img {
+    width: 100%;
+}
+
+#asset {
+    text-align: center;
+    margin: auto;
+    line-height: 1;
+}
+
+#loginform label{
+    border-width: 0;
+}
+
+.buttons {
+    padding: .3em;
+    color: white;
+    background-color: rgba(0,0,0,.66);
+}
+
+#loginform .buttons {
+    background-color: transparent;
+}
+.buttons > * {
+    margin: 0 .5em 0 0;
+    padding: .25em;
+}
+
+.buttons input {
+    text-transform: uppercase;
+}
+.buttons input:hover {
+    color: red;
+}
+.admin .buttons label {
+    border: 1px solid silver;
+    font: .8em Arial;
+    padding: .45em;
+    background-color: rgb(233,233,233);
+}
+
+@media screen and (max-width: 768px) {
+    #editList li > * {
+        display: block;
+        text-align: left;
+    }
+    
+    .admin #editList > * {
+         margin: 0 0 2% 0;
+        width: 100%;
+    }
+    
+    #controls {
+         margin: 1% 0 0% 0;
+        width: 100%;
+    }
+    #editList li label {
+        border: solid 0px white;
+        width: 100%;
+    }
+    #editList li input, #editList li textarea, #editList li > div, .admin .asset, #editList #asset {
+        margin: 0;
+        width: 100%;
+    }    
+    
+    #editList li textarea {
+        width: 100%;
+        font-size: 1.25em;
+    }
+   
+     #editList .asset input, #editList .asset label{
+        width: auto;
+    }
+    
+    #editList .neue li label {
+        display: inline-block;
+         width: auto;
+    }
+    
+    #editList .neue input {
+        display: inline-block;
+        width: 22%;
+    } 
+    
+    .buttons {
+        width: auto;
+        margin: 0;
+        border: 0;
+    }
+
+}
+
+@media only screen and (max-width: 667px) {
+    .admin #editList label {
+        width: auto;
+        text-align: left;
+        background: none;
+    }
+    
+    .admin .neue label {
+        margin: 0;
+    }
+    
+    .admin .content #editList input{
+        width: 100%;
+    }
+     .admin #editList input[type=checkbox]{
+        width: auto;
+    }
+    
+    .admin h3 {
+        padding: 0;
+        background-color: white;
+    }
+    #loginform {
+        width: auto;
+        background-color: white;
+    }
+    #loginform .buttons input{
+        margin: 0 0 0 26%;
+        width: auto;
+    }
+    
+    #loginform input {
+        width: 70%;
+    }
+    #loginform label {
+        width: 26%;
+        margin: 0 2% 0 0;
+    }
+    
+    #adminHeader h2 {
+    font: 2.4em Georgia, serif;
+}
+    
+    #pp > * {
+    padding: .33em .66em;
+}
+ 
+}
+/*
+
+    #editList .neue li, .buttons {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    #editList .neue li label, #editList .neue li input:first-of-type {
+        flex: 1 1 auto;
+        margin: 1%;
+    }
+    #editList .neue li input {
+        flex: 4 1 auto;
+        margin: 1% 0;
+    }
+    
+   .buttons > * {
+        flex: 1 1 1em;
+        margin: .5em;
+    }
+
+.admin .asset {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+.admin .asset figure  {
+    flex: 0 1 6em;
+    width: 1%;
+    border: solid 1px;
+    margin: .5em;
+    padding: .5em;
+    background-color: rgba(255,255,255, 0.5);
+}
+
+.admin .photos figure {
+    flex: 0 1 6em;
+}
+*/

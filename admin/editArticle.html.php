@@ -20,7 +20,13 @@ $mypage = '';
         }
       }
    </script>
-<script src="../js/markup.js"></script>
+     <script src="../js/viewportSize.js"></script>
+    <script src="../js/shims.js"></script>
+<script src="../js/underscore.js"></script>
+    <script src="../js/eventing.js"></script>
+    <script src="../js/classlist.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/markup.js"></script>
 <?php $results['heading'] = 'Edit Article';
 include "admin.html.php"; ?>
 
@@ -40,32 +46,25 @@ include "admin.html.php"; ?>
           
         <ul id="editList">
           <li>
-            <label for="title">title</label>
-            <input type="text" name="title" id="title" placeholder="Name of the article" required autofocus maxlength="255" value="<?php htmlout($results['article']->title)?>">
+              <!-- default layout tool is inner-block so ensure no space between input and label, where poss-->
+            <label for="title">title</label><input type="text" name="title" id="title" placeholder="Name of the article" required autofocus maxlength="255" value="<?php htmlout($results['article']->title)?>">
           </li>
           <li>
-            <label for="summary">summary</label>
-            <textarea name="summary" id="summary" placeholder="Brief description of the article" maxlength="1000" style="height: 5em;"><?php htmlout($results['article']->summary);?></textarea>
+            <label for="summary">summary</label><textarea name="summary" id="summary" placeholder="Brief description of the article" maxlength="1000" style="height: 5em;"><?php htmlout($results['article']->summary);?></textarea>
           </li>
           <li>
-            <label for="content">content</label>
-              <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
+            <label for="content">content</label><textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
           </li>
             <fieldset class="neue">
-          <li id="datepage">
-            <label for="pubDate">publication date</label>
-              <?php 
-              $now = new DateTime();
-              ?>
-            <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
-              <label for="page">page</label>
+              <label for="attr_id">id</label>
+                <input name="attr_id" id="attr_id" maxlength="15" value="<?php htmlout($results['article']->attrID); ?>">
+               <label for="page">page</label>
               <?php if(!empty($_REQUEST['page'])) {  $mypage = strtolower(html($_REQUEST['page'])); }
               else if(!empty($results['article']->page)) {  $mypage = strtolower($results['article']->page); }
               /*strtolower(htmlout($results['article']->page));*/?>
-              <input name="page" id="page" placeholder="archive"  required maxlength="20" value="<?php echo $mypage; ?>">
-              <label for="attr_id">identity</label>
-              <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
-            </li>
+                <input name="page" id="page" placeholder="archive"  required maxlength="15" value="<?php echo $mypage; ?>">
+            <label for="pubDate">published</label><?php $now = new DateTime();?>
+                <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
             </fieldset>            
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
@@ -92,9 +91,9 @@ include "admin.html.php"; ?>
             endif;//$attributes[0]
             endif;//$results['article']
             ?>
-            <fieldset class="neue"><legend>add asset...</legend>
+            
+            <fieldset class="neue"><legend id="upload"><img src="../images/resource/edit_img.png"></legend>
           <li>
-            <label for="image">upload</label>
             <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
           </li>
             <?php 
@@ -104,28 +103,27 @@ include "admin.html.php"; ?>
           </ul>
           <?php if(!isset($remove)) { ?>
                     <fieldset class="buttons">
-                        <input type="submit" name="saveChanges" value="Save Changes">
-            <?php if ($results['article']->id) { ?>
-            <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
-            <input type="submit" name="action" value="Delete Article">
-            <?php } ?>
-            <input type="submit" name="cancel" formnovalidate value="Cancel">
-              <?php
+                        <?php
                     if(isset($mypage)){
-                        echo '<label for="insert">INSERT BEFORE:</label>';
+                        //echo '<label for="insert">INSERT BEFORE:</label>';
                     $rows = ArticleFactory::getTitles($mypage, true);
-                    echo "<select name='insert' id='insert'><option value=''>$default_placement</option>";
+                    echo "<select name='insert' id='insert'><option value=''>INSERT BEFORE:</option>";
                     foreach($rows as $k => $v){
                         //exclude present title from dropdown list, nice
                        if($v != strtolower($results['article']->title)) {
                            echo "<option value='$k'>$v</option>";
                        }
                     }
-                    echo '<option value="*">insert at end</option></select>'
-                  ?>
-                    
-              <?php }
-                   } ?>
+                    echo '<option value="*">insert at end</option></select>';
+                    } ?>
+                        <input type="submit" name="saveChanges" value="Save Changes">
+            <?php if ($results['article']->id) { ?>
+            <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
+            <input type="submit" name="action" value="Delete Article">
+            <?php } ?>
+            <input type="submit" name="cancel" formnovalidate value="Cancel">
+           
+                 <?php  }//if $remove ?>
         </fieldset>
       </form>
 <script>

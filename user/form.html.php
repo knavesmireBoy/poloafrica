@@ -1,20 +1,19 @@
 <form action="?<?php htmlout($results['formaction']); ?>" method="post" class="manage editor">
 <div>
-<label for="name">Name:</label><input type="text" name="name" id="name" value="<?php htmlout($results['name']); ?>" required></div>
+<label for="name">Name</label><input type="text" name="name" id="name" value="<?php htmlout($results['name']); ?>" required></div>
 <div>
-<label for="email">Email:</label><input type="email" name="email"
+<label for="email">Email</label><input type="email" name="email"
 id="email" value="<?php htmlout($results['email']); ?>" required></div>
 <div>
-<label for="password">Set password:</label><input type="password" name="password" id="password" <?php echo $results['required']; ?>></div>
+<label for="password">Set password</label><input type="password" name="password" id="password" <?php echo $results['required']; ?>></div>
       <fieldset>
-        <legend>Roles:</legend>
+        <legend>Roles</legend>
         <?php for ($i = 0; $i < count($roles); $i++): ?>
 <div>
-<label for="role<?php echo $i; ?>"><?php htmlout($roles[$i]['id']); ?></label><input type="checkbox" name="roles[]" id="role<?php echo $i; ?>" value="<?php htmlout($roles[$i]['id']); ?>"<?php if ($roles[$i]['selected']){
+<label for="role<?php echo $i; ?>"><?php htmlout($roles[$i]['description']); ?> </label><input type="checkbox" name="roles[]" id="role<?php echo $i; ?>" value="<?php htmlout($roles[$i]['id']); ?>"<?php if ($roles[$i]['selected']){
 echo ' checked';
 }
-?>><p>
-<?php htmlout($roles[$i]['description']); ?> </p></div>
+?>></div>
 <?php endfor; ?> </fieldset>
 
 <input type="hidden" name="id" value="<?php

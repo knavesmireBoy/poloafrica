@@ -19,10 +19,10 @@ session_start();
 
 <?php
 if (isset($results['errorMessage'])){ ?>
-<div class="errorMessage"><?php htmlout($results['errorMessage']); ?></div>
+<div class="msg errorMessage"><?php htmlout($results['errorMessage']); ?></div>
 <div><a href="../user">User</a></div>
 <?php } 
 if (isset($results['statusMessage'])){ ?>
-<div class="statusMessage"><?php htmlout($results['statusMessage']); ?></div>
+<div class="msg statusMessage"><?php htmlout($results['statusMessage']); ?></div>
 <?php }
 

@@ -1,10 +1,22 @@
 /*jslint nomen: true */
 /*global window: false */
+/*global poloAF: false */
 /*global document: false */
-var $ = function (str) {
-		return document.getElementById(str);
-	},
-	create = function (ancr, tag, txt) {
+/*global _: false */
+if (!window.poloAF) {
+	window.poloAF = {};
+}
+var utils = poloAF.Util,
+        $ = function (str) {
+			return document.getElementById(str);
+		},
+		ptL = _.partial,
+        anCr = utils.append(),
+        anCrIn = utils.insert(),
+        setAttrs = utils.setAttributes,
+        clicker = ptL(utils.addHandler, 'click'),
+    doThrice = utils.curryThrice(),
+    create = function (ancr, tag, txt) {
 		if (!ancr || !txt) {
 			return document.createElement('div');
 		}
@@ -20,6 +32,12 @@ var $ = function (str) {
 			return arg === char;
 		};
 	},
+    simpleInvoke = function (o, m, arg) {
+		return o[m](arg);
+	},
+    findBoundary  = doThrice(simpleInvoke)(/\b\.?\s[A-Z]+/)('match'),
+    findCap  = doThrice(simpleInvoke)(/[A-Z]+/)('match'),
+
 	Maker = function (tx, inp) {
 		var endlink = /\[(\d)+\]:.+/g,
 			i = 0,
@@ -143,13 +161,19 @@ var $ = function (str) {
                 //setTextArea(from, to, cur.slice(1, -4))
 				tx.value = tx.value.slice(0, end - n);
 			},
-			ulist: function () {
-                /*
-				var from = tx.selectionStart,
-					to = tx.selectionEnd,
-					cur = tx.value.slice(from, to);
-                    */
-                
+            
+            img: function(){
+                var o = fixSelection(isLine),
+                    from = o.from,
+                    to = o.to,
+                    cur = tx.value.slice(from, to),
+                    res = window.prompt('Enter path to image'),
+                    sep = /\//;
+                if(res){
+                    setTextArea(from, to, '!['+cur+']('+res+')');
+                }
+            },
+			list: function () {
                 var o = fixSelection(isLine, isLine),
                     from = o.from,
                     to = o.to;
@@ -180,9 +204,10 @@ var $ = function (str) {
 				} else { //normal
                     setTextArea(from, to, '**' + cur + '**');
 				}
+                tx.focus();
 			},
             
-            italics: function(){
+            ital: function(){
                 var o = fixSelection(isSpace, isSpace),
                     from = o.from,
                     to = o.to,
@@ -199,21 +224,39 @@ var $ = function (str) {
 				} else { //normal
                     setTextArea(from, to, '*' + cur + '*');
 				}
+                tx.focus();
             },
-			setCount: function (count) {
-				this.count = count;
-			},
+            quote: function(e){
+                return;
+                var o = fixSelection(isLine, findCap),
+                    from = o.from,
+                    to = o.to,
+                    cur = tx.value.slice(from, to);
+                tx.setSelectionRange(from, to);
+                
+                return;
+
+                var o = fixSelection(isSpace, isSpace),
+                    from = o.from,
+                    to = o.to,
+                    cur = tx.value.slice(from, to);
+                setTextArea(from, to, cur.replace(emphasis, '“$1”'));
+            },
             para: function(){
-                var o = fixSelection(isSpace, isStop);
-                //advance cursor to keep period and space with
+               var o,
+                   res = window.confirm('Please check that the selected sentence ends with a FULL STOP. PERIOD...');
+                if(res){
+                o = fixSelection(isSpace, isStop);
+                //advance cursor to keep period and space with pre-selected text
                 setTextArea(o.from, o.to+2, tx.value.slice(o.from, o.to+2) + '\n\n');
+                }
             },
             line: function(){
                 var o = fixSelection(isSpace, isStop);
                 //console.log(tx.value.slice(o.from, o.to));
                 setTextArea(o.from, o.to+2, tx.value.slice(o.from, o.to+2) + '  \n');
             },
-            head: function(){
+            heading: function(){
                 var o = fixSelection(isLine);
                 header = charCount(tx.value.slice(o.from, o.to), '#');
                 header+=1;                
@@ -225,28 +268,36 @@ var $ = function (str) {
                 setTextArea(o.from, o.to, '#' + tx.value.slice(o.from, o.to));
                 }
                 tx.focus();
-            }
+            },
+            setCount: function (count) {
+				this.count = count;
+			},
 		}; //ret
 	},
 	linkeroo = function (maker) {
 		return function (e) {
-			var txt = e.target.innerHTML.toLowerCase(),
+            if(e.target.alt){
+			var txt = e.target.alt.toLowerCase(),
 				func = maker[txt];
 			if (func) {
 				func();
 			}
+            }
 		};
 	}
-window.addEventListener('load', function () {
-	var div = document.createElement('div'),
-		tags = ['HEAD', 'BOLD', 'ITALICS', 'PARA', 'LINE', 'LINK', 'UNLINK', 'ULIST'],
-		prep = function (cb, ancr, tag) {
-			return function (txt) {
-				cb(ancr, tag, txt);
-			};
-		};
-	tags.forEach(prep(create, div, 'a'));
-	div.setAttribute('className', 'editor-toolbar');
-	div.addEventListener('click', linkeroo(Maker($('content'), $('title'))));
-	$('content').parentNode.insertBefore(div, $('content'));
+window.addEventListener('load', function () {    
+        var controlsconf = {
+					id: 'controls'
+				},
+        tags = ['HEADING', 'BOLD', 'ITAL', 'PARA', 'LINE', 'LINK', 'UNLINK', 'LIST'/*, 'QUOTE', 'IMG'*/],
+        $el = utils.machElement(utils.addEvent(clicker, linkeroo(Maker($('content'), $('title')))), ptL(setAttrs, controlsconf), anCrIn($('content'), $('content').parentNode), utils.always('ul')),
+         func = function(str){
+        var mystr = str.toLowerCase(),
+            path = '../images/resource/edit_'+mystr+'.png',
+            conf = {src: path, alt: mystr},
+            makeLI = _.compose(anCr($('controls')), utils.always('li'));
+            _.compose(ptL(setAttrs, conf), anCr(makeLI), utils.always('img'))();
+    };
+    $el.render();
+    _.each(tags, func);
 });

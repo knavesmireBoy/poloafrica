@@ -1,6 +1,8 @@
 <?php class Admin
 {
 
+    public $id = null;
+    
     public function insert()
     {
         $conn = getConn();
@@ -42,10 +44,31 @@
     public function getById($id)
     {
         $conn = getConn();
+        if(isset($id)){
+            $this->id = $id;
         $st = $conn->prepare("SELECT * FROM user WHERE id=:id");
         $st->bindValue(":id", $id, PDO::PARAM_INT);
         $st->execute();
-        return $st->fetch(PDO::FETCH_ASSOC);
+        $res = $st->fetch(PDO::FETCH_ASSOC);
+        $conn = null;  
+        return $res;
+        }
+        else {
+        $max = $conn->query("SELECT MAX(id) FROM user")->fetch()[0];
+        $conn = null;
+            $this->id = $max;
+        return $max;
+        }
+    }
+    
+    public function getByEmail($email){
+        $conn = getConn();
+        $st = $conn->prepare("SELECT id, name FROM user WHERE email=:email");
+        $st->bindValue(":email", $email, PDO::PARAM_STR);
+        $st->execute();
+        $res = $st->fetch(PDO::FETCH_ASSOC);
+        $conn = null;  
+        return $res;
     }
 
     public function delete($id)

@@ -6,17 +6,27 @@
         <p>You are logged in with email: <b><?php htmlout( $_SESSION['email']) ?></b> <a href="?action=logout"?> <strong>Log out</strong></a></p></div>
 <h3>Manage Users</h3>
 
-<?php if ( isset( $results['errorMessage'] ) ) { ?>
-        <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
-<?php exit(); } ?>
-<?php if ( isset( $results['statusMessage'] ) ) { ?>
-        <div class="statusMessage"><?php echo $results['statusMessage'] ?></div>
-<?php }
+<?php if (isset($results['errorMessage'])) { ?>
+<h4 class="msg errorMessage"><?php echo $results['errorMessage'] ?></h4>
+<h4><a href="../admin">Article List</a></h4>
 
-if(!isset($_POST['action'])): ?>
+<?php exit(); } ?>
+<?php if (isset($results['statusMessage'])) { ?>
+        <h4 class="msg statusMessage"><?php echo $results['statusMessage'] ?></h4>
+<?php }
+//exit(var_dump($users));
+
+if(isset($prompt)){
+    include 'prompt.html.php';
+}
+
+if(isset($form)){
+   include 'form.html.php';
+}
+
+if(isset($users) && !isset($form)): ?>
 <form action="?" method="post" class="manage">
-    <p>All Users:</p>
-<label for="user"></label><select id="user" name="user"><option value="">Select one</option>
+<label for="user">Users</label><select id="user" name="user"><option value="">Select one</option>
 <?php  foreach ($users as $user): ?>
 <option value="<?php htmlout($user['id']); ?>"><?php htmlout($user['name']); ?>
 </option><?php endforeach; ?></select>
@@ -24,14 +34,11 @@ if(!isset($_POST['action'])): ?>
 <input type="submit" value="Edit"/>
 </form>
 
-<?php else : 
-
-//exit(var_dump($users));
-?>
+<?php elseif(isset($user)): ?>
 
 <form action="" method="post" class="manage">
-<label><?php htmlout($users['name']); ?></label>
-<input type="hidden" name="id" value="<?php echo $users['id']; ?>">
+<label><?php htmlout($user['name']); ?></label>
+<input type="hidden" name="id" value="<?php echo $user['id']; ?>">
 <input type="submit" name="action" value="Edit">
 <input type="submit" name="action" value="Delete" title="delete on confirm">
 </form>
@@ -41,4 +48,4 @@ endif;
 if(!isset($_GET['add'])){ ?>
 <a href="?add">Add a New User</a>
 <?php } ?>
-<div><a href="../admin">Admin</a></div>
+<div><a href="../admin">Article List</a></div>

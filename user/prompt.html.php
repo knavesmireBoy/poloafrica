@@ -1,5 +1,5 @@
 <form action="" method="post" class="manage prompt">
-    <fieldset><legend>Are you sure you want to remove 
+    <fieldset><legend>Remove 
     <?php
 echo $user['name']; ?> from the database?&nbsp;</legend>
 <input type="hidden" name="id" value="<?php
