@@ -59,8 +59,7 @@ include "admin.html.php"; ?>
             <label for="content">content</label><textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
           </li>
             <?php endif; ?>
-            <li>
-                <ul class="mock"><li class="mocklabel">attributes</li><li class="neue">
+            <li class="mock"><ul><li class="mocklabel">attributes</li><li class="neue">
               <label for="attr_id">id</label>
                 <input name="attr_id" id="attr_id" maxlength="15" value="<?php htmlout($results['article']->attrID); ?>">
                <label for="page">page</label>
@@ -81,8 +80,9 @@ include "admin.html.php"; ?>
             $i = isset($_REQUEST['s']) ? $_REQUEST['s'] :  0;
             $paginator->setStart($i);
             //use the minimum of total count dataset OR display limit
-            $end = min($i+$limit, count($attributes));
-            echo "<li class='asset {$results['article']->page}'>";
+            $end = min($i+$limit, count($attributes)); ?>
+            <li class="mock"><ul><li class="mocklabel">assets</li><li class="asset">
+                <?php
             for($i; $i < $end; $i++):
             $attribute = $attributes[$i];
             echo '<figure>';
@@ -91,19 +91,16 @@ include "admin.html.php"; ?>
             echo '</figure>';
             //endforeach;
             endfor;
-            echo '</li>';
+            echo '</li></ul></li>';
             $paginator->doNav();
             endif;//$attributes[0]
             endif;//$results['article']
             ?>
-            <fieldset class="neue"><legend id="upload"><img src="../images/resource/edit_img.png"></legend>
-          <li>
-            <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
-          </li>
+                <li class="mock"><ul><li class="mocklabel">uploads</li><li class="neue">
+                    <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
             <?php 
             include "../templates/attributes.php";
-                ?>
-            </fieldset>
+                ?></li></ul></li>
           </ul>
           <?php if(!isset($remove)) { ?>
                     <fieldset class="buttons">

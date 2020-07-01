@@ -93,6 +93,11 @@ form.manage {
     padding: 1em;
 }
 
+.neue {
+    border: solid 1px white;
+    padding: .5em;
+}
+
 .admin form.editor {
     padding: 1.75em;
     border: solid 1px white;
@@ -130,19 +135,48 @@ form.manage + form.manage{
     box-sizing: border-box;
 }
 
-.admin form li > * {
+.admin form ul > li > * {
     line-height: 1.5;
-    margin: 0 0 1% 1%;
     vertical-align: middle;
-    width: 81%;
     display: inline-block;
     box-sizing: border-box;
 }
 
-.admin form > ul li ul.mock li {
+.admin form ul > li > input, .admin form ul > li > textarea {
+    margin: 0 0 1% 1%;
+    width: 81%;
+}
+
+li.mock, li.mock ul {
+    width: 100%;
+    margin: 0;
+}
+li.mock ul li{
+    margin: 0;
+}
+
+
+.mock .mocklabel {
+    margin: 0 1% 0 0;
+    width: 16%;
+}
+.mock .neue, .mock .asset {
+    width: 83%;
+}
+
+.admin form li.mock ul li input{
+    width: auto;
+    margin: 0;
+}
+
+li.mock ul > * {
     vertical-align: top;
     display: inline-block;
+    box-sizing: border-box;
 }
+.admin form li.mock, .admin form li.mock ul {
+}
+
 
 ul.mock li:last-child {
     margin: 0 0 0 1%;
@@ -165,7 +199,7 @@ textarea {
     padding: 1%;
     font: 1.1em/1.2 'Courier New', Courier, monospace;
 }
-#controls, #content, .admin form > ul .asset, .buttons {
+#controls, #content, .buttons {
     margin: 0 0 2% 17%;
     width: 83%;
     box-sizing: border-box;
@@ -174,7 +208,6 @@ textarea {
 #controls {
     margin: 0 0 0% 17%; 
 }
-
 
 #controls li {
     display: inline-block;
@@ -215,21 +248,13 @@ textarea {
 
 .admin form > ul > li > label, .mocklabel {
     margin: 0;
-        width: 16%;
-
+    width: 16%;
     border: solid 1px white;
     border-radius: 8px;
     background-color: hsla(283, 80%, 25%, .2);
     padding: .3em .8em;
     box-shadow: 1px 1px 1px black;
     vertical-align: top;
-}
-.admin form .mock > *{
-    display: inline-block;
-    vertical-align: top;
-}
-.admin form > ul > li > label:hover {
-    
 }
 
 .manage div input {
@@ -240,15 +265,10 @@ textarea {
 }
 
 .admin form > ul input#alt {
-    width: 60%;
+    width: 75%;
 }
 .admin form > ul input#dom_id {
     width: 10%;
-}
-
-.admin label[for="dom_id"] {
-    width: 6%;
-    margin: 0 0 0 1%;
 }
 
 .admin label[for="alt"] {
@@ -342,6 +362,10 @@ textarea {
     margin: 0 0 1% .5%;
 }
 
+.admin .asset figure {
+   margin: 0 0 0% .5%; 
+}
+
 figcaption.del label{
     color: red;
 }
@@ -409,10 +433,6 @@ input#attr_id, input#dom_id{
 .admin form > ul #pp > *{
    border: solid 1px white;
 }
-
-
-    
-
 #pp a:hover {
     color: black;
 }
@@ -457,10 +477,11 @@ form#page_select{
     width: 100%;
 }
 
-#asset {
+input#asset {
     text-align: center;
-    margin: auto;
+    margin: 1% 0 1% 2%;
     line-height: 1;
+    width: 98%;
 }
 
 #loginform label{
