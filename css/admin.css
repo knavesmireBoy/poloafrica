@@ -50,7 +50,7 @@ table a {
     font-size: 3em;
 }
 
-.admin form label, .admin fieldset {
+.admin form label, .admin ul li ul li:last-child, .mocklabel {
     font: 1em 'Arial Black', Arial, sans-serif;
     color: #333;
     color: hsl(283, 25%, 24%);
@@ -60,6 +60,20 @@ table a {
 .admin form input {
     font: .8rem/1.5 Optima Arial, sans-serif;
     color: #444;
+}
+
+.admin input[type="submit"]{
+    border-radius: 5px;
+    padding: .1em .9em;
+    border: solid 1px white;
+    background-image: linear-gradient(135deg, silver, ghostwhite, silver);
+    color: black;
+    text-shadow: 1px 1px 1px white;
+    box-shadow: 1px 1px 1px #444;
+    font: bold 1em Arial;
+}
+.admin input[type="submit"]:hover {
+    color: hsl(283, 50%, 30%);
 }
 
 .admin h3 {
@@ -86,11 +100,11 @@ form.manage {
     margin: 1em 0;
 }
 
-.admin form.editor fieldset {
+.admin form.editor ul li ul li:last-child {
     margin: .75em 0;
 }
 
-.admin form.editor fieldset legend {
+.admin form.editor ul li ul li:last-child legend {
     background-color: hsl(54, 50%, 75%);
     background-color: hsl(283, 25%, 74%);
     padding: .5em;
@@ -103,7 +117,7 @@ form.manage + form.manage{
     padding: 1em;
 }
 
-#editList li {
+.admin form > ul li {
     margin: 1em 0;
 }
 
@@ -118,11 +132,24 @@ form.manage + form.manage{
 
 .admin form li > * {
     line-height: 1.5;
-    margin: 0 0 0 2%;
+    margin: 0 0 1% 1%;
     vertical-align: middle;
     width: 81%;
     display: inline-block;
     box-sizing: border-box;
+}
+
+.admin form > ul li ul.mock li {
+    vertical-align: top;
+    display: inline-block;
+}
+
+ul.mock li:last-child {
+    margin: 0 0 0 1%;
+}
+
+.admin form li.asset > * {
+    vertical-align: middle;
 }
 
 .admin form .neue li input {
@@ -138,7 +165,7 @@ textarea {
     padding: 1%;
     font: 1.1em/1.2 'Courier New', Courier, monospace;
 }
-#controls, #content, #editList .asset, #editList fieldset, .buttons {
+#controls, #content, .admin form > ul .asset, .buttons {
     margin: 0 0 2% 17%;
     width: 83%;
     box-sizing: border-box;
@@ -148,9 +175,6 @@ textarea {
     margin: 0 0 0% 17%; 
 }
 
-#editList fieldset li {
-    margin: 0;
-}
 
 #controls li {
     display: inline-block;
@@ -174,26 +198,38 @@ textarea {
     display: block;
     width: 100%;
 }
-#editList {
+.admin form > ul {
     width: 100%;
 }
 
-#editList input, #editList textarea {
+.admin form > ul input, .admin form > ul textarea {
     box-sizing: border-box;
     border: 0;
 }
 
-.admin form label {
-    width: 16%;
+.admin form label, .admin form .mocklabel {
     text-align: right;
     word-spacing: normal;
     letter-spacing: normal;
 }
 
-#editList > li > label {
+.admin form > ul > li > label, .mocklabel {
     margin: 0;
-    border: solid 0px white;
-    border-width: 0 0 4px;
+        width: 16%;
+
+    border: solid 1px white;
+    border-radius: 8px;
+    background-color: hsla(283, 80%, 25%, .2);
+    padding: .3em .8em;
+    box-shadow: 1px 1px 1px black;
+    vertical-align: top;
+}
+.admin form .mock > *{
+    display: inline-block;
+    vertical-align: top;
+}
+.admin form > ul > li > label:hover {
+    
 }
 
 .manage div input {
@@ -203,10 +239,10 @@ textarea {
     width: auto;
 }
 
-#editList input#alt {
+.admin form > ul input#alt {
     width: 60%;
 }
-#editList input#dom_id {
+.admin form > ul input#dom_id {
     width: 10%;
 }
 
@@ -219,11 +255,10 @@ textarea {
     text-align: right;
 }
 
-.admin fieldset {
+.admin ul.mock li:last-child {
     padding: 0.5em;
     border: solid 1px white;
 }
-
 
 .photos img {
     width: 100%;
@@ -233,8 +268,8 @@ textarea {
     border: solid 1px white;
 }
 
-.admin form li.asset > * {
-    vertical-align: middle;
+.admin form li.asset figure {
+    vertical-align: top;
 }
 
 .asset figcaption {
@@ -303,7 +338,8 @@ textarea {
 }
 
 .admin .asset figure.edit {
-    width: 18em;
+    width: 15em;
+    margin: 0 0 1% .5%;
 }
 
 figcaption.del label{
@@ -315,7 +351,7 @@ figcaption.del label{
     border-width: 0;
 }
 
-#editList .neue li label, #editList .neue li input{
+.admin form > ul .neue li label, .admin form > ul .neue li input{
     width: auto;
 }
 
@@ -350,7 +386,7 @@ input#attr_id, input#dom_id{
     background-color: hsl(54, 50%, 66%);
     background-color: #444;
     background-color: rgba(77,55,77,.35);
-    border: solid 1px white;
+    background-image: linear-gradient(135deg, rgba(77,55,77, .5), rgba(77,55,77, .2), rgba(77,55,77, .5));
     border-radius: 5px;
     color: white;
 }
@@ -366,9 +402,17 @@ input#attr_id, input#dom_id{
     font: 1em Arial, sans-serif;
 }
 
-#editList #pp {
+.admin form > ul #pp {
     margin: 1em 0 1em 17%;
 }
+
+.admin form > ul #pp > *{
+   border: solid 1px white;
+}
+
+
+    
+
 #pp a:hover {
     color: black;
 }
@@ -444,6 +488,7 @@ form#page_select{
     color: red;
     color: hsl(283, 77%, 50%);
 }
+
 .admin .buttons label {
     border: 1px solid silver;
     font: .8em Arial;
@@ -452,12 +497,12 @@ form#page_select{
 }
 
 @media screen and (max-width: 768px) {
-    #editList li > * {
+    .admin form > ul li > * {
         display: block;
         text-align: left;
     }
     
-    .admin #editList > * {
+    .admin .admin form > ul > * {
          margin: 0 0 2% 0;
         width: 100%;
     }
@@ -466,30 +511,30 @@ form#page_select{
          margin: 1% 0 0% 0;
         width: 100%;
     }
-    #editList li label {
+    .admin form > ul li label {
         border: solid 0px white;
         width: 100%;
     }
-    #editList li input, #editList li textarea, #editList li > div, .admin .asset, #editList #asset {
+    .admin form > ul li input, .admin form > ul li textarea, .admin form > ul li > div, .admin .asset, .admin form > ul #asset {
         margin: 0;
         width: 100%;
     }    
     
-    #editList li textarea {
+    .admin form > ul li textarea {
         width: 100%;
         font-size: 1.25em;
     }
    
-     #editList .asset input, #editList .asset label{
+     .admin form > ul .asset input, .admin form > ul .asset label{
         width: auto;
     }
     
-    #editList .neue li label {
+    .admin form > ul .neue li label {
         display: inline-block;
          width: auto;
     }
     
-    #editList .neue input {
+    .admin form > ul .neue input {
         display: inline-block;
         width: 22%;
     } 
@@ -503,7 +548,7 @@ form#page_select{
 }
 
 @media only screen and (max-width: 667px) {
-    .admin #editList label {
+    .admin .admin form > ul label {
         width: auto;
         text-align: left;
         background: none;
@@ -514,10 +559,10 @@ form#page_select{
         margin: 0;
     }
     
-    .admin .content #editList input{
+    .admin .content .admin form > ul input{
         width: 100%;
     }
-     .admin #editList input[type=checkbox]{
+     .admin .admin form > ul input[type=checkbox]{
         width: auto;
     }
     
@@ -553,16 +598,16 @@ form#page_select{
 }
 /*
 
-    #editList .neue li, .buttons {
+    .admin form > ul .neue li, .buttons {
         display: flex;
         flex-wrap: wrap;
     }
     
-    #editList .neue li label, #editList .neue li input:first-of-type {
+    .admin form > ul .neue li label, .admin form > ul .neue li input:first-of-type {
         flex: 1 1 auto;
         margin: 1%;
     }
-    #editList .neue li input {
+    .admin form > ul .neue li input {
         flex: 4 1 auto;
         margin: 1% 0;
     }

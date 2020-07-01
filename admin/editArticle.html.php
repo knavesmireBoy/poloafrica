@@ -52,10 +52,15 @@ include "admin.html.php"; ?>
           <li>
             <label for="summary">summary</label><textarea name="summary" id="summary" placeholder="Brief description of the article" maxlength="1000" style="height: 5em;"><?php htmlout($results['article']->summary);?></textarea>
           </li>
+            <?php
+            
+            if($results['article']->page !== 'photos'): ?>
           <li>
             <label for="content">content</label><textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
           </li>
-            <fieldset class="neue">
+            <?php endif; ?>
+            <li>
+                <ul class="mock"><li class="mocklabel">attributes</li><li class="neue">
               <label for="attr_id">id</label>
                 <input name="attr_id" id="attr_id" maxlength="15" value="<?php htmlout($results['article']->attrID); ?>">
                <label for="page">page</label>
@@ -65,7 +70,7 @@ include "admin.html.php"; ?>
                 <input name="page" id="page" placeholder="archive"  required maxlength="15" value="<?php echo $mypage; ?>">
             <label for="pubDate">published</label><?php $now = new DateTime();?>
                 <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
-            </fieldset>            
+            </li></ul></li>            
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
             //exit(var_dump($attributes));
@@ -91,7 +96,6 @@ include "admin.html.php"; ?>
             endif;//$attributes[0]
             endif;//$results['article']
             ?>
-            
             <fieldset class="neue"><legend id="upload"><img src="../images/resource/edit_img.png"></legend>
           <li>
             <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
