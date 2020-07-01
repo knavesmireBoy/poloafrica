@@ -495,7 +495,7 @@ input#asset {
         margin: 1em 0 .5em;
     }
         
-    label {
+    .admin label {
         background-color: transparent;
         width: auto;
         text-align: left !important;
