@@ -31,7 +31,6 @@ $mypage = '';
 include "admin.html.php"; ?>
 
       <form action="?action=<?php echo $results['formAction']?>" method="post" enctype="multipart/form-data" class="content">
-        <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>"/>
           <?php if ( isset( $results['errorMessage'] ) ) { ?>
           <div class="errorMessage"><?php echo $results['errorMessage']; ?></div>
           <?php } 
@@ -123,10 +122,10 @@ include "admin.html.php"; ?>
             <input type="submit" name="action" value="Delete Article">
             <?php } ?>
             <input type="submit" name="cancel" formnovalidate value="Cancel">
-           
-                 <?php  }//if $remove ?>
+                        <?php  }//if $remove ?>
         </fieldset>
-      </form>
+            <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>">
+            </form>
 <script>
     var asset = document.querySelector('.asset');
     if(asset){

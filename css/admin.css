@@ -1,3 +1,7 @@
+.admin main {
+    padding: 1em;
+}
+
 .admin p {
     text-align: left;
 }
@@ -7,7 +11,7 @@
 }
 
 .admin a:link, .admin a:active, .admin a:visited {
-color: hsl(283, 100%, 25%);
+    color: hsl(283, 100%, 25%);
 }
 
 .admin a:hover  {
@@ -37,6 +41,10 @@ table a {
     color: hsl(283, 15%, 85%);
 }
 
+.admin h3 {
+    color: black;
+}
+
 #adminHeader h2 {
     background: none;
     text-shadow: none;
@@ -44,7 +52,7 @@ table a {
     padding: 0;
     margin: 0 0 .5em;
     line-height: 1;
-    border: solid 0px hsl(283, 45%, 44%);
+    border: solid 0px hsl(283, 44%, 44%);
     border-width: 0 0 6px;
     display: inline-block;
     font-size: 3em;
@@ -59,11 +67,13 @@ table a {
 
 .admin form input {
     font: .8rem/1.5 Optima Arial, sans-serif;
-    color: #444;
+    color: #333;
+    border-radius: 5px;
 }
 
+
+
 .admin input[type="submit"]{
-    border-radius: 5px;
     padding: .1em .9em;
     border: solid 1px white;
     background-image: linear-gradient(135deg, silver, ghostwhite, silver);
@@ -74,10 +84,6 @@ table a {
 }
 .admin input[type="submit"]:hover {
     color: hsl(283, 50%, 30%);
-}
-
-.admin h3 {
-    color: black;
 }
 
 .admin table, #loginform, .manage {
@@ -93,9 +99,10 @@ form.manage {
     padding: 1em;
 }
 
-.neue {
+.neue, .asset, .asset figure, .admin form textarea {
     border: solid 1px white;
-    padding: .5em;
+    padding: .75em;
+    border-radius: 5px;
 }
 
 .admin form.editor {
@@ -117,9 +124,6 @@ form.manage {
 
 form.manage + form.manage{
     border-radius: 0;
-}
-.admin main {
-    padding: 1em;
 }
 
 .admin form > ul li {
@@ -144,7 +148,7 @@ form.manage + form.manage{
 
 .admin form ul > li > input, .admin form ul > li > textarea {
     margin: 0 0 1% 1%;
-    width: 81%;
+    width: 83%;
 }
 
 li.mock, li.mock ul {
