@@ -464,57 +464,7 @@ input#asset {
     text-shadow: 1px 1px 1px black;
     
 }
-/*
-@media screen and (max-width: 768px) {
-    .admin form > ul li > * {
-        display: block;
-        text-align: left;
-    }
-    
-    .admin .admin form > ul > * {
-         margin: 0 0 2% 0;
-        width: 100%;
-    }
-    
-    #controls {
-         margin: 1% 0 0% 0;
-        width: 100%;
-    }
-    .admin form > ul li label {
-        border: solid 0px white;
-        width: 100%;
-    }
-    .admin form > ul li input, .admin form > ul li textarea, .admin form > ul li > div, .admin .asset, .admin form > ul #asset {
-        margin: 0;
-        width: 100%;
-    }    
-    
-    .admin form > ul li textarea {
-        width: 100%;
-        font-size: 1.25em;
-    }
-   
-     .admin form > ul .asset input, .admin form > ul .asset label{
-        width: auto;
-    }
-    
-    .admin form > ul .neue li label {
-        display: inline-block;
-         width: auto;
-    }
-    
-    .admin form > ul .neue input {
-        display: inline-block;
-        width: 22%;
-    } 
-    
-    .buttons {
-        width: auto;
-        margin: 0;
-        border: 0;
-    }
-}
-*/
+
 @media only screen and (max-width: 1160px) {
  input#dom_id, #insert {
         margin: 0 90% 0 0;
@@ -609,42 +559,3 @@ input#asset {
     }
  
 }
-/*
-
-    .admin form > ul .neue li, .buttons {
-        display: flex;
-        flex-wrap: wrap;
-    }
-    
-    .admin form > ul .neue li label, .admin form > ul .neue li input:first-of-type {
-        flex: 1 1 auto;
-        margin: 1%;
-    }
-    .admin form > ul .neue li input {
-        flex: 4 1 auto;
-        margin: 1% 0;
-    }
-    
-   .buttons > * {
-        flex: 1 1 1em;
-        margin: .5em;
-    }
-
-.admin .asset {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-}
-.admin .asset figure  {
-    flex: 0 1 6em;
-    width: 1%;
-    border: solid 1px;
-    margin: .5em;
-    padding: .5em;
-    background-color: rgba(255,255,255, 0.5);
-}
-
-.admin .photos figure {
-    flex: 0 1 6em;
-}
-*/
