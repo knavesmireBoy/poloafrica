@@ -100,14 +100,15 @@ include "admin.html.php"; ?>
             <?php 
             include "../templates/attributes.php";
                 ?></li></ul></li>
-          </ul>
-          <?php if(!isset($remove)) { ?>
-                    <fieldset class="buttons">
-                        <?php
-                    if(isset($mypage)){
-                        //echo '<label for="insert">INSERT BEFORE:</label>';
-                    $rows = ArticleFactory::getTitles($mypage, true);
-                    echo "<select name='insert' id='insert'><option value=''>INSERT BEFORE:</option>";
+                
+                
+                   <?php
+                    if(isset($mypage)){ ?>
+                <li class="mock"><ul><li class="mocklabel">placement</li><li class="neue">
+                    
+                  <?php 
+                                       $rows = ArticleFactory::getTitles($mypage, true);
+                    echo "<select name='insert' id='insert'><option value=''>insert before</option>";
                     foreach($rows as $k => $v){
                         //exclude present title from dropdown list, nice
                        if($v != strtolower($results['article']->title)) {
@@ -116,6 +117,10 @@ include "admin.html.php"; ?>
                     }
                     echo '<option value="*">insert at end</option></select>';
                     } ?>
+                    </li></ul></li></ul>
+          <?php if(!isset($remove)) { ?>
+                    <fieldset class="buttons">
+                     
                         <input type="submit" name="saveChanges" value="Save Changes">
             <?php if ($results['article']->id) { ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
