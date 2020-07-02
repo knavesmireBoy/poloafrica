@@ -58,7 +58,7 @@ include "admin.html.php"; ?>
             <label for="content">content</label><textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
           </li>
             <?php endif; ?>
-            <li class="mock"><ul><li class="mocklabel">details</li><li class="neue">
+            <li id="details" class="mock"><ul><li class="mocklabel">details</li><li class="neue">
               <label for="attr_id">id</label>
                 <input name="attr_id" id="attr_id" maxlength="15" value="<?php htmlout($results['article']->attrID); ?>">
                <label for="page">page</label>
@@ -66,6 +66,8 @@ include "admin.html.php"; ?>
               else if(!empty($results['article']->page)) {  $mypage = strtolower($results['article']->page); }
               /*strtolower(htmlout($results['article']->page));*/?>
                 <input name="page" id="page" placeholder="archive"  required maxlength="15" value="<?php echo $mypage; ?>">
+            <label for="pubDate">published</label><?php $now = new DateTime();?>
+                <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
                 <?php
                     if(isset($mypage)){ ?>
                 <label for="insert">placement</label>
@@ -81,8 +83,6 @@ include "admin.html.php"; ?>
                     echo '<option value="*">insert at end</option></select>';
                     } ?>
                 
-                <label for="pubDate">published</label><?php $now = new DateTime();?>
-                <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
                 
             </li></ul></li>            
             <?php if ($results['article']):
