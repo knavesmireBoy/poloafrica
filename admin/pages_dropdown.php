@@ -1,3 +1,4 @@
+
 <form action="?" method="get" id="page_select">
 <select id="page" name="page">
 <option value="">Select Page</option>
@@ -9,5 +10,5 @@ if($page && $page == $p){ echo ' selected'; }
 ><?php htmlout($p); ?></option>
     <?php endforeach; ?>
 </select>
-    <input type="submit" name="action" value="choose">
-    </form>
+<input type="submit" name="action" value="choose">
+</form>
