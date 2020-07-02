@@ -77,7 +77,6 @@ if (!window.poloAF) {
         h2 = poloAF.Util.getByTag('h2', document)[0],
         doAlt = poloAF.Util.doAlternate(),
 		fader = (function () {
-            
               function exit(){
                 window.clearTimeout(timer);
                 exit.opacity = fade_el.style.opacity;

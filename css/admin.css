@@ -16,6 +16,7 @@
 
 .admin a:link, .admin a:active, .admin a:visited {
     color: hsl(283, 100%, 25%);
+    color: hsl(255, 53%, 53%);
 }
 
 .admin a:hover  {

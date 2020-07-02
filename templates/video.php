@@ -6,7 +6,7 @@ if($count == 7){ ?>
 <input class="read-more-state" id="<?php echo $cur?>" type="checkbox">
 <label class="read-more-trigger" for="<?php echo $cur?>"></label>
     <?php 
-    $head = '<a href="#" id="TV"><h3>TV and video coverage</h3></a>';      
+    $head = '<h3><a href="#" id="TV">TV and video coverage</a></h3>';      
                }
 $video = $article->getFilePath()[0];
     if($video) { ?>

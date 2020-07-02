@@ -273,7 +273,12 @@ h2 span {
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);
 	}
-	#contactarea #dogs {
+     #enquiries article.show h3  a {
+        color: white;
+        background-color: transparent;
+    }
+
+    #contactarea #dogs {
 		position: absolute;
 		left: -999em;
 	}
@@ -373,3 +378,4 @@ h2 span {
         	 */
 		}
 	}
+    

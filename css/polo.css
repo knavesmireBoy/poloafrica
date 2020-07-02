@@ -8,8 +8,9 @@ h2 span {
         }
  
 #facilities img {
-	clear: both;
+    clear: both;
     width: 30%;
+    float: right;
 	margin: 1em 0 1em 1em;
 }
 

@@ -29,22 +29,23 @@
             -webkit-align-items: flex-start;
             align-items: flex-start;
 		}
-		#facilities, section:first-child p {
+		section#facilities h3 {
 			-webkit-box-flex: 1;
 			-ms-flex: 1 0 100%;
 			-webkit-flex: 1 0 100%;
 			flex: 1 0 100%;
 		}
-		#wrap section:first-child img {
+		#wrap #facilities img {
 			-webkit-box-flex: 1;
 			-ms-flex: 1 1 15em;
 			-webkit-flex: 1 1 15em;
 			flex: 1 1 15em;
+            
 		}
-		section:first-child img:first-of-type {
+		#facilities img:first-of-type {
 			margin: 1em .5em 0em 0;
 		}
-		.override section:first-child img:last-of-type {
+		#facilities img:last-of-type {
 			margin: 1em 0 0 .5em;
 		}
 		section:first-child p {
@@ -88,6 +89,9 @@
 	.no-flexwrap #polo .field:last-of-type {
 		margin: 1em 1em 0;
 	}
+    .override #facilities img{
+			margin: 1em 1em 0;
+		}
 }
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 

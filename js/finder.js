@@ -22,6 +22,7 @@
 		ptL = _.partial,
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
+        setAttrs = utils.setAttributes,
 		//con = window.console.log.bind(window),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
@@ -38,7 +39,7 @@
 		polo = utils.$("polo") && !Modernizr.cssgrid,
 		doAlt = utils.doAlternate(),
 		doWrap = utils.always(true),
-        //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
+       //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
@@ -46,10 +47,10 @@
 				return _.partial(utils.isDesktop, threshold);
 			}
 		}()),
-        //getEnvironment = _.partial(utils.isDesktop, threshold),
+       //getEnvironment = _.partial(utils.isDesktop, threshold),
 		negater = function (alternators, func) {
-            //report();
-            /*NOTE netrenderer reports window.width AS ZERO*/
+           //report();
+           /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
 				_.each(alternators, function (f) {
 					f();
@@ -60,13 +61,13 @@
 		},
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
-        getTarget = utils.drillDown([mytarget]),
-        dummy = {},
+       getTarget = utils.drillDown([mytarget]),
+       dummy = {},
 		bridge = function (e) {
-            var tgt = getTarget(e),
+           var tgt = getTarget(e),
 				el = tgt && utils.getDomParent(utils.getNodeByTag('section'))(tgt),
 				hit = el && utils.getClassList(el).contains('show');
-			if (!el || !isHeading(tgt)) {
+			if (!el || !isHeading(tgt.parentNode)) {
 				return;
 			}
 			
@@ -81,7 +82,7 @@
 			if (animation) {
 				return utils.getNext(el);
 			}
-         
+
 			return utils.getSibling(utils.getNodeByTag('article'))(el);
 		},
 		floaters = function (els) {
@@ -93,7 +94,7 @@
 				var article = getSib(el),
 					outbound = function () {
 						//console.log(el, utils.getNextElement(article.firstChild))
-                        var tgt = polo ? article.lastChild : article.firstChild;
+                       var tgt = polo ? article.lastChild : article.firstChild;
 						utils.insertAfter(el, utils.getNextElement(tgt));
 					},
 					inbound = function () {
@@ -101,12 +102,12 @@
 					},
 					move = function () {
 						var p = utils.getSibling(utils.getNodeByTag('p'))(article.firstChild);
-                        if(polo && utils.getClassList(el).contains('field')){
-                            utils.insertAfter(el, utils.getNextElement(p))
-                        }
-                        else {
-                            article.insertBefore(el, p);
-                        }
+                       if(polo && utils.getClassList(el).contains('field')){
+                           utils.insertAfter(el, utils.getNextElement(p))
+                       }
+                       else {
+                           article.insertBefore(el, p);
+                       }
 					},
 					unmove = function () {
 						article.parentNode.insertBefore(el, article);
@@ -164,7 +165,7 @@
 	*/
 	//main.addEventListener('click', bridge);
 	utils.addHandler('click', main, bridge);
-    dummy[mytarget] = sections[0].getElementsByTagName('h3')[0];
+   dummy[mytarget] = sections[0].getElementsByTagName('a')[0];
 	bridge(dummy);
 	if (utils.$('enquiries')) {
 		return;
@@ -182,7 +183,7 @@
 	if (Modernizr.touchevents) {
 		utils.setScrollHandlers(sections, doTwice(utils.getScrollThreshold)(0.1));
 	}
-    */
+   */
 	//console.log(utils.getByTag('header', document)[0])
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
 	//report();

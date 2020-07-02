@@ -287,6 +287,7 @@ h2 span {
 	section.show h3, .read-more-state:checked~.read-more-trigger:before, .no-js section:first-of-type .read-more-state~.read-more-trigger:before {
 		color: white;
 		text-shadow: 1px 1px 1px black;
+		background-color: #c8c87e;
 		background-color: hsl(60, 40%, 64%);
 	}
     section.show h3 a {

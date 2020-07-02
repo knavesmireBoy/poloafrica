@@ -38,7 +38,7 @@ include "../templates/nav.php"
         <label class="read-more-trigger" for="post4"></label>
        <article id="contactarea" class="alt">
            <?php if(!isset($_POST['email'])) { ?>
-           <a href="#" id="contact_form"><h3>Poloafrica contact form</h3></a>
+           <h3><a href="#" id="contact_form">Poloafrica contact form</a></h3>
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
            <!-- The form is the ONLY 'article' that remains HARDCODED-->
            <form action="?" method="post" id="poloafricacontactform"  name="poloafricacontactform" >
@@ -64,8 +64,42 @@ include "../templates/nav.php"
          ?>
         </main>
 <?php echo '</div>'; include "../templates/footer.php" ?>
-    <script src="../js/finder.js"></script>
-        <script>        
+          <script>
+       var dum = {},
+           utils = poloAF.Util,
+           invokemethod = function (o, arg, m) {
+               return o[m](arg);
+           },
+           doThrice = utils.curryThrice(),
+           headingmatch = doThrice(invokemethod)('match')(/h3/i),
+           tgt = !window.addEventListener ? 'srcElement' : 'target',
+
+           getTarget = utils.drillDown([tgt, 'parentNode']),
+           isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
+           main = document.getElementsByTagName('main')[0],
+           articles = document.getElementsByTagName('article'),
+           bridge = function(e) {
+			var el = getTarget(e),
+               myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
+				hit = myarticles && utils.getClassList(myarticles).contains('show');
+               console.log(isHeading(el), el)
+               if(!isHeading(el)){
+                   return;
+               }
+			_.each(articles, function(article) {
+				utils.hide(article);
+			});
+			if (!hit) {
+				utils.show(myarticles);
+			}
+		};
+       utils.addHandler('click', bridge, main);
+              //trigger...
+       dum[tgt] = articles[0].getElementsByTagName('a')[0];
+              dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
+	bridge(dum);
+   </script>
+        <script>       
         var utils = poloAF.Util,
     	ptL = _.partial,
             clicker = ptL(utils.addHandler, 'click'),
@@ -102,5 +136,6 @@ include "../templates/nav.php"
             };
             window.onload = prepareAjax;            
             utils.addEvent(clicker, relocate)(myform);
+            
     </script>
 <?php echo '</body></html>';
