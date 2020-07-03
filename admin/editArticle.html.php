@@ -36,7 +36,7 @@ include "admin.html.php"; ?>
           <?php } 
 
              if (isset($remove)) { ?>
-            <div class='buttons'> <?php echo $remove . "<strong>{$results['article']->title}</strong>?";?>
+            <div class='buttons'> <?php echo '<p>' .$remove . "<strong>{$results['article']->title}</strong>" . '?</p>';?>
                 <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">
                 <input type="hidden" name="page" value="<?php htmlout($results['article']->page); ?>">
                 <input type="submit" name="action" value="Confirm">
@@ -118,7 +118,6 @@ include "admin.html.php"; ?>
                 ?></li></ul></li></ul>
           <?php if(!isset($remove)) { ?>
                     <fieldset class="buttons">
-                     
                         <input type="submit" name="saveChanges" value="Save Changes">
             <?php if ($results['article']->id) { ?>
             <input type="hidden" name="articleId" value="<?php htmlout($results['article']->id); ?>">

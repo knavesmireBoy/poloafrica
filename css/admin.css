@@ -111,6 +111,10 @@ form.content input, select {
 	color: white;
 	background-color: rgba(0, 0, 0, .66);
 }
+.buttons p {
+    text-align: center;
+    color: yellow;
+}
 #loginform .buttons {
 	background-color: transparent;
 }
