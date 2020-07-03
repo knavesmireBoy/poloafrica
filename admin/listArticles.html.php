@@ -1,16 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Article.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PagePaginator.php';
-require_once '../../../innocent/poloafricaDB.txt';
-require_once '../includes/db.inc.php';
-
-
-if(!isset($_SESSION['email'])){
-session_start();
-}
-
 $pp = ArticleFactory::getPages();
 include 'pages_dropdown.php'; 
 ?>
@@ -29,7 +17,6 @@ include 'pages_dropdown.php';
         </tr>
 <?php } ?>
 </table>
-
 <?php 
 $paginator->doNav(); ?>
 <p>Total Article<?php htmlout(doPlural($paginator->getRecords())); ?>: <strong><?php htmlout($paginator->getRecords()); ?></strong></p>

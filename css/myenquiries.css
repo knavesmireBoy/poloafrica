@@ -114,7 +114,7 @@
 		#enquiries section:nth-child(2) article>* {
 			width: 100%;
 		}
-		#contactarea>a {
+		#contactarea>h3 {
 			grid-column: 1/10;
 		}
 		#contactarea form {

@@ -8,8 +8,9 @@
 
 <?php if (isset($results['errorMessage'])) { ?>
 <h4 class="msg errorMessage"><?php echo $results['errorMessage'] ?></h4>
-<h4><a href="../admin">Article List</a></h4>
-
+<nav><a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>
+<a href="../home/" title="live website" class="icon"><img src="../images/resource/home.png"></a>
+</nav>
 <?php exit(); } ?>
 <?php if (isset($results['statusMessage'])) { ?>
         <h4 class="msg statusMessage"><?php echo $results['statusMessage'] ?></h4>
