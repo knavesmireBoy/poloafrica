@@ -388,9 +388,10 @@ input#attr_id, input#dom_id {
     overflow: hidden;
     width: 83%;
     box-sizing: border-box;
+    border: solid 1px white;
 }
 .content>ul #pp>* {
-    padding: .33em .7em .44em .7em;
+    padding: .33em .66em .44em .66em;
     margin: 0 .25em;
 	border: solid 1px white;
 }
@@ -516,7 +517,7 @@ nav .icon {
 		display: inline-block;
 	}
 .content > ul #pp {
-	margin: .25em 0 1em 0%;
+	margin: .25em 0 0;
     width: 100%;
 }
 }
@@ -550,9 +551,16 @@ nav .icon {
 	#loginform .buttons input {
 		width: auto;
 	}
-	#pp>* {
-		padding: .33em .66em;
-	}
+
+    .content>ul #pp {
+        padding: 2%;
+    }
+    .content>ul #pp>* {
+        padding: .33em;
+        width: 1em;
+        height: 1em;
+        margin: 0 .5%;
+    }
 }
 @media only screen and (max-width: 580px) {
 	.content #page {
@@ -561,4 +569,30 @@ nav .icon {
 	#pubDate {
 		margin-right: 50%;
 	}
+}
+@media only screen and (max-width: 479px) {
+	.content #page {
+		margin-right: 40%;
+	}
+	#pubDate {
+		margin-right: 50%;
+	}
+    
+     .content>ul #pp {
+        border-width: 0;
+         
+    }
+    .content>ul #pp > * {
+        border-radius: 0px;
+        margin: 0;
+        border-width: 0;
+        background-color: transparent;
+        background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
+    }
+    .content>ul #pp span {
+        border-width: 1px;
+    }
+    #details+li {
+        margin: 1em 0 0;
+    }
 }

@@ -48,6 +48,7 @@ endif;
 if(!isset($_GET['add'])){ ?>
 <nav>
 <a href="?add" title="Add a New User" class="icon"><img src="../images/resource/icon_user_add.png"></a>
-<?php } ?>
-<a href="../admin" title="Back to Article List" class="icon"><img src="../images/resource/icon_list.png"></a>
+<?php } 
+if(isset($_GET['add']) && !isset($user)){ echo '<nav>'; }?>
+<a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>
 </nav>
