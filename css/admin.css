@@ -24,7 +24,7 @@
 }
 .admin table {
 	border: solid 1px black;
-	table-layout: fixed;
+    table-layout: fixed;
 }
 #adminHeader h2 {
 	background: none;
@@ -120,6 +120,10 @@ form.content input, select {
 }
 .admin form {
 	text-align: center;
+}
+
+.admin form.content {
+	text-align: left;
 }
 form.manage {
 	border-radius: 8px 8px 0px 0px;
@@ -380,9 +384,18 @@ input#attr_id, input#dom_id {
 }
 .content>ul #pp {
 	margin: .25em 0 1em 17%;
+    position: relative;
+    overflow: hidden;
+    width: 83%;
+    box-sizing: border-box;
 }
 .content>ul #pp>* {
+    padding: .33em .7em .44em .7em;
+    margin: 0 .25em;
 	border: solid 1px white;
+}
+
+.content>ul #pp *:first-child {
 }
 #pp a:hover {
 	color: black;
@@ -440,6 +453,29 @@ input#asset {
 #details input {
 	margin-bottom: .5em !important;
 }
+
+nav .icon {
+    display: inline-block;
+    position: relative;
+    width: 3em;
+    margin: 1em 1em 0 0;
+}
+
+.icon:nth-child(odd) {
+    margin: 1em .7em 0 0;
+}
+
+.icon img {
+    width: 100%;
+    background-color: hsl(285, 35%, 35%);
+    left: -1px;
+}
+
+.icon img:hover{
+   background-color: hsl(285, 35%, 85%);
+    
+}
+
 @media only screen and (max-width: 1160px) {
 	input#dom_id {
 		margin: 0 90% 0 0;
@@ -479,6 +515,10 @@ input#asset {
 	#pubDate+label {
 		display: inline-block;
 	}
+.content > ul #pp {
+	margin: .25em 0 1em 0%;
+    width: 100%;
+}
 }
 @media only screen and (max-width: 667px) {
 	.admin h3 {
@@ -490,11 +530,13 @@ input#asset {
 		text-align: left;
 		background: none;
 	}
-	.touchevents body {
-		margin: 2%;
+	.touchevents main {
+        box-sizing: border-box;
 	}
+    
 	.admin table {
-		width: 100%;
+        width: 100%;
+        min-width: 20em;
 	}
 	.manage label {
 		display: inline-block;
@@ -513,7 +555,7 @@ input#asset {
 	}
 }
 @media only screen and (max-width: 580px) {
-	#page {
+	.content #page {
 		margin-right: 40%;
 	}
 	#pubDate {

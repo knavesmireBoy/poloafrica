@@ -83,7 +83,6 @@ include "admin.html.php"; ?>
                     echo '<option value="*">insert at end</option></select>';
                     } ?>
                 
-                
             </li></ul></li>            
             <?php if ($results['article']):
             $attributes = $results['article']->getFilePath(true);
@@ -141,4 +140,4 @@ include "admin.html.php"; ?>
         });
     }
 </script>
-<a href=".">Article List</a>
+<nav><a href="." title="Back to Article List" class="icon"><img src="../images/resource/icon_list.png"></a></nav>

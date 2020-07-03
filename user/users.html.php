@@ -46,6 +46,8 @@ if(isset($users) && !isset($form)): ?>
 <?php
 endif;
 if(!isset($_GET['add'])){ ?>
-<a href="?add">Add a New User</a>
+<nav>
+<a href="?add" title="Add a New User" class="icon"><img src="../images/resource/icon_user_add.png"></a>
 <?php } ?>
-<div><a href="../admin">Article List</a></div>
+<a href="../admin" title="Back to Article List" class="icon"><img src="../images/resource/icon_list.png"></a>
+</nav>

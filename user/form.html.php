@@ -20,4 +20,4 @@ echo ' checked';
 htmlout($results['id']); ?>">
 <input type="submit" value="<?php htmlout($results['button']); ?>">
 <input type="submit" name="abort" value="Cancel" formnovalidate>
-    </form>
+</form>

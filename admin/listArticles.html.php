@@ -33,8 +33,8 @@ include 'pages_dropdown.php';
 <?php 
 $paginator->doNav(); ?>
 <p>Total Article<?php htmlout(doPlural($paginator->getRecords())); ?>: <strong><?php htmlout($paginator->getRecords()); ?></strong></p>
-<p><a href="?action=newArticle&amp;page=<?php if(isset($_REQUEST['page'])){
+<nav>
+<a href="?action=newArticle&amp;page=<?php if(isset($_REQUEST['page'])){
     htmlout($_REQUEST['page']);
-}?>">Add a New Article</a></p>
-<p><a href="../user/?action=manageUsers">Manage Users</a></p>
-<p><a href="../enquiries/">Home</a></p>
+}?>" title="Add a New Article" class="icon"><img src="../images/resource/icon_list_add.png"></a>
+<a href="../user/?action=manageUsers" title="Manage Users" class="icon"><img src="../images/resource/icon_user_edit.png"></a><a href="../home/" title="live website" class="icon"><img src="../images/resource/home.png"></a></nav>
