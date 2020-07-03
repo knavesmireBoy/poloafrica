@@ -163,6 +163,14 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 	position: relative;
 	left: auto;
 }
+
+#sans_js {
+    text-align: center;
+}
+
+#sans_js a {
+  margin: 0 auto;  
+}
 footer {
 	margin: 0 auto;
 }

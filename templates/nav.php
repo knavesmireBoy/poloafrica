@@ -54,7 +54,10 @@ function prepareNav($style, $deco){
         if($p === $style){
             //if $style (ie: stay) is found in lookup array return decorated title
             $output = performOutput($p, $deco);
-            echo '<li><a href=".">' . $output['title'] . '</a><ul>';
+            $t = $output['title'];
+            /*to accomodate no js gallery*/
+            echo "<li><a href=' ../$t'>" . $t . '</a><ul>';
+            //echo '<li><a href=".">' . $output['title'] . '</a><ul>';
         foreach ($titles as $t){
             //tv articles get represented by one subnav heading
             $output = outputWhen(performOutput($t['title'], $deco, true), $tv);
