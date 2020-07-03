@@ -2,12 +2,12 @@
 
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
-#medley >*, #medley article:last-child>* {
+#medley >*, #medley section:last-child>* {
 	-ms-flex-item-align: start;
 	align-self: flex-start;
 }
 @supports(flex-wrap: wrap) {
-	#medley #presslinks, #medley article:last-child {
+	#medley #presslinks, #medley section:last-child {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
@@ -16,7 +16,7 @@
 
 @media screen and (max-width: 667px) {
 	@supports(flex-wrap: wrap) {
-		.override img, .override section {
+		.override img, .override article {
 			-webkit-box-flex: 0;
 			-ms-flex: 0 0 100%;
 			flex: 0 0 100%;
@@ -29,14 +29,14 @@
 }
 @media screen and (min-width: 890px) {
 	@supports(flex-wrap: wrap) {
-		#place article:nth-child(2), #scholars article:nth-child(4), #scholars article:last-child, #trust article:nth-child(2), #trust article:nth-child(4) {
+		#place section:nth-child(2), #scholars section:nth-child(4), #scholars section:last-child, #trust section:nth-child(2), #trust section:nth-child(4) {
 			display: flex;
 		}
 	}
 }
 @media screen and (min-width: 983px) {
 	@supports(flex-wrap: wrap) {
-		#medley article:nth-child(2) {
+		#medley section:nth-child(2) {
 			display: flex;
 		}
 	}

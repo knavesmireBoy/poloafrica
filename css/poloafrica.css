@@ -219,7 +219,7 @@ h2 a:hover, a:active {
 #current a {
 	font-weight: bold !important
 }
-.articles {
+.sections {
 	color: #000;
 	font-size: 11px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -228,15 +228,15 @@ h2 a:hover, a:active {
 	margin: 0;
 	padding: 0
 }
-.articles a:link, .articles a:visited, .articles a:hover, .articles a:active {
+.sections a:link, .sections a:visited, .sections a:hover, .sections a:active {
 	color: #060 !important;
 	font-weight: normal !important;
-	text-decoration: underline !important
+	text-decoration: underline !important;
 }
-.articles li {
+.sections li {
 	list-style-type: none
 }
-.articles ul {
+.sections ul {
 	margin: 0;
 	padding: 0
 }
@@ -286,7 +286,7 @@ h2 a:hover, a:active {
 	padding: 10px 0 10px 0px;
 	width: 406px
 }
-/* Previous version of #enqlist used for the rates section on left with different indent and line length
+/* Previous version of #enqlist used for the rates article on left with different indent and line length
 #enqlist li   { color: #900; font-size: 11px; font-family: Verdana, Arial, Helvetica, sans-serif; line-height: 1.6; margin: 0; padding: 0; border-style: none none solid; border-width: 0 0 1px; border-color:   #cc6 }
 #enqlist ul   { text-indent: -10px; list-style-type: none; margin: 0 0 0 10px; padding: 10px 0 10px 10px; width: 386px }
 */

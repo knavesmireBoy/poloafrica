@@ -1,3 +1,5 @@
+/* SHOUT OUT: ON CMS VERSION HAD TO MOVE ALT CLASS FROM MAIN TO UL AS WE DIDN'T WANT TO INCLUDE MAIN IN INNERHTML AJAX RESPONSE */
+
 @import "flex_mod.css";
 
 .no-touchevents main {
@@ -22,7 +24,7 @@
 	-webkit-align-self: flex-start;
 	align-self: flex-start;
 }
-.flexwrap .flexwrap ul.gallery li, .flexwrap .alt ul.gallery li.portrait, .flexwrap .alt ul.gallery li:nth-child(n+5), .flexwrap main ul.gallery li:nth-last-child(-n+4) {
+.flexwrap .flexwrap ul.gallery li, .flexwrap ul.gallery.alt li.portrait, .flexwrap ul.gallery.alt li:nth-child(n+5), .flexwrap main ul.gallery li:nth-last-child(-n+4) {
 	-webkit-box-flex: 3;
 	-ms-flex: 3 1 auto;
 	-webkit-flex: 3 1 auto;
@@ -122,10 +124,10 @@ ul.gallery {
 		grid-row: 5 / 7;
 		grid-column: auto / span 3;
 	}
-	.alt .gallery li:nth-child(n+5) {
+	.gallery.alt li:nth-child(n+5) {
 		grid-column: auto / span 3;
 	}
-	.alt .gallery li:nth-child(n+9) {
+	.gallery.alt li:nth-child(n+9) {
 		grid-row: 5 / 7;
 		grid-column: auto / span 3;
 	}
@@ -135,7 +137,7 @@ ul.gallery {
      .touchevents main .pagenav {
          margin: 0 2%;
 }
-	.override .gallery li, .alt .gallery li.portrait, .alt .gallery li:nth-child(n+5), ul.gallery li:nth-last-child(-n+4) {
+	.override .gallery li, .gallery.alt li.portrait, .gallery.alt li:nth-child(n+5), ul.gallery li:nth-last-child(-n+4) {
 		-webkit-box-flex: 3;
 		-ms-flex: 3 1 auto;
 		-webkit-flex: 3 1 auto;
@@ -166,18 +168,18 @@ ul.gallery {
 			grid-row: 3 / 4;
 			grid-column: auto / span 4;
 		}
-		.alt .gallery li:nth-child(n+5) {
+		.gallery.alt li:nth-child(n+5) {
 			grid-column: auto / span 6;
 		}
 		.gallery li:nth-child(n+8) {
 			grid-row: 4 / 5;
 			grid-column: auto / span 4;
 		}
-		.alt .gallery li:nth-child(n+7) {
+		.gallery.alt li:nth-child(n+7) {
 			grid-row: 4 / 5;
 			grid-column: auto / span 6;
 		}
-		.alt .gallery li:nth-child(n+9) {
+		.gallery.alt li:nth-child(n+9) {
 			grid-row: 5 / 6;
 			grid-column: auto / span 6;
 		}
@@ -185,7 +187,7 @@ ul.gallery {
 			grid-row: 5 / 6;
 			grid-column: auto / span 6;
 		}
-		.alt .gallery li:nth-child(n+11) {
+		.gallery.alt li:nth-child(n+11) {
 			grid-row: 6 / 7;
 			grid-column: auto / span 6;
 		}

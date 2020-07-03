@@ -13,33 +13,33 @@ h2 span {
 	}
 }
 @media screen and (max-width: 667px) {
-     article {
+     section {
         display: block;
     }
 	h2, h2 span {
 		background: none;
 	}
-	.no-js article:nth-child(1) .read-more-trigger:before {
+	.no-js section:nth-child(1) .read-more-trigger:before {
 		content: "Participation";
 	}
-	.no-js article:nth-child(2) .read-more-trigger:before {
+	.no-js section:nth-child(2) .read-more-trigger:before {
 		content: "The Programme";
 	}
-	.no-js article:nth-child(3) .read-more-trigger:before {
+	.no-js section:nth-child(3) .read-more-trigger:before {
 		content: "Gender divide";
 	}
-	.no-js article:nth-child(4) .read-more-trigger:before {
+	.no-js section:nth-child(4) .read-more-trigger:before {
 		content: "Attending school";
 	}
-	.no-js article:nth-child(5) .read-more-trigger:before {
+	.no-js section:nth-child(5) .read-more-trigger:before {
 		content: "Typical school holiday programme";
 	}
-	.no-js article:nth-child(6) .read-more-trigger:before {
+	.no-js section:nth-child(6) .read-more-trigger:before {
 		content: "A childhood dream";
 	}
 }
 @media only screen and (max-width: 440px) {
-	.override article:nth-child(5) h3, .override article:nth-child(5) label {
+	.override section:nth-child(5) h3, .override section:nth-child(5) label {
 		line-height: 1.2;
 	}
 }

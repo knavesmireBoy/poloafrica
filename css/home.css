@@ -40,7 +40,7 @@ h2 span {
 }
 @media screen and (max-width: 667px) {
     
-    article {
+    section {
         display: block;
     }
 
@@ -55,34 +55,34 @@ h2 span {
 		position: absolute;
 		left: -999em;
 	}
-	article.show #ani, .read-more-state:checked~#ani {
+	section.show #ani, .read-more-state:checked~#ani {
 		position: relative;
 		left: auto;
 	}
-	article.show #ani, .read-more-state:checked~#ani {
+	section.show #ani, .read-more-state:checked~#ani {
 		position: relative;
 		left: auto;
 	}
-	.no-js article:nth-child(1) .read-more-trigger:before {
+	.no-js section:nth-child(1) .read-more-trigger:before {
 		content: "The Poloafrica Development Trust";
 	}
-	.no-js article:nth-child(2) .read-more-trigger:before {
+	.no-js section:nth-child(2) .read-more-trigger:before {
 		content: "The Uitgedacht experience";
 	}
-	.no-js article:nth-child(3) .read-more-trigger:before {
+	.no-js section:nth-child(3) .read-more-trigger:before {
 		content: "The Poloafrica / Polo 150 tour to England";
 	}
-	.no-js article:nth-child(3) {
+	.no-js section:nth-child(3) {
 		display: block;
 	}
 }
 @media only screen and (max-width: 540px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
-	article:last-child h3, article label {
+	section:last-child h3, section label {
 		line-height: normal;
 	}
 }
 @media only screen and (max-width: 410px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
-	.override article h3, article:first-child label {
+	.override section h3, section:first-child label {
 		line-height: normal;
 	}
 }

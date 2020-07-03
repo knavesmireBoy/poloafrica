@@ -1,3 +1,4 @@
+/* SHOUT OUT: ON CMS VERSION HAD TO MOVE ALT CLASS FROM MAIN TO UL AS WE DIDN'T WANT TO INCLUDE MAIN IN INNERHTML AJAX RESPONSE */
 #wrap {
 	width: 832px;
     background-color: white;
@@ -122,22 +123,26 @@ main ul li, main ul li img {
 main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="80"]   {
     border-color: white;
 }
-.gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait, ul.gallery li:nth-last-child(-n+4) {
+.gallery li, .gallery.alt li:nth-child(n+5), .gallery.alt li.portrait, ul.gallery li:nth-last-child(-n+4) {
 		width: 25%;
 	}
 	.gallery li:nth-child(n+5), .gallery li.portrait{
 		width: 16.666%
 	}
 
-.gallery li:nth-child(5), .gallery li:nth-child(11), .alt .gallery li:nth-child(9) {
+.gallery li:nth-child(5), .gallery li:nth-child(11), .gallery.alt li:nth-child(9) {
 	clear: left;
 }
-.alt .gallery li:nth-child(11) {
+.gallery.alt li:nth-child(11) {
 	clear: none;
 }
-.alt .gallery li:nth-last-child(-n+2) {
+
+/* ON THE NON CMS VERSION THE LAST TWO LI's WERE SUPERFLUOUS WHEN IN ALT MODE (ie displaying 12 pictures not 14)
+ON THE CMS VERSION LI'S ARE LIMITED BY DATABASE RESULTS, MAYBE FIX NON-CMS TO REMOVE/REINSTATE LI'S AS REQD
+.gallery.alt li:nth-last-child(-n+2) {
 	display: none;
 }
+*/
 .js .showtime main ul li {
 	width: 100%;
 }

@@ -32,6 +32,9 @@ h3, label {
 	font-size: 1.75em;
 	word-spacing: 1px;
 	letter-spacing: 1px;
+    color: #990;
+    color: hsl(58, 60%, 40%);
+
 }
 a:link, a:visited, a:hover, a:active {
 	color: #990;
@@ -44,7 +47,7 @@ a:hover, a:active {
 p a:hover, p a:active {
 	text-decoration: underline;
 }
-.no-touchevents a:hover h3, .no-touchevents a:active h3 {
+.no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
     color: hsl(58, 60%, 40%);
 }
@@ -86,7 +89,7 @@ h2:hover, h2:focus, h2:active {
 }
 /* direct child selector, otherwise will have to override for animation */
 
-article>img {
+section>img {
 	border: solid 1px white;
 	/*box-shadow: 0px 0px 12px indigo;*/
 }
@@ -101,7 +104,7 @@ article>img {
 	border: solid 1px #ccc;
 	border-color: #ccc #000 #449 #ccc;
 }
-section a {
+article a {
 	font-weight: bold;
 	outline: none;
 }
@@ -218,7 +221,7 @@ h2 span {
 	#home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
 		color: #cc6;
 	}
-	.no-touchevents a:hover h3 {
+	.no-touchevents h3 a:hover{
 		color: #fff;
 	}
 	header {
@@ -227,10 +230,10 @@ h2 span {
 		background-size: cover;
 	}
 
-	.touchevents article section p {
+	.touchevents section article p {
 		padding: 0 1em;
 	}
-    .override article section p {
+    .override section article p {
 		line-height: 1.55;
 	}
 	.menu {
@@ -264,28 +267,33 @@ h2 span {
 		font-weight: bold;
 	}
 	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
-	.js h3, .no-js article .read-more-trigger:before {
+	.js h3, .no-js section .read-more-trigger:before {
 		padding: .5em .6em .4em;
 		border-bottom: solid 1px white;
 	}
-	.read-more-trigger:before, .no-js article:first-of-type .read-more-state:checked~.read-more-trigger:before {
+	.read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before {
 		color: #993;
 		text-shadow: none;
 		background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
 	}
-	.js article img {
+	.js section img {
 		border-bottom: solid 1px white;
 	}
-	.no-js article .read-more-trigger:before:hover {
+	.no-js section .read-more-trigger:before:hover {
 		background-color: white;
 		color: #993;
 	}
-	article.show h3, .read-more-state:checked~.read-more-trigger:before, .no-js article:first-of-type .read-more-state~.read-more-trigger:before {
+	section.show h3, .read-more-state:checked~.read-more-trigger:before, .no-js section:first-of-type .read-more-state~.read-more-trigger:before {
 		color: white;
 		text-shadow: 1px 1px 1px black;
+		background-color: #c8c87e;
 		background-color: hsl(60, 40%, 64%);
 	}
+    section.show h3 a {
+        color: white;
+        background-color: transparent;
+    }
 
 	ul#nav a {
 		text-align: right;

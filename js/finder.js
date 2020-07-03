@@ -22,6 +22,7 @@
 		ptL = _.partial,
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
+        setAttrs = utils.setAttributes,
 		//con = window.console.log.bind(window),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
@@ -32,13 +33,13 @@
 			msg = undef(msg) ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
-		articles = document.getElementsByTagName('article'),
-		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, articles, ptL(utils.getByTag, 'img')))(),
+		sections = document.getElementsByTagName('section'),
+		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
 		animation = utils.$("ani"),
 		polo = utils.$("polo") && !Modernizr.cssgrid,
 		doAlt = utils.doAlternate(),
 		doWrap = utils.always(true),
-        //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
+       //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
@@ -46,10 +47,10 @@
 				return _.partial(utils.isDesktop, threshold);
 			}
 		}()),
-        //getEnvironment = _.partial(utils.isDesktop, threshold),
+       //getEnvironment = _.partial(utils.isDesktop, threshold),
 		negater = function (alternators, func) {
-            //report();
-            /*NOTE netrenderer reports window.width AS ZERO*/
+           //report();
+           /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
 				_.each(alternators, function (f) {
 					f();
@@ -60,18 +61,18 @@
 		},
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
-        getTarget = utils.drillDown([mytarget]),
-        dummy = {},
+       getTarget = utils.drillDown([mytarget]),
+       dummy = {},
 		bridge = function (e) {
-            var tgt = getTarget(e),
-				el = tgt && utils.getDomParent(utils.getNodeByTag('article'))(tgt),
+           var tgt = getTarget(e),
+				el = tgt && utils.getDomParent(utils.getNodeByTag('section'))(tgt),
 				hit = el && utils.getClassList(el).contains('show');
-			if (!el || !isHeading(tgt)) {
+			if (!el || !isHeading(tgt.parentNode)) {
 				return;
 			}
 			
-			_.each(articles, function (article) {
-				utils.hide(article);
+			_.each(sections, function (section) {
+				utils.hide(section);
 			});
 			if (!hit) {
 				utils.show(el);
@@ -81,8 +82,8 @@
 			if (animation) {
 				return utils.getNext(el);
 			}
-         
-			return utils.getSibling(utils.getNodeByTag('section'))(el);
+
+			return utils.getSibling(utils.getNodeByTag('article'))(el);
 		},
 		floaters = function (els) {
 			var conditions = [doTwice(utils.getter)('id'), doWrap, utils.always(true)],
@@ -90,26 +91,26 @@
 					return elem && zipped[0](elem);
 				};
 			return _.map(els, function (el) {
-				var section = getSib(el),
+				var article = getSib(el),
 					outbound = function () {
-						//console.log(el, utils.getNextElement(section.firstChild))
-                        var tgt = polo ? section.lastChild : section.firstChild;
+						//console.log(el, utils.getNextElement(article.firstChild))
+                       var tgt = polo ? article.lastChild : article.firstChild;
 						utils.insertAfter(el, utils.getNextElement(tgt));
 					},
 					inbound = function () {
-						section.parentNode.insertBefore(el, section);
+						article.parentNode.insertBefore(el, article);
 					},
 					move = function () {
-						var p = utils.getSibling(utils.getNodeByTag('p'))(section.firstChild);
-                        if(polo && utils.getClassList(el).contains('field')){
-                            utils.insertAfter(el, utils.getNextElement(p))
-                        }
-                        else {
-                            section.insertBefore(el, p);
-                        }
+						var p = utils.getSibling(utils.getNodeByTag('p'))(article.firstChild);
+                       if(polo && utils.getClassList(el).contains('field')){
+                           utils.insertAfter(el, utils.getNextElement(p))
+                       }
+                       else {
+                           article.insertBefore(el, p);
+                       }
 					},
 					unmove = function () {
-						section.parentNode.insertBefore(el, section);
+						article.parentNode.insertBefore(el, article);
 					},
 					standard = [move, unmove],
 					floater = [outbound, inbound],
@@ -138,7 +139,7 @@
 		        doBest = function (actions, el){
 		           return utils.getBest(ptL(doScroll, el), actions);
 		        },
-		        mapped = _.map(articles, ptL(doBest, [utils.show, utils.hide])),
+		        mapped = _.map(sections, ptL(doBest, [utils.show, utils.hide])),
 		        scroller = function () {
 		            var smile = function (f){
 		                    var isNotEq = _.negate(utils.isEqual),
@@ -154,7 +155,7 @@
 		                reducer = function (champ, contender){
 		                    return doScroll(contender) ? contender : champ;
 		                },
-		                primed = ptL(_.reduce, articles, reducer),
+		                primed = ptL(_.reduce, sections, reducer),
 		                throttled = _.throttle(_.compose(getResult, ptL(thunk, smile, primed)), 100);
 				},
 		        */
@@ -164,7 +165,7 @@
 	*/
 	//main.addEventListener('click', bridge);
 	utils.addHandler('click', main, bridge);
-    dummy[mytarget] = articles[0].getElementsByTagName('h3')[0];
+   dummy[mytarget] = sections[0].getElementsByTagName('a')[0];
 	bridge(dummy);
 	if (utils.$('enquiries')) {
 		return;
@@ -180,9 +181,9 @@
 	float_handler();
 	/*
 	if (Modernizr.touchevents) {
-		utils.setScrollHandlers(articles, doTwice(utils.getScrollThreshold)(0.1));
+		utils.setScrollHandlers(sections, doTwice(utils.getScrollThreshold)(0.1));
 	}
-    */
+   */
 	//console.log(utils.getByTag('header', document)[0])
 	//report(utils.getComputedStyle(document.documentElement, 'width'))
 	//report();
