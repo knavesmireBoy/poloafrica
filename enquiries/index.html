@@ -125,159 +125,78 @@
     <script src="../js/eventing.js"></script>
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
-       <script>
+           <script>
+       var dum = {},
+           utils = poloAF.Util,
+           invokemethod = function (o, arg, m) {
+               return o[m](arg);
+           },
+           doThrice = utils.curryThrice(),
+           headingmatch = doThrice(invokemethod)('match')(/h3/i),
+           tgt = !window.addEventListener ? 'srcElement' : 'target',
 
-        var dum = {},
-            utils = poloAF.Util,
-            main = document.getElementsByTagName('main')[0],
-            sections = document.getElementsByTagName('section'),
-            tgt = !window.addEventListener ? 'srcElement' : 'target',
-            invokemethod = function (o, arg, m) {
-                return o[m](arg);
-            },
-            doThrice = utils.curryThrice(),
-            headingmatch = doThrice(invokemethod)('match')(/h3/i),
-            getTarget = utils.drillDown([tgt]),
-            isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
-            bridge = function(e) {
+           getTarget = utils.drillDown([tgt, 'parentNode']),
+           isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
+           main = document.getElementsByTagName('main')[0],
+           articles = document.getElementsByTagName('article'),
+           bridge = function(e) {
 			var el = getTarget(e),
-                mysection = utils.getDomParent(utils.getNodeByTag('section'))(el),
-				hit = mysection && utils.getClassList(mysection).contains('show');
-                if(!isHeading(el)){
-                    return;
-                }
-			_.each(sections, function(sec) {
-				utils.hide(sec);
+               myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
+				hit = myarticles && utils.getClassList(myarticles).contains('show');
+               console.log(isHeading(el), el)
+               if(!isHeading(el)){
+                   return;
+               }
+			_.each(articles, function(article) {
+				utils.hide(article);
 			});
 			if (!hit) {
-				utils.show(mysection);
+				utils.show(myarticles);
 			}
 		};
-        utils.addHandler('click', bridge, main);
-        dum[tgt] = sections[0].getElementsByTagName('h3')[0];
+       utils.addHandler('click', bridge, main);
+              //trigger...
+       dum[tgt] = articles[0].getElementsByTagName('a')[0];
+              dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
 	bridge(dum);
-           
-           function found(i){
-               return i >= 0;
-           }
-           
-           function isSingle(char, str){
-              return _.isString(str) && found(str.indexOf(char)) ? str : undefined;
-           }
-            function isDouble(char, str){
-                if(!str){
-                    return false;
+   </script>
+        <script>       
+        var utils = poloAF.Util,
+    	ptL = _.partial,
+            clicker = ptL(utils.addHandler, 'click'),
+            
+    	makeElement = utils.machElement,
+    	anCr = utils.append(),
+    	setAttrs = utils.setAttributes,
+    	klasAdd = utils.addClass,
+    	displayLoading = function(ancor, conf) {
+    		return makeElement(ptL(klasAdd, 'loading'), ptL(setAttrs, {
+    			alt: 'loading',
+    			src: "../images/progressbar.gif"
+    		}), anCr(ancor), utils.always('img'));
+    	},
+            myform = document.forms[0],
+            legend = utils.getByTag('legend', myform)[0],
+    	prepareAjax = function() {
+    		var xhr = poloAF.Hijax();
+    		xhr.setContainer(myform);
+    		xhr.setCanvas(utils.$('post'));
+    		xhr.setUrl("response.php");
+    		xhr.setLoading(function() {
+    			displayLoading(utils.$('post')).render();
+    		});
+    		xhr.setCallback(function() {
+    			utils.fadeUp(utils.$('post'), 255, 255, 204);
+    		});
+    		xhr.captureData();
+    	},
+            relocate = function(e){
+                if(e.target.nodeName.toLowerCase() === 'legend'){
+                    window.location.assign("../admin");
                 }
-               return str.indexOf(char) !== str.lastIndexOf(char);
-           }
-           
-           var myU = _.partial(isSingle, 'u'),
-               myDbU = _.partial(isDouble, 'u'),
-               determineContent = _.compose(myDbU, myU);
-           
-           var makeTyper = function(typ, count){
-               function concat(arg){
-                   return typ + arg;
-               }
-               function always(arg){
-                   return arg;
-               }
-               function check(arg){
-                    return arg === typ;
-               }
-               function doOp(arg){
-                   var cache = count % 2;
-                   count += 1;
-                   return ops[cache](arg);
-                   }
-               function current(arg){
-                   return ops[count % 2](arg || '');
-               }
-               var ops = [always, concat];
-               
-               return {
-                   handle: function(arg){
-                      if(!check(arg)){
-                          if(this.next){
-                              return this.next.handle(arg);
-                          }
-                          return current();
-                      }
-                       return doOp(arg);
-                   },
-                   setNext: function(next){
-                       this.next = next;       
-                   },
-                   current: current
-               };
-               
-           },
-               makeAssembler = function(){
-                   var o = {},
-                       str = '',
-                       noOp = function(){},
-                       empty = function(){
-                           return '';
-                       },
-                       dummy = {
-                           handle: empty,
-                           setNext: noOp,
-                           current: empty
-                       },
-                       doSplit = function(arg){
-                           return str.split(arg);
-                       },
-                       same = function(arg){
-                          return str.split().length === str.split(arg).length;
-                       },
-                       found = function(arg){
-                           return str.split(arg).length > 1;
-                       };
-                   return {
-                   set: function(arg){
-                       o[arg] = o[arg] || makeTyper(arg, 0);
-                       return this;
-                   },
-                   get: function(arg){
-                       return o[arg] || dummy;
-                   },
-                      handle: function(arg){
-                           var p,
-                               pass = same(arg);
-                           for(p in o){
-                               if(o.hasOwnProperty(p)){
-                                  if(p === arg){
-                                      str += o[p].handle(p);
-                                  }
-                                   else {
-                                       str += o[p].current();
-                                   }
-                               }
-                           }
-                          return str;
-                       }
-                   };
-               };
-           
-           
-           var a = makeAssembler().set('f').set('t').set('u'),
-               f = a.get('f'),
-               t = a.get('t'),
-               u = a.get('u');
-           f.setNext(t);
-           t.setNext(u);
-           
-           var tryme = function(arg){
-               var current = '',
-                   arr = current.split(arg),
-                   res = _.every(arr, function(str){
-                       return str;
-                   });
-               return res && arr.length !== 1;
-           };
-           
-           console.log(determineContent('ufu'));
-
+            };
+            window.onload = prepareAjax;            
+            utils.addEvent(clicker, relocate)(myform);
     </script>
 </body>
 </html>
