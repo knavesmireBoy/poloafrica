@@ -115,6 +115,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     $results = array();
     $results['pageTitle'] = "Edit Article";
     $results['formAction'] = "editArticle";
+    $results['heading'] = 'Edit Article';
 
     if (isset($_POST['saveChanges']))
     {
@@ -166,6 +167,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     $results = array();
     $results['pageTitle'] = "New Article";
     $results['formAction'] = "newArticle";
+    $results['heading'] = 'Add Article';
+
     $default_placement = "select position";
 
     //form action

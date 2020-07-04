@@ -27,7 +27,7 @@ $mypage = '';
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
     <script src="../js/markup.js"></script>
-<?php $results['heading'] = 'Edit Article';
+<?php 
 include "admin.html.php"; ?>
 
       <form action="?action=<?php echo $results['formAction']?>" method="post" enctype="multipart/form-data" class="content">

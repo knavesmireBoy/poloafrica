@@ -55,9 +55,15 @@ function prepareNav($style, $deco){
             //if $style (ie: stay) is found in lookup array return decorated title
             $output = performOutput($p, $deco);
             $t = $output['title'];
-            /*to accomodate no js gallery*/
-            echo "<li><a href=' ../$t'>" . $t . '</a><ul>';
-            //echo '<li><a href=".">' . $output['title'] . '</a><ul>';
+            /*to accommodate a no js gallery scenario where current directory would be gallery not photos
+            (because that's where we put the index.php which uses the query string to assign image source')
+            We need to nav bar to take us back to photos directory*/
+            if($t === 'photos'){
+                echo "<li><a href=' ../$t'>" . $t . '</a><ul>';
+            }
+            else {
+                echo '<li><a href=".">' . $t . '</a><ul>';
+            }
         foreach ($titles as $t){
             //tv articles get represented by one subnav heading
             $output = outputWhen(performOutput($t['title'], $deco, true), $tv);

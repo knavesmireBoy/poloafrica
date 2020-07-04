@@ -53,3 +53,4 @@ if(!isset($_GET['add'])){ ?>
 if(isset($_GET['add']) && !isset($user)){ echo '<nav>'; }?>
 <a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>
 </nav>
+<?php echo '</main></body>';

@@ -24,7 +24,8 @@ $style = 'admin';
 
 include ("../templates/header.php");
 ?>
-<body class="admin"> 
+<body class="admin">
+    <main>
 <?php
 if (!userIsLoggedIn()){
 include '../templates/login.html.php';

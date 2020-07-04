@@ -222,8 +222,8 @@ li.mock ul>* {
 }
 #controls li {
 	display: inline-block;
-	width: 5%;
-	min-width: 2.5em;
+	width: 6%;
+	min-width: 3em;
 	margin: 0 .25em;
 	box-shadow: 1px 1px 2px black;
 	border-radius: 5px;
@@ -415,7 +415,6 @@ form#page_select {
 }
 .msg {
 	display: inline-block;
-	padding: .3em 1em;
 	border-radius: 8px 1px;
 	background-color: #444;
 	background-color: hsl(283, 100%, 15%);
@@ -425,9 +424,11 @@ form#page_select {
 .errorMessage {
 	color: red;
 	font: bold italic 1.2em serif;
+    padding: .3em 1em;
 }
 .statusMessage {
 	color: hsl(285, 35%, 85%);
+    padding: .3em 1em;
 }
 input#asset {
 	text-align: center;
@@ -469,8 +470,9 @@ nav .icon {
 
 .icon img {
     width: 100%;
+    margin: auto;
     background-color: hsl(285, 35%, 35%);
-    left: -1px;
+    outline: 0px;
 }
 
 .icon img:hover{
@@ -523,6 +525,16 @@ nav .icon {
 }
 }
 @media only screen and (max-width: 667px) {
+    
+        .admin table, #loginform, .manage {
+	min-width: 20em;
+}
+    
+    #pp>* {
+	padding: .33em .66em .44em .66em;
+	margin: 0 .25em;
+}
+    
 	.admin h3 {
 		padding: 0;
 		background-color: white;
@@ -596,4 +608,6 @@ nav .icon {
     #details+li {
         margin: 1em 0 0;
     }
+    
+
 }
