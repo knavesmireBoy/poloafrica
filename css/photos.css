@@ -179,8 +179,8 @@ footer {
 }
 
 .backgroundsize .showtime footer:hover {
-    		background:  url(../images/footer_green_ko.png) no-repeat bottom right,
-                url(../images/sky.png) no-repeat top left;
+    		background:  url(../images/resource/footer_green_ko.png) no-repeat bottom right,
+                url(../images/resource/sky.png) no-repeat top left;
 }
 
 .js #exit {
@@ -189,7 +189,7 @@ footer {
 	left: 100%;
 	margin: .5em 0 .5em -2.5em;
 	display: block;
-	background: url("../images/sticks_sprite_fat.png") no-repeat;
+	background: url("../images/resource/sticks_sprite_fat.png") no-repeat;
 	background-position: 50% 0%;
 	background-size: 100%;
 	position: relative;
@@ -245,7 +245,7 @@ li#slide, li#paused {
 	border-radius: .2em;
 	line-height: 1.6;
 	opacity: 1;
-	background-image: url(../images/buttons_sprite_lowend8.png);
+	background-image: url(../images/resource/buttons_sprite_lowend8.png);
 	background-repeat: no-repeat;
 	background-position: 50% 0%;
 	-webkit-box-shadow: 2px 2px 4px black;
@@ -257,7 +257,7 @@ li#slide, li#paused {
 	border: 1px solid rgba(255, 255, 255, .75);
 }
 #controls>button {
-	background-image: url(../images/buttons_sprite_lowend.png);
+	background-image: url(../images/resource/buttons_sprite_lowend.png);
 	background-color: hsla(50, 50%, 40%, .3);
 }
 #controls button:hover, #controls button:focus {
@@ -354,7 +354,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		width: 100%;
 	}
 	#controls button {
-		background-image: url(../images/buttons_sprite.png);
+		background-image: url(../images/resource/buttons_sprite.png);
 		background-color: hsla(75, 50%, 40%, .3);
 		background-size: 128%;
 	}
@@ -412,7 +412,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		top: .2em;
 	}
 	.touchevents #wrap.inplay+footer {
-		background: url(../images/sil_bg.png) no-repeat 60% top;
+		background: url(../images/resource/sil_bg.png) no-repeat 60% top;
 	}
 	.touchevents ul.gallery li {
 		border: solid 3px white;

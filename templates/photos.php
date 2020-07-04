@@ -31,8 +31,7 @@ echo threshold($limit-$start);
 foreach($results['list'] as $image): 
     $src = $results['path'] . $image['src'] . $image['ext']; ?>
     <li>
-        <!--<a href="<?php //htmlout($src); ?>">-->
-        <a href='../gallery/index.php?img=<?php echo explode('/', $src)[4]; ?> &alt=<?php echo $image['alt']; ?>'>
+        <a href="<?php htmlout($src); ?>">
         <img src="<?php htmlout($src); ?>" alt="<?php htmlout($image['alt']); ?>"></a>
     </li>
 <?php endforeach; echo '</ul>';?>

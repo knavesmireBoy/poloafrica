@@ -212,15 +212,15 @@ li.mock ul>* {
 .content li.asset>* {
 	vertical-align: middle;
 }
-#controls, #content, .content .buttons {
+.admin #controls, #content, .content .buttons {
 	margin: 0 0 2% 17%;
 	width: 83%;
 	box-sizing: border-box;
 }
-#controls {
+.admin #controls {
 	margin-left: 17%;
 }
-#controls li {
+.admin #controls li {
 	display: inline-block;
 	width: 6%;
 	min-width: 3em;
@@ -229,13 +229,13 @@ li.mock ul>* {
 	border-radius: 5px;
 	cursor: pointer;
 }
-#controls li img {
+.admin #controls li img {
 	border-radius: 5px;
 }
-#controls li:hover {
+.admin #controls li:hover {
 	background-color: hsl(283, 25%, 44%);
 }
-#controls li img {
+.admin #controls li img {
 	display: block;
 	width: 100%;
 }
@@ -509,7 +509,7 @@ nav .icon {
 		box-shadow: none;
 		padding: .3em .2em;
 	}
-	#controls, #content, .content .buttons {
+	.admin #controls, #content, .content .buttons {
 		margin-left: 0;
 		width: 100%;
 	}
