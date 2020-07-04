@@ -13,6 +13,7 @@ include "../templates/nav.php"; ?>
 include "../templates/photos.php";
 echo '</main></div>'; ?>
 <?php include '../templates/footer.php'; 
+    
     function trimString($coll, $start, $count){
         return array_map(function($str) use($start, $count){
             return substr($str, $start, $count);
@@ -37,7 +38,7 @@ echo '</main></div>'; ?>
         hijax.setContainer(document.querySelector('main'));
         hijax.setCanvas(document.querySelector('main'));
         hijax.setUrl('../templates/photos.php');
-        hijax.captureData(true);
+        //hijax.captureData(true);
         //preload images
         var all,
             imgs = <?php echo json_encode($iZero) ?>;

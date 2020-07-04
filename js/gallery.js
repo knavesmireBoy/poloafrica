@@ -7,18 +7,8 @@
 (function (doc, visiblity, mq, query, cssanimations, touchevents, main, footer, q2, picnum, makePath, makePathWrap, getDefAlt) {
 	"use strict";
     
-    /*
-    NOTE: IN THIS VERSION the all variable is produced by PHP see (photos/index.php)
-    een = ['01', '02', '03', '09', '04', '05', '06', '07', '08', 24, 10, 11, 12, 13],
-		twee = [14, 15, 16, 17, 28, 33, 34, 35, 36, 43, 18, 19, 20, 21],
-		drie = [22, 23, 25, 26, 47, 70, 82, 60, 67, 69, 27, 29, 30, 31],
-		vyf = [50, 51, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63],
-		vier = [32, 37, 38, 39, 40, 41, 42, 44, 45, 46, 48, 49],
-		ses = [64, 65, 66, 68, 71, 72, 73, 74, 75, 76, 77, 78],
-		sewe = _.range(83, 97),
-		all = [een, twee, drie, vier, vyf, ses, sewe],
-    */
-	function modulo(n, i) {
+   
+function modulo(n, i) {
 		return i % n;
 	}
 
@@ -118,6 +108,8 @@
 	function isEqual(x, y) {
 		return Number(x) === Number(y);
 	}
+    
+    
 	var utils = poloAF.Util,
 		con = window.console.log.bind(window),
 		reporter = function (msg, el) {
@@ -285,13 +277,35 @@
             var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
                 leader = filtered[0] ? portrait : landscape,
                 trailer = filtered[0] ? landscape : portrait;
-            /*
-            if(singlePage().checked){
-                leader = [leader[0]] || [[]];
-                trailer = [trailer[0]] || [[]];
-            }*/
 				return [leader, trailer];
         },
+        
+        getCurrentColl = (function(){
+        // NOTE: IN THIS VERSION the all variable is produced by PHP see (photos/index.php)
+    var een = _.range(1, 15),
+		twee = _.range(15, 29),
+		drie = _.range(29, 43),
+		vyf = _.range(43, 55),
+		vier = _.range(55, 67),
+		ses = _.range(67, 79),
+		sewe = _.range(79, 93),
+        myall = [een, twee, drie, vyf, vier, ses, sewe];
+            
+        
+        return function(j){
+            var ret = {};
+            return _.reduce(myall, function(cur, next){
+               var i = _.findIndex(next, function(n){ return n == j; });
+                if(i >= 0){
+                    cur = next;
+                    ret.page = cur;
+                    ret.index = i;
+                }
+                return ret;
+            });
+        };
+        
+    }()),
 		getSubGallery = function (i) {
             //con(_.zip(ptrt, lscp))
 			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
@@ -316,7 +330,6 @@
 			tmp = leader[0];
 			start = _.findIndex(tmp, ptL(isEqual, i));
 			leader[0] = tmp.splice(start).concat(tmp);
-            //if(groupByOrientation().checked){
             if(Modernizr.deviceorientation){
                 tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1]));//orientation
             }
@@ -378,7 +391,8 @@
 			comp.add(_.extend(poloAF.Composite(), $controls));
 			return comp;
 		}([]));
-	(function () {
+	(function (bark) {
+        //con(bark);
 		var stage_two_comp = (function (inc) {
 				return poloAF.Composite(inc);
 			}([])),
@@ -432,7 +446,8 @@
 						countdown.progress = window.requestAnimationFrame(counter);
 					} else {
 						//x = 300;
-						x = 111;
+						//x = 111;
+						x = 77;
 					}
 				}
 				return counter;
@@ -673,6 +688,10 @@
 			},
 			initplay = ptL(invokeWhen, once(1)),
 			default_iterator = makeIterator(),
+            getFileNumber = function(src){
+                var t = src.split('/');
+                   return Number(t[t.length-1].split('.')[0].substr(1));
+            },
 			prepareNavHandlers = function () {
 				var iterator = default_iterator(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
@@ -689,12 +708,17 @@
                                 if(!_.isEmpty(result)){
                                     return result[0];
                                 }
-                                getDomTargetImg(lis[0]).src = src;
-                                if(isPortrait(lis[0])){
-                                    getDomTargetImg(lis[4]).src = src;
-                                    return lis[4];
-                                }
-                                return lis[0];
+                                
+                                var coll = getCurrentColl(getFileNumber(src));
+                                //document.location = '?f='+(_.first(coll.page)-1);
+                                
+                                _.each(lis, function(li, i){
+                                    var img = getDomTargetImg(li, i),
+                                        src = img.src.replace(/\d+/, '0'+[coll.page[i]]);
+                                    img.src = src;
+                                    img.parentNode.href = src;
+                                });
+                                return lis[coll.index];
                             };
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
 					},
@@ -743,7 +767,7 @@
 			},
 			$current = {
 				render: hideCurrent,
-				unrender: noOp
+				unrender: function(){}
 			},
 			makeSwapper = function () {
 				var ret = {
@@ -833,7 +857,7 @@
 			//utils.$('placeholder').innerHTML = 'PHOTOS';
 			utils.getByTag('span', document)[0].innerHTML = 'PHOTOS';
 		}());
-	}());
+	}('woof'));
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
 	//return "../images/gallery/fullsize/013.jpg";
 	return "../images/gallery/fullsize/0" + path + ".jpg";
