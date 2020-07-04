@@ -496,7 +496,7 @@
 							}), anCr(thumbs), always(clone)).render(),
 							img = getDomTargetImg(pauser.getElement());
 						img.onload = fade50(pauser.getElement());
-						img.src = isPortrait(clone) ? '../images/pauseLong.png' : '../images/pause.png';
+						img.src = isPortrait(clone) ? '../images/resource/pauseLong.png' : '../images/resource/pause.png';
 						return pauser;
 					},
 					//dummy pause, gets rewitten after first run
@@ -678,13 +678,27 @@
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
-					getNextAction = function (m) {
+                    getNextAction = function (m) {
 						var get_src = _.compose(drill(['src']), getDomTargetImg),
+                            src,
 							findCurrent = function (f, li) {
+                                src = get_src(f());
 								return get_src(li).match(get_src(f()));
-							};
-						return _.compose(utils.show, utils[m], utils.getZero, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
+							},
+                            fallback = function(result){
+                                if(!_.isEmpty(result)){
+                                    return result[0];
+                                }
+                                getDomTargetImg(lis[0]).src = src;
+                                if(isPortrait(lis[0])){
+                                    getDomTargetImg(lis[4]).src = src;
+                                    return lis[4];
+                                }
+                                return lis[0];
+                            };
+						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
 					},
+                    
 					getPrevEl = getNextAction('getPreviousElement'),
 					getNextEl = getNextAction('getNextElement'),
 					getAction = doThrice(invokemethod)(1)(null),
