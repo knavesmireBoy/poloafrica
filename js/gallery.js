@@ -726,6 +726,10 @@ function modulo(n, i) {
                                     return result[0];
                                 }
                                 var coll = getCurrentColl(getFileNumber(src));
+                                
+                            document.location ='?f='+(_.last(coll.page))+'&index='+coll.page[coll.index];
+                                
+                                /*
                                 if(coll.page.length > lis.length){
                                     cb = expand;
                                     gang = coll.page;
@@ -737,6 +741,7 @@ function modulo(n, i) {
                                 if(cb){
                                     _.each(gang, cb);
                                 }
+                                */
                                 return lis[coll.index];
                             };
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
