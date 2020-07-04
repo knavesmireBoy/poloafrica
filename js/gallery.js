@@ -704,20 +704,39 @@ function modulo(n, i) {
                                 src = get_src(f());
 								return get_src(li).match(get_src(f()));
 							},
+                            
+                            expand = function(n, i){
+                                    var img = getDomTargetImg(lis[i]);
+                                     if(!img){
+                                         img = _.compose(anCr(thumbs), always(lis[0]))();
+                                         img = getDomTargetImg(img);
+                                     }
+                                    src = img.src.replace(/\d+/, '0'+n);
+                                    img.src = src;
+                                    img.parentNode.href = src;
+                                },
+                            contract = function(n, i){
+                                utils.removeNodeOnComplete(lis[i]);
+                            },
+                            cb,
+                            gang,
+                            
                             fallback = function(result){
                                 if(!_.isEmpty(result)){
                                     return result[0];
                                 }
-                                
                                 var coll = getCurrentColl(getFileNumber(src));
-                                //document.location = '?f='+(_.first(coll.page)-1);
-                                
-                                _.each(lis, function(li, i){
-                                    var img = getDomTargetImg(li, i),
-                                        src = img.src.replace(/\d+/, '0'+[coll.page[i]]);
-                                    img.src = src;
-                                    img.parentNode.href = src;
-                                });
+                                if(coll.page.length > lis.length){
+                                    cb = expand;
+                                    gang = coll.page;
+                                }
+                                else if(lis.length > coll.page.length){
+                                    cb = contract;
+                                    gang = lis;
+                                }
+                                if(cb){
+                                    _.each(gang, cb);
+                                }
                                 return lis[coll.index];
                             };
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
