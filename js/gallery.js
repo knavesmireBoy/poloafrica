@@ -83,12 +83,6 @@
 	function thunk(f) {
 		return f.apply(f, _.rest(arguments));
 	}
-    
-    function funk(f1, f2) {
-        console.log(f1, f2(), 88)
-		return f1.apply(f1, f2());
-	}
-    
 
 	function always(val) {
 		return function () {
@@ -190,6 +184,7 @@
 		},
 		exitGallery = _.compose(exitCurrentImage, getCurrentImage),
 		hideCurrent = _.compose(utils.hide, getCurrentSlide),
+		//showCurrent = _.compose(utils.show, getCurrentSlide),
 		doShow = function (next) {
 			hideCurrent();
 			utils.show(next);
@@ -288,11 +283,6 @@
             var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
                 leader = filtered[0] ? portrait : landscape,
                 trailer = filtered[0] ? landscape : portrait;
-            /*
-            if(singlePage().checked){
-                leader = [leader[0]] || [[]];
-                trailer = [trailer[0]] || [[]];
-            }*/
 				return [leader, trailer];
         },
 		getSubGallery = function (i) {
@@ -319,7 +309,6 @@
 			tmp = leader[0];
 			start = _.findIndex(tmp, ptL(isEqual, i));
 			leader[0] = tmp.splice(start).concat(tmp);
-            //if(groupByOrientation().checked){
             if(Modernizr.deviceorientation){
                 tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1]));//orientation
             }
@@ -360,13 +349,7 @@
 			return arg;
 		},
 		addPageNav = function (myAnCr, title, id, cb) {
-			return _.compose(cb, pageInputHandler, ptL(setAttrs, {
-				/*id: 'range'
-                type: 'checkbox',
-				id: 'range'
-				title: title
-                */
-			}), anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {
+			return _.compose(cb, pageInputHandler, anCr(_.compose(ptL(klasAdd, 'pagenav'), ptL(setAttrs, {
 				id: id,
 				href: '.'
 			}), myAnCr(main), utils.always('a'))))('span');
@@ -478,7 +461,8 @@
 						countdown.progress = window.requestAnimationFrame(counter);
 					} else {
 						//x = 300;
-						x = 111;
+						//x = 111;
+						x = 55;
 					}
 				}
 				return counter;
@@ -726,10 +710,23 @@
 					getDirection = locator(iterator, forward, back),
 					getNextAction = function (m) {
 						var get_src = _.compose(drill(['src']), getDomTargetImg),
+                            src,
 							findCurrent = function (f, li) {
+                                src = get_src(f());
 								return get_src(li).match(get_src(f()));
-							};
-						return _.compose(utils.show, utils[m], utils.getZero, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
+							},
+                            fallback = function(result){
+                                if(!_.isEmpty(result)){
+                                    return result[0];
+                                }
+                                getDomTargetImg(lis[0]).src = src;
+                                if(isPortrait(lis[0])){
+                                    getDomTargetImg(lis[4]).src = src;
+                                    return lis[4];
+                                }
+                                return lis[0];
+                            };
+						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
 					},
 					getPrevEl = getNextAction('getPreviousElement'),
 					getNextEl = getNextAction('getNextElement'),
@@ -775,7 +772,8 @@
 			},
 			$current = {
 				render: hideCurrent,
-				unrender: noOp
+				unrender: function(){
+                }
 			},
 			makeSwapper = function () {
 				var ret = {
