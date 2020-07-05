@@ -759,9 +759,13 @@
                             contract = function(n, i){
                                 utils.removeNodeOnComplete(lis[i]);
                             },
-                            cb,
+                            cb = function(n, i){
+                                var img = getDomTargetImg(lis[i]);
+                                src = img.src.replace(/\d+/, '0'+n);
+                                 img.src = src;
+                                    img.parentNode.href = src;
+                            },
                             gang,
-                            
                             fallback = function(result){
                                 if(!_.isEmpty(result)){
                                     return result[0];
@@ -769,16 +773,17 @@
                                 var coll = getCurrentColl(getFileNumber(src));                                
                                 
                                 if(coll.page.length > lis.length){
-                                    cb = expand;
                                     gang = coll.page;
+                                    cb = expand;
                                 }
                                 else if(lis.length > coll.page.length){
-                                    cb = contract;
                                     gang = lis;
+                                    cb = contract;
                                 }
-                                if(cb){
-                                    _.each(gang, cb);
+                                else {
+                                gang = coll.page;
                                 }
+                               // _.each(gang, cb);
                                 return lis[coll.index];
                             };
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
