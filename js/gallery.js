@@ -417,14 +417,13 @@ function modulo(n, i) {
 				return poloAF.Composite(inc);
 			}([])),
 			allow = !touchevents ? 2 : 0,
-			isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName'])),
             isImage = function(e){
-                var i = new URLSearchParams(document.location.search).get('index'),
+                var i = new window.URLSearchParams(document.location.search).get('index'),
                     mock = {},
                     isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName']));
                 if(i){
                     utils.show(lis[i]);
-                    mock.target = getDomTargetImg(lis[i]);
+                    mock[mytarget] = getDomTargetImg(lis[i]);
                     e = mock;
                 }
                 return isImg(e);
@@ -753,7 +752,7 @@ function modulo(n, i) {
                                 var coll = getCurrentColl(getFileNumber(src));
                                 
                                 
-                            document.location ='?f='+(_.first(coll.page)-1)+'&index='+coll.index+'&path='+coll.page[coll.index];
+                            document.location ='?f='+(_.first(coll.page)-1)+'&index='+coll.index;
                                 
                                 /*
                                 if(coll.page.length > lis.length){
