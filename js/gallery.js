@@ -244,7 +244,7 @@
 		},
 		getPortraitPics = ptL(doSplice, true),
 		getLscpPics = ptL(doSplice, false),
-		een = _.range(1, 15),
+		een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10,11,12,13,14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
 		vyf = _.range(43, 55),
@@ -262,7 +262,8 @@
                 return arr[0];
             });
             if(active){
-                 return predicate() ? leader.concat('97', '80', trailer, '98') : leader.concat('80', '97', trailer, '99');
+                 //return predicate() ? leader.concat('97', '80', trailer, '98') : leader.concat('80', '97', trailer, '99');
+                 return predicate() ? leader.concat('97', '96', trailer, '98') : leader.concat('96', '97', trailer, '99');
             }
             return leader[0] ? leader : trailer;
 
