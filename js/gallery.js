@@ -13,9 +13,9 @@
 
 	function shuffle(coll, flag) {
 		return function (start, deleteCount) {
-            deleteCount = isNaN(deleteCount) ? coll.length-1 : deleteCount;
-            start = isNaN(start) ? 0 : start;
-            var res = coll.splice(start, deleteCount);
+			deleteCount = isNaN(deleteCount) ? coll.length - 1 : deleteCount;
+			start = isNaN(start) ? 0 : start;
+			var res = coll.splice(start, deleteCount);
 			return flag ? res.concat(coll) : coll.concat(res);
 		};
 	}
@@ -158,6 +158,14 @@
 		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
+		een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
+		twee = _.range(15, 29),
+		drie = _.range(29, 43),
+		vyf = _.range(43, 55),
+		vier = _.range(55, 67),
+		ses = _.range(67, 79),
+		sewe = _.range(79, 93),
+		all = [een, twee, drie, vier, vyf, ses, sewe],
 		//thumbs = $('thumbnails'),
 		thumbs = utils.getByClass('gallery')[0],
 		lis = _.toArray(thumbs.getElementsByTagName('li')),
@@ -167,18 +175,18 @@
 			return img.offsetHeight > img.offsetWidth;
 			//return utils.getClassList(el).contains('portrait');
 		}),
-        doPortrait = function (el) {
+		doPortrait = function (el) {
 			var m = getOrientation(el) ? 'addClass' : 'removeClass';
 			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
 		},
-        inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
+		inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		//singlePage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
 		//groupByOrientation = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_back'))),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
-            m = math ? 'addClass' : 'removeClass';
+			m = math ? 'addClass' : 'removeClass';
 			_.map([thumbs, $('wrap')], ptL(utils[m], 'portrait'));
 			return img;
 		},
@@ -244,34 +252,25 @@
 		},
 		getPortraitPics = ptL(doSplice, true),
 		getLscpPics = ptL(doSplice, false),
-		een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10,11,12,13,14],
-		twee = _.range(15, 29),
-		drie = _.range(29, 43),
-		vyf = _.range(43, 55),
-		vier = _.range(55, 67),
-		ses = _.range(67, 79),
-		sewe = _.range(79, 93),
-		all = [een, twee, drie, vier, vyf, ses, sewe],
 		//lscp = _.map(all, getLscpPics),
 		//ptrt = _.map(all, getPortraitPics),
-        mixer = function(predicate, leader, trailer){
-            /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
-                the '98' signal undoes the original action.
-                '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
-            var active = _.every([leader, trailer], function(arr){
-                return arr[0];
-            });
-            if(active){
-                 //return predicate() ? leader.concat('97', '80', trailer, '98') : leader.concat('80', '97', trailer, '99');
-                 return predicate() ? leader.concat('97', '96', trailer, '98') : leader.concat('96', '97', trailer, '99');
-            }
-            return leader[0] ? leader : trailer;
-
-        },
-        mixerBridge = function(pred, zipped){
-            return mixer.apply(null, [pred, zipped[0], zipped[1]]);
-        },
-        performSwap = function (inbound, outbound, enter, exit) {
+		mixer = function (predicate, leader, trailer) {
+			/*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
+			    the '98' signal undoes the original action.
+			    '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
+			var active = _.every([leader, trailer], function (arr) {
+				return arr[0];
+			});
+			if (active) {
+				//return predicate() ? leader.concat('97', '80', trailer, '98') : leader.concat('80', '97', trailer, '99');
+				return predicate() ? leader.concat('97', '96', trailer, '98') : leader.concat('96', '97', trailer, '99');
+			}
+			return leader[0] ? leader : trailer;
+		},
+		mixerBridge = function (pred, zipped) {
+			return mixer.apply(null, [pred, zipped[0], zipped[1]]);
+		},
+		performSwap = function (inbound, outbound, enter, exit) {
 			return function (path) {
 				var action = utils.getBest(function (agg) {
 					return agg[0]();
@@ -279,67 +278,59 @@
 				return action[1]();
 			};
 		},
-        getLeadingGroup = function(i, portrait, landscape){
-            var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
-                leader = filtered[0] ? portrait : landscape,
-                trailer = filtered[0] ? landscape : portrait;
-				return [leader, trailer];
-        },
-        getCurrentColl = (function(){
-        // NOTE: IN THIS VERSION the all variable is produced by PHP see (photos/index.php)
-    var een = _.range(1, 15),
-		twee = _.range(15, 29),
-		drie = _.range(29, 43),
-		vyf = _.range(43, 55),
-		vier = _.range(55, 67),
-		ses = _.range(67, 79),
-		sewe = _.range(79, 93),
-        myall = [een, twee, drie, vyf, vier, ses, sewe];
-        
-        return function(j){
-            var ret = {};
-            return _.reduce(myall, function(cur, next){
-               var i = _.findIndex(next, function(n){ return n == j; });
-                if(i >= 0){
-                    cur = next;
-                    ret.page = cur;
-                    ret.index = i;
-                }
-                return ret;
-            });
-        };
-        
-    }()),
+		getLeadingGroup = function (i, portrait, landscape) {
+			var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
+				leader = filtered[0] ? portrait : landscape,
+				trailer = filtered[0] ? landscape : portrait;
+			return [leader, trailer];
+		},
+		getSubGroup = function (j) {
+			var ret = {};
+			return _.reduce(all, function (cur, next, k) {
+				var i = _.findIndex(next, function (n) {
+					return n == j;
+				});
+				if (i >= 0) {
+					cur = next;
+					ret.page = cur;
+					ret.index = i;
+					ret.group = k;
+				}
+				return ret;
+			});
+		},
 		getSubGallery = function (i) {
-            //con(_.zip(ptrt, lscp))
+			//con(_.zip(ptrt, lscp))
 			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
-                reordered = shuffle(all.slice(0), true)(sub),
-                lscp = _.map(reordered, getLscpPics),
-                ptrt = _.map(reordered, getPortraitPics),
-                filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
+				reordered = shuffle(all.slice(0), true)(sub),
+				lscp = _.map(reordered, getLscpPics),
+				ptrt = _.map(reordered, getPortraitPics),
+				filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
 				group = getLeadingGroup(i, ptrt, lscp),
 				start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(group[0], doTwice(_.findIndex)(ptL(isEqual, i)))),
 				leader = group[0].slice(0),
-                getDisplayRoute = function(gang, triggers){
-                    var actions = utils.getBest(inPortraitMode, [gang, gang.slice(0).reverse()]),
-                        metriggers = utils.getBest(inPortraitMode, triggers);
-                    return actions.concat(metriggers);
-                },
-                action = performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [['97', '98'], ['80', '99']])),
-                tmp;
-            makePathWrap = _.wrap(makePath, function(func, path){
-                action(path);
-                return func(path);
-            });
+				getDisplayRoute = function (gang, triggers) {
+					var actions = utils.getBest(inPortraitMode, [gang, gang.slice(0).reverse()]),
+						metriggers = utils.getBest(inPortraitMode, triggers);
+					return actions.concat(metriggers);
+				},
+				action = performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [
+					['97', '98'],
+					['96', '99']
+				])),
+				tmp;
+			makePathWrap = _.wrap(makePath, function (func, path) {
+				action(path);
+				return func(path);
+			});
 			tmp = leader[0];
 			start = _.findIndex(tmp, ptL(isEqual, i));
 			leader[0] = tmp.splice(start).concat(tmp);
-            if(Modernizr.deviceorientation){
-                tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1]));//orientation
-            }
-            else {
-               tmp =_.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0])));//page
-            }
+			if (Modernizr.deviceorientation) {
+				tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1])); //orientation
+			} else {
+				tmp = _.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0]))); //page
+			}
 			return makeCrossPageIterator(_.flatten(tmp));
 		},
 		advance = function () {
@@ -496,14 +487,14 @@
 			setImageAlt = ptL(setterAdapter, 'alt'),
 			setHyperLink = ptL(setterAdapter, 'href'),
 			getMyNextBase = function (it) {
-					return [_.compose(makePath, it.getNext), _.compose(getDefAlt, it.getCurrent), _.compose(makePath, it.getCurrent)];
+				return [_.compose(makePath, it.getNext), _.compose(getDefAlt, it.getCurrent), _.compose(makePath, it.getCurrent)];
 			},
-            bridgeBase = function(el) {
-					return getDomTargetImg(el).src.match(picnum)[1];
-				},
+			bridgeBase = function (el) {
+				return getDomTargetImg(el).src.match(picnum)[1];
+			},
 			getMyNextSlide = function (base) {
-					return [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePathWrap, bridgeBase, base)];
-				},
+				return [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePathWrap, bridgeBase, base)];
+			},
 			baseTrio = function (doSrc, doAlt, doHref, iterator) {
 				var headFunctions = getMyNextBase(iterator),
 					mysrc = _.compose(doSrc, headFunctions[0]),
@@ -660,7 +651,8 @@
 			play = noOp,
 			toggle_command = (function (klas, cb) {
 				var o = {
-						statik: null,/*can't use static reserved word*/
+						statik: null,
+						/*can't use static reserved word*/
 						inplay: null
 					},
 					rem = _.compose(ptL(klasRem, klas), cb),
@@ -728,68 +720,69 @@
 			},
 			initplay = ptL(invokeWhen, once(1)),
 			default_iterator = makeIterator(lis),
-                       getFileNumber = function(src){
-                var t = src.split('/');
-                   return Number(t[t.length-1].split('.')[0].substr(1));
-            },
+			getFileNumber = function (src) {
+				var t = src.split('/');
+				return Number(t[t.length - 1].split('.')[0].substr(1));
+			},
 			prepareNavHandlers = function () {
 				var iterator = default_iterator(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
-                    getNextAction = function (m) {
+					getNextAction = function (m) {
 						var get_src = _.compose(drill(['src']), getDomTargetImg),
-                            src,
+							src,
 							findCurrent = function (f, li) {
-                                src = get_src(f());
+								src = get_src(f());
 								return get_src(li).match(get_src(f()));
 							},
-                            
-                            expand = function(n, i){
-                                    var img = getDomTargetImg(lis[i]);
-                                     if(!img){
-                                         img = _.compose(anCr(thumbs), always(lis[0]))();
-                                         img = getDomTargetImg(img);
-                                     }
-                                    src = img.src.replace(/\d+/, '0'+n);
-                                    img.src = src;
-                                    img.parentNode.href = src;
-                                },
-                            contract = function(n, i){
-                                utils.removeNodeOnComplete(lis[i]);
-                            },
-                            cb = function(n, i){
-                                var img = getDomTargetImg(lis[i]);
-                                src = img.src.replace(/\d+/, '0'+n);
-                                 img.src = src;
-                                    img.parentNode.href = src;
-                            },
-                            gang,
-                            fallback = function(result){
-                                if(!_.isEmpty(result)){
-                                    return result[0];
-                                }
-                                var coll = getCurrentColl(getFileNumber(src)); 
-                                con(coll)
-
-                                
-                                if(coll.page.length > lis.length){
-                                    gang = coll.page;
-                                    cb = expand;
-                                }
-                                else if(lis.length > coll.page.length){
-                                    gang = lis;
-                                    cb = contract;
-                                }
-                                else {
-                                gang = coll.page;
-                                }
-                               _.each(gang, cb);
-                                return lis[coll.index];
-                            };
+							expand = function (n, i) {
+								var img = getDomTargetImg(lis[i]);
+								if (!img) {
+									img = _.compose(anCr(thumbs), always(lis[0]))();
+									img = getDomTargetImg(img);
+								}
+								src = img.src.replace(/\d+/, '0' + n);
+								img.src = src;
+								img.parentNode.href = src;
+							},
+							cb = function (n, i) {
+								var img = getDomTargetImg(lis[i]);
+								src = img.src.replace(/\d+/, '0' + n);
+								img.src = src;
+								img.parentNode.href = src;
+							},
+							gang,
+							fallback = function (result) {
+								if (!_.isEmpty(result)) {
+									return result[0];
+								}
+								var coll = getSubGroup(getFileNumber(src)),
+									contract = function (li, i) {
+                                        if(coll.page[i]){
+                                         var img = getDomTargetImg(lis[i]); 
+                                            src = img.src.replace(/\d+/, '0' + coll.page[i]);
+											img.src = src;
+											img.parentNode.href = src;
+                                        }
+                                        else {
+											//utils.removeNodeOnComplete(lis[i]);
+										}
+									};
+								if (coll.page.length > lis.length) {
+									gang = coll.page;
+									cb = expand;
+								} else if (lis.length > coll.page.length) {
+									gang = lis;
+									cb = contract;
+								} else {
+									gang = coll.page;
+								}
+								_.each(gang, cb);
+								return lis[coll.index];
+							};
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
 					},
-                    
 					getPrevEl = getNextAction('getPreviousElement'),
 					getNextEl = getNextAction('getNextElement'),
 					getAction = doThrice(invokemethod)(1)(null),
@@ -830,12 +823,11 @@
 			},
 			get_play_iterator = function () {
 				var myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
-                    return getSubGallery(myint);
+				return getSubGallery(myint);
 			},
 			$current = {
 				render: hideCurrent,
-				unrender: function(){
-                }
+				unrender: function () {}
 			},
 			makeSwapper = function () {
 				var ret = {
@@ -926,5 +918,6 @@
 		}());
 	}());
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
+    "use strict";
 	return "images/0" + path + ".jpg";
-}, function(){}, poloAF.Util.always('')));
+}, function () {"use strict"; }, poloAF.Util.always('')));
