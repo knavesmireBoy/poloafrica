@@ -295,7 +295,6 @@
 		ses = _.range(67, 79),
 		sewe = _.range(79, 93),
         myall = [een, twee, drie, vyf, vier, ses, sewe];
-            
         
         return function(j){
             var ret = {};
@@ -770,7 +769,9 @@
                                 if(!_.isEmpty(result)){
                                     return result[0];
                                 }
-                                var coll = getCurrentColl(getFileNumber(src));                                
+                                var coll = getCurrentColl(getFileNumber(src)); 
+                                con(coll)
+
                                 
                                 if(coll.page.length > lis.length){
                                     gang = coll.page;
@@ -783,7 +784,7 @@
                                 else {
                                 gang = coll.page;
                                 }
-                               // _.each(gang, cb);
+                               _.each(gang, cb);
                                 return lis[coll.index];
                             };
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
