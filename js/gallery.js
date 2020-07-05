@@ -285,6 +285,32 @@
                 trailer = filtered[0] ? landscape : portrait;
 				return [leader, trailer];
         },
+        getCurrentColl = (function(){
+        // NOTE: IN THIS VERSION the all variable is produced by PHP see (photos/index.php)
+    var een = _.range(1, 15),
+		twee = _.range(15, 29),
+		drie = _.range(29, 43),
+		vyf = _.range(43, 55),
+		vier = _.range(55, 67),
+		ses = _.range(67, 79),
+		sewe = _.range(79, 93),
+        myall = [een, twee, drie, vyf, vier, ses, sewe];
+            
+        
+        return function(j){
+            var ret = {};
+            return _.reduce(myall, function(cur, next){
+               var i = _.findIndex(next, function(n){ return n == j; });
+                if(i >= 0){
+                    cur = next;
+                    ret.page = cur;
+                    ret.index = i;
+                }
+                return ret;
+            });
+        };
+        
+    }()),
 		getSubGallery = function (i) {
             //con(_.zip(ptrt, lscp))
 			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
@@ -703,31 +729,61 @@
 			},
 			initplay = ptL(invokeWhen, once(1)),
 			default_iterator = makeIterator(lis),
+                       getFileNumber = function(src){
+                var t = src.split('/');
+                   return Number(t[t.length-1].split('.')[0].substr(1));
+            },
 			prepareNavHandlers = function () {
 				var iterator = default_iterator(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
-					getNextAction = function (m) {
+                    getNextAction = function (m) {
 						var get_src = _.compose(drill(['src']), getDomTargetImg),
                             src,
 							findCurrent = function (f, li) {
                                 src = get_src(f());
 								return get_src(li).match(get_src(f()));
 							},
+                            
+                            expand = function(n, i){
+                                    var img = getDomTargetImg(lis[i]);
+                                     if(!img){
+                                         img = _.compose(anCr(thumbs), always(lis[0]))();
+                                         img = getDomTargetImg(img);
+                                     }
+                                    src = img.src.replace(/\d+/, '0'+n);
+                                    img.src = src;
+                                    img.parentNode.href = src;
+                                },
+                            contract = function(n, i){
+                                utils.removeNodeOnComplete(lis[i]);
+                            },
+                            cb,
+                            gang,
+                            
                             fallback = function(result){
                                 if(!_.isEmpty(result)){
                                     return result[0];
                                 }
-                                getDomTargetImg(lis[0]).src = src;
-                                if(isPortrait(lis[0])){
-                                    getDomTargetImg(lis[4]).src = src;
-                                    return lis[4];
+                                var coll = getCurrentColl(getFileNumber(src));                                
+                                
+                                if(coll.page.length > lis.length){
+                                    cb = expand;
+                                    gang = coll.page;
                                 }
-                                return lis[0];
+                                else if(lis.length > coll.page.length){
+                                    cb = contract;
+                                    gang = lis;
+                                }
+                                if(cb){
+                                    _.each(gang, cb);
+                                }
+                                return lis[coll.index];
                             };
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
 					},
+                    
 					getPrevEl = getNextAction('getPreviousElement'),
 					getNextEl = getNextAction('getNextElement'),
 					getAction = doThrice(invokemethod)(1)(null),
