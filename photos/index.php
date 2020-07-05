@@ -38,7 +38,6 @@ echo '</main></div>'; ?>
         hijax.setContainer(document.querySelector('main'));
         hijax.setCanvas(document.querySelector('main'));
         hijax.setUrl('../templates/photos.php');
-        //hijax.captureData(true);
         //preload images
         var all,
             imgs = <?php echo json_encode($iZero) ?>;
@@ -46,6 +45,7 @@ echo '</main></div>'; ?>
         _.each(imgs, function(path){
             new Image().src = '../images/gallery/fullsize/'+path;
         });
+        //hijax.captureData(true);
         all = <?php echo json_encode(sortArray(trimString($iZero, 1, 2))) ?>;
     </script>
     <script src="../js/gallery.js"></script>
