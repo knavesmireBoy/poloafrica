@@ -42,12 +42,10 @@ echo '</main></div>'; ?>
         //preload images
         var all,
             imgs = <?php echo json_encode($iZero) ?>;
-        
         //preload
         _.each(imgs, function(path){
             new Image().src = '../images/gallery/fullsize/'+path;
         });
-        
         all = <?php echo json_encode(sortArray(trimString($iZero, 1, 2))) ?>;
     </script>
     <script src="../js/gallery.js"></script>

@@ -403,7 +403,7 @@ function modulo(n, i) {
 			return comp;
 		}([]));
 	(function (bark) {
-        //con(bark);
+        con(bark);
 		var stage_two_comp = (function (inc) {
 				return poloAF.Composite(inc);
 			}([])),
@@ -415,8 +415,9 @@ function modulo(n, i) {
 			}([])),
 			allow = !touchevents ? 2 : 0,
             isImage = function(e){
-                var i = new window.URLSearchParams(document.location.search).get('index'),
-                    mock = {},
+                var mock = {},
+                    //j = new window.URLSearchParams(document.location.search).get('index'),
+                    i = document.location.search && document.location.search.match(/f=\d+&index=(\d+)/)[1],
                     isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName']));
                 if(i){
                     utils.show(lis[i]);
@@ -888,6 +889,7 @@ function modulo(n, i) {
 				},
 				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render);
 			try {
+                con(all);
 				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
 				//utils.highLighter.perform();
