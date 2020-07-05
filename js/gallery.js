@@ -7,6 +7,19 @@
 (function (doc, visiblity, mq, query, cssanimations, touchevents, main, footer, q2, picnum, makePath, makePathWrap, getDefAlt) {
 	"use strict";
     
+    function cloneEventObj(eventObj, overrideObj){
+
+   if(!overrideObj){ overrideObj = {}; }
+
+   function EventCloneFactory(overProps){
+       for(var x in overProps){
+           this[x] = overProps[x];
+       }
+    }
+    EventCloneFactory.prototype = eventObj;
+    return new EventCloneFactory(overrideObj);
+
+}
    
 function modulo(n, i) {
 		return i % n;
@@ -159,6 +172,7 @@ function modulo(n, i) {
 		gallery = utils.getNextElement(main.firstChild),
 		allpics = utils.getByTag('img', main),
 		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
+		//getOrientation = always(false),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
 		//thumbs = $('thumbnails'),
@@ -404,6 +418,17 @@ function modulo(n, i) {
 			}([])),
 			allow = !touchevents ? 2 : 0,
 			isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName'])),
+            isImage = function(e){
+                var i = new URLSearchParams(document.location.search).get('index'),
+                    mock = {},
+                    isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName']));
+                if(i){
+                    utils.show(lis[i]);
+                    mock.target = getDomTargetImg(lis[i]);
+                    e = mock;
+                }
+                return isImg(e);
+            },
 			exitShow = function (actions) {
 				return function (flag) {
 					var f = flag ? ptL(thunk, once(1)) : always(false),
@@ -727,7 +752,8 @@ function modulo(n, i) {
                                 }
                                 var coll = getCurrentColl(getFileNumber(src));
                                 
-                            document.location ='?f='+(_.last(coll.page))+'&index='+coll.page[coll.index];
+                                
+                            document.location ='?f='+(_.first(coll.page)-1)+'&index='+coll.index+'&path='+coll.page[coll.index];
                                 
                                 /*
                                 if(coll.page.length > lis.length){
@@ -869,7 +895,11 @@ function modulo(n, i) {
 				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
 				//utils.highLighter.perform();
-				_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(thumbs);
+				_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImage, handler)))(thumbs);
+                setTimeout(function(){
+                    //poloAF.Eventing.triggerEvent(thumbs, 'click');
+                    thumbs.dispatchEvent(new Event('click'));
+                }, 1111);
 			} catch (e) {
 				$('report').innerHTML = e;
 			}
