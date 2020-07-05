@@ -403,7 +403,7 @@ function modulo(n, i) {
 			return comp;
 		}([]));
 	(function (bark) {
-        con(bark);
+        //con(bark);
 		var stage_two_comp = (function (inc) {
 				return poloAF.Composite(inc);
 			}([])),
@@ -414,10 +414,10 @@ function modulo(n, i) {
 				return poloAF.Composite(inc);
 			}([])),
 			allow = !touchevents ? 2 : 0,
-            isImage = function(e){
+            isImage = function(search, e){
                 var mock = {},
+                    i = search && search[1],
                     //j = new window.URLSearchParams(document.location.search).get('index'),
-                    i = document.location.search && document.location.search.match(/f=\d+&index=(\d+)/)[1],
                     isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName']));
                 if(i){
                     utils.show(lis[i]);
@@ -887,17 +887,17 @@ function modulo(n, i) {
 						makeElement(ptL(setAttrs, conf), anCr(getResult(tgt)), always('button')).render();
 					});
 				},
-				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render);
+				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render),
+                index = document.location.search && document.location.search.match(/f=\d+&index=(\d+)/),
+                isImg = ptL(isImage, index);
 			try {
-                con(all);
 				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
 				//utils.highLighter.perform();
-				_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImage, handler)))(thumbs);
-                setTimeout(function(){
-                    //poloAF.Eventing.triggerEvent(thumbs, 'click');
-                    thumbs.dispatchEvent(new Event('click'));
-                }, 1111);
+				_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(thumbs);
+                if(index){
+                    poloAF.Eventing.triggerEvent(thumbs, 'click');
+                }
 			} catch (e) {
 				$('report').innerHTML = e;
 			}
