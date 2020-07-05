@@ -303,9 +303,7 @@ function modulo(n, i) {
 		vier = _.range(55, 67),
 		ses = _.range(67, 79),
 		sewe = _.range(79, 93),
-        myall = [een, twee, drie, vyf, vier, ses, sewe];
-            
-        
+        myall = [een, twee, drie, vyf, vier, ses, sewe];        
         return function(j){
             var ret = {};
             return _.reduce(myall, function(cur, next){
@@ -318,7 +316,6 @@ function modulo(n, i) {
                 return ret;
             });
         };
-        
     }()),
 		getSubGallery = function (i) {
             //con(_.zip(ptrt, lscp))

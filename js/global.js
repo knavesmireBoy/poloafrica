@@ -389,7 +389,6 @@ function divideBy(a, b){
 	}
 
 	function invokeWhen(validate, action) {
-        console.log(arguments);
 		var args = _.rest(arguments, 2),
 			res = validate.apply(null, args);
 		return res && action.apply(null, args);
