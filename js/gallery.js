@@ -356,7 +356,15 @@
 				});
 			};
 		},
-		myadvance = advance(),
+		//myadvance = advance(),
+        myadvance = _.wrap(advance(), function(orig, e){
+           if(getTarget(e) === main){
+               var mock = {};
+               mock.target = $('gal_forward');
+               return orig(mock);
+           }
+            return orig(e);
+		}),
 		doInsert = ptL(anCrIn, gallery),
 		pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
 		addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
@@ -736,58 +744,28 @@
 								src = get_src(f());
 								return get_src(li).match(get_src(f()));
 							},
-							expand = function (n, i) {
-								var img = getDomTargetImg(lis[i]);
-								if (!img) {
-									img = _.compose(anCr(thumbs), always(lis[0]))();
-									img = getDomTargetImg(img);
-								}
-								src = img.src.replace(/\d+/, '0' + n);
-								img.src = src;
-								img.parentNode.href = src;
-							},
-							cb = function (n, i) {
-								var img = getDomTargetImg(lis[i]);
-								src = img.src.replace(/\d+/, '0' + n);
-								img.src = src;
-								img.parentNode.href = src;
-							},
-							gang,
-							fallback = function (result) {
+                            //matchFromBasePrep = ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))),
+                            matchFromBase = ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))),
+							fallback = function myfallback(result) {
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
-                                
-								var coll = getSubGroup(getFileNumber(src)),
-									contract = function (li, i) {
-                                        if(coll.page[i]){
-                                         var img = getDomTargetImg(lis[i]); 
-                                            src = img.src.replace(/\d+/, '0' + coll.page[i]);
-											img.src = src;
-											img.parentNode.href = src;
-                                        }
-                                        else {
-											//utils.removeNodeOnComplete(lis[i]);
-										}
-									};
-                                /*
-								if (coll.page.length > lis.length) {
-									gang = coll.page;
-									cb = expand;
-								} else if (lis.length > coll.page.length) {
-									gang = lis;
-									cb = contract;
-								} else {
-									gang = coll.page;
-								}
-								_.each(gang, cb);
-                                */
-                                
-                                poloAF.Eventing.triggerEvent($('gal_forward'), 'click');
-                                return [];
-								return lis[coll.index];
+                                poloAF.Eventing.triggerEvent(main, 'click');                           
+                                window.setTimeout(function(){
+                                    var res,
+                                        map =_.map(thumbs.getElementsByTagName('img'), function(img){
+                                        return getFileNumber(img.src);                                        
+                                    });
+                                    res = _.contains(map, getFileNumber(src));
+                                    if(!res){
+                                        myfallback([]);
+                                    }
+                                }, 555);
+                                var coll = getSubGroup(getFileNumber(src));
+                                return lis[coll.index];
+  
 							};
-						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
+						return _.compose(utils.show, utils[m], fallback, matchFromBase);
 					},
 					getPrevEl = getNextAction('getPreviousElement'),
 					getNextEl = getNextAction('getNextElement'),
