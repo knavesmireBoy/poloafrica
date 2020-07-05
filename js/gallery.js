@@ -757,6 +757,7 @@
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
+                                
 								var coll = getSubGroup(getFileNumber(src)),
 									contract = function (li, i) {
                                         if(coll.page[i]){
@@ -769,6 +770,7 @@
 											//utils.removeNodeOnComplete(lis[i]);
 										}
 									};
+                                /*
 								if (coll.page.length > lis.length) {
 									gang = coll.page;
 									cb = expand;
@@ -779,6 +781,10 @@
 									gang = coll.page;
 								}
 								_.each(gang, cb);
+                                */
+                                
+                                poloAF.Eventing.triggerEvent($('gal_forward'), 'click');
+                                return [];
 								return lis[coll.index];
 							};
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
