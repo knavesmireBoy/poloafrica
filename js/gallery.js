@@ -288,8 +288,9 @@
 			var ret = {};
 			return _.reduce(all, function (cur, next, k) {
 				var i = _.findIndex(next, function (n) {
-					return n == j;
+					return Number(n) === Number(j);
 				});
+               
 				if (i >= 0) {
 					cur = next;
 					ret.page = cur;
@@ -297,7 +298,7 @@
 					ret.group = k;
 				}
 				return ret;
-			});
+			}, all[0]);
 		},
 		getSubGallery = function (i) {
 			//con(_.zip(ptrt, lscp))
@@ -750,19 +751,23 @@
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
+                                else {
+                                    //presenter.unrender();
                                 poloAF.Eventing.triggerEvent(main, 'click');                           
                                 window.setTimeout(function(){
                                     var res,
                                         map =_.map(thumbs.getElementsByTagName('img'), function(img){
-                                        return getFileNumber(img.src);                                        
-                                    });
+                                            return getFileNumber(img.src);                                        
+                                        });
                                     res = _.contains(map, getFileNumber(src));
                                     if(!res){
-                                        myfallback([]);
+                                        return myfallback([]);
                                     }
-                                }, 555);
+                                }, 444);
                                 var coll = getSubGroup(getFileNumber(src));
-                                return lis[coll.index];
+                                    //con(coll.index, getFileNumber(src))
+                                    return lis[coll.index]; 
+                                }                                    
   
 							};
 						return _.compose(utils.show, utils[m], fallback, matchFromBase);
