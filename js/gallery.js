@@ -7,20 +7,7 @@
 (function (doc, visiblity, mq, query, cssanimations, touchevents, main, footer, q2, picnum, makePath, makePathWrap, getDefAlt) {
 	"use strict";
     
-    function cloneEventObj(eventObj, overrideObj){
 
-   if(!overrideObj){ overrideObj = {}; }
-
-   function EventCloneFactory(overProps){
-       for(var x in overProps){
-           this[x] = overProps[x];
-       }
-    }
-    EventCloneFactory.prototype = eventObj;
-    return new EventCloneFactory(overrideObj);
-
-}
-   
 function modulo(n, i) {
 		return i % n;
 	}
@@ -147,7 +134,6 @@ function modulo(n, i) {
 		invokeWhen = utils.invokeWhen,
 		cssopacity = poloAF.getOpacity().getKey(),
 		anCr = utils.append(),
-		anCrIn = utils.insert(),
 		setAttrs = utils.setAttributes,
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
@@ -164,18 +150,12 @@ function modulo(n, i) {
 		doToggle = ptL(klasTog, 'alt', main),
 		getControls = ptL($, 'controls'),
 		getSlide = ptL($, 'slide'),
-		getNodeName = utils.drillDown(['nodeName']),
-		getID = utils.drillDown(['id']),
 		mytarget = !window.addEventListener ? 'srcElement' : 'target',
-		getTarget = utils.drillDown([mytarget]),
 		getLength = utils.drillDown(['length']),
-		gallery = utils.getNextElement(main.firstChild),
 		allpics = utils.getByTag('img', main),
 		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
-		//getOrientation = always(false),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
-		//thumbs = $('thumbnails'),
 		thumbs = utils.getByClass('gallery')[0],
 		lis = _.toArray(thumbs.getElementsByTagName('li')),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
@@ -190,8 +170,6 @@ function modulo(n, i) {
 		},
         inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
-		//singlePage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
-		//groupByOrientation = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_back'))),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
@@ -241,12 +219,6 @@ function modulo(n, i) {
 		myrevadapter = doQuart(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite()),
 		neg = function (a, b) {
 			return getLength(a) !== getLength(b);
-		},
-		negator = function (cb, a, b) {
-			if (neg(a, b)) {
-				cb();
-				neg = _.negate(neg);
-			}
 		},
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
 		doPortraitLoop = ptL(_.each, allpics, fixNoNthChild),
@@ -372,6 +344,7 @@ function modulo(n, i) {
 				},
 				fixcache = function () {
 					stage_one_rpt.remove();
+                    document.location.href = document.location.href.split('?')[0];
 					//remove exit listener from event_cache
 					var list = poloAF.Eventing.listEvents(),
 						res = _.findIndex(list, function (item) {
