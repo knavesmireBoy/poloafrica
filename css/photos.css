@@ -120,7 +120,7 @@ main ul li, main ul li img {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="80"]   {
+main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="96"]   {
     border-color: white;
 }
 .gallery li, .gallery.alt li:nth-child(n+5), .gallery.alt li.portrait, ul.gallery li:nth-last-child(-n+4) {

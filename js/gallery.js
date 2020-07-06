@@ -294,7 +294,7 @@ function modulo(n, i) {
 				return [leader, trailer];
         },
         
-        getCurrentColl = (function(){
+        getSubGroup = (function(){
         // NOTE: IN THIS VERSION the all variable is produced by PHP see (photos/index.php)
     var een = _.range(1, 15),
 		twee = _.range(15, 29),
@@ -314,11 +314,10 @@ function modulo(n, i) {
                     ret.index = i;
                 }
                 return ret;
-            });
+            }, myall[0]);
         };
     }()),
 		getSubGallery = function (i) {
-            //con(_.zip(ptrt, lscp))
 			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
                 reordered = shuffle(all.slice(0), true)(sub),
                 lscp = _.map(reordered, getLscpPics),
@@ -726,50 +725,16 @@ function modulo(n, i) {
                                 src = get_src(f());
 								return get_src(li).match(get_src(f()));
 							},
-                            
-                            expand = function(n, i){
-                                    var img = getDomTargetImg(lis[i]);
-                                     if(!img){
-                                         img = _.compose(anCr(thumbs), always(lis[0]))();
-                                         img = getDomTargetImg(img);
-                                     }
-                                    src = img.src.replace(/\d+/, '0'+n);
-                                    img.src = src;
-                                    img.parentNode.href = src;
-                                },
-                            contract = function(n, i){
-                                utils.removeNodeOnComplete(lis[i]);
-                            },
-                            cb,
-                            gang,
-                            
                             fallback = function(result){
                                 if(!_.isEmpty(result)){
                                     return result[0];
                                 }
-                                var coll = getCurrentColl(getFileNumber(src));
-                                
-                                
-                            document.location ='?f='+(_.first(coll.page)-1)+'&index='+coll.index;
-                                
-                                /*
-                                if(coll.page.length > lis.length){
-                                    cb = expand;
-                                    gang = coll.page;
-                                }
-                                else if(lis.length > coll.page.length){
-                                    cb = contract;
-                                    gang = lis;
-                                }
-                                if(cb){
-                                    _.each(gang, cb);
-                                }
-                                */
+                                var coll = getSubGroup(getFileNumber(src));
+                                document.location ='?f='+(_.first(coll.page)-1)+'&index='+coll.index;
                                 return lis[coll.index];
                             };
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
 					},
-                    
 					getPrevEl = getNextAction('getPreviousElement'),
 					getNextEl = getNextAction('getNextElement'),
 					getAction = doThrice(invokemethod)(1)(null),
