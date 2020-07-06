@@ -285,19 +285,15 @@
 			return [leader, trailer];
 		},
 		getSubGroup = function (j) {
-			var ret = {};
-			return _.reduce(all, function (cur, next, k) {
+			var k;
+			return _.reduce(all, function (cur, next) {
 				var i = _.findIndex(next, function (n) {
 					return Number(n) === Number(j);
 				});
-               
-				if (i >= 0) {
-					cur = next;
-					ret.page = cur;
-					ret.index = i;
-					ret.group = k;
+				if(!failed(i)){
+                    k = i;
 				}
-				return ret;
+				return k;
 			}, all[0]);
 		},
 		getSubGallery = function (i) {
@@ -359,6 +355,7 @@
 		},
 		//myadvance = advance(),
         myadvance = _.wrap(advance(), function(orig, e){
+            //sign that event is triggered
            if(getTarget(e) === main){
                var mock = {};
                mock.target = $('gal_forward');
@@ -459,12 +456,12 @@
 			},
 			fade50 = doTwiceDefer(fadeNow)(poloAF.getOpacity(50).getValue()),
 			fade100 = doTwiceDefer(fadeNow)(poloAF.getOpacity(100).getValue()),
-			dofading = function (myopacity, pred, swapper, counter, i) {
+			dofading = function (myopacity, pred, $swapper, counter, i) {
 				var currysetter = doThrice(utils.setter)(myopacity.getValue(i))(cssopacity),
 					el = getSlide();
 				if (el) {
 					_.compose(currysetter, ptL(drill(['style']), el))();
-					utils.invokeWhen(ptL(pred, i), ptL(swapper.swap, counter), swapper);
+					utils.invokeWhen(ptL(pred, i), ptL($swapper.swap, counter), $swapper);
 				}
 			},
 			countdown = function countdown(cb, x) {
@@ -745,14 +742,12 @@
 								src = get_src(f());
 								return get_src(li).match(get_src(f()));
 							},
-                            //matchFromBasePrep = ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))),
                             matchFromBase = ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))),
 							fallback = function myfallback(result) {
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
                                 else {
-                                    //presenter.unrender();
                                 poloAF.Eventing.triggerEvent(main, 'click');                           
                                 window.setTimeout(function(){
                                     var res,
@@ -763,10 +758,8 @@
                                     if(!res){
                                         return myfallback([]);
                                     }
-                                }, 444);
-                                var coll = getSubGroup(getFileNumber(src));
-                                    //con(coll.index, getFileNumber(src))
-                                    return lis[coll.index]; 
+                                }, 333);
+                                    return lis[getSubGroup(getFileNumber(src))]; 
                                 }                                    
   
 							};
@@ -843,7 +836,7 @@
 				return ret;
 			};
 		play = function () {
-			var swapper = makeSwapper(),
+			var $swapper = makeSwapper(),
 				makeEl = function (myid) {
 					return makeElement(utils.hide, ptL(setAttrs, {
 						id: myid
@@ -851,7 +844,7 @@
 				},
 				$base = makeEl('base'),
 				$slide = makeEl('slide'),
-				fader = ptL(dofading, poloAF.getOpacity(), _.compose(_.isNumber, lessOrEqual(0)), swapper),
+				fader = ptL(dofading, poloAF.getOpacity(), _.compose(_.isNumber, lessOrEqual(0)), $swapper),
 				player = controller(countdown, fader, 101),
 				cleanup = function () {
 					player.unrender();
@@ -873,7 +866,7 @@
 			mediator.render = _.wrap(mediator.render, function (med_render, i, bool) {
 				return bool ? _.compose(mysync.exit, med_render(i, bool), mysync.enter) : med_render(i);
 			});
-			stage_two_persister(swapper);
+			stage_two_persister($swapper);
 			stage_two_persister($base);
 			stage_two_persister($slide);
 			stage_two_persister($current);
