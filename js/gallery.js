@@ -175,10 +175,33 @@
 			return img.offsetHeight > img.offsetWidth;
 			//return utils.getClassList(el).contains('portrait');
 		}),
+        $LI = (function(options){
+            var gang = [];
+            return {
+                add: function(el){
+                    gang.push(el);
+                },
+                exec: function(){
+                    var action = options[0];
+                    _.each(gang, this[action]);
+                    options = options.reverse();
+                    gang = [];
+                },
+                unrender: function(el){
+                    var $el = makeElement(always(el)).render();
+                    $el.unrender();
+                    
+                },
+                render: function(el){
+                    return makeElement(anCr(thumbs), always(el)).render();
+                }
+            };
+        }(['unrender', 'render'])),
 		doPortrait = function (el) {
 			var m = getOrientation(el) ? 'addClass' : 'removeClass';
 			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
 		},
+        
 		inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		//singlePage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
@@ -232,7 +255,8 @@
 		},
 		negator = function (cb, a, b) {
 			if (neg(a, b)) {
-				cb();
+				con('chh..')
+                cb.apply(null, _.rest(arguments, 3));
 				neg = _.negate(neg);
 			}
 		},
@@ -332,7 +356,8 @@
 		},
 		advance = function () {
 			var iterator = makeCrossPageIterator(all),
-				doNeg = ptL(negator, toogleLoop);
+                each = ptL(_.each, _.last(lis, 2), _.bind($LI.add, $LI)),
+				doNeg = ptL(negator, _.compose(toogleLoop, each));
 			return function (e) {
 				var tgt = getTarget(e),
 					allpics = utils.getByTag('img', main),
@@ -344,7 +369,9 @@
 				}
 				m = getID(tgt).match(/back$/) ? 'back' : 'forward';
 				gang = iterator[m]();
+                con(allpics.length, gang.length);
 				doNeg(allpics, gang);
+                $LI.exec();
 				allpics = utils.getByTag('img', main);
 				_.each(allpics, function (img, j) {
 					path = gang[j] || path;
