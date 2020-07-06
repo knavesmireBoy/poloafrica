@@ -25,10 +25,6 @@ function modulo(n, i) {
 		return typeof (x) === 'undefined';
 	}
 
-	function partial(f, el) {
-		return _.partial(f, el);
-	}
-
 	function compare(f, a, b, o) {
 		return f(o[a], o[b]);
 	}
@@ -137,7 +133,6 @@ function modulo(n, i) {
 		setAttrs = utils.setAttributes,
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
-		klasTog = utils.toggleClass,
 		isDesktop = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
@@ -147,12 +142,9 @@ function modulo(n, i) {
 		}()),
 		clicker = ptL(utils.addHandler, 'click'),
 		makeElement = utils.machElement,
-		doToggle = ptL(klasTog, 'alt', main),
 		getControls = ptL($, 'controls'),
 		getSlide = ptL($, 'slide'),
 		mytarget = !window.addEventListener ? 'srcElement' : 'target',
-		getLength = utils.drillDown(['length']),
-		allpics = utils.getByTag('img', main),
 		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
@@ -164,10 +156,6 @@ function modulo(n, i) {
 			return img.offsetHeight > img.offsetWidth;
 			//return utils.getClassList(el).contains('portrait');
 		}),
-        doPortrait = function (el) {
-			var m = getOrientation(el) ? 'addClass' : 'removeClass';
-			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
-		},
         inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		exitCurrentImage = function (img) {
@@ -281,6 +269,7 @@ function modulo(n, i) {
         };
     }()),
 		getSubGallery = function (i) {
+            //all variable is supplied by php in index.php, included just before galley.js
 			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
                 reordered = shuffle(all.slice(0), true)(sub),
                 lscp = _.map(reordered, getLscpPics),
@@ -829,12 +818,6 @@ function modulo(n, i) {
 			} catch (e) {
 				$('report').innerHTML = e;
 			}
-			/*inserts back/forward buttons, returns a REVERSE adpater around a eventListener object,
-    where unrender would restore listener and render would remove listener when entering navigation mode
-    HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
-			//addPageNav(anCr, 'Enable checkbox to restrict to a single page', 'gal_forward', noOp);
-			//addPageNav(doInsert, 'Enable checkbox to group pictures by orientation', 'gal_back', addPageNavHandler);
-			//utils.$('placeholder').innerHTML = 'PHOTOS';
 			utils.getByTag('span', document)[0].innerHTML = 'PHOTOS';
 		}());
 	}());
