@@ -135,9 +135,7 @@ main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"],
 .alt .gallery li:nth-child(11) {
 	clear: none;
 }
-.alt .gallery li:nth-last-child(-n+2) {
-	display: none;
-}
+
 .js .showtime main ul li {
 	width: 100%;
 }

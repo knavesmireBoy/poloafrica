@@ -176,28 +176,18 @@
 			//return utils.getClassList(el).contains('portrait');
 		}),
         $LI = (function(options){
-            var gang = [];
             return {
-                add: function(el){
-                    if(!gang[1]){
-                        gang.push(el);
-                    }
-                },
+
                 exec: function(){
-                    con('ex', gang, options[0])
                     var action = options[0];
-                    con(gang);
-                    _.each(gang, this[action]);
+                    _.each(_.last(thumbs.getElementsByTagName('li'), 2), this[action]);
                     options = options.reverse();
-                    gang = [];
                 },
                 unrender: function(el){
-                    con(el, 'u');
                     var $el = makeElement(always(el)).render();
                     $el.unrender();
                 },
                 render: function(el){
-                    con(el, 'r');
                     return makeElement(anCr(thumbs), always(el)).render();
                 }
             };
@@ -361,9 +351,9 @@
 		},
 		advance = function () {
 			var iterator = makeCrossPageIterator(all),
+				//doNeg = ptL(negator, _.bind($LI.exec, $LI));
 				doNeg = ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)));
 			return function (e) {
-           _.each(_.last(thumbs.getElementsByTagName('li'), 2), _.bind($LI.add, $LI));
 				var tgt = getTarget(e),
 					allpics = utils.getByTag('img', main),
 					path = '001',
