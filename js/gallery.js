@@ -179,20 +179,25 @@
             var gang = [];
             return {
                 add: function(el){
-                    gang.push(el);
+                    if(!gang[1]){
+                        gang.push(el);
+                    }
                 },
                 exec: function(){
+                    con('ex', gang, options[0])
                     var action = options[0];
+                    con(gang);
                     _.each(gang, this[action]);
                     options = options.reverse();
                     gang = [];
                 },
                 unrender: function(el){
+                    con(el, 'u');
                     var $el = makeElement(always(el)).render();
                     $el.unrender();
-                    
                 },
                 render: function(el){
+                    con(el, 'r');
                     return makeElement(anCr(thumbs), always(el)).render();
                 }
             };
@@ -251,7 +256,7 @@
 		},
 		myrevadapter = doQuart(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite()),
 		neg = function (a, b) {
-			return getLength(a) !== getLength(b);
+			return getLength(b) !== 14;
 		},
 		negator = function (cb, a, b) {
 			if (neg(a, b)) {
@@ -356,9 +361,9 @@
 		},
 		advance = function () {
 			var iterator = makeCrossPageIterator(all),
-                each = ptL(_.each, _.last(lis, 2), _.bind($LI.add, $LI)),
-				doNeg = ptL(negator, _.compose(toogleLoop, each));
+				doNeg = ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)));
 			return function (e) {
+           _.each(_.last(thumbs.getElementsByTagName('li'), 2), _.bind($LI.add, $LI));
 				var tgt = getTarget(e),
 					allpics = utils.getByTag('img', main),
 					path = '001',
@@ -369,9 +374,7 @@
 				}
 				m = getID(tgt).match(/back$/) ? 'back' : 'forward';
 				gang = iterator[m]();
-                con(allpics.length, gang.length);
 				doNeg(allpics, gang);
-                $LI.exec();
 				allpics = utils.getByTag('img', main);
 				_.each(allpics, function (img, j) {
 					path = gang[j] || path;
