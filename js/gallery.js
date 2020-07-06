@@ -217,15 +217,6 @@ function modulo(n, i) {
 			return doQuart(adaptHandlers)('unrender')([renderpair, handlerpair.slice(0)])(poloAF.Composite());
 		},
 		myrevadapter = doQuart(adaptHandlers)('render')([renderpair, handlerpair.slice(0).reverse()])(poloAF.Composite()),
-		neg = function (a, b) {
-			return getLength(a) !== getLength(b);
-		},
-		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
-		doPortraitLoop = ptL(_.each, allpics, fixNoNthChild),
-		doPortraitBridge = function (e) {
-			fixNoNthChild(e.target);
-		},
-		toogleLoop = _.compose(doPortraitLoop, doToggle),
 		doSplice = function (bool, coll) {
 			if (coll[13]) {
 				var copy = coll.slice(0),
@@ -374,8 +365,7 @@ function modulo(n, i) {
 			comp.add(_.extend(poloAF.Composite(), $controls));
 			return comp;
 		}([]));
-	(function (bark) {
-        //con(bark);
+	(function () {
 		var stage_two_comp = (function (inc) {
 				return poloAF.Composite(inc);
 			}([])),
@@ -413,12 +403,12 @@ function modulo(n, i) {
 			},
 			fade50 = doTwiceDefer(fadeNow)(poloAF.getOpacity(50).getValue()),
 			fade100 = doTwiceDefer(fadeNow)(poloAF.getOpacity(100).getValue()),
-			dofading = function (myopacity, pred, swapper, counter, i) {
+			dofading = function (myopacity, pred, $swapper, counter, i) {
 				var currysetter = doThrice(utils.setter)(myopacity.getValue(i))(cssopacity),
 					el = getSlide();
 				if (el) {
 					_.compose(currysetter, ptL(drill(['style']), el))();
-					utils.invokeWhen(ptL(pred, i), ptL(swapper.swap, counter), swapper);
+					utils.invokeWhen(ptL(pred, i), ptL($swapper.swap, counter), $swapper);
 				}
 			},
 			countdown = function countdown(cb, x) {
@@ -779,7 +769,7 @@ function modulo(n, i) {
 				return ret;
 			};
 		play = function () {
-			var swapper = makeSwapper(),
+			var $swapper = makeSwapper(),
 				makeEl = function (myid) {
 					return makeElement(utils.hide, ptL(setAttrs, {
 						id: myid
@@ -787,7 +777,7 @@ function modulo(n, i) {
 				},
 				$base = makeEl('base'),
 				$slide = makeEl('slide'),
-				fader = ptL(dofading, poloAF.getOpacity(), _.compose(_.isNumber, lessOrEqual(0)), swapper),
+				fader = ptL(dofading, poloAF.getOpacity(), _.compose(_.isNumber, lessOrEqual(0)), $swapper),
 				player = controller(countdown, fader, 101),
 				cleanup = function () {
 					player.unrender();
@@ -809,7 +799,7 @@ function modulo(n, i) {
 			mediator.render = _.wrap(mediator.render, function (med_render, i, bool) {
 				return bool ? _.compose(mysync.exit, med_render(i, bool), mysync.enter) : med_render(i);
 			});
-			stage_two_persister(swapper);
+			stage_two_persister($swapper);
 			stage_two_persister($base);
 			stage_two_persister($slide);
 			stage_two_persister($current);
@@ -847,7 +837,7 @@ function modulo(n, i) {
 			//utils.$('placeholder').innerHTML = 'PHOTOS';
 			utils.getByTag('span', document)[0].innerHTML = 'PHOTOS';
 		}());
-	}('woof'));
+	}());
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
 	//return "../images/gallery/fullsize/013.jpg";
 	return "../images/gallery/fullsize/0" + path + ".jpg";
