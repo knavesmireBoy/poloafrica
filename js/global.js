@@ -550,6 +550,7 @@ function divideBy(a, b){
                         eventing_instance[extent](e);//preventDefault etc..
                     }
 				//avoid sending Event object as it may wind up as the useCapture argument in the eventing_instance
+                    //action MAY already be bound
                     action.apply(el || e.target || null, args);
 			},
 			wrapped = _.wrap(fn, wrapper);
@@ -700,6 +701,7 @@ function divideBy(a, b){
 		addEvent: function (handler, func, extent) {
 			return function (el) {
 				var partial = el && _.isElement(el) ? _.partial(handler, el) : _.partial(handler);
+                //returns a function which call a function that init's an eventing_instance and returns it
 				return prepareListener(extent)(partial, func, el);
 			};
 		},
