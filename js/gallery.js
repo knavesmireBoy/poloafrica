@@ -336,7 +336,13 @@ function modulo(n, i) {
 					}
 				},
 				presenter_unrender = ptL(invokemethod, presenter, null, 'unrender'),
-				$exit = makeElement(doTwice(utils.getter)('getElement'), utils.addEvent(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf), anCrIn(thumbs, main), always('a')),
+                
+                
+				$exit = makeElement(doTwice(utils.getter)('getElement'), utils.addEvent(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf),
+                                    //anCrIn(thumbs, main),
+                                    anCr(main),
+                                    always('a')),
+                
 				$controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
 			comp.add(_.extend(poloAF.Composite(), $thumbs, {
 				unrender: _.compose(ptL(klasRem, 'portrait'), ptL(klasAdd, 'gallery', thumbs))
@@ -792,7 +798,7 @@ function modulo(n, i) {
 			stage_two_persister($base);
 			stage_two_persister($slide);
 			stage_two_persister($current);
-			_.compose(stage_two_persist.add, adapterFactory(), utils.addEvent(clicker, _.bind(player.render, player)))(thumbs);
+			_.compose(stage_two_persist.add, adapterFactory(), utils.addEvent(clicker, _.bind(player.render, player)))(main);
 			_.compose(stage_two_persist.add, tooltip_adapter, makeToolTip)();
 			presenter.addAll(player, mediator, syncho);
 		};
@@ -811,9 +817,9 @@ function modulo(n, i) {
 				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
 				//utils.highLighter.perform();
-				_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(thumbs);
+				_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(main);
                 if(index){
-                    poloAF.Eventing.triggerEvent(thumbs, 'click');
+                    poloAF.Eventing.triggerEvent(main, 'click');
                 }
 			} catch (e) {
 				$('report').innerHTML = e;
