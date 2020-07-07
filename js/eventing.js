@@ -165,7 +165,7 @@ window.poloAF.Eventing = (function (eventing) {
 		}([]));
 	if (window.addEventListener) {
 		eventing.init = function (type, el, fn, context) {
-            //console.log(arguments)
+        //console.log(arguments)
             //var inta = new poloAF.Intaface('Element', ['setAttribute']);
 			//poloAF.Intaface.ensures(config.element, inta);
 			var config = sortArgs(fn, el, context),
@@ -183,7 +183,11 @@ window.poloAF.Eventing = (function (eventing) {
 			this.getElement = function () {
 				return config.element;
 			};
+            this.getAction = function () {
+				return bound;
+			};
 			_.each(['prevent', 'preventOnly', 'stop', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));
+            //console.log(config);
 			this.el = config.element + '_' + window.poloAF.Eventing.listEvents().length + '_' + (count += 1) + '__' + config.element.id;
 			return _.extendOwn({}, this);
 		};
@@ -206,6 +210,9 @@ window.poloAF.Eventing = (function (eventing) {
 			this.getElement = function () {
 				return config.element;
 			};
+            this.getAction = function () {
+				return bound;
+			};
             this.el = config.element + '_' + (count += 1);
 			_.each(['prevent', 'preventOnly', 'stop', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));
 			return _.extendOwn({}, this);
@@ -226,6 +233,9 @@ window.poloAF.Eventing = (function (eventing) {
 			};
 			this.getElement = function () {
 				return config.element;
+			};
+            this.getAction = function () {
+				return bound;
 			};
 			this.el = config.element + '_' + (count += 1);
 			_.each(['prevent', 'preventOnly', 'stop', 'deleteListeners', 'flush', 'listEvents', 'triggerEvent', 'getEventTarget'], _.partial(mapper, EventCache, this));

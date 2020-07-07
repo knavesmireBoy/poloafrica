@@ -366,6 +366,16 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	main ul {
 		width: 80%;
 	}
+    
+    main ul.portrait {
+	margin: 0 30%;
+    width: auto;
+}
+.showtime main ul.portrait {
+	margin: 0;
+    width: 40%;
+}
+    
 	.showtime main ul {
 		width: auto;
 		margin: 0 8%;

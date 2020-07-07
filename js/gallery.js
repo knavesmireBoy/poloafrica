@@ -168,7 +168,7 @@
 		all = [een, twee, drie, vier, vyf, ses, sewe],
 		//thumbs = $('thumbnails'),
 		thumbs = utils.getByClass('gallery')[0],
-		lis = _.toArray(thumbs.getElementsByTagName('li')),
+		list_elements = _.toArray(thumbs.getElementsByTagName('li')),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
@@ -745,7 +745,7 @@
 				};
 			},
 			initplay = ptL(invokeWhen, once(1)),
-			default_iterator = makeIterator(lis),
+			default_iterator = makeIterator(list_elements),
 			getFileNumber = function (src) {
 				var t = src.split('/');
 				return Number(t[t.length - 1].split('.')[0].substr(1));
@@ -762,7 +762,7 @@
 								src = get_src(f());
 								return get_src(li).match(get_src(f()));
 							},
-                            matchFromBase = ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))),
+                            matchFromBase = ptL(_.filter, list_elements, ptL(findCurrent, ptL($, 'base'))),
 							fallback = function myfallback(result) {
 								if (!_.isEmpty(result)) {
 									return result[0];
@@ -779,7 +779,7 @@
                                         return myfallback([]);
                                     }
                                 }, 333);
-                                    return lis[getSubGroup(getFileNumber(src))]; 
+                                    return list_elements[getSubGroup(getFileNumber(src))]; 
                                 }                                    
   
 							};
