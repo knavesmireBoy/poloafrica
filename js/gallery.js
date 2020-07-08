@@ -168,7 +168,7 @@
 		all = [een, twee, drie, vier, vyf, ses, sewe],
 		//thumbs = $('thumbnails'),
 		thumbs = utils.getByClass('gallery')[0],
-		list_elements = _.toArray(thumbs.getElementsByTagName('li')),
+		list_elements = thumbs.getElementsByTagName('li'),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
@@ -180,10 +180,12 @@
 
                 exec: function(){
                     var action = options[0];
-                    _.each(_.last(thumbs.getElementsByTagName('li'), 2), this[action]);
+                    con(action);
+                    _.each(_.last(list_elements, 2), this[action]);
                     options = options.reverse();
                 },
                 unrender: function(el){
+                    con(el);
                     var $el = makeElement(always(el)).render();
                     $el.unrender();
                 },
@@ -351,8 +353,8 @@
 		},
 		advance = function () {
 			var iterator = makeCrossPageIterator(all),
-				//doNeg = ptL(negator, _.bind($LI.exec, $LI));
-				doNeg = ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)));
+				//checkStatus = ptL(negator, _.bind($LI.exec, $LI));
+				checkStatus = ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)));
 			return function (e) {
 				var tgt = getTarget(e),
 					allpics = utils.getByTag('img', main),
@@ -364,7 +366,8 @@
 				}
 				m = getID(tgt).match(/back$/) ? 'back' : 'forward';
 				gang = iterator[m]();
-				doNeg(allpics, gang);
+				checkStatus(allpics, gang);
+                con(allpics, gang)
 				allpics = utils.getByTag('img', main);
 				_.each(allpics, function (img, j) {
 					path = gang[j] || path;
@@ -745,12 +748,15 @@
 				};
 			},
 			initplay = ptL(invokeWhen, once(1)),
-			default_iterator = makeIterator(list_elements),
+			default_iterator = makeIterator(_.filter(list_elements, function(li){
+                return !li.id;
+            })),
 			getFileNumber = function (src) {
 				var t = src.split('/');
 				return Number(t[t.length - 1].split('.')[0].substr(1));
 			},
 			prepareNavHandlers = function () {
+                con(default_iterator())
 				var iterator = default_iterator(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
@@ -760,10 +766,11 @@
 							src,
 							findCurrent = function (f, li) {
 								src = get_src(f());
-								return get_src(li).match(get_src(f()));
+								return !li.id && get_src(li).match(get_src(f()));
 							},
                             matchFromBase = ptL(_.filter, list_elements, ptL(findCurrent, ptL($, 'base'))),
 							fallback = function myfallback(result) {
+                                con(result);
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
@@ -780,7 +787,7 @@
                                         return myfallback([]);
                                     }
                                 }, 333);
-                                    con(99)
+                                    con(list_elements);
                                     return list_elements[getSubGroup(getFileNumber(src))]; 
                                 }                                    
   
@@ -811,7 +818,7 @@
 				mediator.add(0, doPrevious, doNext);
 				addRouter(handler);
 				addLocator(_.compose(doShow, getAction, getDirection));
-			},
+			},//needs to run after exiti slideshow
 			tooltip_pairs = [
 				['render', 'unrender'],
 				['init', 'cancel']
