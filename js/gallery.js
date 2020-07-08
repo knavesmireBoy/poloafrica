@@ -171,6 +171,9 @@
 		list_elements = _.toArray(thumbs.getElementsByTagName('li')),
         get_src = _.compose(drill(['src']), getDomTargetImg),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
+        getMyInt = function(){
+            return Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
+        },
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
 			return img.offsetHeight > img.offsetWidth;
@@ -299,17 +302,20 @@
 			return [leader, trailer];
 		},
 		getSubGroup = function (j) {
-			var k;
+			var ret = {};
 			return _.reduce(all, function (cur, next) {
 				var i = _.findIndex(next, function (n) {
 					return Number(n) === Number(j);
 				});
 				if(!failed(i)){
-                    k = i;
+                    cur = next;
+                    ret.page = cur;
+                    ret.index = i;
 				}
-				return k;
+				return ret;
 			}, all[0]);
 		},
+
 		getSubGallery = function (i) {
 			//con(_.zip(ptrt, lscp))
 			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
@@ -749,9 +755,12 @@
 				return Number(t[t.length - 1].split('.')[0].substr(1));
 			},
 			prepareNavHandlers = function () {
+                con(getMyInt());
                 //con(utils.getByTag('li', thumbs));
 				var getNextAction = function (m) {
 						var src,
+                            i,
+                            pp,
 							findCurrent = function (f, li) {
 								src = get_src(getResult(f));
 								return !li.id && get_src(li).match(src);
@@ -774,15 +783,16 @@
                                         return myfallback([]);
                                     }
                                 }, 333);
-                                    return list_elements[getSubGroup(getFileNumber(src))]; 
+                                    i = getSubGroup(getFileNumber(src)).index;
+                                    pp =  getSubGroup(getFileNumber(src)).page;
+                                    return list_elements[i]; 
                                 }                                    
   
 							};
 						return _.compose(utils.show, utils[m], fallback, matchFromBase);
 					},
-                    iterator = default_iterator();
-                con(iterator.getLength())
-					var forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
+                    iterator = default_iterator(),
+					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
 					getPrevEl = getNextAction('getPreviousElement'),
