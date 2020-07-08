@@ -174,19 +174,16 @@
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
 			return img.offsetHeight > img.offsetWidth;
-			//return utils.getClassList(el).contains('portrait');
 		}),
 							
         $LI = (function(options){
             return {
                 exec: function(){
                     var action = options[0];
-                    con(action);
                     _.each(_.last(list_elements, 2), this[action]);
                     options = options.reverse();
                 },
                 unrender: function(el){
-                    con(el);
                     var $el = makeElement(always(el)).render();
                     $el.unrender();
                 },
@@ -202,8 +199,6 @@
         
 		inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
-		//singlePage = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_forward'))),
-		//groupByOrientation = _.compose(utils.getZero, ptL(utils.getByTag, 'input', ptL($, 'gal_back'))),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass';
@@ -213,7 +208,6 @@
 		},
 		exitGallery = _.compose(exitCurrentImage, getCurrentImage),
 		hideCurrent = _.compose(utils.hide, getCurrentSlide),
-		//showCurrent = _.compose(utils.show, getCurrentSlide),
 		doShow = function (next) {
 			hideCurrent();
 			utils.show(next);
@@ -274,8 +268,6 @@
 		},
 		getPortraitPics = ptL(doSplice, true),
 		getLscpPics = ptL(doSplice, false),
-		//lscp = _.map(all, getLscpPics),
-		//ptrt = _.map(all, getPortraitPics),
 		mixer = function (predicate, leader, trailer) {
 			/*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
 			    the '98' signal undoes the original action.
@@ -367,6 +359,7 @@
 				}
 				m = getID(tgt).match(/back$/) ? 'back' : 'forward';
 				gang = iterator[m]();
+                con(allpics, gang)
 				checkStatus(allpics, gang);
 				allpics = utils.getByTag('img', main);
 				_.each(allpics, function (img, j) {
@@ -763,7 +756,7 @@
 								src = get_src(getResult(f));
 								return !li.id && get_src(li).match(src);
 							},
-                            matchFromBase = ptL(_.filter, utils.getByTag('li', thumbs), ptL(findCurrent, ptL($, 'base'))),
+                            matchFromBase = ptL(_.filter, list_elements, ptL(findCurrent, ptL($, 'base'))),
 							fallback = function myfallback(result) {                                
 								if (!_.isEmpty(result)) {
 									return result[0];
@@ -787,8 +780,9 @@
 							};
 						return _.compose(utils.show, utils[m], fallback, matchFromBase);
 					},
-                    iterator = default_iterator(),
-					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
+                    iterator = default_iterator();
+                con(iterator.getLength())
+					var forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
 					getPrevEl = getNextAction('getPreviousElement'),
@@ -862,6 +856,7 @@
 				return ret;
 			};
 		play = function () {
+            con('big play');
 			var $swapper = makeSwapper(),
 				makeEl = function (myid) {
 					return makeElement(utils.hide, ptL(setAttrs, {
