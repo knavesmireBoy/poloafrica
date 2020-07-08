@@ -168,16 +168,17 @@
 		all = [een, twee, drie, vier, vyf, ses, sewe],
 		//thumbs = $('thumbnails'),
 		thumbs = utils.getByClass('gallery')[0],
-		list_elements = thumbs.getElementsByTagName('li'),
+		list_elements = _.toArray(thumbs.getElementsByTagName('li')),
+        get_src = _.compose(drill(['src']), getDomTargetImg),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
 			return img.offsetHeight > img.offsetWidth;
 			//return utils.getClassList(el).contains('portrait');
 		}),
+							
         $LI = (function(options){
             return {
-
                 exec: function(){
                     var action = options[0];
                     con(action);
@@ -367,7 +368,6 @@
 				m = getID(tgt).match(/back$/) ? 'back' : 'forward';
 				gang = iterator[m]();
 				checkStatus(allpics, gang);
-                con(allpics, gang)
 				allpics = utils.getByTag('img', main);
 				_.each(allpics, function (img, j) {
 					path = gang[j] || path;
@@ -748,7 +748,7 @@
 				};
 			},
 			initplay = ptL(invokeWhen, once(1)),
-			default_iterator = makeIterator(_.filter(list_elements, function(li){
+			default_iterator = makeIterator(_.filter(utils.getByTag('li', thumbs), function(li){
                 return !li.id;
             })),
 			getFileNumber = function (src) {
@@ -756,21 +756,15 @@
 				return Number(t[t.length - 1].split('.')[0].substr(1));
 			},
 			prepareNavHandlers = function () {
-                con(default_iterator())
-				var iterator = default_iterator(),
-					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
-					back = doThriceDefer(invokemethod)('back')(null)(iterator),
-					getDirection = locator(iterator, forward, back),
-					getNextAction = function (m) {
-						var get_src = _.compose(drill(['src']), getDomTargetImg),
-							src,
+                //con(utils.getByTag('li', thumbs));
+				var getNextAction = function (m) {
+						var src,
 							findCurrent = function (f, li) {
-								src = get_src(f());
-								return !li.id && get_src(li).match(get_src(f()));
+								src = get_src(getResult(f));
+								return !li.id && get_src(li).match(src);
 							},
-                            matchFromBase = ptL(_.filter, list_elements, ptL(findCurrent, ptL($, 'base'))),
-							fallback = function myfallback(result) {
-                                con(result);
+                            matchFromBase = ptL(_.filter, utils.getByTag('li', thumbs), ptL(findCurrent, ptL($, 'base'))),
+							fallback = function myfallback(result) {                                
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
@@ -787,13 +781,16 @@
                                         return myfallback([]);
                                     }
                                 }, 333);
-                                    con(list_elements);
                                     return list_elements[getSubGroup(getFileNumber(src))]; 
                                 }                                    
   
 							};
 						return _.compose(utils.show, utils[m], fallback, matchFromBase);
 					},
+                    iterator = default_iterator(),
+					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
+					back = doThriceDefer(invokemethod)('back')(null)(iterator),
+					getDirection = locator(iterator, forward, back),
 					getPrevEl = getNextAction('getPreviousElement'),
 					getNextEl = getNextAction('getNextElement'),
 					getAction = doThrice(invokemethod)(1)(null),
@@ -893,6 +890,7 @@
 				});
 			mediator.add(1, _.bind(player.render, player));
 			mediator.render = _.wrap(mediator.render, function (med_render, i, bool) {
+                con(arguments)
 				return bool ? _.compose(mysync.exit, med_render(i, bool), mysync.enter) : med_render(i);
 			});
 			stage_two_persister($swapper);
