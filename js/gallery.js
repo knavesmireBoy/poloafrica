@@ -149,15 +149,13 @@ function modulo(n, i) {
 		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
-		thumbs = utils.getByClass('gallery')[0],
         getThumbs = _.compose(utils.getZero, ptL(utils.getByTag, 'ul', main)),
-		//lis = _.toArray(thumbs.getElementsByTagName('li')),
-		lis = _.compose(ptL(_.toArray, _.compose(ptL(utils.getByTag, 'li'), getThumbs))),
+		//lis = _.compose(ptL(_.toArray, _.compose(ptL(utils.getByTag, 'li'), getThumbs))),
+		getListElements = _.compose(ptL(utils.getByTag, 'li'), getThumbs),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', getThumbs, 'li')),
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
 			return img.offsetHeight > img.offsetWidth;
-			//return utils.getClassList(el).contains('portrait');
 		}),
         inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
@@ -373,12 +371,13 @@ function modulo(n, i) {
 			allow = !touchevents ? 2 : 0,
             isImage = function(search, e){
                 var mock = {},
+                    list = getListElements(),
                     i = search && search[1],
                     //j = new window.URLSearchParams(document.location.search).get('index'),
                     isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName']));
                 if(i){
-                    utils.show(lis[i]);
-                    mock[mytarget] = getDomTargetImg(lis[i]);
+                    utils.show(list[i]);
+                    mock[mytarget] = getDomTargetImg(list[i]);
                     e = mock;
                 }
                 return isImg(e);
@@ -679,6 +678,7 @@ function modulo(n, i) {
                     getNextAction = function (m) {
 						var get_src = _.compose(drill(['src']), getDomTargetImg),
                             src,
+                            list = getListElements(),
 							findCurrent = function (f, li) {
                                 src = get_src(f());
 								return get_src(li).match(get_src(f()));
@@ -689,9 +689,9 @@ function modulo(n, i) {
                                 }
                                 var coll = getSubGroup(getFileNumber(src));
                                 document.location ='?f='+(_.first(coll.page)-1)+'&index='+coll.index;
-                                return lis[coll.index];
+                                return list[coll.index];
                             };
-						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, lis, ptL(findCurrent, ptL($, 'base'))));
+						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, list, ptL(findCurrent, ptL($, 'base'))));
 					},
 					getPrevEl = getNextAction('getPreviousElement'),
 					getNextEl = getNextAction('getNextElement'),
