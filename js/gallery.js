@@ -146,6 +146,7 @@
 		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
+        /* ON THIS VERSION we are using ajax to update when navigating to different pages this means a fresh ul is created aling with the forward and back buttons. So we can't hardcode thise DOM elements and instead must use functions to query the current DOM, getByClass and getByTag use getResult to obtain an element, getResult either invokes a function or eturns it's argument*/
 		getThumbs = _.compose(utils.getZero, ptL(utils.getByTag, 'ul', main)),
 		getListElements = _.compose(ptL(utils.getByTag, 'li'), getThumbs),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', getThumbs, 'li')),
