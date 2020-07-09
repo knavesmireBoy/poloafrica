@@ -254,10 +254,10 @@
 					img.onload = doPortraitBridge;
 				});
         },
-		toogleLoop = _.compose(doPortraitLoop, doToggle),
+		toogleLoop = _.compose(doPortraitLoop, doToggle),//cb
             $LI = (function(options){
             return {
-                exec: function(){
+                exec: function(){//cb
                     var action = options[0];
                     _.each(_.last(list_elements, 2), this[action]);
                     options = options.reverse();
@@ -273,22 +273,22 @@
         }(['unrender', 'render'])),
         populate = _.compose(doPopulate, ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)), allpics)),
 		advanceRouteBridge = function (e) {
-				if (!getNodeName(getTarget(e)).match(/a/i)) { return; }
-				return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
+            if (!getNodeName(getTarget(e)).match(/a/i)) { return; }
+            return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
 		},
         advanceRoute = function(m){
           return populate(cross_page_iterator[m]());
         },
-        myadvance = _.wrap(advanceRouteBridge, function(orig, e){
+        advanceRouteListener = _.wrap(advanceRouteBridge, function(orig, e){
+            con(getTarget(e))
             //sign that event is triggered
            if(getTarget(e) === main){
-               var mock = {};
-               mock.target = $('gal_forward');
-               return advanceRoute(orig(mock));
+               //var mock = {};
+               //mock.target = $('gal_forward');
+               //return advanceRoute(orig(mock));
            }
             return advanceRoute(orig(e));
 		}),
-    
         doSplice = function (bool, coll) {
 			if (coll[13]) {
 				var copy = coll.slice(0),
@@ -378,10 +378,11 @@
 			}
 			return makeCrossPageIterator(_.flatten(tmp));
 		},
-		doInsert = ptL(anCrIn, gallery),
-		pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
+		insertBeforeThumbs = ptL(anCrIn, gallery),
+		pageNavHandler = utils.addEvent(clicker, _.debounce(advanceRouteListener, 300)),
 		addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
 		pageInputHandler = function (arg) {
+            //stopPropagation
 			utils.addEvent(clicker, noOp, 'stop')(arg);
 			return arg;
 		},
@@ -747,12 +748,10 @@
 				return Number(t[t.length - 1].split('.')[0].substr(1));
 			},
 			prepareNavHandlers = function () {
-                con(getMyInt());
                 //con(utils.getByTag('li', thumbs));
 				var getNextAction = function (m) {
 						var src,
-                            i,
-                            pp,
+                            subgroup,
 							findCurrent = function (f, li) {
 								src = get_src(getResult(f));
 								return !li.id && get_src(li).match(src);
@@ -775,15 +774,14 @@
                                         return myfallback([]);
                                     }
                                 }, 333);
-                                    i = getSubGroup(getFileNumber(src)).index;
-                                    pp = getSubGroup(getFileNumber(src)).page;
-                                    return list_elements[i]; 
+                                    subgroup = getSubGroup(getFileNumber(src));
+                                    doPopulate(subgroup.page);
+                                    return list_elements[subgroup.index]; 
                                 }                                    
-  
 							};
 						return _.compose(utils.show, utils[m], fallback, matchFromBase);
 					},
-                    iterator = default_iterator(),
+                    iterator = makeIterator(utils.getByTag('li', thumbs))(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
@@ -919,7 +917,8 @@
     where unrender would restore listener and render would remove listener when entering navigation mode
     HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
 			addPageNav(anCr, 'Enable checkbox to restrict to a single page', 'gal_forward', noOp);
-			addPageNav(doInsert, 'Enable checkbox to group pictures by orientation', 'gal_back', addPageNavHandler);
+            //addPageNavHandler delegaates to main as the listening element, only one handler required, hence noOp above
+			addPageNav(insertBeforeThumbs, 'Enable checkbox to group pictures by orientation', 'gal_back', addPageNavHandler);
 			utils.$('placeholder').innerHTML = 'PHOTOS';
 		}());
 	}());
