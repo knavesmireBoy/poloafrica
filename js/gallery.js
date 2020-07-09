@@ -239,13 +239,21 @@
                 cb.apply(null, _.rest(arguments, 3));
 				neg = _.negate(neg);
 			}
+            return b;
 		},
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
 		doPortraitLoop = ptL(_.each, allpics, fixNoNthChild),
 		doPortraitBridge = function (e) {
 			fixNoNthChild(e.target);
 		},
-        
+        doPopulate = function(pagepics){
+            var path = '001';
+            _.each(allpics, function (img, i) {
+					path = pagepics[i] || path;//? default to avoid null
+					img.src = makePath(path);
+					img.onload = doPortraitBridge;
+				});
+        },
 		toogleLoop = _.compose(doPortraitLoop, doToggle),
             $LI = (function(options){
             return {
@@ -260,21 +268,10 @@
                 },
                 render: function(el){
                     return makeElement(anCr(thumbs), always(el)).render();
-                },
-                populate: noOp
+                }
             };
         }(['unrender', 'render'])),
-        
-        populate = function(gang){
-            var path = '001',
-                checkStatus = ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)));
-				checkStatus(allpics, gang);
-				_.each(allpics, function (img, i) {
-					path = gang[i] || path;//? default to avoid null
-					img.src = makePath(path);
-					img.onload = doPortraitBridge;
-				});
-        },
+        populate = _.compose(doPopulate, ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)), allpics)),
 		advanceRoute = function (e) {
 				if (!getNodeName(getTarget(e)).match(/a/i)) { return; }
 				return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
