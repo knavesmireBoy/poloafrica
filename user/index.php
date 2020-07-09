@@ -2,7 +2,6 @@
 include $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 
-require_once '../../../innocent/poloafricaDB.txt';
 require_once '../includes/db.inc.php';
 require_once '../includes/access.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Admin.php';
