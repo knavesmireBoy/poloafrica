@@ -249,7 +249,6 @@ h2 span {
 	#tvcoverage article p:last-child {
 		margin: 0 0 1em;
 	}
-    
     #tvcoverage article:first-of-type p:last-child {
 		margin: 1em 0;
 	}
