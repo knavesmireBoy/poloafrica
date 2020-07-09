@@ -775,7 +775,6 @@
                                     }
                                 }, 333);
                                     subgroup = getSubGroup(getFileNumber(src));
-                                    doPopulate(subgroup.page);
                                     return list_elements[subgroup.index]; 
                                 }                                    
 							};
@@ -867,7 +866,8 @@
 				$slide = makeEl('slide'),
 				fader = ptL(dofading, poloAF.getOpacity(), _.compose(_.isNumber, lessOrEqual(0)), $swapper),
 				player = controller(countdown, fader, 101),
-				cleanup = function () {
+				cleanup = function () {                    
+                    populate(_.compose(getSubGroup, getFileNumber, get_src)($('base')).page);
 					player.unrender();
 					stage_two_comp.unrender();
 					stage_one_rpt.remove(stage_one_rpt.get(false)).unrender();
@@ -885,7 +885,6 @@
 				});
 			mediator.add(1, _.bind(player.render, player));
 			mediator.render = _.wrap(mediator.render, function (med_render, i, bool) {
-                con(arguments)
 				return bool ? _.compose(mysync.exit, med_render(i, bool), mysync.enter) : med_render(i);
 			});
 			stage_two_persister($swapper);
