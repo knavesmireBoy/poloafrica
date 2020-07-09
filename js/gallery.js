@@ -178,7 +178,7 @@ function modulo(n, i) {
             /* the CMS version loads a new set of 'lis' per page so we now simply query the DOM to obtain
             the lateset set of 'lis' rather than relay on supplying a collection as before
             */
-			var coll = getThumbs(),
+			var coll = getListElements(),
                 findIndex = ptL(utils.findIndex, coll),
 				prepIterator = doQuart(poloAF.Iterator(false)),
 				doIterator = prepIterator(ptL(modulo, coll.length))(always(true))(coll);
@@ -681,14 +681,17 @@ function modulo(n, i) {
                             list = getListElements(),
 							findCurrent = function (f, li) {
                                 src = get_src(f());
-								return get_src(li).match(get_src(f()));
+								return !li.id && get_src(li).match(src);
 							},
                             fallback = function(result){
+                                con(result, list)
                                 if(!_.isEmpty(result)){
                                     return result[0];
                                 }
                                 var coll = getSubGroup(getFileNumber(src));
+                                con(88)
                                 document.location ='?f='+(_.first(coll.page)-1)+'&index='+coll.index;
+                                con(list, coll.index);
                                 return list[coll.index];
                             };
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, list, ptL(findCurrent, ptL($, 'base'))));
