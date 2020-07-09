@@ -533,29 +533,32 @@ function divideBy(a, b){
 			select = args[1] ? args.splice(-1, 1)[0] : args[0];
 		return _.compose.apply(null, args)(select());
 	}
+    
+    function addHandler(type, func, el) {
+		return poloAF.Eventing.init.call(poloAF.Eventing, type, func, el).addListener();
+	}
 
 	function prepareListener(extent){
-    return function(handler, fn, el) {
-		var listener,
-			wrapper = function (func) {
+        return function(handler, fn, el) {
+            var eventing_instance,
+                wrapper = function (action) {
 				var args = _.rest(arguments),
 					e = _.last(arguments);
-                    extent = extent || 'prevent';
-				listener[extent](e);
-				//avoid sending Event object as it may wind up as the useCapture argument in the listener
-				func.apply(el || null, args.splice(-1, 1));
+                    if(e instanceof window.Event){
+                        args = args.splice(-1, 1);
+                        extent = extent || 'prevent';
+                        eventing_instance[extent](e);//preventDefault etc..
+                    }
+				//avoid sending Event object as it may wind up as the useCapture argument in the eventing_instance
+                    //action MAY already be bound
+                    action.apply(el || e.target || null, args);
 			},
 			wrapped = _.wrap(fn, wrapper);
 		//calls addHandler which calls addListener which invokes the addEventListener/attachEvent method
-		listener = handler(wrapped);
-		return listener;
+		eventing_instance = handler(wrapped);
+		return eventing_instance;
 	};
-}
-
-	function addHandler(type, func, el) {
-		return poloAF.Eventing.init.call(poloAF.Eventing, type, func, el).addListener();
-	}
-    
+}    
 
 	function validator(message, fun) {
 		var f = function () {
@@ -698,6 +701,7 @@ function divideBy(a, b){
 		addEvent: function (handler, func, extent) {
 			return function (el) {
 				var partial = el && _.isElement(el) ? _.partial(handler, el) : _.partial(handler);
+                //returns a function which call a function that init's an eventing_instance and returns it
 				return prepareListener(extent)(partial, func, el);
 			};
 		},
