@@ -178,23 +178,7 @@
 			var img = getDomTargetImg(el);
 			return img.offsetHeight > img.offsetWidth;
 		}),
-							
-        $LI = (function(options){
-            return {
-                exec: function(){
-                    var action = options[0];
-                    _.each(_.last(list_elements, 2), this[action]);
-                    options = options.reverse();
-                },
-                unrender: function(el){
-                    var $el = makeElement(always(el)).render();
-                    $el.unrender();
-                },
-                render: function(el){
-                    return makeElement(anCr(thumbs), always(el)).render();
-                }
-            };
-        }(['unrender', 'render'])),
+        isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName'])),
 		doPortrait = function (el) {
 			var m = getOrientation(el) ? 'addClass' : 'removeClass';
 			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
@@ -226,6 +210,7 @@
 			var prepIterator = doVier(window.poloAF.Iterator(false));
 			return prepIterator(ptL(modulo, coll.length))(utils.always(true))(coll)(0);
 		},
+        cross_page_iterator = makeCrossPageIterator(all),
 		Element = poloAF.Intaface('Display', ['render', 'unrender']),
 		makeLeafComp = function (obj) {
 			return _.extend(poloAF.Composite(), obj);
@@ -260,8 +245,54 @@
 		doPortraitBridge = function (e) {
 			fixNoNthChild(e.target);
 		},
+        
 		toogleLoop = _.compose(doPortraitLoop, doToggle),
-		doSplice = function (bool, coll) {
+            $LI = (function(options){
+            return {
+                exec: function(){
+                    var action = options[0];
+                    _.each(_.last(list_elements, 2), this[action]);
+                    options = options.reverse();
+                },
+                unrender: function(el){
+                    var $el = makeElement(always(el)).render();
+                    $el.unrender();
+                },
+                render: function(el){
+                    return makeElement(anCr(thumbs), always(el)).render();
+                },
+                populate: noOp
+            };
+        }(['unrender', 'render'])),
+        
+        populate = function(gang){
+            var path = '001',
+                checkStatus = ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)));
+				checkStatus(allpics, gang);
+				_.each(allpics, function (img, i) {
+					path = gang[i] || path;//? default to avoid null
+					img.src = makePath(path);
+					img.onload = doPortraitBridge;
+				});
+        },
+		advanceRoute = function (e) {
+				if (!getNodeName(getTarget(e)).match(/a/i)) { return; }
+				return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
+		},
+        advanceRouteBridge = function(m){
+          return populate(cross_page_iterator[m]());
+        },
+        myadvance = _.wrap(advanceRoute, function(orig, e){
+            //sign that event is triggered
+           if(getTarget(e) === main){
+               var mock = {};
+               mock.target = $('gal_forward');
+               return advanceRouteBridge(orig(mock));
+           }
+            return advanceRouteBridge(orig(e));
+		}),
+    
+        doSplice = function (bool, coll) {
 			if (coll[13]) {
 				var copy = coll.slice(0),
 					res = copy.splice(4, 6);
@@ -350,41 +381,6 @@
 			}
 			return makeCrossPageIterator(_.flatten(tmp));
 		},
-		advance = function () {
-			var iterator = makeCrossPageIterator(all),
-				//checkStatus = ptL(negator, _.bind($LI.exec, $LI));
-				checkStatus = ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)));
-			return function (e) {
-				var tgt = getTarget(e),
-					allpics = utils.getByTag('img', main),
-					path = '001',
-					gang,
-					m;
-				if (!getNodeName(tgt).match(/a/i)) {
-					return;
-				}
-				m = getID(tgt).match(/back$/) ? 'back' : 'forward';
-				gang = iterator[m]();
-                con(allpics, gang)
-				checkStatus(allpics, gang);
-				allpics = utils.getByTag('img', main);
-				_.each(allpics, function (img, j) {
-					path = gang[j] || path;
-					img.src = makePath(path);
-					img.onload = doPortraitBridge;
-				});
-			};
-		},
-		//myadvance = advance(),
-        myadvance = _.wrap(advance(), function(orig, e){
-            //sign that event is triggered
-           if(getTarget(e) === main){
-               var mock = {};
-               mock.target = $('gal_forward');
-               return orig(mock);
-           }
-            return orig(e);
-		}),
 		doInsert = ptL(anCrIn, gallery),
 		pageNavHandler = utils.addEvent(clicker, _.debounce(myadvance, 300)),
 		addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
@@ -462,7 +458,6 @@
 				return poloAF.Composite(inc);
 			}([])),
 			allow = !touchevents ? 2 : 0,
-			isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName'])),
 			exitShow = function (actions) {
 				return function (flag) {
 					var f = flag ? ptL(thunk, once(1)) : always(false),
@@ -784,7 +779,7 @@
                                     }
                                 }, 333);
                                     i = getSubGroup(getFileNumber(src)).index;
-                                    pp =  getSubGroup(getFileNumber(src)).page;
+                                    pp = getSubGroup(getFileNumber(src)).page;
                                     return list_elements[i]; 
                                 }                                    
   

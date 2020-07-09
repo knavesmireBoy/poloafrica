@@ -55,6 +55,9 @@ poloAF.Iterator = function (rev) {
 				},
 				getCollection: function () {
 					return coll;
+				},
+                setCollection: function (coll) {
+					this.coll = coll;
 				}
 			};
 		if (rev) {
