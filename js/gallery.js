@@ -6,17 +6,16 @@
 /*global _: false */
 (function (doc, visiblity, mq, query, cssanimations, touchevents, main, footer, q2, picnum, makePath, makePathWrap, getDefAlt) {
 	"use strict";
-    
 
-function modulo(n, i) {
+	function modulo(n, i) {
 		return i % n;
 	}
 
 	function shuffle(coll, flag) {
 		return function (start, deleteCount) {
-            deleteCount = isNaN(deleteCount) ? coll.length-1 : deleteCount;
-            start = isNaN(start) ? 0 : start;
-            var res = coll.splice(start, deleteCount);
+			deleteCount = isNaN(deleteCount) ? coll.length - 1 : deleteCount;
+			start = isNaN(start) ? 0 : start;
+			var res = coll.splice(start, deleteCount);
 			return flag ? res.concat(coll) : coll.concat(res);
 		};
 	}
@@ -104,8 +103,6 @@ function modulo(n, i) {
 	function isEqual(x, y) {
 		return Number(x) === Number(y);
 	}
-    
-    
 	var utils = poloAF.Util,
 		con = window.console.log.bind(window),
 		reporter = function (msg, el) {
@@ -149,21 +146,20 @@ function modulo(n, i) {
 		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
-        getThumbs = _.compose(utils.getZero, ptL(utils.getByTag, 'ul', main)),
-		//lis = _.compose(ptL(_.toArray, _.compose(ptL(utils.getByTag, 'li'), getThumbs))),
+		getThumbs = _.compose(utils.getZero, ptL(utils.getByTag, 'ul', main)),
 		getListElements = _.compose(ptL(utils.getByTag, 'li'), getThumbs),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', getThumbs, 'li')),
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
 			return img.offsetHeight > img.offsetWidth;
 		}),
-        inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
+		inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass',
-                thumbs = getThumbs();
-            m = math ? 'addClass' : 'removeClass';
+				thumbs = getThumbs();
+			m = math ? 'addClass' : 'removeClass';
 			_.map([thumbs, $('wrap')], ptL(utils[m], 'portrait'));
 			return img;
 		},
@@ -175,11 +171,11 @@ function modulo(n, i) {
 			exitGallery();
 		},
 		makeIterator = function () {
-            /* the CMS version loads a new set of 'lis' per page so we now simply query the DOM to obtain
-            the lateset set of 'lis' rather than relay on supplying a collection as before
-            */
+			/* the CMS version loads a new set of 'lis' per page so we now simply query the DOM to obtain
+			the lateset set of 'lis' rather than relay on supplying a collection as before
+			*/
 			var coll = getListElements(),
-                findIndex = ptL(utils.findIndex, coll),
+				findIndex = ptL(utils.findIndex, coll),
 				prepIterator = doQuart(poloAF.Iterator(false)),
 				doIterator = prepIterator(ptL(modulo, coll.length))(always(true))(coll);
 			return _.compose(doIterator, findIndex, doTwice(utils.isEqual), getCurrentSlide);
@@ -217,90 +213,93 @@ function modulo(n, i) {
 		},
 		getPortraitPics = ptL(doSplice, true),
 		getLscpPics = ptL(doSplice, false),
-        mixer = function(predicate, leader, trailer){
-            /*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
-                the '98' signal undoes the original action.
-                '96' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
-            var active = _.every([leader, trailer], function(arr){
-                return arr[0];
-            });
-            if(active){
-                 return predicate() ? leader.concat('97', '96', trailer, '98') : leader.concat('96', '97', trailer, '99');
-            }
-            return leader[0] ? leader : trailer;
-        },
-        mixerBridge = function(pred, zipped){
-            return mixer.apply(null, [pred, zipped[0], zipped[1]]);
-        },
-        performSwap = function (inbound, outbound, enter, exit) {
+		mixer = function (predicate, leader, trailer) {
+			/*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
+			    the '98' signal undoes the original action.
+			    '96' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
+			var active = _.every([leader, trailer], function (arr) {
+				return arr[0];
+			});
+			if (active) {
+				return predicate() ? leader.concat('97', '96', trailer, '98') : leader.concat('96', '97', trailer, '99');
+			}
+			return leader[0] ? leader : trailer;
+		},
+		mixerBridge = function (pred, zipped) {
+			return mixer.apply(null, [pred, zipped[0], zipped[1]]);
+		},
+		performSwap = function (inbound, outbound, enter, exit) {
 			return function (path) {
 				var thumbs = getThumbs(),
-                    action = utils.getBest(function (agg) {
-					return agg[0]();
-				}, _.zip([ptL(utils.isEqual, enter, path), ptL(utils.isEqual, exit, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, 'portrait')), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, 'portrait')), noOp]));
+					action = utils.getBest(function (agg) {
+						return agg[0]();
+					}, _.zip([ptL(utils.isEqual, enter, path), ptL(utils.isEqual, exit, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, 'portrait')), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, 'portrait')), noOp]));
 				return action[1]();
 			};
 		},
-        getLeadingGroup = function(i, portrait, landscape){
-            var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
-                leader = filtered[0] ? portrait : landscape,
-                trailer = filtered[0] ? landscape : portrait;
-				return [leader, trailer];
-        },
-        
-        getSubGroup = (function(){
-        // NOTE: IN THIS VERSION the all variable is produced by PHP see (photos/index.php)
-    var een = _.range(1, 15),
-		twee = _.range(15, 29),
-		drie = _.range(29, 43),
-		vyf = _.range(43, 55),
-		vier = _.range(55, 67),
-		ses = _.range(67, 79),
-		sewe = _.range(79, 93),
-        myall = [een, twee, drie, vyf, vier, ses, sewe];        
-        return function(j){
-            var ret = {};
-            return _.reduce(myall, function(cur, next){
-               var i = _.findIndex(next, function(n){ return n == j; });
-                if(i >= 0){
-                    cur = next;
-                    ret.page = cur;
-                    ret.index = i;
-                }
-                return ret;
-            }, myall[0]);
-        };
-    }()),
+		getLeadingGroup = function (i, portrait, landscape) {
+			var filtered = _.filter(portrait, doTwice(_.find)(ptL(isEqual, i))),
+				leader = filtered[0] ? portrait : landscape,
+				trailer = filtered[0] ? landscape : portrait;
+			return [leader, trailer];
+		},
+		getSubGroup = (function () {
+			// NOTE: IN THIS VERSION the all variable is produced by PHP see (photos/index.php)
+			var een = _.range(1, 15),
+				twee = _.range(15, 29),
+				drie = _.range(29, 43),
+				vyf = _.range(43, 55),
+				vier = _.range(55, 67),
+				ses = _.range(67, 79),
+				sewe = _.range(79, 93),
+				myall = [een, twee, drie, vyf, vier, ses, sewe];
+			return function (j) {
+				var ret = {};
+				return _.reduce(myall, function (cur, next) {
+					var i = _.findIndex(next, function (n) {
+						return Number(n) === Number(j);
+					});
+					if (i >= 0) {
+						cur = next;
+						ret.page = cur;
+						ret.index = i;
+					}
+					return ret;
+				}, myall[0]);
+			};
+		}()),
 		getSubGallery = function (i) {
-            //all variable is supplied by php in index.php, included just before galley.js
+			//all variable is supplied by php in index.php, included just before galley.js
 			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
-                reordered = shuffle(all.slice(0), true)(sub),
-                lscp = _.map(reordered, getLscpPics),
-                ptrt = _.map(reordered, getPortraitPics),
-                filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
+				reordered = shuffle(all.slice(0), true)(sub),
+				lscp = _.map(reordered, getLscpPics),
+				ptrt = _.map(reordered, getPortraitPics),
+				filtered = _.filter(ptrt, doTwice(_.find)(ptL(isEqual, i))),
 				group = getLeadingGroup(i, ptrt, lscp),
 				start = doTwice(_.findIndex)(doThrice(utils.gtThan)(true)(0))(_.map(group[0], doTwice(_.findIndex)(ptL(isEqual, i)))),
 				leader = group[0].slice(0),
-                getDisplayRoute = function(gang, triggers){
-                    var actions = utils.getBest(inPortraitMode, [gang, gang.slice(0).reverse()]),
-                        metriggers = utils.getBest(inPortraitMode, triggers);
-                    return actions.concat(metriggers);
-                },
-                action = performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [['97', '98'], ['96', '99']])),
-                tmp;
-            makePathWrap = _.wrap(makePath, function(func, path){
-                action(path);
-                return func(path);
-            });
+				getDisplayRoute = function (gang, triggers) {
+					var actions = utils.getBest(inPortraitMode, [gang, gang.slice(0).reverse()]),
+						metriggers = utils.getBest(inPortraitMode, triggers);
+					return actions.concat(metriggers);
+				},
+				action = performSwap.apply(null, getDisplayRoute([klasRem, klasAdd], [
+					['97', '98'],
+					['96', '99']
+				])),
+				tmp;
+			makePathWrap = _.wrap(makePath, function (func, path) {
+				action(path);
+				return func(path);
+			});
 			tmp = leader[0];
 			start = _.findIndex(tmp, ptL(isEqual, i));
 			leader[0] = tmp.splice(start).concat(tmp);
-            if(Modernizr.deviceorientation){
-                tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1]));//orientation
-            }
-            else {
-               tmp =_.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0])));//page
-            }
+			if (Modernizr.deviceorientation) {
+				tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1])); //orientation
+			} else {
+				tmp = _.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0]))); //page
+			}
 			return makeCrossPageIterator(_.flatten(tmp));
 		},
 		presenter = (function (inc) {
@@ -313,7 +312,7 @@ function modulo(n, i) {
 			var comp = poloAF.Composite(inc, Element),
 				getDomTargetList = utils.getDomParent(utils.getNodeByTag('li')),
 				//all arguments must be functions...hence always
-                $thumbs = makeElement(_.debounce(exitGallery, 300), ptL(klasRem, 'gallery'), getThumbs),
+				$thumbs = makeElement(_.debounce(exitGallery, 300), ptL(klasRem, 'gallery'), getThumbs),
 				$body = makeElement(ptL(klasAdd, 'showtime'), always(utils.getBody)),
 				$wrap = makeElement(always($('wrap'))),
 				$show = makeElement(ptL(utils.show), getDomTargetList, drill(['target'])),
@@ -326,7 +325,7 @@ function modulo(n, i) {
 				},
 				fixcache = function () {
 					stage_one_rpt.remove();
-                    document.location.href = document.location.href.split('?')[0];
+					document.location.href = document.location.href.split('?')[0];
 					//remove exit listener from event_cache
 					var list = poloAF.Eventing.listEvents(),
 						res = _.findIndex(list, function (item) {
@@ -338,10 +337,8 @@ function modulo(n, i) {
 					}
 				},
 				presenter_unrender = ptL(invokemethod, presenter, null, 'unrender'),
-				$exit = makeElement(doTwice(utils.getter)('getElement'), utils.addEvent(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf),
-                                    anCrIn(getThumbs, main),
-                                    always('a')),
-                $controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
+				$exit = makeElement(doTwice(utils.getter)('getElement'), utils.addEvent(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf), anCrIn(getThumbs, main), always('a')),
+				$controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
 			comp.add(_.extend(poloAF.Composite(), $thumbs, {
 				unrender: _.compose(ptL(klasRem, 'portrait'), ptL(klasAdd, 'gallery', getThumbs))
 			}));
@@ -369,19 +366,19 @@ function modulo(n, i) {
 				return poloAF.Composite(inc);
 			}([])),
 			allow = !touchevents ? 2 : 0,
-            isImage = function(search, e){
-                var mock = {},
-                    list = getListElements(),
-                    i = search && search[1],
-                    //j = new window.URLSearchParams(document.location.search).get('index'),
-                    isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName']));
-                if(i){
-                    utils.show(list[i]);
-                    mock[mytarget] = getDomTargetImg(list[i]);
-                    e = mock;
-                }
-                return isImg(e);
-            },
+			isImage = function (search, e) {
+				var mock = {},
+					list = getListElements(),
+					i = search && search[1],
+					//j = new window.URLSearchParams(document.location.search).get('index'),
+					isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName']));
+				if (i) {
+					utils.show(list[i]);
+					mock[mytarget] = getDomTargetImg(list[i]);
+					e = mock;
+				}
+				return isImg(e);
+			},
 			exitShow = function (actions) {
 				return function (flag) {
 					var f = flag ? ptL(thunk, once(1)) : always(false),
@@ -434,14 +431,14 @@ function modulo(n, i) {
 			setImageAlt = ptL(setterAdapter, 'alt'),
 			setHyperLink = ptL(setterAdapter, 'href'),
 			getMyNextBase = function (it) {
-					return [_.compose(makePath, it.getNext), _.compose(getDefAlt, it.getCurrent), _.compose(makePath, it.getCurrent)];
+				return [_.compose(makePath, it.getNext), _.compose(getDefAlt, it.getCurrent), _.compose(makePath, it.getCurrent)];
 			},
-            bridgeBase = function(el) {
-					return getDomTargetImg(el).src.match(picnum)[1];
-				},
+			bridgeBase = function (el) {
+				return getDomTargetImg(el).src.match(picnum)[1];
+			},
 			getMyNextSlide = function (base) {
-					return [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePathWrap, bridgeBase, base)];
-				},
+				return [_.compose(getDefAlt, base), _.compose(makePath, bridgeBase, base), _.compose(makePathWrap, bridgeBase, base)];
+			},
 			baseTrio = function (doSrc, doAlt, doHref, iterator) {
 				var headFunctions = getMyNextBase(iterator),
 					mysrc = _.compose(doSrc, headFunctions[0]),
@@ -598,7 +595,8 @@ function modulo(n, i) {
 			play = noOp,
 			toggle_command = (function (klas, cb) {
 				var o = {
-						statik: null,/*can't use static reserved word*/
+						statik: null,
+						/*can't use static reserved word*/
 						inplay: null
 					},
 					rem = _.compose(ptL(klasRem, klas), cb),
@@ -666,34 +664,31 @@ function modulo(n, i) {
 			},
 			initplay = ptL(invokeWhen, once(1)),
 			default_iterator = makeIterator(),
-            getFileNumber = function(src){
-                var t = src.split('/');
-                   return Number(t[t.length-1].split('.')[0].substr(1));
-            },
+			getFileNumber = function (src) {
+				var t = src.split('/');
+				return Number(t[t.length - 1].split('.')[0].substr(1));
+			},
 			prepareNavHandlers = function () {
 				var iterator = default_iterator(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
-                    getNextAction = function (m) {
+					getNextAction = function (m) {
 						var get_src = _.compose(drill(['src']), getDomTargetImg),
-                            src,
-                            list = getListElements(),
+							src,
+							list = getListElements(),
 							findCurrent = function (f, li) {
-                                src = get_src(f());
+								src = get_src(f());
 								return !li.id && get_src(li).match(src);
 							},
-                            fallback = function(result){
-                                con(result, list)
-                                if(!_.isEmpty(result)){
-                                    return result[0];
-                                }
-                                var coll = getSubGroup(getFileNumber(src));
-                                con(88)
-                                document.location ='?f='+(_.first(coll.page)-1)+'&index='+coll.index;
-                                con(list, coll.index);
-                                return list[coll.index];
-                            };
+							fallback = function (result) {
+								if (!_.isEmpty(result)) {
+									return result[0];
+								}
+								var coll = getSubGroup(getFileNumber(src));
+								document.location = '?f=' + (_.first(coll.page) - 1) + '&index=' + coll.index;
+								return list[coll.index];
+							};
 						return _.compose(utils.show, utils[m], fallback, ptL(_.filter, list, ptL(findCurrent, ptL($, 'base'))));
 					},
 					getPrevEl = getNextAction('getPreviousElement'),
@@ -736,11 +731,11 @@ function modulo(n, i) {
 			},
 			get_play_iterator = function () {
 				var myint = Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
-                    return getSubGallery(myint);
+				return getSubGallery(myint);
 			},
 			$current = {
 				render: hideCurrent,
-				unrender: function(){}
+				unrender: function () {}
 			},
 			makeSwapper = function () {
 				var ret = {
@@ -814,16 +809,16 @@ function modulo(n, i) {
 					});
 				},
 				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render),
-                index = document.location.search && document.location.search.match(/f=\d+&index=(\d+)/),
-                isImg = ptL(isImage, index);
+				index = document.location.search && document.location.search.match(/f=\d+&index=(\d+)/),
+				isImg = ptL(isImage, index);
 			try {
 				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
 				//utils.highLighter.perform();
 				_.compose(stage_one_comp.add, myrevadapter, utils.addEvent(clicker, ptL(invokeWhen, isImg, handler)))(main);
-                if(index){
-                    poloAF.Eventing.triggerEvent(main, 'click');
-                }
+				if (index) {
+					poloAF.Eventing.triggerEvent(main, 'click');
+				}
 			} catch (e) {
 				$('report').innerHTML = e;
 			}
@@ -831,6 +826,7 @@ function modulo(n, i) {
 		}());
 	}());
 }(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
+    "use strict";
 	//return "../images/gallery/fullsize/013.jpg";
 	return "../images/gallery/fullsize/0" + path + ".jpg";
-}, function(){}, poloAF.Util.always('')));
+}, function () {"use strict"; }, poloAF.Util.always('')));
