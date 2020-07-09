@@ -272,21 +272,21 @@
             };
         }(['unrender', 'render'])),
         populate = _.compose(doPopulate, ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)), allpics)),
-		advanceRoute = function (e) {
+		advanceRouteBridge = function (e) {
 				if (!getNodeName(getTarget(e)).match(/a/i)) { return; }
 				return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
 		},
-        advanceRouteBridge = function(m){
+        advanceRoute = function(m){
           return populate(cross_page_iterator[m]());
         },
-        myadvance = _.wrap(advanceRoute, function(orig, e){
+        myadvance = _.wrap(advanceRouteBridge, function(orig, e){
             //sign that event is triggered
            if(getTarget(e) === main){
                var mock = {};
                mock.target = $('gal_forward');
-               return advanceRouteBridge(orig(mock));
+               return advanceRoute(orig(mock));
            }
-            return advanceRouteBridge(orig(e));
+            return advanceRoute(orig(e));
 		}),
     
         doSplice = function (bool, coll) {
