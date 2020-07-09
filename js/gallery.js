@@ -167,7 +167,6 @@
 		ses = _.range(67, 79),
 		sewe = _.range(79, 93),
 		all = [een, twee, drie, vier, vyf, ses, sewe],
-		//thumbs = $('thumbnails'),
 		thumbs = utils.getByClass('gallery')[0],
 		list_elements = _.toArray(thumbs.getElementsByTagName('li')),
 		get_src = _.compose(drill(['src']), getDomTargetImg),
