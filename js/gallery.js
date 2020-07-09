@@ -130,6 +130,7 @@ function modulo(n, i) {
 		invokeWhen = utils.invokeWhen,
 		cssopacity = poloAF.getOpacity().getKey(),
 		anCr = utils.append(),
+		anCrIn = utils.insert(),
 		setAttrs = utils.setAttributes,
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
@@ -149,8 +150,10 @@ function modulo(n, i) {
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
 		thumbs = utils.getByClass('gallery')[0],
-		lis = _.toArray(thumbs.getElementsByTagName('li')),
-		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
+        getThumbs = _.compose(utils.getZero, ptL(utils.getByTag, 'ul', main)),
+		//lis = _.toArray(thumbs.getElementsByTagName('li')),
+		lis = _.compose(ptL(_.toArray, _.compose(ptL(utils.getByTag, 'li'), getThumbs))),
+		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', getThumbs, 'li')),
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
 			return img.offsetHeight > img.offsetWidth;
@@ -160,7 +163,8 @@ function modulo(n, i) {
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		exitCurrentImage = function (img) {
 			var math = getOrientation(img),
-				m = math && isDesktop() ? 'addClass' : 'removeClass';
+				m = math && isDesktop() ? 'addClass' : 'removeClass',
+                thumbs = getThumbs();
             m = math ? 'addClass' : 'removeClass';
 			_.map([thumbs, $('wrap')], ptL(utils[m], 'portrait'));
 			return img;
@@ -176,7 +180,7 @@ function modulo(n, i) {
             /* the CMS version loads a new set of 'lis' per page so we now simply query the DOM to obtain
             the lateset set of 'lis' rather than relay on supplying a collection as before
             */
-			var coll = _.toArray(thumbs.getElementsByTagName('li')),
+			var coll = getThumbs(),
                 findIndex = ptL(utils.findIndex, coll),
 				prepIterator = doQuart(poloAF.Iterator(false)),
 				doIterator = prepIterator(ptL(modulo, coll.length))(always(true))(coll);
@@ -232,7 +236,8 @@ function modulo(n, i) {
         },
         performSwap = function (inbound, outbound, enter, exit) {
 			return function (path) {
-				var action = utils.getBest(function (agg) {
+				var thumbs = getThumbs(),
+                    action = utils.getBest(function (agg) {
 					return agg[0]();
 				}, _.zip([ptL(utils.isEqual, enter, path), ptL(utils.isEqual, exit, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, 'portrait')), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, 'portrait')), noOp]));
 				return action[1]();
@@ -308,10 +313,9 @@ function modulo(n, i) {
 		}([])),
 		stage_one_comp = (function (inc) {
 			var comp = poloAF.Composite(inc, Element),
-				anCrIn = utils.insert(),
 				getDomTargetList = utils.getDomParent(utils.getNodeByTag('li')),
 				//all arguments must be functions...hence always
-				$thumbs = makeElement(_.debounce(exitGallery, 300), ptL(klasRem, 'gallery'), always(thumbs)),
+                $thumbs = makeElement(_.debounce(exitGallery, 300), ptL(klasRem, 'gallery'), getThumbs),
 				$body = makeElement(ptL(klasAdd, 'showtime'), always(utils.getBody)),
 				$wrap = makeElement(always($('wrap'))),
 				$show = makeElement(ptL(utils.show), getDomTargetList, drill(['target'])),
@@ -336,16 +340,12 @@ function modulo(n, i) {
 					}
 				},
 				presenter_unrender = ptL(invokemethod, presenter, null, 'unrender'),
-                
-                
 				$exit = makeElement(doTwice(utils.getter)('getElement'), utils.addEvent(clicker, _.compose(fixcache, presenter_unrender)), ptL(setAttrs, exitconf),
-                                    //anCrIn(thumbs, main),
-                                    anCr(main),
+                                    anCrIn(getThumbs, main),
                                     always('a')),
-                
-				$controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
+                $controls = makeElement(ptL(klasAdd, 'static'), ptL(setAttrs, controlsconf), anCr(main), always('div'));
 			comp.add(_.extend(poloAF.Composite(), $thumbs, {
-				unrender: _.compose(ptL(klasRem, 'portrait'), ptL(klasAdd, 'gallery', thumbs))
+				unrender: _.compose(ptL(klasRem, 'portrait'), ptL(klasAdd, 'gallery', getThumbs))
 			}));
 			comp.add(_.extend(poloAF.Composite(), $body, {
 				unrender: ptL(klasRem, 'showtime', utils.getBody())
@@ -487,7 +487,7 @@ function modulo(n, i) {
 						var clone = getSlide(),
 							pauser = makeElement(ptL(setAttrs, {
 								id: 'paused'
-							}), anCr(thumbs), always(clone)).render(),
+							}), anCr(getThumbs), always(clone)).render(),
 							img = getDomTargetImg(pauser.getElement());
 						img.onload = fade50(pauser.getElement());
 						img.src = isPortrait(clone) ? '../images/resource/pauseLong.png' : '../images/resource/pause.png';
@@ -590,7 +590,7 @@ function modulo(n, i) {
 			], 0)),
 			addLocator = function (cb) {
 				var adapter = adapterFactory();
-				_.compose(stage_one_rpt.add, adapter, utils.addEvent(clicker, cb))(thumbs);
+				_.compose(stage_one_rpt.add, adapter, utils.addEvent(clicker, cb))(getThumbs);
 			},
 			addRouter = function (cb) {
 				var adapter = adapterFactory();
@@ -636,7 +636,7 @@ function modulo(n, i) {
 				stage_two_rpt.add(command);
 			},
 			makeToolTip = function () {
-				return poloAF.Tooltip(thumbs, ["move mouse in and out of footer...", "...to toggle the display of control buttons"], allow);
+				return poloAF.Tooltip(getThumbs(), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], allow);
 			},
 			enter_slideshow = function () {
 				var comp = stage_one_rpt.get(false);
@@ -768,7 +768,7 @@ function modulo(n, i) {
 				makeEl = function (myid) {
 					return makeElement(utils.hide, ptL(setAttrs, {
 						id: myid
-					}), anCr(thumbs), getCurrentSlide);
+					}), anCr(getThumbs), getCurrentSlide);
 				},
 				$base = makeEl('base'),
 				$slide = makeEl('slide'),

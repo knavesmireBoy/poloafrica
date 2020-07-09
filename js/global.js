@@ -501,7 +501,7 @@ function divideBy(a, b){
 			},
 			ran = false,
 			pre = _.partial(prefix, '.'),
-			byTag = _.partial(filterTagsByClass, el || document, tag || '*', mefilter),
+			byTag = _.partial(filterTagsByClass, getResult(el) || document, tag || '*', mefilter),
 			dispatcher = dispatch.apply(null, classInvokers.concat(byTag)),
 			nested = function (klass) {
 				var res = dispatcher(proto, klass);
@@ -640,6 +640,7 @@ function divideBy(a, b){
 					/*don't do this: args = args.concat(always(e))
 					add 'select' argument on-the-fly (see composer)
 					fresh argument to the persisted Element object */
+                    //console.log(args);
 					el = composer.apply(null, e ? args.concat(always(e)) : args);
 					return this;
 				},
@@ -698,6 +699,7 @@ function divideBy(a, b){
 		which needs to be cross browser see EventCache.prevent */
 		addEvent: function (handler, func, extent) {
 			return function (el) {
+                el = getResult(el);
 				var partial = el && _.isElement(el) ? _.partial(handler, el) : _.partial(handler);
 				return prepareListener(extent)(partial, func, el);
 			};
