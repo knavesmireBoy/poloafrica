@@ -4,7 +4,7 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (doc, visiblity, mq, query, cssanimations, touchevents, main, footer, q2, picnum, makePath, makePathWrap, getDefAlt) {
+(function (mq, query, touchevents, main, footer, picnum, makePath, getDefAlt, makePathWrap) {
 	"use strict";
 
 	function modulo(n, i) {
@@ -109,11 +109,12 @@
 	}
 	var utils = poloAF.Util,
 		con = window.console.log.bind(window),
-		reporter = function (msg, el) {
+		/*reporter = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
 			msg = undef(msg) ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
+        */
 		$ = function (str) {
 			return document.getElementById(str);
 		},
@@ -169,21 +170,17 @@
 		//thumbs = $('thumbnails'),
 		thumbs = utils.getByClass('gallery')[0],
 		list_elements = _.toArray(thumbs.getElementsByTagName('li')),
-        get_src = _.compose(drill(['src']), getDomTargetImg),
+		get_src = _.compose(drill(['src']), getDomTargetImg),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', thumbs, 'li')),
-        getMyInt = function(){
-            return Number(getDomTargetImg(getCurrentSlide()).src.match(picnum)[1]);
-        },
 		isPortrait = ptL(function (el) {
 			var img = getDomTargetImg(el);
 			return img.offsetHeight > img.offsetWidth;
 		}),
-        isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName'])),
+		isImg = _.compose(doThrice(invokemethod)('match')(/^img$/i), drill(['target', 'nodeName'])),
 		doPortrait = function (el) {
 			var m = getOrientation(el) ? 'addClass' : 'removeClass';
 			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
 		},
-        
 		inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		exitCurrentImage = function (img) {
@@ -210,7 +207,7 @@
 			var prepIterator = doVier(window.poloAF.Iterator(false));
 			return prepIterator(ptL(modulo, coll.length))(utils.always(true))(coll)(0);
 		},
-        cross_page_iterator = makeCrossPageIterator(all),
+		cross_page_iterator = makeCrossPageIterator(all),
 		Element = poloAF.Intaface('Display', ['render', 'unrender']),
 		makeLeafComp = function (obj) {
 			return _.extend(poloAF.Composite(), obj);
@@ -235,61 +232,62 @@
 		},
 		negator = function (cb, a, b) {
 			if (neg(a, b)) {
-				con('chh..')
-                cb.apply(null, _.rest(arguments, 3));
+				cb.apply(null, _.rest(arguments, 3));
 				neg = _.negate(neg);
 			}
-            return b;
+			return b;
 		},
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
 		doPortraitLoop = ptL(_.each, allpics, fixNoNthChild),
 		doPortraitBridge = function (e) {
 			fixNoNthChild(e.target);
 		},
-        doPopulate = function(pagepics){
-            var path = '001';
-            _.each(allpics, function (img, i) {
-					path = pagepics[i] || path;//? default to avoid null
-					img.src = makePath(path);
-					img.onload = doPortraitBridge;
-				});
-        },
-		toogleLoop = _.compose(doPortraitLoop, doToggle),//cb
-            $LI = (function(options){
-            return {
-                exec: function(){//cb
-                    var action = options[0];
-                    _.each(_.last(list_elements, 2), this[action]);
-                    options = options.reverse();
-                },
-                unrender: function(el){
-                    var $el = makeElement(always(el)).render();
-                    $el.unrender();
-                },
-                render: function(el){
-                    return makeElement(anCr(thumbs), always(el)).render();
-                }
-            };
-        }(['unrender', 'render'])),
-        populate = _.compose(doPopulate, ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)), allpics)),
-		advanceRouteBridge = function (e) {
-            if (!getNodeName(getTarget(e)).match(/a/i)) { return; }
-            return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
+		doPopulate = function (pagepics) {
+			var path = '001';
+			_.each(allpics, function (img, i) {
+				path = pagepics[i] || path; //? default to avoid null
+				img.src = makePath(path);
+				img.onload = doPortraitBridge;
+			});
 		},
-        advanceRoute = function(m){
-          return populate(cross_page_iterator[m]());
-        },
-        advanceRouteListener = _.wrap(advanceRouteBridge, function(orig, e){
-            con(getTarget(e))
-            //sign that event is triggered
-           if(getTarget(e) === main){
-               //var mock = {};
-               //mock.target = $('gal_forward');
-               //return advanceRoute(orig(mock));
-           }
-            return advanceRoute(orig(e));
+		toogleLoop = _.compose(doPortraitLoop, doToggle), //cb
+		$LI = (function (options) {
+			return {
+				exec: function () { //cb
+					var action = options[0];
+					_.each(_.last(list_elements, 2), this[action]);
+					options = options.reverse();
+				},
+				unrender: function (el) {
+					var $el = makeElement(always(el)).render();
+					$el.unrender();
+				},
+				render: function (el) {
+					return makeElement(anCr(thumbs), always(el)).render();
+				}
+			};
+		}(['unrender', 'render'])),
+		populate = _.compose(doPopulate, ptL(negator, _.compose(toogleLoop, _.bind($LI.exec, $LI)), allpics)),
+		advanceRouteBridge = function (e) {
+			if (!getNodeName(getTarget(e)).match(/a/i)) {
+				return;
+			}
+			return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
+		},
+		advanceRoute = function (m) {
+			return populate(cross_page_iterator[m]());
+		},
+		advanceRouteListener = _.wrap(advanceRouteBridge, function (orig, e) {
+			//sign that event is triggered
+			if (getTarget(e) === main) {
+				/*var mock = {};
+				mock.target = $('gal_forward');
+				return advanceRoute(orig(mock));
+                */
+			}
+			return advanceRoute(orig(e));
 		}),
-        doSplice = function (bool, coll) {
+		doSplice = function (bool, coll) {
 			if (coll[13]) {
 				var copy = coll.slice(0),
 					res = copy.splice(4, 6);
@@ -335,15 +333,14 @@
 				var i = _.findIndex(next, function (n) {
 					return Number(n) === Number(j);
 				});
-				if(!failed(i)){
-                    cur = next;
-                    ret.page = cur;
-                    ret.index = i;
+				if (!failed(i)) {
+					cur = next;
+					ret.page = cur;
+					ret.index = i;
 				}
 				return ret;
 			}, all[0]);
 		},
-
 		getSubGallery = function (i) {
 			//con(_.zip(ptrt, lscp))
 			var sub = _.findIndex(_.map(all, doTwice(_.filter)(ptL(isEqual, i))), _.negate(_.isEmpty)),
@@ -380,9 +377,10 @@
 		},
 		insertBeforeThumbs = ptL(anCrIn, gallery),
 		pageNavHandler = utils.addEvent(clicker, _.debounce(advanceRouteListener, 300)),
-		addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
+		//addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(utils.getNodeByTag('main'))),
+		addPageNavHandler = _.compose(pageNavHandler, utils.getDomParent(main)),
 		pageInputHandler = function (arg) {
-            //stopPropagation
+			//stopPropagation
 			utils.addEvent(clicker, noOp, 'stop')(arg);
 			return arg;
 		},
@@ -740,47 +738,42 @@
 				};
 			},
 			initplay = ptL(invokeWhen, once(1)),
-			default_iterator = makeIterator(_.filter(utils.getByTag('li', thumbs), function(li){
-                return !li.id;
-            })),
 			getFileNumber = function (src) {
 				var t = src.split('/');
 				return Number(t[t.length - 1].split('.')[0].substr(1));
 			},
 			prepareNavHandlers = function () {
-                //con(utils.getByTag('li', thumbs));
 				var getNextAction = function (m) {
 						var src,
-                            subgroup,
+							subgroup,
 							findCurrent = function (f, li) {
 								src = get_src(getResult(f));
 								return !li.id && get_src(li).match(src);
 							},
-                            matchFromBase = ptL(_.filter, list_elements, ptL(findCurrent, ptL($, 'base'))),
-							fallback = function myfallback(result) {                                
+							matchFromBase = ptL(_.filter, list_elements, ptL(findCurrent, ptL($, 'base'))),
+							fallback = function myfallback(result) {
 								if (!_.isEmpty(result)) {
 									return result[0];
+								} else {
+									poloAF.Eventing.triggerEvent(main, 'click');
+									window.setTimeout(function () {
+										var res,
+											map = _.map(thumbs.getElementsByTagName('img'), function (img) {
+												return getFileNumber(img.src);
+											});
+										res = _.contains(map, getFileNumber(src));
+										if (!res) {
+											//get on the right page
+											return myfallback([]);
+										}
+									}, 333);
+									subgroup = getSubGroup(getFileNumber(src));
+									return list_elements[subgroup.index];
 								}
-                                else {
-                                poloAF.Eventing.triggerEvent(main, 'click');                           
-                                window.setTimeout(function(){
-                                    var res,
-                                        map =_.map(thumbs.getElementsByTagName('img'), function(img){
-                                            return getFileNumber(img.src);                                        
-                                        });
-                                    res = _.contains(map, getFileNumber(src));
-                                    if(!res){
-                                        //get on the right page
-                                        return myfallback([]);
-                                    }
-                                }, 333);
-                                    subgroup = getSubGroup(getFileNumber(src));
-                                    return list_elements[subgroup.index]; 
-                                }                                    
 							};
 						return _.compose(utils.show, utils[m], fallback, matchFromBase);
 					},
-                    iterator = makeIterator(utils.getByTag('li', thumbs))(),
+					iterator = makeIterator(utils.getByTag('li', thumbs))(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
@@ -808,7 +801,7 @@
 				mediator.add(0, doPrevious, doNext);
 				addRouter(handler);
 				addLocator(_.compose(doShow, getAction, getDirection));
-			},//needs to run after exiti slideshow
+			}, //needs to run after exiti slideshow
 			tooltip_pairs = [
 				['render', 'unrender'],
 				['init', 'cancel']
@@ -855,7 +848,6 @@
 				return ret;
 			};
 		play = function () {
-            con('big play');
 			var $swapper = makeSwapper(),
 				makeEl = function (myid) {
 					return makeElement(utils.hide, ptL(setAttrs, {
@@ -866,8 +858,13 @@
 				$slide = makeEl('slide'),
 				fader = ptL(dofading, poloAF.getOpacity(), _.compose(_.isNumber, lessOrEqual(0)), $swapper),
 				player = controller(countdown, fader, 101),
-				cleanup = function () {                    
-                    populate(_.compose(getSubGroup, getFileNumber, get_src)($('base')).page);
+				cleanup = function () {
+					/*invoked by EITHER close button (no base element) OR forward/back button*/
+					var base = $('base');
+					if (base) {
+                        /*on exiting SLIDESHOW THIS MUST RUN BEFORE prepNavHandlers creates an iterator from the list elements otherwise the number of lis may not be in sync with the current page */
+						populate(_.compose(getSubGroup, getFileNumber, get_src)(base).page);
+					}
 					player.unrender();
 					stage_two_comp.unrender();
 					stage_one_rpt.remove(stage_one_rpt.get(false)).unrender();
@@ -916,12 +913,12 @@
     where unrender would restore listener and render would remove listener when entering navigation mode
     HOWEVER events in gallery mode are not propagating to the main element so we can save the bother of that*/
 			addPageNav(anCr, 'Enable checkbox to restrict to a single page', 'gal_forward', noOp);
-            //addPageNavHandler delegaates to main as the listening element, only one handler required, hence noOp above
+			//addPageNavHandler delegaates to main as the listening element, only one handler required, hence noOp above
 			addPageNav(insertBeforeThumbs, 'Enable checkbox to group pictures by orientation', 'gal_back', addPageNavHandler);
 			utils.$('placeholder').innerHTML = 'PHOTOS';
 		}());
 	}());
-}(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
-    "use strict";
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], /[^\d]+\d(\d+)[^\d]+$/, function (path) {
+	"use strict";
 	return "images/0" + path + ".jpg";
-}, function () {"use strict"; }, poloAF.Util.always('')));
+}, poloAF.Util.always(''), function () {"use strict"; }));
