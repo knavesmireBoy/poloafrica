@@ -495,9 +495,7 @@
 					if (isPositive(x)) {
 						countdown.progress = window.requestAnimationFrame(counter);
 					} else {
-						//x = 300;
-						//x = 111;
-						x = 55;
+						x = 300;
 					}
 				}
 				return counter;
