@@ -2,10 +2,11 @@
 //session_start();
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/ArticleFactory.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/Asset.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PagePaginator.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/PhotoPaginator.php';
+
+include_once '../classes/ArticleFactory.php';
+include_once '../classes/Asset.php';
+include_once '../classes/PagePaginator.php';
+include_once '../classes/PhotoPaginator.php';
 
 require_once '../includes/db.inc.php';
 require_once '../includes/access.inc.php';
@@ -21,7 +22,6 @@ function getMsg($str){
     $lookup = array('articleNotFound' => 'Article not found', 'changesSaved' => "Your changes have been saved.", 'articleDeleted' => "Article deleted.");
     return isset($lookup[$str]) ?  $lookup[$str] : $str;
 }
-
 
 function redirect($arr){
     $str = '?';
