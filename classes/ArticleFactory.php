@@ -67,7 +67,7 @@ class ArticleFactory
         $conn = getConn();
         $sql = "SELECT title FROM articles WHERE page = :pp ORDER BY id ASC";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":pp", $pp, PDO::PARAM_INT);
+        $st->bindValue(":pp", $pp, PDO::PARAM_STR);
         doPreparedQuery($st, 'Error retreiving articles for this page');
         $rows = $st->fetchAll(PDO::FETCH_ASSOC);
         //('mya'=>'myarticle', 'you'=>'yourearticle)...dropDown for selecting a target position for insertion of new/updated article
@@ -105,7 +105,7 @@ class ArticleFactory
         $list = array();
         $sql = "SELECT articles.id, title, summary, content, attr_id, page, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE page = :pp";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":pp", $pp, PDO::PARAM_INT);
+        $st->bindValue(":pp", $pp, PDO::PARAM_STR);
         doPreparedQuery($st, 'Error retreiving articles for this page');
         while ($row = $st->fetch(PDO::FETCH_ASSOC))
         {

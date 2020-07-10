@@ -40,6 +40,6 @@ h2 span {
 }
 @media only screen and (max-width: 440px) {
 	.override section:nth-child(5) h3, .override section:nth-child(5) label {
-		line-height: 1.2;
+		line-height: normal;
 	}
 }
