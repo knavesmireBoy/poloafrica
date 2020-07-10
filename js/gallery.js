@@ -157,6 +157,7 @@
 		inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		exitCurrentImage = function (img) {
+            return con(getCurrentSlide(), 9);
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass',
 				thumbs = getThumbs();
@@ -249,11 +250,11 @@
 			var een = _.range(1, 15),
 				twee = _.range(15, 29),
 				drie = _.range(29, 43),
-				vyf = _.range(43, 55),
-				vier = _.range(55, 67),
+				vier = _.range(43, 55),
+				vyf = _.range(55, 67),
 				ses = _.range(67, 79),
 				sewe = _.range(79, 93),
-				myall = [een, twee, drie, vyf, vier, ses, sewe];
+				myall = [een, twee, drie, vier, vyf, ses, sewe];
 			return function (j) {
 				var ret = {};
 				return _.reduce(myall, function (cur, next) {
@@ -683,6 +684,7 @@
 								return !li.id && get_src(li).match(src);
 							},
 							fallback = function (result) {
+                                con(result);
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
@@ -774,6 +776,7 @@
 				fader = ptL(dofading, poloAF.getOpacity(), _.compose(_.isNumber, lessOrEqual(0)), $swapper),
 				player = controller(countdown, fader, 101),
 				cleanup = function () {
+                    con('cleanup');
 					player.unrender();
 					stage_two_comp.unrender();
 					stage_one_rpt.remove(stage_one_rpt.get(false)).unrender();
