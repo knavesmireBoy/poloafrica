@@ -45,7 +45,7 @@ echo '</main></div>'; ?>
         _.each(imgs, function(path){
             new Image().src = '../images/gallery/fullsize/'+path;
         });
-        hijax.captureData(true);
+        //hijax.captureData(true);
         all = <?php echo json_encode(sortArray(trimString($iZero, 1, 2))) ?>;
     </script>
     <script src="../js/gallery.js"></script>

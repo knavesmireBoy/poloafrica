@@ -385,6 +385,7 @@
 				return function (flag) {
 					var f = flag ? ptL(thunk, once(1)) : always(false),
 						res = utils.getBest(f, actions)();
+                    con(res);
 					return res;
 				};
 			},
