@@ -157,8 +157,6 @@
 		inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		exitCurrentImage = function (img) {
-            var f = ptL(utils.getByClass, '.show', getThumbs, 'li');
-            //con(getThumbs().innerHTML)
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass',
 				thumbs = getThumbs();
@@ -169,21 +167,9 @@
 		exitGallery = _.compose(exitCurrentImage, getCurrentImage),
 		hideCurrent = _.compose(utils.hide, getCurrentSlide),
 		doShow = function (next) {
-            /*
-            con(getCurrentSlide(), next)
-            var src,
-                findCurrent = function (f, li) {
-                src = get_src(f());
-                return !li.id && get_src(li).match(src);
-            },
-                coll = getSubGroup(getFileNumber(src));
-            document.location = '?f=' + (_.first(coll.page) - 1) + '&index=' + coll.index;
-            return list[coll.index];
-            */
-            
 			hideCurrent();
 			utils.show(next);
-			//exitGallery();
+			exitGallery();
 		},
 		makeIterator = function () {
 			/* the CMS version loads a new set of 'lis' per page so we now simply query the DOM to obtain
