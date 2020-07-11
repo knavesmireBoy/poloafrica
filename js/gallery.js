@@ -169,7 +169,18 @@
 		exitGallery = _.compose(exitCurrentImage, getCurrentImage),
 		hideCurrent = _.compose(utils.hide, getCurrentSlide),
 		doShow = function (next) {
-            con(next)
+            /*
+            con(getCurrentSlide(), next)
+            var src,
+                findCurrent = function (f, li) {
+                src = get_src(f());
+                return !li.id && get_src(li).match(src);
+            },
+                coll = getSubGroup(getFileNumber(src));
+            document.location = '?f=' + (_.first(coll.page) - 1) + '&index=' + coll.index;
+            return list[coll.index];
+            */
+            
 			hideCurrent();
 			utils.show(next);
 			//exitGallery();
@@ -667,13 +678,13 @@
 				};
 			},
 			initplay = ptL(invokeWhen, once(1)),
-			default_iterator = makeIterator(),
 			getFileNumber = function (src) {
 				var t = src.split('/');
 				return Number(t[t.length - 1].split('.')[0].substr(1));
 			},
 			prepareNavHandlers = function () {
-				var iterator = default_iterator(),
+                /*CRUCIAL ON AJAX VERSION TO HAVE FRESH ITERATOR CREATED FROM LIVE LIST*/
+				var iterator = makeIterator()(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
 					getDirection = locator(iterator, forward, back),
@@ -686,6 +697,7 @@
 								return !li.id && get_src(li).match(src);
 							},
 							fallback = function (result) {
+                                con(result);
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
@@ -777,7 +789,6 @@
 				fader = ptL(dofading, poloAF.getOpacity(), _.compose(_.isNumber, lessOrEqual(0)), $swapper),
 				player = controller(countdown, fader, 101),
 				cleanup = function () {
-                    con('cleanup');
 					player.unrender();
 					stage_two_comp.unrender();
 					stage_one_rpt.remove(stage_one_rpt.get(false)).unrender();
