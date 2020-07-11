@@ -157,7 +157,8 @@
 		inPortraitMode = _.compose(utils.getZero, ptL(utils.getByClass, 'portrait')),
 		getCurrentImage = _.compose(getDomTargetImg, getCurrentSlide),
 		exitCurrentImage = function (img) {
-            return con(getCurrentSlide(), 9);
+            var f = ptL(utils.getByClass, '.show', getThumbs, 'li');
+            //con(getThumbs().innerHTML)
 			var math = getOrientation(img),
 				m = math && isDesktop() ? 'addClass' : 'removeClass',
 				thumbs = getThumbs();
@@ -168,9 +169,10 @@
 		exitGallery = _.compose(exitCurrentImage, getCurrentImage),
 		hideCurrent = _.compose(utils.hide, getCurrentSlide),
 		doShow = function (next) {
+            con(next)
 			hideCurrent();
 			utils.show(next);
-			exitGallery();
+			//exitGallery();
 		},
 		makeIterator = function () {
 			/* the CMS version loads a new set of 'lis' per page so we now simply query the DOM to obtain
@@ -385,7 +387,6 @@
 				return function (flag) {
 					var f = flag ? ptL(thunk, once(1)) : always(false),
 						res = utils.getBest(f, actions)();
-                    con(res);
 					return res;
 				};
 			},
@@ -685,7 +686,6 @@
 								return !li.id && get_src(li).match(src);
 							},
 							fallback = function (result) {
-                                con(result);
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
@@ -816,6 +816,7 @@
 				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render),
 				index = document.location.search && document.location.search.match(/f=\d+&index=(\d+)/),
 				isImg = ptL(isImage, index);
+            con(index)
 			try {
 				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
