@@ -4,7 +4,7 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (doc, visiblity, mq, query, cssanimations, touchevents, main, footer, q2, picnum, makePath, makePathWrap, getDefAlt) {
+(function (mq, query, touchevents, main, footer, picnum, makePath, makePathWrap, getDefAlt) {
 	"use strict";
 
 	function modulo(n, i) {
@@ -146,7 +146,7 @@
 		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
-        /* ON THIS VERSION we are using ajax to update when navigating to different pages this means a fresh ul is created along with the forward and back buttons. So we can't hardcode thise DOM elements and instead must use functions to query the current DOM, getByClass and getByTag use getResult to obtain an element, getResult either invokes a function or eturns it's argument*/
+       /* ON THIS VERSION we are using ajax to update when navigating to different pages this means a fresh ul is created along with the forward and back buttons. So we can't hardcode thise DOM elements and instead must use functions to query the current DOM, getByClass and getByTag use getResult to obtain an element, getResult either invokes a function or eturns it's argument*/
 		getThumbs = _.compose(utils.getZero, ptL(utils.getByTag, 'ul', main)),
 		getListElements = _.compose(ptL(utils.getByTag, 'li'), getThumbs),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', getThumbs, 'li')),
@@ -669,7 +669,7 @@
 				return Number(t[t.length - 1].split('.')[0].substr(1));
 			},
 			prepareNavHandlers = function () {
-                /*CRUCIAL ON AJAX VERSION TO HAVE FRESH ITERATOR CREATED FROM LIVE LIST*/
+               /*CRUCIAL ON AJAX VERSION TO HAVE FRESH ITERATOR CREATED FROM LIVE LIST*/
 				var iterator = makeIterator()(),
 					forward = doThriceDefer(invokemethod)('forward')(null)(iterator),
 					back = doThriceDefer(invokemethod)('back')(null)(iterator),
@@ -683,7 +683,7 @@
 								return !li.id && get_src(li).match(src);
 							},
 							fallback = function (result) {
-                                con(result);
+                               con(result);
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
@@ -813,7 +813,7 @@
 				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render),
 				index = document.location.search && document.location.search.match(/f=\d+&index=(\d+)/),
 				isImg = ptL(isImage, index);
-            con(index)
+           con(index)
 			try {
 				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
@@ -828,8 +828,8 @@
 			utils.getByTag('span', document)[0].innerHTML = 'PHOTOS';
 		}());
 	}());
-}(document, 'show', Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.cssanimations, Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], '(min-width: 601px)', /[^\d]+\d(\d+)[^\d]+$/, function (path) {
-    "use strict";
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], /[^\d]+\d(\d+)[^\d]+$/, function (path) {
+   "use strict";
 	//return "../images/gallery/fullsize/013.jpg";
 	return "../images/gallery/fullsize/0" + path + ".jpg";
 }, function () {"use strict"; }, poloAF.Util.always('')));
