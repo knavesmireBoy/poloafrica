@@ -1,39 +1,42 @@
-.admin main {
+main {
 	padding: 1em;
 }
-.admin p, form.content li {
+p, form.content li {
 	text-align: left;
 }
-.admin h3 {
+h3 {
 	color: black;
 }
-.admin th {
+th {
 	font-weight: bold;
 }
-.admin form {
+form {
 	border: solid 1px #444;
 }
-.admin select {
+select {
 	border: solid 1px black;
 }
-.admin a:link, .admin a:active, .admin a:visited {
+a:link, a:active, a:visited {
+	color: #5B0080;
 	color: hsl(283, 100%, 25%);
 }
-.admin a:hover {
+a:hover {
+    color: #8C39AC;
 	color: hsl(283, 50%, 45%);
 }
-.admin table {
+table {
 	border: solid 1px black;
     table-layout: fixed;
 }
-#adminHeader h2 {
+h2 {
 	background: none;
 	text-shadow: none;
 	color: black;
 	padding: 0;
 	margin: 0 0 .5em;
 	line-height: 1;
-	border: solid 0px hsl(283, 44%, 44%);
+	border: solid 0 #863FA2;
+	border: solid 0 hsl(283, 44%, 44%);
 	border-width: 0 0 6px;
 	display: inline-block;
 	font-size: 3em;
@@ -41,24 +44,26 @@
 table a {
 	font-weight: bold;
 }
-.admin table tr>* {
+table tr th,  table tr td{
 	table-layout: fixed;
-	border: 0px solid black;
+	border: 0 solid black;
 	padding: .5em;
 	line-height: normal;
 }
-.admin table tr:nth-child(odd) {
+table tr:nth-child(odd) {
+	background-color: #F3F0F4;
 	background-color: hsl(283, 15%, 95%);
 }
-.admin table tr:first-child {
+table tr:first-child {
 	background-color: black;
+	color: #DBD3DE;
 	color: hsl(283, 15%, 85%);
 }
-.admin form label, .mocklabel, .admin form.manage fieldset legend {
+form label, .mocklabel, form.manage fieldset legend {
 	font: 1em 'Arial Black', Arial, sans-serif;
 	color: black;
 }
-.admin form li label {
+form li label {
 	margin: 0;
 	line-height: 1;
 }
@@ -71,27 +76,28 @@ form.content input, select {
 	border-radius: 5px;
 	border: solid 1px white;
 }
-.admin input[type="submit"] {
+input[type="submit"] {
 	font: bold 1em Helvetica;
 	padding: .1em .9em;
 }
-.admin legend {
+legend {
 	margin-left: .5em;
 	text-transform: uppercase;
 	padding: .5em;
 }
-.neue, .asset, .asset figure, .admin form textarea, .admin form.manage fieldset {
+.neue, .asset, .asset figure, form textarea, form.manage fieldset {
 	border: solid 1px white;
 	padding: .75em;
 	border-radius: 5px;
 }
-.admin table, #loginform, .manage {
+table, #loginform, .manage {
 	width: 40%;
 	min-width: 28em;
 }
 #loginform {
 	text-align: left;
 	padding: 2%;
+	background-color: #C4ACCD;
 	background-color: hsl(283, 25%, 74%);
 	border-radius: 8px;
 }
@@ -119,37 +125,37 @@ form.content input, select {
 #loginform .buttons {
 	background-color: transparent;
 }
-.admin form {
+form {
 	text-align: center;
 }
 
-.admin form.content {
+form.content {
 	text-align: left;
 }
 form.manage {
-	border-radius: 8px 8px 0px 0px;
+	border-radius: 8px 8px 0 0;
 	border-radius: 8px;
 	padding: 1%;
 }
-.admin form.manage fieldset {
+form.manage fieldset {
 	padding: 1em;
-	border-radius: 8px 8px 0px 0px;
+	border-radius: 8px 8px 0 0;
 	margin: .5em 0 1em;
 }
-.admin form.prompt {
+form.prompt {
 	padding: 0;
 }
-.admin form.prompt fieldset {
-	border-width: 1px 1px 0px;
+form.prompt fieldset {
+	border-width: 1px 1px 0;
 }
-.admin form.editor {
+form.editor {
 	text-align: left;
 	padding: 1.75em;
 	margin: 1em 0;
 }
 form.manage+form.manage {
 	border-width: 0 1px 1px;
-	border-radius: 0px 0px 8px 8px;
+	border-radius: 0 0 8px 8px;
 }
 form.manage+form {
 	display: none;
@@ -167,13 +173,13 @@ form.manage+form {
 .content ul li {
 	margin: 1em 0;
 }
-.admin form.content, .admin form.editor {
+form.content, form.editor {
 	float: none;
 	background-color: #af8dbb;
 	background-color: hsl(283, 25%, 74%);
 	padding: 2%;
 }
-.admin .manage select {
+.manage select {
 	margin: 0 .5em;
 }
 .content ul li>* {
@@ -212,15 +218,15 @@ li.mock ul>* {
 .content li.asset>* {
 	vertical-align: middle;
 }
-.admin #controls, #content, .content .buttons {
+#controls, #content, .content .buttons {
 	margin: 0 0 2% 17%;
 	width: 83%;
 	box-sizing: border-box;
 }
-.admin #controls {
+#controls {
 	margin-left: 17%;
 }
-.admin #controls li {
+#controls li {
 	display: inline-block;
 	width: 6%;
 	min-width: 3em;
@@ -229,13 +235,13 @@ li.mock ul>* {
 	border-radius: 5px;
 	cursor: pointer;
 }
-.admin #controls li img {
+#controls li img {
 	border-radius: 5px;
 }
-.admin #controls li:hover {
+#controls li:hover {
 	background-color: hsl(283, 25%, 44%);
 }
-.admin #controls li img {
+#controls li img {
 	display: block;
 	width: 100%;
 }
@@ -263,7 +269,7 @@ li.mock ul>* {
 	box-shadow: 1px 1px 1px black;
 	vertical-align: top;
 }
-.admin fieldset {
+fieldset {
 	border: solid 1px white;
 	border-radius: 8px;
 }
@@ -273,10 +279,10 @@ li.mock ul>* {
 .content>ul input#dom_id {
 	width: 10%;
 }
-.admin label[for="alt"] {
+label[for="alt"] {
 	text-align: right;
 }
-.admin ul.mock li:last-child {
+ul.mock li:last-child {
 	padding: 0.5em;
 	border: solid 1px white;
 }
@@ -293,59 +299,59 @@ li.mock ul>* {
 	position: absolute;
 	left: -999px;
 }
-.admin .asset label {
+.asset label {
 	display: block;
 }
-.admin .asset label:first-of-type {
+.asset label:first-of-type {
 	display: inline-block;
 }
-.admin .asset figure img {
+.asset figure img {
 	margin: 0;
 	width: 100%;
 }
-.admin .asset figure img.pdf_icon {
+.asset figure img.pdf_icon {
 	width: auto;
 	display: inline;
 }
-.admin .asset figure input {
+.asset figure input {
 	margin: 0 0 .4em .2em;
 }
-.admin .asset figcaption>* {
+.asset figcaption>* {
 	margin: .25em 0;
 }
-.admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset figure.edit>* {
+.mock .asset figure img, .asset figure figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>* {
 	position: relative;
 	left: 0;
 }
-.admin .asset figure.edit input {
+.asset figure.edit input {
 	width: 99%;
 }
-.admin .asset figure.edit input[type=checkbox] {
+.asset figure.edit input[type=checkbox] {
 	width: auto;
 }
-.admin .asset figure label, .admin .asset figure input {
+.asset figure label, .asset figure input {
 	text-align: left;
-	border-width: 0px;
+	border-width: 0;
 }
-.admin .asset figure {
+figure {
 	width: 11%;
 	min-width: 5em;
 	padding: .2em;
 	border: solid 1px;
 	background-color: rgba(255, 255, 255, .7);
 }
-.admin .asset figure.edit {
+.asset figure.edit {
 	width: 15em;
 	margin: 0 0 1% 1%;
 }
-.admin .asset figure {
+.asset figure {
 	margin: 0 0 0% 1%;
 }
 figcaption.del label {
 	color: red;
 	background: black;
 }
-.admin .neue label {
+.neue label {
 	text-align: right;
 	border-width: 0;
 }
@@ -357,7 +363,7 @@ input#attr_id, input#dom_id {
 }
 /*overrides default hiding of inouts which are used in no-js scenario*/
 
-.admin section input {
+section input {
 	position: relative;
 	left: 0;
 }
@@ -381,7 +387,7 @@ input#attr_id, input#dom_id {
 	border: solid 1px black;
 	display: inline-block;
 	padding: 1em .7em;
-	border-radius: 10px;
+	border-radius: 10;
 }
 .content>ul #pp {
 	margin: .25em 0 1em 17%;
@@ -472,7 +478,7 @@ nav .icon {
     width: 100%;
     margin: auto;
     background-color: hsl(285, 35%, 35%);
-    outline: 0px;
+    outline: 0;
 }
 
 .icon img:hover{
@@ -480,7 +486,7 @@ nav .icon {
     
 }
 
-@media only screen and (max-width: 1160px) {
+@media only screen and (max-width: 1160) {
 	input#dom_id {
 		margin: 0 90% 0 0;
 	}
@@ -493,7 +499,7 @@ nav .icon {
 		display: none;
 	}
 }
-@media only screen and (max-width: 910px) {
+@media only screen and (max-width: 910) {
 	#page+label {
 		display: inline-block;
 	}
@@ -509,7 +515,7 @@ nav .icon {
 		box-shadow: none;
 		padding: .3em .2em;
 	}
-	.admin #controls, #content, .content .buttons {
+	#controls, #content, .content .buttons {
 		margin-left: 0;
 		width: 100%;
 	}
@@ -526,7 +532,7 @@ nav .icon {
 }
 @media only screen and (max-width: 667px) {
     
-        .admin table, #loginform, .manage {
+        table, #loginform, .manage {
 	min-width: 20em;
 }
     
@@ -535,11 +541,11 @@ nav .icon {
 	margin: 0 .25em;
 }
     
-	.admin h3 {
+	h3 {
 		padding: 0;
 		background-color: white;
 	}
-	.admin label {
+	label {
 		width: auto;
 		text-align: left;
 		background: none;
@@ -548,7 +554,7 @@ nav .icon {
         box-sizing: border-box;
 	}
     
-	.admin table {
+	table {
         width: 100%;
         min-width: 20em;
 	}
@@ -575,7 +581,7 @@ nav .icon {
         margin: 0 .5%;
     }
 }
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: 580) {
 	.content #page {
 		margin-right: 40%;
 	}
@@ -596,7 +602,7 @@ nav .icon {
          
     }
     .content>ul #pp > * {
-        border-radius: 0px;
+        border-radius: 0;
         margin: 0;
         border-width: 0;
         background-color: transparent;

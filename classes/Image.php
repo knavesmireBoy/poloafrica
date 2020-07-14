@@ -172,5 +172,4 @@ class Image extends Asset implements AssetInterface
         $row['src'] = $this->path2file . $pathtype . '/' . $row['id'] . $row['ext'];
         return $row;
     }
-
 }

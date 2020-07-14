@@ -8,6 +8,12 @@ if (!window.poloAF) {
 }
 (function () {
 	"use strict";
+    
+    function simpleInvoke(o, m, arg) {
+		return o[m](arg);
+	}
+
+    
 	var utils = poloAF.Util,
 		$ = function (str) {
 			return document.getElementById(str);
@@ -23,13 +29,15 @@ if (!window.poloAF) {
 			};
 		},
 		Maker = function (tx, inp) {
-			var endlink = /\[(\d)+\]:.+/g,
+			var endlinkref = /\[(\d)+\]:.+/g,
+                endlink = /\]\[\d+\]/,
+                emphasis = /\**([^\*]+)\**/g,
 				i = 0,
 				getReg = function (n) {
 					return new RegExp('\\[' + n + '\\]:');
 				},
 				getCurrent = function () {
-					var ret = tx.value.match(endlink);
+					var ret = tx.value.match(endlinkref);
 					return ret ? Number(ret[ret.length - 1].slice(1, 2)) + 1 : 1;
 				},
 				prepareId = function (str) {
@@ -106,24 +114,42 @@ if (!window.poloAF) {
 				isSpace = isEqual(' '),
 				isLine = isEqual('\n'),
 				isStop = isEqual('.'),
-				emphasis = /\**([^\*]+)\**/g,
-				header = 0;
+                isStartLink = isEqual('['),
+                //isEndLink = isEqual('['),
+				header = 0,
+                cache = tx.value;
 			return {
 				link: function () {
-					var res = window.prompt('Enter hyperlink'),
+					var o,
+                        fixed = false,
+                        t,
+                        title = '',
+                        res = window.prompt('Enter hyperlink'),
 						mybreak = '\n[',
 						from = tx.selectionStart,
 						to = tx.selectionEnd,
 						cur = tx.value.slice(from, to);
 					if (!isSelected(from, to)) {
-						return;
-					}
-					from = trimFrom(cur, from);
-					to = trimTo(cur, to);
+                        o = fixSelection(isSpace, isSpace);
+						from = o.from;
+						to = o.to;
+						cur = tx.value.slice(from, to);
+                        fixed = true;
+                    }
+                    if(!fixed){
+                        from = trimFrom(cur, from);
+                        to = trimTo(cur, to); 
+                    }
+					
 					if (res) {
+                        t = res.lastIndexOf(' ');
+                        if(t >= 0){
+                            title = '"'+ res.substring(t+1)+'"';
+                            res =  res.substring(0, t+1);
+                        }
 						i = getCurrent(cur);
 						mybreak = (i === 1) ? '\n\n[' : mybreak;
-						tx.value = tx.value.slice(0, from) + '[' + tx.value.slice(from, to) + '][' + i + ']' + tx.value.slice(to) + mybreak + i + ']: ' + res + '{target=blank}' + prepareId(tx.value.slice(from, to));
+						tx.value = tx.value.slice(0, from) + '[' + tx.value.slice(from, to) + '][' + i + ']' + tx.value.slice(to) + mybreak + i + ']: ' + res + title + '{target=blank}' + prepareId(tx.value.slice(from, to)) ;
 					}
 				},
 				unlink: function () {
@@ -231,6 +257,9 @@ if (!window.poloAF) {
 					}
 					tx.focus();
 				},
+                quote: function(){
+                    tx.value = cache;
+                },
 				setCount: function (count) {
 					this.count = count;
 				}
@@ -255,7 +284,7 @@ if (!window.poloAF) {
         var controlsconf = {
 				id: 'controls'
 			},
-			tags = ['HEADING', 'BOLD', 'ITAL', 'PARA', 'LINE', 'LINK', 'UNLINK', 'LIST' /*, 'QUOTE', 'IMG'*/ ],
+			tags = ['HEADING', 'BOLD', 'ITAL', 'PARA', 'LINE', 'LINK', 'UNLINK', 'LIST', 'QUOTE', 'IMG' ],
 			$el = utils.machElement(utils.addEvent(clicker, linkeroo(Maker($('content'), $('title')))), ptL(setAttrs, controlsconf), anCrIn($('content'), $('content').parentNode), utils.always('ul')),
 			prepIcons = function (str) {
 				var mystr = str.toLowerCase(),

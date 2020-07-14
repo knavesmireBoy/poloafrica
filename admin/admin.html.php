@@ -1,6 +1,5 @@
-<div id="adminHeader">
-        <h2>Poloafrica Admin</h2>
-        <p>You are logged in with email: <b><?php htmlout($_SESSION['email']); ?></b> <a href="?action=logout"?> <strong>Log out</strong></a></p></div>
+<h2>Poloafrica Admin</h2>
+<p>You are logged in with email: <b><?php htmlout($_SESSION['email']); ?></b> <a href="?action=logout"?> <strong>Log out</strong></a></p>
 <h3><?php echo $results['heading']; ?></h3>
 
 <?php

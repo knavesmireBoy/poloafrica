@@ -1,12 +1,6 @@
 <?php
 require_once 'AssetInterface.php';
 require_once 'Image.php';
-
-//require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
-//use Michelf\MarkdownExtra;
-/**
-* Class to handle assets
-*/
 class Doc extends Image implements AssetInterface
 {
     

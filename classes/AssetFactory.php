@@ -35,7 +35,5 @@ class AssetFactory
             return new Video($articleId, $page, $id);
         }
         else return new Doc($articleId, $page, $id);        
-        }
-    
-    
+        }    
 }

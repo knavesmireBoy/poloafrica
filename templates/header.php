@@ -13,8 +13,10 @@
       <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/fonts.css">
-    <?php } endif; ?>
+    <?php } endif; 
+          if(!isset($style)): ?>
         <link href="../css/admin.css" media="screen" rel="stylesheet">
+    <?php endif; ?>
         <link href="../css/print.css" media="print" rel="stylesheet">
      	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
