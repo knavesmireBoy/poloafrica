@@ -1,16 +1,16 @@
-#medley>*, #medley section:last-child>* {
+#medley>*, #medley #medley_links>* {
 	-ms-flex-item-align: start;
 	-webkit-align-self: flex-start;
 	align-self: flex-start;
 }
-.flexwrap #medley #presslinks, .flexwrap #medley section:last-child {
+.flexwrap #medley #presslinks, .flexwrap #medley #medley_links {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
 }
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-	#medley #presslinks, #medley section:last-child {
+	#medley #presslinks, #medley #medley_links {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: -webkit-flex;
@@ -18,14 +18,14 @@
 	}
 }
 @media screen and (min-width: 890px) {
-	.flexwrap #place section:nth-child(2), .flexwrap #scholars section:nth-child(4), .flexwrap #scholars section:last-child, .flexwrap #trust section:nth-child(2), .flexwrap #trust section:nth-child(4) {
+	.flexwrap #place section:nth-child(2), .flexwrap #scholars section:nth-child(4),  .flexwrap #trust section:nth-child(2), .flexwrap #trust section:nth-child(4), .flexwrap #scholars #medley_links {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: -webkit-flex;
 		display: flex;
 	}
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
-		#place section:nth-child(2), #scholars section:nth-child(4), #scholars section:last-child, #trust section:nth-child(2), #trust section:nth-child(4) {
+		#place section:nth-child(2), #scholars section:nth-child(4), #trust section:nth-child(2), #trust section:nth-child(4), , #scholars #medley_links {
 			display: -webkit-box;
 			display: -ms-flexbox;
 			display: -webkit-flex;

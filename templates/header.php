@@ -5,6 +5,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<title><?php htmlout($results['page_title']); ?></title>
+    
+<?php if(!isset($style)){ ?>
+        <link href="../css/reset.css" media="screen" rel="stylesheet">
+        <link href="../css/admin.css" media="screen" rel="stylesheet">
+    <?php }
+    else { ?>
+    
     <link href="../css/standard.css" media="screen" rel="stylesheet">
     <?php if(isset($style)): 
    $my = glob("../css/my$style.css"); ?>
@@ -13,12 +20,10 @@
       <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/fonts.css">
-    <?php } endif; 
-          if(!isset($style)): ?>
-        <link href="../css/admin.css" media="screen" rel="stylesheet">
-    <?php endif; ?>
-        <link href="../css/print.css" media="print" rel="stylesheet">
-     	<script>
+    <?php } ?>
+          <link href="../css/print.css" media="print" rel="stylesheet">
+          <?php endif; } ?>
+    <script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
 	<script src="../js/modernizr.js"></script>   

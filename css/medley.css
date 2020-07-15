@@ -164,8 +164,8 @@ h2 span {
 @media screen and (max-width: 667px) {
     
     #tvcoverage h3 {
-    margin: 0;
-}
+        margin: 0;
+    }
     
 	h2, h2 span {
 		background: none;

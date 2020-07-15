@@ -1,3 +1,12 @@
+body {
+	font: normal .875em/1.75 Georgia, serif;
+	background-color: white;
+    margin: 4%;
+}
+.no-js body {
+	background-color: mintcream;
+}
+
 main {
 	padding: 1em;
 }
@@ -138,12 +147,7 @@ form.manage fieldset {
 	border-radius: 8px 8px 0 0;
 	margin: .5em 0 1em;
 }
-form.prompt {
-	padding: 0;
-}
-form.prompt fieldset {
-	border-width: 1px 1px 0;
-}
+
 form.editor {
 	text-align: left;
 	padding: 1.75em;
@@ -357,12 +361,7 @@ figure {
 	width: 12%;
 	width: auto;
 }
-/*overrides default hiding of inputs which are used in no-js scenario*/
 
-section input {
-	position: relative;
-	left: 0;
-}
 .pp span, .pp a {
 	padding: .33em 1em .44em 1em;
 	margin: 0 .33em;
