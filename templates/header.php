@@ -5,9 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<title><?php htmlout($results['page_title']); ?></title>
-    
 <?php if(!isset($style)){ ?>
-        <link href="../css/reset.css" media="screen" rel="stylesheet">
         <link href="../css/admin.css" media="screen" rel="stylesheet">
     <?php }
     else { ?>

@@ -9,6 +9,30 @@
 	display: -webkit-flex;
 	display: flex;
 }
+
+.override .ptrt img {
+ 	-webkit-box-flex: 1;
+ 	-ms-flex: 1 1 %;
+ 	-webkit-flex: 1 1 1%;
+ 	flex: 1 1 1%;
+ }
+ .override .ptrt article {
+ 	-webkit-box-flex: 6;
+ 	-ms-flex: 6 1 1%;
+ 	-webkit-flex: 6 1 1%;
+ 	flex: 6 1 1%;
+ }
+
+ .no-flexwrap .override .ptrt {
+ 	display: block;
+ }
+
+ .override .ptrt img {
+ 	float: right;
+ 	width: 20%;
+ 	margin: 1em 1em 0;
+ }
+
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
 	#medley #presslinks, #medley #medley_links {
 		display: -webkit-box;
@@ -17,6 +41,42 @@
 		display: flex;
 	}
 }
+
+ @media screen and (max-width: 667px) {
+     .override .ptrt img {
+         margin: 1em 0 1em 1em;
+     }
+     .override .ptrt {
+		display: block;
+	}
+	
+    .override .ptrt article img {
+		float: right;
+		width: 30%;
+		margin: 1em 0 1em 1em;
+	}
+     .override .ptrt img {
+		width: auto;
+		margin: 1em 0 0 1em;
+		/* floats are explicitly disabled in "mobile layout", so re-apply where reqd"*/
+	}
+ }
+
+@media screen and (max-width: 480px) {
+ 	.override .ptrt article img {
+ 		width: 40%;
+ 	}
+ }
+
+@media screen and (max-width: 370px) {
+	.override .ptrt article img {
+		width: 37%;
+	}
+	.ptrt article p:first-of-type {
+		text-align: left;
+	}
+}
+
 @media screen and (min-width: 890px) {
 	.flexwrap #place section:nth-child(2), .flexwrap #scholars section:nth-child(4),  .flexwrap #trust section:nth-child(2), .flexwrap #trust section:nth-child(4), .flexwrap #scholars #medley_links {
 		display: -webkit-box;

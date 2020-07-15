@@ -1,83 +1,32 @@
 @import "flex_mod.css";
 @import "fullflex_mod.css";
-/*
-section:nth-child(5) img {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 10em;
-    -webkit-flex: 1 1 10em;
-    flex: 1 1 10em;
-    box-shadow: none;
-        }
-        section:nth-child(5) article {
-            -webkit-box-flex: 1;
-            -ms-flex: 1 1 20em;
-            -webkit-flex: 1 1 20em;
-            flex: 1 1 20em;
-        }
-*/
-.override #location img {
- 	-webkit-box-flex: 1;
- 	-ms-flex: 1 1 %;
- 	-webkit-flex: 1 1 1%;
- 	flex: 1 1 1%;
- }
- .override #location article {
- 	-webkit-box-flex: 6;
- 	-ms-flex: 6 1 1%;
- 	-webkit-flex: 6 1 1%;
- 	flex: 6 1 1%;
- }
-        .override section:nth-child(5) img {
-        	width: 20%;
-        }
-        h2 span {
-        	background: white 0% 0% url(../images/resource/sub_place.jpg) no-repeat;
-        }
-        @media only screen {
-        	h2 span {
-        		background: white 0% 0% url(../images/resource/sub_place.png) no-repeat;
-                background-size: contain;
-        	}
-        }
-        @media screen and (max-width: 667px) {
-            h2, h2 span {
-        		background: none;
-        	}
-        	.override section:nth-child(5) {
-        		display: block;
-        	}
-        	.override section:nth-child(5) img {
-        		width: auto;
-        		margin: 1em 0 0 1em;
-        		/* floats are explicitly disabled in "mobile layout", so re-apply where reqd"*/
-        		float: right;
-        	}
-        	.no-js section:nth-child(1) .read-more-trigger:before {
-        		content: "The setting";
-        	}
-        	.no-js section:nth-child(2) .read-more-trigger:before {
-        		content: "Farm life";
-        	}
-        	.no-js section:nth-child(3) .read-more-trigger:before {
-        		content: "Climate";
-        	}
-        	.no-js section:nth-child(4) .read-more-trigger:before {
-        		content: "Connectivity";
-        	}
-        	.no-js section:nth-child(5) .read-more-trigger:before {
-        		content: "Location";
-        	}
-        	.override section:nth-child(5) article img {
-        		float: right;
-        		width: 30%;
-        		margin: 1em 0 1em 1em;
-        	}
-        }
-        @media screen and (max-width: 370px) {
-        	.override section:nth-child(5) article img {
-        		width: 37%;
-        	}
-        	section:nth-child(5) article p:first-of-type {
-        		text-align: left;
-        	}
-        }
+
+h2 span {
+	background: white 0% 0% url(../images/resource/sub_place.jpg) no-repeat;
+}
+@media only screen {
+	h2 span {
+		background: white 0% 0% url(../images/resource/sub_place.png) no-repeat;
+		background-size: contain;
+	}
+}
+@media screen and (max-width: 667px) {
+	h2, h2 span {
+		background: none;
+	}
+	.no-js section:nth-child(1) .read-more-trigger:before {
+		content: "The setting";
+	}
+	.no-js section:nth-child(2) .read-more-trigger:before {
+		content: "Farm life";
+	}
+	.no-js section:nth-child(3) .read-more-trigger:before {
+		content: "Climate";
+	}
+	.no-js section:nth-child(4) .read-more-trigger:before {
+		content: "Connectivity";
+	}
+	.no-js section:nth-child(5) .read-more-trigger:before {
+		content: "Location";
+	}
+}

@@ -9,7 +9,7 @@ define( "ARTICLE_IMAGE_PATH", "../images/articles" );
 define( "ARTICLE_PDF_PATH", "../pdf/articles" );
 define( "ARTICLE_VIDEO_PATH", "../video" );
 
-require_once '../../../innocent/poloafricaDB.txt';
+require_once '../../../semolina_pilchard/poloafricaDB.txt';
 define( "ARTICLE_ASSETS_PATH", "../assets" );
 define( "ARTICLE_UPLOAD_PATH", "../../../filestore/poloafrica" );
 define( "ARTICLE_GALLERY_PATH", "../images/gallery" );

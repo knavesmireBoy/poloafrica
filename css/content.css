@@ -181,6 +181,10 @@ h2 span {
 	padding: 0 0 0 8rem;
     line-height: 1.5;
 }
+
+
+
+
 @media only screen {
 	h2 {
 		background-image: linear-gradient(to right, #993, white);
