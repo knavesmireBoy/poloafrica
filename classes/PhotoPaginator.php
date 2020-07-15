@@ -30,7 +30,7 @@ class PhotoPaginator extends Paginator implements PaginatorInterface {
         if($this->records <= $this->display){
             return;
         }
-         echo '<nav id="pp">';
+         echo '<nav class="pp">';
         if($this->getCurrentPage() != 1){
            echo '<a href=".?' . $this->setQS($this->start - $this->display) . '">Previous</a>';
         }

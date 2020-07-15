@@ -262,6 +262,12 @@ include 'admin.html.php';
 require "listArticles.html.php";
 echo '</section></main>';
 ?>
+    <script src="../js/viewportSize.js"></script>
+    <script src="../js/shims.js"></script>
+    <script src="../js/underscore.js"></script>
+    <script src="../js/eventing.js"></script>
+    <script src="../js/classlist.js"></script>
+    <script src="../js/global.js"></script>
 
 <script>
     function prepareNavLinks(){
@@ -289,7 +295,7 @@ echo '</section></main>';
         });
         
         hijax.validate = function(tgt){
-           if(tgt.id === "page_select"){
+           if(poloAF.Util.hasClass("page_select", tgt)){
                 return true;
             }
             return false;

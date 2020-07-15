@@ -3,7 +3,7 @@
 <?php if (!empty($loginError)): ?>
 <h4 class="msg errorMessage"><?php htmlout($loginError); ?></h4>
 <?php endif; ?>
-<form action="." method="post" id="loginform">
+<form action="." method="post" class="login">
     <label for="email">Email</label>
     <input type="email" name="email" id="email" autofocus maxlength="50" required value="<?php if(isset($myemail)){ htmlout($myemail); } ?>">
     <label for="password">Password</label>

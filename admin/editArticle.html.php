@@ -52,15 +52,14 @@ include "admin.html.php"; ?>
             <label for="summary">summary</label><textarea name="summary" id="summary" placeholder="Brief description of the article" maxlength="1000" style="height: 5em;"><?php htmlout($results['article']->summary);?></textarea>
           </li>
             <?php
-            
             if($results['article']->page !== 'photos'): ?>
-          <li>
+          <li class="edit-content">
             <label for="content">content</label><textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
           </li>
             <?php endif; ?>
             <li id="details" class="mock"><ul><li class="mocklabel">details</li><li class="neue">
               <label for="attr_id">id</label>
-                <input name="attr_id" id="attr_id" maxlength="15" value="<?php htmlout($results['article']->attrID); ?>">
+                <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
                <label for="page">page</label>
               <?php if(!empty($_REQUEST['page'])) {  $mypage = strtolower(html($_REQUEST['page'])); }
               else if(!empty($results['article']->page)) {  $mypage = strtolower($results['article']->page); }

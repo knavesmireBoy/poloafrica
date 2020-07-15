@@ -3,11 +3,11 @@ h2 span {
 }
 
 /* NO FLEX PLEASE WE'RE BRITISH*/
-.override #facilities {
+.override .multi {
     display: block;
         }
  
-#facilities img {
+.multi img {
     clear: both;
     width: 30%;
     float: right;
@@ -22,7 +22,7 @@ h2 span {
 }
 
 @media screen and (max-width: 888px) {
-    #facilities img {
+    .multi img {
     width: 40%;
 }
 }

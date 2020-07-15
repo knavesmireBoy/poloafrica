@@ -29,23 +29,23 @@
             -webkit-align-items: flex-start;
             align-items: flex-start;
 		}
-		section#facilities h3 {
+		section.multi h3 {
 			-webkit-box-flex: 1;
 			-ms-flex: 1 0 100%;
 			-webkit-flex: 1 0 100%;
 			flex: 1 0 100%;
 		}
-		#wrap #facilities img {
+		#wrap .multi img {
 			-webkit-box-flex: 1;
 			-ms-flex: 1 1 15em;
 			-webkit-flex: 1 1 15em;
 			flex: 1 1 15em;
             
 		}
-		#facilities img:first-of-type {
+		.multi img:first-of-type {
 			margin: 1em .5em 0em 0;
 		}
-		#facilities img:last-of-type {
+		.multi img:last-of-type {
 			margin: 1em 0 0 .5em;
 		}
 		section:first-child p {
@@ -89,13 +89,13 @@
 	.no-flexwrap #polo .field:last-of-type {
 		margin: 1em 1em 0;
 	}
-    .override #facilities img{
+    .override .multi img{
 			margin: 1em 1em 0;
 		}
 }
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
-.override #facilities {
+.override .multi {
     display: block;
         }
 
@@ -107,17 +107,17 @@
 		section:first-child article {
 			width: auto;
 		}
-		.override #facilities {
+		.override .multi {
 			display: -ms-grid;
 			display: grid;
 			grid-row-gap: 1em;
 			grid-column-gap: 2em;
 		}
-		.override #facilities img {
+		.override .multi img {
 			width: 100%;
 			margin: 0;
 		}
-		.override #facilities>a {
+		.override .multi>a {
 			-ms-grid-column: 1;
 			-ms-grid-column-span: 2;
 			grid-column: 1 / 3;
@@ -125,7 +125,7 @@
 			-ms-grid-row-span: 1;
 			grid-row: 1/2;
 		}
-		.override #facilities article {
+		.override .multi article {
 			-ms-grid-column: 1;
 			-ms-grid-column-span: 1;
 			grid-column: 1 / 2;
@@ -133,7 +133,7 @@
 			-ms-grid-row-span: 5;
 			grid-row: 1/6;
 		}
-		.override #facilities img:first-of-type {
+		.override .multi img:first-of-type {
 			-ms-grid-row: 1;
 			-ms-grid-row-span: 1;
 			grid-row: 1/2;
@@ -141,7 +141,7 @@
 			-ms-grid-column-span: 1;
 			grid-column: 2 / 3;
 		}
-		.override #facilities img:last-of-type {
+		.override .multi img:last-of-type {
 			-ms-grid-row: 3;
 			-ms-grid-row-span: 1;
 			grid-row: 3/4;

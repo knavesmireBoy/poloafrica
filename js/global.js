@@ -828,7 +828,14 @@ function divideBy(a, b){
 		getZero: _.partial(byIndex, 0),
 		getter: getter,
 		gtThan: gtThan,
-		hasFeature: (function () {
+		hasClass: (function () {
+			var html = document.documentElement || document.getElementsByTagName('html')[0];
+			return function (str, el) {
+                el = el || html;
+				return poloAF.Util.getClassList(el).contains(str);
+			};
+		}()),
+        hasFeature: (function () {
 			var html = document.documentElement || document.getElementsByTagName('html')[0];
 			return function (str) {
 				return poloAF.Util.getClassList(html).contains(str);

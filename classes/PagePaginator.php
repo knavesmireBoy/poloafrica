@@ -41,7 +41,7 @@ class PagePaginator extends Paginator implements PaginatorInterface {
         if($this->records <= $this->display){
             return;
         }
-         echo '<nav id="pp">';
+         echo '<nav class="pp">';
         if($this->getCurrentPage() != 1){
            echo '<a href=".?s=' . ($this->start - $this->display) . '&pp=' . $this->pages .'">Previous</a>';
         }
