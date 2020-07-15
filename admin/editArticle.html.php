@@ -139,4 +139,4 @@ include "admin.html.php"; ?>
         });
     }
 </script>
-<nav><a href="." title="Back to Article List" class="icon"><img src="../images/resource/icon_list.png"></a></nav>
+<nav><a href="?page=<?php echo $mypage; ?>" title="Back to Article List" class="icon"><img src="../images/resource/icon_list.png"></a></nav>

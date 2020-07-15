@@ -17,10 +17,10 @@ include "../templates/nav.php"
 <section id="intro">
 <input class="read-more-state" id="post1" type="checkbox">
 <label class="read-more-trigger" for="post1"></label>
-            <?php
-            $article = $articles['Donations and sponsorship'];
-            $imagePaths = $article->getFilePath();
-            foreach($imagePaths as $image) : ?>
+    <?php
+    $article = $articles['Donations and sponsorship'];
+$imagePaths = $article->getFilePath();
+foreach($imagePaths as $image) : ?>
     <img id="<?php htmlout($image['dom_id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
     <?php endforeach;
          include '../templates/article_enq.php';

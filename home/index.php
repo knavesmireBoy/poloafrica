@@ -6,6 +6,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/ArticleFactory.php
 include_once '../myconfig.php';
 $results = ['page_title' => 'Welcome'];
 $style = 'home';
+$meta = '';
 include "../templates/header.php";
 $articles = ArticleFactory::getListByPage($style);
 $count = 0;

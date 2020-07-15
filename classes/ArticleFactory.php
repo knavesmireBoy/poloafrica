@@ -83,12 +83,16 @@ class ArticleFactory
         return $rows;
     }
 
-    public static function getPages()
+    public static function getPages($col, $page = '')
     {
-        //$pt = '/The (Poloafrica\s)?(\b)/i';
-        //echo preg_replace($pt, '$1', 'The Uity Expo');
         $conn = getConn();
-        $sql = "SELECT name FROM pages;";
+        $sql = "SELECT $col FROM pages";
+        if(!empty($page)){
+            $sql = "SELECT $col FROM pages WHERE name = '$page'"; 
+            $st = prepSQL($conn, $sql);
+            doPreparedQuery($st, 'Error fetching meta content');
+            return $st->fetch(PDO::FETCH_NUM)[0];
+        }
         $st = prepSQL($conn, $sql);
         doPreparedQuery($st, 'Error fetching list of pages');
         $ret = array();

@@ -257,7 +257,7 @@ if (!window.poloAF) {
 					}
 					tx.focus();
 				},
-                quote: function(){
+                back: function(){
                     tx.value = cache;
                 },
 				setCount: function (count) {
@@ -284,7 +284,7 @@ if (!window.poloAF) {
         var controlsconf = {
 				id: 'controls'
 			},
-			tags = ['HEADING', 'BOLD', 'ITAL', 'PARA', 'LINE', 'LINK', 'UNLINK', 'LIST', 'QUOTE', 'IMG' ],
+			tags = ['HEADING', 'BOLD', 'ITAL', 'PARA', 'LINE', 'LINK', 'UNLINK', 'LIST', 'IMG', 'BACK'],
 			$el = utils.machElement(utils.addEvent(clicker, linkeroo(Maker($('content'), $('title')))), ptL(setAttrs, controlsconf), anCrIn($('content'), $('content').parentNode), utils.always('ul')),
 			prepIcons = function (str) {
 				var mystr = str.toLowerCase(),

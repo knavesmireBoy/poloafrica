@@ -43,9 +43,6 @@
 }
 
  @media screen and (max-width: 667px) {
-     .override .ptrt img {
-         margin: 1em 0 1em 1em;
-     }
      .override .ptrt {
 		display: block;
 	}

@@ -103,7 +103,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
     $outer[] = array('page', false);//set page so we don't get an undefined index, but set to falsy
     $_SESSION["paginator"]->setStart(0);
     //simulate selecting.. 
-    if(!in_array($page, ArticleFactory::getPages())){
+    if(!in_array($page, ArticleFactory::getPages('name'))){
        $outer[] = array('action', 'choose');
         }
         redirect($outer);
@@ -147,7 +147,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     {
         //User has cancelled their edits: return to the article list
         //preserve page selection when exiting form
-        $page = isset($_GET['page']) ? $_GET['page'] : '';
+        $page = isset($_GET['page']) ? $_GET['page'] : $_POST['page'];
         redirect(array(array('page', $page)));
         exit();
     }
