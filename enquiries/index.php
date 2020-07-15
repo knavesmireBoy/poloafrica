@@ -10,7 +10,7 @@ include "../templates/header.php";
 ?>
 <?php
 $articles = ArticleFactory::getListByPage("enquiries");
-$count = 1;
+$count = 2;
 include "../templates/nav.php"
 ?>
 <main class="override">
@@ -23,13 +23,13 @@ include "../templates/nav.php"
             foreach($imagePaths as $image) : ?>
     <img id="<?php htmlout($image['dom_id']); ?>" src="<?php htmlout($image['src']); ?>" alt="<?php htmlout($image['alt']); ?>">
     <?php endforeach;
-         include '../templates/article_sans.php';
+         include '../templates/article_enq.php';
         $article = $articles['Holiday rates'];
         $count += 1;
-        include '../templates/article_alt.php';
-            $article = $articles['Contact us'];
+        include '../templates/article_enq.php';
+         $article = $articles['Contact us'];
         $count += 1;
-        include '../templates/article_alt.php'
+        include '../templates/article_enq.php'
         ?>
         
         </section><section id="post">
