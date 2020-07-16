@@ -18,22 +18,6 @@ function findArticle($id){
     return ArticleFactory::getById((int)$id);
 }
 
-function getMsg($str){
-    $lookup = array('articleNotFound' => 'Article not found', 'changesSaved' => "Your changes have been saved.", 'articleDeleted' => "Article deleted.");
-    return isset($lookup[$str]) ?  $lookup[$str] : $str;
-}
-
-function redirect($arr){
-    $str = '?';
-    for($i=0; $i < count($arr); $i++){
-        if($i !== 0){
-           $str .= '&'; 
-        }
-        $str .= implode('=', $arr[$i]);
-    }
-    header("Location: $str");
-}
-
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $display = 10;
 $page = null;
@@ -305,12 +289,6 @@ echo '</section></main>';
     }
     prepareNavLinks();
     prepareDropDown();
-    /*
-    document.getElementById('page').addEventListener('change',  function(e){
-        //e.preventDefault();
-        this.form.submit();
-    });
-    */    
     
     </script>
     <?php echo '</body>';

@@ -4,6 +4,7 @@ date_default_timezone_set( "Europe/London" );  // http://www.php.net/manual/en/t
 
 define( "CLASS_PATH", "classes" );
 define( "TEMPLATE_PATH", "templates" );
+define( "ACTIVE_PAGES", 9 );
 
 define( "ARTICLE_IMAGE_PATH", "../images/articles" );
 define( "ARTICLE_PDF_PATH", "../pdf/articles" );

@@ -26,6 +26,7 @@ $paginator->doNav(); ?>
     $myp = isset($_REQUEST['page']) ? html($_REQUEST['page']) : $p;
     $myp = isset($myp) ?  $myp : 'home';
     ?>
+    <a href="../page/" title="Edit Page Tags" class="icon"><img src="../images/resource/icon_page_edit.png"></a>
 <a href="?action=newArticle&amp;page=<?php if(isset($_REQUEST['page'])){
     htmlout($_REQUEST['page']);
 }?>" title="Add a New Article" class="icon"><img src="../images/resource/icon_list_add.png"></a>

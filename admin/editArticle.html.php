@@ -20,13 +20,13 @@ $mypage = '';
         }
       }
    </script>
-     <script src="../js/viewportSize.js"></script>
-    <script src="../js/shims.js"></script>
+<script src="../js/viewportSize.js"></script>
+<script src="../js/shims.js"></script>
 <script src="../js/underscore.js"></script>
-    <script src="../js/eventing.js"></script>
-    <script src="../js/classlist.js"></script>
-    <script src="../js/global.js"></script>
-    <script src="../js/markup.js"></script>
+<script src="../js/eventing.js"></script>
+<script src="../js/classlist.js"></script>
+<script src="../js/global.js"></script>
+<script src="../js/markup.js"></script>
 <?php 
 include "admin.html.php"; ?>
 

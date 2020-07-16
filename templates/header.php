@@ -1,26 +1,26 @@
+<?php
+include_once '../classes/PageFactory.php';
+?>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8"><!-- IE compatibility mode issue -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
-    <?php if(isset($style) && !empty($style)){
-    $content = ArticleFactory::getPages('meta_content', $style);
-}
-    else {
-        $content = '';
+	<title><?php htmlout($results['page_title']); ?></title>
+    <?php
+    if(isset($style)){
+    $page = PageFactory::getByName($style);
+    include 'meta.html.php';
     }
     ?>
-    <meta name="description" content="<?php htmlout($content); ?>">
-	<title><?php htmlout($results['page_title']); ?></title>
-<?php if(!isset($style)){ ?>
+    <?php if(!isset($style)){ ?>
         <link href="../css/admin.css" media="screen" rel="stylesheet">
     <?php }
     else { ?>
-    
     <link href="../css/standard.css" media="screen" rel="stylesheet">
     <?php if(isset($style)): 
-   $my = glob("../css/my$style.css"); ?>
+          $my = glob("../css/my$style.css"); ?>
     <link href="../css/<?php echo "$style.css" ?>" media="screen" rel="stylesheet"> 
     <?php if(!empty($my)){ ?>
       <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">

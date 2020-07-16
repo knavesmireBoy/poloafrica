@@ -5,8 +5,7 @@
 if (isset($results['errorMessage'])){ ?>
 <div class="msg errorMessage"><?php htmlout($results['errorMessage']); ?></div>
 <nav>
-<a href="../user/" title="Manage Users" class="icon"><img src="../images/resource/icon_user_edit.png"></a>
-<a href="../home/" title="live website" class="icon"><img src="../images/resource/home.png"></a>
+<a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>
 </nav>
 <?php } 
 if (isset($results['statusMessage'])){ ?>

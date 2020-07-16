@@ -83,16 +83,19 @@ class ArticleFactory
         return $rows;
     }
 
-    public static function getPages($col, $page = '')
+    public static function getPages($col/*, $page = ''*/)
     {
         $conn = getConn();
-        $sql = "SELECT $col FROM pages";
+        $n = ACTIVE_PAGES;
+        $sql = "SELECT $col FROM pages LIMIT $n";
+        /*
         if(!empty($page)){
             $sql = "SELECT $col FROM pages WHERE name = '$page'"; 
             $st = prepSQL($conn, $sql);
             doPreparedQuery($st, 'Error fetching meta content');
             return $st->fetch(PDO::FETCH_NUM)[0];
         }
+        */
         $st = prepSQL($conn, $sql);
         doPreparedQuery($st, 'Error fetching list of pages');
         $ret = array();
@@ -107,7 +110,7 @@ class ArticleFactory
     {
         $conn = getConn();
         $list = array();
-        $sql = "SELECT articles.id, title, summary, content, attr_id, page, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE page = :pp";
+        $sql = "SELECT articles.id, title, summary, content, attr_id, page, UNIX_TIMESTAMP(pubDate) AS pubDate FROM articles WHERE page = :pp ";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":pp", $pp, PDO::PARAM_STR);
         doPreparedQuery($st, 'Error retreiving articles for this page');
