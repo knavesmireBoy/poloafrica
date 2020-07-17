@@ -1,6 +1,6 @@
 <?php
 $pp = PageFactory::getPages();
-$myp = 'home';
+$mypage = 'home';
 $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
 ?>
 <h2>Poloafrica Admin</h2>
@@ -32,7 +32,8 @@ if($page && $page == $p){ echo ' selected'; }
 
 <nav>
 <a href="?action=addPage" title="Add a New Page" class="icon"><img src="../images/resource/icon_page_add.png"></a>
-<?php  $myp = isset($_GET['page']) ? $_GET['page'] : $myp; ?>
-<a href="../<?php echo $myp; ?>" title="go to <?php echo $myp; ?> page" class="icon"><img src="../images/resource/home.png"></a>
+<?php  $mypage = isset($_GET['page']) ? $_GET['page'] : $mypage; ?>
+<a href="../admin/?page=<?php echo $mypage; ?>" title="Back to Article List" class="icon"><img src="../images/resource/icon_list.png"></a>
+<a href="../<?php echo $mypage; ?>" title="go to <?php echo $mypage; ?> page" class="icon"><img src="../images/resource/home.png"></a>
 </nav>
 <?php echo '</section></main></body>';

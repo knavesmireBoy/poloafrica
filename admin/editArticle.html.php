@@ -53,8 +53,15 @@ include "admin.html.php"; ?>
           </li>
             <?php
             if($results['article']->page !== 'photos'): ?>
+            <a class="nojs" href="https://www.markdownguide.org/getting-started/" title="Please enable Javascript for additional functionality"><strong>The Markdown Guide</strong> by Matt Cone</a>
+           
           <li class="edit-content">
-            <label for="content">content</label><textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
+              
+            <label for="content">content</label>
+              
+             <?php include 'markdown_guide.html'; ?>
+              
+              <textarea name="content" id="content" placeholder="The HTML content of the article" maxlength="200000" style="height:<?php htmlout(getTextAreaHeight($results['article']->title)); ?>"><?php htmlout($results['article']->content);?></textarea>
           </li>
             <?php endif; ?>
             <li id="details" class="mock"><ul><li class="mocklabel">details</li><li class="neue">
@@ -124,7 +131,7 @@ include "admin.html.php"; ?>
             <input type="submit" name="cancel" formnovalidate value="Cancel">
                         <?php  }//if $remove ?>
         </fieldset>
-            <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>">
+                <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>"></li></ul>
             </form>
 <script>
     var asset = document.querySelector('.asset');

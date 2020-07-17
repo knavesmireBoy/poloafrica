@@ -80,7 +80,7 @@ textarea {
 	font: 1.1em/1.2 'Courier New', Courier, monospace;
 }
 form.content input, select {
-	font: .8rem/1.5 Optima, Arial, sans-serif;
+	font: 1em/1.5 Optima, Arial, sans-serif;
 	border-radius: 5px;
 	border: solid 1px white;
 }
@@ -98,9 +98,12 @@ legend {
 	padding: .75em;
 	border-radius: 5px;
 }
-table, form, .manage {
+table, form, .manage. .page {
 	width: 40%;
 	min-width: 28em;
+}
+.page {
+    width: auto;
 }
 form {
 	text-align: left;
@@ -119,19 +122,14 @@ form div {
 	margin: 1em 0 0;
 }
 .buttons {
-	padding: .3em;
-	color: white;
-	background-color: white;
-	background-color: rgba(0, 0, 0, .66);
-	text-align: center;
+	padding: .5em;
+    box-sizing: border-box;
 }
 .buttons p {
 	text-align: center;
 	color: yellow;
 }
-form .buttons {
-	background-color: transparent;
-}
+
 form.content {
 	text-align: left;
 	width: 96%;
@@ -215,9 +213,40 @@ li.mock ul>li {
 .content li.asset figure {
 	vertical-align: middle;
 }
-.edit-content ul, .content .edit-content>textarea, .content .buttons {
+.edit-content ul, .content .edit-content>textarea, .content .buttons, .nojs {
 	margin: 0 0 2% 17%;
 	width: 83%;
+}
+.no-js .nojs {
+    position: relative;
+    top: 2.5em;
+}
+.js .nojs {
+    position: absolute;
+    left: -9999px;
+}
+#guide  {
+    position: absolute;
+    left: -9999px;
+}
+#guide.show  {
+    position: relative;
+    left: 0;
+    padding: 1em;
+    width: auto;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+#guide li {
+    display: block;
+    width: auto;
+    box-shadow: none;
+    padding: 0 .3em;
+}
+
+#guide li:hover {
+    background-color: black;
+    color: white;
 }
 .edit-content ul {
 	margin-left: 17%;
@@ -455,7 +484,7 @@ figure {
 	color: yellow;
 }
 .buttons input:last-child:hover {
-	color: silver;
+	color: blue;
 }
 #details input {
 	margin-bottom: .5em !important;

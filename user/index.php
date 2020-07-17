@@ -19,7 +19,6 @@ $setstatus = izSet($_GET, 'status');
 $seterror = izSet($_GET, 'error');
 $onsuccess = 'User was successfully';
 $set = doSet($results, 'statusMessage');
-$style = 'admin';
 
 include ("../templates/header.php");
 ?>

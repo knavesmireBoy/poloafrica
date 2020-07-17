@@ -136,8 +136,6 @@ class Image extends Asset implements AssetInterface
         $this->removeFile($row[0]);
     }
     
-    
-
     public function insert()
     {
         // Does the Image object already have an ID?

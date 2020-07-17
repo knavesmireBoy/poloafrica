@@ -28,6 +28,7 @@ if (!window.poloAF) {
 				return arg === char;
 			};
 		},
+        doAlt = utils.doAlternate(),
 		Maker = function (tx, inp) {
 			var endlinkref = /\[(\d)+\]:.+/g,
                 endlink = /\]\[\d+\]/,
@@ -110,6 +111,7 @@ if (!window.poloAF) {
 				setTextArea = function (from, to, cur) {
 					tx.value = tx.value.slice(0, from) + cur + tx.value.slice(to);
 				},
+                pair = doAlt([ptL(utils.show, ptL($, 'guide')), ptL(utils.hide, ptL($, 'guide'))]),
 				hasEmphasis = isEqual('*'),
 				isSpace = isEqual(' '),
 				isLine = isEqual('\n'),
@@ -173,12 +175,21 @@ if (!window.poloAF) {
 					tx.value = tx.value.slice(0, end - n);
 				},
 				img: function () {
-					var o = fixSelection(isLine),
+					var t,
+                        title,
+                        o = fixSelection(isLine),
 						from = o.from,
 						to = o.to,
 						cur = tx.value.slice(from, to),
-						res = window.prompt('Enter path to image');
+						res = window.prompt('Enter path to image');                       
+                    
 					if (res) {
+                        t = res.lastIndexOf(' ');
+                        if(t >= 0){
+                            title = '"'+ res.substring(t+1)+'"';
+                            res =  res.substring(0, t+1);
+                            res = res + ' ' + title;
+                        }
 						setTextArea(from, to, '![' + cur + '](' + res + ')');
 					}
 				},
@@ -262,7 +273,10 @@ if (!window.poloAF) {
                 },
 				setCount: function (count) {
 					this.count = count;
-				}
+				},
+                help: function(){
+                    pair();
+                }
 			}; //ret
 		},
 		linkeroo = function (maker) {
@@ -277,21 +291,22 @@ if (!window.poloAF) {
 			};
 		};
 	window.addEventListener('load', function () {
-        
         if(!$('content')){
             return;
         }
         var controlsconf = {
 				id: 'controls'
 			},
-			tags = ['HEADING', 'BOLD', 'ITAL', 'PARA', 'LINE', 'LINK', 'UNLINK', 'LIST', 'IMG', 'BACK'],
-			$el = utils.machElement(utils.addEvent(clicker, linkeroo(Maker($('content'), $('title')))), ptL(setAttrs, controlsconf), anCrIn($('content'), $('content').parentNode), utils.always('ul')),
-			prepIcons = function (str) {
+			tags = ['HEADING', 'BOLD', 'ITAL', 'PARA', 'LINE', 'LINK', 'UNLINK', 'LIST', 'IMG', 'BACK', 'HELP'],
+            tag_titles = ['Create headings from h1 thru h6', 'toggle bold text', 'toggle italic text', 'paragraph shortcut', 'line break shortcut', 'create a link from selected text', 'unlink selected text', 'toggle from paragraph to list', 'insert an image', 'clear all edits', 'toggle a handy guide'],
+			$el = utils.machElement(utils.addEvent(clicker, linkeroo(Maker($('content'), $('title')))), ptL(setAttrs, controlsconf), anCrIn($('guide'), $('content').parentNode), utils.always('ul')),
+			prepIcons = function (str, i) {
 				var mystr = str.toLowerCase(),
 					path = '../images/resource/edit_' + mystr + '.png',
 					conf = {
 						src: path,
-						alt: mystr
+						alt: mystr,
+                        title: tag_titles[i]
 					},
 					makeLI = _.compose(anCr($('controls')), utils.always('li'));
 				_.compose(ptL(setAttrs, conf), anCr(makeLI), utils.always('img'))();
