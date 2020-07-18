@@ -28,11 +28,16 @@ if (!window.poloAF) {
 				return arg === char;
 			};
 		},
+        mylist = [ [/\n+1\.\s+/g, '\n- '], [/\n+\-\s+/g, '\n1. ']],
         doAlt = utils.doAlternate(),
 		Maker = function (tx, inp) {
 			var endlinkref = /\[(\d)+\]:.+/g,
                 endlink = /\]\[\d+\]/,
                 emphasis = /\**([^\*]+)\**/g,
+                ul = /\n+\-\s+/g,
+                toOL =  '\n1. ',
+                ol = /\n+1\.\s+/g,
+                toUL = '\n- ',
 				i = 0,
 				getReg = function (n) {
 					return new RegExp('\\[' + n + '\\]:');
@@ -110,6 +115,22 @@ if (!window.poloAF) {
 				},
 				setTextArea = function (from, to, cur) {
 					tx.value = tx.value.slice(0, from) + cur + tx.value.slice(to);
+				},
+                listFromLine = function () {
+					var o = fixSelection(isLine, isLine),
+						from = o.from,
+						to = o.to;
+					if (!isSelected(from, to)) {
+						return;
+					}
+                    if (tx.value.slice(from, to).charAt(0) === '-' || tx.value.slice(from, to).charAt(0) === '1') {
+						setTextArea(from-1, to, tx.value.slice(from - 1, to).replace(mylist[0][0], '\n'));
+					}
+                    else {
+						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\n|$)/g, mylist[0][1]));
+                        tx.value = tx.value.replace(/(\-|\W1\.)\s+(\n+)/, '$2');
+                        mylist = mylist.reverse();
+					}
 				},
                 pair = doAlt([ptL(utils.show, ptL($, 'guide')), ptL(utils.hide, ptL($, 'guide'))]),
 				hasEmphasis = isEqual('*'),
@@ -193,17 +214,18 @@ if (!window.poloAF) {
 						setTextArea(from, to, '![' + cur + '](' + res + ')');
 					}
 				},
-				list: function () {
-					var o = fixSelection(isLine, isLine),
-						from = o.from,
-						to = o.to;
+				
+                list: function () {
+					var from = tx.selectionStart,
+						to = tx.selectionEnd;
 					if (!isSelected(from, to)) {
 						return;
 					}
-					if (tx.value.slice(from, to).charAt(0) === '-') {
-						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/\n-\s?/g, '\n'));
-					} else {
-						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\n)/g, '$1- '));
+                    if(tx.value.substring(from, to).match(/\n/)){
+                        return listFromLine();
+                    }
+                    else {
+						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\w+(\s|$))/g, '- $1\n'));
 					}
 				},
 				bold: function () {
@@ -253,8 +275,7 @@ if (!window.poloAF) {
 				},
 				line: function () {
 					var o = fixSelection(isSpace, isStop);
-					//console.log(tx.value.slice(o.from, o.to));
-					setTextArea(o.from, o.to + 2, tx.value.slice(o.from, o.to + 2) + '  \n');
+					setTextArea(o.from, o.to + 2, tx.value.slice(o.from, o.to + 2) + '<br> ');
 				},
 				heading: function () {
 					var o = fixSelection(isLine);
