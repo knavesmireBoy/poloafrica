@@ -11,7 +11,7 @@ function htmlout($text)
 
 function markdown2html($text) {
     
-    $text = html($text);
+$text = html($text);
   // strong emphasis
 $text = preg_replace('/__(.+?)__/s', '<strong>$1</strong>', $text);
 $text = preg_replace('/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $text);

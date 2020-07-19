@@ -543,6 +543,7 @@ function divideBy(a, b){
 					e = _.last(arguments);
                     extent = extent || 'prevent';
 				listener[extent](e);
+               // el = el ? getResult(el) : null;
 				//avoid sending Event object as it may wind up as the useCapture argument in the listener
 				func.apply(el || null, args.splice(-1, 1));
 			},
@@ -554,6 +555,7 @@ function divideBy(a, b){
 }
 
 	function addHandler(type, func, el) {
+        //console.log(arguments);
 		return poloAF.Eventing.init.call(poloAF.Eventing, type, func, el).addListener();
 	}
     
@@ -658,7 +660,7 @@ function divideBy(a, b){
 	// The three branches.
 	var standard = {
 			createXhrObject: function() {
-				return new XMLHttpRequest();
+				return new window.XMLHttpRequest();
 			}
 		},
 		activeXNew = {
@@ -699,6 +701,7 @@ function divideBy(a, b){
 		which needs to be cross browser see EventCache.prevent */
 		addEvent: function (handler, func, extent) {
 			return function (el) {
+                //console.log(el);
                 el = getResult(el);
 				var partial = el && _.isElement(el) ? _.partial(handler, el) : _.partial(handler);
 				return prepareListener(extent)(partial, func, el);

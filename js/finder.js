@@ -171,6 +171,7 @@
 		return;
 	}
 	if (animation) {
+        //console.log(utils.$('tween'));
 		images.splice(-3, 3);
 		images.push(animation);
 		utils.removeNodeOnComplete(utils.$('tween'));

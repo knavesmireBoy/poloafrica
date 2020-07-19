@@ -30,14 +30,10 @@ if (!window.poloAF) {
 		},
         mylist = [ [/\n+1\.\s+/g, '\n- '], [/\n+\-\s+/g, '\n1. ']],
         doAlt = utils.doAlternate(),
+        toggleToolbar = doAlt([ptL(utils.show, ptL($, 'guide')), ptL(utils.hide, ptL($, 'guide'))]),
 		Maker = function (tx, inp) {
 			var endlinkref = /\[(\d)+\]:.+/g,
-                endlink = /\]\[\d+\]/,
                 emphasis = /\**([^\*]+)\**/g,
-                ul = /\n+\-\s+/g,
-                toOL =  '\n1. ',
-                ol = /\n+1\.\s+/g,
-                toUL = '\n- ',
 				i = 0,
 				getReg = function (n) {
 					return new RegExp('\\[' + n + '\\]:');
@@ -123,7 +119,7 @@ if (!window.poloAF) {
 					if (!isSelected(from, to)) {
 						return;
 					}
-                    if (tx.value.slice(from, to).charAt(0) === '-' || tx.value.slice(from, to).charAt(0) === '1') {
+                    if (tx.value.slice(from, to).charAt(0) === '-' || tx.value.slice(from, to).match(/^1\./)) {
 						setTextArea(from-1, to, tx.value.slice(from - 1, to).replace(mylist[0][0], '\n'));
 					}
                     else {
@@ -132,13 +128,10 @@ if (!window.poloAF) {
                         mylist = mylist.reverse();
 					}
 				},
-                pair = doAlt([ptL(utils.show, ptL($, 'guide')), ptL(utils.hide, ptL($, 'guide'))]),
 				hasEmphasis = isEqual('*'),
 				isSpace = isEqual(' '),
 				isLine = isEqual('\n'),
 				isStop = isEqual('.'),
-                isStartLink = isEqual('['),
-                //isEndLink = isEqual('['),
 				header = 0,
                 cache = tx.value;
 			return {
@@ -296,7 +289,7 @@ if (!window.poloAF) {
 					this.count = count;
 				},
                 help: function(){
-                    pair();
+                    toggleToolbar();
                 }
 			}; //ret
 		},
@@ -318,6 +311,12 @@ if (!window.poloAF) {
         var controlsconf = {
 				id: 'controls'
 			},
+            check = function(li){
+                var sib = utils.getNextElement(li.nextSibling);
+                if(!sib){
+                    toggleToolbar();
+                }
+            },
 			tags = ['HEADING', 'BOLD', 'ITAL', 'PARA', 'LINE', 'LINK', 'UNLINK', 'LIST', 'IMG', 'BACK', 'HELP'],
             tag_titles = ['Create headings from h1 thru h6', 'toggle bold text', 'toggle italic text', 'paragraph shortcut', 'line break shortcut', 'create a link from selected text', 'unlink selected text', 'toggle from paragraph to list', 'insert an image', 'clear all edits', 'toggle a handy guide'],
 			$el = utils.machElement(utils.addEvent(clicker, linkeroo(Maker($('content'), $('title')))), ptL(setAttrs, controlsconf), anCrIn($('guide'), $('content').parentNode), utils.always('ul')),
@@ -334,5 +333,6 @@ if (!window.poloAF) {
 			};
 		$el.render();
 		_.each(tags, prepIcons);
+         utils.addEvent(clicker, _.compose(check, utils.drillDown(['target'])))(ptL($, 'guide'));
 	});
 }());
