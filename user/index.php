@@ -14,7 +14,7 @@ $results['email'] = '';
 $results['button'] = 'Add User';
 $results['required'] = 'required';
 $results['heading'] = 'Manage Users';
-$results['nav'] = '<a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>';
+$results['nav'] = '<a href="../admin" title="Back to Article List" class="icon"><img src="../images/resource/icon_list.png"></a>';
 $results['exclude'] = null;
 $setstatus = izSet($_GET, 'status');
 $seterror = izSet($_GET, 'error');
@@ -134,7 +134,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'selecteduser') {
     }
         
 if (!userHasRole('Content Editor')) {
-        $results['exclude'] = true;
-    }
-
+    $results['exclude'] = true;
+}
 include ("users.html.php");

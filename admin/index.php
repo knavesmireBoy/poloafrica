@@ -17,7 +17,7 @@ $page = null;
 $default_placement = "current position";
 $results['page_title'] = 'Admin';
 $results['heading'] = 'Article List';
-$results['nav'] = '<a href="../user/" title="Manage Users" class="icon"><img src="../images/resource/icon_user_edit.png"></a>';
+$results['nav'] = '<a href="../user/" title="Manage Users" class="icon"><img src="../images/resource/icon_user_edit.png"></a><a href="../page/" title="Edit Page Tags" class="icon"><img src="../images/resource/icon_page_edit.png"></a>';
 $results['exclude'] = null;
 
 include "../templates/header.php";
