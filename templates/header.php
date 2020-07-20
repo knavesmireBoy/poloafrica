@@ -23,12 +23,12 @@ include_once '../classes/PageFactory.php';
           $my = glob("../css/my$style.css"); ?>
     <link href="../css/<?php echo "$style.css" ?>" media="screen" rel="stylesheet"> 
     <?php if(!empty($my)){ ?>
-      <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../css/fonts.css">
+    <link href="../css/my<?php echo "$style.css" ?>" media="screen" rel="stylesheet">
     <?php } ?>
-          <link href="../css/print.css" media="print" rel="stylesheet">
+    <link href="../css/fonts.css" rel="stylesheet">
+    <link href="../css/print.css" media="print" rel="stylesheet">
           <?php endif; } ?>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>

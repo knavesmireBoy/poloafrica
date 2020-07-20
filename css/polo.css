@@ -23,8 +23,12 @@ h2 span {
 
 @media screen and (max-width: 888px) {
     .multi img {
-    width: 40%;
-}
+        width: 49%;
+        margin: 1em 0 0;
+    }
+    .multi img:last-of-type {
+        margin: 1em 0 0 2%;
+    }
 }
 
 @media screen and (max-width: 667px) {
@@ -49,6 +53,12 @@ h2 span {
 		left: 0;
 	}
     */
+    .js .multi article img {
+        display: inline-block;
+    }
+    .no-js .multi .read-more-state~article {
+		margin: 0;
+	}
 
 	h2, h2 span {
 		background: none;

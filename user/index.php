@@ -42,7 +42,6 @@ header("Location: ?error=Only Account Administrators may access this page!");
 exit();
 }
     
-    
 if (isset($_POST['action']) and $_POST['action'] == 'Edit') {
     $admin = new Admin();
     $results = $admin->getById($_POST['id']);        
@@ -136,4 +135,4 @@ if(isset($_POST['action']) && $_POST['action'] == 'selecteduser') {
 if (!userHasRole('Content Editor')) {
     $results['exclude'] = true;
 }
-include ("users.html.php");
+include "users.html.php";
