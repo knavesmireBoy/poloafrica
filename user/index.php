@@ -13,17 +13,23 @@ $results['id'] = '';
 $results['email'] = '';
 $results['button'] = 'Add User';
 $results['required'] = 'required';
+$results['heading'] = 'Manage Users';
+$results['nav'] = '<a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>';
+$results['exclude'] = null;
 $setstatus = izSet($_GET, 'status');
 $seterror = izSet($_GET, 'error');
 $onsuccess = 'User was successfully';
 $set = doSet($results, 'statusMessage');
 
-include ("../templates/header.php");
+include "../templates/header.php";
+include_once '../templates/admin_header.html.php';
+
 ?>
 <body class="admin">
     <main>
 <?php
 if (!userIsLoggedIn()){
+$results['heading'] = 'Log In';
 include '../templates/login.html.php';
 exit();
 }
@@ -31,6 +37,9 @@ exit();
 if (!userHasRole('Account Administrator') && !isset($_GET['error'])) {
 $error = 'Only Account Administrators may access this page.';
 header("Location: ?error=Only Account Administrators may access this page!");
+//$results['heading'] = 'Log In';
+//$results['errorMessage'] = 'Only Account Administrators may access this page.';
+exit();
 }
     
     
@@ -77,9 +86,6 @@ if (isset($_GET['editform'])) {
     exit();
 }
     
-if(isset($_POST['action']) && $_POST['action'] == 'login'){
-
-}
 
 if($arg = $setstatus('deleted')){
     $results['statusMessage'] = "$onsuccess $arg!";
@@ -95,6 +101,9 @@ if($arg = $setstatus('updated')){
 
 if(isset($_GET['error'])){
     $results['errorMessage'] = $_GET['error'];
+    //$results['exclude'] = true;
+    include (TEMPLATE_PATH . "issue.html.php");
+    exit();
 }
 
 if (isset($_POST['confirm']) && $_POST['confirm'] === 'Yes'){
@@ -122,6 +131,10 @@ if(isset($_POST['action']) && $_POST['action'] == 'selecteduser') {
     if(!isset($user)){
     $admin = new Admin();
     $users = $admin->getList();
+    }
+        
+if (!userHasRole('Content Editor')) {
+        $results['exclude'] = true;
     }
 
 include ("users.html.php");

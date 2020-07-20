@@ -7,11 +7,14 @@ require_once ACCESS;
 
 $results['page_title'] = 'Page';
 $results['heading'] = 'Page List';
-
+$results['nav'] = '<a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>';
+$results['exclude'] = null;
 include '../templates/header.php';
 
 if (!userIsLoggedIn())
 {
+    $results['heading'] = 'Log In';
+    include '../templates/admin_header.html.php';
     include '../templates/login.html.php';
     exit();
 }
@@ -27,10 +30,11 @@ $error = 'Only Account Administrators may access this page.';
 header("Location: ?error=Only Account Administrators may access this page!");
 }
 
-if (isset($_GET['error'])) {
-    $results['errorMessage'] = isset($_GET['error']) ? getMsg($_GET['error']) : null;
-    include 'admin.html.php';
-    exit();
+
+if(isset($_GET['error'])){
+    $results['errorMessage'] = $_GET['error'];
+    include '../templates/admin_header.html.php';
+    include (TEMPLATE_PATH . "issue.html.php");
 }
    
 
@@ -94,5 +98,11 @@ if (isset($_POST['confirm']) && $_POST['confirm'] == 'Yes')
 
 $results['statusMessage'] = isset($_GET['status']) ? getMsg($_GET['status']) : null;
 $results['errorMessage'] = isset($_GET['error']) ? getMsg($_GET['error']) : null;
+
+if (!userHasRole('Content Editor')) {
+        $results['exclude'] = true;
+    }
+
+include '../templates/admin_header.html.php';
 include 'listPages.html.php';
 echo '</section></main></body>';

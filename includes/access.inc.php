@@ -3,7 +3,9 @@ $GLOBALS['loginError'] = '';
 
 function doUnset($required)
 {
-    session_start();
+       if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     foreach ($required as $r)
     {
         unset($_SESSION[$r]);
@@ -81,7 +83,9 @@ function userIsLoggedIn()
                 }
             return false;
             }
+           if (session_status() == PHP_SESSION_NONE) {
             session_start();
+        }
             $_SESSION['loggedIn'] = true;
             $_SESSION['email'] = $_POST['email'];
             $_SESSION['password'] = $password;
@@ -114,7 +118,9 @@ function userIsLoggedIn()
     } //logout
     else
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if (isset($_SESSION['loggedIn']))
         {
             return databaseContainsUser($_SESSION['email'], $_SESSION['password']);

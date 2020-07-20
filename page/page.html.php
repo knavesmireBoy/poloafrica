@@ -1,4 +1,3 @@
-<h2>Poloafrica Admin</h2>
 <form action="?" method="post" class="page">
 <div>
 <label for="name">Title</label><input name="name" id="name" value="<?php htmlout($results['name']); ?>" required></div>

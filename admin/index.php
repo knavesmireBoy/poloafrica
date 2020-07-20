@@ -17,33 +17,40 @@ $page = null;
 $default_placement = "current position";
 $results['page_title'] = 'Admin';
 $results['heading'] = 'Article List';
-include "../templates/header.php"; ?>
+$results['nav'] = '<a href="../user/" title="Manage Users" class="icon"><img src="../images/resource/icon_user_edit.png"></a>';
+$results['exclude'] = null;
+
+include "../templates/header.php";
+?>
 <body class="admin"><main><section>
 <?php
 $insert_action_plus = "";
 //$insert_placeholder = "";
-
 if (isset($_GET['loginError']))
 {
     $loginError = $_GET['loginError'];
-    include 'admin.html.php';
+    $results['heading'] = 'Log In';
     include '../templates/login.html.php';
     header("Location: ?error=$loginError");
     exit();
 }
-    
+
 if (!userIsLoggedIn())
 {
+    $results['heading'] = 'Log In';
+    include_once '../templates/admin_header.html.php';
     include '../templates/login.html.php';
     exit();
 }
-    
+
 if (!userHasRole('Content Editor'))
 {
     $results['errorMessage'] = "Only Content Editor's may access this page!";
-    include 'admin.html.php';
+    include_once '../templates/admin_header.html.php';
+    include (TEMPLATE_PATH . "issue.html.php");
     exit();
 }
+
     
 if (isset($_GET['action']) && $_GET['action'] == 'removeArticle')
 {
@@ -92,6 +99,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     $results['pageTitle'] = "Edit Article";
     $results['formAction'] = "editArticle";
     $results['heading'] = 'Edit Article';
+    include_once '../templates/admin_header.html.php';
 
     if (isset($_POST['saveChanges']))
     {
@@ -233,9 +241,13 @@ $articles = $paginator->getList($page);
       
 $results['errorMessage'] = isset($_GET['error']) ? getMsg($_GET['error']) : null;
 $results['statusMessage'] = isset($_GET['status']) ? getMsg($_GET['status']) : null;
+$results['heading'] = 'Article List';
     
-$results['heading'] = 'Article List';   
-include 'admin.html.php'; 
+    if (!userHasRole('Account Administrator')) {
+        $results['exclude'] = true;
+    }
+    
+include_once '../templates/admin_header.html.php';
 require "listArticles.html.php";
 echo '</section></main>';
 ?>

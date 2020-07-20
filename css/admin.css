@@ -8,14 +8,11 @@ body {
 	background-color: mintcream;
 }
 
-main {
-	padding: 1em;
-}
 p, form.content li {
 	text-align: left;
 }
-h3 {
-	color: black;
+h2 {
+    margin: .5em 0;
 }
 th {
 	font-weight: bold;
@@ -38,7 +35,7 @@ table {
 	border: solid 1px black;
 	table-layout: fixed;
 }
-h2 {
+h1 {
 	margin: 0 0 .5em;
 	border-color: #863FA2;
 	border-color: hsl(283, 44%, 44%);
@@ -98,7 +95,7 @@ legend {
 	padding: .75em;
 	border-radius: 5px;
 }
-table, form, .manage. .page {
+table, form, .manage, .page, .login {
 	width: 40%;
 	min-width: 28em;
 }
@@ -125,9 +122,8 @@ form div {
 	padding: .5em;
     box-sizing: border-box;
 }
-.buttons p {
-	text-align: center;
-	color: yellow;
+.buttons {
+border: solid 1px black;
 }
 
 form.content {
@@ -295,7 +291,7 @@ li.mock ul>li {
 	box-shadow: 1px 1px 1px black;
 	vertical-align: top;
 }
-fieldset {
+fieldset, .buttons {
 	border: solid 1px white;
 	border-radius: 8px;
 }
@@ -440,7 +436,7 @@ figure {
 }
 .page_select {
 	background-color: white;
-	padding: 1em 0;
+	padding: 0 0 1em;
 }
 .content .pp span {
 	background-color: #634663;

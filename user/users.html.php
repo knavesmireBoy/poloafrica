@@ -1,17 +1,4 @@
-<h2>Poloafrica Admin</h2>
-<p>You are logged in with email: <b><?php htmlout( $_SESSION['email']) ?></b> <a href="?action=logout"?> <strong>Log out</strong></a></p>
-<h3>Manage Users</h3>
-
-<?php if (isset($results['errorMessage'])) { ?>
-<h4 class="msg errorMessage"><?php echo $results['errorMessage'] ?></h4>
-<nav><a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>
-<a href="../home/" title="live website" class="icon"><img src="../images/resource/home.png"></a>
-</nav>
-<?php exit(); } ?>
-<?php if (isset($results['statusMessage'])) { ?>
-        <h4 class="msg statusMessage"><?php echo $results['statusMessage'] ?></h4>
-<?php }
-//exit(var_dump($users));
+<?php
 
 if(isset($prompt)){
     include 'prompt.html.php';
@@ -45,8 +32,12 @@ endif;
 if(!isset($_GET['add'])){ ?>
 <nav>
 <a href="?add" title="Add a New User" class="icon"><img src="../images/resource/icon_user_add.png"></a>
-<?php } 
-if(isset($_GET['add']) && !isset($user)){ echo '<nav>'; }?>
-<a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>
+<a href="../page/" title="Edit Page Tags" class="icon"><img src="../images/resource/icon_page_edit.png"></a>
+<?php }
+if(isset($_GET['add']) && !isset($user)){ echo '<nav>'; }
+if(!isset($results['exclude'])) { ?>
+<a href="../admin" title="Back to Article List"  class="icon"><img src="../images/resource/icon_list.png"></a>
+<?php } ?>
+<a href="../home/" title="live website" class="icon"><img src="../images/resource/home.png"></a>
 </nav>
 <?php echo '</main></body>';
