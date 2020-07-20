@@ -1,16 +1,14 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
-
-require_once '../includes/db.inc.php';
-require_once '../includes/access.inc.php';
 require_once '../myconfig.php';
+include_once MAGIC;
+include DB;
+include_once HELPERS;
+require_once ACCESS;
 
 $results['page_title'] = 'Page';
 $results['heading'] = 'Page List';
 
 include '../templates/header.php';
-
 
 if (!userIsLoggedIn())
 {

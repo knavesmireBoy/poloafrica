@@ -1,16 +1,21 @@
 <?php
 ini_set( "display_errors", true );
 date_default_timezone_set( "Europe/London" );  // http://www.php.net/manual/en/timezones.php
+require_once '../../../semolinapilchard/poloafricaDB.txt';
 
-define( "CLASS_PATH", "classes" );
-define( "TEMPLATE_PATH", "templates" );
+define( "MAGIC", $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php');
+define( "HELPERS", $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php');
+define( "DB",  '../includes/db.inc.php');
+define( "ACCESS", '../includes/access.inc.php');
+
+define( "CLASS_PATH", "../classes/" );
+define( "TEMPLATE_PATH", "../templates/" );
 define( "ACTIVE_PAGES", 9 );
 
 define( "ARTICLE_IMAGE_PATH", "../images/articles" );
 define( "ARTICLE_PDF_PATH", "../pdf/articles" );
 define( "ARTICLE_VIDEO_PATH", "../video" );
 
-require_once '../../../semolina_pilchard/poloafricaDB.txt';
 define( "ARTICLE_ASSETS_PATH", "../assets" );
 define( "ARTICLE_UPLOAD_PATH", "../../../filestore/poloafrica" );
 define( "ARTICLE_GALLERY_PATH", "../images/gallery" );
@@ -42,6 +47,21 @@ function getGalleryPageSets(){
 function getGalleryPageBreaks(){
     return array(0, 14, 28, 42, 54, 66, 78, 92);
 }
+/*
+spl_autoload_register( function( $class) {
+    echo $class;
+    if(file_exists(CLASS_PATH."{$class}.php")){
+        if( !class_exists($class) ){
+            require_once CLASS_PATH."{$class}.php";
+        }
+    }
+});
+*/
+// Or, using an anonymous function as of PHP 5.3.0
+spl_autoload_register(function ($class) {
+    require_once CLASS_PATH . $class . '.php';
+});
+
 /*
 require( CLASS_PATH . "/Article.php" );
 require( CLASS_PATH . "/Asset.php" );

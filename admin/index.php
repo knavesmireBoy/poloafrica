@@ -1,16 +1,9 @@
 <?php
-//session_start();
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/magicquotes.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
-
-include_once '../classes/ArticleFactory.php';
-include_once '../classes/Asset.php';
-include_once '../classes/PagePaginator.php';
-include_once '../classes/PhotoPaginator.php';
-
-require_once '../includes/db.inc.php';
-require_once '../includes/access.inc.php';
 require_once '../myconfig.php';
+include_once MAGIC;
+include DB;
+include_once HELPERS;
+require_once ACCESS;
 
 $results['errorMessage'] = '';
 
