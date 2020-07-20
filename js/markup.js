@@ -8,12 +8,6 @@ if (!window.poloAF) {
 }
 (function () {
 	"use strict";
-    
-    function simpleInvoke(o, m, arg) {
-		return o[m](arg);
-	}
-
-    
 	var utils = poloAF.Util,
 		$ = function (str) {
 			return document.getElementById(str);
