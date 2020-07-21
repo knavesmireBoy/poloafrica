@@ -1,35 +1,6 @@
 @import "flex_mod.css";
 @import "fullflex_mod.css";
-/*
-section:nth-child(5) img {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 10em;
-    -webkit-flex: 1 1 10em;
-    flex: 1 1 10em;
-    box-shadow: none;
-        }
-        section:nth-child(5) article {
-            -webkit-box-flex: 1;
-            -ms-flex: 1 1 20em;
-            -webkit-flex: 1 1 20em;
-            flex: 1 1 20em;
-        }
-*/
-.override #location img {
- 	-webkit-box-flex: 1;
- 	-ms-flex: 1 1 %;
- 	-webkit-flex: 1 1 1%;
- 	flex: 1 1 1%;
- }
- .override #location article {
- 	-webkit-box-flex: 6;
- 	-ms-flex: 6 1 1%;
- 	-webkit-flex: 6 1 1%;
- 	flex: 6 1 1%;
- }
-        .override section:nth-child(5) img {
-        	width: 20%;
-        }
+
         h2 span {
         	background: white 0% 0% url(../images/sub_place.jpg) no-repeat;
         }

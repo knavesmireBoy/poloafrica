@@ -140,9 +140,29 @@ section>img {
     box-sizing: border-box;
     padding: .75em 1% .75em 0;
     }
-
-
 }
+
+.override .ptrt img {
+ 	-webkit-box-flex: 1;
+ 	-ms-flex: 1 1 %;
+ 	-webkit-flex: 1 1 1%;
+ 	flex: 1 1 1%;
+ }
+ .override .ptrt article {
+ 	-webkit-box-flex: 6;
+ 	-ms-flex: 6 1 1%;
+ 	-webkit-flex: 6 1 1%;
+ 	flex: 6 1 1%;
+ }
+ .no-flexwrap .override .ptrt {
+ 	display: block;
+ }
+ .override .ptrt img {
+ 	float: right;
+ 	width: 20%;
+ 	margin: 1em 1em 0;
+ }
+
 @media screen and (max-width: 667px) {
 	section {
 		display: block;

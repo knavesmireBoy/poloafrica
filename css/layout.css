@@ -209,11 +209,17 @@ header h1, header h1 img, h2 span {
 		border: solid 1px blue;
         padding: 0;
 	}
-	section img {
+	.override section img {
 		width: 100%;
-		margin: 0em 0 0;
+		margin: 0;
 		box-shadow: none;
 	}
+    
+    .override section.ptrt img {
+		width: 30%;
+        margin: 1em 0 1em 1em;
+	}
+
 	.menu {
 		position: absolute;
 		top: .7rem;
@@ -255,16 +261,15 @@ header h1, header h1 img, h2 span {
 	.read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before {
 		display: block;
 	}
-	.no-js .read-more-state~article, article p:first-of-type, article p:last-child {
+	article p:first-of-type, article p:last-child {
 		margin: 1em 0;
 	}
 	
 	/*first section is shown by default?*/
-	.no-js article>a, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>* {
+	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>* {
 		position: absolute;
 		top: 0px;
 		left: -999em;
-		margin: 0;
 	}
 	.no-js section:first-of-type .read-more-state~article, .no-js section:first-of-type .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article h3:first-of-type {
 		position: static;
@@ -353,6 +358,9 @@ header h1, header h1 img, h2 span {
 	#fb {
 		margin: 0 0 .75em -23.5em;
 	}
+    .override .ptrt article img {
+ 		width: 40%;
+ 	}
 }
 
 @media only screen and (max-width: 414px) {

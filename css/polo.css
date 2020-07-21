@@ -3,11 +3,11 @@ h2 span {
 }
 
 /* NO FLEX PLEASE WE'RE BRITISH*/
-.override #facilities {
+.override .multi {
     display: block;
         }
  
-#facilities img {
+.multi img {
     clear: both;
     width: 30%;
     float: right;
@@ -22,9 +22,9 @@ h2 span {
 }
 
 @media screen and (max-width: 888px) {
-    #facilities img {
-    width: 40%;
-}
+    .multi img {
+        width: 40%;
+    }
 }
 
 @media screen and (max-width: 667px) {
@@ -40,17 +40,22 @@ h2 span {
 	.no-js section:nth-child(4) .read-more-trigger:before {
 		content: "Your polo day";
 	}
-    /*
-    	.override section:first-child {
-		flex-direction: column;
-	}
-	.js .override section.show img {
-		position: static;
-		left: 0;
-	}
-    */
 
 	h2, h2 span {
 		background: none;
 	}
+    
+     section.multi img {
+        display: inline-block;
+         vertical-align: top;
+         width: 49%;
+    }
+    
+    section.multi img:first-of-type {
+        margin: 0 1% 0 0;
+    }
+    section.multi img:last-of-type {
+        margin: 0 0 0 1%;
+    }
+    
 }
