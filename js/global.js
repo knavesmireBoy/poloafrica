@@ -877,6 +877,9 @@ function divideBy(a, b){
 			};
 		},
 		insertAfter: insertAfter,
+		insertBefore: function(refnode, tgt){
+            refnode.parentNode.insertBefore(tgt, refnode);
+        },
 		invokeRest: function (m, o) {
 			return o[m].apply(o, _.rest(arguments, 2));
 		},

@@ -73,7 +73,7 @@ $mypage = '';
                 <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
                 <?php
                     if(isset($mypage)){ ?>
-                <label for="insert">placement</label>
+                <label for="insert">place</label>
                   <?php 
                         $rows = ArticleFactory::getTitles($mypage, true);
                     echo "<select name='insert' id='insert'><option value=''>insert before</option>";
@@ -113,7 +113,7 @@ $mypage = '';
             endif;//$attributes[0]
             endif;//$results['article']
             ?>
-                <li class="mock"><ul><li class="mocklabel">uploads</li><li class="neue">
+                <li class="mock"><ul><li class="mocklabel">uploads</li><li class="neue upload">
                     <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
             <?php 
             include "../templates/attributes.php";
