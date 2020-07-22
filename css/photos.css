@@ -6,7 +6,10 @@
 
 main {
 	position: relative;
+    /*rem causing gap between image and border in chrome
 	font: normal 1rem Arial, sans-serif;
+    */
+	font: normal 1em Arial, sans-serif;
 	padding: 0;
 	text-align: center;
 	height: 100%;
@@ -32,9 +35,11 @@ main img, main ul {
 	border: 1px solid black;
 }
 #wrap .override img {
-	border-radius: 0px;
+	border-radius: 0;
 	box-shadow: none;
 }
+
+
 main img:hover {
 	border-color: indigo;
 }
