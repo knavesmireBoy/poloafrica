@@ -9,7 +9,7 @@ if(isset($form)){
 }
 
 if(isset($users) && !isset($form)): ?>
-<form action="?" method="post" class="manage">
+<form action="?set" method="post" class="manage">
 <label for="user">Users</label><select id="user" name="user" onchange="this.form.submit()"><option value="">Select one</option>
 <?php  foreach ($users as $user): ?>
 <option value="<?php htmlout($user['id']); ?>"><?php htmlout($user['name']); ?>
@@ -32,6 +32,9 @@ endif;
 if(!isset($_GET['add'])){ ?>
 <nav>
 <a href="?add" title="Add a New User" class="icon"><img src="../images/resource/icon_user_add.png"></a>
+<?php if(isset($_GET['set'])){ ?>
+<a href="../user/?action=manageUsers" title="Manage Users" class="icon"><img src="../images/resource/icon_user_edit.png"></a>
+<?php } ?>
 <a href="../page/" title="Edit Page Tags" class="icon"><img src="../images/resource/icon_page_edit.png"></a>
 <?php }
 if(isset($_GET['add']) && !isset($user)){ echo '<nav>'; }

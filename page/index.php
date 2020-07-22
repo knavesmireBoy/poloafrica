@@ -9,7 +9,7 @@ $results['page_title'] = 'Page';
 $results['heading'] = 'Page List';
 $results['nav'] = '<a href="../admin" title="Back to Article List"  class="icon" ><img src="../images/resource/icon_list.png"></a>';
 $results['exclude'] = null;
-include '../templates/header.php';
+include TEMPLATE_PATH . 'header.php';
 
 if (!userIsLoggedIn())
 {
@@ -35,6 +35,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'selectedpage')
 {
     $results = PageFactory::getById((int)$_POST['page']);
     $results['action'] = 'Edit';
+    $results['heading'] = 'Page List';
+    include TEMPLATE_PATH . 'admin_header.html.php';
     include 'page.html.php';
     exit();
 }
@@ -95,7 +97,6 @@ if (!userHasRole('Content Editor')) {
     $results['exclude'] = true;
     }
 
-
-include '../templates/admin_header.html.php';
+include TEMPLATE_PATH . 'admin_header.html.php';
 include 'listPages.html.php';
 echo '</section></main></body>';
