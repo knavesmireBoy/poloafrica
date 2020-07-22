@@ -4,7 +4,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 include_once '../includes/db.inc.php';
 include_once '../myconfig.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/ArticleFactory.php';
-$results = ['page_title' => 'Gallery!'];
+$results = ['page_title' => '!Gallery!'];
 $style = 'photos';
 include "../templates/header.php";
 include "../templates/nav.php"; ?>

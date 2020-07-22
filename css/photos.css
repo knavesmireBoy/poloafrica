@@ -156,8 +156,9 @@ ON THE CMS VERSION LI'S ARE LIMITED BY DATABASE RESULTS, MAYBE FIX NON-CMS TO RE
 	width: 100%;
 }
 main ul.portrait {
-	margin: 0 30%;
+	margin: 0 auto;
     width: auto;
+    background-color: orange;
 }
 .showtime main ul.portrait {
 	margin: 0;
@@ -187,9 +188,9 @@ footer {
     margin: -4.1em auto 0;
 }
 
-.backgroundsize .showtime footer:hover {
-    		background:  url(../images/resource/footer_green_ko.png) no-repeat bottom right,
-                url(../images/resource/sky.png) no-repeat top left;
+.backgroundsize .no-touchevents .showtime footer:hover {
+    background:  url(../images/resource/footer_green_ko.png) no-repeat bottom right,
+        url(../images/resource/sky.png) no-repeat top left;
 }
 
 .js #exit {
@@ -393,9 +394,14 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 	.showtime main ul {
 		width: auto;
-		display: block;
+		display: inline-block;
 		margin: 0 8%;
 	}
+    
+    .showtime main ul.portrait {
+        width: 75%;
+        margin: 0 auto;
+    }
 	.touchevents .showtime main {
 		padding: .5em 0 0 0;
 	}
@@ -422,6 +428,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
 	.touchevents #wrap.inplay+footer {
 		background: url(../images/resource/sil_bg.png) no-repeat 60% top;
+        background-size: cover;
 	}
 	.touchevents ul.gallery li {
 		border: solid 3px white;

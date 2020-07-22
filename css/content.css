@@ -210,7 +210,7 @@ h2 span {
 	}
 
 	footer {
-		background: url(../images/resource/sil_bg.png) no-repeat top center;
+		background: url(../images/resource/sil_bg.png) no-repeat center top;
 		background-size: cover;
 		padding: 7em 0 0 0;
 	}
