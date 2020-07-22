@@ -10,12 +10,16 @@
 		flex-wrap: wrap;
 		align-content: flex-end;
 	}
+    
+    #contactarea h3 {
+		flex: 1 1 100%;
+	}
 	#contactarea figure {
 		flex: 6 1 1%;
 		align-self: flex-start;
 	}
 	#contactarea form {
-		flex: 17 1 1%
+		flex: 17 1 1%;
 	}
 	form input {
 		position: static;
