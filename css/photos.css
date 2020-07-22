@@ -48,6 +48,10 @@ main>* {
 	position: relative;
 	margin: 1px;
 }
+li.show, li.show a {
+    display: block !important;
+    width: 100% !important;
+}
 
 /*
 @keyframes myright {
