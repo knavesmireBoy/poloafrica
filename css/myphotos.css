@@ -101,6 +101,7 @@ ul.gallery {
 		flex-wrap: wrap;
 	}
 }
+/*
 @supports(column-gap: 20px) {
 	main {
 		padding: 0;
@@ -130,6 +131,7 @@ ul.gallery {
 		grid-column: auto / span 3;
 	}
 }
+*/
 @media only screen and (max-width: 667px) {
 
      .touchevents main .pagenav {
@@ -147,6 +149,7 @@ ul.gallery {
 		-webkit-flex: 2 1 auto;
 		flex: 2 1 auto;
 	}
+    /*
 	@supports (column-gap: 20px) {
         	main {
 		padding: 2em 0 0 0;
@@ -194,5 +197,6 @@ ul.gallery {
 			grid-column: auto / span 6;
 		}
 	}
+    */
 }
 /*667*/
