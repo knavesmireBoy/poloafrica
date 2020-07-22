@@ -405,8 +405,10 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents .inplay #controls {
 		top: .2em;
 	}
-	.touchevents #wrap.inplay+footer {
-		background: url(../images/sil_bg.png) no-repeat 60% top;
+    
+    .touchevents #wrap.inplay+footer {
+		background: url(../images/resource/sil_bg.png) no-repeat 60% top;
+        background-size: cover;
 	}
 	.touchevents ul.gallery li {
 		border: solid 3px white;
