@@ -224,8 +224,8 @@ else
         //echo $_SERVER['REQUEST_URI']$_SERVER['QUERY_STRING'];
     }
     //or clearing page selection
-    if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'choose' && !$_REQUEST['page']){
-         $count = $data['totalRows'];
+    if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'selectedpage' && !$_REQUEST['page']){
+        $count = $data['totalRows'];
         $page = null;
         $_SESSION["paginator"] = new PagePaginator(10, $count);
     }
@@ -259,6 +259,7 @@ echo '</section></main>';
     <script src="../js/global.js"></script>
 
 <script>
+    
     function prepareNavLinks(){
         var hijax = window.poloAF.Hijax();
         hijax.setContainer(document.querySelector('section'));
@@ -267,7 +268,7 @@ echo '</section></main>';
         hijax.captureData();
         
          hijax.validate = function(tgt){
-           if(tgt.parentNode.id === "pp"){
+           if(poloAF.Util.getClassList(tgt.parentNode).contains("pp")){
                 return true;
             }
             return false;
@@ -276,6 +277,7 @@ echo '</section></main>';
     
     function prepareDropDown(){
         var hijax = window.poloAF.Hijax();
+        //hijax.setContainer(document.querySelector('main'));
         hijax.setContainer(document.querySelector('main'));
         hijax.setCanvas(document.querySelector('main'));
         hijax.setUrl('.');
@@ -293,7 +295,7 @@ echo '</section></main>';
         hijax.captureData();
     }
     prepareNavLinks();
-    prepareDropDown();
+    //prepareDropDown();
     
     </script>
     <?php echo '</body>';

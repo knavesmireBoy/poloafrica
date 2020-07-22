@@ -49,7 +49,7 @@ form fieldset:first-child input {
     border-radius: 0;
 }
 #enquiries #intro {
-	margin: 2em 0 1em 0;
+	margin: 2em 0 0;
 }
 #enquiries section {
 	display: block;

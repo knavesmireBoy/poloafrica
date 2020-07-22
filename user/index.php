@@ -26,7 +26,7 @@ include_once '../templates/admin_header.html.php';
 
 ?>
 <body class="admin">
-    <main>
+<main>
 <?php
 if (!userIsLoggedIn()){
 $results['heading'] = 'Log In';
@@ -136,3 +136,4 @@ if (!userHasRole('Content Editor')) {
     $results['exclude'] = true;
 }
 include "users.html.php";
+echo '</main></body>';

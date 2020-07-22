@@ -10,12 +10,12 @@ if(isset($form)){
 
 if(isset($users) && !isset($form)): ?>
 <form action="?" method="post" class="manage">
-<label for="user">Users</label><select id="user" name="user"><option value="">Select one</option>
+<label for="user">Users</label><select id="user" name="user" onchange="this.form.submit()"><option value="">Select one</option>
 <?php  foreach ($users as $user): ?>
 <option value="<?php htmlout($user['id']); ?>"><?php htmlout($user['name']); ?>
 </option><?php endforeach; ?></select>
-<input type="hidden" name="action" value="selecteduser"/>
-<input type="submit" value="Edit"/>
+<input type="hidden" name="action" value="selecteduser">
+<input type="submit" class="submitter" value="Edit">
 </form>
 
 <?php elseif(isset($user)): ?>
@@ -40,4 +40,3 @@ if(!isset($results['exclude'])) { ?>
 <?php } ?>
 <a href="../home/" title="live website" class="icon"><img src="../images/resource/home.png"></a>
 </nav>
-<?php echo '</main></body>';

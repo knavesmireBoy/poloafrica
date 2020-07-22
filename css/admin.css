@@ -117,7 +117,7 @@ form input[type="submit"] {
 	width: auto;
 }
 
-#attr_id, #page, #dom_id {
+#attr_id, .content #page, #dom_id {
     width: 15%;
 }
 
@@ -227,7 +227,7 @@ li.mock ul>li {
     position: relative;
     top: 2.5em;
 }
-.js .nojs {
+.js .nojs, .js .submitter {
     position: absolute;
     left: -9999px;
 }
@@ -540,7 +540,6 @@ form input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .conte
     li.mock li.neue select {
         grid-column: 2 / span 3; 
     }
-    
     .upload > *:nth-child(5) {
         grid-column: 4 / span 3;
     }
@@ -631,7 +630,7 @@ form input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .conte
         }
          li.mock li.upload{
             grid-template-rows: repeat(2, 1fr);
-            grid-template-columns: 1fr 1fr 1fr 3fr;
+            grid-template-columns: 1fr 3fr 3fr 6fr;
         }
         .neue > *:nth-child(n+5) {
             grid-row-start: 2;
@@ -642,19 +641,29 @@ form input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .conte
         .neue > *:nth-child(6) {
             grid-column: 2 / span 3;
         }
-        
-        fieldset.buttons {
+    }
+            
+       /*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
+ fieldset.buttons {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
             text-align: center;
-            flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
         }
         fieldset.buttons > input {
-            flex: 1 1 1%;
+            -webkit-box-flex: 1;
+                -ms-flex: 1 1 1%;
+                    flex: 1 1 1%;
             margin: .25em;
         }
-
-    }
-
 }
 
 @media only screen and (max-width: 479px) {

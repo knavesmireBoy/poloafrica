@@ -25,22 +25,15 @@ header("Location: ?error=Only Account Administrators may access this page!");
 exit();
 }
 
-if (!userHasRole('Account Administrator') && !isset($_GET['error'])) {
-$error = 'Only Account Administrators may access this page.';
-header("Location: ?error=Only Account Administrators may access this page!");
-}
-
-
 if(isset($_GET['error'])){
     $results['errorMessage'] = $_GET['error'];
     include '../templates/admin_header.html.php';
     include (TEMPLATE_PATH . "issue.html.php");
 }
-   
 
-if (isset($_GET['action']) && $_GET['action'] == 'choose')
+if (isset($_POST['action']) && $_POST['action'] == 'selectedpage')
 {
-    $results = PageFactory::getById((int)$_GET['page']);
+    $results = PageFactory::getById((int)$_POST['page']);
     $results['action'] = 'Edit';
     include 'page.html.php';
     exit();
@@ -90,7 +83,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'Delete')
 
 if (isset($_POST['confirm']) && $_POST['confirm'] == 'Yes')
 {
-
     $page = PageFactory::createPage($_POST);
     $page->delete();
     header("Location: ?status=pageDeleted&page={$_POST['name']}");
@@ -100,8 +92,9 @@ $results['statusMessage'] = isset($_GET['status']) ? getMsg($_GET['status']) : n
 $results['errorMessage'] = isset($_GET['error']) ? getMsg($_GET['error']) : null;
 
 if (!userHasRole('Content Editor')) {
-        $results['exclude'] = true;
+    $results['exclude'] = true;
     }
+
 
 include '../templates/admin_header.html.php';
 include 'listPages.html.php';

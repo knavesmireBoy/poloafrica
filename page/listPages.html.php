@@ -12,18 +12,18 @@ if (isset($results['errorMessage'])){ ?>
 <div class="msg errorMessage"><?php htmlout($results['errorMessage']); ?></div>
 <?php } ?>
 
-<form action="?" method="get" class="page_select">
-<select id="page" name="page">
+<form action="?" method="post" class="page_select">
+<select id="page" name="page"  onchange="this.form.submit()">
 <option value="">Select Page</option>
 <?php  foreach ($pp as $p): ?>
 <option value="<?php htmlout($p['id']); ?>"
-    <?php
-if($page && $page == $p){ echo ' selected'; }
-    ?>
-><?php htmlout($p['name']); ?></option>
+<?php
+if($page && $page == $p){ echo ' selected'; }?>>
+    <?php htmlout($p['name']); ?></option>
     <?php endforeach; ?>
 </select>
-<input type="submit" name="action" value="choose">
+<input type="submit" name="action" class="submitter" value="choose">
+<input type="hidden" name="action" value="selectedpage">
 </form>
 
 <nav>

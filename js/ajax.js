@@ -1,5 +1,6 @@
 /*jslint browser: true*/
 /*global window: false */
+/*global document: false */
 /*global poloAF: false */
 if (!window.poloAF) {
 	window.poloAF = {};
@@ -8,17 +9,17 @@ window.poloAF.SimpleXhrFactory = (function() {
 	// The three branches.
 	var standard = {
 			createXhrObject: function() {
-				return new XMLHttpRequest();
+				return new window.XMLHttpRequest();
 			}
 		},
 		activeXNew = {
 			createXhrObject: function() {
-				return new ActiveXObject('Msxml2.XMLHTTP');
+				return new window.ActiveXObject('Msxml2.XMLHTTP');
 			}
 		},
 		activeXOld = {
 			createXhrObject: function() {
-				return new ActiveXObject('Microsoft.XMLHTTP');
+				return new window.ActiveXObject('Microsoft.XMLHTTP');
 			}
 		},
 		// To assign the branch, try each method; return whatever doesn't fail.
@@ -57,6 +58,7 @@ function always(val) {
 	};
 }
 window.poloAF.Hijax = function() {
+    
 	function fromPost(form) {
 		var i,
 			query = '';
@@ -67,31 +69,6 @@ window.poloAF.Hijax = function() {
 			query += "&";
 		}
 		return query;
-	}
-	function captureDataEvent() {
-		if (!container) {
-			return true;
-		}
-		var query = '';
-        if(container.nodeName.toLowerCase() === 'section'){
-            container.addEventListener('click', function(e) {
-			if (e.target.getAttribute("href") && ret.validate(e.target)) {
-                e.preventDefault();
-				query = e.target.getAttribute("href").split("?")[1];
-				url += "?" + query;
-				start();
-			}
-		});
-        }
-        else if(container.nodeName.toLowerCase() === 'main'){
-            container.addEventListener('submit', function(e) {
-			if (ret.validate(e.target)) {
-                e.preventDefault();
-                data = fromPost(e.target);
-				start();
-			}
-		});
-        }
 	}
     
     function captureDataOnClick(flag) {
@@ -104,7 +81,6 @@ window.poloAF.Hijax = function() {
         if(container.nodeName.toLowerCase() === 'section' || flag){
             container.onclick = function(e) {
 			if (e.target.getAttribute("href") && ret.validate(e.target)) {
-                //console.log('ajaxclick');
 				query = e.target.getAttribute("href").split("?")[1];
 				url += "?" + query;
 				return !start();
