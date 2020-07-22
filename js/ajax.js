@@ -88,7 +88,7 @@ window.poloAF.Hijax = function() {
 			return true;
 		};
         }
-        else if(container.nodeName.toLowerCase() === 'main' && !flag){
+        else if((container.nodeName.toLowerCase() === 'form' || container.nodeName.toLowerCase() === 'main') && !flag){
            container.onsubmit = function(e) {
             if (ret.validate(e.target)) {
                 data = fromPost(e.target);
@@ -143,7 +143,6 @@ window.poloAF.Hijax = function() {
 			if (request.status == 200 || request.status == 304) {
 				if (canvas) {
 					if (request.responseText) {
-                        //console.log(request.responseText);
 						canvas.innerHTML = request.responseText;
 					}
 				}

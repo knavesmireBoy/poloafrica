@@ -277,9 +277,10 @@ echo '</section></main>';
     
     function prepareDropDown(){
         var hijax = window.poloAF.Hijax();
-        //hijax.setContainer(document.querySelector('main'));
-        hijax.setContainer(document.querySelector('main'));
         hijax.setCanvas(document.querySelector('main'));
+        hijax.setContainer(document.querySelector('main'));
+        //hijax.setContainer(document.forms[0]);
+        //hijax.setCanvas(document.getElementById('pagelist'));
         hijax.setUrl('.');
         hijax.setCallback(function(){
             //console.log(document.querySelector('.statusMessage'));
