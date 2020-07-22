@@ -514,7 +514,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
         color: #444;
          font: 1.5em normal serif;
     }
-    .no-js h2 span {;
+    .no-js h2 span {
         padding: .5em 0;
     }
 }

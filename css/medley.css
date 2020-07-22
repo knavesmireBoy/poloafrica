@@ -2,18 +2,23 @@
     margin: 0 0 1em 0;
 }
 
-#presslinks nav ul {
+.touchevents #presslinks nav ul {
 	line-height: 1.3;
 	text-indent: -.8em;
 	padding: 0 0 0 1em;
 }
 
-.js #presslinks nav ul {
+.touchevents #presslinks nav ul {
 	text-indent: -1.7em;
 	padding: 0 0 0 1.7em;
 }
 
-no-touchevents.background-size #presslinks nav ul {
+.no-touchevents li {
+list-style-position: inside;
+text-indent: -1em;
+}
+
+.no-touchevents.background-size #presslinks nav ul {
 	text-indent: 0;
 	padding: 0;
 }

@@ -81,7 +81,6 @@ foreach($imagePaths as $image) : ?>
 			var el = getTarget(e),
                myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
 				hit = myarticles && utils.getClassList(myarticles).contains('show');
-               console.log(isHeading(el), el)
                if(!isHeading(el)){
                    return;
                }

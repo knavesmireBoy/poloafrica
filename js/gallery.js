@@ -296,7 +296,7 @@
 			tmp = leader[0];
 			start = _.findIndex(tmp, ptL(isEqual, i));
 			leader[0] = tmp.splice(start).concat(tmp);
-			if (Modernizr.deviceorientation) {
+			if (Modernizr.touchevents) {
 				tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1])); //orientation
 			} else {
 				tmp = _.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0]))); //page
@@ -683,7 +683,6 @@
 								return !li.id && get_src(li).match(src);
 							},
 							fallback = function (result) {
-                               con(result);
 								if (!_.isEmpty(result)) {
 									return result[0];
 								}
