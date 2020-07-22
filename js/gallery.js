@@ -813,7 +813,6 @@
 				handler = _.compose(ptL(makeButtons, ptL($, 'controls')), prepareNavHandlers, stage_one_comp.render),
 				index = document.location.search && document.location.search.match(/f=\d+&index=(\d+)/),
 				isImg = ptL(isImage, index);
-           con(index)
 			try {
 				presenter.addAll(stage_one_comp, stage_one_rpt, stage_two_comp);
 				stage_two_comp.addAll(stage_two_rpt, stage_two_persist);
