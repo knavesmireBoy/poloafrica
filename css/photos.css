@@ -1,6 +1,9 @@
 #wrap {
 	width: 832px;
     background-color: white;
+}
+
+body#photos {
     background-color: tan;
 }
 
