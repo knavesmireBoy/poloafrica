@@ -8,6 +8,36 @@ if (!window.poloAF) {
 }
 poloAF.Util = (function () {
 	"use strict";
+    
+function spreadify (fn, fnThis) {
+    return function (/* accepts unlimited arguments */) {
+        // Holds the processed arguments for use by `fn`
+        var i,
+            spreadArgs = [],
+            length = arguments.length,
+            currentArg;
+
+        for (i = 0; i < length; i++) {
+            currentArg = arguments[i];
+            if (Array.isArray(currentArg)) {
+                spreadArgs = spreadArgs.concat(currentArg);
+            } else {
+                spreadArgs.push(currentArg);
+            }
+        }
+        fn.apply(fnThis || null, spreadArgs);
+    };
+}
+    
+    function doOnce() {
+			return function (i) {
+				return function () {
+					var res = i > 0;
+					i -= 1;
+					return res > 0;
+				};
+			};
+		}
 
 	function toCamelCase(variable) {
 		return variable.replace(/-([a-z])/g, function (str, letter) {
@@ -127,6 +157,7 @@ function divideBy(a, b){
 	}
 
 	function mittleInvoke(m, arg, o) {
+        //console.log(arguments);
 		return getResult(o)[m](arg);
 	}
 
@@ -136,6 +167,13 @@ function divideBy(a, b){
 
 	function thunk(f) {
 		return f.apply(f, _.rest(arguments));
+	}
+    
+    function thunker(f) {
+		var args = _.rest(arguments);
+        return function(){
+            return f.apply(f, _.rest(args))
+        }
 	}
 
 	function prefix(p, str) {
@@ -156,6 +194,17 @@ function divideBy(a, b){
 			};
 		};
 	}
+    
+    function doNTimes() {
+		function once(i) {
+			return function () {
+				return i-- > 0;
+			};
+		}
+		return function (actions) {
+            return spreadify(actions[0]);
+			};
+	}
 
 	function cloneNode(node, bool) {
 		//con(node, bool)
@@ -163,15 +212,7 @@ function divideBy(a, b){
 		return node.cloneNode(deep);
 	}
 
-	function insertAfter(newElement, targetElement) {
-		var parent = targetElement.parentNode;
-		if (parent.lastChild === targetElement) {
-			parent.appendChild(newElement);
-		} else if (newElement) {
-			parent.insertBefore(newElement, targetElement.nextSibling);
-		}
-	}
-
+	
 	function render(anc, refnode, el) {
 		//console.log(arguments)
 		return getResult(anc).insertBefore(getResult(el), getResult(refnode));
@@ -202,7 +243,14 @@ function divideBy(a, b){
 		}
 		return null;
 	}
-
+    function insertAfter(newElement, targetElement) {
+		var parent = targetElement.parentNode;
+		if (parent.lastChild === targetElement) {
+			parent.appendChild(newElement);
+		} else if (newElement) {
+			parent.insertBefore(newElement, getNextElement(targetElement.nextSibling));
+		}
+	}
 	function getTargetNode(node, reg, dir) {
 		if (!node) {
 			return null;
@@ -255,6 +303,9 @@ function divideBy(a, b){
 	}
 
 	function handleElement($el, cb) {
+        if(!$el.getElement()){
+            $el.init();
+        }
 		if (getPageOffset() > cb($el.getElement())) {
 			$el.render();
 		} else {
@@ -264,8 +315,10 @@ function divideBy(a, b){
 
 	function handleScroll($el, cb, klas) {
 		if (!$el.getElementsByTagName) {
-			var inta = new poloAF.Intaface('Element', ['render', 'unrender', 'getElement']);
-			poloAF.Intaface.ensures($el, inta);
+            if(poloAF.Intaface){
+                var inta = new poloAF.Intaface('Element', ['render', 'unrender', 'getElement']);
+                poloAF.Intaface.ensures($el, inta);
+            }
 			handleElement($el, cb);
 		} else { //default treatment
 			//getPageOffset() > ($el.offsetTop - window.innerHeight)
@@ -310,7 +363,7 @@ function divideBy(a, b){
 			var elementOffsetTop = getElementOffset(el).top,
 				elementHeight = el.offsetHeight || el.getBoundingClientRect().height,
 				wh = window.innerHeight,
-				extra = elementHeight * (percent || 0);
+				extra = percent ? (elementHeight * percent) : 0;
 			return (elementOffsetTop - wh) + extra;
 		} catch (e) {
 			return 0;
@@ -500,7 +553,7 @@ function divideBy(a, b){
 			},
 			ran = false,
 			pre = _.partial(prefix, '.'),
-			byTag = _.partial(filterTagsByClass, el || document, tag || '*', mefilter),
+			byTag = _.partial(filterTagsByClass, getResult(el) || document, tag || '*', mefilter),
 			dispatcher = dispatch.apply(null, classInvokers.concat(byTag)),
 			nested = function (klass) {
 				var res = dispatcher(proto, klass);
@@ -533,33 +586,30 @@ function divideBy(a, b){
 			select = args[1] ? args.splice(-1, 1)[0] : args[0];
 		return _.compose.apply(null, args)(select());
 	}
-    
-    function addHandler(type, func, el) {
-		return poloAF.Eventing.init.call(poloAF.Eventing, type, func, el).addListener();
-	}
 
 	function prepareListener(extent){
-        return function(handler, fn, el) {
-            var eventing_instance,
-                wrapper = function (action) {
+    return function(handler, fn, el) {
+		var listener,
+			wrapper = function (func) {
 				var args = _.rest(arguments),
 					e = _.last(arguments);
-                    if(e instanceof window.Event){
-                        args = args.splice(-1, 1);
-                        extent = extent || 'prevent';
-                        eventing_instance[extent](e);//preventDefault etc..
-                    }
-				//avoid sending Event object as it may wind up as the useCapture argument in the eventing_instance
-                    //action MAY already be bound
-                    action.apply(el || e.target || null, args);
+                    extent = extent || 'prevent';
+				listener[extent](e);
+               // el = el ? getResult(el) : null;
+				//avoid sending Event object as it may wind up as the useCapture argument in the listener
+				func.apply(el || null, args.splice(-1, 1));
 			},
 			wrapped = _.wrap(fn, wrapper);
 		//calls addHandler which calls addListener which invokes the addEventListener/attachEvent method
-		eventing_instance = handler(wrapped);
-		return eventing_instance;
+		listener = handler(wrapped);
+		return listener;
 	};
-}    
-
+}
+	function addHandler(type, func, el) {
+        //console.log(arguments);
+		return poloAF.Eventing.init.call(poloAF.Eventing, type, func, el).addListener();
+	}
+    
 	function validator(message, fun) {
 		var f = function () {
 			//console.log(arguments)
@@ -602,7 +652,6 @@ function divideBy(a, b){
 		return adapter;
 	}
 	var getNewElement = dispatch(curry2(cloneNode)(true), _.bind(document.createElement, document), _.bind(document.createDocumentFragment, document)),
-        
 		removeNodeOnComplete = _.wrap(removeElement, function (f, node) {
 			if (validateRemove(node)) {
 				return f(node);
@@ -634,17 +683,23 @@ function divideBy(a, b){
 		},
 		machElement = function () {
 			var el,
-				args = slice.call(arguments);
+				args = slice.call(arguments),
+                //slice because we want a copy
+                select = args[1] ? args.slice(0).splice(-1, 1)[0] : args[0];
 			return {
-				init: function () {},
 				render: function (e) {
 					//console.log(e && e.target && e.target.src)
 					/*don't do this: args = args.concat(always(e))
 					add 'select' argument on-the-fly (see composer)
 					fresh argument to the persisted Element object */
+                    //console.log(args);
 					el = composer.apply(null, e ? args.concat(always(e)) : args);
 					return this;
 				},
+                init: function(){
+                    /*may sometimes just want to get a reference to the element without adding class, attrs, eventHandlers*/
+                    el = select();
+                },
 				unrender: function () {
 					var removed = removeNodeOnComplete(getResult(el));
 					el = null;
@@ -659,7 +714,7 @@ function divideBy(a, b){
 	// The three branches.
 	var standard = {
 			createXhrObject: function() {
-				return new XMLHttpRequest();
+				return new window.XMLHttpRequest();
 			}
 		},
 		activeXNew = {
@@ -700,8 +755,9 @@ function divideBy(a, b){
 		which needs to be cross browser see EventCache.prevent */
 		addEvent: function (handler, func, extent) {
 			return function (el) {
+                //console.log(el);
+                el = getResult(el);
 				var partial = el && _.isElement(el) ? _.partial(handler, el) : _.partial(handler);
-                //returns a function which call a function that init's an eventing_instance and returns it
 				return prepareListener(extent)(partial, func, el);
 			};
 		},
@@ -757,15 +813,7 @@ function divideBy(a, b){
         var f = ptL(thunk, once(1));
         return best(f, actions)();
 				}; */
-		doOnce: function () {
-			return function (i) {
-				return function () {
-					var res = i > 0;
-					i -= 1;
-					return res > 0;
-				};
-			};
-		},
+		doOnce: doOnce,
 		doWhen: doWhen,
 		drillDown: drillDown,
         fadeUp: function(element, red, green, blue) {
@@ -829,7 +877,14 @@ function divideBy(a, b){
 		getZero: _.partial(byIndex, 0),
 		getter: getter,
 		gtThan: gtThan,
-		hasFeature: (function () {
+		hasClass: (function () {
+			var html = document.documentElement || document.getElementsByTagName('html')[0];
+			return function (str, el) {
+                el = el || html;
+				return poloAF.Util.getClassList(el).contains(str);
+			};
+		}()),
+        hasFeature: (function () {
 			var html = document.documentElement || document.getElementsByTagName('html')[0];
 			return function (str) {
 				return poloAF.Util.getClassList(html).contains(str);
@@ -868,6 +923,9 @@ function divideBy(a, b){
 			};
 		},
 		insertAfter: insertAfter,
+		insertBefore: function(refnode, tgt){
+            refnode.parentNode.insertBefore(tgt, refnode);
+        },
 		invokeRest: function (m, o) {
 			return o[m].apply(o, _.rest(arguments, 2));
 		},

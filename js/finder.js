@@ -28,6 +28,7 @@
         getHeading = utils.getDomChild(utils.getNodeByTag('h3')),
         getParent = utils.drillDown(['parentNode']),
 		ptL = _.partial,
+        klasAdd = utils.addClass,
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
 		//con = window.console.log.bind(window),
@@ -92,7 +93,8 @@
 				return doAlt([move, unmove]);
 			}); //map           
 		},
-		float_handler;
+		float_handler,
+        $sections;
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
 	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels.
 	*/
@@ -112,5 +114,13 @@
 	float_handler = ptL(negater, floating_images(images));
 	float_handler();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
+    $sections = _.map(document.getElementsByTagName('section'), function(el){
+        var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
+        $el.unrender = noOp;
+        return $el;
+    });
+    
+    poloAF.Util.setScrollHandlers($sections, doTwice(poloAF.Util.getScrollThreshold)(0.4), 'display', 1);
+    window.setTimeout($sections[0].render, 666);
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 668px)', window.matchMedia('only screen and (max-width: 668px)').matches));
