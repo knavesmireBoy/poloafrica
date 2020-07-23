@@ -8,6 +8,27 @@ html.js body img, html.no-js body img {
 /*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO BUT SEPARATE INSTRUCTIONS FROM UNITS*/
 
 /*REMEMBER override class hardcoded in HTML*/
+
+
+#nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+}
+
+#nav li {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    -ms-flex-item-align: start;
+        align-self: flex-start;
+}
+
 section {
 	-webkit-box-align: start;
 	-ms-flex-align: start;

@@ -2,18 +2,23 @@
     margin: 0 0 1em 0;
 }
 
-#presslinks nav ul {
+.no-touchevents #presslinks nav ul {
 	line-height: 1.3;
 	text-indent: -.8em;
 	padding: 0 0 0 1em;
 }
 
-.js #presslinks nav ul {
+.no-touchevents #presslinks nav ul {
 	text-indent: -1.7em;
 	padding: 0 0 0 1.7em;
 }
 
-no-touchevents.background-size #presslinks nav ul {
+.touchevents #presslinks li {
+list-style-position: inside;
+text-indent: -1em;
+}
+
+.no-touchevents.background-size #presslinks nav ul {
 	text-indent: 0;
 	padding: 0;
 }
@@ -136,8 +141,8 @@ no-touchevents.background-size #presslinks nav ul {
 #tvcoverage p:last-child {
 	margin: 0;
 }
-.view::after {
-	content: "on the right";
+#tvcoverage p span::after {
+	content: "on the right)";
 }
 #tvcoverage>a {
 	width: 100%;
@@ -234,8 +239,8 @@ h2 span {
 	#tvcoverage iframe:first-of-type {
 		margin: 1em 0 3em 1em;
 	}
-	.view::after {
-		content: "above";
+	#tvcoverage p span ::after {
+		content: "above)";
 	}
 	p:first-of-type {
 		margin: 1em 0;

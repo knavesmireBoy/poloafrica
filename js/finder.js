@@ -19,27 +19,33 @@
 		return o[m](arg);
 	}
 	var dummy = {},
-      utils = poloAF.Util,
+        utils = poloAF.Util,
+        animation = utils.$("ani"),
+        sections = document.getElementsByTagName('section'),
+        firstlink = sections[0].getElementsByTagName('a')[0],
+        getArticle = utils.getSibling(utils.getNodeByTag('article')),
+        getSection = utils.getDomParent(utils.getNodeByTag('section')),
+        getHeading = utils.getDomChild(utils.getNodeByTag('h3')),
+        getParent = utils.drillDown(['parentNode']),
 		ptL = _.partial,
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
-		con = window.console.log.bind(window),
+		//con = window.console.log.bind(window),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
 		main = document.getElementsByTagName('main')[0],
-       mytarget = !window.addEventListener ? 'srcElement' : 'target',
-       getTarget = utils.drillDown([mytarget]),
+        mytarget = !window.addEventListener ? 'srcElement' : 'target',
+        getTarget = utils.drillDown([mytarget]),
+        /*
 		report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
 			msg = undef(msg) ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
-		sections = document.getElementsByTagName('section'),
+        */
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
-		animation = utils.$("ani"),
 		doAlt = utils.doAlternate(),
-		doWrap = utils.always(true),
-     //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
+        //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
@@ -47,14 +53,13 @@
 				return _.partial(utils.isDesktop, threshold);
 			}
 		}()),
-		negater = function (alternators, func) {
+		negater = function (alternators) {
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
 				_.each(alternators, function (f) {
 					f();
 				});
-				func();
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
@@ -62,38 +67,39 @@
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
 		bridge = function (e) {
          var tgt = getTarget(e),
-				el = tgt && utils.getDomParent(utils.getNodeByTag('section'))(tgt),
-				hit = el && utils.getClassList(el).contains('show');
-			if (!el || !isHeading(tgt.parentNode)) {
+				section = tgt && getSection(tgt),
+				hit = section && utils.getClassList(section).contains('show');
+			if (!section || !isHeading(getParent(tgt))) {
 				return;
 			}
-			_.each(sections, function (section) {
-				utils.hide(section);
+			_.each(sections, function (sec) {
+				utils.hide(sec);
 			});
 			if (!hit) {
-				utils.show(el);
+				utils.show(section);
 			}
 		},
-		floating_images = function (els) {
-			return _.map(els, function (el) {
-				var article = utils.getSibling(utils.getNodeByTag('article'))(el),
+        floating_images = function (imgs) {
+			return _.map(imgs, function (img) {
+				var article = getArticle(img),
+                    h = getHeading(article.firstChild),
 					move = function () {
-                       var p = utils.getSibling(utils.getNodeByTag('p'))(article.firstChild);
-                       article.insertBefore(el, p);
+                        utils.insertAfter(img, h);
 					},
 					unmove = function () {
-						article.parentNode.insertBefore(el, article);
+                        utils.insertBefore(article, img);
 					};
 				return doAlt([move, unmove]);
 			}); //map           
 		},
 		float_handler;
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
-	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels, but the picture will come before the content
+	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels.
 	*/
 	utils.addHandler('click', main, bridge);
-   dummy[mytarget] = sections[0].getElementsByTagName('a')[0];
+    dummy[mytarget] = firstlink;
 	bridge(dummy);
+    
 	if (utils.$('enquiries')) {
 		return;
 	}
@@ -102,7 +108,8 @@
 		images.push(animation);
 		utils.removeNodeOnComplete(utils.$('tween'));
 	}
-	float_handler = ptL(negater, floating_images(images), noOp);
+    
+	float_handler = ptL(negater, floating_images(images));
 	float_handler();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
 	return true;

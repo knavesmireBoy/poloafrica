@@ -100,7 +100,7 @@ section>img {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding-bottom: 1em;
 }
-#nav li {
+#nav li a{
 	border: solid 1px #ccc;
 	border-color: #ccc #000 #449 #ccc;
 }

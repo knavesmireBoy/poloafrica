@@ -86,7 +86,7 @@
         <input class="read-more-state" id="post4" type="checkbox">
         <label class="read-more-trigger" for="post4"></label>
        <article id="contactarea" class="alt">
-           <a href="#" id="contact_form"><h3>Poloafrica contact form</h3></a>
+           <h3><a href="#" id="contact_form">Poloafrica contact form</a></h3>
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
            <form action="action.php" id="contactform" method="post" name="contactform">
 				<fieldset>
@@ -143,7 +143,6 @@
 			var el = getTarget(e),
                myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
 				hit = myarticles && utils.getClassList(myarticles).contains('show');
-               console.log(isHeading(el), el)
                if(!isHeading(el)){
                    return;
                }
@@ -160,43 +159,5 @@
               dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
 	bridge(dum);
    </script>
-        <script>       
-        var utils = poloAF.Util,
-    	ptL = _.partial,
-            clicker = ptL(utils.addHandler, 'click'),
-            
-    	makeElement = utils.machElement,
-    	anCr = utils.append(),
-    	setAttrs = utils.setAttributes,
-    	klasAdd = utils.addClass,
-    	displayLoading = function(ancor, conf) {
-    		return makeElement(ptL(klasAdd, 'loading'), ptL(setAttrs, {
-    			alt: 'loading',
-    			src: "../images/progressbar.gif"
-    		}), anCr(ancor), utils.always('img'));
-    	},
-            myform = document.forms[0],
-            legend = utils.getByTag('legend', myform)[0],
-    	prepareAjax = function() {
-    		var xhr = poloAF.Hijax();
-    		xhr.setContainer(myform);
-    		xhr.setCanvas(utils.$('post'));
-    		xhr.setUrl("response.php");
-    		xhr.setLoading(function() {
-    			displayLoading(utils.$('post')).render();
-    		});
-    		xhr.setCallback(function() {
-    			utils.fadeUp(utils.$('post'), 255, 255, 204);
-    		});
-    		xhr.captureData();
-    	},
-            relocate = function(e){
-                if(e.target.nodeName.toLowerCase() === 'legend'){
-                    window.location.assign("../admin");
-                }
-            };
-            window.onload = prepareAjax;            
-            utils.addEvent(clicker, relocate)(myform);
-    </script>
 </body>
 </html>
