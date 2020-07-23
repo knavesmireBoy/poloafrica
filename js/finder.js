@@ -24,8 +24,8 @@
         sections = document.getElementsByTagName('section'),
         firstlink = sections[0].getElementsByTagName('a')[0],
         getArticle = utils.getSibling(utils.getNodeByTag('article')),
-        getPara = utils.getSibling(utils.getNodeByTag('p')),
         getSection = utils.getDomParent(utils.getNodeByTag('section')),
+        getHeading = utils.getDomChild(utils.getNodeByTag('h3')),
         getParent = utils.drillDown(['parentNode']),
 		ptL = _.partial,
 		doTwice = utils.curryTwice(),
@@ -54,14 +54,14 @@
 				return _.partial(utils.isDesktop, threshold);
 			}
 		}()),
-		negater = function (alternators, func) {
+		negater = function (alternators) {
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
 				_.each(alternators, function (f) {
 					f();
 				});
-				func();
+				//func();
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
@@ -69,27 +69,27 @@
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
 		bridge = function (e) {
          var tgt = getTarget(e),
-				el = tgt && getSection(tgt),
-				hit = el && utils.getClassList(el).contains('show');
-			if (!el || !isHeading(getParent(tgt))) {
+				section = tgt && getSection(tgt),
+				hit = section && utils.getClassList(section).contains('show');
+			if (!section || !isHeading(getParent(tgt))) {
 				return;
 			}
-			_.each(sections, function (section) {
-				utils.hide(section);
+			_.each(sections, function (sec) {
+				utils.hide(sec);
 			});
 			if (!hit) {
-				utils.show(el);
+				utils.show(section);
 			}
 		},
-		floating_images = function (els) {
-			return _.map(els, function (el) {
-				var article = getArticle(el),
-                    p = getPara(article.firstChild),
+        floating_images = function (imgs) {
+			return _.map(imgs, function (img) {
+				var article = getArticle(img),
+                    h = getHeading(article.firstChild),
 					move = function () {
-                       article.insertBefore(el, p);
+                        utils.insertAfter(img, h);
 					},
 					unmove = function () {
-                        utils.insertBefore(article, el);
+                        utils.insertBefore(article, img);
 					};
 				return doAlt([move, unmove]);
 			}); //map           
@@ -101,6 +101,7 @@
 	utils.addHandler('click', main, bridge);
     dummy[mytarget] = firstlink;
 	bridge(dummy);
+    
 	if (utils.$('enquiries')) {
 		return;
 	}
@@ -109,7 +110,8 @@
 		images.push(animation);
 		utils.removeNodeOnComplete(utils.$('tween'));
 	}
-	float_handler = ptL(negater, floating_images(images), noOp);
+    
+	float_handler = ptL(negater, floating_images(images));
 	float_handler();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
 	return true;

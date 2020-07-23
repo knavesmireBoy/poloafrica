@@ -26,13 +26,17 @@ return TRUE;
 <p id='now'>
 <?php
 if (userIsLoggedIn()){
-echo '<p>Email: ' . $_POST['contactEmail'] . '<p/>';
+echo '<p>Email: ' . $_POST['email'] . '<p/>';
 }
 else { echo'<p>Email:' . $loginError . '<p/>'; }
-echo '<p>Name: ' . $_POST['contactName'] . '<p/>';
-echo '<p>Telephone: ' . $_POST['contactTel'] . '<p/>';
-echo '<p>Address1: ' . $_POST['AddressLine1'] . '<p/>';
-echo '<p>Address2: ' . $_POST['AddressLine2'] . '<p/>';
+echo '<p>Name: ' . $_POST['name'] . '<p/>';
+echo '<p>Telephone: ' . $_POST['phone'] . '<p/>';
+echo '<p>Address1: ' . $_POST['addr1'] . '<p/>';
+echo '<p>Address2: ' . $_POST['addr2'] . '<p/>';
+echo '<p>Address3: ' . $_POST['addr3'] . '<p/>';
+echo '<p>Country: ' . $_POST['country'] . '<p/>';
+echo '<p>Postcode: ' . $_POST['postcode'] . '<p/>';
+echo '<p>Your message: ' . $_POST['msg'] . '<p/>';
 echo '<h2>' . $greeting . '</h2>';
 ?>
 </p>

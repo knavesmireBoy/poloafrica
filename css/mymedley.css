@@ -23,6 +23,19 @@
 }
 */
 
+@media only screen and (-ms-high-contrast: none) {
+	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
+	#presslinks>img, #medley_links img {
+		-webkit-box-flex: 1;
+		-ms-flex: 2 1 5em;
+		flex: 2 1 5em;
+		-ms-flex-item-align: start;
+		align-self: flex-start;
+		float: none;
+		height: 100%;
+	}
+}
+
 @supports (column-gap: 20px) {
 	.override #tvcoverage {
 		display: -ms-grid;

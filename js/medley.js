@@ -1,27 +1,18 @@
 /*jslint nomen: true */
 /*global window: false */
 /*global poloAF: false */
+/*global Modernizr: false */
 /*global document: false */
 /*global _: false */
 
 function simpleInvoke(o, m, arg) {
 		return o[m](arg);
 	}
-        function undef(x) {
-		return typeof (x) === 'undefined';
-	}
     var mq = Modernizr.mq('only all'),
         query = '(min-width: 668px)',
         touch = Modernizr.touchevents,
         utils = poloAF.Util,
-        //con = window.console.log.bind(window),
-        report = function (msg, el) {
-			el = el || utils.getByTag('h2', document)[0];
-			msg = undef(msg) ? document.documentElement.className : msg;
-			el.innerHTML = msg;
-		},
 		ptL = _.partial,
-		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
         doMatch = doThrice(simpleInvoke)(/\d\)$/)('match'),
         number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
@@ -45,11 +36,11 @@ function simpleInvoke(o, m, arg) {
             return {
             render: ptL(_.each, coll, function(a){
             var copy = utils.drillDown(['innerHTML'])(a);
-            copy = copy.split('(');
-            sub = doMatch(copy[1]) ? 1 : 7;
-            a.innerHTML = copy[0];
-                    repl.push(' '+copy[1].substring(copy[1].length - sub));
-            a.setAttribute('title', copy[1].substring(0, copy[1].length - sub));
+                copy = copy.split('(');
+                sub = doMatch(copy[1]) ? 1 : 7;
+                a.innerHTML = copy[0];
+                repl.push(' '+copy[1].substring(copy[1].length - sub));
+                a.setAttribute('title', copy[1].substring(0, copy[1].length - sub));
         }),
             unrender: function(){
              _.each(coll, function(a, i){
@@ -65,7 +56,7 @@ function simpleInvoke(o, m, arg) {
             var doAlt = utils.doAlternate(),
                 toggler = doAlt([command.render, command.unrender]),
                 handler = ptL(negater, toggler);
-        utils.addHandler('resize', window, _.throttle(handler, 99));
+            utils.addHandler('resize', window, _.throttle(handler, 99));
         if(getEnvironment()){
             toggler();
         }

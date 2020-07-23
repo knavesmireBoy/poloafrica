@@ -164,15 +164,7 @@ function divideBy(a, b){
 		return node.cloneNode(deep);
 	}
 
-	function insertAfter(newElement, targetElement) {
-		var parent = targetElement.parentNode;
-		if (parent.lastChild === targetElement) {
-			parent.appendChild(newElement);
-		} else if (newElement) {
-			parent.insertBefore(newElement, targetElement.nextSibling);
-		}
-	}
-
+	
 	function render(anc, refnode, el) {
 		//console.log(arguments)
 		return getResult(anc).insertBefore(getResult(el), getResult(refnode));
@@ -203,7 +195,14 @@ function divideBy(a, b){
 		}
 		return null;
 	}
-
+    function insertAfter(newElement, targetElement) {
+		var parent = targetElement.parentNode;
+		if (parent.lastChild === targetElement) {
+			parent.appendChild(newElement);
+		} else if (newElement) {
+			parent.insertBefore(newElement, getNextElement(targetElement.nextSibling));
+		}
+	}
 	function getTargetNode(node, reg, dir) {
 		if (!node) {
 			return null;

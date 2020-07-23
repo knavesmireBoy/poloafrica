@@ -97,7 +97,7 @@ legend {
 }
 table, form, .manage, .page, .login {
 	width: 40%;
-	min-width: 28em;
+	min-width: 22em;
 }
 
 .page {

@@ -40,7 +40,7 @@ foreach($imagePaths as $image) : ?>
            <h3><a href="#" id="contact_form">Poloafrica contact form</a></h3>
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
            <!-- The form is the ONLY 'article' that remains HARDCODED-->
-           <form action="?" method="post" id="poloafricacontactform"  name="poloafricacontactform" >
+           <form action="?" method="post" id="poloafricacontactform">
 				<fieldset>
 					<legend>&nbsp;Poloafrica contact form&nbsp;</legend>
 						<label for="name">name</label><input id="name" tabindex="1" type="text" name="name" required pattern ="\S+\s\S{2,}">
@@ -49,11 +49,14 @@ foreach($imagePaths as $image) : ?>
                     <label for="postcode">postcode</label><input id="postcode" name="postcode" tabindex="8" type="text">
 				</fieldset>
                <fieldset>
-                   <textarea id="msg" name="msg" tabindex="9">Use this area for comments or questions</textarea><input alt="" src="../images/resource/dogsform.gif" tabindex="10" type="image" name="dogs" id="dogs">
-               <input type="submit"></fieldset>
+                   <textarea id="msg" name="msg" tabindex="9">Use this area for comments or questions</textarea><input type="image" alt="" src="../images/resource/dogsform.gif" tabindex="10" name="dogs" id="dogs">
+                   <input type="submit" value="submit">
+              </fieldset>
             </form><figure><img alt="cat" src="../images/resource/cat.jpg" id="cat"></figure>
            <?php }
-           else { include "response.php"; } ?>
+           else {
+               include "response.php";
+           } ?>
                 </article>
         </section>
         <?php
@@ -62,78 +65,5 @@ foreach($imagePaths as $image) : ?>
                 include '../templates/article.php';
          ?>
         </main>
-<?php echo '</div>'; include "../templates/footer.php" ?>
-          <script>
-       var dum = {},
-           utils = poloAF.Util,
-           invokemethod = function (o, arg, m) {
-               return o[m](arg);
-           },
-           doThrice = utils.curryThrice(),
-           headingmatch = doThrice(invokemethod)('match')(/h3/i),
-           tgt = !window.addEventListener ? 'srcElement' : 'target',
-
-           getTarget = utils.drillDown([tgt, 'parentNode']),
-           isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
-           main = document.getElementsByTagName('main')[0],
-           articles = document.getElementsByTagName('article'),
-           bridge = function(e) {
-			var el = getTarget(e),
-               myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
-				hit = myarticles && utils.getClassList(myarticles).contains('show');
-               if(!isHeading(el)){
-                   return;
-               }
-			_.each(articles, function(article) {
-				utils.hide(article);
-			});
-			if (!hit) {
-				utils.show(myarticles);
-			}
-		};
-       utils.addHandler('click', bridge, main);
-              //trigger...
-       dum[tgt] = articles[0].getElementsByTagName('a')[0];
-              dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
-	bridge(dum);
-   </script>
-        <script>       
-        var utils = poloAF.Util,
-    	ptL = _.partial,
-            clicker = ptL(utils.addHandler, 'click'),
-            
-    	makeElement = utils.machElement,
-    	anCr = utils.append(),
-    	setAttrs = utils.setAttributes,
-    	klasAdd = utils.addClass,
-    	displayLoading = function(ancor, conf) {
-    		return makeElement(ptL(klasAdd, 'loading'), ptL(setAttrs, {
-    			alt: 'loading',
-    			src: "../images/progressbar.gif"
-    		}), anCr(ancor), utils.always('img'));
-    	},
-            myform = document.forms[0],
-            legend = utils.getByTag('legend', myform)[0],
-    	prepareAjax = function() {
-    		var xhr = poloAF.Hijax();
-    		xhr.setContainer(myform);
-    		xhr.setCanvas(utils.$('post'));
-    		xhr.setUrl("response.php");
-    		xhr.setLoading(function() {
-    			displayLoading(utils.$('post')).render();
-    		});
-    		xhr.setCallback(function() {
-    			utils.fadeUp(utils.$('post'), 255, 255, 204);
-    		});
-    		xhr.captureData();
-    	},
-            relocate = function(e){
-                if(e.target.nodeName.toLowerCase() === 'legend'){
-                    window.location.assign("../admin");
-                }
-            };
-            window.onload = prepareAjax;            
-            utils.addEvent(clicker, relocate)(myform);
-            
-    </script>
-<?php echo '</body></html>';
+<?php echo '</div>'; include "../templates/footer.php";
+echo "<script src='../js/enq.js'></script></body></html>";

@@ -90,6 +90,7 @@ window.poloAF.Hijax = function() {
         }
         else if((container.nodeName.toLowerCase() === 'form' || container.nodeName.toLowerCase() === 'main') && !flag){
            container.onsubmit = function(e) {
+               console.log(e);
             if (ret.validate(e.target)) {
                 data = fromPost(e.target);
                 return !start(); //needs to return false to cancel default action, so success will cancel

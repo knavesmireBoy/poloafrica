@@ -17,35 +17,29 @@ function IsInjected($str){
                    return false;
                }
            }
-               
-           $name = $_POST['name'];
-           $email = $_POST['email'];
-           $message = $_POST['msg'];
-               /*
-        $phone = $_POST['phone'];
-           $addr1 = $_POST['addr1'];
-           $addr2 = $_POST['addr2'];
-           $addr3 = $_POST['addr3'];
-           $country = $_POST['country'];
-           $postcode = $_POST['postcode'];
-           */
-           
-           $to = 'andrewsykes@btinternet.com';
-           $body = "You have received a new message from the user $name.\n".
-                            "Here is the message:\n $message";
-               if(IsInjected($email)){
-                   echo "Bad email value!";
-                   exit();
-               }
+$name = $_POST['name'];
+$email = $_POST['email'];
+$message = $_POST['msg'];
+$phone = $_POST['phone'];
+$addr1 = $_POST['addr1'];
+$addr2 = $_POST['addr2'];
+$addr3 = $_POST['addr3'];
+$country = $_POST['country'];
+$postcode = $_POST['postcode'];
+$to = 'andrewsykes@btinternet.com';
+$body = "You have received a new message from the user $name.\n".
+    "Here is the message:\n $message";
+if(IsInjected($email)){
+    exit("Bad email value!");
+}
                
 $message = wordwrap($body, 70, "\r\n");
 $headers = 'From: info@poloafrica.com' . "\r\n" .
 'Reply-To: info@poloafrica.com' . "\r\n" .
 'X-Mailer: PHP/' . phpversion();
-           
-           if (!@mail('north.wolds@btinternet.com', 'PoloAfrica Enquiry',  $message, $headers)){
-               exit('<p>Email could not be sent.</p>');  
-           }
+if (!@mail('north.wolds@btinternet.com', 'PoloAfrica Enquiry',  $message, $headers)){
+    exit('<p>Email could not be sent.</p>');  
+}
 ?>
 <div id="response">
     <h3>Thankyou for your enquiry</h3>
@@ -54,4 +48,3 @@ $headers = 'From: info@poloafrica.com' . "\r\n" .
         echo "<p>$post</p>\r\n";
     }
     ?></div>
-           

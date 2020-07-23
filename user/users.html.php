@@ -20,7 +20,7 @@ if(isset($users) && !isset($form)): ?>
 
 <?php elseif(isset($user)): ?>
 
-<form action="" method="post" class="manage">
+<form action="?" method="post" class="manage">
 <label><?php htmlout($user['name']); ?></label>
 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
 <input type="submit" name="action" value="Edit">

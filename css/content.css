@@ -50,6 +50,10 @@ p a:hover, p a:active {
 .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
     color: hsl(58, 60%, 40%);
+    /*
+    color: #BCA95B;
+    color: hsl(48.25, 41.99%, 54.71%);
+    */
 }
 p {
 	color: #444;
@@ -100,7 +104,7 @@ section>img {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding-bottom: 1em;
 }
-#nav li {
+#nav li a{
 	border: solid 1px #ccc;
 	border-color: #ccc #000 #449 #ccc;
 }

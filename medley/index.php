@@ -27,5 +27,4 @@ include "../templates/nav.php";
 echo '</main></div>';
 include '../templates/footer.php'; ?>
     <script src="../js/finder.js"></script>
-    <script src="../js/medley.js"></script>
 <?php echo '</body></html>';

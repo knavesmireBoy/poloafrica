@@ -193,9 +193,17 @@ h2 span {
 		left: -999em;
 	}
 
+#response {
+    padding: 1em;
+    background-color:beige;
+}
+#response h3 {
+    width: auto;
+}
+
 #response p {
     margin: 0;
-    color: purple;
+    font-weight: bold;
 }
 @media only screen {
 	h2 span {

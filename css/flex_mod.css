@@ -9,6 +9,19 @@ html.js body img, html.no-js body img {
 
 /*REMEMBER override class hardcoded in HTML*/
 
+
+#nav {
+    display: flex;
+    align-items: flex-start;
+}
+
+#nav li {
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    align-self: flex-start;
+}
+
+
 section {
 	-webkit-box-align: start;
 	-ms-flex-align: start;

@@ -28,7 +28,7 @@
 }
 @media screen and (max-width: 823px) {
 	@supports(column-gap: 20px) {
-		#intro article {
+		#intro article, #response {
 			grid-column: 1 / 20;
 		}
 		.override section p {
@@ -118,7 +118,7 @@
 		#enquiries section:nth-child(2) article>* {
 			width: 100%;
 		}
-		#contactarea>h3 {
+		#contactarea>h3, #response {
 			grid-column: 1/10;
 		}
 		#contactarea form {
