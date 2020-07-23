@@ -125,39 +125,6 @@
     <script src="../js/eventing.js"></script>
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
-           <script>
-       var dum = {},
-           utils = poloAF.Util,
-           invokemethod = function (o, arg, m) {
-               return o[m](arg);
-           },
-           doThrice = utils.curryThrice(),
-           headingmatch = doThrice(invokemethod)('match')(/h3/i),
-           tgt = !window.addEventListener ? 'srcElement' : 'target',
-
-           getTarget = utils.drillDown([tgt, 'parentNode']),
-           isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
-           main = document.getElementsByTagName('main')[0],
-           articles = document.getElementsByTagName('article'),
-           bridge = function(e) {
-			var el = getTarget(e),
-               myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
-				hit = myarticles && utils.getClassList(myarticles).contains('show');
-               if(!isHeading(el)){
-                   return;
-               }
-			_.each(articles, function(article) {
-				utils.hide(article);
-			});
-			if (!hit) {
-				utils.show(myarticles);
-			}
-		};
-       utils.addHandler('click', bridge, main);
-              //trigger...
-       dum[tgt] = articles[0].getElementsByTagName('a')[0];
-              dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
-	bridge(dum);
-   </script>
+    <script src="../js/enq.js"></script>
 </body>
 </html>
