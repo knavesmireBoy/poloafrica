@@ -12,11 +12,11 @@ var dum = {},
     invokemethod = function(o, arg, m) {
         return o[m](arg);
     },
-    clicker = ptL(utils.addHandler, 'click'),
 	makeElement = utils.machElement,
 	anCr = utils.append(),
 	setAttrs = utils.setAttributes,
 	klasAdd = utils.addClass,
+    doTwice = utils.curryTwice(),
     doThrice = utils.curryThrice(),
     headingmatch = doThrice(invokemethod)('match')(/h3/i),
     tgt = !window.addEventListener ? 'srcElement' : 'target',
@@ -69,3 +69,12 @@ window.onload = prepareAjax;
  dum[tgt] = articles[0].getElementsByTagName('a')[0];
  dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
  bridge(dum);
+
+ var $sections = _.map(document.getElementsByTagName('section'), function(el){
+        var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
+        $el.unrender = function(){};
+        return $el;
+    });
+
+    poloAF.Util.setScrollHandlers($sections, doTwice(poloAF.Util.getScrollThreshold)(0.4), 'display');
+    window.setTimeout($sections[0].render, 666);

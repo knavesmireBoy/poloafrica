@@ -96,14 +96,18 @@
 			}); //map           
 		},
 		float_handler,
-        $sections;
+        $sections = _.map(sections, function(el){
+        var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
+        $el.unrender = noOp;
+        return $el;
+    });
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
 	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels.
 	*/
 	utils.addHandler('click', main, bridge);
     dummy[mytarget] = firstlink;
 	bridge(dummy);
-    
+        
 	if (utils.$('enquiries')) {
 		return;
 	}
@@ -116,11 +120,6 @@
 	float_handler = ptL(negater, floating_images(images));
 	float_handler();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
-     $sections = _.map(document.getElementsByTagName('section'), function(el){
-        var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
-        $el.unrender = noOp;
-        return $el;
-    });
     poloAF.Util.setScrollHandlers($sections, doTwice(poloAF.Util.getScrollThreshold)(0.4), 'display', 1);
     window.setTimeout($sections[0].render, 666);
 	return true;

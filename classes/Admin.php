@@ -122,14 +122,14 @@
         if ($_POST['password'] != '')
         {
             $password = md5($data['password'] . DB_SALT);
-            $st = prepSQL($conn, 'UPDATE author SET password = :password WHERE id = :id');
+            $st = prepSQL($conn, 'UPDATE user SET password = :password WHERE id = :id');
             $st->bindValue(':password', $password, PDO::PARAM_STR);
             $st->bindValue(':id', $data['id'], PDO::PARAM_INT);
             doPreparedQuery($st, 'Error setting user password.');
         }
         $st = prepSQL($conn, 'DELETE FROM userrole WHERE user_id = :id');
         $st->bindValue(':id', $data['id'], PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error removing obsolete author role entries.');
+        doPreparedQuery($st, 'Error removing obsolete user role entries.');
         if (isset($data['roles']))
         {
             foreach ($data['roles'] as $role)
