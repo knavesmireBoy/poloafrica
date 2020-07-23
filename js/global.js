@@ -8,6 +8,26 @@ if (!window.poloAF) {
 }
 poloAF.Util = (function () {
 	"use strict";
+    
+    function spreadify (fn, fnThis) {
+    return function (/* accepts unlimited arguments */) {
+        // Holds the processed arguments for use by `fn`
+        var i,
+            spreadArgs = [],
+            length = arguments.length,
+            currentArg;
+
+        for (i = 0; i < length; i++) {
+            currentArg = arguments[i];
+            if (Array.isArray(currentArg)) {
+                spreadArgs = spreadArgs.concat(currentArg);
+            } else {
+                spreadArgs.push(currentArg);
+            }
+        }
+        fn.apply(fnThis || null, spreadArgs);
+    };
+}
 
 	function toCamelCase(variable) {
 		return variable.replace(/-([a-z])/g, function (str, letter) {
@@ -255,6 +275,9 @@ function divideBy(a, b){
 	}
 
 	function handleElement($el, cb) {
+        if(!$el.getElement()){
+            $el.init();
+        }
 		if (getPageOffset() > cb($el.getElement())) {
 			$el.render();
 		} else {
@@ -264,8 +287,10 @@ function divideBy(a, b){
 
 	function handleScroll($el, cb, klas) {
 		if (!$el.getElementsByTagName) {
-			var inta = new poloAF.Intaface('Element', ['render', 'unrender', 'getElement']);
-			poloAF.Intaface.ensures($el, inta);
+            if(poloAF.Intaface){
+                var inta = new poloAF.Intaface('Element', ['render', 'unrender', 'getElement']);
+                poloAF.Intaface.ensures($el, inta);
+            }
 			handleElement($el, cb);
 		} else { //default treatment
 			//getPageOffset() > ($el.offsetTop - window.innerHeight)
@@ -276,7 +301,6 @@ function divideBy(a, b){
 			}
 		}
 	}
-
 	function getElementOffset(el) {
 		//https://medium.com/snips-ai/make-your-next-microsite-beautifully-readable-with-this-simple-javascript-technique-ffa1a18d6de2
 		var top = 0,
@@ -633,9 +657,10 @@ function divideBy(a, b){
 		},
 		machElement = function () {
 			var el,
-				args = slice.call(arguments);
+				args = slice.call(arguments),
+                //slice because we want a copy
+                select = args[1] ? args.slice(0).splice(-1, 1)[0] : args[0];
 			return {
-				init: function () {},
 				render: function (e) {
 					//console.log(e && e.target && e.target.src)
 					/*don't do this: args = args.concat(always(e))
@@ -645,6 +670,10 @@ function divideBy(a, b){
 					el = composer.apply(null, e ? args.concat(always(e)) : args);
 					return this;
 				},
+                init: function(){
+                    /*may sometimes just want to get a reference to the element without adding class, attrs, eventHandlers*/
+                    el = select();
+                },
 				unrender: function () {
 					var removed = removeNodeOnComplete(getResult(el));
 					el = null;
@@ -920,6 +949,7 @@ function divideBy(a, b){
 			// ensure we don't fire this handler too often
 			// for a good intro into throttling and debouncing, see:
 			// https://css-tricks.com/debouncing-throttling-explained-examples/
+            //may have primed getThreshold with a percent argument to delay the display of a item until its well scrolled
 			klas = klas || 'show';
 			var deferHandle = curry33(handleScroll)(klas)(getThreshold || poloAF.Util.getScrollThreshold),
 				funcs = _.map(collection, deferHandle);

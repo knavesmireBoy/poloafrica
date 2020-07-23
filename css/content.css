@@ -336,4 +336,26 @@ h2 span {
 		padding: .75em .6em;
 	}
 }
+@media only screen and (min-width: 1024px) {
+    article, section img {
+    transition-property: transform;
+    transition-duration: 2s;
+}
+
+section img {
+    transform: translate(100em, 0);
+}
+
+article, section:nth-child(even) img {
+    transform: translate(-100em, 0);
+}
+
+section:nth-child(even) article  {
+   transform: translate(100em, 0);
+}
+.override .display article, .override .display img {
+    transform: translate(0, 0);    
+}
+
+}
 /*@*/
