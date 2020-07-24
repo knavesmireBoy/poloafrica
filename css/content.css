@@ -1,15 +1,14 @@
 @keyframes bgfade {
 	0% {
-		background-image: url(../images/poloafrica_flower_logo.jpg);
+		background-image: url(../images/resource/poloafrica_flower_logo.jpg);
 	}
 	50% {
-		background-image: url(../images/polo150yrs_squared_logo.jpg);
+		background-image: url(../images/resource/polo150yrs_squared_logo.jpg);
 	}
 	100% {
-		background-image: url(../images/polo_armed_forces_logo.jpg);
+		background-image: url(../images/resource/polo_armed_forces_logo.jpg);
 	}
 }
-
 body {
 	font: normal .875em/1.75 Georgia, serif;
 	background-color: white;
@@ -22,7 +21,7 @@ body {
     box-shadow: 0px 0px 4px #990;
 }
 header {
-	background-image: url(../images/header.png);
+	background-image: url(../images/resource/header.png);
 	background-repeat: no-repeat;
 	background-color: #b6b685;
 	background-color: rgb(182,182,133);
@@ -51,6 +50,10 @@ p a:hover, p a:active {
 .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
     color: hsl(58, 60%, 40%);
+    /*
+    color: #BCA95B;
+    color: hsl(48.25, 41.99%, 54.71%);
+    */
 }
 p {
 	color: #444;
@@ -60,15 +63,6 @@ p {
 p:first-of-type {
 	margin: 0;
 }
-/*
-  p::first-letter {
-     -webkit-initial-letter: 4;
-     initial-letter: 4;
-     color: #FE742F;
-     font-weight: bold;
-     margin-right: 0.5em;
-  }
-*/
 
 h2 {
 	margin: .8em 0 0 0;
@@ -149,7 +143,7 @@ article a {
 	color: #306;
 }
 footer {
-	background: url(../images/footer_green_ko.png) no-repeat;
+	background: url(../images/resource/footer_green_ko.png) no-repeat;
 	background-position: bottom right;
 }
 #footer_girl a:last-child:before {
@@ -182,6 +176,7 @@ h2 span {
 	padding: 0 0 0 8rem;
     line-height: 1.5;
 }
+
 @media only screen {
 	h2 {
 		background-image: linear-gradient(to right, #993, white);
@@ -207,7 +202,7 @@ h2 span {
 	}
 
 	footer {
-		background: url(../images/sil_bg.png) no-repeat top center;
+		background: url(../images/resource/sil_bg.png) no-repeat center top;
 		background-size: cover;
 		padding: 7em 0 0 0;
 	}
@@ -226,7 +221,7 @@ h2 span {
 		color: #fff;
 	}
 	header {
-		background-image: url(../images/header_only.png);
+		background-image: url(../images/resource/header_only.png);
 		background-position: 0px 0px;
 		background-size: cover;
 	}
@@ -238,7 +233,7 @@ h2 span {
 		line-height: 1.55;
 	}
 	.menu {
-		background: 50% 0% url("../images/polo_ball_sprite.png") no-repeat;
+		background: 50% 0% url("../images/resource/polo_ball_sprite.png") no-repeat;
 		background-size: 100%;
 		cursor: pointer;
 		-webkit-transition: transform 1s;
@@ -329,27 +324,59 @@ h2 span {
 		padding: .75em .6em;
 	}
 }
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
 
 @media only screen and (min-width: 1024px) {
-    article, section img {
-    transition-property: transform;
-    transition-duration: 2s;
-}
-
-section img {
-    transform: translate(100em, 0);
-}
-
-article, section:nth-child(even) img {
-    transform: translate(-100em, 0);
-}
-
-section:nth-child(even) article  {
-   transform: translate(100em, 0);
-}
-.override .display article, .override .display img {
-    transform: translate(0, 0);    
-}
+    .override article, .override section > img, aside{
+        -webkit-transition-property: opacity, -webkit-transform;
+        transition-property: opacity, -webkit-transform;
+        -o-transition-property: transform, opacity;
+        transition-property: transform, opacity;
+        transition-property: transform, opacity, -webkit-transform;
+        -webkit-transition-duration: 3s;
+             -o-transition-duration: 3s;
+                transition-duration: 3s;
+        opacity: 0;
+    }
+    section > img, aside {
+        -webkit-transform: translate(100em, 0);
+            -ms-transform: translate(100em, 0);
+                transform: translate(100em, 0);
+    }
+    
+    section > img:last-of-type {
+        -webkit-transform: translate(150em, 0);
+            -ms-transform: translate(150em, 0);
+                transform: translate(150em, 0);
+    }
+    article, section:nth-child(even) > img {
+        -webkit-transform: translate(-100em, 0);
+            -ms-transform: translate(-100em, 0);
+                transform: translate(-100em, 0);
+    }
+    section:nth-child(even) article  {
+        -webkit-transform: translate(100em, 0);
+            -ms-transform: translate(100em, 0);
+                transform: translate(100em, 0);
+    }
+    .override .display article, .override .display > img, .display aside {
+        -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+                transform: translate(0, 0);   
+        opacity: 1;
+    }
+    #enquiries article, #enquiries section img {
+        -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+                transform: translate(0, 0);   
+        opacity: 1;
+        
+    }
 
 }
 /*@*/
