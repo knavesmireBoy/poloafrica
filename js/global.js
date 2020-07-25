@@ -97,7 +97,7 @@ function divideBy(a, b){
 	}
 
 	function cat() {
-		var head = _.first(arguments);
+        var head = _.first(arguments);
 		if (existy(head)) {
 			return head.concat.apply(head, _.rest(arguments));
 		} else {
@@ -106,8 +106,8 @@ function divideBy(a, b){
 	}
 
 	function mapcat(fun, coll) {
-		var res = _.map(coll, fun);
-		return cat.apply(null, res);
+        var res = _.map(coll, fun);
+        return cat.apply(null, res);
 	}
 
 	function construct(head, tail) {
@@ -189,8 +189,9 @@ function divideBy(a, b){
 		}
 		return function (actions) {
 			var f = _.partial(thunk, alternate(0, 2));
-			return function (arg) {
-				return poloAF.Util.getBest(f, [_.partial(actions[0], arg), _.partial(actions[1], arg)])();
+			return function () {
+				//return poloAF.Util.getBest(f, [_.partial(actions[0], arg), _.partial(actions[1], arg)])();
+				return poloAF.Util.getBest(f, [_.partial.apply(null, construct(actions[0], arguments)), _.partial.apply(null, construct(actions[1], arguments))])();
 			};
 		};
 	}

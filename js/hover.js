@@ -7,7 +7,7 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-(function () {
+(function (logo_paths) {
 	"use strict";
 
 	function modulo(i, n) {
@@ -29,13 +29,16 @@ if (!window.poloAF) {
 			};
 		};
 	}
-    
-    function always(val) {
+
+	function always(val) {
 		return function () {
 			return val;
 		};
 	}
-	var sfHover = function () {
+	var  U = poloAF.Util,
+        ptL = _.partial,
+        /*
+        sfHover = function () {
 			var sfEls = document.getElementsByTagName("nav")[0].getElementsByTagName("LI"),
 				i;
 			for (i = 0; i < sfEls.length; i += 1) {
@@ -47,82 +50,89 @@ if (!window.poloAF) {
 				};
 			}
 		},
+        mytarget = !window.addEventListener ? 'srcElement' : 'target',
+        getTarget = U.drillDown([mytarget]),
+        klasAdd = ptL(U.addClass, 'sfhover'),
+        klasRem = ptL(U.removeClass, 'sfhover'),
+        mouseover = ptL(U.addHandler, 'mouseover'),
+        mouseout = ptL(U.addHandler, 'mouseout'),
+        show = _.compose(klasAdd, U.getDomParent(U.getNodeByTag('li')), getTarget), 
+        hide = _.compose(klasRem, U.getDomParent(U.getNodeByTag('li')), getTarget), 
+        doOver = U.addEvent(mouseover, show)(document.getElementsByTagName("nav")[0]),
+        doOut = U.addEvent(mouseout, hide)(document.getElementsByTagName("nav")[0]),
+        */
 		$ = function (str) {
 			return document.getElementById(str);
 		},
-        utils = poloAF.Util,
-		ptL = _.partial,
-        anCr = utils.append(),
-        anCrIn = utils.insert(),
-        makeElement = utils.machElement,
-        setAttrs = utils.setAttributes,        
-        ani = (function(){
-            var section = utils.getByTag('section', document),
-                ancr = section[section.length-1],
-                article = utils.getByTag('article', ancr)[0],
-                ret = makeElement(ptL(setAttrs, {
-				id: 'ani',
-			}), anCrIn(article, ancr), always('aside'));
-            ret.render();
-        }()),
-        flower = (function(){
-            var ret = makeElement(ptL(setAttrs, {
-				id: 'flower',
-                src: '../images/poloafrica_flower_logo.jpg',
-                alt: ''
-			}),
-                        anCr(utils.$('ani')), always('img'));
-            ret.render();
-        }()),
-        h2 = poloAF.Util.getByTag('h2', document)[0],
-        doAlt = poloAF.Util.doAlternate(),
+		ani = (function (o) {
+			var anCrIn = o.insert(),
+                section = o.getByTag('section', document),
+				ancr = section[section.length - 1],
+				article = o.getByTag('article', ancr)[0],
+				ret = o.machElement(ptL(o.setAttributes, {
+					id: 'ani'
+				}), anCrIn(article, ancr), always('aside'));
+			ret.render();
+		}(U)),
+		flower = (function (o) {
+            var anCr = o.append(),
+                ret = o.machElement(ptL(o.setAttributes, {
+                    id: 'flower',
+                    src: logo_paths[0],
+                    alt: ''
+                }), anCr(o.$('ani')), always('img'));
+			ret.render();
+		}(U)),
+		doAlt = U.doAlternate(),
 		fader = (function () {
-              function exit(){
-                window.clearTimeout(timer);
-                exit.opacity = fade_el.style.opacity;
-                fade_el.style.opacity = 100;
-              }
+            var base_el,
+				fade_el,
+				parent,
+				domod = curry2(modulo)(3),
+				j = 0,
+				timer;
             
-            function enter(){
-                doFade(exit.opacity);
-              }
+            function doFade(i) {
+				fade_el.style.opacity = i / 100;
+				return setTimeout(curryDefer(fader)(i), 9);
+			}
             
-            function doFade(i){
-                fade_el.style.opacity = i / 100;
-                return setTimeout(curryDefer(fader)(i), 9)
-            }
-                        
-            var base_el = poloAF.Util.getDomChild(poloAF.Util.getNodeByTag('img'))($('ani')),
-                fade_el = base_el.cloneNode(),
-                parent = base_el.parentNode,
-                logo_paths = ["images/poloafrica_flower_logo.jpg", "images/polo150yrs_squared_logo.jpg", "images/polo_armed_forces_logo.jpg"],
-                domod = curry2(modulo)(3),
-                j = 0,
-                timer;
-              
-            parent.appendChild(fade_el);
-            base_el.src = logo_paths[j];
-            fade_el.onload = function () {
-                this.style.opacity = 100;
-                j = isNaN(j) ? 0 : domod(j += 1);
-                base_el.src = logo_paths[j];
-            };
-            poloAF.Util.addHandler('click', $('ani'), doAlt([exit, enter]));
+			function exit() {
+				window.clearTimeout(timer);
+				exit.opacity = fade_el.style.opacity;
+				fade_el.style.opacity = 100;
+			}
             
-            return function (i) {
-                i -= 1;
-                if (i >= 0) {
-                    timer = doFade(i);
-                } else {
-                    fade_el.src = base_el.src;
-                    setTimeout(curryDefer(fader)(101), 3000);
-                }
-
-            };
-        }());
-    
-    setTimeout(curryDefer(fader)(101), 2222);
-    if (window.attachEvent) {
+			function enter() {
+				doFade(exit.opacity);
+			}
+			
+            base_el = poloAF.Util.getDomChild(poloAF.Util.getNodeByTag('img'))($('ani'));
+            fade_el = base_el.cloneNode();
+            parent = base_el.parentNode;
+			parent.appendChild(fade_el);
+			base_el.src = logo_paths[j];
+			fade_el.onload = function () {
+				this.style.opacity = 100;
+                //isNaN : divide by zero
+				j = isNaN(j) ? 0 : domod(j += 1);
+				base_el.src = logo_paths[j];
+			};
+			U.addHandler('click', $('ani'), doAlt([exit, enter]));
+			return function (i) {
+				i -= 1;
+				if (i >= 0) {
+					timer = doFade(i);
+				} else {
+					fade_el.src = base_el.src;
+					setTimeout(curryDefer(fader)(101), 3000);
+				}
+			};
+		}());
+	setTimeout(curryDefer(fader)(101), 2222);
+    /*
+	if (window.attachEvent) {
 		window.attachEvent("onload", sfHover);
 	}
-}());
+    */
+}(["images/poloafrica_flower_logo.jpg", "images/polo150yrs_squared_logo.jpg", "images/polo_armed_forces_logo.jpg"]));

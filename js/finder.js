@@ -20,23 +20,28 @@
 	}
 	var dummy = {},
         utils = poloAF.Util,
+        ptL = _.partial,
+        number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
+		threshold = Number(query.match(number_reg)[1]),
+        mytarget = !window.addEventListener ? 'srcElement' : 'target',
+        getTarget = utils.drillDown([mytarget]),
+        
         animation = utils.$("ani"),
+        tween = utils.$('tween'),
+        main = document.getElementsByTagName('main')[0],
         sections = document.getElementsByTagName('section'),
         firstlink = sections[0].getElementsByTagName('a')[0],
         getArticle = utils.getSibling(utils.getNodeByTag('article')),
         getSection = utils.getDomParent(utils.getNodeByTag('section')),
         getHeading = utils.getDomChild(utils.getNodeByTag('h3')),
         getParent = utils.drillDown(['parentNode']),
-		ptL = _.partial,
+		
         klasAdd = utils.addClass,
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
-		//con = window.console.log.bind(window),
-		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
-		threshold = Number(query.match(number_reg)[1]),
-		main = document.getElementsByTagName('main')[0],
-        mytarget = !window.addEventListener ? 'srcElement' : 'target',
-        getTarget = utils.drillDown([mytarget]),
+        doAlt = utils.doAlternate(),
+       
+        //con = window.console.log.bind(window),
         /*
 		report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
@@ -45,7 +50,6 @@
 		},
         */
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
-		doAlt = utils.doAlternate(),
         //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment = (function () {
 			if (mq) {
@@ -64,7 +68,7 @@
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
-		headingmatch = doThrice(invokemethod)('match')(/h3/i),
+		headingmatch = doThrice(invokemethod)('match')(/^h\d$/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
 		bridge = function (e) {
          var tgt = getTarget(e),
@@ -108,7 +112,7 @@
 	if (animation) {
 		images.splice(-3, 3);
 		images.push(animation);
-		utils.removeNodeOnComplete(utils.$('tween'));
+		utils.removeNodeOnComplete(tween);
 	}
     
 	float_handler = ptL(negater, floating_images(images));
