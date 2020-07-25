@@ -53,7 +53,7 @@ class Gallery extends Image implements AssetInterface
     {
         // Get the image size and type
         $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), null, null, 1.525);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), 100, 0, 1.525);
         buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), JPEG_QUALITY, IMG_THUMB_WIDTH, 1.525);
     }
     protected function removeFile($id)
