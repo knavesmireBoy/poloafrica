@@ -53,8 +53,8 @@ class Gallery extends Image implements AssetInterface
     {
         // Get the image size and type
         $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), 100, 0, 1.525);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), JPEG_QUALITY, IMG_THUMB_WIDTH, 1.525);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), 100, 0, 1.5);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), JPEG_QUALITY, IMG_THUMB_WIDTH, 1.5);
     }
     protected function removeFile($id)
     {
@@ -62,8 +62,8 @@ class Gallery extends Image implements AssetInterface
         $exec = $this->unlinkImages(unlinker(ARTICLE_GALLERY_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_GALLERY_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
         $exec($id);
         //optional delete?
-        $exec = $this->unlinkAsset(unlinker(ARTICLE_UPLOAD_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
-        $exec($id);
+        //$exec = $this->unlinkAsset(unlinker(ARTICLE_UPLOAD_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
+        //$exec($id);
     }
       
      protected function deleteAsset()

@@ -1,93 +1,103 @@
 <?php
+include '../Classes/ImageClient.php';
+include '../Classes/CropperFactory.php';
 
-function html($text)
+function buildIMG($source_image, $filepath, $quality = 100, $output_width = 0, $ratio = 1)
 {
-return htmlspecialchars($text, ENT_QUOTES, 'UTF-8'); }
+    $client = new ImageClient();
+    $handler = $client->getHandler();
+    list($width, $height) = getimagesize($source_image);    
+    $src_x = 0;
+    $src_y = 0;
+    $cropper = null;
 
-function htmlout($text)
-{
-  echo html($text);
-}
-
-function markdown2html($text) {
+    if(isset($ratio)) {
+        $o = new CropperFactory($width, $height, $ratio);
+        $cropper = $o->cropper;
+        $cropper->crop();
+        $src_x = $cropper->src_x;
+        $src_y = $cropper->src_y;
+        $width = $cropper->width;
+        $height = $cropper->height;
+    }
+    $handler->handleRequest($source_image, $filepath, $quality);
     
-$text = html($text);
-  // strong emphasis
-$text = preg_replace('/__(.+?)__/s', '<strong>$1</strong>', $text);
-$text = preg_replace('/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $text);
-// emphasis
-$text = preg_replace('/_([^_]+)_/', '<em>$1</em>', $text); $text = preg_replace('/\*([^\*]+)\*/', '<em>$1</em>', $text);
-// Convert Windows (\r\n) to Unix (\n) $text = str_replace("\r\n", "\n", $text); // Convert Macintosh (\r) to Unix (\n) $text = str_replace("\r", "\n", $text);
-// Paragraphs
-$text = '<p>' . str_replace("\n\n", '</p><p>', $text) . '</p>'; // Line breaks
-$text = str_replace("\n", '<br>', $text);
-// [linked text](link URL)
-    $text = preg_replace(
-'/\[([^\]]+)]\(([-a-z0-9._~:\/?#@!$&\'()*+,;=%]+)\)/i', '<a href="$2">$1</a>', $text);
-  return $text;
+    $newHeight = $height;
+    $newWidth = $width;
+    
+    if(isset($output_width) && $output_width !== 0){
+        $newHeight = intval(($height / $width) * $output_width);
+        $newWidth = $output_width;
+    }
+    
+    //Copy and resize the image to create the thumbnail
+    $newResource = imagecreatetruecolor($newWidth, $newHeight);
+    imagecopyresampled($newResource, $handler->getResource(), 0, 0, $src_x, $src_y, $newWidth, $newHeight, $width, $height);
+    $handler->output($newResource);
 }
 
-function markdownout($text)
+
+function buildIMG2($source_image, $filepath, $quality = 100, $output_width = 0, $ratio = 1)
 {
-  echo markdown2html($text);
-}
-
-function doQuery($pdo, $sql, $msg){
-       try {
-        return $pdo->query($sql);
-       }
-    catch(PDOException $e){
-        $error = $msg . ' ' . $e->getMessage();
-        include '../templates/error.html.php';
-        exit();
-    } 
-}
-
-function doPreparedQuery($st, $msg){
-       try {
-       return $st->execute();
+    $client = new ImageClient();
+    $handler = $client->getHandler();
+    list($width, $height) = getimagesize($source_image);    
+    $src_x = 0;
+    $src_y = 0;
+ if (isset($ratio))
+ {
+        $orient = greaterThan($width, $height) ? 'lscp' : 'ptrt';
+        if ($orient === 'lscp')
+        {
+            $res = $width / $height;
+            //w too big crop sides
+            if (greaterThan($res, $ratio))
+            {
+                $newWidth = $height * $ratio;
+                //$newWidth = $multByRatio($height);
+                $src_x = ($width - $newWidth) / 2;
+                //$src_x = $divBy2($fromWidth($newWidth);
+                $width = $newWidth;
+            }
+            //h too big crop top/bottom
+            if (lesserThan($res, $ratio))
+            {
+                $newHeight = $width / $ratio;
+                $src_y = ($height - $newHeight) / 2;
+                $height = $newHeight;
+            }
+        }
+        else
+        {
+            $res = $height / $width;
+            //h too big crop top/bottom
+            if (greaterThan($res, $ratio))
+            {
+                $newHeight = $width * $ratio;
+                $src_y = ($height - $newHeight) / 2;
+                $height = $newHeight;
+            }
+            //w too big crop sides
+            if (lesserThan($res, $ratio))
+            {
+                $newWidth = $height / $ratio;
+                $src_x = ($width - $newWidth) / 2;
+                $width = $newWidth;
+            }
+        }
     }
-    catch(PDOException $e){
-        $error = $msg . ' ' . $e->getMessage();
-        header("Location: ?error=$error");
-        exit();
-    } 
-}
-
-function doPreparedQueryArray($st, $msg, $placeholders){
-       try {
-       return $st->execute($placeholders);
+    $handler->handleRequest($source_image, $filepath, $quality);
+    
+       $newHeight = $height;
+       $newWidth = $width;
+    
+    if(isset($output_width) && $output_width !== 0){
+        $newHeight = intval(($height / $width) * $output_width);
+        $newWidth = $output_width;
     }
-    catch(PDOException $e){
-        $error = $msg . ' ' . $e->getMessage();
-        include '../../templates/error.html.php';
-        exit();
-    } 
-}
-
-function prepSQL($pdo, $sql){
-    return $pdo->prepare($sql);
-}
-
-function isInt($arg){
-    $int = (int)$arg;
-    return is_int($int) && $int;
-}
-
-function makeQuery($conn, $sql, $msg){
-       if($conn instanceof PDO){
-           $class = 'selector';
-       }
-    else {
-        $msg = null;
-         $class = 'affector';
-    }
-        $class = ucfirst($class);
-        require_once "../klass/$class.php";
-        $q = new $class();
-        return $q->makeQuery($conn, $sql, $msg);
-}
-
-function removeSpace($str){
-    return strtolower(preg_replace('/\s+/', '', $str));
+    
+    //Copy and resize the image to create the thumbnail
+    $newResource = imagecreatetruecolor($newWidth, $newHeight);
+    imagecopyresampled($newResource, $handler->getResource(), 0, 0, $src_x, $src_y, $newWidth, $newHeight, $width, $height);
+    $handler->output($newResource);
 }

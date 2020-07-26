@@ -1,7 +1,6 @@
 <?php
 require_once 'Asset.php';
-//require_once $_SERVER['DOCUMENT_ROOT'] . '/Michelf/Markdown.inc.php';
-//use Michelf\MarkdownExtra;
+include_once '../includes/helpers.inc.php';
 
 /**
  * Class to handle assets
