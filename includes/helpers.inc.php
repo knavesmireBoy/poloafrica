@@ -10,7 +10,7 @@ function buildIMG($source_image, $filepath, $quality = 100, $output_width = 0, $
     $src_x = 0;
     $src_y = 0;
     $cropper = null;
-
+//a default implementation cropping from center of pic
     if(isset($ratio)) {
         $o = new CropperFactory($width, $height, $ratio);
         $cropper = $o->cropper;
@@ -20,6 +20,7 @@ function buildIMG($source_image, $filepath, $quality = 100, $output_width = 0, $
         $width = $cropper->width;
         $height = $cropper->height;
     }
+    //creates $resource
     $handler->handleRequest($source_image, $filepath, $quality);
     
     $newHeight = $height;
@@ -29,75 +30,47 @@ function buildIMG($source_image, $filepath, $quality = 100, $output_width = 0, $
         $newHeight = intval(($height / $width) * $output_width);
         $newWidth = $output_width;
     }
-    
     //Copy and resize the image to create the thumbnail
     $newResource = imagecreatetruecolor($newWidth, $newHeight);
     imagecopyresampled($newResource, $handler->getResource(), 0, 0, $src_x, $src_y, $newWidth, $newHeight, $width, $height);
     $handler->output($newResource);
 }
 
-
-function buildIMG2($source_image, $filepath, $quality = 100, $output_width = 0, $ratio = 1)
-{
-    $client = new ImageClient();
-    $handler = $client->getHandler();
-    list($width, $height) = getimagesize($source_image);    
-    $src_x = 0;
-    $src_y = 0;
- if (isset($ratio))
- {
-        $orient = greaterThan($width, $height) ? 'lscp' : 'ptrt';
-        if ($orient === 'lscp')
-        {
-            $res = $width / $height;
-            //w too big crop sides
-            if (greaterThan($res, $ratio))
-            {
-                $newWidth = $height * $ratio;
-                //$newWidth = $multByRatio($height);
-                $src_x = ($width - $newWidth) / 2;
-                //$src_x = $divBy2($fromWidth($newWidth);
-                $width = $newWidth;
-            }
-            //h too big crop top/bottom
-            if (lesserThan($res, $ratio))
-            {
-                $newHeight = $width / $ratio;
-                $src_y = ($height - $newHeight) / 2;
-                $height = $newHeight;
-            }
-        }
-        else
-        {
-            $res = $height / $width;
-            //h too big crop top/bottom
-            if (greaterThan($res, $ratio))
-            {
-                $newHeight = $width * $ratio;
-                $src_y = ($height - $newHeight) / 2;
-                $height = $newHeight;
-            }
-            //w too big crop sides
-            if (lesserThan($res, $ratio))
-            {
-                $newWidth = $height / $ratio;
-                $src_x = ($width - $newWidth) / 2;
-                $width = $newWidth;
-            }
-        }
-    }
-    $handler->handleRequest($source_image, $filepath, $quality);
-    
-       $newHeight = $height;
-       $newWidth = $width;
-    
-    if(isset($output_width) && $output_width !== 0){
-        $newHeight = intval(($height / $width) * $output_width);
-        $newWidth = $output_width;
-    }
-    
-    //Copy and resize the image to create the thumbnail
-    $newResource = imagecreatetruecolor($newWidth, $newHeight);
-    imagecopyresampled($newResource, $handler->getResource(), 0, 0, $src_x, $src_y, $newWidth, $newHeight, $width, $height);
-    $handler->output($newResource);
+function buildMsg($prop){
+    return function() use($prop){
+        return "Please enter your $prop";
+    };
 }
+
+function flushMsg1($missing, $data){
+    return function($k, $flag = false) use($missing, $data){
+       $output = isset($missing[$k]) ? $missing[$k]() : null;
+        if(isset($output)){
+            echo $flag ? $output : ' class="warning"';
+        }
+        else if(isset($data[$k])){
+            echo $data[$k];
+        }
+    };
+}
+
+
+function preconditionsHI() {
+    $checkers = func_get_args();
+    return function ($strategy, $arg) use($checkers){
+        try {
+        $errors = array_reduce(array_map(
+            function($checker) use($strategy, $arg){
+                return $checker->validate($arg) ? array() : array($checker->message);
+            }, $checkers), 'array_merge', array());
+        if (!empty($errors)) {
+            throw new Exception(implode($errors, ", "));
+        }
+        }
+        catch(Exception $e){
+           echo $e;
+        }
+        return $strategy->algorithm($arg);
+    };
+}
+

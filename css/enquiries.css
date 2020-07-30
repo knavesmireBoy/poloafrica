@@ -31,6 +31,11 @@ form fieldset legend {
 	border: solid 1px white;
 	padding: 0.2em .5em;
 }
+
+.warning fieldset legend, label.warning{
+    color: red;
+    background: black;
+}
 form label {
 	font: bold .8em/2 Verdana, Arial, Helvetica, sans-serif;
 	color: black;
@@ -82,7 +87,7 @@ form fieldset:first-child input {
 }
 /*layout*/
 
-#contactarea form input {
+form input {
 	position: static;
 	left: auto;
 }
@@ -95,17 +100,35 @@ form input:first-of-type, form label:first-of-type {
 }
 form label {
 	margin: .1em 0;
-	width: 12%;
+	width: 9%;
 }
-#contactarea form fieldset:first-child input {
+form fieldset:first-child input{
 	height: 2em;
-	margin: .1em 0 .1em .5em;
-	width: 84%;
+	margin: .1em 0 .1em 1%;
+	width: 86.77%;
 	*width: 80%;
 	padding: 0 .5em;
 	box-sizing: border-box;
 }
-#contactarea #dogs {
+label.warning + input{
+    color: red;
+}
+
+#name, #country {
+    width: 50%;
+    margin: .1em 1%;
+}
+
+#phone, #postcode {
+    width: 25%;
+}
+
+#addr1, #addr2, #addr3, #addr4 {
+    width: 37.5%;
+    margin: .1em 1%;
+}
+
+form #dogs {
 	margin: 0;
 	position: relative;
 	width: 26%;
@@ -113,7 +136,50 @@ form label {
     margin-left: -100%;
 	border: solid 1px white;
 }
-#contactarea fieldset:last-child input:last-child {
+
+.override #response {
+    line-height: 1.3;
+}
+
+.override #response > *{
+    float: left;
+    width: 32%;
+    margin: 0;
+}
+
+.override #response p {
+    color: black;
+}
+
+.override #response h4 {
+    margin-bottom: .5em;
+    border-bottom: #444 1px dotted;
+}
+
+.override #response p[class="msg"] {
+    border: 1px dotted #444;
+    margin-top: 1em;
+    padding: .4em;
+    font: 1em/normal Georgia, sans-serf;
+}
+
+.override #response #dogs {
+    width: 41.5%;
+}
+
+.override #response #cat {
+    width: 22.5%;
+}
+
+.override #response div {
+    margin: 0 1%;
+}
+
+.override #response > img{
+    border-radius: 0;
+    box-shadow: none;
+}
+form fieldset:last-child input:last-child {
 	position: absolute;
 	left: -999em;
 }
@@ -176,7 +242,7 @@ section:nth-child(2) {
 }
 */
 
-textarea, #contactarea #dogs {
+textarea, #dogs {
     display: inline-block;
     vertical-align: bottom;
 }
@@ -286,7 +352,7 @@ h2 span {
         background-color: transparent;
     }
 
-    #contactarea #dogs {
+    #dogs {
 		position: absolute;
 		left: -999em;
 	}
