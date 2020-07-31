@@ -36,6 +36,11 @@ form fieldset legend {
     color: red;
     background: black;
 }
+
+.warning textarea{
+    color: red;
+    background-color: rgba(255,255,255, .5);
+}
 form label {
 	font: bold .8em/2 Verdana, Arial, Helvetica, sans-serif;
 	color: black;
@@ -149,6 +154,7 @@ form #dogs {
 
 .override #response p {
     color: black;
+    text-align: left;
 }
 
 .override #response h4 {

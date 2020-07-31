@@ -7,6 +7,10 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/classes/Checker.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/classes/Utility.php';
 include_once '../myconfig.php';
 
+function buildMessage($k, $v, $flag){
+    $ret = $flag ? '' : '\r\n\r\n';
+    return ucfirst($k) . ': ' . $v . $ret;
+}
 $results = ['page_title' => 'Enquiries'];
 $style = 'enquiries';
 include "../templates/header.php";
@@ -27,6 +31,8 @@ $host = 'north.wolds@btinternet.com';
 $to = 'andrewsykes@btinternet.com';
 $expected = array('name', 'email', 'msg', 'phone', 'addr1', 'addr2', 'addr3', 'addr4', 'postcode', 'country');
 $missing = array();
+$text = "Use this area for comments or questions";
+$post_text = 'Please enter your message';
 $state = '';
 $fieldset = 'Poloafrica contact form';
 $item = 'item';
@@ -50,62 +56,82 @@ foreach($imagePaths as $image) : ?>
         <label class="read-more-trigger" for="post4"></label>
         <article id="contactarea" class="alt">
             <h3><a href="#" id="contact_form">Poloafrica contact form</a></h3>
-            <?php if(empty($_POST)) {
-            $item = null;
-            include 'form.html.php';
-        }
-    elseif(!empty($_POST)){
-        $data = array_map('spam_scrubber', $_POST);
-        //$data = $_POST;
-        $empty = new Checker('this is a required field', new Negator(new Empti()));
-        $isNum = new Checker('must contain number', new Number());
-        $isEmail = new Checker('format must match an email address', new isEmail());
-        $isName = new Checker('please supply name in the expected format: "FirstName Middle/LastName LastName"', new isName());
-        $required = array('name' => preconditions($empty, $isName), 'phone' => preconditions($empty, $isNum), 'email'=>preconditions($empty, $isEmail));
-         //input type of image buttons returning x and y values in form submission
-        $data = array_slice($data, 0, count($data)-2);
-        
-        foreach ($data as $k => $v){
-            if(isset($required[$k])){
-                $res = $required[$k]('identity', $v);
-                //$res will be a string if valid, or an array of issues
-                if(is_array($res)){
-                    $missing[$k] = $res;
-                    $k = null;
-                }
-            }
-            if (in_array($k, $expected)){
-                ${$k} = $k;
-            }
-        }
-        
-        if(empty($missing)) { ?>
+            
+            <?php
+            if(!empty($_POST)){
+                $message = '';
+                $pairs = array('phone' => 'email');
+                $data = array_map('spam_scrubber', $_POST);
+                $empty = new Checker('this is a required field', new Negator(new Empti()));
+                //$comment = new Checker('Please enter your message', new Negator(new Equality($text)));
+                $subtext = substr($text, 0, 13);
+                $comment = new Checker($post_text, new Negator(new Match("/^$subtext/")));
+                $subpost_text = substr($post_text, 0, 13);
+                $postcomment = new Checker($post_text, new Negator(new Match("/^$subpost_text/")));
+                $isNum = new Checker('please supply a phone number', new PhoneNumber());
+                $isEmail = new Checker('please supply an email address', new isEmail());
+                $isName = new Checker('please supply name in the expected format: "FirstName Middle/LastName LastName"', new isName());
+                $required = array('name' => preconditions($empty, $isName), 'phone' => preconditions($empty, $isNum), 'email'=>preconditions($empty, $isEmail), 'comments' => preconditions($empty, $comment, $postcomment));
+                //input type of image buttons returning x and y values in form submission
+                $data = array_slice($data, 0, count($data)-2);//remove last two values
+                
+                foreach ($data as $k => $v){
+                    $optional = isset($pairs[$k])? $pairs[$k] : null;
+                    if(isset($required[$k]) && !$optional){
+                        $res = $required[$k]('identity', $v);
+                        //$res will be a string if valid, or an array of issues
+                        if(is_array($res)){
+                            $missing[$k] = $res;
+                            $k = null;
+                        }
+                    }
+                    if(isset($k)){
+                        $message .= buildMessage($k, $v, $k === 'comments');
+                    }
+                }//each
+                if(empty($missing)) { 
+                    $message = wordwrap($message, 70);
+                    $headers = "From: $host";
+                    $mailsent = mail($host, 'Website Enquiry', $message, $headers);
+                    if($mailsent) { 
+                        unset($missing);
+            ?>
             <div id="response">
                 <img alt="" id="dogs" name="dogs" src="../images/resource/016.jpg">
-                <div><h4>Thankyou for your enquiry, an email has been sent to <?php htmlout($data['email']); ?></h4><p>
-                    <?php htmlout($data['msg']); ?>
-            </p></div>
-            <img alt="cat" src="../images/resource/cat.jpg" id="cat">
+                <div><h1>Thankyou for your enquiry</h1>
+                    <p>An email has been sent to <a href="mailto:<?php htmlout($data['email']);?>"><?php htmlout($data['email']); ?></a></p>
+                    <blockquote><?php htmlout($data['comments']); ?></blockquote>
+                </div>
+                <img alt="cat" src="../images/resource/cat.jpg" id="cat">
             </div>
-            <?php }//empty
-        else {
-            $item = count($missing) > 1 ? 'items' : 'item';
-            $fieldset = "Please complete the missing $item indicated";
-            $state = 'warning';
-            $echo = flushMsg($missing, $data);
-            //https://stackoverflow.com/questions/24403817/html5-required-attribute-one-of-two-fields
-            include 'form.html.php';
-        }
-    }//posted
+            <?php }//sent
+                else { ?>
+                <div id="response">
+                    <h1 class="warning">Sorry, There was a problem sending your message. PLease try again later.</h1></div>
+            <?php }//not sent
+            }//ok
+            else {
+                $item = count($missing) > 1 ? 'items' : 'item';
+                $fieldset = "Please complete the missing $item indicated";
+                $state = 'warning';
+                $echo = flushMsg($missing, $data);
+                //https://stackoverflow.com/questions/24403817/html5-required-attribute-one-of-two-fields
+                include 'form.html.php';//sticky
+            }
+        }//posted
+    else {//not yet posted
+        $item = null;//used as a flag to supply default text to textarea
+        include 'form.html.php';//new
+    }
             ?>
         </article>
-        </section>
-        <?php
-            $article = $articles['Directions'];
-                $count = 5;
-                include '../templates/article.php';
-         ?>
-        </main>
+    </section>
+    <?php
+    $article = $articles['Directions'];
+    $count = 5;
+    include '../templates/article.php';
+    ?>
+</main>
 <?php 
 include "../templates/footer.php";
 //echo "<script src='../js/enq.js'></script></body></html>";
