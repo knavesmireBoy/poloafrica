@@ -101,11 +101,12 @@ foreach($imagePaths as $image) : ?>
                             }
                         }
                        if(in_array($k, $expected)){
-                            ${$k} = trim($k);
+                            ${$k} = trim($v);
                             $message .= buildMessage($k, $v, $k === 'comments');
                         }
                     }//each
                 }
+                var_dump($email);
                     //if submit button hit without ANYTHING being entered
                 if(empty($missing)) { 
                     $message = wordwrap($message, 70);
@@ -119,9 +120,9 @@ foreach($imagePaths as $image) : ?>
             <div id="response">
                 <img alt="" id="dogs" name="dogs" src="../images/resource/016.jpg">
                 <div><h1>Thankyou for your enquiry</h1>
-                    <p>An email has been sent to <a href="mailto:<?php htmlout($data['email']);?>"><?php htmlout($data['email']); ?></a></p>
+                    <p>An email has been sent to <a href="mailto:<?php htmlout($email);?>"><?php htmlout($email); ?></a></p>
                     <p><em>Here is your message</em>:</p>
-                    <p class="msg"><?php htmlout($data['comments']); ?></p>
+                    <p class="msg"><?php htmlout($comments); ?></p>
                 </div>
                 <img alt="cat" src="../images/resource/cat_gone.jpg" id="cat">
             </div>
