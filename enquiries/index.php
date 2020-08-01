@@ -9,8 +9,39 @@ include_once '../myconfig.php';
 
 function buildMessage($k, $v, $flag){
     $ret = $flag ? '' : '\r\n\r\n';
-    return ucfirst($k) . ': ' . $v . $ret;
+    $str = ucfirst($k) . ': ' . $v;
+    $msg = "Here is your message: \r\n\r\n";
+    if($flag){
+        $str .= $msg;
+    }
+    return $str . $ret;
 }
+    
+$host = 'north.wolds@btinternet.com';
+//$host = 'info@poloafrica.com';
+$to = 'andrewsykes@btinternet.com';
+$expected = array('name', 'email', 'msg', 'phone', 'addr1', 'addr2', 'addr3', 'addr4', 'postcode', 'country', 'comments');
+$text = "Use this area for comments or questions";
+$post_text = 'Please enter your message';
+$state = '';
+$fieldset = 'Poloafrica contact form';
+//$pussy = "../images/resource/cat.jpg";
+$item = 'item';
+$echo = function(){};
+$suspect = false;
+$suspect_pattern = '/to:|cc:|bcc:|content-type:|mime-version:|multipart-mixed:|content-transfer-encoding:/i';
+$pairs = array('phone' => 'email');
+$empty = new Checker('this is a required field', new Negator(new Empti()));
+//$comment = new Checker('Please enter your message', new Negator(new Equality($text)));
+$subtext = substr($text, 0, 13);
+$subpost_text = substr($post_text, 0, 13);
+$isNum = new Checker('please supply a phone number', new PhoneNumber());
+$isEmail = new Checker('please supply an email address', new isEmail());
+$isName = new Checker('please supply name in the expected format: "FirstName Middle/LastName LastName"', new isName());
+$comment = new Checker($post_text, new Negator(new Match("/^$subtext/")));
+$postcomment = new Checker($post_text, new Negator(new Match("/^$subpost_text/")));
+$required = array('name' => preconditions($empty, $isName), 'email'=>preconditions($empty, $isEmail)/*, 'comments' => preconditions($empty, $comment, $postcomment), 'phone' => preconditions($empty, $isNum)*/);
+
 $results = ['page_title' => 'Enquiries'];
 $style = 'enquiries';
 include "../templates/header.php";
@@ -25,18 +56,7 @@ include "../templates/nav.php"
 <input class="read-more-state" id="post1" type="checkbox">
 <label class="read-more-trigger" for="post1"></label>
 <?php
-    
-$host = 'north.wolds@btinternet.com';
-//$host = 'info@poloafrica.com';
-$to = 'andrewsykes@btinternet.com';
-$expected = array('name', 'email', 'msg', 'phone', 'addr1', 'addr2', 'addr3', 'addr4', 'postcode', 'country');
-$missing = array();
-$text = "Use this area for comments or questions";
-$post_text = 'Please enter your message';
-$state = '';
-$fieldset = 'Poloafrica contact form';
-$item = 'item';
-$echo = function(){};
+
 $article = $articles['Donations and sponsorship'];
 $imagePaths = $article->getFilePath();
 foreach($imagePaths as $image) : ?>
@@ -59,39 +79,39 @@ foreach($imagePaths as $image) : ?>
             
             <?php
             if(!empty($_POST)){
-                $message = '';
-                $pairs = array('phone' => 'email');
-                $data = array_map('spam_scrubber', $_POST);
-                $empty = new Checker('this is a required field', new Negator(new Empti()));
-                //$comment = new Checker('Please enter your message', new Negator(new Equality($text)));
-                $subtext = substr($text, 0, 13);
-                $comment = new Checker($post_text, new Negator(new Match("/^$subtext/")));
-                $subpost_text = substr($post_text, 0, 13);
-                $postcomment = new Checker($post_text, new Negator(new Match("/^$subpost_text/")));
-                $isNum = new Checker('please supply a phone number', new PhoneNumber());
-                $isEmail = new Checker('please supply an email address', new isEmail());
-                $isName = new Checker('please supply name in the expected format: "FirstName Middle/LastName LastName"', new isName());
-                $required = array('name' => preconditions($empty, $isName), 'phone' => preconditions($empty, $isNum), 'email'=>preconditions($empty, $isEmail), 'comments' => preconditions($empty, $comment, $postcomment));
+                $message = ''; 
+                $missing = array();
+                //genuine values trimmed, suspect values ('To:') /etc replaced with a single space /^\s$/
                 //input type of image buttons returning x and y values in form submission
-                $data = array_slice($data, 0, count($data)-2);//remove last two values
-                
-                foreach ($data as $k => $v){
-                    $optional = isset($pairs[$k])? $pairs[$k] : null;
-                    if(isset($required[$k]) && !$optional){
-                        $res = $required[$k]('identity', $v);
-                        //$res will be a string if valid, or an array of issues
-                        if(is_array($res)){
-                            $missing[$k] = $res;
-                            $k = null;
+                $data = array_map('spam_scrubber', array_slice($_POST, 0, count($_POST)-2));
+                $suspect = !empty(array_filter($data, 'single_space'));
+                //honeypot
+                if(!$suspect && $_POST['url']){
+                    $suspect = true;
+                    
+                }
+                if(!$suspect){
+                    foreach ($data as $k => $v) {
+                        if(isset($required[$k])){
+                            $res = $required[$k]('identity', $v);
+                            //$res will be a string if valid, or an array of issues
+                            if(is_array($res)){
+                                $missing[$k] = $res;
+                                $k = null;
+                            }
                         }
-                    }
-                    if(isset($k)){
-                        $message .= buildMessage($k, $v, $k === 'comments');
-                    }
-                }//each
+                       if(in_array($k, $expected)){
+                            ${$k} = trim($k);
+                            $message .= buildMessage($k, $v, $k === 'comments');
+                        }
+                    }//each
+                }
+                    //if submit button hit without ANYTHING being entered
                 if(empty($missing)) { 
                     $message = wordwrap($message, 70);
                     $headers = "From: $host";
+                    $headers .= 'Content-Type: text/plain; charset=utf-8';
+                    $headers .= "\r\nReply-To: {$data['email']}";
                     $mailsent = mail($host, 'Website Enquiry', $message, $headers);
                     if($mailsent) { 
                         unset($missing);
@@ -100,9 +120,10 @@ foreach($imagePaths as $image) : ?>
                 <img alt="" id="dogs" name="dogs" src="../images/resource/016.jpg">
                 <div><h1>Thankyou for your enquiry</h1>
                     <p>An email has been sent to <a href="mailto:<?php htmlout($data['email']);?>"><?php htmlout($data['email']); ?></a></p>
-                    <blockquote><?php htmlout($data['comments']); ?></blockquote>
+                    <p><em>Here is your message</em>:</p>
+                    <p class="msg"><?php htmlout($data['comments']); ?></p>
                 </div>
-                <img alt="cat" src="../images/resource/cat.jpg" id="cat">
+                <img alt="cat" src="../images/resource/cat_gone.jpg" id="cat">
             </div>
             <?php }//sent
                 else { ?>
@@ -119,7 +140,7 @@ foreach($imagePaths as $image) : ?>
                 include 'form.html.php';//sticky
             }
         }//posted
-    else {//not yet posted
+    else if(!isset($missing)){//not yet posted
         $item = null;//used as a flag to supply default text to textarea
         include 'form.html.php';//new
     }

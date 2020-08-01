@@ -25,7 +25,35 @@
 		position: static;
 		left: 0;
 	}
+
 }
+
+    @supports(column-gap: 20px) {
+        .override #response {
+            display: grid;
+            grid-template-columns: 38% 1fr 40% 1fr 19%;
+            align-items: stretch; 
+            
+    }
+    #enquiries .override #response > *{
+        width: 100%;
+        grid-row-start: 1;
+        margin: 0;
+        padding: 0;
+        }
+        #cat {
+            grid-column-start: 5;
+        }
+        
+        #enquiries .override #response div {
+            grid-column-start: 3;
+            padding: 1em;
+            margin: 0;
+            box-sizing: border-box;
+            align-self: center;
+        }
+        
+    }
 @media screen and (max-width: 823px) {
 	@supports(column-gap: 20px) {
 		#intro article, #response {
