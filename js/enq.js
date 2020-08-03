@@ -16,14 +16,15 @@ var dum = {},
 	anCr = utils.append(),
 	setAttrs = utils.setAttributes,
 	klasAdd = utils.addClass,
-    doTwice = utils.curryTwice(),
     doThrice = utils.curryThrice(),
+    clicker = ptL(utils.addHandler, 'click'),
     headingmatch = doThrice(invokemethod)('match')(/h3/i),
     tgt = !window.addEventListener ? 'srcElement' : 'target',
     getTarget = utils.drillDown([tgt, 'parentNode']),
     isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
     main = document.getElementsByTagName('main')[0],
     articles = document.getElementsByTagName('article'),
+    legend = document.forms[0].getElementsByTagName('legend')[0],
     bridge = function(e) {
         var el = getTarget(e),
             myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
@@ -41,20 +42,23 @@ var dum = {},
     displayLoading = function(ancor) {
 		return makeElement(ptL(klasAdd, 'loading'), ptL(setAttrs, {
 			alt: 'loading',
-			src: "../images/progressbar.gif"
+			src: "../images/resource/progressbar.gif"
 		}), anCr(ancor), utils.always('img'));
 	},
 	prepareAjax = function() {
 		var xhr = poloAF.Hijax();
 		xhr.setContainer(document.forms[0]);
 		xhr.setCanvas(utils.$('post'));
-		xhr.setUrl("response.php");
-		xhr.setLoading(function() {
+		xhr.setUrl("action.php");
+		/*
+        xhr.setLoading(function() {
 			displayLoading(utils.$('post')).render();
 		});
+        
 		xhr.setCallback(function() {
 			utils.fadeUp(utils.$('post'), 255, 255, 204);
 		});
+        */
 		xhr.captureData();
 	},
     relocate = function(e) {
@@ -63,7 +67,7 @@ var dum = {},
 		}
 	};
 window.onload = prepareAjax;
-//utils.addEvent(clicker, relocate)(document.forms[0]);
+utils.addEvent(clicker, relocate)(legend);
 
  utils.addHandler('click', bridge, main);
  dum[tgt] = articles[0].getElementsByTagName('a')[0];
@@ -76,5 +80,5 @@ window.onload = prepareAjax;
         return $el;
     });
 
-    poloAF.Util.setScrollHandlers($sections, doTwice(poloAF.Util.getScrollThreshold)(0.4), 'display');
-    window.setTimeout($sections[0].render, 666);
+//poloAF.Util.setScrollHandlers($sections, doTwice(poloAF.Util.getScrollThreshold)(0.4), 'display');
+//window.setTimeout($sections[0].render, 666);

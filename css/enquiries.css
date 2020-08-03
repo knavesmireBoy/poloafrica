@@ -1,3 +1,28 @@
+#contactarea > div {
+    margin-top: .5em;
+    border-spacing: 1em;
+    display: table;
+}
+
+#contactarea form, #contactarea figure {
+    display: table-cell;
+    vertical-align: top;/*crucial*/
+    height: 100%;
+    border-radius: 10px;
+}
+#post #contactarea figure img{
+    object-fit: cover;
+    margin: auto;
+    max-width: 100%;
+    height: 100%;
+    border: solid 1px black;
+    border-radius: 10px;
+}
+
+#cat {
+    box-sizing: border-box;
+} 
+
 h3 {
 	border-bottom: solid 1px;
 }
@@ -7,19 +32,25 @@ h3 {
 #enquiries section:first-child article p {
 	margin: 0 0 1.3em 0;
 }
+
+#post figure {
+	width: 20%;
+}
+
 form {
-	font-family: Arial, Helvetica, Verdana, sans-serif;
+	width: 75%;
+    font-family: Optima, Arial, Helvetica, Verdana, sans-serif;
 	background-color: #cc9;
+	background-color: hsl(60, 33.33%, 70%);
 	border: solid 1px #000;
 	padding: 1em 0;
-	float: left;
-	width: 72%;
-    border-radius: 10px;
+	border-radius: 10px;
 }
+
 form fieldset {
 	font-size: 1em;
 	padding: 0 0 0 2%;
-	border: solid 1px black;
+	border: solid 1px white;
 	border-width: 1px 0 0;
 }
 form fieldset:last-child {
@@ -28,38 +59,59 @@ form fieldset:last-child {
 }
 form fieldset legend {
 	font-weight: bold;
+    font-size: 1.35em;
 	background-color: #cc6;
+	background-color: hsl(60, 50%, 60%);
 	border: solid 1px white;
-	padding: 0.2em .5em;
+	padding: 0.1em 1em;
+    color: white;
 }
-
-.warning fieldset legend, .override label.warning{
-    color: hsl(60, 50%, 84%);
-    background-color: hsl(60, 50%, 24%);
+.warning fieldset legend, .override label.warning {
+	color: hsl(60, 50%, 84%);
+	background-color: hsl(60, 50%, 24%);
 }
-
-.warning textarea{
-    color: red;
-    background-color: rgba(255,255,255, .5);
+.warning textarea {
+	color: hsl(60, 50%, 24%);
 }
 form label {
 	font: bold .8em/2 Verdana, Arial, Helvetica, sans-serif;
-	color: black;
+	color: rgb(255, 235, 100);
+	color: white;
+    background-color: hsl(44, 70%, 60%);
 	background-color: #cc6;
 	background-color: hsl(60, 50%, 60%);
+    background: hsla(299, 50%, 25%, .8);
 	text-align: right;
 	padding: .2em;
 	border: solid 1px #fff;
+    word-spacing: 0px;
+	letter-spacing: 0px;
+    margin: .1em 0;
+	width: 9%;
+    /*declaring width w/o height causes label to reduce vertically when clicked???*/
+    height: 2em;
 }
+form fieldset legend, label[for="name"], label[for="email"], form label:hover {
+    background: #5f2060;
+    background: hsla(299, 50%, 25%, 1);
+}
+
+label[for="name"]:hover, label[for="email"]:hover {
+    background: #4c1a4d;
+    background: hsla(299, 50%, 20%, 1);
+}
+
+
 form fieldset:first-child input {
 	background-color: white;
-	text-transform: uppercase;
 	border-width: 0;
 }
-.override #contactarea figure img {
-    object-fit: cover;
-    border-radius: 0;
+/*
+form {
+    background: linear-gradient(217deg, brown, rgba(0, 0, 255, 0) 70.71%), linear-gradient(127deg, brown, rgba(200, 255, 0, 0) 70.71%), linear-gradient(336deg, brown, rgba(111, 111, 0, 0) 70.71%);
 }
+*/
+
 #enquiries #intro {
 	margin: 2em 0 0;
 }
@@ -70,9 +122,8 @@ form fieldset:first-child input {
 #enquiries section article>a {
 	flex: 0 0 100%;
 }
-
 #web {
-    display: none;
+	display: none;
 }
 .no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before {
 	color: white;
@@ -85,7 +136,7 @@ form fieldset:first-child input {
 	background-color: #E7E7C7;
 	background-color: hsl(60, 40%, 84%);
 }
-.override section img {
+.#intro section img {
 	width: 33%;
 	float: right;
 	margin: 1em 0 0 0em;
@@ -109,11 +160,8 @@ form input, form label {
 form input:first-of-type, form label:first-of-type {
 	margin-top: 1em;
 }
-form label {
-	margin: .1em 0;
-	width: 9%;
-}
-form fieldset:first-child input{
+
+form fieldset:first-child input {
 	height: 2em;
 	margin: .1em 0 .1em 1%;
 	width: 86.77%;
@@ -121,89 +169,33 @@ form fieldset:first-child input{
 	padding: 0 .5em;
 	box-sizing: border-box;
 }
-label.warning + input{
-    color: hsl(60, 50%, 24%);
+label.warning+input {
+	color: hsl(60, 50%, 24%);
 }
-
 #name, #country {
-    width: 50%;
-    margin: .1em 1%;
+	width: 50%;
+	margin: .1em 1%;
 }
-
 #phone, #postcode {
-    width: 25%;
+	width: 25%;
 }
-
 #addr1, #addr2, #addr3, #addr4 {
-    width: 37.5%;
-    margin: .1em 1%;
+	width: 37.5%;
+	margin: .1em 1%;
 }
-
 form #dogs {
 	margin: 0;
 	position: relative;
 	width: 26%;
-    left: 100%;
-    margin-left: -100%;
+	left: 100%;
+	margin-left: -100%;
 	border: solid 1px white;
 }
 
-.override #response {
-    line-height: 1.3;
-    background: white;
+form #dogs:hover {
+    opacity: .9;
 }
 
-#enquiries .override #response > *{
-    float: left;
-    width: 32%;
-    margin: 0;
-    border-radius: 10px;
-}
-
-.override #response p {
-    color: black;
-    text-align: left;
-}
-
-.override #response p:first-of-type {
-    margin-bottom: 1em;
-}
-
-
-.override #response h1 {
-    color: crimson;
-}
-
-.override #response a {
-    color: royalblue;
-}
-
-.override #response p[class="msg"] {
-    border-top: 1px dotted #444;
-    margin-top: .5em;
-    padding: .4em;
-    font: 1em/normal Georgia, sans-serf;
-}
-
-.override #response #dogs {
-    width: 43%;
-}
-
-.override #response #cat {
-    width: 20%;
-}
-
-#enquiries .override #response div {
-    margin: 1%;
-    padding: 1%;
-    border: dotted 1px #444;
-    background-color: aliceblue;
-}
-
-.override #response > img{
-    border-radius: 0;
-    box-shadow: none;
-}
 form fieldset:last-child input:last-child {
 	position: absolute;
 	left: -999em;
@@ -214,97 +206,100 @@ textarea {
 	height: 9.8vw;
 	height: 6.8em;
 }
-#contactarea figure {
-	border: solid 1px;
-	margin: 0 0 0 1%;
-	float: right;
-	box-shadow: none;
-	overflow: hidden;
-	width: 25.5%;
-	align-self: flex-start;
-    border-radius: 10px;
-}
-#contactarea figure img {
-	width: 100%;
-	float: none;
-	margin: 0;
-	box-shadow: none;
-	border-width: 0px;
-	height: 100%;
-}
+
 #enquiries section:last-child {
 	clear: left;
 }
-/* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
-section:nth-child(2) {
-	clear:left;
-	float:left;
-	width:100%;
-	overflow:hidden;
-	background:#ffa7a7;
-}
-
-#wrap #contactarea {
-    float:left;
-	width:100%;
-	position:relative;
-	right:50%;
-	background:#fff689;
-}
-
-#wrap #contactarea form {
-    float:left;
-	width:46%;
-	position:relative;
-	left:52%;
-	overflow:hidden;
-}
-#wrap #contactarea figure {
-    float:left;
-	width:46%;
-	position:relative;
-	left:56%;
-	overflow:hidden;
-}
-*/
-#contactarea label, #contactarea input, #contactarea textarea, #contactarea legend {
-    border-radius: 8px;
-}
-label[for="name"], label[for="email"] {
-    background-color: #993;
-    background-color: hsl(60, 50%, 44%);
-}
-
-#contactarea textarea {
-    border:solid 1px #993;
-}
 
 textarea, #dogs {
-    display: inline-block;
-    vertical-align: bottom;
+	display: inline-block;
+	vertical-align: bottom;
 }
-
 textarea {
-    margin: 0 1em 0 0;
+	margin: 0 1em 0 0;
 }
-
 h2 span {
 	background: white 0% 0% url(../images/resource/sub_enq.jpg) no-repeat;
 }
-#cath img{
-		position: absolute;
-		left: -999em;
-	}
+#cath img {
+	position: absolute;
+	left: -999em;
+}
 
 #response {
-    background-color: aliceblue;
+	line-height: 1.3;
+	background: indigo;
+	background: linear-gradient(217deg, black, rgba(0, 0, 255, 0) 70.71%), linear-gradient(127deg, black, rgba(200, 255, 0, 0) 70.71%), linear-gradient(336deg, indigo, rgba(111, 111, 0, 0) 70.71%);
+	overflow: hidden;
+    display: table;
+    border-radius: 10px;
 }
-#response h3 {
-    width: auto;
+/*!*/
+#enquiries #post img {
+    margin: 0;
+    float: none;
+    box-shadow: none;
+    border-width: 0;
+    width: 100%;
+    border-radius: 0px;
+}
+
+#response > * {
+	margin: 0;
+    box-sizing: border-box;
+    display: table-cell;
+    vertical-align: top;
 }
 
 #response p {
-    margin: 0;
+	color: black;
+	text-align: left;
+}
+#response p:first-of-type {
+	margin-bottom: 1em;
+}
+#response h1 {
+	color: crimson;
+}
+#response a {
+	color: royalblue;
+}
+#response p[class="msg"] {
+	border-top: 1px dotted #444;
+	margin-top: .5em;
+	padding: .4em;
+	font: 1em/normal Georgia, sans-serf;
+}
+
+#response .dogs {
+    width: 37.6%;
+     border-right: solid 1px white;
+}
+#response .cat {
+	width: 18%;
+    border-left: solid 1px white; 
+}
+#response div {
+	margin: 1%;
+	padding: 1%;
+	border: solid 0px white;
+	background-color: aliceblue;
+	background-color: rgba(200, 222, 255, .7);
+    width: 42.4%;
+}
+#response img {
+	border-radius: 0;
+	box-shadow: none;
+}
+
+#response {
+	background-color: aliceblue;
+}
+#response h3 {
+	width: auto;
+}
+#response p {
+	margin: 0;
 }
 @media only screen {
 	h2 span {
@@ -312,14 +307,18 @@ h2 span {
 	}
 }
 
-@media screen and (max-width: 823px) {
-    
-    form {
-	float: none;
-	width: auto;
-        margin: 0;
+@media only screen and (max-width: 960px) {
+    	form label {
+            font: bold .7em/2 Verdana, Arial, Helvetica, sans-serif;
+    }
 }
-	#enquiries #contactarea figure, #wrap #grooms {
+
+@media screen and (max-width: 812px) {
+	form {
+		width: auto;
+		margin: 0;
+	}
+	#enquiries #post figure, #wrap #grooms {
 		position: absolute;
 		left: -999em;
 	}
@@ -332,46 +331,64 @@ h2 span {
 	section article p {
 		margin: 0 0 1.3em 0;
 	}
-	#contact_form {
-		width: 100%;
-	}
+}
+
+@media screen and (max-width: 812px) {
+    
+    #contactarea form {
+        display: block;
+    }
+    #response figure {
+        position: absolute;
+		left: -999em;
+    }
+    .override div#response {
+        display: block;/*-grid*/
+
+    }
+    #response div {
+        width: 100%;
+        margin: 0;
+        animation: none;
+    }
+
 }
 
 @media screen and (max-width: 667px) {
     
-    @supports(column-gap: 20px) {
-        article.show #cath {
-            display: grid;
-            grid-template-columns: 2fr 3fr;
-            background: #cc6;
-        }
- 
-    article.show #cath {
-        margin-bottom: 1em;
-        font-size: 1.1em;
+	@supports(column-gap: 20px) {
+		article.show #cath {
+			display: grid;
+			grid-template-columns: 2fr 3fr;
+			background: #cc6;
+		}
+		article.show #cath {
+			margin-bottom: 1em;
+			font-size: 1.1em;
+		}
+		#cath address {
+			padding-left: 1em;
+		}
+		#cath img {
+			position: relative;
+			left: auto;
+			margin: 0 1em 0 0;
+			border-width: 0;
+			width: 100%;
+		}
+		#cath a {
+			color: white;
+		}
 	}
-    #cath address{
-        padding-left: 1em;
-    }   
         
-    #cath img {
-        position: relative;
-		left: auto;
-        margin: 0 1em 0 0;
-        border-width: 0;
-        width: 100%;
-    }
-    #cath a {
-        color: white;
-    }
-   }
 	h2, h2 span {
 		background: none;
 	}
 	#enquiries section {
 		margin: 0;
 	}
-	#contactarea form fieldset:first-child input {
+
+	#post form fieldset:first-child input {
 		width: 83.5%;
 	}
 	#enquiries section:first-child article p {
@@ -382,19 +399,13 @@ h2 span {
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);
 	}
-     #enquiries article.show h3  a {
-        color: white;
-        background-color: transparent;
-    }
-
-    #dogs {
-		position: absolute;
-		left: -999em;
+	#enquiries article.show h3 a {
+		color: white;
+		background-color: transparent;
 	}
-	#contactarea form {
+	#post form {
 		width: 100%;
 		float: none;
-		display: block;
 		box-sizing: border-box;
 	}
 	textarea {
@@ -403,11 +414,11 @@ h2 span {
 		float: none;
 		box-sizing: border-box;
 	}
-	#enquiries #contactarea figure, #wrap #grooms, #contactarea #dogs {
+	#enquiries #post figure, #wrap #grooms, #post #dogs {
 		position: absolute;
 		left: -999em;
 	}
-	#wrap #contactarea fieldset:last-child input:last-child {
+	#wrap #post fieldset:last-child input:last-child {
 		position: static;
 		left: auto;
 		display: block;
@@ -428,17 +439,49 @@ h2 span {
 	.no-js section:nth-child(3)>label:before {
 		content: "Directions";
 	}
-   
-    .no-js input~article p, .no-js #post1.read-more-state:checked~article:nth-of-type(1) p{
-        position: absolute;
+	.no-js input~article p, .no-js #post1.read-more-state:checked~article:nth-of-type(1) p {
+		position: absolute;
 		left: -999em;
-    }
-    
-    .no-js section:first-of-type .read-more-state:checked~article, .no-js #post1~article:nth-of-type(1) p, .no-js #post2.read-more-state:checked~article:nth-of-type(2) p,  .no-js #post3.read-more-state:checked~article:nth-of-type(3) p, .no-js #post5.read-more-state:checked~article:nth-of-type(1) p, .js #wrap section article.show > *{
-       position: static;
+	}
+	.no-js section:first-of-type .read-more-state:checked~article, .no-js #post1~article:nth-of-type(1) p, .no-js #post2.read-more-state:checked~article:nth-of-type(2) p, .no-js #post3.read-more-state:checked~article:nth-of-type(3) p, .no-js #post5.read-more-state:checked~article:nth-of-type(1) p, .js #wrap section article.show>* {
+		position: static;
 		left: 0em;
+	}
+	#post form fieldset:first-child label, #post form fieldset:first-child input {
+		width: 98%;
+		box-sizing: border-box;
+		border-width: 0px;
+		text-align: left;
+		font: normal .875em/normal Arial, sans-serif;
+        color: #4c1a4d;
+	}
+	#post form fieldset:first-child legend {
+		display: none;
+	}
+    #post form fieldset {
+        border-width: 0;
+    }
+	#post form fieldset:first-child label {
+		background: none;
+		margin: 0;
+        height: 1em;
+        font-weight: bold;
+	}
+	#post form fieldset:first-child label:first-of-type {
+		margin-top: .5em;
+	}
+	#post form fieldset:first-child input {
+		margin: 0;
+	}
+    form fieldset legend {
+        width: 50%;
+        margin-left: 23%;
+        text-align: center;
     }
     
+    textarea {
+        margin: 0 0 1em;
+    }
 }
 /*@*/
 
@@ -447,15 +490,21 @@ h2 span {
 		line-height: 1.2;
 	}
 }
+
 @media screen and (min-width: 801px) {
-	#contactarea {
+	#post {
 		margin: 2em 0 0;
 		box-sizing: border-box;
 	}
-	@media screen and (min-width: 668px) {
-        #cath address {
-    font-style: normal;
 }
+
+	@media screen and (min-width: 668px) {
+		#cath address {
+			font-style: normal;
+		}
+        #post label, #post input, #post textarea, #post legend {
+            border-radius: 8px;
+        }
 		@supports(column-gap: 20px) {
 			/*the textarea form element seems to confuse attempts at a grid layout
             The form expands if textarea is given explicit dimensions either as html attributes, or css.
@@ -486,5 +535,20 @@ h2 span {
         	}
         	 */
 		}
+  
 	}
-    
+	#response figure.top {
+		display: none;
+	}
+	#response p:nth-child(4) {
+		background-color: white;
+		border-width: 0;
+		padding: .3em;
+		border-radius: 8px;
+	}
+	#response em {
+		font-weight: bold;
+	}
+.no-cssanimations #response .top {
+    display: none;
+    }

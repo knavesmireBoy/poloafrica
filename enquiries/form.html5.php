@@ -1,8 +1,20 @@
-<form action="?" id="poloafricacontactform" method="post" name="poloafricacontactform">
+<!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
+<!-- The form is the ONLY 'article' that remains HARDCODED-->
+<div><form action="" id="poloafricacontactform" method="post" class="<?php echo $state; ?>">
 		<fieldset>
-			<legend>&nbsp;Poloafrica contact form&nbsp;</legend> <label for="name">name</label><input id="name" name="name" pattern="\S+\s\S{2,}" required="" tabindex="1" type="text"> <label for="phone">phone</label><input id="phone" name="phone" pattern="\d{7,}" tabindex="2" type="tel"> <label for="email">email</label><input id="email" name="email" required="" tabindex="3" type="email"><label for="addr1">address</label><input id="addr1" name="addr1" tabindex="4" type="text"><label for="addr2">address</label><input id="addr2" name="addr2" tabindex="5" type="text"><label for="addr3">address</label><input id="addr3" name="addr3" tabindex="6" type="text"><label for="country">country</label><input id="country" name="country" tabindex="7" type="text"> <label for="postcode">postcode</label><input id="postcode" name="postcode" tabindex="8" type="text">
+            <legend><?php echo $fieldset; ?></legend><label title="required field" for="name" <?php $echo('name');?>>name</label><input id="name" name="name" tabindex="1" value="<?php $echo('name', true);?>" pattern="\S+\s\S{2,}" required=""><label for="phone" <?php $echo('phone');?>>phone</label><input id="phone" name="phone" tabindex="2" type="tel" value="<?php $echo('phone', true);?>" pattern="\d\s?{7,}"><label for="email" <?php $echo('email');?> title="required field">email</label><input id="email" name="email" tabindex="3" type="email" value="<?php $echo('email', true); ?>"><label for="addr1">address</label><input id="addr1" name="addr1" tabindex="4" value="<?php $echo('addr1');?>"><label for="addr2">address</label><input id="addr2" name="addr2" tabindex="5" value="<?php $echo('addr2');?>"><label for="addr3">address</label><input id="addr3" name="addr3" tabindex="6" value="<?php $echo('addr3');?>"><label for="addr4">address</label><input id="addr4" name="addr4" tabindex="7" value="<?php $echo('addr4');?>"><label for="country">country</label><input id="country" name="country" tabindex="8" value="<?php $echo('country');?>"><label for="postcode">postcode</label><input id="postcode" name="postcode" tabindex="9" value="<?php $echo('postcode');?>">
+            <p id="web"><label for="url"><input id="url" name="url"></label></p>
 		</fieldset>
 		<fieldset>
-			<textarea id="msg" name="msg" tabindex="9">Use this area for comments or questions</textarea><input alt="" id="dogs" name="dogs" src="../images/resource/dogsform.gif" tabindex="10" type="image"> <input type="submit" value="submit">
+            <textarea id="comments" name="comments" tabindex="9"><?php
+                //$item variable is used in fieldset/legend set to empty string if form has yet to be submitted
+                if(empty($item)){
+                    echo trim($text);
+                }
+                   else {
+                       //sticky: if form submission fails on a required field
+                       $echo('comments', true);
+                   }
+                ?></textarea><input alt="" id="dogs" name="dogs" src="../images/resource/dogsform.png" tabindex="10" type="image"><input type="submit" value="submit">
 		</fieldset>
-	</form>
+	</form><figure><img alt="cat" src="../images/resource/cat.jpg" id="cat"></figure></div>
