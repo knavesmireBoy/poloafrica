@@ -96,7 +96,7 @@ footer {
 	margin: -10.1em auto 0;
 	width: 100%;
 }
-footer div {
+footer div, footer a:link{
 	display: inline-block;
 	vertical-align: bottom;
 }
@@ -117,9 +117,7 @@ footer div img {
 	width: 7em;
 	left: 100%;
 }
-footer a:link {
-	display: inline-block;
-}
+
 /**/
 
 /**/
@@ -141,10 +139,15 @@ header h1, header h1 img, h2 span {
 		right: 0px;
 	}
 }
-@media screen and (max-width: 667px)
-/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */
-
-	{
+@media screen and (max-width: 667px) {
+    
+    .read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before, header>a, ul#nav, label, ul#nav a, ul#nav li, #footer_girl a {
+		display: block;
+	}
+    ul#nav ul, #footer_girl a:first-child {
+        display: none;
+    }
+    
 	#wrap .override img {
 		border-radius: 0px;
 		box-shadow: none;
@@ -153,17 +156,17 @@ header h1, header h1 img, h2 span {
 		margin: 0;
 	}
 	#footer_girl img {
-		visibility: hidden;
 		width: 8em;
+	}
+    #footer_girl img , #footer_girl a:first-child {
+		visibility: hidden;
 	}
 	main {
 		padding: 0 0 10.1em 0;
 		margin: 0;
 	}
 	/*ie*/
-	header>a {
-		display: block;
-	}
+	
 	header h1 img {
 		visibility: visible;
 		min-width: 3em;
@@ -209,20 +212,7 @@ header h1, header h1 img, h2 span {
 		margin: 0;
 		box-shadow: none;
 	}
-	.menu {
-		position: absolute;
-		top: .7rem;
-		right: .7rem;
-		height: 2.5rem;
-		width: 2.5rem;
-	}
-	ul#nav {
-		position: absolute;
-		top: 0em;
-		right: -99em;
-		display: block;
-		width: 9.5em;
-	}
+	
 	#menu-toggle:checked+ul#nav {
 		top: 3.5rem;
 		right: 1rem;
@@ -240,15 +230,12 @@ header h1, header h1 img, h2 span {
 		transition: height .9s ease-out;
 	}
 	label {
-		display: block;
 		width: 100%;
 	}
 	section, .override article {
 		margin: 0;
 	}
-	.read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before {
-		display: block;
-	}
+	
 	.no-js .read-more-state~article, .override article p {
 		margin: 1em 0 0;
 	}
@@ -256,7 +243,7 @@ header h1, header h1 img, h2 span {
 		margin: 1em 0;
 	}
 	/*first section is shown by default?*/
-	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>* {
+	.menu, .ul#nav, .no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>* {
 		position: absolute;
 		top: 0px;
 		left: -999em;
@@ -265,17 +252,24 @@ header h1, header h1 img, h2 span {
 		position: static;
 		left: 0em;
 	}
+    
+    .menu {
+		top: .7rem;
+		right: .7rem;
+		height: 2.5rem;
+		width: 2.5rem;
+	}
+	ul#nav {
+		top: 0em;
+		right: -99em;
+		width: 9.5em;
+	}
 	/* explicitly set float to none in case browser doesn't support flex/grid*/
 	.no-js section>img, .js article>img {
 		float: none;
 		border-width: 0;
 	}
-	ul#nav ul {
-		display: none;
-	}
-	ul#nav a, ul#nav li {
-		display: block;
-	}
+
 	#footer_girl {
 		width: 15em;
 	}
@@ -285,12 +279,8 @@ header h1, header h1 img, h2 span {
 	footer {
 		padding: 7em 0 0 0;
 	}
-	#footer_girl a:first-child {
-		visibility: hidden;
-		display: none;
-	}
+
 	#footer_girl a {
-		display: block;
 		margin: .25em 0;
 	}
 	header h1, header h1 img, h2 span {

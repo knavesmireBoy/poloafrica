@@ -279,7 +279,7 @@ h2 span {
 		border: solid 1px white;
         border-width: 0 0 1px;
 	}
-	.read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before, label, .js h3 {
+	.read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before, .js h3 {
 		color: hsl(58, 60%, 45%);
         color: #b8b32e;
 		text-shadow: none;
@@ -292,7 +292,7 @@ h2 span {
 		color: hsl(58, 60%, 45%);
 		color: #b8b32e;
 	}
-	section.show h3, .read-more-state:checked~.read-more-trigger:before, .no-js section:first-of-type .read-more-state~.read-more-trigger:before {
+	section.show h3, .no-js .read-more-state:checked~.read-more-trigger:before, .no-js section:first-of-type .read-more-state~.read-more-trigger:before {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: #c8c87e;
