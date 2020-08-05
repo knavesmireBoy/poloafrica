@@ -1,8 +1,8 @@
 <?php
 $cur = 'post' . $count; ?>
 <section <?php htmlout(classify($article->attrID)); ?>>
-<label class="read-more-trigger" for="<?php echo $cur ?>"></label>
 <input class="read-more-state" id="<?php echo $cur ?>" type="checkbox">
+<label class="read-more-trigger" for="<?php echo $cur ?>"></label>
     <?php
 //default is just one image per article, polo first article has two
 $imagePaths = $article->getFilePath();

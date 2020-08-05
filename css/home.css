@@ -39,10 +39,6 @@ h2 span {
 	}
 }
 @media screen and (max-width: 667px) {
-    
-    section {
-        display: block;
-    }
 
 	h2, h2 span {
 		background: none;
@@ -72,7 +68,7 @@ h2 span {
 	.no-js section:nth-child(3) .read-more-trigger:before {
 		content: "The Poloafrica / Polo 150 tour to England";
 	}
-	.no-js section:nth-child(3) {
+	section, .no-js section:nth-child(3) {
 		display: block;
 	}
 }
