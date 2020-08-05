@@ -7,28 +7,22 @@ html, body {
 img, #nav a, #fb a, footer>a:link:last-child {
 	display: block;
 }
-
-#wrap {
-	min-height: 100%;
+#wrap, main, #main_nav, header h1 {
+	overflow: hidden;
+}
+#wrap, header, footer div {
+	position: relative;
 }
 #wrap {
 	margin: 0 auto;
 	max-width: 84em;
 	min-height: 100%;
-	overflow: hidden;
-	position: relative;
 }
 main {
-	overflow: hidden;
 	margin: .2em 0 0em;
 	padding: 0 1em 10.1em;
 }
-#main_nav {
-    width: 100%;
-    overflow: hidden;
-}
-header {
-	position: relative;
+#main_nav, header {
 	width: 100%;
 }
 header h1 {
@@ -36,7 +30,6 @@ header h1 {
 	white-space: nowrap;
 	width: 40%;
 	text-indent: 100%;
-	overflow: hidden;
 	line-height: .3;
 }
 header h1 img {
@@ -97,18 +90,15 @@ section:after {
 nav li#current:hover ul, nav li#current.sfhover ul {
 	left: 0;
 }
-
 footer {
 	max-width: 80em;
 	padding: 5em 0 0 0;
 	margin: -10.1em auto 0;
 	width: 100%;
 }
-
 footer div {
 	display: inline-block;
 	vertical-align: bottom;
-	position: relative;
 }
 footer div img {
 	width: 100%;
@@ -151,13 +141,14 @@ header h1, header h1 img, h2 span {
 		right: 0px;
 	}
 }
-@media screen and (max-width: 667px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
-   
-    
-    #wrap .override img {
-    border-radius: 0px;
-    box-shadow: none;
-    }
+@media screen and (max-width: 667px)
+/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */
+
+	{
+	#wrap .override img {
+		border-radius: 0px;
+		box-shadow: none;
+	}
 	.touchevents body {
 		margin: 0;
 	}
@@ -211,7 +202,7 @@ header h1, header h1 img, h2 span {
 		display: inline-block;
 		margin: 0 auto;
 		border: solid 1px blue;
-        padding: 0;
+		padding: 0;
 	}
 	.override section img {
 		width: 100%;
@@ -255,17 +246,15 @@ header h1, header h1 img, h2 span {
 	section, .override article {
 		margin: 0;
 	}
-
 	.read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before {
 		display: block;
 	}
 	.no-js .read-more-state~article, .override article p {
 		margin: 1em 0 0;
 	}
-     article p:last-child {
+	article p:last-child {
 		margin: 1em 0;
 	}
-	
 	/*first section is shown by default?*/
 	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>* {
 		position: absolute;
@@ -281,7 +270,6 @@ header h1, header h1 img, h2 span {
 		float: none;
 		border-width: 0;
 	}
-	
 	ul#nav ul {
 		display: none;
 	}
@@ -310,7 +298,6 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media only screen and (max-width: 568px) {
-
 	header h1 {
 		padding: 0 0 8.5vw 0;
 	}
@@ -325,7 +312,6 @@ header h1, header h1 img, h2 span {
 	}
 }
 @media only screen and (max-width: 480px) {
-    
 	header h1, h2 span {
 		width: 58vw;
 	}
@@ -340,8 +326,8 @@ header h1, header h1 img, h2 span {
 	h2 {
 		margin: -10vw 0 0 0em;
 	}
-    .no-touchevents h2 {
-        line-height: 1.4;
+	.no-touchevents h2 {
+		line-height: 1.4;
 	}
 	.no-flexwrap header h1 {
 		padding: 0 0 2.5rem 0;
@@ -360,10 +346,9 @@ header h1, header h1 img, h2 span {
 		margin: 0 0 .75em -23.5em;
 	}
 }
-
 @media only screen and (max-width: 414px) {
-#wrap h2 {
-        line-height: 1.4;
+	#wrap h2 {
+		line-height: 1.4;
 	}
 }
 @media only screen and (max-width: 400px) {
@@ -390,9 +375,8 @@ header h1, header h1 img, h2 span {
 		width: 13rem;
 	}
 }
-@media only screen and (-ms-high-contrast: none){
-
-.touchevents footer {
+@media only screen and (-ms-high-contrast: none) {
+	.touchevents footer {
 		background: url(../images/sil_bg.png) no-repeat top center;
 		background-size: cover;
 		padding: 7em 0 0 0;
