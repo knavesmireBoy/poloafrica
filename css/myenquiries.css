@@ -1,4 +1,5 @@
 @import "flex_mod.css";
+@import "fullflex_mod.css";
 @keyframes mover {
 	0% {
 		transform: translateY(-500px);
@@ -34,46 +35,25 @@
 		opacity: 1;
 	}
 }
-#response figure {
-	-webkit-box-flex: 2;
-	-ms-flex: 2 1 1%;
-	flex: 2 1 1%;
+.flexwrap section {
+	display: block;
 }
-#response div {
-	-webkit-box-flex: 6;
-	-ms-flex: 6 1 1%;
-	flex: 6 1 1%;
-}
-#response figure.cat {
-	-webkit-box-flex: 1;
-	-ms-flex: 1 1 1%;
-	flex: 1 1 1%;
-}
-@supports (display: flex) or (display: -webkit-box) {
-	#response {
-		display: -webkit-box;
-		display: -ms-flexbox;
+@supports(display: flex){
+	.override section, #response {
 		display: flex;
 	}
-	#response img {
-		-o-object-fit: cover;
-		object-fit: cover;
-		height: 100%;
+	#response figure {
+		flex: 2 1 1%;
 	}
-}
-.flexbox #response, .flexboxtweener #response, .flexboxlegacy #response {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-}
-.flexbox #response img, .flexboxtweener #response img, .flexboxlegacy #response img {
-	-o-object-fit: cover;
-	object-fit: cover;
-	height: 100%;
+	#response div {
+		flex: 4 1 1%;
+	}
+	#response figure.cat {
+		flex: 1 1 1%;
+	}
 }
 /* response to form submission:
 restrict animation for proper grid support as we are using grid positioning to overlay images */
-
 @supports(column-gap: 20px) {
 	#wrap #intro label {
 		position: absolute;
@@ -108,10 +88,9 @@ restrict animation for proper grid support as we are using grid positioning to o
 		-ms-grid-column-span: 3;
 		grid-column: 12/20;
 	}
-
 	#contactarea>div {
 		margin-top: 1em;
-        display: -ms-grid;
+		display: -ms-grid;
 		display: grid;
 		grid-template-columns: repeat(9, 1fr);
 		grid-gap: 1em;
@@ -120,7 +99,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 		grid-column: 1/10;
 	}
 	#contactarea>div form {
-        grid-column: 1/8;
+		grid-column: 1/8;
 		height: auto;
 		width: 100%;
 	}
@@ -132,7 +111,11 @@ restrict animation for proper grid support as we are using grid positioning to o
 		display: grid;
 		grid-template-columns: 30% 1fr 48% 1fr 19%;
 		align-items: stretch;
+		background: linear-gradient(217deg, black, rgba(0, 0, 255, 0) 70.71%), linear-gradient(127deg, black, rgba(200, 255, 0, 0) 70.71%), linear-gradient(336deg, indigo, rgba(111, 111, 0, 0) 70.71%);
 	}
+    #response figure img {
+        height: 100%;
+    }
 	#response figure.top {
 		display: block;
 	}
@@ -142,7 +125,6 @@ restrict animation for proper grid support as we are using grid positioning to o
 		margin: 0;
 		padding: 0;
 	}
-
 	#response p {
 		animation-name: fader_rev;
 		opacity: 0;
@@ -173,16 +155,18 @@ restrict animation for proper grid support as we are using grid positioning to o
 		grid-column-start: 5;
 		border-width: 0 0 0 1px;
 	}
-
 	#response .top {
-		animation-name: fader;
+        /*
+        animation-name: fader;
 		animation-timing-function: ease-in-out;
 		animation-iteration-count: 1;
 		animation-duration: 10s;
 		animation-fill-mode: forwards;
+        */
+        animation: 10s ease-in-out 1 forwards fader;
 	}
 	#post #response div {
-        grid-column-start: 3;
+		grid-column-start: 3;
 		padding: 1em;
 		box-sizing: border-box;
 		align-self: center;
@@ -191,7 +175,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 		animation-iteration-count: 1;
 		animation-duration: 5s;
 		animation-fill-mode: forwards;
-        border-radius: 10px;
+		border-radius: 10px;
 	}
 }
 @media screen and (max-width: 812px) {
@@ -216,16 +200,14 @@ restrict animation for proper grid support as we are using grid positioning to o
 	section {
 		display: block;
 	}
-        
-    #contactarea > div {
-        margin-top: 0;
-    }
-    #contactarea form {
-        border-radius: 0;
-        border-width: 0;
-    }
-    #contactarea form fieldset {
-        padding: 0 3% 3%;
-    }
-
+	#contactarea>div {
+		margin-top: 0;
+	}
+	#contactarea form {
+		border-radius: 0;
+		border-width: 0;
+	}
+	#contactarea form fieldset {
+		padding: 0 3% 3%;
+	}
 }

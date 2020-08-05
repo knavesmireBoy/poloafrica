@@ -3,17 +3,14 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/helpers.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/poloafrica/classes/ArticleFactory.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/classes/Checker.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/classes/Utility.php';
+
 function buildMessage($k, $v, $flag)
 {
-    $ret = $flag ? '' : '\r\n\r\n';
+    $ret = $flag ? "" : "\r\n\r\n";//!MUST BE DOUBLE QUOTES!
     $str = ucfirst($k) . ': ' . $v;
-    $msg = "Here is your message: \r\n\r\n";
-    if ($flag)
-    {
-        $str .= $msg;
-    }
     return $str . $ret;
 }
+
 
 $host = 'north.wolds@btinternet.com';
 //$host = 'info@poloafrica.com';
@@ -35,7 +32,6 @@ $text = "Use this area for comments or questions";
 $post_text = 'Please enter your message';
 $state = '';
 $fieldset = 'Poloafrica contact form';
-//$pussy = "../images/resource/cat.jpg";
 $item = 'item';
 $echo = function ()
 {
@@ -56,7 +52,7 @@ $postcomment = new Checker($post_text, new Negator(new Match("/^$subpost_text/")
 $required = array(/*
     'name' => preconditions($empty, $isName) ,
     'email' => preconditions($empty, $isEmail) ,
-    'comments' => preconditions($empty, $comment, $postcomment) /*, 'phone' => preconditions($empty, $isNum)*/
+    'comments' => preconditions($empty, $comment, $postcomment)*/
 );
 
 if (!empty($_POST))
@@ -100,9 +96,11 @@ if (!empty($_POST))
     {
         $message = wordwrap($message, 70);
         $headers = "From: $host";
-        $headers .= 'Content-Type: text/plain; charset=utf-8';
-        $headers .= "\r\nReply-To: {$data['email']}";
-        $mailsent = mail($host, 'Website Enquiry', $message, $headers);
+        $headers .= "\r\nContent-Type: text/plain; charset=utf-8";
+        $headers .= "\r\nReply-To: $email";
+        //$mailsent = mail($host, 'Website Enquiry', $message, $headers);
+        $mailsent = true;
+        
         if ($mailsent)
         {
             unset($missing);
