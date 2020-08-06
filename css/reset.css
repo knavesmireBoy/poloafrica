@@ -1,26 +1,4 @@
 /*https://gist.github.com/robinrendle/1d20c566c5e5fbd67f25*/
-
-/*Box sizing (the nuclear option)*/
-
-*, *:before, *:after {
-	-ms-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	/*above messing with slideshow*/
-	box-sizing: content-box;
-}
-/* Fix font rendering defaults */
-
-html, button {
-	-ms-text-size-adjust: 100%;
-	-webkit-text-size-adjust: 100%;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-body {
-	font-size: 100%;
-}
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, input, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
@@ -29,6 +7,7 @@ html, body {
     height: 100%;
 }
 body {
+    font-size: 100%;
     min-height: 100%;
 }
 /* IE fixes for HTML5 elements */
@@ -81,4 +60,24 @@ button:focus {
 }
 ol, ul, dl {
 	list-style: none;
+}
+
+
+/*Box sizing (the nuclear option)*/
+
+*, *:before, *:after {
+	-ms-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	/*above messing with slideshow*/
+	box-sizing: content-box;
+}
+/* Fix font rendering defaults */
+
+html, button {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }

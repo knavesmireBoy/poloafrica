@@ -9,26 +9,23 @@ html.js body img, html.no-js body img {
 
 /*REMEMBER override class hardcoded in HTML*/
 
-
-#nav {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
+header ul {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: start;
+	-ms-flex-align: start;
+	align-items: flex-start;
 }
-
-#nav li {
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    -ms-flex-item-align: start;
-        align-self: flex-start;
+header ul li {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-ms-flex-item-align: start;
+	align-self: flex-start;
 }
-
 section {
 	-webkit-box-align: start;
 	-ms-flex-align: start;
@@ -50,17 +47,6 @@ section>* {
 	-webkit-align-self: flex-start;
 	align-self: flex-start;
 }
-
-#wrap+footer {
-	-ms-flex-wrap: wrap;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	-webkit-box-align: end;
-	-ms-flex-align: end;
-	-webkit-align-items: flex-end;
-	align-items: flex-end;
-}
-
 .flexwrap section article {
 	-webkit-box-flex: 6;
 	-ms-flex: 6 1 1%;
@@ -73,7 +59,6 @@ section>* {
 	-webkit-flex: 4 1 1%;
 	flex: 4 1 1%;
 }
-
 .flexwrap #wrap+footer {
 	/*display: -webkit-box; ipod not resizing on orientation*/
 	display: -webkit-flex;
@@ -103,29 +88,56 @@ section>* {
 	left: 0;
 	min-width: 6em;
 }
-
 .flexwrap #wrap+footer>a {
 	-webkit-box-flex: 0;
 	-ms-flex: 0 0 100%;
 	-webkit-flex: 0 0 100%;
 	flex: 0 0 100%;
-    box-sizing: border-box;
-    padding: .75em 1% .75em 0;
+	box-sizing: border-box;
+	padding: .75em 1% .75em 0;
 }
-
+#wrap+footer {
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	-webkit-align-items: flex-end;
+	align-items: flex-end;
+}
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-    section article {
-	-webkit-box-flex: 6;
-	-ms-flex: 6 1 1%;
-	-webkit-flex: 6 1 1%;
-	flex: 6 1 1%;
-}
-section>img {
-	-webkit-box-flex: 4;
-	-ms-flex: 4 1 1%;
-	-webkit-flex: 4 1 1%;
-	flex: 4 1 1%;
-}
+	section article {
+		-webkit-box-flex: 6;
+		-ms-flex: 6 1 1%;
+		-webkit-flex: 6 1 1%;
+		flex: 6 1 1%;
+	}
+	section>img {
+		-webkit-box-flex: 4;
+		-ms-flex: 4 1 1%;
+		-webkit-flex: 4 1 1%;
+		flex: 4 1 1%;
+	}
+	.override .ptrt img {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 %;
+		-webkit-flex: 1 1 1%;
+		flex: 1 1 1%;
+	}
+	.override .ptrt article {
+		-webkit-box-flex: 6;
+		-ms-flex: 6 1 1%;
+		-webkit-flex: 6 1 1%;
+		flex: 6 1 1%;
+	}
+	.no-flexwrap .override .ptrt {
+		display: block;
+	}
+	.override .ptrt img {
+		float: right;
+		width: 20%;
+		margin: 1em 1em 0;
+	}
 	#wrap+footer:first-of-type {
 		/*display: -webkit-box; ipod not resizing on orientation*/
 		display: -webkit-flex;
@@ -153,39 +165,17 @@ section>img {
 		left: 0;
 		min-width: 6em;
 	}
-   #wrap+footer > a:first-of-type {
-	-webkit-box-flex: 0;
-	-ms-flex: 0 0 100%;
-	-webkit-flex: 0 0 100%;
-	flex: 0 0 100%;
-    box-sizing: border-box;
-    padding: .75em 1% .75em 0;
-    }
+	#wrap+footer>a:first-of-type {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 100%;
+		-webkit-flex: 0 0 100%;
+		flex: 0 0 100%;
+		box-sizing: border-box;
+		padding: .75em 1% .75em 0;
+	}
 }
-
-.override .ptrt img {
- 	-webkit-box-flex: 1;
- 	-ms-flex: 1 1 %;
- 	-webkit-flex: 1 1 1%;
- 	flex: 1 1 1%;
- }
- .override .ptrt article {
- 	-webkit-box-flex: 6;
- 	-ms-flex: 6 1 1%;
- 	-webkit-flex: 6 1 1%;
- 	flex: 6 1 1%;
- }
- .no-flexwrap .override .ptrt {
- 	display: block;
- }
- .override .ptrt img {
- 	float: right;
- 	width: 20%;
- 	margin: 1em 1em 0;
- }
-
 @media screen and (max-width: 667px) {
-	section {
+	section, header ul {
 		display: block;
 	}
 	article {
@@ -206,29 +196,26 @@ section>img {
 		-webkit-flex: 1 1 2em;
 		flex: 1 1 2em;
 	}
-    .flexwrap #wrap+footer>a {
-    padding: .75em 2% .75em 0;
-}
-
+	.flexwrap #wrap+footer>a {
+		padding: .75em 2% .75em 0;
+	}
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-
-        #wrap+footer #footer_girl {
-		-webkit-box-flex: 5;
-		-ms-flex: 5 1 5em;
-		-webkit-flex: 5 1 5em;
-		flex: 5 1 5em;
+		#wrap+footer #footer_girl {
+			-webkit-box-flex: 5;
+			-ms-flex: 5 1 5em;
+			-webkit-flex: 5 1 5em;
+			flex: 5 1 5em;
+		}
+		#wrap+footer #fb {
+			-webkit-box-flex: 1;
+			-ms-flex: 1 1 2em;
+			-webkit-flex: 1 1 2em;
+			flex: 1 1 2em;
+		}
+		#wrap+footer>a:first-of-type {
+			padding: .75em 2% .75em 0;
+		}
 	}
-	#wrap+footer #fb {
-		-webkit-box-flex: 1;
-		-ms-flex: 1 1 2em;
-		-webkit-flex: 1 1 2em;
-		flex: 1 1 2em;
-	}
-#wrap+footer>a:first-of-type {
-    padding: .75em 2% .75em 0;
-}
-	}
-
 }
 /*IF js disbaled and feature queries not supported what to do?*/
 
@@ -244,16 +231,13 @@ section>img {
 	}
 	.flexwrap h3 {
 		border-bottom: solid #990 1px;
-        border-bottom: solid hsl(58, 60%, 40%) 1px;
+		border-bottom: solid hsl(58, 60%, 40%) 1px;
 	}
 	.flexwrap p:first-of-type {
 		margin: 0;
 	}
 	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-		p:first-of-type {
-			margin: 0;
-		}
 		/* by default the border will run up to the floating image, we choose to enable it on flexwrap support*/
 		h3 {
 			border-bottom: solid 1px;
@@ -263,6 +247,9 @@ section>img {
 			display: -webkit-flex;
 			display: -ms-flexbox;
 			display: flex;
+		}
+		p:first-of-type {
+			margin: 0;
 		}
 	}
 }

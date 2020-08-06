@@ -1,6 +1,6 @@
 @import "flex_mod.css";
 @import "fullflex_mod.css";
-#ani {
+#ani, #tween {
 	width: 18em;
 	height: auto;
 	padding: 2em;
@@ -11,6 +11,7 @@
 }
 .no-js #tween, .js #flower {
 	display: block;
+    float: right;
 }
 #home #ani img {
 	width: 100%;
@@ -19,6 +20,13 @@
 	border-width: 0;
 	margin: 0;
 }
+
+#tween {
+    flex: 1 1 1%;
+    border-width: 0;
+    box-shadow: none;
+}
+
 .js #home #ani img:last-child {
 	margin: 0 0 0 -100%;
 }
@@ -47,22 +55,21 @@ h2 span {
 	h2, h2 span {
 		background: none;
 	}
-	#ani {
+	#ani, #tween {
 		width: 9em;
 		height: auto;
 		margin: .5em 0 0;
 		padding: .5em;
-		position: absolute;
-		left: -999em;
 	}
-	section.show #ani, .read-more-state:checked~#ani {
+     #ani {
+         position: absolute;
+         left: -999em;
+    }
+	section.show #ani, .read-more-state:checked~#ani, section.show #tween {
 		position: relative;
 		left: auto;
 	}
-	section.show #ani, .read-more-state:checked~#ani {
-		position: relative;
-		left: auto;
-	}
+
 	.no-js section:nth-child(1) .read-more-trigger:before {
 		content: "The Poloafrica Development Trust";
 	}
@@ -75,6 +82,7 @@ h2 span {
 	.no-js section:nth-child(3) {
 		display: block;
 	}
+
 }
 @media only screen and (max-width: 540px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
 	section:last-child h3, section label {
