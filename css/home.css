@@ -2,9 +2,6 @@
 @import "fullflex_mod.css";
 */
 
-.js #home #ani img:last-child {
-	margin: 0 0 0 -100%;
-}
 h2 span {
 	background: white 0% 50% url(../images/sub_home.jpg) no-repeat;
 }
@@ -22,19 +19,24 @@ h2 span {
     box-shadow: none;
 }
 
-.js #tween, .no-js #flower {
-	display: none;
-}
-.no-js #tween, .js #flower {
-	display: block;
-    float: right;
-}
 #ani img {
 	width: 100%;
 	float: left;
 	box-shadow: none;
 	border-width: 0;
 	margin: 0;
+}
+
+#ani img:last-child {
+	margin: 0 0 0 -100%;
+}
+
+.js #tween, .no-js #flower {
+	display: none;
+}
+.no-js #tween, .js #flower {
+	display: block;
+    float: right;
 }
 
 @media only screen {

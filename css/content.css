@@ -1,3 +1,4 @@
+/*
 @keyframes bgfade {
 	0% {
 		background-image: url(../images/poloafrica_flower_logo.jpg);
@@ -9,6 +10,7 @@
 		background-image: url(../images/polo_armed_forces_logo.jpg);
 	}
 }
+*/
 body {
 	font: normal .875em/1.75 Georgia, serif;
 	background-color: white;
@@ -305,7 +307,8 @@ header ul li a:hover, header ul li a:active, #wrap ul ul a:link, #wrap ul ul a:v
 */
 /*
 @media only screen and (min-width: 1024px) {
-	.js article, .js section>img, aside {
+
+.js article, .js section>img, aside {
 		-webkit-transition-property: opacity, -webkit-transform;
 		transition-property: opacity, -webkit-transform;
 		-o-transition-property: transform, opacity;
