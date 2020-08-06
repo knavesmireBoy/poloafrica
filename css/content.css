@@ -34,6 +34,11 @@ p {
 	text-align: justify;
 	margin: .5em 0 0 0;
 }
+h3 {
+	font-size: 1.75em;
+	word-spacing: 1px;
+	letter-spacing: 1px;
+}
 footer {
 	background: url(../images/footer_green_ko.png) no-repeat;
 	background-position: bottom right;
@@ -43,13 +48,20 @@ h2 span {
 	padding: 0 0 0 8rem;
 	line-height: 1.5;
 }
+header ul {
+	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
+}
 /* direct child selector, otherwise will have to override for animation */
 section>img {
 	border-radius: 4px;
 	box-shadow: 0px 0px 4px #990;
 	border: solid 1px white;
 }
-p:first-of-type, footer>a:last-child {
+article a {
+	font-weight: bold;
+	outline: none;
+}
+p:first-of-type {
 	margin: 0;
 }
 footer a, footer a:link, footer a:visited {
@@ -61,20 +73,15 @@ footer>a:last-child {
 	border-top: dotted 1px #cc6;
 	text-align: right;
 	padding: .75em 1em;
+    margin: 0;
 }
 footer div a:hover, footer b {
 	color: #cc6;
 }
-article a {
-	font-weight: bold;
-	outline: none;
-}
 p a:hover, p a:active {
 	text-decoration: underline;
 }
-header ul {
-	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
-}
+
 header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding: 0 0 1em;
@@ -90,10 +97,7 @@ header ul a {
 header h1, header h1 img, h2 span {
 	border-width: 1px;
 }
-.cssgradients #footer_girl a:first-child {
-	background: radial-gradient(circle at 50%, #cc6, transparent 70%);
-	background: none;
-}
+
 header ul a:hover, header ul a:active {
 	background-image: url("../images/navbghov1.gif");
 	background-image: linear-gradient(hsl(60, 25%, 62%), hsl(60, 35%, 72%), hsl(60, 25%, 62%));
@@ -104,11 +108,7 @@ header ul ul a, header ul ul a:hover {
 .no-js body {
 	background-color: mintcream;
 }
-h3 {
-	font-size: 1.75em;
-	word-spacing: 1px;
-	letter-spacing: 1px;
-}
+
 h3, section > label, a:link, a:visited, a:hover, a:active, .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
 	color: hsl(58, 60%, 40%);
@@ -116,6 +116,10 @@ h3, section > label, a:link, a:visited, a:hover, a:active, .no-touchevents h3 a:
 h2, a:hover, a:active, h2:hover, h2:focus, h2:active {
 	color: #cc6;
 	color: hsl(58, 60%, 48%);
+}
+.cssgradients #footer_girl a:first-child {
+	background: radial-gradient(circle at 50%, #cc6, transparent 70%);
+	background: none;
 }
 /*spacer for submenu desktop*/
 #wrap ul ul li {
@@ -130,6 +134,10 @@ header ul a:link, header ul a:visited, #wrap ul ul a:link, #wrap ul ul a:visited
 header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
 	color: white;
 }
+#footer_girl a:last-child:before {
+	content: " | ";
+}
+
 header ul li a:hover, header ul li a:active, #wrap ul ul a:link, #wrap ul ul a:visited {
 	background-color: #b6b686;
 	background-color: hsl(60, 25%, 62%);
@@ -141,7 +149,4 @@ header ul li a:hover, header ul li a:active, #wrap ul ul a:link, #wrap ul ul a:v
 #wrap ul ul a:hover, #wrap ul ul a:active {
 	background-color: white;
 	border-color: #900;
-}
-#footer_girl a:last-child:before {
-	content: " | ";
 }
