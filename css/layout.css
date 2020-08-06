@@ -4,7 +4,7 @@ body {
 html, body {
 	height: 100%;
 }
-img, #nav a, #fb a, footer>a:link:last-child {
+img, footer>a:link:last-child {
 	display: block;
 }
 main {
@@ -107,6 +107,11 @@ header ul ul {
 	width: 12em;
 	margin: 0 -1.5em -1.5em 0;
 }
+
+#nav a, #fb a {
+	display: block;
+}
+
 #home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
 	left: auto;
 }
