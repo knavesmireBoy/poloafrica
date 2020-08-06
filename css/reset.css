@@ -1,16 +1,11 @@
-html, body {
-    height: 100%;
-}
 body {
     font-size: 100%;
     min-height: 100%;
 }
-
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-
 iframe {
 	width: 100%;
 }
@@ -23,6 +18,10 @@ img {
 button {
 	cursor: pointer;
 	font-size: 100%;
+}
+
+html, body {
+    height: 100%;
 }
 /* Fix font rendering defaults */
 html, button {
