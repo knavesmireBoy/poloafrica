@@ -80,15 +80,15 @@ section:first-child {
 footer a:link {
 	display: inline-block;
 }
+footer>a:link:last-child {
+	display: block;
+}
 /* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
-
 section:nth-child(odd)>img, #ani {
 	margin: 0em 0 1em 2%;
 	float: right;
 }
-footer>a:link:last-child {
-	display: block;
-}
+
 #wrap {
 	margin: 0 auto;
 	max-width: 84em;
@@ -143,6 +143,10 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	}
 	footer {
 		padding: 7em 0 0 0;
+	}
+    
+    section {
+		margin: 0;
 	}
 	/*ie*/
 	header>a {
@@ -220,9 +224,7 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	.touchevents body {
 		margin: 0;
 	}
-	section, .override article {
-		margin: 0;
-	}
+	
 	.override section img {
 		width: 100%;
 		margin: 0;
