@@ -68,6 +68,12 @@ article a {
 p:first-of-type {
 	margin: 0;
 }
+footer b, footer div a:hover {
+	color: #cc6;
+}
+header h1, h2 span, header h1 img {
+	border-width: 1px;
+}
 footer a:link, footer a:visited {
 	color: white;
 	padding: 0;
@@ -79,9 +85,7 @@ footer>a:last-child {
 	padding: .75em 1em;
     margin: 0;
 }
-footer b, footer div a:hover {
-	color: #cc6;
-}
+
 p a:hover, p a:active {
 	text-decoration: underline;
 }
@@ -97,9 +101,6 @@ header ul a {
 	background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
 	border: solid 1px;
 	border-color: #ccc #306 #306 #ccc;
-}
-header h1, h2 span, header h1 img {
-	border-width: 1px;
 }
 
 header ul a:hover, header ul a:active {
@@ -130,21 +131,19 @@ h2, a:hover, a:active, h2:hover, h2:focus, h2:active {
 #footer_girl a:last-child:before {
 	content: " | ";
 }
-
 /* #wrap used as override for sub-menu*/
 header ul a:link, header ul a:visited, #wrap ul ul a:link, #wrap ul ul a:visited {
 	color: #306;
 	color: hsl(270, 100%, 20%);
 }
-header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
-	color: white;
-}
-
-
 header ul li a:hover, header ul li a:active, #wrap ul ul a:link, #wrap ul ul a:visited {
 	background-color: #b6b686;
 	background-color: hsl(60, 25%, 62%);
 }
+header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
+	color: white;
+}
+
 #wrap ul ul a:link, #wrap ul ul a:visited {
 	border-color: #999 #000 #000 #999;
 	padding: 0 .7em;
