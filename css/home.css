@@ -31,12 +31,12 @@
 	margin: 0 0 0 -100%;
 }
 h2 span {
-	background: white 0% 50% url(../images/resource/sub_home.jpg) no-repeat;
+	background: white 0% 50% url(../images/sub_home.jpg) no-repeat;
 }
 @media only screen {
     
 	h2 span {
-		background: white 0% 0% url(../images/resource/sub_home.png) no-repeat;
+		background: white 0% 0% url(../images/sub_home.png) no-repeat;
 		background-size: contain;
 	}
 }
@@ -47,6 +47,10 @@ h2 span {
 	}
 }
 @media screen and (max-width: 667px) {
+    
+    section {
+        display: block;
+    }
 
 	h2, h2 span {
 		background: none;
@@ -75,7 +79,7 @@ h2 span {
 	.no-js section:nth-child(3) .read-more-trigger:before {
 		content: "The Poloafrica / Polo 150 tour to England";
 	}
-	section, .no-js section:nth-child(3) {
+	.no-js section:nth-child(3) {
 		display: block;
 	}
 
@@ -88,8 +92,5 @@ h2 span {
 @media only screen and (max-width: 410px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
 	.override section h3, section:first-child label {
 		line-height: normal;
-	}
-    .override section:nth-child(2) h3, section:nth-child(2) label {
-		line-height: 1.75;
 	}
 }

@@ -1,0 +1,365 @@
+body {
+	margin: 4%;
+}
+html, body {
+	height: 100%;
+}
+img, #nav a, #fb a, footer>a:link:last-child {
+	display: block;
+}
+main {
+	overflow: hidden;
+	margin: .2em 0 0em;
+	padding: 0 1em 10.1em;
+}
+header {
+	position: relative;
+	width: 100%;
+}
+section {
+	margin: 3em 0 0;
+}
+footer {
+	max-width: 80em;
+	padding: 5em 0 0 0;
+	margin: -10.1em auto 0;
+	width: 100%;
+}
+header h1 {
+	margin: -2.2em 0 0 0;
+	white-space: nowrap;
+	width: 40%;
+	text-indent: 100%;
+	overflow: hidden;
+	line-height: .3;
+}
+section:first-child {
+	margin: 2em 0 0 0;
+}
+section input, nav input {
+	cursor: pointer;
+	position: absolute;
+	left: -9999px;
+}
+section:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+/* direct child selector, otherwise will have to override for animation */
+
+section>img {
+	margin: .5em 2% 1em 0;
+	float: left;
+	width: 40%;
+}
+footer div {
+	display: inline-block;
+	vertical-align: bottom;
+	position: relative;
+}
+footer a:link {
+	display: inline-block;
+}
+header h1 img {
+	width: 100%;
+	visibility: hidden;
+}
+footer div img {
+	width: 100%;
+}
+/* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
+
+section:nth-child(odd)>img, #ani {
+	margin: 0em 0 1em 2%;
+	float: right;
+}
+header ul {
+	display: table;
+	width: 100%;
+}
+header li {
+	display: table-cell;
+}
+header ul ul {
+	width: auto;
+	position: absolute;
+	left: -9999px;
+}
+#wrap {
+	margin: 0 auto;
+	max-width: 84em;
+	min-height: 100%;
+	overflow: hidden;
+	position: relative;
+}
+#fb {
+	margin: 0 0 .75em -49.5em;
+	width: 7em;
+	left: 100%;
+}
+#footer_girl {
+	margin: 0 0 .75em 0em;
+	width: 40em;
+}
+#footer_girl a:first-child {
+	width: 9em;
+	width: 12em;
+	margin: 0 -1.5em -1.5em 0;
+}
+#home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
+	left: auto;
+}
+#medley li:nth-child(7):hover ul, #enquiries li:nth-child(8):hover ul {
+	left: auto;
+	right: 0px;
+}
+nav li#current:hover ul, nav li#current.sfhover ul {
+	left: 0;
+}
+@media screen and (max-width: 867px) {
+	#polo li:nth-child(6):hover ul {
+		left: auto;
+		right: 0px;
+	}
+}
+@media screen and (max-width: 667px) {
+	main {
+		padding: 0 0 10.1em 0;
+		margin: 0;
+	}
+	/*ie*/
+	header>a {
+		display: block;
+	}
+	header h1 {
+		margin: 0 0 0 4vw;
+		padding: 0% 0 7vw 0;
+	}
+	h2 {
+		position: relative;
+		margin: -8vw 0 0 0em;
+		padding: 0 0 0 4vw;
+		font-size: 2em;
+		font-size: 1.75rem;
+	}
+	footer {
+		padding: 7em 0 0 0;
+	}
+	h2 span {
+		text-align: center;
+		display: inline-block;
+		margin: 0 auto;
+		border: solid 1px blue;
+		padding: 0;
+	}
+	header h1, h2 span {
+		width: 48vw;
+	}
+	header h1 img {
+		visibility: visible;
+		min-width: 3em;
+		max-width: 100%;
+		border: solid 1px red;
+	}
+	section>label {
+		display: block;
+		width: 100%;
+	}
+	header h1, header h1 img, h2 span {
+		border-width: 0px;
+	}
+	header ul {
+		position: absolute;
+		top: 0em;
+		right: -99em;
+		display: block;
+		width: 9.5em;
+	}
+	header ul ul {
+		display: none;
+	}
+	header ul a, header ul li {
+		display: block;
+	}
+	header ul>li {
+		height: 0px;
+		transition: height .9s ease-out;
+	}
+	header ul>li a {
+		line-height: 2.6;
+	}
+	header input:checked+ul {
+		top: 3.5rem;
+		right: 1rem;
+		z-index: 2;
+	}
+	/*no need to fix advanced selectors for ie as mobile only layout*/
+	header input:checked+ul>li {
+		height: 2.6em;
+	}
+	article p:first-of-type, article p:last-child {
+		margin: 1em 0;
+	}
+	.menu {
+		position: absolute;
+		top: .7rem;
+		right: .7rem;
+		height: 2.5rem;
+		width: 2.5rem;
+	}
+	.no-flexwrap h2 {
+		margin: -1.6em 0 0em 0em;
+		margin: -2.73rem 0 0em 0em;
+		padding: 0 0 0 .7em;
+		padding: 0 0 0 1.2rem;
+	}
+	.touchevents body {
+		margin: 0;
+	}
+	section, .override article {
+		margin: 0;
+	}
+	.override section img {
+		width: 100%;
+		margin: 0;
+		box-shadow: none;
+	}
+	.no-flexwrap header h1, .no-flexwrap h2 span {
+		width: 15rem;
+	}
+	.no-flexwrap header h1 {
+		margin: 0 0 0 1.2rem;
+		padding: 0% 0 3.1rem 0;
+	}
+	.override section.ptrt img {
+		width: 30%;
+		margin: 1em 0 1em 1em;
+	}
+	.read-more-trigger:before, .no-js section:first-child .no-js .read-more-state:checked~.read-more-trigger:before {
+		display: block;
+	}
+	/* explicitly set float to none in case browser doesn't support flex/grid*/
+	.no-js section>img, .js article>img {
+		float: none;
+		border-width: 0;
+	}
+	/*first section is shown by default?*/
+	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>* {
+		position: absolute;
+		top: 0px;
+		left: -999em;
+	}
+	.no-js section:first-of-type .read-more-state~article, .no-js section:first-of-type .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article h3:first-of-type {
+		position: static;
+		left: 0em;
+	}
+	#footer_girl {
+		width: 15em;
+	}
+	#fb {
+		margin: 0 0 .75em -24.5em;
+	}
+	#footer_girl a:first-child {
+		visibility: hidden;
+		display: none;
+	}
+	#footer_girl a {
+		display: block;
+		margin: .25em 0;
+	}
+	#footer_girl img {
+		visibility: hidden;
+		width: 8em;
+	}
+	#wrap .override img {
+		border-radius: 0px;
+		box-shadow: none;
+	}
+}
+@media only screen and (max-width: 568px) {
+	header h1 {
+		padding: 0 0 8.5vw 0;
+	}
+	.no-flexwrap header h1 {
+		padding: 0 0 3rem 0;
+	}
+	h2 {
+		margin: -9vw 0 0 0em;
+	}
+	.no-flexwrap h2 {
+		margin: -2.8rem 0 0 0em;
+	}
+}
+@media only screen and (max-width: 480px) {
+	h2 {
+		margin: -10vw 0 0 0em;
+	}
+	header input:checked+ul {
+		top: 3rem;
+	}
+	header h1, h2 span {
+		width: 58vw;
+	}
+	header h1 {
+		padding: 0 0 9vw 0;
+		/*quick way to lift up logo*/
+		font-size: .5rem;
+	}
+	.menu {
+		height: 2rem;
+		width: 2rem;
+	}
+	.no-flexwrap h2 span, .no-flexwrap header h1 {
+		width: 15.7rem;
+	}
+	.no-touchevents h2 {
+		line-height: 1.4;
+	}
+	.no-flexwrap header h1 {
+		padding: 0 0 2.5rem 0;
+	}
+	.override .ptrt article img {
+		width: 40%;
+	}
+	#footer_girl {
+		margin: 0 0 .75em .6em;
+	}
+	#fb {
+		margin: 0 0 .75em -23.5em;
+	}
+}
+@media only screen and (max-width: 414px) {
+	#wrap h2 {
+		line-height: 1.4;
+	}
+}
+@media only screen and (max-width: 400px) {
+	h2 {
+		font-size: 1.7em;
+		font-size: 1.5rem;
+		padding: 0 0 0 1.5vw
+	}
+	header h1 {
+		margin: 0 0 0 1.5vw;
+	}
+	header h1, h2 span {
+		width: 64vw;
+	}
+	.no-flexwrap header h1 {
+		margin: 0 0 0 .3rem;
+	}
+	.no-flexwrap h2 {
+		padding: 0 0 0 .3rem;
+	}
+	.no-flexwrap header h1, .no-flexwrap h2 span {
+		width: 13rem;
+	}
+}
+@media only screen and (-ms-high-contrast: none) {
+	.touchevents footer {
+		background: url(../images/sil_bg.png) no-repeat top center;
+		background-size: cover;
+		padding: 7em 0 0 0;
+	}
+}
