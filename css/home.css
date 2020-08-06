@@ -1,3 +1,6 @@
+@import "flex_mod.css";
+@import "fullflex_mod.css";
+
 h2 span {
 	background: white 0% 50% url(../images/sub_home.jpg) no-repeat;
 }
@@ -27,15 +30,18 @@ h2 span {
 .js #tween, .no-js #flower {
 	display: none;
 }
-.no-js #tween, .js #flower {
+.no-js #tween {
 	display: block;
     float: right;
+}
+
+.js #flower {
+	display: block;
 }
 
 #ani img:last-child {
 	margin: 0 0 0 -100%;
 }
-
 
 @media only screen {
     
