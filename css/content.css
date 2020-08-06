@@ -2,9 +2,11 @@ body {
 	font: normal .875em/1.75 Georgia, serif;
 	background-color: white;
 }
+/*
 .no-js body {
 	background-color: mintcream;
 }
+*/
 header {
 	background: #b6b686 url(../images/header.png) no-repeat 0 76%/100%;
 	background: hsl(60, 25%, 62%) url(../images/header.png) no-repeat 0 76%/100%;
@@ -119,7 +121,6 @@ footer a:nth-child(3):before {
 	content: " | ";
 }
 /* #wrap used as override for sub-menu*/
-
 header ul a:link, header ul a:visited, #wrap ul ul a:link, #wrap ul ul a:visited {
 	color: #306;
 	color: hsl(270, 100%, 20%);
@@ -132,7 +133,6 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	color: white;
 }
 /*spacer for submenu desktop*/
-
 #wrap ul ul li {
 	border: solid 1px transparent;
 	border-width: 3px 1px 0;
@@ -152,7 +152,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	}
 }
 @media screen and (max-width: 800px) {
-	header nav ul {
+	header ul {
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
 }
@@ -177,7 +177,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	section>label {
 		font-weight: bold;
 	}
-	section>label, h3 {
+	h3, section>label {
 		font-size: 1.4em;
 		font-size: 1.25rem;
 		margin: 0;
@@ -195,7 +195,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	header a h1 img {
 		visibility: visible;
 	}
-	header nav ul>li a {
+	header ul>li a {
 		background: none;
 		padding: 0 1em 0 0;
 		display: block;
@@ -236,7 +236,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	.override article p {
 		line-height: 1.55;
 	}
-	.read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before, .js h3 {
+	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
 		color: hsl(58, 60%, 45%);
 		color: #b8b32e;
 		text-shadow: none;
