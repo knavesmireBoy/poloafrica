@@ -140,7 +140,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	border-width: 3px 1px 0;
 }
 
-#footer_girl a:last-child:before {
+footer a:nth-child(3):before {
 	content: " | ";
 }
 #wrap ul ul a:link, #wrap ul ul a:visited {
