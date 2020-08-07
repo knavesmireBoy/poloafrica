@@ -2,11 +2,11 @@ body {
 	font: normal .875em/1.75 Georgia, serif;
 	background-color: white;
 }
-/*
+
 .no-js body {
 	background-color: mintcream;
 }
-*/
+
 header {
 	background: #b6b686 url(../images/header.png) no-repeat 0 76%/100%;
 	background: hsl(60, 25%, 62%) url(../images/header.png) no-repeat 0 76%/100%;
@@ -33,16 +33,14 @@ h2 {
 h3 {
 	margin: 0 0 .3em 0;
 	line-height: 1.2;
+    font-size: 1.75em;
+	word-spacing: 1px;
+	letter-spacing: 1px;
 }
 p {
 	color: #444;
 	text-align: justify;
 	margin: .5em 0 0 0;
-}
-h3 {
-	font-size: 1.75em;
-	word-spacing: 1px;
-	letter-spacing: 1px;
 }
 footer {
 	background: url(../images/footer_green_ko.png) no-repeat;
@@ -57,7 +55,6 @@ header ul {
 	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 }
 /* direct child selector, otherwise will have to override for animation */
-
 section>img {
 	border-radius: 4px;
 	box-shadow: 0px 0px 4px #990;
@@ -78,18 +75,14 @@ header h1, h2 span, header h1 img {
 }
 footer a:link, footer a:visited {
 	color: white;
-	padding: 0;
 	line-height: normal;
 }
 footer>a:last-child {
 	border-top: dotted 1px #cc6;
 	text-align: right;
 	padding: .75em 1em;
-	margin: 0;
 }
-p a:hover, p a:active {
-	text-decoration: underline;
-}
+
 header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding: 0 0 1em;
@@ -102,24 +95,30 @@ header ul a {
 	border: solid 1px;
 	border-color: #ccc #306 #306 #ccc;
 }
+
 header ul a:hover, header ul a:active {
 	background-image: url("../images/navbghov1.gif");
 	background-image: linear-gradient(hsl(60, 25%, 62%), hsl(60, 35%, 72%), hsl(60, 25%, 62%));
 }
+
 header ul ul a, header ul ul a:hover {
 	background-image: none;
 }
-h3, section>label, a:link, a:visited, a:hover, a:active, .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
+h3, section>label, a:link, a:visited, .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
 	color: hsl(58, 60%, 40%);
 }
-h2, a:hover, a:active, h2:hover, h2:focus, h2:active {
+h2, a:hover, a:active{
 	color: #cc6;
 	color: hsl(58, 60%, 48%);
 }
-footer a:nth-child(3):before {
+p a:hover, p a:active {
+	text-decoration: underline;
+}
+footer a[href^="mailto:i"]:before {
 	content: " | ";
 }
+
 /* #wrap used as override for sub-menu*/
 header ul a:link, header ul a:visited, #wrap ul ul a:link, #wrap ul ul a:visited {
 	color: #306;
@@ -151,12 +150,21 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
 	}
 }
+
+@media screen and (max-width: 867px) {
+	#polo li:nth-child(6):hover ul {
+		left: auto;
+		right: 0px;
+	}
+}
+
 @media screen and (max-width: 800px) {
 	header ul {
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
 }
 @media only screen and (max-width: 667px) {
+        
 	header {
 		background-image: url(../images/header_only.png);
 		background-position: 0px 0px;
@@ -218,17 +226,22 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
 	}
+
 	section.show h3 a {
 		color: white;
 		background-color: transparent;
 	}
+    
+    h2:hover, h2:focus, h2:active {
+        color: hsl(58, 60%, 90%);
+    }
+    
 	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
 	h3, .read-more-trigger:before {
 		padding: .5em .6em .4em;
 	}
 	h3, .read-more-trigger:before, .js section img {
-		border: solid 1px white;
-		border-width: 0 0 1px;
+		border-bottom: solid 1px white;
 	}
 	.touchevents article p {
 		padding: 0 1em;
@@ -257,7 +270,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		background-color: #c8c87e;
 		background-color: hsl(60, 40%, 64%);
 	}
-	#footer_girl a:last-child:before {
+	footer div:first-child a:last-child:before {
 		content: "";
 	}
 	#main_nav header nav ul {

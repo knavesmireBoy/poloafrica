@@ -97,12 +97,12 @@ section:nth-child(odd)>img, #ani {
 	position: relative;
 }
 #fb {
-	margin: 0 0 .75em -49.5em;
+	margin: 0 0 .75em -49em;
 	width: 7em;
 	left: 100%;
 }
-#footer_girl {
-	margin: 0 0 .75em 0em;
+footer div:first-child {
+	margin: 0 0 .75em 1em;
 	width: 40em;
 }
 #nav a, #fb a {
@@ -111,10 +111,9 @@ section:nth-child(odd)>img, #ani {
 nav li#current:hover ul, nav li#current.sfhover ul {
 	left: 0;
 }
-#footer_girl a:first-child {
-	width: 9em;
+footer div:first-child a:first-child {
 	width: 12em;
-	margin: 0 -1.5em -1.5em 0;
+	margin: 0 -2.5em -1.5em 0;
 }
 #home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
 	left: auto;
@@ -123,12 +122,7 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	left: auto;
 	right: 0px;
 }
-@media screen and (max-width: 867px) {
-	#polo li:nth-child(6):hover ul {
-		left: auto;
-		right: 0px;
-	}
-}
+
 @media screen and (max-width: 667px) {
 	main {
 		padding: 0 0 10.1em 0;
@@ -158,9 +152,7 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	}
 	header ul {
 		position: absolute;
-		top: 0em;
 		right: -99em;
-		display: block;
 		width: 9.5em;
 	}
 	section>label {
@@ -177,32 +169,40 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	header h1, h2 span {
 		width: 48vw;
 	}
+    /*width reqd, other properties reqd in no-js scenario; */
+    section img {
+        /* explicitly set float to none in case browser doesn't support flex/grid*/
+        float: none;
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+        border-width: 0;
+        width: 100%;
+    }
 	header h1 img {
 		visibility: visible;
 		min-width: 3em;
 		max-width: 100%;
 		border: solid 1px red;
 	}
+    /*remove border's above when in production*/
 	header h1, h2 span, header h1 img {
 		border-width: 0px;
 	}
-	header ul ul {
-		display: none;
-	}
 	header ul a, header ul li {
-		display: block;
+		display: block;/*a may not be reqd check ie*/
+        line-height: 2.6;
 	}
 	header ul>li {
 		height: 0px;
 		transition: height .9s ease-out;
 	}
-	header ul>li a {
-		line-height: 2.6;
-	}
 	header input:checked+ul {
 		top: 3.5rem;
 		right: 1rem;
 		z-index: 2;
+        /*override display:table not really required as li's set to block*/
+        display: block;
 	}
 	/*no need to fix advanced selectors for ie as mobile only layout*/
 	header input:checked+ul>li {
@@ -224,12 +224,7 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	.touchevents body {
 		margin: 0;
 	}
-	
-	.override section img {
-		width: 100%;
-		margin: 0;
-		box-shadow: none;
-	}
+
 	.no-flexwrap header h1, .no-flexwrap h2 span {
 		width: 15rem;
 	}
@@ -240,20 +235,16 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	article p:first-of-type, article p:last-child {
 		margin: 1em 0;
 	}
-	.override section.ptrt img {
+	section.ptrt img {
 		width: 30%;
 		margin: 1em 0 1em 1em;
 	}
-	.read-more-trigger:before, .no-js section:first-child .no-js .read-more-state:checked~.read-more-trigger:before {
+	.read-more-trigger:before, .no-js section:first-child, .no-js .read-more-state:checked~.read-more-trigger:before {
 		display: block;
 	}
-	/* explicitly set float to none in case browser doesn't support flex/grid*/
-	.no-js section>img, .js article>img {
-		float: none;
-		border-width: 0;
-	}
+
 	/*first section is shown by default?*/
-	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>* {
+	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>*, footer div:first-child a:first-child, header ul ul {
 		position: absolute;
 		top: 0px;
 		left: -999em;
@@ -262,27 +253,19 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 		position: static;
 		left: 0em;
 	}
-	#footer_girl {
+	footer div:first-child {
 		width: 15em;
 	}
 	#fb {
-		margin: 0 0 .75em -24.5em;
+		margin: 0 0 .75em -24em;
 	}
-	#footer_girl a {
+	footer div:first-child a {
 		display: block;
 		margin: .25em 0;
 	}
-	#footer_girl img {
+	footer div:first-child img {
 		visibility: hidden;
 		width: 8em;
-	}
-	#footer_girl a:first-child {
-		visibility: hidden;
-		display: none;
-	}
-	#wrap .override img {
-		border-radius: 0px;
-		box-shadow: none;
 	}
 }
 @media only screen and (max-width: 568px) {
@@ -327,10 +310,10 @@ nav li#current:hover ul, nav li#current.sfhover ul {
 	.no-flexwrap header h1 {
 		padding: 0 0 2.5rem 0;
 	}
-	.override .ptrt article img {
+	section.ptrt img {
 		width: 40%;
 	}
-	#footer_girl {
+	footer div:first-child {
 		margin: 0 0 .75em .6em;
 	}
 	#fb {

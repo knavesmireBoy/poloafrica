@@ -1,5 +1,4 @@
-@import "flex_mod.css";
-@import "fullflex_mod.css";
+/*@import "flex_mod.css";*/
 
 h2 span {
 	background: white 0% 50% url(../images/sub_home.jpg) no-repeat;
@@ -25,7 +24,6 @@ h2 span {
 	border-width: 0;
 	margin: 0;
 }
-
 
 .js #tween, .no-js #flower {
 	display: none;
@@ -95,7 +93,7 @@ h2 span {
 
 }
 @media only screen and (max-width: 540px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
-	section:last-child h3, section label {
+	section:last-child h3, section:last-child label {
 		line-height: normal;
 	}
 }
