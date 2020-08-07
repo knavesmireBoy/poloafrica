@@ -239,17 +239,18 @@ footer div:first-child a:first-child {
 		width: 30%;
 		margin: 1em 0 1em 1em;
 	}
+    
 	.read-more-trigger:before, .no-js section:first-child, .no-js .read-more-state:checked~.read-more-trigger:before {
 		display: block;
 	}
 
 	/*first section is shown by default?*/
-	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-of-type .read-more-state:checked~article, .no-js section:first-of-type .read-more-state:checked~img, .js article>*, footer div:first-child a:first-child, header ul ul {
+	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-child .read-more-state:checked~article, .no-js section:first-child .read-more-state:checked~img, .js article>*, footer div:first-child a:first-child, header ul ul {
 		position: absolute;
 		top: 0px;
 		left: -999em;
 	}
-	.no-js section:first-of-type .read-more-state~article, .no-js section:first-of-type .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article h3:first-of-type {
+	.no-js section:first-child .read-more-state~article, .no-js section:first-child .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article h3:first-of-type {
 		position: static;
 		left: 0em;
 	}
