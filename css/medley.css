@@ -48,41 +48,41 @@ text-indent: -1em;
     width: 1.2em;
     height: 1.5em;
     margin-right: .5em;
-    background: url(../images/resource/pdf_sq.png) no-repeat center;
+    background: url(../images/pdf_sq.png) no-repeat center;
     background-size: 140%;
 }
 .no-touchevents.backgroundsize #presslinks nav li:first-child::before {
-    background-image: url(../images/resource/prne.png);
+    background-image: url(../images/prne.png);
     background-size: cover;
 }
 .no-touchevents.backgroundsize #presslinks nav li:nth-child(4)::before {
-    background-image: url(../images/resource/laureus.png);
+    background-image: url(../images/laureus.png);
     background-size: cover;
 }
 
 .no-touchevents.backgroundsize #presslinks nav li:nth-child(6)::before {
-    background-image: url(../images/resource/bd-logo.png);
+    background-image: url(../images/bd-logo.png);
     background-size: contain;
 }
 
 .no-touchevents.backgroundsize #presslinks nav li:nth-child(7)::before {
-    background-image: url(../images/resource/poloplus.png);
+    background-image: url(../images/poloplus.png);
      background-size: contain;
 }
 .no-touchevents.backgroundsize #presslinks nav li:nth-child(8)::before {
-    background-image: url(../images/resource/p5.jpg);
+    background-image: url(../images/p5.jpg);
     background-size: cover;
 }
 
 /*
 .no-touchevents.backgroundsize #presslinks nav li:first-child::before,  .no-touchevents.backgroundsize #presslinks nav li:nth-child(4)::before, .no-touchevents.backgroundsize #presslinks nav li:nth-child(6)::before, .no-touchevents.backgroundsize #presslinks nav li:nth-child(7)::before, .no-touchevents.backgroundsize #presslinks nav li:nth-child(8)::before {
-	background: url(../images/resource/pointer.png);
+	background: url(../images/pointer.png);
 	background: none;
     content: '» ';
 }
 
 .no-touchevents.backgroundsize #presslinks nav li:nth-child(12)::before {
-	background: url("../images/resource/plain.png");
+	background: url("../images/plain.png");
     background: none;
     content: '»  ';
 }
@@ -158,11 +158,11 @@ was only effecting the 7th child as in #medley li:nth-child(7), which can also r
 	color: #306;
 }
 h2 span {
-	background: white 0% 0% url(../images/resource/sub_medley.jpg) no-repeat;
+	background: white 0% 0% url(../images/sub_medley.jpg) no-repeat;
 }
 @media only screen {
 	h2 span {
-		background: white 0% 0% url(../images/resource/sub_medley.png) no-repeat;
+		background: white 0% 0% url(../images/sub_medley.png) no-repeat;
 		background-size: contain;
 	}
 }
@@ -265,6 +265,10 @@ h2 span {
     #tvcoverage article:first-of-type p:last-child {
 		margin: 1em 0;
 	}
+    
+    #medley li:nth-child(7):hover ul{
+	right: 9999px;
+}
 }
 @media only screen and (max-width: 568px) {
 	#PoloGirls {

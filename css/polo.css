@@ -57,5 +57,8 @@ h2 span {
     section.multi img:last-of-type {
         margin: 0 0 0 1%;
     }
+    #polo li:nth-child(6):hover ul {
+        right: 999px;
+    }
     
 }

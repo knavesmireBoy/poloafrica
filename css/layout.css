@@ -245,7 +245,7 @@ footer div:first-child a:first-child {
 	}
 
 	/*first section is shown by default?*/
-	.no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-child .read-more-state:checked~article, .no-js section:first-child .read-more-state:checked~img, .js article>*, footer div:first-child a:first-child, header ul ul {
+	.js .read-more-state, .no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-child .read-more-state:checked~article, .no-js section:first-child .read-more-state:checked~img, .js article>*, footer div:first-child a:first-child, header ul ul {
 		position: absolute;
 		top: 0px;
 		left: -999em;
@@ -265,9 +265,10 @@ footer div:first-child a:first-child {
 		margin: .25em 0;
 	}
 	footer div:first-child img {
-		visibility: hidden;
+        display: none;
 		width: 8em;
 	}
+
 }
 @media only screen and (max-width: 568px) {
 	h2 {
