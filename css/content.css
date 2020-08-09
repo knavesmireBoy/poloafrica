@@ -8,11 +8,11 @@ body {
 }
 
 header {
-	background: #b6b686 url(../images/header.png) no-repeat 0 76%/100%;
-	background: hsl(60, 25%, 62%) url(../images/header.png) no-repeat 0 76%/100%;
+	background: #b6b686 url(../images/resource/header.png) no-repeat 0 76%/100%;
+	background: hsl(60, 25%, 62%) url(../images/resource/header.png) no-repeat 0 76%/100%;
 	width: 100%;
 	/*
-    background-image: url(../images/header.png);
+    background-image: url(../images/resource/header.png);
 	background-repeat: no-repeat;
 	background-color: #baba87;
 	background-color: hsl(60, 27%, 63%);
@@ -43,7 +43,7 @@ p {
 	margin: .5em 0 0 0;
 }
 footer {
-	background: url(../images/footer_green_ko.png) no-repeat;
+	background: url(../images/resource/footer_green_ko.png) no-repeat;
 	background-position: bottom right;
 }
 h2 span {
@@ -90,14 +90,14 @@ header ul ul {
 header ul a {
 	text-align: center;
 	background-color: #af8ddb;
-	background-image: url("../images/navbg.gif");
+	background-image: url("../images/resource/navbg.gif");
 	background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
 	border: solid 1px;
 	border-color: #ccc #306 #306 #ccc;
 }
 
 header ul a:hover, header ul a:active {
-	background-image: url("../images/navbghov1.gif");
+	background-image: url("../images/resource/navbghov1.gif");
 	background-image: linear-gradient(hsl(60, 25%, 62%), hsl(60, 35%, 72%), hsl(60, 25%, 62%));
 }
 
@@ -166,7 +166,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 @media only screen and (max-width: 667px) {
         
 	header {
-		background-image: url(../images/header_only.png);
+		background-image: url(../images/resource/header_only.png);
 		background-position: 0px 0px;
 		background-size: cover;
 	}
@@ -178,7 +178,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		border-width: 1px 0 0;
 	}
 	footer {
-		background: url(../images/sil_bg.png) no-repeat center top;
+		background: url(../images/resource/sil_bg.png) no-repeat center top;
 		background-size: cover;
 		padding: 7em 0 0 0;
 	}
@@ -214,7 +214,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		background: black;
 	}
 	.menu {
-		background: 50% 0% url("../images/polo_ball_sprite.png") no-repeat;
+		background: 50% 0% url("../images/resource/polo_ball_sprite.png") no-repeat;
 		background-size: 100%;
 		cursor: pointer;
 		-webkit-transition: transform 1s;

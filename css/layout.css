@@ -356,7 +356,7 @@ footer div:first-child a:first-child {
 }
 @media only screen and (-ms-high-contrast: none) {
 	.touchevents footer {
-		background: url(../images/sil_bg.png) no-repeat top center;
+		background: url(../images/resource/sil_bg.png) no-repeat top center;
 		background-size: cover;
 		padding: 7em 0 0 0;
 	}

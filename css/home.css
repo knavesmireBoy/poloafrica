@@ -1,7 +1,7 @@
 @import "flex_mod.css";
 
 h2 span {
-	background: white 0% 50% url(../images/sub_home.jpg) no-repeat;
+	background: white 0% 50% url(../images/resource/sub_home.jpg) no-repeat;
 }
 
 #ani, #tween {
@@ -44,7 +44,7 @@ h2 span {
 @media only screen {
     
 	h2 span {
-		background: white 0% 0% url(../images/sub_home.png) no-repeat;
+		background: white 0% 0% url(../images/resource/sub_home.png) no-repeat;
 		background-size: contain;
 	}
 }

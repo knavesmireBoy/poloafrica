@@ -2,11 +2,11 @@
 @import "fullflex_mod.css";
 
         h2 span {
-        	background: white 0% 0% url(../images/sub_place.jpg) no-repeat;
+        	background: white 0% 0% url(../images/resource/sub_place.jpg) no-repeat;
         }
         @media only screen {
         	h2 span {
-        		background: white 0% 0% url(../images/sub_place.png) no-repeat;
+        		background: white 0% 0% url(../images/resource/sub_place.png) no-repeat;
                 background-size: contain;
         	}
         }

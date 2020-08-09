@@ -4,11 +4,11 @@
 	left: 0;
 }
 h2 span {
-	background: white 0% 0% url(../images/sub_scholars.jpg) no-repeat;
+	background: white 0% 0% url(../images/resource/sub_scholars.jpg) no-repeat;
 }
 @media only screen {
 	h2 span {
-		background: white 0% 0% url(../images/sub_scholars.png) no-repeat;
+		background: white 0% 0% url(../images/resource/sub_scholars.png) no-repeat;
         background-size: contain;
 	}
 }

@@ -3,7 +3,7 @@ section {
 }
 
 header {
-	background-image: url(../images/header.jpg);
+	background-image: url(../images/resource/header.jpg);
 }
 
 main ul {
@@ -142,7 +142,7 @@ main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, fo
 
 #wrap h2 {
     margin: .8em 0 0 0;
-    background: 0% 0% url(../images/grad.jpg) no-repeat;
+    background: 0% 0% url(../images/resource/grad.jpg) no-repeat;
     color: #993;
 }
 #wrap h2 span {
@@ -164,5 +164,5 @@ main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, fo
 .js #exit {
     width: 2.3em;
     height: 2.3em;
-	background: url("../images/sticks_sprite_fat_lowend.png") no-repeat;
+	background: url("../images/resource/sticks_sprite_fat_lowend.png") no-repeat;
 }
