@@ -1,5 +1,4 @@
-
-    @media screen and (min-width: 890px) {
+@media screen and (min-width: 890px) {
     	.flexwrap #place section:nth-child(2), .flexwrap #scholars section:nth-child(4),  .flexwrap #trust section:nth-child(4) {
     		display: -webkit-box;
     		display: -ms-flexbox;
