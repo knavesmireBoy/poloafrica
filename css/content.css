@@ -250,8 +250,6 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		line-height: 1.55;
 	}
 	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
-		color: hsl(58, 60%, 45%);
-		color: #b8b32e;
 		text-shadow: none;
 		background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
