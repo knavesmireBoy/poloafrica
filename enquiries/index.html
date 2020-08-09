@@ -88,17 +88,15 @@
        <article id="contactarea" class="alt">
            <h3><a href="#" id="contact_form">Poloafrica contact form</a></h3>
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
-           <form action="action.php" id="contactform" method="post" name="contactform">
-				<fieldset>
-					<legend>&nbsp;Poloafrica contact form&nbsp;</legend>
-						<label for="ID_namefield_BF7EF605">name</label><input id="ID_namefield_BF7EF605" tabindex="1" type="text" name="contactName" required pattern ="\S+\s\S{2,}">
-                        <label for="ID_phonefield_BF7EF6A0">phone</label><input id="ID_phonefield_BF7EF6A0" tabindex="2" type="tel" name="contactTel" pattern ="\d{7,}">
-                        <label for="ID_emailfield_BF7EF6A8">email</label><input id="ID_emailfield_BF7EF6A8" type="email" name="contactEmail" tabindex="3" required><label for="ID_adfield_BF7EF6B4">address</label><input id="ID_adfield_BF7EF6B4"  name="AddressLine1"  tabindex="4" type="text"><label for="ID_adfield2_BF7EF6BC">address</label><input id="ID_adfield2_BF7EF6BC" name="AddressLine2" tabindex="5" type="text">
-				</fieldset>
+           <div><form action="" id="poloafricacontactform" method="post">
                <fieldset>
-                   <textarea id="ID_Hols_BF72B5B7" name="Text" tabindex="6">Use this area for comments or questions</textarea><input alt="" src="../images/dogsform.gif" tabindex="9" type="image" id="dogs">
-               <input type="submit"></fieldset>
-            </form><figure><img alt="cat" src="../images/cat.jpg" id="cat"></figure>
+            <legend>Poloafrica contact form</legend><label title="required field" for="name">name</label><input id="name" name="name" tabindex="1"  pattern="\S+\s\S{2,}" required=""><label for="phone">phone</label><input id="phone" name="phone" tabindex="2" type="tel"  pattern="\d\s?{7,}"><label for="email"  title="required field">email</label><input id="email" name="email" tabindex="3" type="email"><label for="addr1">address</label><input id="addr1" name="addr1" tabindex="4"><label for="addr2">address</label><input id="addr2" name="addr2" tabindex="5"><label for="addr3">address</label><input id="addr3" name="addr3" tabindex="6"><label for="addr4">address</label><input id="addr4" name="addr4" tabindex="7"><label for="country">country</label><input id="country" name="country" tabindex="8"><label for="postcode">postcode</label><input id="postcode" name="postcode" tabindex="9">
+		</fieldset>
+		<fieldset>
+            <textarea id="comments" name="comments" tabindex="9">
+            </textarea><input alt="" id="dogs" name="dogs" src="../images/dogsform.gif" tabindex="10" type="image"><input type="submit" value="submit">
+		</fieldset>
+               </form><figure><img alt="cat" src="../images/cat.jpg" id="cat"></figure></div>
                 </article>
         </section>
         <section>
