@@ -33,7 +33,7 @@ header h1 {
 	overflow: hidden;
 	line-height: .3;
 }
-section input, nav input {
+section > input, nav > input {
 	cursor: pointer;
 	position: absolute;
 	left: -9999px;
