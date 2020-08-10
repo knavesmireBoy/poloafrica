@@ -18,6 +18,7 @@ var dum = {},
 	klasAdd = utils.addClass,
     doThrice = utils.curryThrice(),
     clicker = ptL(utils.addHandler, 'click'),
+    submitter = ptL(utils.addHandler, 'submit'),
     headingmatch = doThrice(invokemethod)('match')(/h3/i),
     tgt = !window.addEventListener ? 'srcElement' : 'target',
     getTarget = utils.drillDown([tgt, 'parentNode']),
@@ -66,8 +67,9 @@ var dum = {},
             window.location.assign("../admin");
 		}
 	};
-window.onload = prepareAjax;
-utils.addEvent(clicker, relocate)(legend);
+//window.onload = prepareAjax;
+//utils.addEvent(clicker, relocate)(legend);
+utils.addEvent(submitter, utils.shout('alert'))(document.forms[0]);
 
  utils.addHandler('click', bridge, main);
  dum[tgt] = articles[0].getElementsByTagName('a')[0];
