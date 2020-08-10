@@ -13,6 +13,14 @@ form {
 	padding: 1em 0;
 	border-radius: 10px;
 }
+
+fieldset {
+	font-size: 1em;
+	padding: 0 0 0 2%;
+	border: solid 1px black;
+	border-width: 1px 0 0;
+}
+
 label, input, textarea, legend {
 	border-radius: 8px;
 }
@@ -20,8 +28,10 @@ legend {
 	font-weight: bold;
 	background-color: #cc6;
 	border: solid 1px white;
-	padding: 0.2em .5em;
+    font-size: 1.2em;
+    padding: .1em 1em;
 }
+
 textarea {
 	border-width: 0;
 	width: 71.2%;
@@ -35,33 +45,25 @@ h2 span {
 form label {
 	font: bold .8em/2 Verdana, Arial, Helvetica, sans-serif;
 	text-align: center;
-	padding: .2em;
 	word-spacing: 0px;
 	letter-spacing: 0px;
 	margin: .1em 0;
-	width: 9%;
+	width: 10%;
 	/*declaring width w/o height causes label to reduce vertically when clicked???*/
-	height: 2em;
+	height: 2.4em;
+    
+    box-sizing: border-box;
 }
 legend, form label {
 	background-color: hsl(60, 40%, 55%);
 	border: solid 1px white;
 }
 
-legend {
-    font-size: 1.2em;
-    padding: .1em 1em;
-}
 form label:hover {
 	background-color: #cc6;
 	background-color: hsl(60, 50%, 60%);
 }
-fieldset {
-	font-size: 1em;
-	padding: 0 0 0 2%;
-	border: solid 1px black;
-	border-width: 1px 0 0;
-}
+
 form input, form label, textarea {
 	display: inline-block;
 	vertical-align: text-bottom;
@@ -77,6 +79,7 @@ fieldset:first-child input {
     box-sizing: border-box;
     background-color: white;
 	border-width: 0;
+    padding-left: .4em;
 }
 
 form input:first-of-type, form label:first-of-type {
@@ -92,22 +95,34 @@ fieldset:last-child input:last-child {
 	left: -999em;
 }
 
+section article>a {
+	flex: 0 0 100%;
+}
+
+form, figure, #response>* {
+	display: table-cell;
+    	/*crucial*/
+	vertical-align: top;
+	border-radius: 10px;
+	box-sizing: border-box;
+}
+
 #grooms {
 	width: 32%;
 }
 #addr1, #addr2, #addr3, #addr4 {
-	width: 37.8%;
+	width: 37.5%;
 	margin: .1em 1%;
 }
 #email {
-	width: 87.3%;
+	width: 87%;
 }
 #name, #country {
 	width: 48.5%;
 	margin: .1em 1%;
 }
 #phone, #postcode {
-	width: 27.1%;
+	width: 26.5%;
 }
 #dogs {
 	margin: 0;
@@ -140,11 +155,8 @@ fieldset:last-child input:last-child {
 	position: absolute;
 	left: -999em;
 }
-#enquries #intro {
+#intro {
 	margin: 2em 0 1em 0;
-}
-section article>a {
-	flex: 0 0 100%;
 }
 
 #post div, #response {
@@ -160,13 +172,6 @@ section article>a {
 	margin: 0;
     object-fit: cover;
 	border-radius: 10px;
-}
-form, figure, #response>* {
-	display: table-cell;
-    	/*crucial*/
-	vertical-align: top;
-	border-radius: 10px;
-	box-sizing: border-box;
 }
 
 #response figure.top {
@@ -223,33 +228,42 @@ section:nth-child(2) {
 		background: white 0% 0%/contain url(../images/resource/sub_enq.png) no-repeat;
 	}
 }
-@media screen and (max-width: 823px) {
-	form {
-		float: none;
-		width: auto;
-		margin: 0;
-	}
-	#intro {
-		margin: 2em 0 0 0;
-	}
-	#intro article {
-		margin: 0;
-	}
+@media screen and (max-width: 888px) {
+
 	section article p {
 		margin: 0 0 1.3em 0;
 	}
 	#poloafricacontactform {
 		width: 100%;
 	}
+    	#intro {
+		margin: 2em 0 0 0;
+	}
+	#intro article {
+		margin: 0;
+	}
+    
 	figure, #grooms {
 		position: absolute;
 		left: -999em;
 	}
+    #post div {
+        display: block;
+    }
+    
+    #post form {
+        margin-top: 1em;
+        display: block;
+    }
 }
 @media screen and (max-width: 667px) {
 	h2, h2 span {
 		background: none;
 	}
+    
+    h3 {
+	border-bottom: solid 1px white;
+}
 	section {
 		margin: 0;
 	}
@@ -294,7 +308,7 @@ section:nth-child(2) {
 	background-color: #E7E7C7;
 	background-color: hsl(60, 40%, 84%);
 }
-    
+    /*
 	@supports(column-gap: 20px) {
 		article.show #cath {
 			display: grid;
@@ -319,15 +333,17 @@ section:nth-child(2) {
 			color: white;
 		}
 	}
+    */
 	#dogs {
 		position: absolute;
 		left: -999em;
 	}
-	#wrap fieldset:last-child input:last-child {
+	fieldset:last-child input:last-child {
 		position: static;
 		left: auto;
 		display: block;
 		margin: 0 auto;
+        border-radius: 0;
 	}
 	.no-js section>label:nth-of-type(1):before {
 		content: "Donations and sponsorship";
@@ -355,6 +371,45 @@ section:nth-child(2) {
 	li:nth-child(8):hover ul {
 		right: 9999px;
 	}
+    
+    #post form fieldset:first-child label, #post form fieldset:first-child input {
+		width: 98%;
+		border-width: 0px;
+		text-align: left;
+		font: normal .875em/normal Arial, sans-serif;
+        color: hsl(60, 50%, 20%);
+	}
+    
+    #post form fieldset:first-child label {
+        text-transform: uppercase;
+    }
+	#post form fieldset:first-child legend {
+		display: none;
+	}
+    #post form fieldset {
+        border-width: 0;
+    }
+	#post form fieldset:first-child label {
+		background: none;
+		margin: 0;
+        height: 1em;
+        font-weight: bold;
+	}
+	#post form fieldset:first-child label:first-of-type {
+		margin-top: .5em;
+	}
+	#post form fieldset:first-child input {
+		margin: 0;
+	}
+    form fieldset legend {
+        width: 50%;
+        margin-left: 23%;
+        text-align: center;
+    }
+    
+    textarea {
+        margin: 0 0 1em;
+    }
 }
 /*@*/
 
