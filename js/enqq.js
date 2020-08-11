@@ -6,6 +6,48 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
+
+	function getResult(arg) {
+		return _.isFunction(arg) ? arg() : arg;
+	}
+
+function helper(ancor, tag, config){
+    var anCr = poloAF.Util.append();
+    if(tag.charAt[0] === '!'){
+        return makeElement(config, anCr(ancor), utils.always(tag)).render();
+    }
+    return makeElement(config, anCr(ancor), utils.always(tag)).render();
+}
+
+
+function reducer(tags){
+    return function (ancor, config, i) {
+        return helper(ancor, tags[i], config).getElement();
+};
+    }
+
+
+function appender(ancor, flag){
+    return function(tags){
+        return function (config, i) {
+            return helper(ancor, tags[i], config);
+};
+    };
+}
+
+
+function appender(ancor){
+    return function(tags, confs){
+        return function (config, i) {
+            if(_.isArray(tags[i])){
+                return _.reduce(confs, reducer(tags[i]), ancor);
+            }
+            return helper(ancor, tags[i], config);
+};
+    };
+}
+
+
 var dum = {},
     utils = poloAF.Util,
     ptL = _.partial,
@@ -25,7 +67,11 @@ var dum = {},
     isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
     main = document.getElementsByTagName('main')[0],
     articles = document.getElementsByTagName('article'),
-    legend = document.forms[0].getElementsByTagName('legend')[0],
+    myform = document.forms[0],
+    legend = myform.getElementsByTagName('legend')[0],
+    makeLeafComp = function (obj) {
+			return _.extend(poloAF.Composite(), obj);
+		},
     bridge = function(e) {
         var el = getTarget(e),
             myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
@@ -69,12 +115,22 @@ var dum = {},
 	};
 //window.onload = prepareAjax;
 //utils.addEvent(clicker, relocate)(legend);
-utils.addEvent(submitter, utils.shout('alert'))(document.forms[0]);
+//utils.addEvent(submitter, ptL(addParaPlus, anCr(document.forms[0].parentNode)))(document.forms[0]);
+var child_tags = ['img', 'div', 'img'],
+    children_config = [ptL(setAttrs, {alt:"", src: "../images/dogsform.gif"}), utils.drillDown(), ptL(setAttrs, {alt:"", src: "../images/cat.jpg"})],
+    //configs = [utils.drillDown(), ptL(klasAdd, 'msg'), ptL(setAttrs, {href: 'mailto:andrewsykes@btinternet.com'})],
+    innerdiv = ['h1', 'p', ['p', 'em'], 'p'],
+    innerdiv_configs = [utils.setText('Thankyou for your enquiry'), utils.setText('Here is your message:'), null, _.compose(ptL(klasAdd, 'msg'), utils.setText('hello'))],
+    sub_config = [utils.drillDown(), _.compose(ptL(utils.createTextNode, ':'), utils.drillDown(['parentNode']), utils.setText('A message has been sent to'))], 
+    f = appender(myform.parentNode)(innerdiv, sub_config);
+_.each(configs3, f);
+//_.reduce(configs, f, myform.parentNode);
+//utils.addEvent(submitter, ptL(FFF(, myform.parentNode), ))(document.forms[0]);
 
- utils.addHandler('click', bridge, main);
- dum[tgt] = articles[0].getElementsByTagName('a')[0];
- dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
- bridge(dum);
+utils.addHandler('click', bridge, main);
+dum[tgt] = articles[0].getElementsByTagName('a')[0];
+dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
+bridge(dum);
 
  var $sections = _.map(document.getElementsByTagName('section'), function(el){
         var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));

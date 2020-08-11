@@ -107,6 +107,8 @@
 	function isEqual(x, y) {
 		return Number(x) === Number(y);
 	}
+
+    
 	var utils = poloAF.Util,
 		con = window.console.log.bind(window),
 		/*reporter = function (msg, el) {

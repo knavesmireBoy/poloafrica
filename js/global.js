@@ -212,6 +212,10 @@ function divideBy(a, b){
 		var deep = existy(bool) ? bool : false;
 		return node.cloneNode(deep);
 	}
+    
+    function textNode(txt) {
+		return document.createTextNode(txt);
+	}
 
 	
 	function render(anc, refnode, el) {
@@ -294,6 +298,11 @@ function divideBy(a, b){
 	function getElementHeight(el) {
 		return el.offsetHeight || el.getBoundingClientRect().height;
 	}
+    
+    function baseNestedElements(ancor, outer, inner, hash) {
+        var anCr = poloAF.Util.append();
+        return _.compose(anCr(_.compose(anCr(ancor), utils.always(outer))))(inner);
+}
 
 	function getPageOffset(bool) {
 		var w = window,
@@ -583,7 +592,7 @@ function divideBy(a, b){
 	function composer() {
 		var args = _.toArray(arguments),
 			//may just be creating/selecting an unadorned element
-			/* if more than one argument get the last argument, otherwise get then only argument*/
+			/* if more than one argument get the last argument, otherwise get the only argument*/
 			select = args[1] ? args.splice(-1, 1)[0] : args[0];
 		return _.compose.apply(null, args)(select());
 	}
@@ -653,6 +662,7 @@ function divideBy(a, b){
 		return adapter;
 	}
 	var getNewElement = dispatch(curry2(cloneNode)(true), _.bind(document.createElement, document), _.bind(document.createDocumentFragment, document)),
+        
 		removeNodeOnComplete = _.wrap(removeElement, function (f, node) {
 			if (validateRemove(node)) {
 				return f(node);
@@ -698,7 +708,7 @@ function divideBy(a, b){
 					return this;
 				},
                 init: function(){
-                    /*may sometimes just want to get a reference to the element without adding class, attrs, eventHandlers*/
+                    /*may sometimes just want to get a reference to an (existing) element without adding class, attrs, eventHandlers*/
                     el = select();
                 },
 				unrender: function () {
@@ -783,19 +793,10 @@ function divideBy(a, b){
 				return fun(arg);
 			};
 		},
-		silent_conditional: function () {
-			var validators = _.toArray(arguments);
-			return function (fun, arg) {
-				var errors = mapcat(function (isValid) {
-					return isValid(arg) ? [] : [isValid.message];
-				}, validators);
-				if (!_.isEmpty(errors)) {
-					return;
-					//throw new Error(errors.join(", "));
-				}
-				return fun(arg);
-			};
-		},
+        createTextNode: function(text, ancor){
+            getResult(ancor).appendChild(document.createTextNode(text));
+            return ancor;
+        },
 		curry4: curry4,
 		curryTwice: function (flag) {
 			return flag ? curry22 : curry2;
@@ -976,6 +977,19 @@ function divideBy(a, b){
 		setText: curry3(setAdapter)('innerHTML'),
 		setter: setter,
 		show: _.partial(setFromArray, always(true), 'add', ['show']),
+        silent_conditional: function () {
+            var validators = _.toArray(arguments);
+            return function (fun, arg) {
+				var errors = mapcat(function (isValid) {
+					return isValid(arg) ? [] : [isValid.message];
+				}, validators);
+				if (!_.isEmpty(errors)) {
+					return;
+					//throw new Error(errors.join(", "));
+				}
+				return fun(arg);
+			};
+		},
 		simpleAdapter: simpleAdapter,
         SimpleXhrFactory: SimpleXhrFactory,
 		toggleClass: _.partial(setFromArray, always(true), 'toggle'),
