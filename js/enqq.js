@@ -13,9 +13,6 @@ if (!window.poloAF) {
 
 function helper(ancor, tag, config){
     var anCr = poloAF.Util.append();
-    if(tag.charAt[0] === '!'){
-        return makeElement(config, anCr(ancor), utils.always(tag)).render();
-    }
     return makeElement(config, anCr(ancor), utils.always(tag)).render();
 }
 
@@ -25,6 +22,17 @@ function reducer(tags){
         return helper(ancor, tags[i], config).getElement();
 };
     }
+
+
+function reducer(tags, confs){
+    return function (ancor, config, i) {
+         if(_.isArray(tags[i])){
+                return _.reduce(confs, reducer(tags[i], confs), ancor);
+            }
+        return helper(ancor, tags[i], config).getElement();
+};
+    }
+
 
 
 function appender(ancor, flag){
@@ -37,16 +45,15 @@ function appender(ancor, flag){
 
 
 function appender(ancor){
-    return function(tags, confs){
+    return function(tags, confs, subconfs){
         return function (config, i) {
             if(_.isArray(tags[i])){
-                return _.reduce(confs, reducer(tags[i]), ancor);
+                return _.reduce(confs, reducer(tags[i], subconfs), ancor);
             }
             return helper(ancor, tags[i], config);
-};
+        };
     };
 }
-
 
 var dum = {},
     utils = poloAF.Util,
@@ -116,14 +123,17 @@ var dum = {},
 //window.onload = prepareAjax;
 //utils.addEvent(clicker, relocate)(legend);
 //utils.addEvent(submitter, ptL(addParaPlus, anCr(document.forms[0].parentNode)))(document.forms[0]);
-var child_tags = ['img', 'div', 'img'],
-    children_config = [ptL(setAttrs, {alt:"", src: "../images/dogsform.gif"}), utils.drillDown(), ptL(setAttrs, {alt:"", src: "../images/cat.jpg"})],
+var outerdiv = ['img', ['div', 'h1', 'p', ['p', 'em'], 'p'], 'img'],
+    thx = utils.setText('Thankyou for your enquiry'),
+    here = utils.setText('Here is your message:'),
+    sent = utils.setText('A message has been sent to'),
+    children_config = [ptL(setAttrs, {alt:"", src: "../images/dogsform.gif"}), null, ptL(setAttrs, {alt:"", src: "../images/cat.jpg"})],
     //configs = [utils.drillDown(), ptL(klasAdd, 'msg'), ptL(setAttrs, {href: 'mailto:andrewsykes@btinternet.com'})],
-    innerdiv = ['h1', 'p', ['p', 'em'], 'p'],
-    innerdiv_configs = [utils.setText('Thankyou for your enquiry'), utils.setText('Here is your message:'), null, _.compose(ptL(klasAdd, 'msg'), utils.setText('hello'))],
-    sub_config = [utils.drillDown(), _.compose(ptL(utils.createTextNode, ':'), utils.drillDown(['parentNode']), utils.setText('A message has been sent to'))], 
-    f = appender(myform.parentNode)(innerdiv, sub_config);
-_.each(configs3, f);
+    innerdiv_configs = [utils.drillDown(), _.compose(utils.drillDown(['parentNode']), thx), _.compose(utils.drillDown(['parentNode']), here), null, _.compose(ptL(klasAdd, 'msg'), utils.setText('hello'))],
+    sub_config = [utils.drillDown(), _.compose(utils.drillDown(['parentNode']), ptL(utils.createTextNode, ':'), utils.drillDown(['parentNode']), sent)], 
+    f = appender(myform.parentNode)(outerdiv, innerdiv_configs, sub_config);
+
+_.each(children_config, f);
 //_.reduce(configs, f, myform.parentNode);
 //utils.addEvent(submitter, ptL(FFF(, myform.parentNode), ))(document.forms[0]);
 
