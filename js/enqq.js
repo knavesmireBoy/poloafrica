@@ -122,20 +122,25 @@ var dum = {},
 	};
 //window.onload = prepareAjax;
 //utils.addEvent(clicker, relocate)(legend);
-//utils.addEvent(submitter, ptL(addParaPlus, anCr(document.forms[0].parentNode)))(document.forms[0]);
-var outerdiv = ['img', ['div', 'h1', 'p', ['p', 'em'], 'p'], 'img'],
+var outerdiv = ['img', ['div', 'h1', 'p', ['p', 'a'], 'p'], 'img'],
     thx = utils.setText('Thankyou for your enquiry'),
     here = utils.setText('Here is your message:'),
-    sent = utils.setText('A message has been sent to'),
+    sent = utils.setText('An email has been sent to '),
+    email1 = utils.setText("andrewsykes@btinternet.com"),
+    getParent = utils.drillDown(['parentNode']),
+    getParent2 = utils.drillDown(['parentNode', 'parentNode']),
+    getCurrent = utils.drillDown(),
+    email2 = "mailto:andrewsykes@btinternet.com",
     children_config = [ptL(setAttrs, {alt:"", src: "../images/dogsform.gif"}), null, ptL(setAttrs, {alt:"", src: "../images/cat.jpg"})],
-    //configs = [utils.drillDown(), ptL(klasAdd, 'msg'), ptL(setAttrs, {href: 'mailto:andrewsykes@btinternet.com'})],
-    innerdiv_configs = [utils.drillDown(), _.compose(utils.drillDown(['parentNode']), thx), _.compose(utils.drillDown(['parentNode']), here), null, _.compose(ptL(klasAdd, 'msg'), utils.setText('hello'))],
-    sub_config = [utils.drillDown(), _.compose(utils.drillDown(['parentNode']), ptL(utils.createTextNode, ':'), utils.drillDown(['parentNode']), sent)], 
+    innerdiv_configs = [getCurrent, _.compose(getParent, thx), _.compose(getParent, here), null, _.compose(ptL(klasAdd, 'msg'), utils.setText('hello'))],
+    
+   // sub_config = [getCurrent, _.compose(getParent, ptL(utils.createTextNode, ':x'), getParent, sent)], 
+    sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {href:email2}), email1)], 
+    
+    
     f = appender(myform.parentNode)(outerdiv, innerdiv_configs, sub_config);
 
 _.each(children_config, f);
-//_.reduce(configs, f, myform.parentNode);
-//utils.addEvent(submitter, ptL(FFF(, myform.parentNode), ))(document.forms[0]);
 
 utils.addHandler('click', bridge, main);
 dum[tgt] = articles[0].getElementsByTagName('a')[0];
