@@ -108,14 +108,18 @@ var dum = {},
 			window.location.assign("../admin");
 		}
 	},
+    obj = {
+        email: 'email',
+        comments: 'comments'
+    },
 	//window.onload = prepareAjax;
 	//utils.addEvent(clicker, relocate)(legend);
 	listener = function(e) {      
-		var obj = utils.serializeObject(e.target),
-            $tgt = makeElement(ptL(setAttrs, {
+		var $tgt = makeElement(ptL(setAttrs, {
 				id: 'response'
 			}), utils.always(myform.parentNode)),
-			neue_nodes = ['figure', 'img', ['div', 'h1', ['p', 'a'], 'p', 'p'], 'img'],
+            //obj = utils.serializeObject(e.target),
+			neue_nodes = ['figure', 'img', ['div', 'h1', ['p', 'a'], 'p', 'p'], 'figure', 'img'],
 			thx = utils.setText('Thankyou for your enquiry'),
 			here = utils.setText('Here is your message:'),
 			sent = utils.setText('An email has been sent to '),
@@ -133,7 +137,7 @@ var dum = {},
 			getParent2 = utils.drillDown(['parentNode', 'parentNode']),
 			getCurrent = utils.drillDown(),
 			email2 = "mailto:"+obj.email,
-			children_config = [ptL(klasAdd, ['dogs', 'bottom']), comp(getParent, ptL(setAttrs, dogsrc)), null, comp(ptL(klasAdd, ['cat', 'bottom']), ptL(setAttrs, catsrc))],
+			children_config = [ptL(klasAdd, ['dogs', 'bottom']), comp(getParent, ptL(setAttrs, dogsrc)), null, ptL(klasAdd, ['cat', 'bottom']), ptL(setAttrs, catsrc)],
 			innerdiv_configs = [getCurrent, _.compose(getParent, thx), null, _.compose(getParent, here), _.compose(ptL(klasAdd, 'msg'), hiya)],
 			sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {
 				href: email2
@@ -141,6 +145,7 @@ var dum = {},
 			response = appender($tgt)(neue_nodes, innerdiv_configs, sub_config);
 			_.each(children_config, response);		
 	};
+listener();
 //_.each(children_config, response);
 utils.addEvent(submitter, listener)(myform);
 utils.addHandler('click', bridge, main);
