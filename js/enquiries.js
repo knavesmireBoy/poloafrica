@@ -33,15 +33,17 @@ function go(ancor) {
 }
 
 function appender(ancor) {
-	return function(tags, confs, subconfs) {
+	return function(tags, confs) {
+        var j = 0;
 		return function(config, i) {
 			if (_.isArray(tags[i])) {
-				return _.reduce(confs, reducer(tags[i], subconfs), go(ancor));
+				return _.reduce(confs[j++], reducer(tags[i], confs[j]), go(ancor));
 			}
 			return helper(go(ancor), tags[i], config);
 		};
 	};
 }
+
 var dum = {},
 	utils = poloAF.Util,
 	ptL = _.partial,
@@ -142,7 +144,7 @@ var dum = {},
 			sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {
 				href: email2
 			}), email1)],
-			response = appender($tgt)(neue_nodes, innerdiv_configs, sub_config);
+			response = appender($tgt)(neue_nodes, [innerdiv_configs, sub_config]);
 			_.each(children_config, response);		
 	};
 listener();
