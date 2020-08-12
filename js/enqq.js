@@ -16,14 +16,6 @@ function helper(ancor, tag, config){
     return makeElement(config, anCr(ancor), utils.always(tag)).render();
 }
 
-
-function reducer(tags){
-    return function (ancor, config, i) {
-        return helper(ancor, tags[i], config).getElement();
-};
-    }
-
-
 function reducer(tags, confs){
     return function (ancor, config, i) {
          if(_.isArray(tags[i])){
@@ -33,24 +25,13 @@ function reducer(tags, confs){
 };
     }
 
-
-
-function appender(ancor, flag){
-    return function(tags){
-        return function (config, i) {
-            return helper(ancor, tags[i], config);
-};
-    };
-}
-
-
 function appender(ancor){
     return function(tags, confs, subconfs){
         return function (config, i) {
             if(_.isArray(tags[i])){
-                return _.reduce(confs, reducer(tags[i], subconfs), ancor);
+                return _.reduce(confs, reducer(tags[i], subconfs), ancor.getElement());
             }
-            return helper(ancor, tags[i], config);
+            return helper(ancor.getElement(), tags[i], config);
         };
     };
 }
@@ -122,7 +103,8 @@ var dum = {},
 	};
 //window.onload = prepareAjax;
 //utils.addEvent(clicker, relocate)(legend);
-var outerdiv = ['img', ['div', 'h1', 'p', ['p', 'a'], 'p'], 'img'],
+var $tgt = makeElement(ptL(setAttrs, {id: 'response'}), always(myform.parentNode)),
+    outerdiv = ['img', ['div', 'h1', ['p', 'a'], 'p', 'p'], 'img'],
     thx = utils.setText('Thankyou for your enquiry'),
     here = utils.setText('Here is your message:'),
     sent = utils.setText('An email has been sent to '),
@@ -132,13 +114,10 @@ var outerdiv = ['img', ['div', 'h1', 'p', ['p', 'a'], 'p'], 'img'],
     getCurrent = utils.drillDown(),
     email2 = "mailto:andrewsykes@btinternet.com",
     children_config = [ptL(setAttrs, {alt:"", src: "../images/dogsform.gif"}), null, ptL(setAttrs, {alt:"", src: "../images/cat.jpg"})],
-    innerdiv_configs = [getCurrent, _.compose(getParent, thx), _.compose(getParent, here), null, _.compose(ptL(klasAdd, 'msg'), utils.setText('hello'))],
-    
-   // sub_config = [getCurrent, _.compose(getParent, ptL(utils.createTextNode, ':x'), getParent, sent)], 
+    innerdiv_configs = [getCurrent, _.compose(getParent, thx), null, _.compose(getParent, here), _.compose(ptL(klasAdd, 'msg'), utils.setText('hello'))],
     sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {href:email2}), email1)], 
-    
-    
-    f = appender(myform.parentNode)(outerdiv, innerdiv_configs, sub_config);
+    f = appender($tgt.render())(outerdiv, innerdiv_configs, sub_config),
+    prep = ptL(_.each, children_config, f);
 
 _.each(children_config, f);
 

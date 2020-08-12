@@ -174,9 +174,9 @@ form, figure, #response>* {
 	border-radius: 10px;
 }
 
-#response figure.top {
+#response form, #response figure, #response figure.top {
 		display: none;
-	}
+}
 	#response p:nth-child(4) {
 		background-color: white;
 		border-width: 0;
@@ -295,7 +295,6 @@ section:nth-child(2) {
 		color: white;
 		background-color: transparent;
 	}
-    
     
     .no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before {
 	color: white;
