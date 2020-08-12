@@ -207,7 +207,7 @@ form, figure, #response>* {
 }
 
 #response .dogs {
-    width: 33%;
+    width: 15%;
     border-right: solid 1px white;
 }
 #response .cat {

@@ -39,6 +39,7 @@ function appender(ancor){
 var dum = {},
     utils = poloAF.Util,
     ptL = _.partial,
+    comp = _.compose,
     invokemethod = function(o, arg, m) {
         return o[m](arg);
     },
@@ -110,11 +111,13 @@ var $tgt = makeElement(ptL(setAttrs, {id: 'response'}), utils.always(myform.pare
     sent = utils.setText('An email has been sent to '),
     hiya = utils.setText('hello'),
     email1 = utils.setText("andrewsykes@btinternet.com"),
+    dogsrc = {alt:"", src: "../images/resource/dog_gone.jpg"},
+    catsrc = {alt:"", src: "../images/resource/cat_real_gone.jpg"},
     getParent = utils.drillDown(['parentNode']),
     getParent2 = utils.drillDown(['parentNode', 'parentNode']),
     getCurrent = utils.drillDown(),
     email2 = "mailto:andrewsykes@btinternet.com",
-    children_config = [ptL(setAttrs, {alt:"", src: "../images/resource/016.jpg"}), null, ptL(setAttrs, {alt:"", src: "../images/resource/cat_gone.jpg"})],
+    children_config = [comp(ptL(klasAdd, ['dogs','bottom']), ptL(setAttrs, dogsrc)), null, comp(ptL(klasAdd, ['cat', 'bottom']), ptL(setAttrs, catsrc))],
     innerdiv_configs = [getCurrent, _.compose(getParent, thx), null, _.compose(getParent, here), _.compose(ptL(klasAdd, 'msg'), hiya)],
     sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {href:email2}), email1)], 
     response = appender($tgt.render())(neue_nodes, innerdiv_configs, sub_config),
