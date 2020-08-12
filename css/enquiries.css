@@ -174,6 +174,73 @@ form, figure, #response>* {
 	border-radius: 10px;
 }
 
+#response {
+	background-color: whitesmoke;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#response > * {
+	margin: 0;
+}
+
+#response p {
+	color: black;
+	text-align: left;
+    margin: 0;
+}
+
+#response a {
+	color: royalblue;
+}
+#response p[class="msg"] {
+	border-top: 1px dotted #444;
+	margin-top: .5em;
+	padding: .4em;
+	font: 1em/1.5 Georgia, sans-serif;
+    max-height: 250px;
+    overflow: auto;
+}
+/* to prevent crazy heights if big message posted*/
+#response figure img {
+    height: 360px;
+}
+
+#response .dogs {
+    width: 33%;
+    border-right: solid 1px white;
+}
+#response .cat {
+	width: 15%;
+    border-left: solid 1px white; 
+}
+#response div {
+	margin: 1%;
+	padding: 1%;
+	border: solid 0px white;
+	background-color: aliceblue;
+	background-color: rgba(200, 222, 255, 1);
+    width: 50%;
+}
+#response div h1 {
+    color: crimson;
+}
+#response div p.msg {
+    margin-bottom: 1em;
+}
+
+#contactarea > div, #response {
+     display: table;
+}
+
+#contactarea form, #contactarea figure, #response > * {
+    display: table-cell;
+    vertical-align: top;/*crucial*/
+    border-radius: 10px;
+    box-sizing: border-box;
+    border-radius: 0;
+}
+
 #response form, #response figure, #response figure.top {
 		display: none;
 }
@@ -189,6 +256,7 @@ form, figure, #response>* {
 .no-cssanimations #response .top {
     display: none;
     }
+
 
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
 section:nth-child(2) {
