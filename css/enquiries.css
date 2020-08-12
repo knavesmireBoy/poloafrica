@@ -159,10 +159,13 @@ form, figure, #response>* {
 	margin: 2em 0 1em 0;
 }
 
-#post div, #response {
+#post div {
 	display: table;
 	margin-top: .5em;
 	border-spacing: 1em;
+}
+div#response {
+    display: block;
 }
 #cat {
 	/* firefox 48.0.2 required this:*/
@@ -207,7 +210,7 @@ form, figure, #response>* {
 }
 
 #response .dogs {
-    width: 15%;
+    width: 33%;
     border-right: solid 1px white;
 }
 #response .cat {
@@ -221,16 +224,13 @@ form, figure, #response>* {
 	background-color: aliceblue;
 	background-color: rgba(200, 222, 255, 1);
     width: 50%;
+    box-sizing: border-box;
 }
 #response div h1 {
     color: crimson;
 }
 #response div p.msg {
     margin-bottom: 1em;
-}
-
-#contactarea > div, #response {
-     display: table;
 }
 
 #contactarea form, #contactarea figure, #response > * {
@@ -240,6 +240,12 @@ form, figure, #response>* {
     box-sizing: border-box;
     border-radius: 0;
 }
+
+#response > * {
+    display: block;
+    float: left;
+}
+
 
 #response form, #response figure, #response figure.top {
 		display: none;

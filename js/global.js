@@ -961,7 +961,36 @@ function divideBy(a, b){
 		removeNodeOnComplete: removeNodeOnComplete,
 		render: render,
 		reverse: reverseArray,
-		setAnchor: setAnchor,
+        /*https://gomakethings.com/how-to-serialize-form-data-into-an-object-with-vanilla-js/*/
+        serializeObject: function (form) {
+            var obj = {},
+                options = [];
+            // Loop through each field in the form
+            Array.prototype.slice.call(form.elements).forEach(function (field) {
+                // Skip some fields we don't need
+                if (!field.name || field.disabled || ['file', 'reset', 'submit', 'button'].indexOf(field.type) > -1) return;
+                // Handle multi-select fields
+                if (field.type === 'select-multiple') {
+                    // Create an array of selected values
+                    // Loop through the options and add selected ones
+                    Array.prototype.slice.call(field.options).forEach(function (option) {
+                        if (!option.selected) return;
+                        options.push(option.value);
+                    });
+                }
+                // If there are any selection options, add them to the object
+                if (options.length) {
+                    obj[field.name] = options;
+                }
+                // If it's a checkbox or radio button and it's not checked, skip it
+                if (['checkbox', 'radio'].indexOf(field.type) > -1 && !field.checked) return;
+                obj[field.name] = field.value;
+            });
+		// Do stuff with the field...
+            // Return the object
+            return obj;
+        },
+        setAnchor: setAnchor,
 		setAttributes: _.partial(setFromFactory(!window.addEventListener), always(true), 'setAttribute'),
 		setAttrsFix: setFromFactory, //keep as may be in use, but prefer above
 		setFromArray: setFromArray,
@@ -992,9 +1021,6 @@ function divideBy(a, b){
 		},
 		simpleAdapter: simpleAdapter,
         SimpleXhrFactory: SimpleXhrFactory,
-		toggleClass: _.partial(setFromArray, always(true), 'toggle'),
-		toggle: _.partial(setFromArray, always(true), 'toggle', ['show']),
-		validator: validator,
 		shout: function (m) {
 			var applier = function (f, args) {
 				return function () {
@@ -1007,6 +1033,9 @@ function divideBy(a, b){
             var getBg = curry3(simpleInvoke)(reg)('match');
             return getBg(poloAF.Util.getComputedStyle(el, prop));
         },
+        toggleClass: _.partial(setFromArray, always(true), 'toggle'),
+		toggle: _.partial(setFromArray, always(true), 'toggle', ['show']),
+		validator: validator,
 		getDummyTarget: function (k, v) {
 			var tgt = {};
 			tgt[k] = v;
