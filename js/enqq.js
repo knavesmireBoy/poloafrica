@@ -103,23 +103,24 @@ var dum = {},
 	};
 //window.onload = prepareAjax;
 //utils.addEvent(clicker, relocate)(legend);
-var $tgt = makeElement(ptL(setAttrs, {id: 'response'}), always(myform.parentNode)),
-    outerdiv = ['img', ['div', 'h1', ['p', 'a'], 'p', 'p'], 'img'],
+var $tgt = makeElement(ptL(setAttrs, {id: 'response'}), utils.always(myform.parentNode)),
+    neue_nodes = ['img', ['div', 'h1', ['p', 'a'], 'p', 'p'], 'img'],
     thx = utils.setText('Thankyou for your enquiry'),
     here = utils.setText('Here is your message:'),
     sent = utils.setText('An email has been sent to '),
+    hiya = utils.setText('hello'),
     email1 = utils.setText("andrewsykes@btinternet.com"),
     getParent = utils.drillDown(['parentNode']),
     getParent2 = utils.drillDown(['parentNode', 'parentNode']),
     getCurrent = utils.drillDown(),
     email2 = "mailto:andrewsykes@btinternet.com",
-    children_config = [ptL(setAttrs, {alt:"", src: "../images/dogsform.gif"}), null, ptL(setAttrs, {alt:"", src: "../images/cat.jpg"})],
-    innerdiv_configs = [getCurrent, _.compose(getParent, thx), null, _.compose(getParent, here), _.compose(ptL(klasAdd, 'msg'), utils.setText('hello'))],
+    children_config = [ptL(setAttrs, {alt:"", src: "../images/resource/016.jpg"}), null, ptL(setAttrs, {alt:"", src: "../images/resource/cat_gone.jpg"})],
+    innerdiv_configs = [getCurrent, _.compose(getParent, thx), null, _.compose(getParent, here), _.compose(ptL(klasAdd, 'msg'), hiya)],
     sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {href:email2}), email1)], 
-    f = appender($tgt.render())(outerdiv, innerdiv_configs, sub_config),
-    prep = ptL(_.each, children_config, f);
+    response = appender($tgt.render())(neue_nodes, innerdiv_configs, sub_config),
+    prep = ptL(_.each, children_config, response);
 
-_.each(children_config, f);
+_.each(children_config, response);
 
 utils.addHandler('click', bridge, main);
 dum[tgt] = articles[0].getElementsByTagName('a')[0];
