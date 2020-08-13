@@ -154,6 +154,14 @@ fieldset:last-child input:last-child {
     overflow: hidden;
 }
 
+form, figure, #response>* {
+	display: table-cell;
+    	/*crucial*/
+	vertical-align: top;
+	border-radius: 10px;
+	box-sizing: border-box;
+}
+
 #intro article {
 	margin: 0 38% 0 0;
 }
@@ -165,13 +173,6 @@ fieldset:last-child input:last-child {
 	width: 20%;
 }
 
-form, figure, #response>* {
-	display: table-cell;
-    	/*crucial*/
-	vertical-align: top;
-	border-radius: 10px;
-	box-sizing: border-box;
-}
 
 #response p {
 	margin: 0;
@@ -243,7 +244,6 @@ div#response {
 	width: 15%;
     border-left: solid 1px white; 
 }
-
 
 #response div p.msg {
     margin-bottom: 1em;
@@ -355,15 +355,16 @@ section:nth-child(2) {
 		height: 10em;
 		float: none;
 		box-sizing: border-box;
+         margin: 0 0 1em;
 	}
-	figure, #wrap #grooms, #dogs {
-		position: absolute;
-		left: -999em;
-	}
-	#intro article p {
-		margin: 1em 0 1.3em 0;
-	}
-	article.show h3 {
+    
+        legend {
+        width: 50%;
+        margin-left: 23%;
+        text-align: center;
+    }
+    
+    	article.show h3 {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);
@@ -372,6 +373,15 @@ section:nth-child(2) {
 		color: white;
 		background-color: transparent;
 	}
+    
+	figure, #grooms, #dogs {
+		position: absolute;
+		left: -999em;
+	}
+	#intro article p {
+		margin: 1em 0 1.3em 0;
+	}
+
     
     .no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before {
 	color: white;
@@ -474,15 +484,6 @@ section:nth-child(2) {
 	#post form fieldset:first-child input {
 		margin: 0;
 	}
-    form fieldset legend {
-        width: 50%;
-        margin-left: 23%;
-        text-align: center;
-    }
-    
-    textarea {
-        margin: 0 0 1em;
-    }
 }
 /*@*/
 
