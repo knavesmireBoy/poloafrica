@@ -333,13 +333,6 @@ section:nth-child(2) {
 		color: white;
 		background-color: transparent;
 	}
-	figure, #grooms, #dogs {
-		position: absolute;
-		left: -999em;
-	}
-	#intro article p {
-		margin: 1em 0 1.3em 0;
-	}
 	/*
 	@supports(column-gap: 20px) {
 		article.show #cath {
@@ -415,6 +408,13 @@ section:nth-child(2) {
 	}
 	.no-js section:nth-child(3)>label:before {
 		content: "Directions";
+	}
+	figure, #grooms, #dogs {
+		position: absolute;
+		left: -999em;
+	}
+	#intro article p {
+		margin: 1em 0 1.3em 0;
 	}
 	.no-js input~article p, .no-js #post1.read-more-state:checked~article:nth-of-type(1) p {
 		position: absolute;
