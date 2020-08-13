@@ -64,7 +64,7 @@ fieldset:last-child {
 }
 .warning legend, label.warning {
 	color: crimson;
-	background-color: purple;
+	background-color: indigo;
 }
 textarea.warning {
 	color: crimson;
@@ -154,7 +154,7 @@ form, figure, #response>* {
 }
 #response p {
 	margin: 0;
-	color: purple;
+	color: indigo;
 }
 #cath img {
 	position: absolute;
@@ -351,9 +351,7 @@ section:nth-child(2) {
 		}
 	}
     */
-	li:nth-child(8):hover ul {
-		right: 9999px;
-	}
+
 	fieldset:first-child label {
 		text-transform: uppercase;
 	}
@@ -397,6 +395,10 @@ section:nth-child(2) {
     article.show h3 a {
 		color: white;
 		background-color: transparent;
+	}
+    
+    	li:nth-child(8):hover ul {
+		right: 9999px;
 	}
         
 	.no-js section>label:nth-of-type(1):before {
