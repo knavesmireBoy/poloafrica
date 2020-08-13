@@ -38,6 +38,19 @@ function spreadify (fn, fnThis) {
 				};
 			};
 		}
+    
+    function Message (k, v){
+        this.key = k;
+        this.value = v;
+    }
+    
+    Message.prototype.getKey = function(){
+        return this.key;
+    }
+    
+      Message.prototype.getValue = function(){
+        return this.value;
+    }
 
 	function toCamelCase(variable) {
 		return variable.replace(/-([a-z])/g, function (str, letter) {
@@ -248,6 +261,20 @@ function divideBy(a, b){
 		}
 		return null;
 	}
+    
+    
+    function getWhatElement(p){
+        return function getWhat(node){
+            if (node && node.nodeType === 1) {
+                return node;
+            }
+            if (node && node[p]) {
+                return getWhat(node[p]);
+		}
+            return null;
+    };
+    }
+    
     function insertAfter(newElement, targetElement) {
 		var parent = targetElement.parentNode;
 		if (parent.lastChild === targetElement) {
@@ -865,6 +892,7 @@ function divideBy(a, b){
 		getDomParent: curry3(getTargetNode)('parentNode'),
 		getElementHeight: getElementHeight,
 		getElementOffset: getElementOffset,
+        getFirstChild: getWhatElement('firstChild'),
 		getSibling: curry3(getTargetNode)('nextSibling'),
 		getNewElement: getNewElement,
 		getNext: _.partial(nested, curry2(getter)('nextSibling'), getNextElement), // expects node //?//
@@ -943,6 +971,7 @@ function divideBy(a, b){
 		map: function (coll, mapper) {
 			return _.map(coll, mapper);
 		},
+        mapcat: mapcat,
 		move: function (flag) {
 			if (flag) {
 				return curry33(setAnchor)(_.identity)(null);
@@ -1013,10 +1042,21 @@ function divideBy(a, b){
 					return isValid(arg) ? [] : [isValid.message];
 				}, validators);
 				if (!_.isEmpty(errors)) {
-					return;
+					return errors;
 					//throw new Error(errors.join(", "));
 				}
 				return fun(arg);
+			};
+		},
+        
+         simple_conditional: function () {
+            var validators = _.toArray(arguments);
+            return function (v, k) {
+				var errors = mapcat(function (isValid) {
+					return isValid(k, v) ? [] : [k, isValid.message];
+					//return isValid(k, v) ? [] : [new Message(k, v)];
+				}, validators);
+				return errors;
 			};
 		},
 		simpleAdapter: simpleAdapter,

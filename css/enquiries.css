@@ -81,6 +81,14 @@ fieldset:first-child input {
 	border-width: 0;
     padding-left: .4em;
 }
+.warning fieldset legend, .override label.warning {
+	color: firebrick;
+	background-color: black;
+}
+textarea.warning  {
+	color: firebrick;
+    background-color: lightsalmon;
+}
 
 form input:first-of-type, form label:first-of-type {
 	margin-top: 1em;
@@ -159,7 +167,7 @@ form, figure, #response>* {
 	margin: 2em 0 1em 0;
 }
 
-#post > div {
+#post > article > div {
 	display: table;
 	margin-top: .5em;
 	border-spacing: 1em;
