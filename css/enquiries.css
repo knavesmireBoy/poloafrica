@@ -122,9 +122,7 @@ fieldset:last-child input:last-child {
 	margin-left: -100%;
 	border: solid 1px white;
 }
-#dogs:hover {
-	opacity: .9;
-}
+
 #cat {
 	/* firefox 48.0.2 required this:*/
 	min-height: 25.75em;
@@ -134,6 +132,7 @@ fieldset:last-child input:last-child {
 	object-fit: cover;
 	border-radius: 10px;
 }
+
 #response {
 	background-color: whitesmoke;
 	border-radius: 10px;
@@ -217,6 +216,9 @@ div#response {
 #response .cat {
 	width: 15%;
 	border-left: solid 1px white;
+}
+#dogs:hover {
+	opacity: .9;
 }
 #response div p.msg {
 	margin-bottom: 1em;
@@ -381,6 +383,12 @@ section:nth-child(2) {
 		font: normal .875em/normal Arial, sans-serif;
 		color: hsl(60, 50%, 20%);
 	}
+    
+     article.show h3 a {
+		color: white;
+		background-color: transparent;
+	}
+    
 	fieldset:first-child label:first-of-type {
 		margin-top: .5em;
 	}
@@ -392,10 +400,7 @@ section:nth-child(2) {
 		border-radius: 0;
 	}
     
-    article.show h3 a {
-		color: white;
-		background-color: transparent;
-	}
+   
     
     	li:nth-child(8):hover ul {
 		right: 9999px;
