@@ -11,20 +11,6 @@ function getResult(arg) {
 	return _.isFunction(arg) ? arg() : arg;
 }
 
-function helper(ancor, tag, config) {
-	var anCr = poloAF.Util.append();
-	return makeElement(config, anCr(ancor), utils.always(tag)).render();
-}
-
-function reducer(tags, confs) {
-	return function(ancor, config, i) {
-		if (_.isArray(tags[i])) {
-			return _.reduce(confs, reducer(tags[i], confs), ancor);
-		}
-		return helper(ancor, tags[i], config).getElement();
-	};
-}
-
 function go(ancor) {
 	if (!ancor.getElement()) {
 		return ancor.render().getElement();
@@ -32,15 +18,17 @@ function go(ancor) {
 	return ancor.getElement();
 }
 
-function appender(ancor) {
-	return function(tags, confs) {
-        var j = 0;
-		return function(config, i) {
-			if (_.isArray(tags[i])) {
-				return _.reduce(confs[j++], reducer(tags[i], confs[j]), go(ancor));
-			}
-			return helper(go(ancor), tags[i], config);
-		};
+function helper(ancor, tag, config) {
+	var anCr = poloAF.Util.append();
+	return makeElement(config, anCr(ancor), utils.always(tag)).render();
+}
+
+function reducer(tags) {
+    return function (ancor, config, i, gang) {
+		if (_.isArray(tags[i])) {
+			return _.reduce(gang[i], reducer(tags[i]), ancor);
+		}
+		return helper(ancor, tags[i], config).getElement();
 	};
 }
 
@@ -121,7 +109,7 @@ var dum = {},
 				id: 'response'
 			}), utils.always(myform.parentNode)),
             //obj = utils.serializeObject(e.target),
-			neue_nodes = ['figure', 'img', ['div', 'h1', ['p', 'a'], 'p', 'p'], 'figure', 'img'],
+			neue_nodes = [['figure', 'img'], ['div', 'h1'], ['p', 'a'],['p', 'p'],  ['figure', 'img']],
 			thx = utils.setText('Thankyou for your enquiry'),
 			here = utils.setText('Here is your message:'),
 			sent = utils.setText('An email has been sent to '),
@@ -139,16 +127,18 @@ var dum = {},
 			getParent2 = utils.drillDown(['parentNode', 'parentNode']),
 			getCurrent = utils.drillDown(),
 			email2 = "mailto:"+obj.email,
-			children_config = [ptL(klasAdd, ['dogs', 'bottom']), comp(getParent, ptL(setAttrs, dogsrc)), null, ptL(klasAdd, ['cat', 'bottom']), ptL(setAttrs, catsrc)],
-			innerdiv_configs = [getCurrent, _.compose(getParent, thx), null, _.compose(getParent, here), _.compose(ptL(klasAdd, 'msg'), hiya)],
-			sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {
+            fig1 = [ptL(klasAdd, ['dogs', 'bottom']), comp(getParent2, ptL(setAttrs, dogsrc))],
+            fig2 = [ptL(klasAdd, ['cat', 'bottom']), comp(getParent2, ptL(setAttrs, catsrc))],
+            sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {
 				href: email2
 			}), email1)],
-			response = appender($tgt)(neue_nodes, [innerdiv_configs, sub_config]);
-			_.each(children_config, response);		
+            post_sub_config = [_.compose(getParent, here), comp(getParent2, ptL(klasAdd, 'msg'), hiya)],
+            innerdiv_configs = [getCurrent, _.compose(getParent, thx)],
+            children_config = [fig1, innerdiv_configs, sub_config, post_sub_config, fig2],
+            response = reducer(neue_nodes);
+			_.reduce(children_config, response, $tgt.render().getElement());
 	};
 listener();
-//_.each(children_config, response);
 utils.addEvent(submitter, listener)(myform);
 utils.addHandler('click', bridge, main);
 dum[tgt] = articles[0].getElementsByTagName('a')[0];

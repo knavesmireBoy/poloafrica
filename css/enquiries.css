@@ -159,7 +159,7 @@ form, figure, #response>* {
 	margin: 2em 0 1em 0;
 }
 
-#post div {
+#post > div {
 	display: table;
 	margin-top: .5em;
 	border-spacing: 1em;
@@ -241,13 +241,7 @@ div#response {
     border-radius: 0;
 }
 
-#response > * {
-    display: block;
-    float: left;
-}
-
-
-#response form, #response figure, #response figure.top {
+#response form, #response figure:first-of-type, .no-cssanimations #response .top {
 		display: none;
 }
 	#response p:nth-child(4) {
