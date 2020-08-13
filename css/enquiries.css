@@ -455,7 +455,7 @@ section:nth-child(2) {
 		right: 9999px;
 	}
     
-    #post form fieldset:first-child label, #post form fieldset:first-child input {
+    fieldset:first-child label, fieldset:first-child input {
 		width: 98%;
 		border-width: 0px;
 		text-align: left;
@@ -463,25 +463,25 @@ section:nth-child(2) {
         color: hsl(60, 50%, 20%);
 	}
     
-    #post form fieldset:first-child label {
+    fieldset:first-child label {
         text-transform: uppercase;
     }
-	#post form fieldset:first-child legend {
+	fieldset:first-child legend {
 		display: none;
 	}
-    #post form fieldset {
+    fieldset {
         border-width: 0;
     }
-	#post form fieldset:first-child label {
+	fieldset:first-child label {
 		background: none;
 		margin: 0;
         height: 1em;
         font-weight: bold;
 	}
-	#post form fieldset:first-child label:first-of-type {
+	fieldset:first-child label:first-of-type {
 		margin-top: .5em;
 	}
-	#post form fieldset:first-child input {
+	fieldset:first-child input {
 		margin: 0;
 	}
 }
