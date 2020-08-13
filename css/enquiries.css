@@ -59,7 +59,7 @@ legend, form label {
 	border: solid 1px white;
 }
 
-form input, form label, textarea {
+textarea, form input, form label {
 	display: inline-block;
 	vertical-align: text-bottom;
 }
@@ -68,10 +68,17 @@ fieldset:last-child {
 	border-width: 0px;
 	padding: .3em 2% 0 2%;
 }
-
-textarea.warning  {
+.warning legend, label.warning {
+	color: firebrick;
+	background-color: black;
+}
+textarea.warning {
 	color: firebrick;
     background-color: lightsalmon;
+}
+
+label.warning+input {
+	color: firebrick;
 }
 
 fieldset:first-child input {
@@ -88,16 +95,8 @@ form label:hover {
 	background-color: hsl(60, 50%, 60%);
 }
 
-.warning fieldset legend, .override label.warning {
-	color: firebrick;
-	background-color: black;
-}
-
 form input:first-of-type, form label:first-of-type {
 	margin-top: 1em;
-}
-label.warning+input {
-	color: firebrick;
 }
 
 /*real submit button*/
@@ -206,6 +205,21 @@ div#response {
 #response a {
 	color: royalblue;
 }
+
+#response div {
+	margin: 1%;
+	padding: 1%;
+	border: solid 0px white;
+	background-color: aliceblue;
+	background-color: rgba(200, 222, 255, 1);
+    width: 50%;
+    box-sizing: border-box;
+}
+
+	#response em {
+		font-weight: bold;
+	}
+
 #response p[class="msg"] {
 	border-top: 1px dotted #444;
 	margin-top: .5em;
@@ -218,7 +232,9 @@ div#response {
 #response figure img {
     height: 360px;
 }
-
+#response div h1 {
+    color: crimson;
+}
 #response .dogs {
     width: 33%;
     border-right: solid 1px white;
@@ -227,18 +243,8 @@ div#response {
 	width: 15%;
     border-left: solid 1px white; 
 }
-#response div {
-	margin: 1%;
-	padding: 1%;
-	border: solid 0px white;
-	background-color: aliceblue;
-	background-color: rgba(200, 222, 255, 1);
-    width: 50%;
-    box-sizing: border-box;
-}
-#response div h1 {
-    color: crimson;
-}
+
+
 #response div p.msg {
     margin-bottom: 1em;
 }
@@ -251,9 +257,7 @@ div#response {
 		padding: .3em;
 		border-radius: 8px;
 	}
-	#response em {
-		font-weight: bold;
-	}
+
 
 .no-cssanimations #response .top {
     display: none;
