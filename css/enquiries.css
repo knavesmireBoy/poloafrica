@@ -64,7 +64,7 @@ fieldset:last-child {
 }
 .warning legend, label.warning {
 	color: crimson;
-	background-color: indigo;
+	background-color: purple;
 }
 textarea.warning {
 	color: crimson;
@@ -324,15 +324,7 @@ section:nth-child(2) {
 		margin-left: 23%;
 		text-align: center;
 	}
-	article.show h3 {
-		color: white;
-		text-shadow: 1px 1px 1px black;
-		background-color: hsl(60, 40%, 64%);
-	}
-	article.show h3 a {
-		color: white;
-		background-color: transparent;
-	}
+	
 	/*
 	@supports(column-gap: 20px) {
 		article.show #cath {
@@ -377,6 +369,13 @@ section:nth-child(2) {
 	fieldset:first-child input {
 		margin: 0;
 	}
+    
+     article.show h3 {
+		color: white;
+		text-shadow: 1px 1px 1px black;
+		background-color: hsl(60, 40%, 64%);
+	}
+	
 	fieldset:first-child label, fieldset:first-child input {
 		width: 98%;
 		border-width: 0px;
@@ -394,6 +393,12 @@ section:nth-child(2) {
 		margin: 0 auto;
 		border-radius: 0;
 	}
+    
+    article.show h3 a {
+		color: white;
+		background-color: transparent;
+	}
+        
 	.no-js section>label:nth-of-type(1):before {
 		content: "Donations and sponsorship";
 	}
@@ -403,7 +408,7 @@ section:nth-child(2) {
 	.no-js section>label:nth-of-type(3):before {
 		content: "Contact us";
 	}
-	.no-js #wrap section:nth-child(2)>label:before {
+	.no-js section:nth-child(2)>label:before {
 		content: "Poloafrica contact form";
 	}
 	.no-js section:nth-child(3)>label:before {
