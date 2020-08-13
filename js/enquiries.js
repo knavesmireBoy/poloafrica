@@ -11,13 +11,6 @@ function getResult(arg) {
 	return _.isFunction(arg) ? arg() : arg;
 }
 
-function go(ancor) {
-	if (!ancor.getElement()) {
-		return ancor.render().getElement();
-	}
-	return ancor.getElement();
-}
-
 function helper(ancor, tag, config) {
 	var anCr = poloAF.Util.append();
 	return makeElement(config, anCr(ancor), utils.always(tag)).render();
@@ -37,7 +30,6 @@ function simpleInvoke(o, m, arg) {
 }
 
 function getter(o, k) {
-	//console.log(arguments)
 	return o && o[k];
 }
 
@@ -111,7 +103,7 @@ var dum = {},
 	comment_name = function(v) {
 		return !(v.match(/Use this area for comments or questions/));
 	},
-	clear = function() {
+	clear = function() {//listener on textarea
 		this.value = "";
 		undoWarning(this);
 	},

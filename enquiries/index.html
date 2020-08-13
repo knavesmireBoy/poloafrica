@@ -7,8 +7,8 @@
 	<title>Enquiries</title>
 	<link href="../css/standard.css" media="screen" rel="stylesheet">
 	<link href="../css/enquiries.css" media="screen" rel="stylesheet">
-	<link href="../css/myenquiries.css" media="screen" rel="stylesheet">
-    <link href="../css/print.css" media="print" rel="stylesheet">
+	<!--<link href="../css/myenquiries.css" media="screen" rel="stylesheet">
+    <link href="../css/print.css" media="print" rel="stylesheet">-->
      	<script>
 	document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
@@ -90,7 +90,7 @@
            <!--<form action="http://www.poloafrica.com/cgi-bin/nmsfmpa.pl" id="contactform" method="post" name="contactform">-->
            <div><form action="" id="poloafricacontactform" method="post">
                <fieldset>
-            <legend>Poloafrica contact form</legend><label title="required field" for="name">name</label><input id="name" name="name" tabindex="1"><label for="phone">phone</label><input id="phone" name="phone" tabindex="2" type="tel"  pattern="\d\s?{7,}"><label for="email" title="required field">email</label><input id="email" name="email" tabindex="3" required="" type="email"><label for="addr1">address</label><input id="addr1" name="addr1" tabindex="4"><label for="addr2">address</label><input id="addr2" name="addr2" tabindex="5"><label for="addr3">address</label><input id="addr3" name="addr3" tabindex="6"><label for="addr4">address</label><input id="addr4" name="addr4" tabindex="7"><label for="country">country</label><input id="country" name="country" tabindex="8"><label for="postcode">postcode</label><input id="postcode" name="postcode" tabindex="9">
+            <legend>Poloafrica contact form</legend><label title="required field" for="name">name</label><input id="name" name="name" tabindex="1"  pattern="\S+\s\S{2,}" required=""><label for="phone">phone</label><input id="phone" name="phone" tabindex="2" type="tel"  pattern="\d\s?{7,}"><label for="email" title="required field">email</label><input id="email" name="email" tabindex="3" required="" type="email"><label for="addr1">address</label><input id="addr1" name="addr1" tabindex="4"><label for="addr2">address</label><input id="addr2" name="addr2" tabindex="5"><label for="addr3">address</label><input id="addr3" name="addr3" tabindex="6"><label for="addr4">address</label><input id="addr4" name="addr4" tabindex="7"><label for="country">country</label><input id="country" name="country" tabindex="8"><label for="postcode">postcode</label><input id="postcode" name="postcode" tabindex="9">
 		</fieldset>
 		<fieldset>
             <textarea id="comments" name="comments" tabindex="9">Use this area for comments or questions</textarea><input alt="" id="dogs" name="dogs" src="../images/resource/dogsform.png" tabindex="10" type="image"><input type="submit" value="submit">

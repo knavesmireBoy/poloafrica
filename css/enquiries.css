@@ -59,18 +59,19 @@ legend, form label {
 	border: solid 1px white;
 }
 
-form label:hover {
-	background-color: #cc6;
-	background-color: hsl(60, 50%, 60%);
-}
-
 form input, form label, textarea {
 	display: inline-block;
 	vertical-align: text-bottom;
 }
+
 fieldset:last-child {
 	border-width: 0px;
 	padding: .3em 2% 0 2%;
+}
+
+textarea.warning  {
+	color: firebrick;
+    background-color: lightsalmon;
 }
 
 fieldset:first-child input {
@@ -81,13 +82,15 @@ fieldset:first-child input {
 	border-width: 0;
     padding-left: .4em;
 }
+
+form label:hover {
+	background-color: #cc6;
+	background-color: hsl(60, 50%, 60%);
+}
+
 .warning fieldset legend, .override label.warning {
 	color: firebrick;
 	background-color: black;
-}
-textarea.warning  {
-	color: firebrick;
-    background-color: lightsalmon;
 }
 
 form input:first-of-type, form label:first-of-type {
@@ -103,16 +106,8 @@ fieldset:last-child input:last-child {
 	left: -999em;
 }
 
-section article>a {
-	flex: 0 0 100%;
-}
-
-form, figure, #response>* {
-	display: table-cell;
-    	/*crucial*/
-	vertical-align: top;
-	border-radius: 10px;
-	box-sizing: border-box;
+#intro {
+	margin: 2em 0 1em 0;
 }
 
 #grooms {
@@ -144,37 +139,6 @@ form, figure, #response>* {
 	opacity: .9;
 }
 
-#intro article {
-	margin: 0 38% 0 0;
-}
-#intro article p {
-	margin: 0 0 1.3em 0;
-}
-
-#post figure {
-	width: 20%;
-}
-
-#response p {
-	margin: 0;
-	color: purple;
-}
-#cath img {
-	position: absolute;
-	left: -999em;
-}
-#intro {
-	margin: 2em 0 1em 0;
-}
-
-#post > article > div {
-	display: table;
-	margin-top: .5em;
-	border-spacing: 1em;
-}
-div#response {
-    display: block;
-}
 #cat {
 	/* firefox 48.0.2 required this:*/
 	min-height: 25.75em;
@@ -189,6 +153,44 @@ div#response {
 	background-color: whitesmoke;
     border-radius: 10px;
     overflow: hidden;
+}
+
+#intro article {
+	margin: 0 38% 0 0;
+}
+#intro article p {
+	margin: 0 0 1.3em 0;
+}
+
+#post figure {
+	width: 20%;
+}
+
+form, figure, #response>* {
+	display: table-cell;
+    	/*crucial*/
+	vertical-align: top;
+	border-radius: 10px;
+	box-sizing: border-box;
+}
+
+#response p {
+	margin: 0;
+	color: purple;
+}
+#cath img {
+	position: absolute;
+	left: -999em;
+}
+
+div#response {
+    display: block;
+}
+
+#post > article > div {
+	display: table;
+	margin-top: .5em;
+	border-spacing: 1em;
 }
 
 #response > * {
@@ -240,15 +242,6 @@ div#response {
 #response div p.msg {
     margin-bottom: 1em;
 }
-
-#contactarea form, #contactarea figure, #response > * {
-    display: table-cell;
-    vertical-align: top;/*crucial*/
-    border-radius: 10px;
-    box-sizing: border-box;
-    border-radius: 0;
-}
-
 #response form, #response figure:first-of-type, .no-cssanimations #response .top {
 		display: none;
 }
@@ -261,6 +254,7 @@ div#response {
 	#response em {
 		font-weight: bold;
 	}
+
 .no-cssanimations #response .top {
     display: none;
     }
@@ -306,23 +300,26 @@ section:nth-child(2) {
 }
 @media screen and (max-width: 888px) {
 
-	section article p {
-		margin: 0 0 1.3em 0;
-	}
-	#poloafricacontactform {
+	form {
 		width: 100%;
 	}
-    	#intro {
+    
+    section article p {
+		margin: 0 0 1.3em 0;
+	}
+    
+    figure, #grooms {
+		position: absolute;
+		left: -999em;
+	}
+    
+    #intro {
 		margin: 2em 0 0 0;
 	}
 	#intro article {
 		margin: 0;
 	}
-    
-	figure, #grooms {
-		position: absolute;
-		left: -999em;
-	}
+	
     #post div {
         display: block;
     }
@@ -409,10 +406,7 @@ section:nth-child(2) {
 		}
 	}
     */
-	#dogs {
-		position: absolute;
-		left: -999em;
-	}
+
 	fieldset:last-child input:last-child {
 		position: static;
 		left: auto;
