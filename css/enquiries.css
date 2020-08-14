@@ -145,9 +145,7 @@ form, figure, #response>* {
 	border-radius: 10px;
 	box-sizing: border-box;
 }
-#post figure {
-	width: 20%;
-}
+
 #intro article {
 	margin: 0 38% 0 0;
 }
@@ -202,9 +200,9 @@ div#response {
 	margin: 0 0 1.3em 0;
 }
 /* to prevent crazy heights if big message posted*/
-
 #response figure img {
-	height: 360px;
+	height: 300px;
+	max-height: 360px;
 }
 #response div h1 {
 	color: crimson;

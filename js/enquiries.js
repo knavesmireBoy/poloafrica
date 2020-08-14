@@ -24,9 +24,11 @@ function reducer(tags) {
 		return helper(ancor, tags[i], config).getElement();
 	};
 }
-function getNodes(nodes, newnode, pos){
-    return newnode ? nodes.splice(pos, 0, newnode) : nodes;
+
+function getNodes(nodes, newnode, pos) {
+	return newnode ? nodes.splice(pos, 0, newnode) : nodes;
 }
+
 function simpleInvoke(o, m, arg) {
 	return o[m](arg);
 }
@@ -189,31 +191,43 @@ var dum = {},
 		['p', 'p'],
 		['figure', 'img']
 	],
-    	dogsrc = {
-				alt: "",
-				src: "../images/resource/dog_gone.jpg"
-			},
-			catsrc = {
-				alt: "",
-				src: "../images/resource/cat_real_gone.jpg"
-			},
-    fig1 = [ptL(klasAdd, ['dogs', 'bottom']), levelTWO(ptL(setAttrs, dogsrc))],
-    fig2 = [ptL(klasAdd, ['cat', 'bottom']), levelTWO(ptL(setAttrs, catsrc))],
-    opt_fig1 = [ptL(klasAdd, ['dogs', 'top']), levelTWO(ptL(setAttrs, dogsrc))],
-    opt_fig2 = [ptL(klasAdd, ['cat', 'top']), levelTWO(ptL(setAttrs, catsrc))],
-    mod = false,
+	dogsrc = {
+		alt: "",
+		src: "../images/resource/dog_gone.jpg"
+	},
+	catsrc = {
+		alt: "",
+		src: "../images/resource/cat_real_gone.jpg"
+	},
+	opt_dogsrc = {
+		alt: "",
+		src: "../images/resource/016.jpg"
+	},
+	opt_catsrc = {
+		alt: "",
+		src: "../images/resource/cat_gone.jpg"
+	},
+	fig1 = [ptL(klasAdd, ['dogs', 'bottom']), levelTWO(ptL(setAttrs, dogsrc))],
+	fig2 = [ptL(klasAdd, ['cat', 'bottom']), levelTWO(ptL(setAttrs, catsrc))],
+	opt_fig1 = [ptL(klasAdd, ['dogs', 'top']), levelTWO(ptL(setAttrs, opt_dogsrc))],
+	opt_fig2 = [ptL(klasAdd, ['cat', 'top']), levelTWO(ptL(setAttrs, opt_catsrc))],
+	mod = false,
+    obj = {
+        email: 'email',
+        comments: 'comments'
+    },
 	listener = function(e) {
-        /*
-        if(Modernizr.cssgrid && Modernizr.cssanimations){
+		
+		if(Modernizr.cssgrid && Modernizr.cssanimations){
             getNodes(neue_nodes, ['figure', 'img'], 0);
             getNodes(neue_nodes, ['figure', 'img'], -1);
             mod = true;
-        }
-        */
+		}
+		
 		var $tgt = makeElement(ptL(setAttrs, {
 				id: 'response'
 			}), utils.always(myform.parentNode)),
-			obj = utils.serializeObject(e.target),
+			//obj = utils.serializeObject(e.target),
 			thx = utils.setText('Thankyou for your enquiry'),
 			here = utils.setText('Here is your message:'),
 			sent = utils.setText('An email has been sent to '),
@@ -228,19 +242,19 @@ var dum = {},
 			res = _.filter(_.map(obj, checker), function(ar) {
 				return notEmpty(ar);
 			}),
-            config = [fig1, thanker, sender, messenger, fig2];
-        
-        if(mod){
-            config.splice(1,0,opt_fig1);
-            config.splice(6,0,opt_fig2);
-        }
-        
+			config = [fig1, thanker, sender, messenger, fig2];
+		if (mod) {
+			config.splice(1, 0, opt_fig1);
+			config.splice(6, 0, opt_fig2);
+		}
 		if (_.isEmpty(res)) {
 			_.reduce(config, response, $tgt.render().getElement());
 		} else {
-			doAlert(res);
+            _.reduce(config, response, $tgt.render().getElement());
+			//doAlert(res);
 		}
 	};
+listener();
 utils.addEvent(clicker, relocate)(legend);
 utils.addEvent(submitter, listener)(myform);
 utils.addHandler('click', bridge, main);
