@@ -2,11 +2,11 @@
 @import "fullflex_mod.css";
 
         h2 span {
-        	background: white 0% 0% url(../images/sub_place.jpg) no-repeat;
+        	background: white 0% 0% url(../images/resource/sub_place.jpg) no-repeat;
         }
         @media only screen {
         	h2 span {
-        		background: white 0% 0% url(../images/sub_place.png) no-repeat;
+        		background: white 0% 0% url(../images/resource/sub_place.png) no-repeat;
                 background-size: contain;
         	}
         }
@@ -14,15 +14,7 @@
             h2, h2 span {
         		background: none;
         	}
-        	.override section:nth-child(5) {
-        		display: block;
-        	}
-        	.override section:nth-child(5) img {
-        		width: auto;
-        		margin: 1em 0 0 1em;
-        		/* floats are explicitly disabled in "mobile layout", so re-apply where reqd"*/
-        		float: right;
-        	}
+
         	.no-js section:nth-child(1) .read-more-trigger:before {
         		content: "The setting";
         	}
@@ -38,17 +30,12 @@
         	.no-js section:nth-child(5) .read-more-trigger:before {
         		content: "Location";
         	}
-        	.override section:nth-child(5) article img {
-        		float: right;
-        		width: 30%;
-        		margin: 1em 0 1em 1em;
-        	}
         }
         @media screen and (max-width: 370px) {
-        	.override section:nth-child(5) article img {
+        	.override section.ptrt article img {
         		width: 37%;
         	}
-        	section:nth-child(5) article p:first-of-type {
+        	section.ptrt article p:first-of-type {
         		text-align: left;
         	}
         }

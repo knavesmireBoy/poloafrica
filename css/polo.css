@@ -1,11 +1,6 @@
 h2 span {
-	background: white 0% 0% url(../images/sub_polo.jpg) no-repeat;
+	background: white 0% 0% url(../images/resource/sub_polo.jpg) no-repeat;
 }
-
-/* NO FLEX PLEASE WE'RE BRITISH*/
-.override .multi {
-    display: block;
-        }
  
 .multi img {
     clear: both;
@@ -16,10 +11,12 @@ h2 span {
 
 @media only screen {
 	h2 span {
-		background: white 0% 0% url(../images/sub_polo.png) no-repeat;
+		background: white 0% 0% url(../images/resource/sub_polo.png) no-repeat;
         background-size: contain;
 	}
 }
+
+
 
 @media screen and (max-width: 888px) {
     .multi img {
@@ -28,24 +25,12 @@ h2 span {
 }
 
 @media screen and (max-width: 667px) {
-	.no-js section:first-child .read-more-trigger:before {
-		content: "Facilities";
-	}
-	.no-js section:nth-child(2) .read-more-trigger:before {
-		content: "Ponies";
-	}
-	.no-js section:nth-child(3) .read-more-trigger:before {
-		content: "Our team";
-	}
-	.no-js section:nth-child(4) .read-more-trigger:before {
-		content: "Your polo day";
-	}
-
-	h2, h2 span {
+    
+    h2, h2 span {
 		background: none;
 	}
     
-     section.multi img {
+      section.multi img {
         display: inline-block;
          vertical-align: top;
          width: 49%;
@@ -58,4 +43,19 @@ h2 span {
         margin: 0 0 0 1%;
     }
     
+	.no-js section:first-child .read-more-trigger:before {
+		content: "Facilities";
+	}
+	.no-js section:nth-child(2) .read-more-trigger:before {
+		content: "Ponies";
+	}
+	.no-js section:nth-child(3) .read-more-trigger:before {
+		content: "Our team";
+	}
+	.no-js section:nth-child(4) .read-more-trigger:before {
+		content: "Your polo day";
+	}
+    #polo li:nth-child(6):hover ul {
+        right: 999px;
+    }
 }

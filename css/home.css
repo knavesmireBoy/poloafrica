@@ -1,33 +1,50 @@
 @import "flex_mod.css";
-#ani {
+
+h2 span {
+	background: white 0% 50% url(../images/resource/sub_home.jpg) no-repeat;
+}
+
+#ani, #tween {
 	width: 18em;
 	height: auto;
 	padding: 2em;
 	margin: -3em -2em 0 0;
 }
-.js #tween, .no-js #flower {
-	display: none;
+
+#tween {
+    flex: 1 1 1%;
+    border-width: 0;
+    box-shadow: none;
 }
-.no-js #tween, .js #flower {
-	display: block;
-}
-#home #ani img {
+
+#ani img {
 	width: 100%;
 	float: left;
 	box-shadow: none;
 	border-width: 0;
 	margin: 0;
 }
-.js #home #ani img:last-child {
+
+.js #tween, .no-js #flower {
+	display: none;
+}
+.no-js #tween {
+	display: block;
+    float: right;
+}
+
+.js #flower {
+	display: block;
+}
+
+#ani img:last-child {
 	margin: 0 0 0 -100%;
 }
-h2 span {
-	background: white 0% 50% url(../images/sub_home.jpg) no-repeat;
-}
+
 @media only screen {
     
 	h2 span {
-		background: white 0% 0% url(../images/sub_home.png) no-repeat;
+		background: white 0% 0% url(../images/resource/sub_home.png) no-repeat;
 		background-size: contain;
 	}
 }
@@ -46,22 +63,7 @@ h2 span {
 	h2, h2 span {
 		background: none;
 	}
-	#ani {
-		width: 9em;
-		height: auto;
-		margin: .5em 0 0;
-		padding: .5em;
-		position: absolute;
-		left: -999em;
-	}
-	section.show #ani, .read-more-state:checked~#ani {
-		position: relative;
-		left: auto;
-	}
-	section.show #ani, .read-more-state:checked~#ani {
-		position: relative;
-		left: auto;
-	}
+
 	.no-js section:nth-child(1) .read-more-trigger:before {
 		content: "The Poloafrica Development Trust";
 	}
@@ -74,9 +76,24 @@ h2 span {
 	.no-js section:nth-child(3) {
 		display: block;
 	}
+    	#ani, #tween {
+		width: 9em;
+		height: auto;
+		margin: 1em 0 0;
+		padding: .5em;
+	}
+     #ani {
+         position: absolute;
+         left: -999em;
+    }
+	section.show #ani, .read-more-state:checked~#ani, section.show #tween {
+		position: relative;
+		left: auto;
+	}
+
 }
 @media only screen and (max-width: 540px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
-	section:last-child h3, section label {
+	section:last-child h3, section:last-child label {
 		line-height: normal;
 	}
 }

@@ -1,34 +1,50 @@
 @import "flex_mod.css";
-@import "fullflex_mod.css";
-.js body {
-    background-color: white;
-}
-.no-cssgrid #tvcoverage {
-	/*if not grid, block, NOT flex*/
-	display: block;
-}
+
+    #medley>*, #medley_links>* {
+    	-ms-flex-item-align: start;
+    	-webkit-align-self: flex-start;
+    	align-self: flex-start;
+    }
+
+    @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+    	#presslinks, #medley_links:last-child {
+    		display: -webkit-box;
+    		display: -ms-flexbox;
+    		display: -webkit-flex;
+    		display: flex;
+    	}
+    }
+
+    .flexwrap #presslinks, .flexwrap #medley_links:last-child {
+    	display: -webkit-box;
+    	display: -ms-flexbox;
+    	display: -webkit-flex;
+    	display: flex;
+    }
+
 #presslinks img {
-	-webkit-box-flex: 2;
+    -webkit-box-flex: 2;
 	-ms-flex: 2 1 1%;
 	-webkit-flex: 2 1 1%;
 	flex: 2 1 1%;
 }
+
+#presslinks article{
+    margin: 0;
+}
+
+#tvcoverage h3{
+    width: 100%;
+}
 #medley_links img {
 	max-width: 13em;
 }
-/*
-.flexbox #presslinks article, .flexboxtweener #presslinks article, .flexboxlegacy #presslinks article, .flexbox #medley_links article, .flexboxtweener #medley_links article, .flexboxlegacy #medley_links article {
-	margin-left: 2%;
-	float: right;
-}
-*/
-
 @supports (column-gap: 20px) {
-	.override #tvcoverage {
+	#tvcoverage {
 		display: -ms-grid;
 		display: grid;
 	}
-	.override #tvcoverage article {
+	#tvcoverage article {
 		display: -ms-grid;
 		display: grid;
 	}
@@ -52,19 +68,8 @@
 		grid-row: 1/6;
 		grid-column: 4/6;
 	}
-	#tvcoverage #naledi>h3 {
-		-ms-grid-column: 1;
-		-ms-grid-column-span: 2;
-		grid-column: 1/6;
-		-ms-grid-row: 1;
-		grid-row: 1/1;
-	}
-	#tvcoverage #naledi p:last-of-type {
-		-ms-grid-row: 2;
-		-ms-grid-row-span: 1;
-		grid-row: 2/4;
-	}
-	#naledi>*:nth-child(2) {
+    
+    #naledi>*:nth-child(2) {
 		-ms-grid-column: 2;
 		-ms-grid-column-span: 1;
 		-ms-grid-row: 2;
@@ -72,19 +77,41 @@
 		grid-row: 2/3;
 		grid-column: 4/6;
 	}
-}
-/*gap*/
-
-.no-cssgrid #tvcoverage {
-	display: block;
-}
-no-cssgrid #tvcoverage article {
-	display: block;
-}
-@media screen and (max-width: 667px) {
-	section {
-		display: block;
+    
+    #naledi p:last-of-type {
+		-ms-grid-row: 2;
+		-ms-grid-row-span: 1;
+		grid-row: 2/4;
 	}
+    
+	#tvcoverage #naledi h3 {
+		-ms-grid-column: 1;
+		-ms-grid-column-span: 2;
+		grid-column: 1/6;
+		-ms-grid-row: 1;
+		grid-row: 1/1;
+	}
+	
+	
+}
+.cssgrid #tvcoverage {
+	display: -ms-grid;
+	display: grid;
+}
+.cssgrid #tvcoverage article {
+	display: -ms-grid;
+	display: grid;
+}
+
+.no-cssgrid #tvcoverage, .no-cssgrid #tvcoverage article {
+	/*if not grid, block, NOT flex*/
+	display: block;
+}
+.no-cssgrid #presslinks article {
+	margin: 0;
+}
+
+@media screen and (max-width: 667px) {
 	.no-js #presslinks article, .no-js #medley .override #medley_links article {
 		margin: 0 0 0 2%;
 		-webkit-box-flex: 5;
@@ -104,6 +131,73 @@ no-cssgrid #tvcoverage article {
 	}
 	.touchevents #wrap #medley_links img {
 		margin: 1em;
+	}
+	.no-js #presslinks article, .no-js .override #medley_links article {
+		margin: 0 0 0 2%;
+		-webkit-box-flex: 5;
+		-ms-flex: 5 0 1%;
+		flex: 5 0 1%
+	}
+}
+@media only screen and (max-width: 568px) {
+	.no-js #presslinks nav {
+		width: 100%;
+	}
+	.no-cssgrid #tvcoverage {
+		/*if not grid, block, NOT flex*/
+		display: block;
+	}
+	#presslinks img {
+		-webkit-box-flex: 2;
+		-ms-flex: 2 1 1%;
+		-webkit-flex: 2 1 1%;
+		flex: 2 1 1%;
+	}
+	#medley_links img {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 1%;
+		-webkit-flex: 1 1 1%;
+		flex: 1 1 1%;
+	}
+	#tvcoverage p {
+		-ms-grid-row: 1;
+		-ms-grid-row-span: 1;
+		grid-row: 1/3;
+		-ms-grid-column: 1;
+		-ms-grid-column-span: 1;
+		grid-column: 1/4;
+		min-width: 0;
+	}
+	#tvcoverage p:last-of-type {
+		-ms-grid-row: 2;
+		-ms-grid-row-span: 1;
+		grid-row: 3/4;
+	}
+	#tvcoverage article>*:first-child {
+		-ms-grid-row: 2;
+		-ms-grid-row-span: 1;
+		grid-row: 1/6;
+		grid-column: 4/6;
+	}
+	#tvcoverage #naledi>a {
+		-ms-grid-column: 1;
+		-ms-grid-column-span: 2;
+		grid-column: 1/6;
+		-ms-grid-row: 1;
+		grid-row: 1/1;
+	}
+	#tvcoverage #naledi p:last-of-type {
+		-ms-grid-row: 2;
+		-ms-grid-row-span: 1;
+		grid-row: 2/4;
+	}
+	#naledi>*:nth-child(2) {
+		-ms-grid-column: 2;
+		-ms-grid-column-span: 1;
+		-ms-grid-row: 2;
+		-ms-grid-row-span: 1;
+		grid-row: 2/3;
+		grid-column: 4/6;
 	}
 }
 @media screen and (min-width: 668px) {
