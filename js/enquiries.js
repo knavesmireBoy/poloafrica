@@ -227,7 +227,7 @@ var dum = {},
 		var $tgt = makeElement(ptL(setAttrs, {
 				id: 'response'
 			}), utils.always(myform.parentNode)),
-			//obj = utils.serializeObject(e.target),
+			obj = utils.serializeObject(e.target),
 			thx = utils.setText('Thankyou for your enquiry'),
 			here = utils.setText('Here is your message:'),
 			sent = utils.setText('An email has been sent to '),
@@ -250,11 +250,10 @@ var dum = {},
 		if (_.isEmpty(res)) {
 			_.reduce(config, response, $tgt.render().getElement());
 		} else {
-            _.reduce(config, response, $tgt.render().getElement());
-			//doAlert(res);
+			doAlert(res);
 		}
 	};
-listener();
+//listener();
 utils.addEvent(clicker, relocate)(legend);
 utils.addEvent(submitter, listener)(myform);
 utils.addHandler('click', bridge, main);

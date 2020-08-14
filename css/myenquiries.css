@@ -37,7 +37,7 @@
 .flexwrap section {
 	display: block;
 }
-/*
+
 @supports(display: flex){
 	.override section, #response {
 		display: flex;
@@ -52,7 +52,7 @@
 		flex: 1 1 1%;
 	}
 }
-*/
+
 /* response to form submission:
 restrict animation for proper grid support as we are using grid positioning to overlay images */
 @supports(column-gap: 20px) {
@@ -65,27 +65,19 @@ restrict animation for proper grid support as we are using grid positioning to o
 	#intro {
 		display: -ms-grid;
 		display: grid;
-		grid-template-columns: repeat(19, 1fr);
-		grid-gap: 0em;
+		grid-template-columns: repeat(5, 1fr);
+		column-gap: 5%;
 	}
 	#intro>* {
 		width: 100%;
 	}
 	#intro article {
-		-ms-grid-row: 1;
-		-ms-grid-row-span: 2;
-		-ms-grid-column: 1;
-		-ms-grid-column-span: 4;
-		grid-column: 1 / 11;
+		grid-column: 1 / 4;
 	}
 	#grooms {
-		-ms-grid-row: 1;
-		-ms-grid-row-span: 3;
 		grid-row: 1 / 4;
-		margin: 0;
-		-ms-grid-column: 5;
-		-ms-grid-column-span: 3;
-		grid-column: 12/20;
+        margin: 0;
+		grid-column: 4/6;
 	}
 	#post>article>div {
 		margin-top: 1em;
@@ -193,36 +185,29 @@ restrict animation for proper grid support as we are using grid positioning to o
         display: none;
     }
 }
-@media screen and (max-width: 812px) {
-	@supports(column-gap: 20px) {
-		#intro article, #response {
-			grid-column: 1 / 20;
-		}
-		.override section p {
-			margin: 0 0 1.3em 0;
-		}
-		section:first-child h3 {
-			width: 100%;
-		}
+@media screen and (max-width: 888px) {
+
+    #post div {
+        border-radius: 0 !important;
 	}
-	#post #response, #post #response div, #contactarea>div, #intro {
+	#post #response, #post>article>div, #intro {
 		display: block;
-		/*!*/
 	}
+    
 	/*TRIED flex-wrapping in fieldset: https://stackoverflow.com/questions/46472136/fieldset-as-flex-container-not-working-in-google-chrome*/
 }
 @media screen and (max-width: 667px) {
 	section {
 		display: block;
 	}
-	#contactarea>div {
-		margin-top: 0;
+	#post > article > div {
+		margin: 0;
 	}
-	#contactarea form {
+	form {
 		border-radius: 0;
 		border-width: 0;
 	}
-	#contactarea form fieldset {
+	fieldset {
 		padding: 0 3% 3%;
 	}
 }

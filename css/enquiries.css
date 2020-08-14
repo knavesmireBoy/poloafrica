@@ -138,6 +138,11 @@ fieldset:last-child input:last-child {
 	border-radius: 10px;
 	overflow: hidden;
 }
+
+label[for="email"]:before, label[for="name"]:before{
+    content: "*";
+    color: white;
+}
 form, figure, #response>* {
 	display: table-cell;
 	/*crucial*/
@@ -285,13 +290,12 @@ section:nth-child(2) {
 	#intro article {
 		margin: 0;
 	}
-	#post div {
+	#post>article div {
 		display: block;
+        border-spacing: 0;
+         width: auto;
 	}
-	#post form {
-		margin-top: 1em;
-		display: block;
-	}
+   
 }
 @media screen and (max-width: 667px) {
 	h2, h2 span {
@@ -323,9 +327,8 @@ section:nth-child(2) {
 		width: 50%;
 		margin-left: 23%;
 		text-align: center;
-	}
-	
-	/*
+	}	
+    
 	@supports(column-gap: 20px) {
 		article.show #cath {
 			display: grid;
@@ -350,8 +353,6 @@ section:nth-child(2) {
 			color: white;
 		}
 	}
-    */
-
 	fieldset:first-child label {
 		text-transform: uppercase;
 	}
@@ -396,10 +397,7 @@ section:nth-child(2) {
 		display: block;
 		margin: 0 auto;
 		border-radius: 0;
-	}
-    
-   
-    
+	}    
     	li:nth-child(8):hover ul {
 		right: 9999px;
 	}
@@ -423,6 +421,22 @@ section:nth-child(2) {
 		position: absolute;
 		left: -999em;
 	}
+    
+    #post form input {
+        width: 100%;
+        margin: .1em 0;
+    }
+    #post form input[type="submit"] {
+        width: auto;
+        margin: .1em auto;
+        padding: .1em .5em;
+        border-radius: 2px;
+        border-width: 0;
+    }
+    
+    #post>article>div {
+        margin: 1em 0;
+    }
 	#intro article p {
 		margin: 1em 0 1.3em 0;
 	}
