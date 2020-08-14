@@ -24,7 +24,9 @@ function reducer(tags) {
 		return helper(ancor, tags[i], config).getElement();
 	};
 }
-
+function getNodes(nodes, newnode, pos){
+    return newnode ? nodes.splice(pos, 0, newnode) : nodes;
+}
 function simpleInvoke(o, m, arg) {
 	return o[m](arg);
 }
@@ -35,6 +37,39 @@ function getter(o, k) {
 
 function isEqual(x, y) {
 	return getResult(x) === getResult(y);
+}
+
+function existy(x) {
+	return x != null;
+}
+
+function cat() {
+	var head = _.first(arguments);
+	if (existy(head)) {
+		return head.concat.apply(head, _.rest(arguments));
+	} else {
+		return [];
+	}
+}
+
+function construct(head, tail) {
+	return head && cat([head], _.toArray(tail));
+}
+
+function mapcat(fun, coll) {
+	var res = _.map(coll, fun);
+	return cat.apply(null, res);
+}
+
+function validateForm() {
+	var validators = _.toArray(arguments);
+	return function(v, k) {
+		var errors = mapcat(function(isValid) {
+			return isValid(k, v) ? [] : [k, isValid.message];
+			//return isValid(k, v) ? [] : [new Message(k, v)];
+		}, validators);
+		return errors;
+	};
 }
 var dum = {},
 	utils = poloAF.Util,
@@ -69,6 +104,11 @@ var dum = {},
 	isName = ptL(isEqual, 'name'),
 	isComment = ptL(isEqual, 'comments'),
 	isLabel = ptL(isEqual, 'LABEL'),
+	levelup = function(leveller) {
+		return comp.apply(null, construct(leveller, _.rest(arguments)));
+	},
+	levelONE = ptL(levelup, utils.drillDown(['parentNode'])),
+	levelTWO = ptL(levelup, utils.drillDown(['parentNode', 'parentNode'])),
 	bridge = function(e) {
 		var el = getTarget(e),
 			myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
@@ -101,15 +141,23 @@ var dum = {},
 		return v.match(/\S+\s\S{2,}/);
 	},
 	comment_name = function(v) {
-		return !(v.match(/Use this area for comments or questions/));
+		return !(v.match(/Please use this area .*/i));
 	},
-	clear = function() {//listener on textarea
+	string_min = function(v) {
+		return v.length > 15;
+	},
+	string_max = function(v) {
+		return v.length < 1000;
+	},
+	clear = function() { //listener on textarea
 		this.value = "";
 		undoWarning(this);
 	},
 	//Use this area for comments or questions
 	isNotEmptyComment = utils.validator('this is a required field', preCon(isComment, notEmpty)),
-	isNewMessage = utils.validator('please supply your comment or question', preCon(isComment, comment_name)),
+	isNewMessage = utils.validator('Please use this area for comments or questions', preCon(isComment, comment_name)),
+	isSmallMessage = utils.validator('Message is very small, please elaborate', preCon(isComment, string_min)),
+	isLargeMessage = utils.validator('Word count of your message is too great. Reduce word count or please email instead', preCon(isComment, string_max)),
 	isProperName = utils.validator('please supply a first name and a last name', preCon(isName, form_name)),
 	isEmptyName = utils.validator('this is a required field', preCon(isName, notEmpty)),
 	isEmptyEmail = utils.validator('this is a required field', preCon(isEmail, notEmpty)),
@@ -130,30 +178,18 @@ var dum = {},
 				var label = _.find(labels, function(node) {
 					return (getFor(node) === msgs[0][0]) || (getId(node) === msgs[0][0]);
 				});
-				if (label) {
-					doWarning(label);
-				}
+				utils.doWhen(label, ptL(doWarning, label));
 			}
 		};
 	}(legend)),
-	listener = function(e) {
-		var $tgt = makeElement(ptL(setAttrs, {
-				id: 'response'
-			}), utils.always(myform.parentNode)),
-			obj = utils.serializeObject(e.target),
-			neue_nodes = [
-				['figure', 'img'],
-				['div', 'h1'],
-				['p', 'a'],
-				['p', 'p'],
-				['figure', 'img']
-			],
-			thx = utils.setText('Thankyou for your enquiry'),
-			here = utils.setText('Here is your message:'),
-			sent = utils.setText('An email has been sent to '),
-			hiya = utils.setText(obj.comments),
-			email1 = utils.setText(obj.email),
-			dogsrc = {
+	neue_nodes = [
+		['figure', 'img'],
+		['div', 'h1'],
+		['p', 'a'],
+		['p', 'p'],
+		['figure', 'img']
+	],
+    	dogsrc = {
 				alt: "",
 				src: "../images/resource/dog_gone.jpg"
 			},
@@ -161,25 +197,46 @@ var dum = {},
 				alt: "",
 				src: "../images/resource/cat_real_gone.jpg"
 			},
-			getParent = utils.drillDown(['parentNode']),
-			getParent2 = utils.drillDown(['parentNode', 'parentNode']),
-			getCurrent = utils.drillDown(),
-			email2 = "mailto:" + obj.email,
-			fig1 = [ptL(klasAdd, ['dogs', 'bottom']), comp(getParent2, ptL(setAttrs, dogsrc))],
-			fig2 = [ptL(klasAdd, ['cat', 'bottom']), comp(getParent2, ptL(setAttrs, catsrc))],
-			sub_config = [sent, _.compose(getParent2, ptL(setAttrs, {
-				href: email2
-			}), email1)],
-			post_sub_config = [_.compose(getParent, here), comp(getParent2, ptL(klasAdd, 'msg'), hiya)],
-			innerdiv_configs = [getCurrent, _.compose(getParent, thx)],
-			children_config = [fig1, innerdiv_configs, sub_config, post_sub_config, fig2],
+    fig1 = [ptL(klasAdd, ['dogs', 'bottom']), levelTWO(ptL(setAttrs, dogsrc))],
+    fig2 = [ptL(klasAdd, ['cat', 'bottom']), levelTWO(ptL(setAttrs, catsrc))],
+    opt_fig1 = [ptL(klasAdd, ['dogs', 'top']), levelTWO(ptL(setAttrs, dogsrc))],
+    opt_fig2 = [ptL(klasAdd, ['cat', 'top']), levelTWO(ptL(setAttrs, catsrc))],
+    mod = false,
+	listener = function(e) {
+        /*
+        if(Modernizr.cssgrid && Modernizr.cssanimations){
+            getNodes(neue_nodes, ['figure', 'img'], 0);
+            getNodes(neue_nodes, ['figure', 'img'], -1);
+            mod = true;
+        }
+        */
+		var $tgt = makeElement(ptL(setAttrs, {
+				id: 'response'
+			}), utils.always(myform.parentNode)),
+			obj = utils.serializeObject(e.target),
+			thx = utils.setText('Thankyou for your enquiry'),
+			here = utils.setText('Here is your message:'),
+			sent = utils.setText('An email has been sent to '),
+			mailto = {
+				href: "mailto:" + obj.email,
+			},
+			sender = [sent, levelTWO(ptL(setAttrs, mailto), utils.setText(obj.email))],
+			messenger = [levelONE(here), levelTWO(ptL(klasAdd, 'msg'), utils.setText(obj.comments))],
+			thanker = [_.identity, levelONE(thx)],
 			response = reducer(neue_nodes),
-			checker = utils.simple_conditional(isEmptyName, isProperName, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage),
+			checker = validateForm(isEmptyName, isProperName, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage),
 			res = _.filter(_.map(obj, checker), function(ar) {
 				return notEmpty(ar);
-			});
+			}),
+            config = [fig1, thanker, sender, messenger, fig2];
+        
+        if(mod){
+            config.splice(1,0,opt_fig1);
+            config.splice(6,0,opt_fig2);
+        }
+        
 		if (_.isEmpty(res)) {
-			_.reduce(children_config, response, $tgt.render().getElement());
+			_.reduce(config, response, $tgt.render().getElement());
 		} else {
 			doAlert(res);
 		}
