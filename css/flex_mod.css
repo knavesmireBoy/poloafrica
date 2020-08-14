@@ -1,26 +1,7 @@
-/*https://stackoverflow.com/questions/36822370/flexbox-on-ie11-image-stretched-for-no-reason/36828291*/
 
-html.js body img, html.no-js body img {
-	-ms-flex-negative: 0;
-	-webkit-flex-shrink: 0;
-	flex-shrink: 0;
-}
-/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO BUT SEPARATE THE INSTRUCTIONS FROM UNITS*/
+/*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO BUT SEPARATE INSTRUCTIONS FROM UNITS*/
 
 /*REMEMBER override class hardcoded in HTML*/
-
-
-#nav {
-    display: flex;
-    align-items: flex-start;
-}
-
-#nav li {
-    flex: 1 1 auto;
-    box-sizing: border-box;
-    align-self: flex-start;
-}
-
 
 section {
 	-webkit-box-align: start;
@@ -30,6 +11,12 @@ section {
 	-webkit-flex-wrap: wrap;
 	flex-wrap: wrap;
 }
+section>* {
+	-ms-flex-item-align: start;
+	-webkit-align-self: flex-start;
+	align-self: flex-start;
+}
+
 section:nth-child(odd) {
 	-webkit-box-orient: horizontal;
 	-webkit-box-direction: reverse;
@@ -38,21 +25,14 @@ section:nth-child(odd) {
 	-webkit-flex-direction: row-reverse;
 	flex-direction: row-reverse;
 }
-section>* {
-	-ms-flex-item-align: start;
-	-webkit-align-self: flex-start;
-	align-self: flex-start;
+
+html.js body img, html.no-js body img {
+	-ms-flex-negative: 0;
+	-webkit-flex-shrink: 0;
+	flex-shrink: 0;
 }
-#wrap+footer {
-	-ms-flex-wrap: wrap;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	-webkit-box-align: end;
-	-ms-flex-align: end;
-	-webkit-align-items: flex-end;
-	align-items: flex-end;
-}
-.flexwrap section article {
+
+.flexwrap article {
 	-webkit-box-flex: 6;
 	-ms-flex: 6 1 1%;
 	-webkit-flex: 6 1 1%;
@@ -64,19 +44,19 @@ section>* {
 	-webkit-flex: 4 1 1%;
 	flex: 4 1 1%;
 }
-.flexwrap #wrap+footer {
+.flexwrap body>footer {
 	/*display: -webkit-box; ipod not resizing on orientation*/
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
 }
-.flexwrap #wrap+footer #fb {
+.flexwrap body>footer #fb {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 6em;
 	-webkit-flex: 1 1 6em;
 	flex: 1 1 6em;
 }
-.flexwrap #wrap+footer #footer_girl {
+.flexwrap body>footer div:first-child {
 	-webkit-box-flex: 20;
 	-ms-flex: 20 1 auto;
 	-webkit-flex: 20 1 auto;
@@ -84,7 +64,7 @@ section>* {
 	width: auto;
 	margin: 0 0 .25rem 1rem;
 }
-.flexwrap #wrap+footer #fb {
+.flexwrap body>footer #fb {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 6em;
 	-webkit-flex: 1 1 6em;
@@ -93,7 +73,7 @@ section>* {
 	left: 0;
 	min-width: 6em;
 }
-.flexwrap #wrap+footer>a {
+.flexwrap body>footer>a {
 	-webkit-box-flex: 0;
 	-ms-flex: 0 0 100%;
 	-webkit-flex: 0 0 100%;
@@ -101,8 +81,26 @@ section>* {
 	box-sizing: border-box;
 	padding: .75em 1% .75em 0;
 }
+body>footer {
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	-webkit-align-items: flex-end;
+	align-items: flex-end;
+}
+
+/*https://stackoverflow.com/questions/36822370/flexbox-on-ie11-image-stretched-for-no-reason/36828291*/
+    /*
+	.no-flexwrap .override .ptrt {
+		display: block;
+	}
+    */
+
+
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-	section article {
+	article {
 		-webkit-box-flex: 6;
 		-ms-flex: 6 1 1%;
 		-webkit-flex: 6 1 1%;
@@ -114,34 +112,45 @@ section>* {
 		-webkit-flex: 4 1 1%;
 		flex: 4 1 1%;
 	}
-	#wrap+footer:first-of-type {
+	section.ptrt img {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 %;
+		-webkit-flex: 1 1 1%;
+		flex: 1 1 1%;
+        margin: 1em 1em 0;
+        /*float and width will apply until display flex is enabled by media query*/
+        float: right;
+		width: 18%;
+	}
+
+	body>footer {
 		/*display: -webkit-box; ipod not resizing on orientation*/
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
 	}
-	#wrap+footer #fb {
+	body>footer #fb {
 		-webkit-box-flex: 1;
 		-ms-flex: 1 1 6em;
 		-webkit-flex: 1 1 6em;
 		flex: 1 1 6em;
 	}
-	#wrap+footer:first-of-type #footer_girl {
+	body>footer div:first-child {
 		-webkit-box-flex: 20;
 		-ms-flex: 20 1 auto;
 		-webkit-flex: 20 1 auto;
 		flex: 20 1 auto;
 		width: auto;
 	}
-	#wrap+footer:first-of-type #footer_girl {
+	body>footer div:first-child {
 		margin: 0 0 .25rem 1rem;
 	}
-	#wrap+footer:first-of-type #fb {
+	body>footer #fb {
 		margin: 0 .7em .5rem 0;
 		left: 0;
 		min-width: 6em;
 	}
-	#wrap+footer>a:first-of-type {
+	body>footer>a:first-of-type {
 		-webkit-box-flex: 0;
 		-ms-flex: 0 0 100%;
 		-webkit-flex: 0 0 100%;
@@ -151,54 +160,47 @@ section>* {
 	}
 }
 @media screen and (max-width: 667px) {
-	section {
-		display: block;
-	}
-	article {
-		margin: 1em 0 0 0;
-	}
-	section>img, .override h3 {
-		border-bottom: solid 1px white;
-	}
-	.flexwrap #wrap+footer #footer_girl {
+    
+	.flexwrap body>footer div:first-child {
 		-webkit-box-flex: 5;
 		-ms-flex: 5 1 5em;
 		-webkit-flex: 5 1 5em;
 		flex: 5 1 5em;
 	}
-	.flexwrap #wrap+footer #fb {
+	.flexwrap body>footer #fb {
 		-webkit-box-flex: 1;
 		-ms-flex: 1 1 2em;
 		-webkit-flex: 1 1 2em;
 		flex: 1 1 2em;
 	}
-	.flexwrap #wrap+footer>a {
+	.flexwrap body>footer>a {
 		padding: .75em 2% .75em 0;
 	}
+    
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-		#wrap+footer #footer_girl {
+		body>footer div:first-child {
 			-webkit-box-flex: 5;
 			-ms-flex: 5 1 5em;
 			-webkit-flex: 5 1 5em;
 			flex: 5 1 5em;
 		}
-		#wrap+footer #fb {
+		body>footer #fb {
 			-webkit-box-flex: 1;
 			-ms-flex: 1 1 2em;
 			-webkit-flex: 1 1 2em;
 			flex: 1 1 2em;
 		}
-		#wrap+footer>a:first-of-type {
+		body>footer>a:first-of-type {
 			padding: .75em 2% .75em 0;
 		}
 	}
 }
-/*IF js disbaled and feature queries not supported what to do?*/
+/*IF js disbaled and feature queries not supported what to do?
+hard code a class of flexy?
+*/
 
 @media only screen and (min-width: 1024px) {
-	.js body {
-		background-color: white;
-	}
+
 	.flexwrap section {
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -206,17 +208,13 @@ section>* {
 		display: flex;
 	}
 	.flexwrap h3 {
-		border-bottom: solid #990 1px;
-		border-bottom: solid hsl(58, 60%, 40%) 1px;
+		border-bottom: solid 1px;
 	}
 	.flexwrap p:first-of-type {
 		margin: 0;
 	}
 	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-		p:first-of-type {
-			margin: 0;
-		}
 		/* by default the border will run up to the floating image, we choose to enable it on flexwrap support*/
 		h3 {
 			border-bottom: solid 1px;
@@ -226,6 +224,9 @@ section>* {
 			display: -webkit-flex;
 			display: -ms-flexbox;
 			display: flex;
+		}
+		p:first-of-type {
+			margin: 0;
 		}
 	}
 }

@@ -1,32 +1,41 @@
 @import "flex_mod.css";
 @import "fullflex_mod.css";
 
-h2 span {
-	background: white 0% 0% url(../images/resource/sub_place.jpg) no-repeat;
-}
-@media only screen {
-	h2 span {
-		background: white 0% 0% url(../images/resource/sub_place.png) no-repeat;
-		background-size: contain;
-	}
-}
-@media screen and (max-width: 667px) {
-	h2, h2 span {
-		background: none;
-	}
-	.no-js section:nth-child(1) .read-more-trigger:before {
-		content: "The setting";
-	}
-	.no-js section:nth-child(2) .read-more-trigger:before {
-		content: "Farm life";
-	}
-	.no-js section:nth-child(3) .read-more-trigger:before {
-		content: "Climate";
-	}
-	.no-js section:nth-child(4) .read-more-trigger:before {
-		content: "Connectivity";
-	}
-	.no-js section:nth-child(5) .read-more-trigger:before {
-		content: "Location";
-	}
-}
+        h2 span {
+        	background: white 0% 0% url(../images/resource/sub_place.jpg) no-repeat;
+        }
+        @media only screen {
+        	h2 span {
+        		background: white 0% 0% url(../images/resource/sub_place.png) no-repeat;
+                background-size: contain;
+        	}
+        }
+        @media screen and (max-width: 667px) {
+            h2, h2 span {
+        		background: none;
+        	}
+
+        	.no-js section:nth-child(1) .read-more-trigger:before {
+        		content: "The setting";
+        	}
+        	.no-js section:nth-child(2) .read-more-trigger:before {
+        		content: "Farm life";
+        	}
+        	.no-js section:nth-child(3) .read-more-trigger:before {
+        		content: "Climate";
+        	}
+        	.no-js section:nth-child(4) .read-more-trigger:before {
+        		content: "Connectivity";
+        	}
+        	.no-js section:nth-child(5) .read-more-trigger:before {
+        		content: "Location";
+        	}
+        }
+        @media screen and (max-width: 370px) {
+        	.override section.ptrt article img {
+        		width: 37%;
+        	}
+        	section.ptrt article p:first-of-type {
+        		text-align: left;
+        	}
+        }

@@ -1,11 +1,6 @@
 h2 span {
 	background: white 0% 0% url(../images/resource/sub_polo.jpg) no-repeat;
 }
-
-/* NO FLEX PLEASE WE'RE BRITISH*/
-.override .multi {
-    display: block;
-        }
  
 .multi img {
     clear: both;
@@ -21,17 +16,33 @@ h2 span {
 	}
 }
 
+
+
 @media screen and (max-width: 888px) {
     .multi img {
-        width: 49%;
-        margin: 1em 0 0;
-    }
-    .multi img:last-of-type {
-        margin: 1em 0 0 2%;
+        width: 40%;
     }
 }
 
 @media screen and (max-width: 667px) {
+    
+    h2, h2 span {
+		background: none;
+	}
+    
+      section.multi img {
+        display: inline-block;
+         vertical-align: top;
+         width: 49%;
+    }
+    
+    section.multi img:first-of-type {
+        margin: 0 1% 0 0;
+    }
+    section.multi img:last-of-type {
+        margin: 0 0 0 1%;
+    }
+    
 	.no-js section:first-child .read-more-trigger:before {
 		content: "Facilities";
 	}
@@ -44,23 +55,7 @@ h2 span {
 	.no-js section:nth-child(4) .read-more-trigger:before {
 		content: "Your polo day";
 	}
-    /*
-    	.override section:first-child {
-		flex-direction: column;
-	}
-	.js .override section.show img {
-		position: static;
-		left: 0;
-	}
-    */
-    .js .multi article img {
-        display: inline-block;
+    #polo li:nth-child(6):hover ul {
+        right: 999px;
     }
-    .no-js .multi .read-more-state~article {
-		margin: 0;
-	}
-
-	h2, h2 span {
-		background: none;
-	}
 }

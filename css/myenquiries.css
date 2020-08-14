@@ -1,5 +1,4 @@
 @import "flex_mod.css";
-@import "fullflex_mod.css";
 @keyframes mover {
 	0% {
 		transform: translateY(-500px);
@@ -38,6 +37,7 @@
 .flexwrap section {
 	display: block;
 }
+
 @supports(display: flex){
 	.override section, #response {
 		display: flex;
@@ -52,43 +52,34 @@
 		flex: 1 1 1%;
 	}
 }
+
 /* response to form submission:
 restrict animation for proper grid support as we are using grid positioning to overlay images */
 @supports(column-gap: 20px) {
-	#wrap #intro label {
+    
+    #intro label {
 		position: absolute;
 		left: -999em;
 	}
-	section {
-		margin: 0em 0 0;
-	}
 	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
-	#wrap #intro {
+	#intro {
 		display: -ms-grid;
 		display: grid;
-		grid-template-columns: repeat(19, 1fr);
-		grid-gap: 0em;
+		grid-template-columns: repeat(5, 1fr);
+		column-gap: 5%;
 	}
-	#wrap #intro>* {
+	#intro>* {
 		width: 100%;
 	}
 	#intro article {
-		-ms-grid-row: 1;
-		-ms-grid-row-span: 2;
-		-ms-grid-column: 1;
-		-ms-grid-column-span: 4;
-		grid-column: 1 / 11;
+		grid-column: 1 / 4;
 	}
 	#grooms {
-		-ms-grid-row: 1;
-		-ms-grid-row-span: 3;
 		grid-row: 1 / 4;
-		margin: 0;
-		-ms-grid-column: 5;
-		-ms-grid-column-span: 3;
-		grid-column: 12/20;
+        margin: 0;
+		grid-column: 4/6;
 	}
-	#contactarea>div {
+	#post>article>div {
 		margin-top: 1em;
 		display: -ms-grid;
 		display: grid;
@@ -101,29 +92,32 @@ restrict animation for proper grid support as we are using grid positioning to o
 	#contactarea>div form {
 		grid-column: 1/8;
 		height: auto;
-		width: 100%;
+        width: 100%;
 	}
 	#contactarea>div figure {
-		width: 100%;
 		grid-column: 8/10;
+        width: 100%;
 	}
 	#post #response {
 		display: grid;
-		grid-template-columns: 30% 1fr 48% 1fr 19%;
+		grid-template-columns: 35% 50% 15%;
 		align-items: stretch;
 		background: linear-gradient(217deg, black, rgba(0, 0, 255, 0) 70.71%), linear-gradient(127deg, black, rgba(200, 255, 0, 0) 70.71%), linear-gradient(336deg, indigo, rgba(111, 111, 0, 0) 70.71%);
 	}
+    /*
     #response figure img {
         height: 100%;
     }
+    */
 	#response figure.top {
 		display: block;
 	}
-	#post #response>* {
+	section:nth-child(2) > article > #response > * {
 		width: 100%;
 		grid-row-start: 1;
 		margin: 0;
 		padding: 0;
+        overflow: hidden;
 	}
 	#response p {
 		animation-name: fader_rev;
@@ -147,13 +141,18 @@ restrict animation for proper grid support as we are using grid positioning to o
 		border-radius: 8px;
 	}
 	#response .dogs {
-		grid-column-start: 1;
+		grid-column: 1/2;
 		border: solid 1px white;
 		border-width: 0 1px 0 0;
+        display: block;
 	}
+    #response figure img {
+        object-fit: contain;
+}
 	#response .cat {
-		grid-column-start: 5;
+		grid-column: 3/4;
 		border-width: 0 0 0 1px;
+        display: block;
 	}
 	#response .top {
         /*
@@ -166,7 +165,7 @@ restrict animation for proper grid support as we are using grid positioning to o
         animation: 10s ease-in-out 1 forwards fader;
 	}
 	#post #response div {
-		grid-column-start: 3;
+		grid-column: 2/3;
 		padding: 1em;
 		box-sizing: border-box;
 		align-self: center;
@@ -176,38 +175,39 @@ restrict animation for proper grid support as we are using grid positioning to o
 		animation-duration: 5s;
 		animation-fill-mode: forwards;
 		border-radius: 10px;
+        display: block;
 	}
+    #post>article>div {
+        border-spacing: 0;
+    }
+
+    #response form, #response figure {
+        display: none;
+    }
 }
-@media screen and (max-width: 812px) {
-	@supports(column-gap: 20px) {
-		#intro article, #response {
-			grid-column: 1 / 20;
-		}
-		.override section p {
-			margin: 0 0 1.3em 0;
-		}
-		section:first-child h3 {
-			width: 100%;
-		}
+@media screen and (max-width: 888px) {
+
+    #post div {
+        border-radius: 0 !important;
 	}
-	#post #response, #post #response div, #contactarea>div, #wrap #intro {
+	#post #response, #post>article>div, #intro {
 		display: block;
-		/*!*/
 	}
+    
 	/*TRIED flex-wrapping in fieldset: https://stackoverflow.com/questions/46472136/fieldset-as-flex-container-not-working-in-google-chrome*/
 }
 @media screen and (max-width: 667px) {
 	section {
 		display: block;
 	}
-	#contactarea>div {
-		margin-top: 0;
+	#post > article > div {
+		margin: 0;
 	}
-	#contactarea form {
+	form {
 		border-radius: 0;
 		border-width: 0;
 	}
-	#contactarea form fieldset {
+	fieldset {
 		padding: 0 3% 3%;
 	}
 }

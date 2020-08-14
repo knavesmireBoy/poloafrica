@@ -37,9 +37,19 @@ h2 span {
 	.no-js section:nth-child(6) .read-more-trigger:before {
 		content: "A childhood dream";
 	}
+        
+    /*#home li:nth-child(1):hover ul*/
+    
+    #wrap .override ul  {
+       position: relative;
+    }
+    
+    #scholars li:nth-child(3):hover ul {
+        left: -9999px;
+    }
 }
 @media only screen and (max-width: 440px) {
 	.override section:nth-child(5) h3, .override section:nth-child(5) label {
-		line-height: normal;
+		line-height: 1.2;
 	}
 }
