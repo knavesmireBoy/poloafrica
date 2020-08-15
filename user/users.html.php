@@ -10,7 +10,7 @@ if(isset($form)){
 
 if(isset($users) && !isset($form)): ?>
 <form action="?set" method="post" class="manage">
-<label for="user">Users</label><select id="user" name="user" onchange="this.form.submit()"><option value="">Select one</option>
+<select id="user" name="user" onchange="this.form.submit()"><option value="">Select one</option>
 <?php  foreach ($users as $user): ?>
 <option value="<?php htmlout($user['id']); ?>"><?php htmlout($user['name']); ?>
 </option><?php endforeach; ?></select>
