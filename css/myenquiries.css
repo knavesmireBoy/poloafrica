@@ -38,21 +38,6 @@
 	display: block;
 }
 
-@supports(display: flex){
-	.override section, #response {
-		display: flex;
-	}
-	#response figure {
-		flex: 2 1 1%;
-	}
-	#response div {
-		flex: 4 1 1%;
-	}
-	#response figure.cat {
-		flex: 1 1 1%;
-	}
-}
-
 /* response to form submission:
 restrict animation for proper grid support as we are using grid positioning to overlay images */
 @supports(column-gap: 20px) {
@@ -86,7 +71,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 		grid-template-columns: repeat(9, 1fr);
 		grid-gap: 1em;
 	}
-	#contactarea h3, #response {
+	#contactarea h3 {
 		grid-column: 1/10;
 	}
 	#contactarea>div form {
@@ -145,6 +130,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 		border: solid 1px white;
 		border-width: 0 1px 0 0;
         display: block;
+        width: 100%;
 	}
     #response figure img {
         object-fit: contain;
@@ -153,6 +139,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 		grid-column: 3/4;
 		border-width: 0 0 0 1px;
         display: block;
+        width: 100%;
 	}
 	#response .top {
         /*
@@ -176,14 +163,12 @@ restrict animation for proper grid support as we are using grid positioning to o
 		animation-fill-mode: forwards;
 		border-radius: 10px;
         display: block;
+        width: 100%;
 	}
     #post>article>div {
         border-spacing: 0;
     }
 
-    #response form, #response figure {
-        display: none;
-    }
 }
 @media screen and (max-width: 888px) {
 

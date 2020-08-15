@@ -139,6 +139,10 @@ fieldset:last-child input:last-child {
 	overflow: hidden;
 }
 
+#web {
+	display: none;
+}
+
 label[for="email"]:before, label[for="name"]:before{
     content: "*";
     color: white;
@@ -147,8 +151,11 @@ form, figure, #response>* {
 	display: table-cell;
 	/*crucial*/
 	vertical-align: top;
-	border-radius: 10px;
 	box-sizing: border-box;
+}
+
+form, figure {
+    border-radius: 10px;
 }
 
 #intro article {
@@ -232,7 +239,7 @@ div#response {
 	padding: .3em;
 	border-radius: 8px;
 }
-#response form, #response figure:first-of-type, .no-cssanimations #response .top {
+#response form, #response .top {
 	display: none;
 }
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
