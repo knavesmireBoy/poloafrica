@@ -105,7 +105,6 @@ input[type="email"], input[type="password"] {
 	padding: .1em 0 .1em .3em;
 }
 
-
 .content input, select {
 	font: 1em/1.2 Optima, Arial, sans-serif;
 	border-radius: 5px;
@@ -115,15 +114,7 @@ table, form, .manage, .page, .login {
 	width: 40%;
 	min-width: 22em;
 }
-.neue, .asset, .asset figure, form textarea, .manage fieldset {
-	border: solid 1px white;
-	padding: .75em;
-	border-radius: 5px;
-}
 
-.manage+nav {
-	width: 44%;
-}
 .page {
 	width: auto;
 }
@@ -211,6 +202,9 @@ fieldset, .buttons {
 	padding: 2%;
 }
 
+.manage+nav {
+	width: 44%;
+}
 .content>ul {
 	width: 100%;
 }
@@ -262,11 +256,6 @@ label[for="alt"] {
 }
 .asset label {
 	display: block;
-}
-
-label, .mocklabel, .manage legend {
-	font: 1em 'Arial Black', Arial, sans-serif;
-	color: black;
 }
 
 .photos img {
@@ -329,6 +318,18 @@ li.mock, li.mock ul {
 	border-radius: 5px;
 	border: solid 1px white;
 }
+
+label, .mocklabel, .manage legend {
+	font: 1em 'Arial Black', Arial, sans-serif;
+	color: black;
+}
+
+textarea, .neue, .asset, .asset figure, .manage fieldset {
+	border: solid 1px white;
+	padding: .75em;
+	border-radius: 5px;
+}
+
 .content .pp span, .content .pp a {
 	background-color: #CCB7CC;
 	background-color: rgba(77, 55, 77, .35);
@@ -370,7 +371,7 @@ li.mock ul>* {
 	margin: 0 0 1% 1%;
 	width: 83%;
 }
-.content>ul>li>label, .mocklabel {
+.mocklabel, .content>ul>li>label{
 	margin: 0;
 	width: 16%;
 	min-width: 7em;
@@ -382,10 +383,19 @@ li.mock ul>* {
 	vertical-align: top;
 }
 
-
 .mock .mocklabel {
 	margin: 0 1% 0 0;
 	width: 16%;
+}
+
+.icon:nth-child(odd) {
+	margin: 1em .7em 0 0;
+}
+.login input[type="submit"] {
+	width: auto;
+}
+.login .buttons {
+	background-color: transparent;
 }
 
 .content .pp span, .content .pp a {
@@ -398,24 +408,14 @@ li.mock ul>* {
 	background-color: rgba(77, 55, 77, .77);
 }
 
-.icon:nth-child(odd) {
-	margin: 1em .7em 0 0;
-}
-.login input[type="submit"] {
-	width: auto;
-}
-.login .buttons {
-	background-color: transparent;
-}
+
 .pp span:first-child, .pp a:first-child {
 	margin: 0 .33em 0 0;
 }
 .content li.asset>* {
 	vertical-align: middle;
 }
-.buttons input:first-child:hover {
-	color: hsl(283, 100%, 25%);
-}
+
 .icon img:hover {
 	background-color: hsl(285, 35%, 85%);
 }
@@ -523,18 +523,6 @@ input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul
 	margin: 0 0 1% 1%;
 }
 
-.cssgradients .content .pp span, .cssgradients .content .pp a {
-	background-image: linear-gradient(135deg, rgba(77, 55, 77, .5), rgba(77, 55, 77, .2), rgba(77, 55, 77, .5));
-}
-.content .buttons input:hover {
-	color: red;
-}
-.content .buttons input:first-child:hover {
-	color: yellow;
-}
-.content .buttons input:last-child:hover {
-	color: blue;
-}
 ul.mock li:last-child {
 	padding: 0.5em;
 	border: solid 1px white;
@@ -550,16 +538,31 @@ ul.mock li:last-child {
 .asset figure.edit input {
 	width: 99%;
 }
+
+.buttons input:first-child:hover {
+	color: hsl(283, 100%, 25%);
+}
+
+.cssgradients .content .pp span, .cssgradients .content .pp a {
+	background-image: linear-gradient(135deg, rgba(77, 55, 77, .5), rgba(77, 55, 77, .2), rgba(77, 55, 77, .5));
+}
+.content .buttons input:hover {
+	color: red;
+}
+.content .buttons input:first-child:hover {
+	color: yellow;
+}
+.content .buttons input:last-child:hover {
+	color: blue;
+}
+
+.asset figure.edit input[type="checkbox"] {
+	width: auto;
+}
+
 .asset figure img, .asset figure figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>* {
 	position: relative;
 	left: 0;
-}
-.mock .asset figure img, .asset figure figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>* {
-	position: relative;
-	left: 0;
-}
-.asset figure.edit input[type=checkbox] {
-	width: auto;
 }
 #alt {
 	width: 70%;
@@ -568,14 +571,10 @@ ul.mock li:last-child {
 	position: absolute;
 	left: -9999px;
 }
-#guide.show {
-	position: relative;
-	left: 0;
-	padding: 1em;
-	width: auto;
-	background-color: whitesmoke;
-	border-radius: 10;
+#controls {
+	margin-left: 17%;
 }
+
 #guide li {
 	display: block;
 	width: auto;
@@ -586,14 +585,13 @@ ul.mock li:last-child {
 	background-color: black;
 	color: white;
 }
+
 #controls, textarea#content, .content .buttons {
 	margin: 0 0 2% 17%;
 	width: 83%;
 	box-sizing: border-box;
 }
-#controls {
-	margin-left: 17%;
-}
+
 input#attr_id, input#dom_id {
 	width: 10%;
 }
@@ -632,6 +630,16 @@ input#asset {
 	display: block;
 	width: 100%;
 }
+
+#guide.show {
+	position: relative;
+	left: 0;
+	padding: 1em;
+	width: auto;
+	background-color: whitesmoke;
+	border-radius: 10;
+}
+
 #controls li:hover {
 	background-color: hsl(283, 25%, 44%);
 }
@@ -642,6 +650,8 @@ input#asset {
 	width: 10%;
 }
 @media only screen and (max-width: 1160) {
+	div {}
+	div {}
 	div {}
 	input#dom_id {
 		margin: 0 90% 0 0;
