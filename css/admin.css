@@ -297,6 +297,30 @@ form.manage+form.manage {
 	padding: 0.5em;
 	border: solid 1px white;
 }
+
+.admin .asset figure label, .admin .asset figure input {
+	text-align: left;
+	border-width: 0px;
+}
+.admin .asset figure {
+	width: 11%;
+	min-width: 5em;
+	padding: .2em;
+	border: solid 1px;
+	background-color: rgba(255, 255, 255, .7);
+}
+
+.admin .asset figure {
+	margin: 0 0 0% 1%;
+}
+.admin .neue label {
+	text-align: right;
+	border-width: 0;
+}
+.content>ul .neue li label, .content>ul .neue li input {
+	width: auto;
+}
+
 .admin .asset figure img.pdf_icon {
 	width: auto;
 	display: inline;
@@ -311,30 +335,10 @@ form.manage+form.manage {
 .admin .asset figure.edit input[type=checkbox] {
 	width: auto;
 }
-.admin .asset figure label, .admin .asset figure input {
-	text-align: left;
-	border-width: 0px;
-}
-.admin .asset figure {
-	width: 11%;
-	min-width: 5em;
-	padding: .2em;
-	border: solid 1px;
-	background-color: rgba(255, 255, 255, .7);
-}
+
 .admin .asset figure.edit {
 	width: 15em;
 	margin: 0 0 1% 1%;
-}
-.admin .asset figure {
-	margin: 0 0 0% 1%;
-}
-.admin .neue label {
-	text-align: right;
-	border-width: 0;
-}
-.content>ul .neue li label, .content>ul .neue li input {
-	width: auto;
 }
 .buttons input:first-child:hover {
 	color: yellow;
@@ -564,11 +568,11 @@ input#asset {
 	}
 }
 @media only screen and (max-width: 580px) {
-	.content #page {
-		margin-right: 40%;
-	}
 	#pubDate {
 		margin-right: 50%;
+	}
+    .content #page {
+		margin-right: 40%;
 	}
 }
 @media only screen and (max-width: 479px) {
