@@ -295,11 +295,9 @@ textarea, .neue, .asset, .asset figure, .manage fieldset {
 	padding: .75em;
 	border-radius: 5px;
 }
-
 .asset figure input {
 	margin: 0 0 .4em .2em;
 }
-
 .manage div input {
 	width: 100%;
 }
@@ -326,7 +324,6 @@ li.mock ul>* {
 	margin: 0 0 1% 1%;
 	width: 83%;
 }
-
 .neue, .asset, .asset figure, form textarea, .manage fieldset {
 	border: solid 1px white;
 	padding: .75em;
@@ -358,19 +355,16 @@ li.mock ul>* {
 .icon:nth-child(odd) {
 	margin: 1em .7em 0 0;
 }
-
 .login .buttons {
 	background-color: transparent;
 }
-
 .login input[type="submit"] {
 	width: auto;
 }
-
 .content .pp span, .content .pp a {
 	background-color: #CCB7CC;
 	background-color: rgba(77, 55, 77, .35);
-    	padding: .33em .66em .44em .66em;
+	padding: .33em .66em .44em .66em;
 	margin: 0 .25em;
 	border: solid 1px white;
 }
@@ -381,7 +375,6 @@ li.mock ul>* {
 	width: 83%;
 	border: solid 1px white;
 }
-
 .pp span:first-child, .pp a:first-child {
 	margin: 0 .33em 0 0;
 }
@@ -408,7 +401,6 @@ li.mock ul>* {
 	position: absolute;
 	left: -999px;
 }
-
 .manage+.manage {
 	border-width: 0 1px 1px;
 	border-radius: 0 0 8px 8px;
@@ -506,7 +498,6 @@ ul.mock li:last-child {
 .content .buttons input:last-child:hover {
 	color: blue;
 }
-
 #alt {
 	width: 70%;
 }
@@ -587,12 +578,7 @@ ul.mock li:last-child {
 .content>ul input#dom_id {
 	width: 10%;
 }
-
-
 @media only screen and (max-width: 1160px) {
-	div {}
-	div {}
-	div {}
 	#dom_id {
 		margin: 0 90% 0 0;
 	}
@@ -611,6 +597,10 @@ ul.mock li:last-child {
 	}
 }
 @media only screen and (max-width: 736px) {
+	.content>ul .pp {
+		margin: .25em 0 0;
+		width: 100%;
+	}
 	.mock .mocklabel, .mock .asset, .mock .neue, .content #editList>li>* {
 		width: 100%;
 	}
@@ -630,10 +620,6 @@ ul.mock li:last-child {
 	}
 	#pubDate+label {
 		display: inline-block;
-	}
-	.content>ul #pp {
-		margin: .25em 0 0;
-		width: 100%;
 	}
 }
 @media only screen and (max-width: 667px) {
@@ -672,17 +658,17 @@ ul.mock li:last-child {
 	.login .buttons input {
 		width: auto;
 	}
-	.content>ul #pp {
+	.content>ul .pp {
 		padding: 2%;
 	}
-	.content>ul #pp>* {
+	.content>ul .pp>* {
 		padding: .33em;
 		width: 1em;
 		height: 1em;
 		margin: 0 .5%;
 	}
 }
-@media only screen and (max-width: 580) {
+@media only screen and (max-width: 580px) {
 	#pubDate {
 		margin-right: 50%;
 	}
@@ -691,6 +677,22 @@ ul.mock li:last-child {
 	}
 }
 @media only screen and (max-width: 479px) {
+	.content>ul .pp {
+		border-width: 0;
+	}
+	.content>ul .pp>* {
+		border-radius: 0;
+		margin: 0;
+		border-width: 0;
+		background-color: transparent;
+		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
+	}
+	.content>ul .pp span {
+		border-width: 1px;
+	}
+	.cssgradients .content>ul .pp span, .cssgradients .content>ul .pp a {
+		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
+	}
 	#pubDate {
 		margin-right: 50%;
 	}
@@ -699,21 +701,5 @@ ul.mock li:last-child {
 	}
 	#details+li {
 		margin: 1em 0 0;
-	}
-	.content>ul #pp {
-		border-width: 0;
-	}
-	.content>ul #pp>* {
-		border-radius: 0;
-		margin: 0;
-		border-width: 0;
-		background-color: transparent;
-		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
-	}
-	.content>ul #pp span {
-		border-width: 1px;
-	}
-	.cssgradients .content>ul .pp span, .cssgradients .content>ul .pp a {
-		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
 	}
 }
