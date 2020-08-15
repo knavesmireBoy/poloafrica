@@ -27,13 +27,15 @@ table a {
 .statusMessage {
 	color: hsl(285, 35%, 85%);
 }
+
+.buttons>* {
+	margin: 0 .5em 0 0;
+	padding: .25em;
+}
 .content>ul {
 	width: 100%;
 }
-li.mock, li.mock ul {
-	width: 100%;
-	margin: 0;
-}
+
 form.manage {
 	border-radius: 8px 8px 0px 0px;
 	border-radius: 8px;
@@ -65,6 +67,10 @@ form.manage {
 	border: solid 1px black;
 	table-layout: fixed;
 }
+.admin table, .manage {
+	width: 40%;
+	min-width: 28em;
+}
 .admin th {
 	font-weight: bold;
 }
@@ -74,10 +80,7 @@ form.manage {
 .asset figcaption {
 	margin: .2em 0;
 }
-.buttons>* {
-	margin: 0 .5em 0 0;
-	padding: .25em;
-}
+
 .buttons input {
 	text-transform: uppercase;
 }
@@ -95,6 +98,11 @@ nav .icon {
 	width: 100%;
 	background-color: hsl(285, 35%, 35%);
 	left: -1px;
+}
+
+li.mock, li.mock ul {
+	width: 100%;
+	margin: 0;
 }
 form.content input, select {
 	font: .8rem/1.5 Optima Arial, sans-serif;
@@ -129,31 +137,34 @@ form.manage+form {
 	padding: .5em;
 	line-height: normal;
 }
-.admin form li label {
-	margin: 0;
-	line-height: 1;
-}
+
 .content ul li>* {
 	line-height: 1.25;
 	vertical-align: middle;
 	display: inline-block;
 	box-sizing: border-box;
 }
-.content ul>li>input, .content ul>li>textarea {
-	margin: 0 0 1% 1%;
-	width: 83%;
-}
-li.mock ul li {
-	margin: 0;
-}
+
 li.mock ul>* {
 	vertical-align: top;
 	display: inline-block;
 	box-sizing: border-box;
 }
-.content li.asset>* {
-	vertical-align: middle;
+
+.admin form li label {
+	margin: 0;
+	line-height: 1;
 }
+.content ul>li>input, .content ul>li>textarea {
+	margin: 0 0 1% 1%;
+	width: 83%;
+}
+
+li.mock ul li {
+	margin: 0;
+}
+
+
 .content>ul>li>label, .mocklabel {
 	margin: 0;
 	width: 16%;
@@ -169,26 +180,34 @@ li.mock ul>* {
 	margin: 0 1% 0 0;
 	width: 16%;
 }
+.icon:nth-child(odd) {
+	margin: 1em .7em 0 0;
+}
+
+.content li.asset>* {
+	vertical-align: middle;
+}
+
 .buttons input:hover {
 	color: red;
 	background: black;
 }
-.icon:nth-child(odd) {
-	margin: 1em .7em 0 0;
-}
+
 .icon img:hover {
 	background-color: hsl(285, 35%, 85%);
 }
 /*overrides default hiding of inouts which are used in no-js scenario*/
+
+.mock .neue, .mock .asset {
+	width: 83%;
+}
 
 .content label, .content .mocklabel {
 	word-spacing: normal;
 	letter-spacing: normal;
 	text-align: right;
 }
-.mock .neue, .mock .asset {
-	width: 83%;
-}
+
 .admin form.prompt {
 	padding: 0;
 }
@@ -218,6 +237,11 @@ li.mock ul>* {
 .admin a:active, .admin a:hover {
 	color: hsl(283, 50%, 45%);
 }
+
+.admin .asset figcaption>* {
+	margin: .25em 0;
+}
+
 .admin table tr:nth-child(odd) {
 	background-color: hsl(283, 15%, 95%);
 }
@@ -232,28 +256,29 @@ li.mock ul>* {
 .manage input[type="checkbox"] {
 	width: auto;
 }
-.admin form label, .mocklabel, .admin form.manage fieldset legend {
+.mocklabel, .admin form label,  .admin form.manage fieldset legend {
 	font: 1em 'Arial Black', Arial, sans-serif;
 	color: black;
 }
 .admin p, .admin form.content, form.content li {
 	text-align: left;
 }
+
+.js .asset figure>* {
+	position: absolute;
+	left: -999px;
+}
+
 .admin .asset figure input {
 	margin: 0 0 .4em .2em;
 }
-.admin .asset figcaption>* {
-	margin: .25em 0;
-}
+
 .neue, .asset, .asset figure, .admin form textarea, .admin form.manage fieldset {
 	border: solid 1px white;
 	padding: .75em;
 	border-radius: 5px;
 }
-.admin table, #loginform, .manage {
-	width: 40%;
-	min-width: 28em;
-}
+
 .admin form.manage fieldset {
 	padding: 1em;
 	border-radius: 8px 8px 0px 0px;
@@ -273,35 +298,12 @@ form.manage+form.manage {
 .content li.asset figure {
 	vertical-align: top;
 }
-.js .asset figure>* {
-	position: absolute;
-	left: -999px;
-}
+
 .admin .asset figure img {
 	margin: 0;
 	width: 100%;
 }
-.admin .asset label:first-of-type {
-	display: inline-block;
-}
-.admin ul.mock li:last-child {
-	padding: 0.5em;
-	border: solid 1px white;
-}
-.admin .asset figure img.pdf_icon {
-	width: auto;
-	display: inline;
-}
-.admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset figure.edit>* {
-	position: relative;
-	left: 0;
-}
-.admin .asset figure.edit input {
-	width: 99%;
-}
-.admin .asset figure.edit input[type=checkbox] {
-	width: auto;
-}
+
 .admin .asset figure label, .admin .asset figure input {
 	text-align: left;
 	border-width: 0px;
@@ -312,14 +314,9 @@ form.manage+form.manage {
 	padding: .2em;
 	border: solid 1px;
 	background-color: rgba(255, 255, 255, .7);
+    margin: 0 0 0% 1%;
 }
-.admin .asset figure.edit {
-	width: 15em;
-	margin: 0 0 1% 1%;
-}
-.admin .asset figure {
-	margin: 0 0 0% 1%;
-}
+
 .admin .neue label {
 	text-align: right;
 	border-width: 0;
@@ -327,15 +324,46 @@ form.manage+form.manage {
 .content>ul .neue li label, .content>ul .neue li input {
 	width: auto;
 }
+.admin .asset label:first-of-type {
+	display: inline-block;
+}
+
+.admin .asset figure.edit {
+	width: 15em;
+	margin: 0 0 1% 1%;
+}
+
+
 .buttons input:first-child:hover {
 	color: yellow;
 }
 .buttons input:last-child:hover {
 	color: silver;
 }
-input#attr_id, input#dom_id {
-	width: 10%;
+
+.admin ul.mock li:last-child {
+	padding: 0.5em;
+	border: solid 1px white;
 }
+
+.admin .asset figure img.pdf_icon {
+	width: auto;
+	display: inline;
+}
+
+.admin .asset figure.edit input {
+	width: 99%;
+}
+
+.admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset figure.edit>* {
+	position: relative;
+	left: 0;
+}
+
+.admin .asset figure.edit input[type=checkbox] {
+	width: auto;
+}
+
 #pp {
 	margin: 2em 0;
 	border: solid 1px black;
@@ -348,6 +376,8 @@ input#attr_id, input#dom_id {
 	padding: 2%;
 	background-color: hsl(283, 25%, 74%);
 	border-radius: 8px;
+    width: 40%;
+	min-width: 28em;
 }
 #controls, #content, .content .buttons {
 	margin: 0 0 2% 17%;
@@ -357,15 +387,14 @@ input#attr_id, input#dom_id {
 #controls {
 	margin-left: 17%;
 }
+input#attr_id, input#dom_id {
+	width: 10%;
+}
 form#page_select {
 	background-color: white;
 	padding: 1em 0;
 	text-align: left;
 	border-width: 0;
-}
-#pp span {
-	font-weight: bold;
-	background-color: hsl(283, 33%, 40%);
 }
 #pp>* {
 	padding: .33em 1em .44em 1em;
@@ -374,6 +403,10 @@ form#page_select {
 	background-color: hsl(283, 33%, 50%);
 	border-radius: 5px;
 	color: white;
+}
+#pp span {
+	font-weight: bold;
+	background-color: hsl(283, 33%, 40%);
 }
 input#asset {
 	text-align: center;
@@ -388,9 +421,7 @@ input#asset {
 	width: 100%;
 	box-sizing: border-box;
 }
-#loginform input[type="submit"] {
-	width: auto;
-}
+
 #loginform div {
 	margin: 1em 0 0;
 	text-align: center;
@@ -421,6 +452,11 @@ input#asset {
 	display: block;
 	width: 100%;
 }
+
+#loginform input[type="submit"] {
+	width: auto;
+}
+
 #loginform .buttons {
 	background-color: transparent;
 }
@@ -460,6 +496,7 @@ input#asset {
 	width: 10%;
 }
 @media only screen and (max-width: 1160px) {
+div {}
 	input#dom_id {
 		margin: 0 90% 0 0;
 	}
@@ -504,6 +541,7 @@ input#asset {
 	}
 }
 @media only screen and (max-width: 667px) {
+
 	.admin h3 {
 		padding: 0;
 		background-color: white;
@@ -526,9 +564,9 @@ input#asset {
 	.manage input[type="checkbox"] {
 		margin-left: .33em;
 	}
-	#loginform {
-		width: auto;
-	}
+        #loginform {
+            width: auto;
+        }
 	#loginform .buttons input {
 		width: auto;
 	}
@@ -543,11 +581,11 @@ input#asset {
 	}
 }
 @media only screen and (max-width: 580px) {
-	.content #page {
-		margin-right: 40%;
-	}
 	#pubDate {
 		margin-right: 50%;
+	}
+    .content #page {
+		margin-right: 40%;
 	}
 }
 @media only screen and (max-width: 479px) {
@@ -575,5 +613,4 @@ input#asset {
 	.content>ul #pp span {
 		border-width: 1px;
 	}
-	
 }
