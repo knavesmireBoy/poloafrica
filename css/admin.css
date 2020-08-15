@@ -27,13 +27,15 @@ table a {
 .statusMessage {
 	color: hsl(285, 35%, 85%);
 }
+
+.buttons>* {
+	margin: 0 .5em 0 0;
+	padding: .25em;
+}
 .content>ul {
 	width: 100%;
 }
-li.mock, li.mock ul {
-	width: 100%;
-	margin: 0;
-}
+
 form.manage {
 	border-radius: 8px 8px 0px 0px;
 	border-radius: 8px;
@@ -65,6 +67,10 @@ form.manage {
 	border: solid 1px black;
 	table-layout: fixed;
 }
+.admin table, .manage {
+	width: 40%;
+	min-width: 28em;
+}
 .admin th {
 	font-weight: bold;
 }
@@ -74,10 +80,7 @@ form.manage {
 .asset figcaption {
 	margin: .2em 0;
 }
-.buttons>* {
-	margin: 0 .5em 0 0;
-	padding: .25em;
-}
+
 .buttons input {
 	text-transform: uppercase;
 }
@@ -95,6 +98,11 @@ nav .icon {
 	width: 100%;
 	background-color: hsl(285, 35%, 35%);
 	left: -1px;
+}
+
+li.mock, li.mock ul {
+	width: 100%;
+	margin: 0;
 }
 form.content input, select {
 	font: .8rem/1.5 Optima Arial, sans-serif;
@@ -129,28 +137,32 @@ form.manage+form {
 	padding: .5em;
 	line-height: normal;
 }
-.admin form li label {
-	margin: 0;
-	line-height: 1;
-}
+
 .content ul li>* {
 	line-height: 1.25;
 	vertical-align: middle;
 	display: inline-block;
 	box-sizing: border-box;
 }
+
+.admin form li label {
+	margin: 0;
+	line-height: 1;
+}
 .content ul>li>input, .content ul>li>textarea {
 	margin: 0 0 1% 1%;
 	width: 83%;
 }
-li.mock ul li {
-	margin: 0;
-}
+
 li.mock ul>* {
 	vertical-align: top;
 	display: inline-block;
 	box-sizing: border-box;
 }
+li.mock ul li {
+	margin: 0;
+}
+
 .content li.asset>* {
 	vertical-align: middle;
 }
@@ -250,10 +262,7 @@ li.mock ul>* {
 	padding: .75em;
 	border-radius: 5px;
 }
-.admin table, #loginform, .manage {
-	width: 40%;
-	min-width: 28em;
-}
+
 .admin form.manage fieldset {
 	padding: 1em;
 	border-radius: 8px 8px 0px 0px;
@@ -333,9 +342,7 @@ form.manage+form.manage {
 .buttons input:last-child:hover {
 	color: silver;
 }
-input#attr_id, input#dom_id {
-	width: 10%;
-}
+
 #pp {
 	margin: 2em 0;
 	border: solid 1px black;
@@ -348,6 +355,8 @@ input#attr_id, input#dom_id {
 	padding: 2%;
 	background-color: hsl(283, 25%, 74%);
 	border-radius: 8px;
+    width: 40%;
+	min-width: 28em;
 }
 #controls, #content, .content .buttons {
 	margin: 0 0 2% 17%;
@@ -357,15 +366,14 @@ input#attr_id, input#dom_id {
 #controls {
 	margin-left: 17%;
 }
+input#attr_id, input#dom_id {
+	width: 10%;
+}
 form#page_select {
 	background-color: white;
 	padding: 1em 0;
 	text-align: left;
 	border-width: 0;
-}
-#pp span {
-	font-weight: bold;
-	background-color: hsl(283, 33%, 40%);
 }
 #pp>* {
 	padding: .33em 1em .44em 1em;
@@ -374,6 +382,10 @@ form#page_select {
 	background-color: hsl(283, 33%, 50%);
 	border-radius: 5px;
 	color: white;
+}
+#pp span {
+	font-weight: bold;
+	background-color: hsl(283, 33%, 40%);
 }
 input#asset {
 	text-align: center;
@@ -388,9 +400,7 @@ input#asset {
 	width: 100%;
 	box-sizing: border-box;
 }
-#loginform input[type="submit"] {
-	width: auto;
-}
+
 #loginform div {
 	margin: 1em 0 0;
 	text-align: center;
@@ -421,6 +431,11 @@ input#asset {
 	display: block;
 	width: 100%;
 }
+
+#loginform input[type="submit"] {
+	width: auto;
+}
+
 #loginform .buttons {
 	background-color: transparent;
 }
@@ -460,6 +475,9 @@ input#asset {
 	width: 10%;
 }
 @media only screen and (max-width: 1160px) {
+    div {
+        
+    }
 	input#dom_id {
 		margin: 0 90% 0 0;
 	}
@@ -504,6 +522,9 @@ input#asset {
 	}
 }
 @media only screen and (max-width: 667px) {
+       div {
+        
+    }
 	.admin h3 {
 		padding: 0;
 		background-color: white;
