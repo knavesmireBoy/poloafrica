@@ -10,7 +10,6 @@ nav {
 	margin: 1em 0 0;
 	border-width: 1px 0 0;
 }
-
 h1 {
 	margin: 0 0 .5em;
 	border-color: #863FA2;
@@ -25,23 +24,19 @@ h1 {
 h2 {
 	margin: .5em 0;
 }
-
 table, select {
 	border: solid 1px black;
 	table-layout: fixed;
 }
-
 th, td {
 	table-layout: fixed;
 	border: 0 solid black;
 	padding: .5em;
 	line-height: normal;
 }
-
 th {
 	font-weight: bold;
 }
-
 form {
 	text-align: center;
 	padding: 2%;
@@ -59,52 +54,43 @@ legend {
 	text-transform: uppercase;
 	padding: .5em;
 }
-
 textarea {
 	padding: 1%;
 	font: 1.1em/1.2 'Courier New', Courier, monospace;
 }
-
 input {
 	width: 100%;
 }
-
 table a {
 	font-weight: bold;
 }
-
 table tr>* {
 	table-layout: fixed;
 	border: 0 solid black;
 	padding: .5em;
 	line-height: normal;
 }
-
 form div {
 	margin: 1em 0 0;
 }
-
 form li label {
 	margin: 0;
 	line-height: 1;
 }
-
 table, .manage {
 	width: 40%;
 	min-width: 28em;
 }
 input[type="submit"] {
 	width: auto;
-    font: bold 1em Helvetica;
+	font: bold 1em Helvetica;
 	padding: .1em .9em;
 }
-
 input[type="email"], input[type="password"] {
 	border-radius: 8px;
 	border-width: 0;
 	padding: .1em 0 .1em .3em;
 }
-
 .content input, select {
 	font: 1em/1.2 Optima, Arial, sans-serif;
 	border-radius: 5px;
@@ -114,7 +100,6 @@ table, form, .manage, .page, .login {
 	width: 40%;
 	min-width: 22em;
 }
-
 .page {
 	width: auto;
 }
@@ -126,7 +111,6 @@ table, form, .manage, .page, .login {
 	border-radius: 10;
 	width: auto;
 }
-
 .login {
 	text-align: left;
 	padding: 2%;
@@ -163,7 +147,6 @@ fieldset, .buttons {
 .statusMessage {
 	color: hsl(285, 35%, 85%);
 }
-
 .manage {
 	border-radius: 8px 8px 0 0;
 	border-radius: 8px;
@@ -178,14 +161,12 @@ fieldset, .buttons {
 	text-align: left;
 	width: 96%;
 }
-
 .page_select, .manage {
 	text-align: left;
 	border-width: 0;
 	background-color: white;
 	padding: 0 0 1em;
 }
-
 .prompt {
 	padding: 0;
 }
@@ -194,14 +175,12 @@ fieldset, .buttons {
 	padding: 1.75em;
 	margin: 1em 0;
 }
-
 .content, .editor {
 	float: none;
 	background-color: #af8dbb;
 	background-color: hsl(283, 25%, 74%);
 	padding: 2%;
 }
-
 .manage+nav {
 	width: 44%;
 }
@@ -216,7 +195,6 @@ fieldset, .buttons {
 	margin: 1em 0 0;
 	text-align: center;
 }
-
 .pp span, .pp a {
 	padding: .33em 1em .44em 1em;
 	margin: 0 .33em;
@@ -228,11 +206,9 @@ fieldset, .buttons {
 	background-color: hsl(283, 40%, 40%);
 	font-weight: bold;
 }
-
 p, .content, .content li {
 	text-align: left;
 }
-
 a:link, a:active, a:visited {
 	color: #5B0080;
 	color: hsl(283, 100%, 25%);
@@ -250,14 +226,12 @@ tr:first-child {
 	color: #DBD3DE;
 	color: hsl(283, 15%, 85%);
 }
-
 label[for="alt"] {
 	text-align: right;
 }
 .asset label {
 	display: block;
 }
-
 .photos img {
 	width: 100%;
 }
@@ -265,7 +239,6 @@ label[for="alt"] {
 	color: crimson;
 	background: black;
 }
-
 .asset figure {
 	width: 11%;
 	min-width: 5em;
@@ -296,20 +269,16 @@ li.mock, li.mock ul {
 	width: 100%;
 	margin: 0;
 }
-
 .manage+form {
 	display: none;
 }
-
 .content~nav {
 	width: 100%;
 }
-
 .neue label {
 	text-align: right;
 	border-width: 0;
 }
-
 .asset figcaption>* {
 	margin: .25em 0;
 }
@@ -318,23 +287,19 @@ li.mock, li.mock ul {
 	border-radius: 5px;
 	border: solid 1px white;
 }
-
 label, .mocklabel, .manage legend {
 	font: 1em 'Arial Black', Arial, sans-serif;
 	color: black;
 }
-
 textarea, .neue, .asset, .asset figure, .manage fieldset {
 	border: solid 1px white;
 	padding: .75em;
 	border-radius: 5px;
 }
-
 .content .pp span, .content .pp a {
 	background-color: #CCB7CC;
 	background-color: rgba(77, 55, 77, .35);
 }
-
 .content>ul .pp {
 	margin: .25em 0 1em 17%;
 	position: relative;
@@ -342,7 +307,6 @@ textarea, .neue, .asset, .asset figure, .manage fieldset {
 	width: 83%;
 	border: solid 1px white;
 }
-
 .manage div input {
 	width: 100%;
 }
@@ -354,7 +318,6 @@ textarea, .neue, .asset, .asset figure, .manage fieldset {
 	border: 0;
 	padding: .3em;
 }
-
 .content ul li>* {
 	line-height: 1.25;
 	vertical-align: middle;
@@ -366,12 +329,11 @@ li.mock ul>* {
 	display: inline-block;
 	box-sizing: border-box;
 }
-
 .content ul>li>input, .content ul>li>textarea {
 	margin: 0 0 1% 1%;
 	width: 83%;
 }
-.mocklabel, .content>ul>li>label{
+.mocklabel, .content>ul>li>label {
 	margin: 0;
 	width: 16%;
 	min-width: 7em;
@@ -382,12 +344,10 @@ li.mock ul>* {
 	box-shadow: 1px 1px 1px black;
 	vertical-align: top;
 }
-
 .mock .mocklabel {
 	margin: 0 1% 0 0;
 	width: 16%;
 }
-
 .icon:nth-child(odd) {
 	margin: 1em .7em 0 0;
 }
@@ -397,7 +357,6 @@ li.mock ul>* {
 .login .buttons {
 	background-color: transparent;
 }
-
 .content .pp span, .content .pp a {
 	padding: .33em .66em .44em .66em;
 	margin: 0 .25em;
@@ -407,26 +366,21 @@ li.mock ul>* {
 	background-color: #634663;
 	background-color: rgba(77, 55, 77, .77);
 }
-
-
 .pp span:first-child, .pp a:first-child {
 	margin: 0 .33em 0 0;
 }
 .content li.asset>* {
 	vertical-align: middle;
 }
-
 .icon img:hover {
 	background-color: hsl(285, 35%, 85%);
 }
-
 .pp a:link {
 	color: white;
 }
 .pp a:hover {
 	color: black;
 }
-
 .manage input[type="checkbox"] {
 	width: auto;
 }
@@ -434,7 +388,6 @@ li.mock ul>* {
 	font: 1em 'Arial Black', Arial, sans-serif;
 	color: black;
 }
-
 .js .asset figure>* {
 	position: absolute;
 	left: -999px;
@@ -463,9 +416,6 @@ li.mock ul>* {
 	margin: 0;
 	text-decoration: underline;
 }
-
-
-
 .manage+.manage {
 	border-width: 0 1px 1px;
 	border-radius: 0 0 8px 8px;
@@ -485,8 +435,6 @@ li.mock ul>* {
 	text-align: left;
 	border-width: 0;
 }
-
-
 .content>ul .neue li label, .content>ul .neue li input {
 	width: auto;
 }
@@ -496,13 +444,12 @@ input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul
 .asset label:first-of-type {
 	display: inline-block;
 }
-
 .edit-content ul li:hover {
 	background-color: #7C548C;
 	background-color: hsl(283, 25%, 44%);
 }
-
 /*overrides default hiding of inouts which are used in no-js scenario*/
+
 .mock .neue, .mock .asset {
 	width: 83%;
 }
@@ -517,12 +464,10 @@ input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul
 .content .buttons input {
 	text-transform: uppercase;
 }
-
 .asset figure.edit {
 	width: 15em;
 	margin: 0 0 1% 1%;
 }
-
 ul.mock li:last-child {
 	padding: 0.5em;
 	border: solid 1px white;
@@ -538,11 +483,13 @@ ul.mock li:last-child {
 .asset figure.edit input {
 	width: 99%;
 }
-
+.asset figure img, .asset figure figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>* {
+	position: relative;
+	left: 0;
+}
 .buttons input:first-child:hover {
 	color: hsl(283, 100%, 25%);
 }
-
 .cssgradients .content .pp span, .cssgradients .content .pp a {
 	background-image: linear-gradient(135deg, rgba(77, 55, 77, .5), rgba(77, 55, 77, .2), rgba(77, 55, 77, .5));
 }
@@ -555,14 +502,8 @@ ul.mock li:last-child {
 .content .buttons input:last-child:hover {
 	color: blue;
 }
-
 .asset figure.edit input[type="checkbox"] {
 	width: auto;
-}
-
-.asset figure img, .asset figure figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>* {
-	position: relative;
-	left: 0;
 }
 #alt {
 	width: 70%;
@@ -574,32 +515,25 @@ ul.mock li:last-child {
 #controls {
 	margin-left: 17%;
 }
-
+#attr_id, #dom_id {
+	width: 10%;
+}
+#asset {
+	text-align: center;
+	margin: 0%;
+	line-height: 1.3;
+	width: 100%;
+}
 #guide li {
 	display: block;
 	width: auto;
 	box-shadow: none;
 	padding: 0 .3em;
 }
-#guide li:hover {
-	background-color: black;
-	color: white;
-}
-
 #controls, textarea#content, .content .buttons {
 	margin: 0 0 2% 17%;
 	width: 83%;
 	box-sizing: border-box;
-}
-
-input#attr_id, input#dom_id {
-	width: 10%;
-}
-input#asset {
-	text-align: center;
-	margin: 0%;
-	line-height: 1.3;
-	width: 100%;
 }
 #details input {
 	margin-bottom: .5em !important;
@@ -630,7 +564,6 @@ input#asset {
 	display: block;
 	width: 100%;
 }
-
 #guide.show {
 	position: relative;
 	left: 0;
@@ -639,7 +572,10 @@ input#asset {
 	background-color: whitesmoke;
 	border-radius: 10;
 }
-
+#guide li:hover {
+	background-color: black;
+	color: white;
+}
 #controls li:hover {
 	background-color: hsl(283, 25%, 44%);
 }
@@ -648,132 +584,4 @@ input#asset {
 }
 .content>ul input#dom_id {
 	width: 10%;
-}
-@media only screen and (max-width: 1160) {
-	div {}
-	div {}
-	div {}
-	input#dom_id {
-		margin: 0 90% 0 0;
-	}
-	#pubDate+label {
-		display: none;
-	}
-}
-@media only screen and (max-width: 1024px) {
-	#page+label {
-		display: none;
-	}
-}
-@media only screen and (max-width: 910) {
-	#page+label {
-		display: inline-block;
-	}
-}
-@media only screen and (max-width: 736px) {
-	.mock .mocklabel, .mock .asset, .mock .neue, .content #editList>li>* {
-		width: 100%;
-	}
-	.content #editList>li>label, .mock .mocklabel {
-		text-align: left;
-		border-width: 0;
-		background: none;
-		box-shadow: none;
-		padding: .3em .2em;
-	}
-	#controls, #content, .content .buttons {
-		margin-left: 0;
-		width: 100%;
-	}
-	#pubDate {
-		margin-right: 10%;
-	}
-	#pubDate+label {
-		display: inline-block;
-	}
-	.content>ul #pp {
-		margin: .25em 0 0;
-		width: 100%;
-	}
-}
-@media only screen and (max-width: 667px) {
-	.login {
-		width: auto;
-	}
-	h3 {
-		padding: 0;
-		background-color: white;
-	}
-	label {
-		width: auto;
-		text-align: left;
-		background: none;
-	}
-	.touchevents main {
-		box-sizing: border-box;
-	}
-	table {
-		width: 100%;
-		min-width: 20em;
-	}
-	.manage label {
-		display: inline-block;
-	}
-	.manage input[type="checkbox"] {
-		margin-left: .33em;
-	}
-	.login .buttons input {
-		width: auto;
-	}
-	.content>ul #pp {
-		padding: 2%;
-	}
-	.content>ul #pp>* {
-		padding: .33em;
-		width: 1em;
-		height: 1em;
-		margin: 0 .5%;
-	}
-	table, form, .manage {
-		min-width: 20em;
-	}
-	.pp span, .pp a {
-		padding: .33em .66em .44em .66em;
-		margin: 0 .25em;
-	}
-}
-@media only screen and (max-width: 580) {
-	#pubDate {
-		margin-right: 50%;
-	}
-	.content #page {
-		margin-right: 40%;
-	}
-}
-@media only screen and (max-width: 479px) {
-	#pubDate {
-		margin-right: 50%;
-	}
-	.content #page {
-		margin-right: 40%;
-	}
-	#details+li {
-		margin: 1em 0 0;
-	}
-	.content>ul #pp {
-		border-width: 0;
-	}
-	.content>ul #pp>* {
-		border-radius: 0;
-		margin: 0;
-		border-width: 0;
-		background-color: transparent;
-		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
-	}
-	.content>ul #pp span {
-		border-width: 1px;
-	}
-	.cssgradients .content>ul .pp span, .cssgradients .content>ul .pp a {
-		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
-	}
 }
