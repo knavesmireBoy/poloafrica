@@ -497,9 +497,7 @@ input#asset {
 	width: 10%;
 }
 @media only screen and (max-width: 1160px) {
-    div {
-        
-    }
+div {}
 	input#dom_id {
 		margin: 0 90% 0 0;
 	}
@@ -544,9 +542,7 @@ input#asset {
 	}
 }
 @media only screen and (max-width: 667px) {
-       div {
-        
-    }
+
 	.admin h3 {
 		padding: 0;
 		background-color: white;
