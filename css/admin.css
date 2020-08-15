@@ -264,6 +264,12 @@ li.mock ul li {
 .admin p, .admin form.content, form.content li {
 	text-align: left;
 }
+
+.js .asset figure>* {
+	position: absolute;
+	left: -999px;
+}
+
 .admin .asset figure input {
 	margin: 0 0 .4em .2em;
 }
@@ -293,10 +299,7 @@ form.manage+form.manage {
 .content li.asset figure {
 	vertical-align: top;
 }
-.js .asset figure>* {
-	position: absolute;
-	left: -999px;
-}
+
 .admin .asset figure img {
 	margin: 0;
 	width: 100%;
@@ -312,11 +315,9 @@ form.manage+form.manage {
 	padding: .2em;
 	border: solid 1px;
 	background-color: rgba(255, 255, 255, .7);
+    margin: 0 0 0% 1%;
 }
 
-.admin .asset figure {
-	margin: 0 0 0% 1%;
-}
 .admin .neue label {
 	text-align: right;
 	border-width: 0;
@@ -324,10 +325,23 @@ form.manage+form.manage {
 .content>ul .neue li label, .content>ul .neue li input {
 	width: auto;
 }
-
 .admin .asset label:first-of-type {
 	display: inline-block;
 }
+
+.admin .asset figure.edit {
+	width: 15em;
+	margin: 0 0 1% 1%;
+}
+
+
+.buttons input:first-child:hover {
+	color: yellow;
+}
+.buttons input:last-child:hover {
+	color: silver;
+}
+
 .admin ul.mock li:last-child {
 	padding: 0.5em;
 	border: solid 1px white;
@@ -337,26 +351,18 @@ form.manage+form.manage {
 	width: auto;
 	display: inline;
 }
+
+.admin .asset figure.edit input {
+	width: 99%;
+}
+
 .admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset figure.edit>* {
 	position: relative;
 	left: 0;
 }
-.admin .asset figure.edit input {
-	width: 99%;
-}
+
 .admin .asset figure.edit input[type=checkbox] {
 	width: auto;
-}
-
-.admin .asset figure.edit {
-	width: 15em;
-	margin: 0 0 1% 1%;
-}
-.buttons input:first-child:hover {
-	color: yellow;
-}
-.buttons input:last-child:hover {
-	color: silver;
 }
 
 #pp {
@@ -563,9 +569,9 @@ input#asset {
 	.manage input[type="checkbox"] {
 		margin-left: .33em;
 	}
-	#loginform {
-		width: auto;
-	}
+        #loginform {
+            width: auto;
+        }
 	#loginform .buttons input {
 		width: auto;
 	}
