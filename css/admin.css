@@ -295,17 +295,11 @@ textarea, .neue, .asset, .asset figure, .manage fieldset {
 	padding: .75em;
 	border-radius: 5px;
 }
-.content .pp span, .content .pp a {
-	background-color: #CCB7CC;
-	background-color: rgba(77, 55, 77, .35);
+
+.asset figure input {
+	margin: 0 0 .4em .2em;
 }
-.content>ul .pp {
-	margin: .25em 0 1em 17%;
-	position: relative;
-	overflow: hidden;
-	width: 83%;
-	border: solid 1px white;
-}
+
 .manage div input {
 	width: 100%;
 }
@@ -332,6 +326,20 @@ li.mock ul>* {
 	margin: 0 0 1% 1%;
 	width: 83%;
 }
+
+.neue, .asset, .asset figure, form textarea, .manage fieldset {
+	border: solid 1px white;
+	padding: .75em;
+	border-radius: 5px;
+}
+.manage fieldset {
+	padding: 1em;
+	border-radius: 8px 8px 0 0;
+	margin: .5em 0 1em;
+}
+.prompt fieldset {
+	border-width: 1px 1px 0;
+}
 .mocklabel, .content>ul>li>label {
 	margin: 0;
 	width: 16%;
@@ -350,21 +358,30 @@ li.mock ul>* {
 .icon:nth-child(odd) {
 	margin: 1em .7em 0 0;
 }
-.login input[type="submit"] {
-	width: auto;
-}
+
 .login .buttons {
 	background-color: transparent;
 }
+
+.login input[type="submit"] {
+	width: auto;
+}
+
 .content .pp span, .content .pp a {
-	padding: .33em .66em .44em .66em;
+	background-color: #CCB7CC;
+	background-color: rgba(77, 55, 77, .35);
+    	padding: .33em .66em .44em .66em;
 	margin: 0 .25em;
 	border: solid 1px white;
 }
-.content .pp span {
-	background-color: #634663;
-	background-color: rgba(77, 55, 77, .77);
+.content>ul .pp {
+	margin: .25em 0 1em 17%;
+	position: relative;
+	overflow: hidden;
+	width: 83%;
+	border: solid 1px white;
 }
+
 .pp span:first-child, .pp a:first-child {
 	margin: 0 .33em 0 0;
 }
@@ -391,21 +408,10 @@ li.mock ul>* {
 	position: absolute;
 	left: -999px;
 }
-.asset figure input {
-	margin: 0 0 .4em .2em;
-}
-.neue, .asset, .asset figure, form textarea, .manage fieldset {
-	border: solid 1px white;
-	padding: .75em;
-	border-radius: 5px;
-}
-.manage fieldset {
-	padding: 1em;
-	border-radius: 8px 8px 0 0;
-	margin: .5em 0 1em;
-}
-.prompt fieldset {
-	border-width: 1px 1px 0;
+
+.manage+.manage {
+	border-width: 0 1px 1px;
+	border-radius: 0 0 8px 8px;
 }
 .prompt.manage fieldset {
 	padding: 0;
@@ -414,10 +420,6 @@ li.mock ul>* {
 	padding: .5em 0;
 	margin: 0;
 	text-decoration: underline;
-}
-.manage+.manage {
-	border-width: 0 1px 1px;
-	border-radius: 0 0 8px 8px;
 }
 .content li.mock ul li input {
 	width: auto;
@@ -584,4 +586,134 @@ ul.mock li:last-child {
 }
 .content>ul input#dom_id {
 	width: 10%;
+}
+
+
+@media only screen and (max-width: 1160px) {
+	div {}
+	div {}
+	div {}
+	#dom_id {
+		margin: 0 90% 0 0;
+	}
+	#pubDate+label {
+		display: none;
+	}
+}
+@media only screen and (max-width: 1024px) {
+	#page+label {
+		display: none;
+	}
+}
+@media only screen and (max-width: 910px) {
+	#page+label {
+		display: inline-block;
+	}
+}
+@media only screen and (max-width: 736px) {
+	.mock .mocklabel, .mock .asset, .mock .neue, .content #editList>li>* {
+		width: 100%;
+	}
+	.content #editList>li>label, .mock .mocklabel {
+		text-align: left;
+		border-width: 0;
+		background: none;
+		box-shadow: none;
+		padding: .3em .2em;
+	}
+	#controls, #content, .content .buttons {
+		margin-left: 0;
+		width: 100%;
+	}
+	#pubDate {
+		margin-right: 10%;
+	}
+	#pubDate+label {
+		display: inline-block;
+	}
+	.content>ul #pp {
+		margin: .25em 0 0;
+		width: 100%;
+	}
+}
+@media only screen and (max-width: 667px) {
+	h3 {
+		padding: 0;
+		background-color: white;
+	}
+	label {
+		width: auto;
+		text-align: left;
+		background: none;
+	}
+	table {
+		width: 100%;
+		min-width: 20em;
+	}
+	.login {
+		width: auto;
+	}
+	table, form, .manage {
+		min-width: 20em;
+	}
+	.touchevents main {
+		box-sizing: border-box;
+	}
+	.pp span, .pp a {
+		padding: .33em .66em .44em .66em;
+		margin: 0 .25em;
+	}
+	.manage label {
+		display: inline-block;
+	}
+	.manage input[type="checkbox"] {
+		margin-left: .33em;
+	}
+	.login .buttons input {
+		width: auto;
+	}
+	.content>ul #pp {
+		padding: 2%;
+	}
+	.content>ul #pp>* {
+		padding: .33em;
+		width: 1em;
+		height: 1em;
+		margin: 0 .5%;
+	}
+}
+@media only screen and (max-width: 580) {
+	#pubDate {
+		margin-right: 50%;
+	}
+	.content #page {
+		margin-right: 40%;
+	}
+}
+@media only screen and (max-width: 479px) {
+	#pubDate {
+		margin-right: 50%;
+	}
+	.content #page {
+		margin-right: 40%;
+	}
+	#details+li {
+		margin: 1em 0 0;
+	}
+	.content>ul #pp {
+		border-width: 0;
+	}
+	.content>ul #pp>* {
+		border-radius: 0;
+		margin: 0;
+		border-width: 0;
+		background-color: transparent;
+		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
+	}
+	.content>ul #pp span {
+		border-width: 1px;
+	}
+	.cssgradients .content>ul .pp span, .cssgradients .content>ul .pp a {
+		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
+	}
 }
