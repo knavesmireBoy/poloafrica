@@ -11,7 +11,6 @@ nav {
 	border-width: 1px 0 0;
 }
 
-
 h1 {
 	margin: 0 0 .5em;
 	border-color: #863FA2;
@@ -66,11 +65,6 @@ textarea {
 	font: 1.1em/1.2 'Courier New', Courier, monospace;
 }
 
-table, .manage {
-	width: 40%;
-	min-width: 28em;
-}
-
 input {
 	width: 100%;
 }
@@ -95,7 +89,10 @@ form li label {
 	line-height: 1;
 }
 
-
+table, .manage {
+	width: 40%;
+	min-width: 28em;
+}
 input[type="submit"] {
 	width: auto;
     font: bold 1em Helvetica;
@@ -175,17 +172,7 @@ fieldset, .buttons {
 .statusMessage {
 	color: hsl(285, 35%, 85%);
 }
-.content>ul {
-	width: 100%;
-}
-.login input {
-	width: 100%;
-	box-sizing: border-box;
-}
-.login div {
-	margin: 1em 0 0;
-	text-align: center;
-}
+
 .manage {
 	border-radius: 8px 8px 0 0;
 	border-radius: 8px;
@@ -201,7 +188,40 @@ fieldset, .buttons {
 	width: 96%;
 }
 
+.page_select, .manage {
+	text-align: left;
+	border-width: 0;
+	background-color: white;
+	padding: 0 0 1em;
+}
 
+.prompt {
+	padding: 0;
+}
+.editor {
+	text-align: left;
+	padding: 1.75em;
+	margin: 1em 0;
+}
+
+.content, .editor {
+	float: none;
+	background-color: #af8dbb;
+	background-color: hsl(283, 25%, 74%);
+	padding: 2%;
+}
+
+.content>ul {
+	width: 100%;
+}
+.login input {
+	width: 100%;
+	box-sizing: border-box;
+}
+.login div {
+	margin: 1em 0 0;
+	text-align: center;
+}
 
 .pp span, .pp a {
 	padding: .33em 1em .44em 1em;
@@ -215,10 +235,9 @@ fieldset, .buttons {
 	font-weight: bold;
 }
 
-p, .content li {
+p, .content, .content li {
 	text-align: left;
 }
-
 
 a:link, a:active, a:visited {
 	color: #5B0080;
@@ -237,30 +256,19 @@ tr:first-child {
 	color: #DBD3DE;
 	color: hsl(283, 15%, 85%);
 }
-label, .mocklabel, .manage fieldset legend {
+
+label[for="alt"] {
+	text-align: right;
+}
+.asset label {
+	display: block;
+}
+
+label, .mocklabel, .manage legend {
 	font: 1em 'Arial Black', Arial, sans-serif;
 	color: black;
 }
 
-.content .pp span, .content .pp a {
-	background-color: #CCB7CC;
-	background-color: rgba(77, 55, 77, .35);
-}
-
-.content>ul .pp {
-	margin: .25em 0 1em 17%;
-	position: relative;
-	overflow: hidden;
-	width: 83%;
-	border: solid 1px white;
-}
-
-.page_select, .manage {
-	text-align: left;
-	border-width: 0;
-	background-color: white;
-	padding: 0 0 1em;
-}
 .photos img {
 	width: 100%;
 }
@@ -299,9 +307,38 @@ li.mock, li.mock ul {
 	width: 100%;
 	margin: 0;
 }
+
+.manage+form {
+	display: none;
+}
+
+.content~nav {
+	width: 100%;
+}
+
+.neue label {
+	text-align: right;
+	border-width: 0;
+}
+
+.asset figcaption>* {
+	margin: .25em 0;
+}
 .content input, select {
 	font: .8rem/1.5 Optima Arial, sans-serif;
 	border-radius: 5px;
+	border: solid 1px white;
+}
+.content .pp span, .content .pp a {
+	background-color: #CCB7CC;
+	background-color: rgba(77, 55, 77, .35);
+}
+
+.content>ul .pp {
+	margin: .25em 0 1em 17%;
+	position: relative;
+	overflow: hidden;
+	width: 83%;
 	border: solid 1px white;
 }
 
@@ -315,10 +352,6 @@ li.mock, li.mock ul {
 	box-sizing: border-box;
 	border: 0;
 	padding: .3em;
-}
-
-.manage+form {
-	display: none;
 }
 
 .content ul li>* {
@@ -350,6 +383,11 @@ li.mock ul>* {
 }
 
 
+.mock .mocklabel {
+	margin: 0 1% 0 0;
+	width: 16%;
+}
+
 .content .pp span, .content .pp a {
 	padding: .33em .66em .44em .66em;
 	margin: 0 .25em;
@@ -359,10 +397,7 @@ li.mock ul>* {
 	background-color: #634663;
 	background-color: rgba(77, 55, 77, .77);
 }
-.mock .mocklabel {
-	margin: 0 1% 0 0;
-	width: 16%;
-}
+
 .icon:nth-child(odd) {
 	margin: 1em .7em 0 0;
 }
@@ -378,71 +413,20 @@ li.mock ul>* {
 .content li.asset>* {
 	vertical-align: middle;
 }
-.content~nav {
-	width: 100%;
-}
 .buttons input:first-child:hover {
 	color: hsl(283, 100%, 25%);
 }
 .icon img:hover {
 	background-color: hsl(285, 35%, 85%);
 }
-/*overrides default hiding of inouts which are used in no-js scenario*/
 
-.mock .neue, .mock .asset {
-	width: 83%;
-}
-.content label, .content .mocklabel {
-	word-spacing: normal;
-	letter-spacing: normal;
-	text-align: right;
-}
-.prompt {
-	padding: 0;
-}
-.editor {
-	text-align: left;
-	padding: 1.75em;
-	margin: 1em 0;
-}
-label[for="alt"] {
-	text-align: right;
-}
-.asset label {
-	display: block;
-}
-.content, .editor {
-	float: none;
-	background-color: #af8dbb;
-	background-color: hsl(283, 25%, 74%);
-	padding: 2%;
-}
-a:link, a:visited {
-	color: hsl(283, 100%, 25%);
-}
-a:active, a:hover {
-	color: hsl(283, 50%, 45%);
-}
 .pp a:link {
 	color: white;
 }
 .pp a:hover {
 	color: black;
 }
-.asset figcaption>* {
-	margin: .25em 0;
-}
-table tr:nth-child(odd) {
-	background-color: hsl(283, 15%, 95%);
-}
-table tr:first-child {
-	background-color: black;
-	color: hsl(283, 15%, 85%);
-}
-input[type="submit"] {
-	font: bold 1em Helvetica;
-	padding: .1em .9em;
-}
+
 .manage input[type="checkbox"] {
 	width: auto;
 }
@@ -450,9 +434,7 @@ input[type="submit"] {
 	font: 1em 'Arial Black', Arial, sans-serif;
 	color: black;
 }
-p, .content, .content li {
-	text-align: left;
-}
+
 .js .asset figure>* {
 	position: absolute;
 	left: -999px;
@@ -481,6 +463,9 @@ p, .content, .content li {
 	margin: 0;
 	text-decoration: underline;
 }
+
+
+
 .manage+.manage {
 	border-width: 0 1px 1px;
 	border-radius: 0 0 8px 8px;
@@ -501,10 +486,7 @@ p, .content, .content li {
 	border-width: 0;
 }
 
-.neue label {
-	text-align: right;
-	border-width: 0;
-}
+
 .content>ul .neue li label, .content>ul .neue li input {
 	width: auto;
 }
@@ -514,19 +496,31 @@ input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul
 .asset label:first-of-type {
 	display: inline-block;
 }
-.asset figure.edit {
-	width: 15em;
-	margin: 0 0 1% 1%;
-}
+
 .edit-content ul li:hover {
 	background-color: #7C548C;
 	background-color: hsl(283, 25%, 44%);
+}
+
+/*overrides default hiding of inouts which are used in no-js scenario*/
+.mock .neue, .mock .asset {
+	width: 83%;
+}
+.content label, .content .mocklabel {
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-align: right;
 }
 .content .buttons>* {
 	margin: 0 .5em 0 0;
 }
 .content .buttons input {
 	text-transform: uppercase;
+}
+
+.asset figure.edit {
+	width: 15em;
+	margin: 0 0 1% 1%;
 }
 
 .cssgradients .content .pp span, .cssgradients .content .pp a {
