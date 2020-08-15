@@ -89,15 +89,11 @@ restrict animation for proper grid support as we are using grid positioning to o
 		align-items: stretch;
 		background: linear-gradient(217deg, black, rgba(0, 0, 255, 0) 70.71%), linear-gradient(127deg, black, rgba(200, 255, 0, 0) 70.71%), linear-gradient(336deg, indigo, rgba(111, 111, 0, 0) 70.71%);
 	}
-    /*
-    #response figure img {
-        height: 100%;
-    }
-    */
+
 	#response figure.top {
 		display: block;
 	}
-	section:nth-child(2) > article > #response > * {
+	#post #response > * {
 		width: 100%;
 		grid-row-start: 1;
 		margin: 0;

@@ -11,7 +11,6 @@ function buildMessage($k, $v, $flag)
     return $str . $ret;
 }
 
-
 $host = 'north.wolds@btinternet.com';
 //$host = 'info@poloafrica.com';
 $to = 'andrewsykes@btinternet.com';
@@ -49,10 +48,10 @@ $isEmail = new Checker('please supply an email address', new isEmail());
 $isName = new Checker('please supply name in the expected format: "FirstName Middle/LastName LastName"', new isName());
 $comment = new Checker($post_text, new Negator(new Match("/^$subtext/")));
 $postcomment = new Checker($post_text, new Negator(new Match("/^$subpost_text/")));
-$required = array(/*
+$required = array(
     'name' => preconditions($empty, $isName) ,
     'email' => preconditions($empty, $isEmail) ,
-    'comments' => preconditions($empty, $comment, $postcomment)*/
+    'comments' => preconditions($empty, $comment, $postcomment)
 );
 
 if (!empty($_POST))
@@ -120,8 +119,8 @@ if (!empty($_POST))
         } //sent
         else
         { ?>
-                <div id="response">
-                    <h1 class="warning">Sorry, There was a problem sending your message. PLease try again later.</h1></div>
+<div id="response">
+    <h1 class="warning">Sorry, There was a problem sending your message. Please try again later.</h1></div>
             <?php
         } //not sent
         
@@ -134,12 +133,10 @@ if (!empty($_POST))
         $echo = flushMsg($missing, $data);
         //https://stackoverflow.com/questions/24403817/html5-required-attribute-one-of-two-fields
         include 'form.html.php'; //sticky
-        
     }
 } //posted
 else if (!isset($missing))
 { //not yet posted
     $item = null; //used as a flag to supply default text to textarea
     include 'form.html.php'; //new
-    
 }
