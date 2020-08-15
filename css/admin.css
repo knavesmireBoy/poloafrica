@@ -145,6 +145,12 @@ form.manage+form {
 	box-sizing: border-box;
 }
 
+li.mock ul>* {
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
 .admin form li label {
 	margin: 0;
 	line-height: 1;
@@ -154,18 +160,11 @@ form.manage+form {
 	width: 83%;
 }
 
-li.mock ul>* {
-	vertical-align: top;
-	display: inline-block;
-	box-sizing: border-box;
-}
 li.mock ul li {
 	margin: 0;
 }
 
-.content li.asset>* {
-	vertical-align: middle;
-}
+
 .content>ul>li>label, .mocklabel {
 	margin: 0;
 	width: 16%;
@@ -181,26 +180,35 @@ li.mock ul li {
 	margin: 0 1% 0 0;
 	width: 16%;
 }
+.icon:nth-child(odd) {
+	margin: 1em .7em 0 0;
+}
+
+.content li.asset>* {
+	vertical-align: middle;
+}
+
 .buttons input:hover {
 	color: red;
 	background: black;
 }
-.icon:nth-child(odd) {
-	margin: 1em .7em 0 0;
-}
+
 .icon img:hover {
 	background-color: hsl(285, 35%, 85%);
 }
 /*overrides default hiding of inouts which are used in no-js scenario*/
+
+
+.mock .neue, .mock .asset {
+	width: 83%;
+}
 
 .content label, .content .mocklabel {
 	word-spacing: normal;
 	letter-spacing: normal;
 	text-align: right;
 }
-.mock .neue, .mock .asset {
-	width: 83%;
-}
+
 .admin form.prompt {
 	padding: 0;
 }
@@ -230,6 +238,11 @@ li.mock ul li {
 .admin a:active, .admin a:hover {
 	color: hsl(283, 50%, 45%);
 }
+
+.admin .asset figcaption>* {
+	margin: .25em 0;
+}
+
 .admin table tr:nth-child(odd) {
 	background-color: hsl(283, 15%, 95%);
 }
@@ -244,7 +257,7 @@ li.mock ul li {
 .manage input[type="checkbox"] {
 	width: auto;
 }
-.admin form label, .mocklabel, .admin form.manage fieldset legend {
+.mocklabel, .admin form label,  .admin form.manage fieldset legend {
 	font: 1em 'Arial Black', Arial, sans-serif;
 	color: black;
 }
@@ -254,9 +267,7 @@ li.mock ul li {
 .admin .asset figure input {
 	margin: 0 0 .4em .2em;
 }
-.admin .asset figcaption>* {
-	margin: .25em 0;
-}
+
 .neue, .asset, .asset figure, .admin form textarea, .admin form.manage fieldset {
 	border: solid 1px white;
 	padding: .75em;
@@ -290,13 +301,6 @@ form.manage+form.manage {
 	margin: 0;
 	width: 100%;
 }
-.admin .asset label:first-of-type {
-	display: inline-block;
-}
-.admin ul.mock li:last-child {
-	padding: 0.5em;
-	border: solid 1px white;
-}
 
 .admin .asset figure label, .admin .asset figure input {
 	text-align: left;
@@ -319,6 +323,14 @@ form.manage+form.manage {
 }
 .content>ul .neue li label, .content>ul .neue li input {
 	width: auto;
+}
+
+.admin .asset label:first-of-type {
+	display: inline-block;
+}
+.admin ul.mock li:last-child {
+	padding: 0.5em;
+	border: solid 1px white;
 }
 
 .admin .asset figure img.pdf_icon {
