@@ -1,18 +1,15 @@
-.no-js .nojs {
-    position: relative;
-    top: 2.5em;
-}
-.js .nojs, .js .submitter {
-    position: absolute;
-    left: -9999px;
-}
-
 .photos img {
 	width: 100%;
 }
 
+figcaption label:first-child:after {
+    content: 'delete';
+}
 /* MEEJA QUERIES */
 @media only screen and (max-width: 1100px) {
+    figcaption label:first-child:after {
+    content: 'del:';
+}
 @supports(column-gap: 20px) {
     li.mock li.neue {
         display: grid;
@@ -102,13 +99,7 @@
             grid-column: 2 / span 3;
         }
     }
-            
-       /*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
+
 
  fieldset.buttons {
             display: -webkit-box;

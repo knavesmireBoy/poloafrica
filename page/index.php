@@ -43,6 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'selectedpage')
 
 if (isset($_GET['action']) && $_GET['action'] == 'addPage')
 {
+     include TEMPLATE_PATH . 'admin_header.html.php';
     $results = array();
     $results['id'] = '';
     $results['name'] = '';

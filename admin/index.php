@@ -140,7 +140,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     {
         // User has not posted the article edit form yet: display the form
         $results['article'] = ArticleFactory::getById((int)$_REQUEST['articleId']);
-        require ("editArticle.html.php");
+        require "editArticle.html.php";
     }
     exit();
 }//edit article
@@ -154,6 +154,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     $results['heading'] = 'Add Article';
 
     $default_placement = "select position";
+    
+    include_once '../templates/admin_header.html.php';
 
     //form action
     if (isset($_POST['saveChanges']))
