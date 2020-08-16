@@ -11,9 +11,8 @@ nav {
 }
 h1 {
 	margin: 0 0 .5em;
-	border-color: #863FA2;
-	border-color: hsl(283, 44%, 44%);
-	border-style: solid;
+    border: solid 6px #863FA2;
+    border: solid 6px hsl(283, 44%, 44%);
 	border-width: 0 0 6px;
 	font-size: 2.7em;
 	line-height: 1;
@@ -23,26 +22,17 @@ h1 {
 h2 {
 	margin: .5em 0;
 }
-table, select {
-	border: solid 1px black;
-	table-layout: fixed;
-}
-th, td {
-	table-layout: fixed;
-	border: 0 solid black;
-	padding: .5em;
-	line-height: normal;
-}
-th {
-	font-weight: bold;
-}
+
 form {
-	text-align: center;
+	text-align: left;
 	padding: 2%;
 	background-color: #C4ACCD;
 	background-color: hsl(283, 25%, 74%);
 	border-radius: 8px;
 	border: solid 1px #444;
+}
+input {
+	width: 100%;
 }
 fieldset {
 	border: solid 1px white;
@@ -57,12 +47,15 @@ textarea {
 	padding: 1%;
 	font: 1.1em/1.2 'Courier New', Courier, monospace;
 }
-input {
-	width: 100%;
+table, select {
+	border: solid 1px black;
+	table-layout: fixed;
 }
-table a {
+
+th, table a {
 	font-weight: bold;
 }
+
 table tr>* {
 	table-layout: fixed;
 	border: 0 solid black;
@@ -73,51 +66,41 @@ form div {
 	margin: 1em 0 0;
 }
 form li label {
-	margin: 0;
 	line-height: 1;
 }
-table, .manage {
-	width: 40%;
-	min-width: 28em;
-}
+
 input[type="submit"] {
 	width: auto;
 	font: bold 1em Helvetica;
 	padding: .1em .9em;
 }
-input[type="email"], input[type="password"] {
-	border-radius: 8px;
-	border-width: 0;
-	padding: .1em 0 .1em .3em;
-}
+
 .content input, select {
 	font: 1em/1.2 Optima, Arial, sans-serif;
 	border-radius: 5px;
 	border: solid 1px white;
 }
-table, form, .manage, .page, .login {
+
+table, form, .manage, .login  {
 	width: 40%;
-	min-width: 22em;
+	min-width: 28em;
 }
+
 .page {
 	width: auto;
-    text-align: left;
 }
 .pp {
 	margin: 2em 0;
 	border: solid 1px black;
 	display: inline-block;
 	padding: 1em .7em;
-	border-radius: 10;
+	border-radius: 10px;
 	width: auto;
 }
 .login {
-	text-align: left;
 	padding: 2%;
 	background-color: hsl(283, 25%, 74%);
 	border-radius: 8px;
-	width: 40%;
-	min-width: 28em;
 }
 .buttons {
 	padding: .3em;
@@ -148,21 +131,16 @@ fieldset, .buttons {
 	color: hsl(285, 35%, 85%);
 }
 .manage {
-	border-radius: 8px 8px 0 0;
-	border-radius: 8px;
 	padding: 1%;
 }
 .editor {
-	text-align: left;
 	padding: 1.75em;
 	margin: 1em 0;
 }
 .content {
-	text-align: left;
 	width: 96%;
 }
 .page_select, .manage {
-	text-align: left;
 	border-width: 0;
 	background-color: white;
 	padding: 0 0 1em;
@@ -171,7 +149,6 @@ fieldset, .buttons {
 	padding: 0;
 }
 .editor {
-	text-align: left;
 	padding: 1.75em;
 	margin: 1em 0;
 }
@@ -206,9 +183,7 @@ fieldset, .buttons {
 	background-color: hsl(283, 40%, 40%);
 	font-weight: bold;
 }
-p, .content, .content li {
-	text-align: left;
-}
+
 a:link, a:active, a:visited {
 	color: #5B0080;
 	color: hsl(283, 100%, 25%);
@@ -226,9 +201,7 @@ tr:first-child {
 	color: #DBD3DE;
 	color: hsl(283, 15%, 85%);
 }
-label[for="alt"] {
-	text-align: right;
-}
+
 .asset label {
 	display: block;
 }
@@ -452,7 +425,6 @@ li.asset input[type="checkbox"]{
 	width: 100%;
 }
 .asset figure label, .asset figure input {
-	text-align: left;
 	border-width: 0;
 }
 .content>ul .neue li label, .content>ul .neue li input {
@@ -473,11 +445,7 @@ input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul
 .mock .neue, .mock .asset {
 	width: 83%;
 }
-.content label, .content .mocklabel {
-	word-spacing: normal;
-	letter-spacing: normal;
-	text-align: right;
-}
+
 .content .buttons>* {
 	margin: 0 .5em 0 0;
 }
@@ -525,6 +493,13 @@ ul.mock li:last-child {
 .content .buttons input:last-child:hover {
 	color: blue;
 }
+
+input[type="email"], input[type="password"], #name {
+	border-radius: 8px;
+	border-width: 0;
+	padding: .1em 0 .1em .3em;
+}
+
 #alt {
 	width: 70%;
 }
@@ -558,7 +533,9 @@ ul.mock li:last-child {
     vertical-align: baseline;
 }
 
-
+#editList > li > label, .mocklabel {
+  text-align: right;  
+}
 #guide > li:nth-child(odd) {
     background-color: rgba(0,0,0, .10);
 }
@@ -657,7 +634,6 @@ ul.mock li:last-child {
 		width: 100%;
 	}
 	.content #editList>li>label, .mock .mocklabel {
-		text-align: left;
 		border-width: 0;
 		background: none;
 		box-shadow: none;
@@ -681,7 +657,6 @@ ul.mock li:last-child {
 	}
 	label {
 		width: auto;
-		text-align: left;
 		background: none;
 	}
 	table {
