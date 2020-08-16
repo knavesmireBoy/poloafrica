@@ -17,7 +17,6 @@ abstract class Article implements ArticleInterface
     public $page = null;
     public $attrID = null;
 
-    
     protected function doUnlink($f1, $f2)
     {
         return function ($id) use ($f1, $f2)
