@@ -290,14 +290,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		padding: .75em .6em;
 	}
 }
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
 
-/*
 @media only screen and (min-width: 1024px) {
 
 .js article, .js section>img, aside {
@@ -331,7 +324,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		-ms-transform: translate(100em, 0);
 		transform: translate(100em, 0);
 	}
-	.js .display article, .js .display>img, .js .display aside {
+	.js .override .display article, .js .override .display>img, .js .display aside {
 		-webkit-transform: translate(0, 0);
 		-ms-transform: translate(0, 0);
 		transform: translate(0, 0);
@@ -344,4 +337,3 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		opacity: 1;
 	}
 }
-*/
