@@ -481,7 +481,7 @@ input, .content~nav, .icon img, .asset figure img,  #asset, #controls li img, li
 		box-shadow: none;
 		padding: .3em .2em;
 	}
-	#controls, textarea#content, .content .buttons {
+	#controls, textarea#content, .content .buttons, #guide {
 		margin-left: 0;
 		width: 100%;
 	}
@@ -493,6 +493,9 @@ input, .content~nav, .icon img, .asset figure img,  #asset, #controls li img, li
 	}
     #editList li > label, .mock .mocklabel {
         text-align: left;
+    }
+    .content .buttons {
+        margin-top: 1em;
     }
 }
 @media only screen and (max-width: 667px) {
