@@ -76,6 +76,29 @@ table, form  {
 	min-width: 28em;
 }
 
+fieldset {
+    border-radius: 8px;
+}
+
+h1+p a {
+    padding: .3em;
+    border-radius: 50%;
+    border: solid 1px;
+}
+
+form li {
+	margin: 0 0 1em;
+}
+
+form li > *, li.mock ul>* {
+    vertical-align: top;
+    line-height: 1.25;
+}
+
+form ul>li>input, form ul>li>textarea {
+	margin: 0 0 1% 1%;
+}
+
 .del {
 	color: red;
 	background: black;
@@ -87,10 +110,7 @@ table, form  {
 	padding: 1em .7em;
 	border-radius: 10px;
 }
-.login {
-	padding: 2%;
-	border-radius: 8px;
-}
+
 .buttons {
 	padding: .3em;
 	color: white;
@@ -99,14 +119,9 @@ table, form  {
 	border: solid 1px;
 }
 
-fieldset, .buttons {
-	border-radius: 8px;
-}
-
 .msg {
 	padding: .3em 1em;
 	border-radius: 8px 1px;
-	background-color: #444;
 	background-color: hsl(283, 100%, 15%);
 	font: italic 1.2em serif;
 	margin: 0 0 .5em;
@@ -149,20 +164,6 @@ input[type="checkbox"] {
 	margin: 1em 0 0;
 	text-align: center;
     border-width: 0;
-}
-.login fieldset input {
-    background-color: transparent;
-}
-
-h1+p a {
-    padding: .3em;
-    border-radius: 50%;
-    border: solid 1px;
-}
-
-h1+p a:hover {
-    background-color: black;
-    color: #DBD3DE;
 }
 
 .pp span, .pp a {
@@ -217,18 +218,33 @@ nav .icon {
 .manage+form {
 	display: none;
 }
-form li {
-	margin: 0 0 1em;
+
+h1+p a:hover {
+    background-color: black;
+    color: #DBD3DE;
 }
 
-form li > *, li.mock ul>* {
-    vertical-align: top;
-    line-height: 1.25;
+form .pp span, form .pp a {
+	background-color: black;
+	background-color: rgba(77, 55, 77, .75);
+	padding: .33em .66em .44em .66em;
+	margin: 0 .25em;
+}
+form .pp {
+	margin: .25em 0 1em 17%;
+	overflow: hidden;
 }
 
-form ul>li>input, form ul>li>textarea {
-	margin: 0 0 1% 1%;
+
+.mocklabel, .content>ul>li>label {
+	width: 16%;
+	min-width: 7em;
+	border-radius: 8px;
+	background-color: hsla(283, 80%, 25%, .2);
+	padding: .3em .8em;
+	box-shadow: 1px 1px 1px black;
 }
+
 .neue, .asset, .asset figure, textarea, .manage fieldset {
 	padding: .75em;
 	border-radius: 5px;
@@ -238,13 +254,8 @@ form ul>li>input, form ul>li>textarea {
 	border: solid 1px white;
 }
 
-.mocklabel, .content>ul>li>label {
-	width: 16%;
-	min-width: 7em;
-	border-radius: 8px;
-	background-color: hsla(283, 80%, 25%, .2);
-	padding: .3em .8em;
-	box-shadow: 1px 1px 1px black;
+.login fieldset input:hover {
+    background-color: transparent;
 }
 
 .no-js .nojs {
@@ -262,25 +273,9 @@ form ul>li>input, form ul>li>textarea {
 .icon:nth-child(odd) {
 	margin: 1em .7em 0 0;
 }
-.login .buttons {
-	background-color: transparent;
-}
 
-form .pp span, form .pp a {
-	background-color: #CCB7CC;
-	background-color: rgba(77, 55, 77, .75);
-	padding: .33em .66em .44em .66em;
-	margin: 0 .25em;
-}
-.content>ul .pp {
-	margin: .25em 0 1em 17%;
-	overflow: hidden;
-}
 .pp span:first-child, .pp a:first-child {
 	margin: 0 .33em 0 0;
-}
-form li.asset>* {
-	vertical-align: middle;
 }
 
 .pp a:link {
@@ -291,7 +286,7 @@ form li.asset>* {
 	color: hsl(285, 35%, 85%);
 }
 
-.mocklabel, label, .manage legend {
+label, .mocklabel, .manage legend {
 	font: 1em 'Arial Black', Arial, sans-serif;
 }
 
@@ -305,17 +300,6 @@ form li.asset>* {
 	text-decoration: underline;
 }
 
-input, li>label, li>textarea, li.mock ul>li, ul .pp, .buttons, .content .buttons, form ul li > *, .mock ul>*, #guide, #controls, textarea#content {
-	box-sizing: border-box;
-}
-
-.edit-content ul li:hover {
-	background-color: #7C548C;
-	background-color: hsl(283, 25%, 44%);
-}
-.mock .neue, .mock .asset, ul .pp, ul>li>input, ul>li>textarea, .content .buttons, #guide, #controls {
-	width: 83%;
-}
 .content .buttons>* {
 	margin: 0 .5em 0 0;
 }
@@ -335,10 +319,16 @@ input, li>label, li>textarea, li.mock ul>li, ul .pp, .buttons, .content .buttons
 .asset .edit input {
 	width: 99%;
 }
-.asset img, .asset figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>*, #guide.show, .content>ul .pp, .no-js .nojs, nav .icon {
-	position: relative;
-	left: 0;
+
+input, li>label, li>textarea, li.mock ul>li, ul .pp, .buttons, .content .buttons, form ul li > *, .mock ul>*, #guide, #controls, textarea#content {
+	box-sizing: border-box;
 }
+
+.edit-content ul li:hover {
+	background-color: #7C548C;
+	background-color: hsl(283, 25%, 44%);
+}
+
 .buttons input:first-child:hover {
 	color: hsl(283, 100%, 25%);
 }
@@ -346,7 +336,6 @@ input, li>label, li>textarea, li.mock ul>li, ul .pp, .buttons, .content .buttons
 .content .buttons input:hover {
 	color: red;
 }
-
 .content .buttons input:first-child:hover {
 	color: yellow;
 }
@@ -446,6 +435,15 @@ input[type="checkbox"], .prompt, .prompt.manage fieldset, #asset  {
 
 input[type="email"], input[type="password"], .page_select, .manage, #asset, #name {
     border-width: 0;
+}
+
+.mock .neue, .mock .asset, ul .pp, ul>li>input, ul>li>textarea, .content .buttons, #guide, #controls {
+	width: 83%;
+}
+
+.asset img, .asset figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>*, #guide.show, .content>ul .pp, .no-js .nojs, nav .icon {
+	position: relative;
+	left: 0;
 }
 
 h1, .pp, .msg, nav .icon, form li > *, li.mock ul>*, li.asset input[type="checkbox"], .asset label:first-of-type, #controls li {
