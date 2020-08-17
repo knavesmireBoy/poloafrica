@@ -1,417 +1,134 @@
-.admin main {
-	padding: 1em;
+body {
+	font: normal .875em/1.75 Georgia, serif;
+	background-color: white;
+	margin: 4%;
 }
-.admin p, form.content li {
-	text-align: left;
+nav {
+	border: solid 1px hsl(283, 44%, 44%);
+	width: 40%;
+	margin: 1em 0 0;
+	border-width: 1px 0 0;
 }
-.admin h3 {
-	color: black;
-}
-.admin th {
-	font-weight: bold;
-}
-.admin form {
-	border: solid 1px #444;
-}
-.admin select {
-	border: solid 1px black;
-}
-.admin a:link, .admin a:active, .admin a:visited {
-	color: hsl(283, 100%, 25%);
-}
-.admin a:hover {
-	color: hsl(283, 50%, 45%);
-}
-.admin table {
-	border: solid 1px black;
-    table-layout: fixed;
-}
-#adminHeader h2 {
-	background: none;
-	text-shadow: none;
-	color: black;
-	padding: 0;
+h1 {
 	margin: 0 0 .5em;
-	line-height: 1;
-	border: solid 0px hsl(283, 44%, 44%);
+	border-color: #863FA2;
+	border-color: hsl(283, 44%, 44%);
+	border-style: solid;
 	border-width: 0 0 6px;
+	font-size: 2.7em;
+	line-height: 1;
+	text-transform: uppercase;
 	display: inline-block;
-	font-size: 3em;
 }
-table a {
-	font-weight: bold;
+h2 {
+	margin: .5em 0;
 }
-.admin table tr>* {
+table, select {
+	border: solid 1px black;
 	table-layout: fixed;
-	border: 0px solid black;
+}
+th, td {
+	table-layout: fixed;
+	border: 0 solid black;
 	padding: .5em;
 	line-height: normal;
 }
-.admin table tr:nth-child(odd) {
-	background-color: hsl(283, 15%, 95%);
+th {
+	font-weight: bold;
 }
-.admin table tr:first-child {
-	background-color: black;
-	color: hsl(283, 15%, 85%);
+form {
+	text-align: center;
+	padding: 2%;
+	background-color: #C4ACCD;
+	background-color: hsl(283, 25%, 74%);
+	border-radius: 8px;
+	border: solid 1px #444;
 }
-.admin form label, .mocklabel, .admin form.manage fieldset legend {
-	font: 1em 'Arial Black', Arial, sans-serif;
-	color: black;
+fieldset {
+	border: solid 1px white;
+	border-radius: 8px;
 }
-.admin form li label {
-	margin: 0;
-	line-height: 1;
+legend {
+	margin-left: .5em;
+	text-transform: uppercase;
+	padding: .5em;
 }
 textarea {
 	padding: 1%;
 	font: 1.1em/1.2 'Courier New', Courier, monospace;
 }
-form.content input, select {
-	font: .8rem/1.5 Optima Arial, sans-serif;
-	border-radius: 5px;
-	border: solid 1px white;
+input {
+	width: 100%;
 }
-.admin input[type="submit"] {
-	font: bold 1em Helvetica;
-	padding: .1em .9em;
+table a {
+	font-weight: bold;
 }
-.admin legend {
-	margin-left: .5em;
-	text-transform: uppercase;
+table tr>* {
+	table-layout: fixed;
+	border: 0 solid black;
 	padding: .5em;
+	line-height: normal;
 }
-.neue, .asset, .asset figure, .admin form textarea, .admin form.manage fieldset {
-	border: solid 1px white;
-	padding: .75em;
-	border-radius: 5px;
+form div {
+	margin: 1em 0 0;
 }
-.admin table, #loginform, .manage {
+form li label {
+	margin: 0;
+	line-height: 1;
+}
+table, .manage {
 	width: 40%;
 	min-width: 28em;
 }
-#loginform {
+input[type="submit"] {
+	width: auto;
+	font: bold 1em Helvetica;
+	padding: .1em .9em;
+}
+input[type="email"], input[type="password"] {
+	border-radius: 8px;
+	border-width: 0;
+	padding: .1em 0 .1em .3em;
+}
+.content input, select {
+	font: 1em/1.2 Optima, Arial, sans-serif;
+	border-radius: 5px;
+	border: solid 1px white;
+}
+table, form, .manage, .page, .login {
+	width: 40%;
+	min-width: 22em;
+}
+.page {
+	width: auto;
+}
+.pp {
+	margin: 2em 0;
+	border: solid 1px black;
+	display: inline-block;
+	padding: 1em .7em;
+	border-radius: 10;
+	width: auto;
+}
+.login {
 	text-align: left;
 	padding: 2%;
 	background-color: hsl(283, 25%, 74%);
 	border-radius: 8px;
-}
-#loginform input {
-	width: 100%;
-	box-sizing: border-box;
-}
-#loginform input[type="submit"] {
-	width: auto;
-}
-#loginform div {
-	margin: 1em 0 0;
-	text-align: center;
+	width: 40%;
+	min-width: 28em;
 }
 .buttons {
 	padding: .3em;
 	color: white;
 	background-color: rgba(0, 0, 0, .66);
-    text-align: center;
-}
-.buttons p {
-    text-align: center;
-    color: yellow;
-}
-#loginform .buttons {
-	background-color: transparent;
-}
-.admin form {
 	text-align: center;
-}
-
-.admin form.content {
-	text-align: left;
-}
-form.manage {
-	border-radius: 8px 8px 0px 0px;
-	border-radius: 8px;
-	padding: 1%;
-}
-.admin form.manage fieldset {
-	padding: 1em;
-	border-radius: 8px 8px 0px 0px;
-	margin: .5em 0 1em;
-}
-.admin form.prompt {
-	padding: 0;
-}
-.admin form.prompt fieldset {
-	border-width: 1px 1px 0px;
-}
-.admin form.editor {
-	text-align: left;
-	padding: 1.75em;
-	margin: 1em 0;
-}
-form.manage+form.manage {
-	border-width: 0 1px 1px;
-	border-radius: 0px 0px 8px 8px;
-}
-form.manage+form {
-	display: none;
-}
-#page_select {
-	text-align: left;
-	border-width: 0;
-}
-.manage div input {
-	width: 100%;
-}
-.manage input[type="checkbox"] {
-	width: auto;
-}
-.content ul li {
-	margin: 1em 0;
-}
-.admin form.content, .admin form.editor {
-	float: none;
-	background-color: #af8dbb;
-	background-color: hsl(283, 25%, 74%);
-	padding: 2%;
-}
-.admin .manage select {
-	margin: 0 .5em;
-}
-.content ul li>* {
-	line-height: 1.25;
-	vertical-align: middle;
-	display: inline-block;
 	box-sizing: border-box;
-}
-.content ul>li>input, .content ul>li>textarea {
-	margin: 0 0 1% 1%;
-	width: 83%;
-}
-li.mock, li.mock ul {
-	width: 100%;
-	margin: 0;
-}
-li.mock ul li {
-	margin: 0;
-}
-.mock .mocklabel {
-	margin: 0 1% 0 0;
-	width: 16%;
-}
-.mock .neue, .mock .asset {
-	width: 83%;
-}
-.content li.mock ul li input {
-	width: auto;
-	margin: 0;
-}
-li.mock ul>* {
-	vertical-align: top;
-	display: inline-block;
-	box-sizing: border-box;
-}
-.content li.asset>* {
-	vertical-align: middle;
-}
-#controls, #content, .content .buttons {
-	margin: 0 0 2% 17%;
-	width: 83%;
-	box-sizing: border-box;
-}
-#controls {
-	margin-left: 17%;
-}
-#controls li {
-	display: inline-block;
-	width: 5%;
-	min-width: 2.5em;
-	margin: 0 .25em;
-	box-shadow: 1px 1px 2px black;
-	border-radius: 5px;
-	cursor: pointer;
-}
-#controls li img {
-	border-radius: 5px;
-}
-#controls li:hover {
-	background-color: hsl(283, 25%, 44%);
-}
-#controls li img {
-	display: block;
-	width: 100%;
-}
-.content>ul {
-	width: 100%;
-}
-.content>ul input, .content>ul textarea {
-	box-sizing: border-box;
-	border: 0;
-	padding: .3em;
-}
-.content label, .content .mocklabel {
-	word-spacing: normal;
-	letter-spacing: normal;
-	text-align: right;
-}
-.content>ul>li>label, .mocklabel {
-	margin: 0;
-	width: 16%;
-	min-width: 7em;
-	border: solid 1px white;
-	border-radius: 8px;
-	background-color: hsla(283, 80%, 25%, .2);
-	padding: .3em .8em;
-	box-shadow: 1px 1px 1px black;
-	vertical-align: top;
-}
-.admin fieldset {
-	border: solid 1px white;
-	border-radius: 8px;
-}
-.content>ul input#alt {
-	width: 75%;
-}
-.content>ul input#dom_id {
-	width: 10%;
-}
-.admin label[for="alt"] {
-	text-align: right;
-}
-.admin ul.mock li:last-child {
-	padding: 0.5em;
-	border: solid 1px white;
-}
-.photos img {
-	width: 100%;
-}
-.content li.asset figure {
-	vertical-align: top;
-}
-.asset figcaption {
-	margin: .2em 0;
-}
-.js .asset figure>* {
-	position: absolute;
-	left: -999px;
-}
-.admin .asset label {
-	display: block;
-}
-.admin .asset label:first-of-type {
-	display: inline-block;
-}
-.admin .asset figure img {
-	margin: 0;
-	width: 100%;
-}
-.admin .asset figure img.pdf_icon {
-	width: auto;
-	display: inline;
-}
-.admin .asset figure input {
-	margin: 0 0 .4em .2em;
-}
-.admin .asset figcaption>* {
-	margin: .25em 0;
-}
-.admin .asset figure img, .admin .asset figure figcaption, .admin .asset figure label:first-of-type, .asset figure input:first-of-type, .admin .asset figure.edit>* {
-	position: relative;
-	left: 0;
-}
-.admin .asset figure.edit input {
-	width: 99%;
-}
-.admin .asset figure.edit input[type=checkbox] {
-	width: auto;
-}
-.admin .asset figure label, .admin .asset figure input {
-	text-align: left;
-	border-width: 0px;
-}
-.admin .asset figure {
-	width: 11%;
-	min-width: 5em;
-	padding: .2em;
 	border: solid 1px;
-	background-color: rgba(255, 255, 255, .7);
 }
-.admin .asset figure.edit {
-	width: 15em;
-	margin: 0 0 1% 1%;
-}
-.admin .asset figure {
-	margin: 0 0 0% 1%;
-}
-figcaption.del label {
-	color: red;
-	background: black;
-}
-.admin .neue label {
-	text-align: right;
-	border-width: 0;
-}
-.content>ul .neue li label, .content>ul .neue li input {
-	width: auto;
-}
-input#attr_id, input#dom_id {
-	width: 10%;
-}
-/*overrides default hiding of inouts which are used in no-js scenario*/
-
-.admin section input {
-	position: relative;
-	left: 0;
-}
-#pp>* {
-	padding: .33em 1em .44em 1em;
-	margin: 0 .33em;
-	background-color: #444;
-	background-color: hsl(283, 33%, 50%);
-	border-radius: 5px;
-	color: white;
-}
-.content #pp>* {
-	background-color: rgba(77, 55, 77, .35);
-	background-image: linear-gradient(135deg, rgba(77, 55, 77, .5), rgba(77, 55, 77, .2), rgba(77, 55, 77, .5));
-}
-#pp>*:first-child {
-	margin: 0 .33em 0 0;
-}
-#pp {
-	margin: 2em 0;
-	border: solid 1px black;
-	display: inline-block;
-	padding: 1em .7em;
-	border-radius: 10px;
-}
-.content>ul #pp {
-	margin: .25em 0 1em 17%;
-    position: relative;
-    overflow: hidden;
-    width: 83%;
-    box-sizing: border-box;
-    border: solid 1px white;
-}
-.content>ul #pp>* {
-    padding: .33em .66em .44em .66em;
-    margin: 0 .25em;
+fieldset, .buttons {
 	border: solid 1px white;
-}
-
-.content>ul #pp *:first-child {
-}
-#pp a:hover {
-	color: black;
-}
-form#page_select {
-	background-color: white;
-	padding: 1em 0;
-}
-#pp span {
-	font-weight: bold;
-	background-color: hsl(283, 33%, 40%);
-}
-.content #pp span {
-	background-color: rgba(77, 55, 77, .77);
+	border-radius: 8px;
 }
 .msg {
 	display: inline-block;
@@ -429,57 +146,440 @@ form#page_select {
 .statusMessage {
 	color: hsl(285, 35%, 85%);
 }
-input#asset {
+.manage {
+	border-radius: 8px 8px 0 0;
+	border-radius: 8px;
+	padding: 1%;
+}
+.editor {
+	text-align: left;
+	padding: 1.75em;
+	margin: 1em 0;
+}
+.content {
+	text-align: left;
+	width: 96%;
+}
+.page_select, .manage {
+	text-align: left;
+	border-width: 0;
+	background-color: white;
+	padding: 0 0 1em;
+}
+.prompt {
+	padding: 0;
+}
+.editor {
+	text-align: left;
+	padding: 1.75em;
+	margin: 1em 0;
+}
+.content, .editor {
+	float: none;
+	background-color: #af8dbb;
+	background-color: hsl(283, 25%, 74%);
+	padding: 2%;
+}
+.manage+nav {
+	width: 44%;
+}
+.content>ul {
+	width: 100%;
+}
+.login input {
+	width: 100%;
+	box-sizing: border-box;
+}
+.login div {
+	margin: 1em 0 0;
+	text-align: center;
+}
+.pp span, .pp a {
+	padding: .33em 1em .44em 1em;
+	margin: 0 .33em;
+	background-color: hsl(283, 33%, 50%);
+	border-radius: 5px;
+	color: white;
+}
+.pp span {
+	background-color: hsl(283, 40%, 40%);
+	font-weight: bold;
+}
+p, .content, .content li {
+	text-align: left;
+}
+a:link, a:active, a:visited {
+	color: #5B0080;
+	color: hsl(283, 100%, 25%);
+}
+a:hover {
+	color: #8C39AC;
+	color: hsl(283, 50%, 45%);
+}
+tr:nth-child(odd) {
+	background-color: #F3F0F4;
+	background-color: hsl(283, 15%, 95%);
+}
+tr:first-child {
+	background-color: black;
+	color: #DBD3DE;
+	color: hsl(283, 15%, 85%);
+}
+label[for="alt"] {
+	text-align: right;
+}
+.asset label {
+	display: block;
+}
+.photos img {
+	width: 100%;
+}
+.del label {
+	color: red;
+	background: black;
+}
+.asset figure {
+	width: 11%;
+	min-width: 5em;
+	padding: .2em;
+	border: solid 1px;
+	background-color: rgba(255, 255, 255, .7);
+	margin: 0 0 0% 1%;
+}
+.asset figcaption {
+	margin: .2em 0;
+}
+.buttons p {
+	text-align: center;
+	color: yellow;
+}
+nav .icon {
+	display: inline-block;
+	position: relative;
+	width: 3em;
+	margin: 1em 1em 0 0;
+}
+.icon img {
+	width: 100%;
+	background-color: hsl(285, 35%, 35%);
+	left: -1px;
+}
+li.mock, li.mock ul {
+	width: 100%;
+	margin: 0;
+}
+.manage+form {
+	display: none;
+}
+.content~nav {
+	width: 100%;
+}
+.neue label {
+	text-align: right;
+	border-width: 0;
+}
+.asset figcaption>* {
+	margin: .25em 0;
+}
+.content input, select {
+	font: .8rem/1.5 Optima Arial, sans-serif;
+	border-radius: 5px;
+	border: solid 1px white;
+}
+label, .mocklabel, .manage legend {
+	font: 1em 'Arial Black', Arial, sans-serif;
+	color: black;
+}
+textarea, .neue, .asset, .asset figure, .manage fieldset {
+	border: solid 1px white;
+	padding: .75em;
+	border-radius: 5px;
+}
+.asset figure input {
+	margin: 0 0 .4em .2em;
+}
+.manage div input {
+	width: 100%;
+}
+.content ul li {
+	margin: 1em 0;
+}
+.content>ul input, .content>ul textarea {
+	box-sizing: border-box;
+	border: 0;
+	padding: .3em;
+}
+.content ul li>* {
+	line-height: 1.25;
+	vertical-align: middle;
+	display: inline-block;
+	box-sizing: border-box;
+}
+li.mock ul>* {
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+}
+.content ul>li>input, .content ul>li>textarea {
+	margin: 0 0 1% 1%;
+	width: 83%;
+}
+.neue, .asset, .asset figure, form textarea, .manage fieldset {
+	border: solid 1px white;
+	padding: .75em;
+	border-radius: 5px;
+}
+.manage fieldset {
+	padding: 1em;
+	border-radius: 8px 8px 0 0;
+	margin: .5em 0 1em;
+}
+.prompt fieldset {
+	border-width: 1px 1px 0;
+}
+.mocklabel, .content>ul>li>label {
+	margin: 0;
+	width: 16%;
+	min-width: 7em;
+	border: solid 1px white;
+	border-radius: 8px;
+	background-color: hsla(283, 80%, 25%, .2);
+	padding: .3em .8em;
+	box-shadow: 1px 1px 1px black;
+	vertical-align: top;
+}
+.mock .mocklabel {
+	margin: 0 1% 0 0;
+	width: 16%;
+}
+.icon:nth-child(odd) {
+	margin: 1em .7em 0 0;
+}
+.login .buttons {
+	background-color: transparent;
+}
+.login input[type="submit"] {
+	width: auto;
+}
+.content .pp span, .content .pp a {
+	background-color: #CCB7CC;
+	background-color: rgba(77, 55, 77, .35);
+	padding: .33em .66em .44em .66em;
+	margin: 0 .25em;
+	border: solid 1px white;
+}
+.content>ul .pp {
+	margin: .25em 0 1em 17%;
+	position: relative;
+	overflow: hidden;
+	width: 83%;
+	border: solid 1px white;
+}
+.pp span:first-child, .pp a:first-child {
+	margin: 0 .33em 0 0;
+}
+.content li.asset>* {
+	vertical-align: middle;
+}
+.icon img:hover {
+	background-color: hsl(285, 35%, 85%);
+}
+.pp a:link {
+	color: white;
+}
+.pp a:hover {
+	color: black;
+}
+.manage input[type="checkbox"] {
+	width: auto;
+}
+.mocklabel, label, .manage fieldset legend {
+	font: 1em 'Arial Black', Arial, sans-serif;
+	color: black;
+}
+.js .asset figure>* {
+	position: absolute;
+	left: -999px;
+}
+.manage+.manage {
+	border-width: 0 1px 1px;
+	border-radius: 0 0 8px 8px;
+}
+.prompt.manage fieldset {
+	padding: 0;
+}
+.prompt.manage fieldset legend {
+	padding: .5em 0;
+	margin: 0;
+	text-decoration: underline;
+}
+.content li.mock ul li input {
+	width: auto;
+	margin: 0;
+}
+.content li.asset figure {
+	vertical-align: top;
+}
+.asset figure img {
+	margin: 0;
+	width: 100%;
+}
+.asset figure label, .asset figure input {
+	text-align: left;
+	border-width: 0;
+}
+.content>ul .neue li label, .content>ul .neue li input {
+	width: auto;
+}
+input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul .pp {
+	box-sizing: border-box;
+}
+.asset label:first-of-type {
+	display: inline-block;
+}
+.edit-content ul li:hover {
+	background-color: #7C548C;
+	background-color: hsl(283, 25%, 44%);
+}
+/*overrides default hiding of inouts which are used in no-js scenario*/
+
+.mock .neue, .mock .asset {
+	width: 83%;
+}
+.content label, .content .mocklabel {
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-align: right;
+}
+.content .buttons>* {
+	margin: 0 .5em 0 0;
+}
+.content .buttons input {
+	text-transform: uppercase;
+}
+.asset figure.edit {
+	width: 15em;
+	margin: 0 0 1% 1%;
+}
+ul.mock li:last-child {
+	padding: 0.5em;
+	border: solid 1px white;
+}
+.asset figure img.pdf_icon {
+	width: auto;
+	display: inline;
+}
+.asset figure .pdf_icon {
+	width: auto;
+	display: block;
+}
+.asset figure.edit input {
+	width: 99%;
+}
+.asset figure img, .asset figure figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>* {
+	position: relative;
+	left: 0;
+}
+.buttons input:first-child:hover {
+	color: hsl(283, 100%, 25%);
+}
+.cssgradients .content .pp span, .cssgradients .content .pp a {
+	background-image: linear-gradient(135deg, rgba(77, 55, 77, .5), rgba(77, 55, 77, .2), rgba(77, 55, 77, .5));
+}
+.content .buttons input:hover {
+	color: red;
+}
+.asset figure.edit input[type="checkbox"] {
+	width: auto;
+}
+.content .buttons input:first-child:hover {
+	color: yellow;
+}
+.content .buttons input:last-child:hover {
+	color: blue;
+}
+#alt {
+	width: 70%;
+}
+#guide {
+	position: absolute;
+	left: -9999px;
+}
+#controls {
+	margin-left: 17%;
+}
+#attr_id, #dom_id {
+	width: 10%;
+}
+#asset {
 	text-align: center;
 	margin: 0%;
 	line-height: 1.3;
 	width: 100%;
 }
-.buttons>* {
-	margin: 0 .5em 0 0;
-	padding: .25em;
+#guide li {
+	display: block;
+	width: auto;
+	box-shadow: none;
+	padding: 0 .3em;
 }
-.buttons input {
-	text-transform: uppercase;
-}
-.buttons input:hover {
-	color: red;
-	background: black;
-}
-.buttons input:first-child:hover {
-	color: yellow;
-}
-.buttons input:last-child:hover {
-	color: silver;
+#controls, textarea#content, .content .buttons {
+	margin: 0 0 2% 17%;
+	width: 83%;
+	box-sizing: border-box;
 }
 #details input {
 	margin-bottom: .5em !important;
 }
-
-nav .icon {
-    display: inline-block;
-    position: relative;
-    width: 3em;
-    margin: 1em 1em 0 0;
+#controls li {
+	display: inline-block;
+	width: 5%;
+	min-width: 2.5em;
+	margin: 0 .25em;
+	box-shadow: 1px 1px 2px black;
+	border-radius: 5px;
+	cursor: pointer;
 }
-
-.icon:nth-child(odd) {
-    margin: 1em .7em 0 0;
+#adminHeader h2 {
+	background: none;
+	text-shadow: none;
+	color: black;
+	padding: 0;
+	margin: 0 0 .5em;
+	line-height: 1;
+	border: solid 0 hsl(283, 44%, 44%);
+	border-width: 0 0 6px;
+	display: inline-block;
+	font-size: 3em;
 }
-
-.icon img {
-    width: 100%;
-    background-color: hsl(285, 35%, 35%);
-    left: -1px;
+#controls li img {
+	border-radius: 5px;
+	display: block;
+	width: 100%;
 }
-
-.icon img:hover{
-   background-color: hsl(285, 35%, 85%);
-    
+#guide.show {
+	position: relative;
+	left: 0;
+	padding: 1em;
+	width: auto;
+	background-color: whitesmoke;
+	border-radius: 10;
 }
-
+#guide li:hover {
+	background-color: black;
+	color: white;
+}
+#controls li:hover {
+	background-color: hsl(283, 25%, 44%);
+}
+.content>ul input#alt {
+	width: 75%;
+}
+.content>ul input#dom_id {
+	width: 10%;
+}
 @media only screen and (max-width: 1160px) {
-	input#dom_id {
+	#dom_id {
 		margin: 0 90% 0 0;
 	}
 	#pubDate+label {
@@ -497,6 +597,10 @@ nav .icon {
 	}
 }
 @media only screen and (max-width: 736px) {
+	.content>ul .pp {
+		margin: .25em 0 0;
+		width: 100%;
+	}
 	.mock .mocklabel, .mock .asset, .mock .neue, .content #editList>li>* {
 		width: 100%;
 	}
@@ -517,28 +621,33 @@ nav .icon {
 	#pubDate+label {
 		display: inline-block;
 	}
-.content > ul #pp {
-	margin: .25em 0 0;
-    width: 100%;
-}
 }
 @media only screen and (max-width: 667px) {
-	.admin h3 {
+	h3 {
 		padding: 0;
 		background-color: white;
 	}
-	.admin label {
+	label {
 		width: auto;
 		text-align: left;
 		background: none;
 	}
-	.touchevents main {
-        box-sizing: border-box;
+	table {
+		width: 100%;
+		min-width: 20em;
 	}
-    
-	.admin table {
-        width: 100%;
-        min-width: 20em;
+	.login {
+		width: auto;
+	}
+	table, form, .manage {
+		min-width: 20em;
+	}
+	.touchevents main {
+		box-sizing: border-box;
+	}
+	.pp span, .pp a {
+		padding: .33em .66em .44em .66em;
+		margin: 0 .25em;
 	}
 	.manage label {
 		display: inline-block;
@@ -546,54 +655,51 @@ nav .icon {
 	.manage input[type="checkbox"] {
 		margin-left: .33em;
 	}
-	#loginform {
+	.login .buttons input {
 		width: auto;
 	}
-	#loginform .buttons input {
-		width: auto;
+	.content>ul .pp {
+		padding: 2%;
 	}
-
-    .content>ul #pp {
-        padding: 2%;
-    }
-    .content>ul #pp>* {
-        padding: .33em;
-        width: 1em;
-        height: 1em;
-        margin: 0 .5%;
-    }
+	.content>ul .pp>* {
+		padding: .33em;
+		width: 1em;
+		height: 1em;
+		margin: 0 .5%;
+	}
 }
 @media only screen and (max-width: 580px) {
-	.content #page {
-		margin-right: 40%;
-	}
 	#pubDate {
 		margin-right: 50%;
+	}
+	.content #page {
+		margin-right: 40%;
 	}
 }
 @media only screen and (max-width: 479px) {
-	.content #page {
-		margin-right: 40%;
+	.content>ul .pp {
+		border-width: 0;
+	}
+	.content>ul .pp>* {
+		border-radius: 0;
+		margin: 0;
+		border-width: 0;
+		background-color: transparent;
+		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
+	}
+	.content>ul .pp span {
+		border-width: 1px;
+	}
+	.cssgradients .content>ul .pp span, .cssgradients .content>ul .pp a {
+		background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
 	}
 	#pubDate {
 		margin-right: 50%;
 	}
-    
-     .content>ul #pp {
-        border-width: 0;
-         
-    }
-    .content>ul #pp > * {
-        border-radius: 0px;
-        margin: 0;
-        border-width: 0;
-        background-color: transparent;
-        background-image: linear-gradient(135deg, rgba(77, 55, 77, 0), rgba(77, 55, 77, 0), rgba(77, 55, 77, 0));
-    }
-    .content>ul #pp span {
-        border-width: 1px;
-    }
-    #details+li {
-        margin: 1em 0 0;
-    }
+	.content #page {
+		margin-right: 40%;
+	}
+	#details+li {
+		margin: 1em 0 0;
+	}
 }
