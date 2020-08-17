@@ -81,7 +81,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
 {
     $results['article'] = ArticleFactory::getById((int)$_POST['articleId']);
     $results['article']->delete();
-    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+    $page = isset($_GET['page']) ? $_GET['page'] : '';
     $outer = array();    
     $outer[] = array('status', 'articleDeleted');
     $outer[] = array('page', false);//set page so we don't get an undefined index, but set to falsy
@@ -93,7 +93,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
         redirect($outer);
 }
 
-if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQUEST['action'] == 'removeArticle'))
+if (isset($_GET['action']) && ($_GET['action'] == 'editArticle' || $_GET['action'] == 'removeArticle'))
 {
     $results = array();
     $results['pageTitle'] = "Edit Article";
@@ -124,7 +124,7 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
         {
             /* if the file wasn't an upload (UPLOAD_ERR_OK != 0) Asset will only update the attributes */
             $article->storeUploadedFile($_FILES['asset'], $_POST);
-            $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+            $page = isset($_GET['page']) ? $_GET['page'] : '';
             redirect(array(array('status', 'changesSaved'), array('page', $page)));
         }
     }
@@ -139,8 +139,8 @@ if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'editArticle' || $_REQ
     else
     {
         // User has not posted the article edit form yet: display the form
-        $results['article'] = ArticleFactory::getById((int)$_REQUEST['articleId']);
-        require ("editArticle.html.php");
+        $results['article'] = ArticleFactory::getById((int)$_GET['articleId']);
+        require "editArticle.html.php";
     }
     exit();
 }//edit article
@@ -154,12 +154,14 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     $results['heading'] = 'Add Article';
 
     $default_placement = "select position";
+    
+    include_once '../templates/admin_header.html.php';
 
     //form action
     if (isset($_POST['saveChanges']))
     {
         // User has posted the article edit form: save the new article
-        $article = ArticleFactory::createArticle(array(), $_REQUEST['page']);
+        $article = ArticleFactory::createArticle(array(), $_GET['page']);
         $article->storeFormValues($_POST);
         $article->insert();
         $article->placeArticle($_POST['insert']);
@@ -167,20 +169,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
         if (isset($_FILES['asset']))
         {
             $article->storeUploadedFile($_FILES['asset'], $_POST);
-            $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+            $page = isset($_GET['page']) ? $_GET['page'] : '';
             redirect(array(array('status', 'changesSaved'), array('page', $page)));
             //header("Location: ?status=changesSaved");
             exit();
         }
         //header("connection: close");
-        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
         redirect(array(array('status', 'changesSaved'), array('page', $page)));
         //header("Location: ?status=changesSaved");
     }
     elseif (isset($_POST['cancel']))
     {
         // User has cancelled their edits: return to the article list
-        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
         redirect(array(array('page', $page)));
         exit();
     }
@@ -214,17 +216,17 @@ else
         $page = $_SESSION["paginator"]->page;
         
     }
-    //override if new page
-    if(!empty($_REQUEST['page'])){
+    //override if new page. NOTE form.page_select method is GET
+    if(!empty($_GET['page'])){
         //echo 'newpp : ';
-        $count = PagePaginator::getPageCount($_REQUEST['page']);
+        $count = PagePaginator::getPageCount($_GET['page']);
         $_SESSION["paginator"] = new PagePaginator(10, $count);
-        $page = $_REQUEST['page'];
+        $page = $_GET['page'];
         $_SESSION["paginator"]->setPage($page);
         //echo $_SERVER['REQUEST_URI']$_SERVER['QUERY_STRING'];
     }
     //or clearing page selection
-    if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'selectedpage' && !$_REQUEST['page']){
+    if(isset($_GET['action']) && $_GET['action'] == 'selectedpage' && !$_GET['page']){
         $count = $data['totalRows'];
         $page = null;
         $_SESSION["paginator"] = new PagePaginator(10, $count);

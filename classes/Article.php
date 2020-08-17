@@ -17,7 +17,6 @@ abstract class Article implements ArticleInterface
     public $page = null;
     public $attrID = null;
 
-    
     protected function doUnlink($f1, $f2)
     {
         return function ($id) use ($f1, $f2)
@@ -134,7 +133,7 @@ abstract class Article implements ArticleInterface
         $uber = array();
         foreach($rows as $row){
             //create an asset object for every asset
-            $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes();
+            $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes($flag);
         }
         return isset($uber[0]) ? $uber : array();
     }

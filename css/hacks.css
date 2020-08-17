@@ -1,37 +1,21 @@
-.js body {
-    background-color: white;
+section {
+    clear: left;
 }
 
-#photos #wrap main {
-	text-align: center;
-    margin: 0 auto;
-}
-#nav li:nth-child(3){
-    *width: 118px;
-}
-
-#wrap {
-    width: 832px;
-}
-
-#nav li {
-    *width: 87px;
+header {
+	background-image: url(../images/resource/header.jpg);
 }
 
 main ul {
     width: 754px;
 }
 
-main ul.portrait {
-    width: auto;
+main > a {
+    *border-width: 0px;
 }
 
-section {
-    clear: left;
-}
-
-main ul.gallery li {
- *width: 176px;   
+footer > a {
+    *clear: both;
 }
 
 main .gallery li.portrait, main .gallery li:nth-child(n+5) {
@@ -41,71 +25,20 @@ main ul.gallery li:nth-last-child(-n+4) {
 	*width: 176px;
 }
 
-#photos main > * {
-    vertical-align: middle;
+main ul.portrait {
+    width: auto;
 }
 
-#wrap h2 {
-    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
-    background-image: none;
-    color: white;
-    margin: 0;
-	}
-
-#wrap h2:hover {
-    color: white; 
+main ul.gallery li {
+ *width: 176px;   
 }
 
-#photos main > a {
-    *width: 2em;
-    *height: 2em;
-    *background: crimson;
-}
-
-#photos main li a {
-    _width: auto;
-    _height: auto;
-    _background: none;
+.js body {
+    background-color: white;
 }
 
 .showtime h2 {
 		display: none;
-}
-.js #exit {
-    width: 2.3em;
-    height: 2.3em;
-	background: url("../images/sticks_sprite_fat_lowend.png") no-repeat;
-}
-
-#controls button {
-	*background-position: 50% 1%;
-}
-
-#controls button#backbutton {
-	*background-position: 50% 16%;
-}
-#controls button#playbutton {
-	*background-position: 50% 30%;
-}
-
-a:link, a:visited, a:hover, a:active, .no-touchevents a:hover h3, .no-touchevents a:active h3 {
-	color: #993;
-}
-
-main > a {
-    *border-width: 0px;
-}
-
-#nav li {
-    *display:inline-block;
-    *display: inline;
-	zoom: 1;
-}
-
-main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, footer a:link{
-	display:inline-block;
-    *display: inline;
-	zoom: 1;
 }
 
 .showtime main > * {
@@ -124,10 +57,77 @@ main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, fo
     *width: auto;
     *border-width: 0;
 }
-main ul li a {
-    
+
+#wrap {
+    width: 832px;
 }
 
+#photos main > * {
+    vertical-align: middle;
+}
+
+#wrap h2 {
+    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+    background-image: none;
+    color: white;
+    margin: 0;
+	}
+
+#nav li {
+    *width: 87px;
+}
+
+#nav li:nth-child(3){
+    *width: 118px;
+}
+
+#photos #wrap main {
+	text-align: center;
+    margin: 0 auto;
+}
+
+#wrap h2:hover {
+    color: white; 
+}
+
+#photos main > a {
+    *width: 2em;
+    *height: 2em;
+    *background: crimson;
+}
+
+#photos main li a {
+    _width: auto;
+    _height: auto;
+    _background: none;
+}
+
+#controls button {
+	*background-position: 50% 1%;
+}
+
+#controls button#backbutton {
+	*background-position: 50% 16%;
+}
+#controls button#playbutton {
+	*background-position: 50% 30%;
+}
+
+a:link, a:visited, a:hover, a:active, .no-touchevents a:hover h3, .no-touchevents a:active h3 {
+	color: #993;
+}
+
+#nav li {
+    *display:inline-block;
+    *display: inline;
+	zoom: 1;
+}
+
+main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, footer a:link{
+	display:inline-block;
+    *display: inline;
+	zoom: 1;
+}
 
 #gal_back {
 	*border-right: 1px solid crimson;
@@ -140,13 +140,9 @@ main ul li a {
     display: block;
 }
 
-header {
-	background-image: url(../images/header.jpg);
-}
-
 #wrap h2 {
     margin: .8em 0 0 0;
-    background: 0% 0% url(../images/grad.jpg) no-repeat;
+    background: 0% 0% url(../images/resource/grad.jpg) no-repeat;
     color: #993;
 }
 #wrap h2 span {
@@ -165,6 +161,8 @@ header {
     *float: right;
 }
 
-footer > a {
-    *clear: both;
+.js #exit {
+    width: 2.3em;
+    height: 2.3em;
+	background: url("../images/resource/sticks_sprite_fat_lowend.png") no-repeat;
 }

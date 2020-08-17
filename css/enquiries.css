@@ -1,280 +1,192 @@
-#contactarea > div {
-    margin-top: .5em;
-    border-spacing: 1em;
+section {
+	margin: 2em 0 0;
 }
-
-#contactarea form, #contactarea figure {
-    border-radius: 10px;
-}
-
-#enquiries #post img {
-    margin: 0;
-    float: none;
-    box-shadow: none;
-    border-width: 0;
-    width: 100%;
-    border-radius: 0px;
-    -o-object-fit: cover;
-       object-fit: cover;
-}
-
-#enquiries img#cat {
-    box-sizing: border-box;
-    /* firefox 48.0.2 required this:*/
-    min-height: 25.75em;
-    border-radius: 10px;
-    border: solid 1px black;
-} 
-
 h3 {
 	border-bottom: solid 1px;
 }
-#intro article {
-	margin: 0 38% 0 0;
-}
-#intro article p {
-	margin: 0 0 1.3em 0;
-}
-
-#grooms {
-    width: 32%;
-}
-
-#post figure {
-	width: 20%;
-}
-
 form {
 	width: 75%;
-    font-family: Optima, Arial, Helvetica, Verdana, sans-serif;
+	font-family: Optima, Arial, Helvetica, Verdana, sans-serif;
 	background-color: #cc9;
 	background-color: hsl(60, 33.33%, 70%);
 	border: solid 1px #000;
 	padding: 1em 0;
 	border-radius: 10px;
 }
-
-form fieldset {
+fieldset {
 	font-size: 1em;
 	padding: 0 0 0 2%;
-	border: solid 1px white;
+	border: solid 1px black;
 	border-width: 1px 0 0;
 }
-form fieldset:last-child {
-	border-width: 0px;
-	padding: .3em 2% 0 2%;
+label, input, textarea, legend {
+	border-radius: 8px;
 }
-form fieldset legend {
+legend {
 	font-weight: bold;
-    font-size: 1.35em;
-	padding: 0.1em 1em;
+	background-color: #cc6;
+	border: solid 1px white;
+	font-size: 1.2em;
+	padding: .1em 1em;
 }
-.warning fieldset legend, .override label.warning {
-	color: firebrick;
-	background-color: black;
+textarea {
+	border-width: 0;
+	width: 71.2%;
+	height: 9.8vw;
+	height: 7em;
+	margin-right: 1.2%;
 }
-.warning textarea {
-	color: firebrick;
+h2 span {
+	background: white 0% 0% url(../images/resource/sub_enq.jpg) no-repeat;
 }
 form label {
 	font: bold .8em/2 Verdana, Arial, Helvetica, sans-serif;
 	text-align: center;
-	padding: .2em;
-    word-spacing: 0px;
+	word-spacing: 0px;
 	letter-spacing: 0px;
-    margin: .1em 0;
-	width: 9%;
-    /*declaring width w/o height causes label to reduce vertically when clicked???*/
-    height: 2em;
+	margin: .1em 0;
+	width: 10%;
+	/*declaring width w/o height causes label to reduce vertically when clicked???*/
+	height: 2.4em;
+	box-sizing: border-box;
 }
-form fieldset legend, form label {
-    color: rgb(255, 235, 100);
-	color: black;
-    background-color: #cc6;
-	background-color: hsl(60, 50%, 60%);
+legend, form label {
 	background-color: hsl(60, 40%, 55%);
-    border: solid 1px white;
+	border: solid 1px white;
 }
-
-form fieldset legend {
-    background-color: #cc6;
-	background-color: hsl(60, 50%, 60%);
-}
-form label:hover {
-     background-color: #cc6;
-	background-color: hsl(60, 50%, 60%);
-}
-/*
-form fieldset legend, label[for="name"], label[for="email"], form label:hover {
-    background: #5f2060;
-    background: hsl(299, 50%, 25%);
-}
-
-label[for="name"]:hover, label[for="email"]:hover {
-    background: #4c1a4d;
-    background: hsl(299, 50%, 20%);
-    color: rgb(255, 235, 100);
-}
-*/
-
-form fieldset:first-child input {
-	background-color: white;
-	border-width: 0;
-}
-/*
-form {
-    background: linear-gradient(217deg, brown, rgba(0, 0, 255, 0) 70.71%), linear-gradient(127deg, brown, rgba(200, 255, 0, 0) 70.71%), linear-gradient(336deg, brown, rgba(111, 111, 0, 0) 70.71%);
-}
-*/
-
-#enquiries #intro {
-	margin: 2em 0 0;
-}
-#enquiries section {
-	display: block;
-	margin: 1em 0 0;
-}
-#enquiries section article>a {
-	flex: 0 0 100%;
-}
-#web {
-	display: none;
-}
-.no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before {
-	color: white;
-	text-shadow: 1px 1px 1px black;
-	background-color: hsl(60, 40%, 64%);
-}
-.no-js #intro .read-more-state+label:before, .no-js #intro .read-more-state:first-of-type:checked+label:before {
-	color: #993;
-	text-shadow: none;
-	background-color: #E7E7C7;
-	background-color: hsl(60, 40%, 84%);
-}
-.#intro section img {
-	width: 33%;
-	float: right;
-	margin: 1em 0 0 0em;
-}
-.override section p {
-	margin: 0 3em 1.3em 0;
-}
-.override section:last-child p {
-	margin: 1em 0 0;
-}
-/*layout*/
-
-form input {
-	position: static;
-	left: auto;
-}
-form input, form label {
+textarea, form input, form label {
 	display: inline-block;
 	vertical-align: text-bottom;
+}
+fieldset:last-child {
+	border-width: 0px;
+	padding: .3em 2% 0 2%;
+}
+.warning legend, label.warning {
+	color: crimson;
+	background-color: indigo;
+}
+textarea.warning {
+	color: crimson;
+	background-color: lightsalmon;
+}
+label.warning+input {
+	color: crimson;
+}
+fieldset:first-child input {
+	height: 2em;
+	margin: .1em 0 .1em 1%;
+	box-sizing: border-box;
+	background-color: white;
+	border-width: 0;
+	padding-left: .4em;
+}
+form label:hover {
+	background-color: #cc6;
+	background-color: hsl(60, 50%, 60%);
 }
 form input:first-of-type, form label:first-of-type {
 	margin-top: 1em;
 }
+/*real submit button*/
 
-form fieldset:first-child input {
-	height: 2em;
-	margin: .1em 0 .1em 1%;
-	width: 86.77%;
-	padding: 0 .5em;
-	box-sizing: border-box;
+fieldset:last-child input:last-child {
+	position: absolute;
+	left: -999em;
 }
-label.warning+input {
-	color: hsl(60, 50%, 24%);
+#intro {
+	margin: 2em 0 1em 0;
 }
-#name, #country {
-	width: 50%;
-	margin: .1em 1%;
-}
-#phone, #postcode {
-	width: 25%;
+#grooms {
+	width: 32%;
 }
 #addr1, #addr2, #addr3, #addr4 {
 	width: 37.5%;
 	margin: .1em 1%;
 }
-form #dogs {
+#email {
+	width: 87%;
+}
+#name, #country {
+	width: 48.5%;
+	margin: .1em 1%;
+}
+#phone, #postcode {
+	width: 26.5%;
+}
+#dogs {
 	margin: 0;
 	position: relative;
-	width: 26%;
+	width: 26.9%;
 	left: 100%;
 	margin-left: -100%;
 	border: solid 1px white;
 }
 
-form #dogs:hover {
-    opacity: .9;
+#cat {
+	/* firefox 48.0.2 required this:*/
+	min-height: 25.75em;
+	border: solid 1px black;
+	width: 100%;
+	margin: 0;
+	object-fit: cover;
+	border-radius: 10px;
 }
 
-form fieldset:last-child input:last-child {
-	position: absolute;
-	left: -999em;
-}
-textarea {
-	border-width: 0;
-	width: 71%;
-	height: 9.8vw;
-	height: 6.8em;
+#response {
+	background-color: whitesmoke;
+	border-radius: 10px;
+	overflow: hidden;
 }
 
-textarea, #dogs {
-	display: inline-block;
-	vertical-align: bottom;
+#web {
+	display: none;
 }
-textarea {
-	margin: 0 1em 0 0;
+
+label[for="email"]:before, label[for="name"]:before{
+    content: "*";
+    color: white;
 }
-h2 span {
-	background: white 0% 0% url(../images/resource/sub_enq.jpg) no-repeat;
+form, figure, #response>* {
+	display: table-cell;
+	/*crucial*/
+	vertical-align: top;
+	box-sizing: border-box;
+}
+
+form, figure {
+    border-radius: 10px;
+}
+
+#intro article {
+	margin: 0 38% 0 0;
+}
+#response p {
+	margin: 0;
+	color: indigo;
 }
 #cath img {
 	position: absolute;
 	left: -999em;
 }
-
-#response {
-	background-color: whitesmoke;
-    border-radius: 10px;
-    overflow: hidden;
+div#response {
+	display: block;
 }
-
-#response > * {
+#post>article>div {
+	display: table;
+	margin-top: .5em;
+	border-spacing: 1em;
+}
+#response>* {
 	margin: 0;
 }
-
 #response p {
 	color: black;
 	text-align: left;
-    margin: 0;
+	margin: 0;
 }
-
 #response a {
 	color: royalblue;
-}
-#response p[class="msg"] {
-	border-top: 1px dotted #444;
-	margin-top: .5em;
-	padding: .4em;
-	font: 1em/1.5 Georgia, sans-serif;
-    max-height: 250px;
-    overflow: auto;
-}
-/* to prevent crazy heights if big message posted*/
-#response figure img {
-    height: 360px;
-}
-
-#response .dogs {
-    width: 33%;
-    border-right: solid 1px white;
-}
-#response .cat {
-	width: 15%;
-    border-left: solid 1px white; 
 }
 #response div {
 	margin: 1%;
@@ -282,45 +194,100 @@ h2 span {
 	border: solid 0px white;
 	background-color: aliceblue;
 	background-color: rgba(200, 222, 255, 1);
-    width: 50%;
+	width: 50%;
+	box-sizing: border-box;
+}
+#response em {
+	font-weight: bold;
+}
+#response p[class="msg"] {
+	border-top: 1px dotted #444;
+	margin-top: .5em;
+	padding: .4em;
+	font: 1em/1.5 Georgia, sans-serif;
+	max-height: 250px;
+	overflow: auto;
+}
+#intro article p {
+	margin: 0 0 1.3em 0;
+}
+/* to prevent crazy heights if big message posted*/
+#response figure img {
+	height: 300px;
+	max-height: 360px;
 }
 #response div h1 {
-    color: crimson;
+	color: crimson;
+}
+#response .dogs {
+	width: 33%;
+	border-right: solid 1px white;
+}
+#response .cat {
+	width: 15%;
+	border-left: solid 1px white;
+}
+#dogs:hover {
+	opacity: .9;
 }
 #response div p.msg {
-    margin-bottom: 1em;
+	margin-bottom: 1em;
+}
+#response p:nth-child(4) {
+	background-color: white;
+	border-width: 0;
+	padding: .3em;
+	border-radius: 8px;
+}
+#response form, #response .top {
+	display: none;
+}
+/* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
+section:nth-child(2) {
+	clear:left;
+	float:left;
+	width:100%;
+	overflow:hidden;
+	background:#ffa7a7;
 }
 
-#contactarea > div, #response {
-     display: table;
+#wrap {
+    float:left;
+	width:100%;
+	position:relative;
+	right:50%;
+	background:#fff689;
 }
 
-#contactarea form, #contactarea figure, #response > * {
-    display: table-cell;
-    vertical-align: top;/*crucial*/
-    border-radius: 10px;
-    box-sizing: border-box;
-    border-radius: 0;
+#wrap form {
+    float:left;
+	width:46%;
+	position:relative;
+	left:52%;
+	overflow:hidden;
 }
+#wrap figure {
+    float:left;
+	width:46%;
+	position:relative;
+	left:56%;
+	overflow:hidden;
+}
+*/
 
 @media only screen {
 	h2 span {
 		background: white 0% 0%/contain url(../images/resource/sub_enq.png) no-repeat;
 	}
 }
-
-@media only screen and (max-width: 960px) {
-    	form label {
-            font: bold .7em/2 Verdana, Arial, Helvetica, sans-serif;
-    }
-}
-
-@media screen and (max-width: 812px) {
-    	form {
-		width: auto;
-		margin: 0;
+@media screen and (max-width: 888px) {
+	form {
+		width: 100%;
 	}
-	#enquiries #post figure, #wrap #grooms {
+	section article p {
+		margin: 0 0 1.3em 0;
+	}
+	figure, #grooms {
 		position: absolute;
 		left: -999em;
 	}
@@ -330,30 +297,44 @@ h2 span {
 	#intro article {
 		margin: 0;
 	}
-	section article p {
-		margin: 0 0 1.3em 0;
+	#post>article div {
+		display: block;
+        border-spacing: 0;
+         width: auto;
 	}
-    
-    #contactarea form {
-        display: block;
-    }
-    #response figure {
-        position: absolute;
-		left: -999em;
-    }
-    .override div#response {
-        display: block;/*-grid*/
-
-    }
-    #response div {
-        width: 100%;
-        margin: 0;
-        animation: none;
-    }
-
+   
 }
-
 @media screen and (max-width: 667px) {
+	h2, h2 span {
+		background: none;
+	}
+	h3 {
+		border-bottom: solid 1px white;
+	}
+	section {
+		margin: 0;
+	}
+	form {
+		width: 100%;
+		float: none;
+		display: block;
+		box-sizing: border-box;
+	}
+	fieldset {
+		border-width: 0;
+	}
+	textarea {
+		width: 100%;
+		height: 10em;
+		float: none;
+		box-sizing: border-box;
+		margin: 0 0 1em;
+	}
+	legend {
+		width: 50%;
+		margin-left: 23%;
+		text-align: center;
+	}	
     
 	@supports(column-gap: 20px) {
 		article.show #cath {
@@ -379,50 +360,55 @@ h2 span {
 			color: white;
 		}
 	}
-        
-	h2, h2 span {
-		background: none;
+	fieldset:first-child label {
+		text-transform: uppercase;
 	}
-	#enquiries section {
+	fieldset:first-child legend {
+		display: none;
+	}
+	fieldset:first-child label {
+		background: none;
+		margin: 0;
+		height: 1em;
+		font-weight: bold;
+	}
+	fieldset:first-child input {
 		margin: 0;
 	}
-
-	#post form fieldset:first-child input {
-		width: 83.5%;
-	}
-	#intro article p {
-		margin: 1em 0 1.3em 0;
-	}
-	#enquiries article.show h3 {
+    
+     article.show h3 {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);
 	}
-	#enquiries article.show h3 a {
+	
+	fieldset:first-child label, fieldset:first-child input {
+		width: 98%;
+		border-width: 0px;
+		text-align: left;
+		font: normal .875em/normal Arial, sans-serif;
+		color: hsl(60, 50%, 20%);
+	}
+    
+     article.show h3 a {
 		color: white;
 		background-color: transparent;
 	}
-	#post form {
-		width: 100%;
-		float: none;
-		box-sizing: border-box;
+    
+	fieldset:first-child label:first-of-type {
+		margin-top: .5em;
 	}
-	textarea {
-		width: 100%;
-		height: 10em;
-		float: none;
-		box-sizing: border-box;
-	}
-	#enquiries #post figure, #wrap #grooms, #post #dogs {
-		position: absolute;
-		left: -999em;
-	}
-	#wrap #post fieldset:last-child input:last-child {
+	fieldset:last-child input:last-child {
 		position: static;
 		left: auto;
 		display: block;
 		margin: 0 auto;
+		border-radius: 0;
+	}    
+    	li:nth-child(8):hover ul {
+		right: 9999px;
 	}
+        
 	.no-js section>label:nth-of-type(1):before {
 		content: "Donations and sponsorship";
 	}
@@ -432,11 +418,34 @@ h2 span {
 	.no-js section>label:nth-of-type(3):before {
 		content: "Contact us";
 	}
-	.no-js #wrap section:nth-child(2)>label:before {
+	.no-js section:nth-child(2)>label:before {
 		content: "Poloafrica contact form";
 	}
 	.no-js section:nth-child(3)>label:before {
 		content: "Directions";
+	}
+	figure, #grooms, #dogs {
+		position: absolute;
+		left: -999em;
+	}
+    
+    #post form input {
+        width: 100%;
+        margin: .1em 0;
+    }
+    #post form input[type="submit"] {
+        width: auto;
+        margin: .1em auto;
+        padding: .1em .5em;
+        border-radius: 2px;
+        border-width: 0;
+    }
+    
+    #post>article>div {
+        margin: 1em 0;
+    }
+	#intro article p {
+		margin: 1em 0 1.3em 0;
 	}
 	.no-js input~article p, .no-js #post1.read-more-state:checked~article:nth-of-type(1) p {
 		position: absolute;
@@ -446,70 +455,41 @@ h2 span {
 		position: static;
 		left: 0em;
 	}
-	#post form fieldset:first-child label, #post form fieldset:first-child input {
-		width: 98%;
-		box-sizing: border-box;
-		border-width: 0px;
-		text-align: left;
-		font: normal .875em/normal Arial, sans-serif;
-        color: #4c1a4d;
+	.no-js #intro .read-more-state:checked+label:before, .no-js #intro .read-more-state:first-of-type+label:before {
+		color: white;
+		text-shadow: 1px 1px 1px black;
+		background-color: hsl(60, 40%, 64%);
 	}
-	#post form fieldset:first-child legend {
-		display: none;
+	.no-js #intro .read-more-state+label:before, .no-js #intro .read-more-state:first-of-type:checked+label:before {
+		color: #993;
+		text-shadow: none;
+		background-color: #E7E7C7;
+		background-color: hsl(60, 40%, 84%);
 	}
-    #post form fieldset {
-        border-width: 0;
-    }
-	#post form fieldset:first-child label {
-		background: none;
-		margin: 0;
-        height: 1em;
-        font-weight: bold;
-	}
-	#post form fieldset:first-child label:first-of-type {
-		margin-top: .5em;
-	}
-	#post form fieldset:first-child input {
-		margin: 0;
-	}
-    form fieldset legend {
-        width: 50%;
-        margin-left: 23%;
-        text-align: center;
-    }
-    
-    textarea {
-        margin: 0 0 1em;
-    }
 }
 /*@*/
 
 @media only screen and (max-width: 360px) {
-	.override section:first-child h3, .override section:first-child label {
+	.override #intro h3, .override #intro label {
 		line-height: 1.2;
 	}
 }
-
 @media screen and (min-width: 801px) {
 	#post {
 		margin: 2em 0 0;
 		box-sizing: border-box;
 	}
 }
-
-	@media screen and (min-width: 668px) {
-		#cath address {
-			font-style: normal;
-		}
-        #post label, #post input, #post textarea, #post legend {
-            border-radius: 8px;
-        }
-		@supports(column-gap: 20px) {
-			/*the textarea form element seems to confuse attempts at a grid layout
+@media screen and (min-width: 668px) {
+	#cath address {
+		font-style: normal;
+	}
+	@supports(column-gap: 20px) {
+		/*the textarea form element seems to confuse attempts at a grid layout
             The form expands if textarea is given explicit dimensions either as html attributes, or css.
             A solution is to put it in a container, but what kind of hackery is that
             So for the moment confine grid to the first four items on the page*/
-			/*
+		/*
         	#wrap fieldset {
         		display: -ms-grid;
         		display: grid;
@@ -517,7 +497,7 @@ h2 span {
         		grid-auto-columns: repeat(11, 1fr);
         		grid-auto-rows: repeat(7, 1fr);
         	}
-        	#enquiries #wrap fieldset, #enquiries #wrap fieldset>* {
+        	#wrap fieldset, #wrap fieldset>* {
         		margin: 0;
         	}
         	#wrap div:nth-child(1) {
@@ -533,21 +513,5 @@ h2 span {
         		grid-column: 2 / 12;
         	}
         	 */
-		}
-  
 	}
-	#response figure.top {
-		display: none;
-	}
-	#response p:nth-child(4) {
-		background-color: white;
-		border-width: 0;
-		padding: .3em;
-		border-radius: 8px;
-	}
-	#response em {
-		font-weight: bold;
-	}
-.no-cssanimations #response .top {
-    display: none;
-    }
+}

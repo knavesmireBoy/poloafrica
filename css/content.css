@@ -1,236 +1,217 @@
-@keyframes bgfade {
-	0% {
-		background-image: url(../images/resource/poloafrica_flower_logo.jpg);
-	}
-	50% {
-		background-image: url(../images/resource/polo150yrs_squared_logo.jpg);
-	}
-	100% {
-		background-image: url(../images/resource/polo_armed_forces_logo.jpg);
-	}
-}
 body {
 	font: normal .875em/1.75 Georgia, serif;
 	background-color: white;
 }
+
 .no-js body {
 	background-color: mintcream;
 }
-#wrap .override img{
-    border-radius: 4px;
-    box-shadow: 0px 0px 4px #990;
-}
+
 header {
-	background-image: url(../images/resource/header.png);
+	background: #b6b686 url(../images/resource/header.png) no-repeat 0 76%/100%;
+	background: hsl(60, 25%, 62%) url(../images/resource/header.png) no-repeat 0 76%/100%;
+	width: 100%;
+	/*
+    background-image: url(../images/resource/header.png);
 	background-repeat: no-repeat;
-	background-color: #b6b685;
-	background-color: rgb(182,182,133);
+	background-color: #baba87;
+	background-color: hsl(60, 27%, 63%);
 	background-size: 100%;
 	background-position: 0 76%;
+    */
 }
-h3, label {
-	font-size: 1.75em;
+h2 {
+	margin: .8em 0 0;
+	font-size: 2.8em;
+	line-height: 1.7;
+	font-weight: normal;
+	text-transform: uppercase;
+	padding: 1px 0;
+	text-shadow: 1px 1px 2px #444;
+	border: solid 0px red;
+}
+h3 {
+	margin: 0 0 .3em 0;
+	line-height: 1.2;
+    font-size: 1.75em;
 	word-spacing: 1px;
 	letter-spacing: 1px;
-    color: #990;
-    color: hsl(58, 60%, 40%);
-
-}
-a:link, a:visited, a:hover, a:active {
-	color: #990;
-    color: hsl(58, 60%, 40%);
-}
-a:hover, a:active {
-	color: #cc6;
-    color: hsl(58, 60%, 48%);
-}
-p a:hover, p a:active {
-	text-decoration: underline;
-}
-.no-touchevents h3 a:hover, .no-touchevents h3 a:active {
-	color: #990;
-    color: hsl(58, 60%, 40%);
-    /*
-    color: #BCA95B;
-    color: hsl(48.25, 41.99%, 54.71%);
-    */
 }
 p {
 	color: #444;
 	text-align: justify;
 	margin: .5em 0 0 0;
 }
-p:first-of-type {
-	margin: 0;
+footer {
+	background: url(../images/resource/footer_green_ko.png) no-repeat;
+	background-position: bottom right;
 }
-
-h2 {
-	margin: .8em 0 0 0;
-	color: #993;
-	font-family: Georgia, serif;
-	font-size: 2.8em;
-	line-height: 1.7;
-	font-weight: normal;
-	text-transform: uppercase;
-	padding: 1px 0 1px 0;
-	text-shadow: 1px 1px 2px #444;
-    border: solid 0px red;
-	/*background: url(../images/sub-polo-in-africa.png) no-repeat 0% 0%;
-	background-size: contain;*/
+h2 span {
+	display: block;
+	padding: 0 0 0 8rem;
+	line-height: 1.5;
 }
-
-h2:hover, h2:focus, h2:active {
-	color: #cc6;
-}
-/* direct child selector, otherwise will have to override for animation */
-
-section>img {
-	border: solid 1px white;
-	/*box-shadow: 0px 0px 12px indigo;*/
-}
-#nav {
+header ul {
 	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 }
-#nav ul {
-	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
-	padding-bottom: 1em;
-}
-#nav li a{
-	border: solid 1px #ccc;
-	border-color: #ccc #000 #449 #ccc;
+/* direct child selector, otherwise will have to override for animation */
+section>img {
+	border-radius: 4px;
+	box-shadow: 0px 0px 4px #990;
+	border: solid 1px white;
 }
 article a {
 	font-weight: bold;
 	outline: none;
 }
-#nav a {
-	text-align: center;
-	background-color: #af8ddb;
-	background-image: url("../images/navbg.gif");
-	background-image: linear-gradient(#af8ddb, #b793e7, #af8ddb);
+p:first-of-type {
+	margin: 0;
 }
-#nav a:link, #nav a:visited {
-	color: #306;
+footer b, footer div a:hover {
+	color: #cc6;
 }
-#nav li a:hover, #nav li a:active {
-	color: #fff;
-	background-color: #b6b685;
-	background-image: url("../images/navbghov1.gif");
-	background-image: linear-gradient(#b6b685, #caca9f, #b6b685);
+header h1, h2 span, header h1 img {
+	border-width: 1px;
 }
-#nav ul li {
-	margin: 1px 0 0;
-	border: solid 1px transparent;
-	border-width: 3px 1px 0;
-}
-#nav li ul a:link, #nav li ul a:visited {
-	background: #cc9;
-	border: solid 1px;
-	border-color: #999 #000 #000 #999;
-	padding: 0 .7em;
-	background-image: none;
-}
-#nav li ul li a:hover, #nav li ul li a:active {
-	background-color: #fff;
-	border: solid 1px #900;
-}
-#home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
+footer a:link, footer a:visited {
 	color: white;
-}
-/*override above for sub-menu*/
-
-#nav ul li a:link, #nav ul li a:visited, #nav ul li a:hover, #nav ul li a:active {
-	color: #306;
-}
-footer {
-	background: url(../images/resource/footer_green_ko.png) no-repeat;
-	background-position: bottom right;
-}
-#footer_girl a:last-child:before {
-	content: " | ";
-}
-.cssgradients #footer_girl a:first-child {
-    background: radial-gradient(circle at 50%, #cc6, transparent 70%);
-    background: none;
-}
-footer a, footer a:link, footer a:visited {
-	color: white;
-	padding: 0;
 	line-height: normal;
 }
 footer>a:last-child {
 	border-top: dotted 1px #cc6;
 	text-align: right;
-	margin: 0;
 	padding: .75em 1em;
 }
-footer div a:hover, footer b {
+
+header ul ul {
+	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
+	padding: 0 0 1em;
+}
+header ul a {
+	text-align: center;
+	background-color: #af8ddb;
+	background-image: url("../images/resource/navbg.gif");
+	background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+	border: solid 1px;
+	border-color: #ccc #306 #306 #ccc;
+}
+
+header ul a:hover, header ul a:active {
+	background-image: url("../images/resource/navbghov1.gif");
+	background-image: linear-gradient(hsl(60, 25%, 62%), hsl(60, 35%, 72%), hsl(60, 25%, 62%));
+}
+
+header ul ul a, header ul ul a:hover {
+	background-image: none;
+}
+h3, section>label, a:link, a:visited, .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
+	color: #990;
+	color: hsl(58, 60%, 40%);
+}
+h2, a:hover, a:active{
 	color: #cc6;
+	color: hsl(58, 60%, 48%);
 }
-/**/
-
-/**/
-
-h2 span {
-	display: block;
-	padding: 0 0 0 8rem;
-    line-height: 1.5;
+p a:hover, p a:active {
+	text-decoration: underline;
+}
+footer a[href^="mailto:i"]:before {
+	content: " | ";
 }
 
+/* #wrap used as override for sub-menu*/
+header ul a:link, header ul a:visited, #wrap ul ul a:link, #wrap ul ul a:visited {
+	color: #306;
+	color: hsl(270, 100%, 20%);
+}
+header ul li a:hover, header ul li a:active, #wrap ul ul a:link, #wrap ul ul a:visited {
+	background-color: #b6b686;
+	background-color: hsl(60, 25%, 62%);
+}
+header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
+	color: white;
+}
+/*spacer for submenu desktop*/
+#wrap ul ul li {
+	border: solid 1px transparent;
+	border-width: 3px 1px 0;
+}
+#wrap ul ul a:link, #wrap ul ul a:visited {
+	border-color: #999 #000 #000 #999;
+	padding: 0 .7em;
+}
+#wrap ul ul a:hover, #wrap ul ul a:active {
+	background-color: white;
+	border-color: #900;
+}
 @media only screen {
 	h2 {
-		background-image: linear-gradient(to right, #993, white);
+		background-image: linear-gradient(to right, #b8b32e, white);
 		background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
-        color: hsl(58, 60%, 48%);
 	}
 }
+
+@media screen and (max-width: 867px) {
+	#polo li:nth-child(6):hover ul {
+		left: auto;
+		right: 0px;
+	}
+}
+
 @media screen and (max-width: 800px) {
-	#nav {
+	header ul {
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
 }
-/*@media screen and (max-width: 667px)/*, (not (-ms-high-contrast: none)) {*/
-
-@media only screen and (max-width: 667px){
-
-	h2:hover, h2:active {
-		color: azure;
-	}
-
-	nav#main_nav #nav {
-		font: bold 1em/2  "Arial Back", Arial, Verdana, Helvetica, sans-serif;
-	}
-
-	footer {
-		background: url(../images/resource/sil_bg.png) no-repeat center top;
-		background-size: cover;
-		padding: 7em 0 0 0;
-	}
-	header a h1 img {
-		visibility: visible;
-	}
-	nav#main_nav ul li a:hover, nav#main_nav ul li a:active {
-		color: #993;
-		background-color: #E7E7C7;
-		background-image: none;
-	}
-	#home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
-		color: #cc6;
-	}
-	.no-touchevents h3 a:hover{
-		color: #fff;
-	}
+@media only screen and (max-width: 667px) {
+        
 	header {
 		background-image: url(../images/resource/header_only.png);
 		background-position: 0px 0px;
 		background-size: cover;
 	}
-
-	.touchevents section article p {
-		padding: 0 1em;
+	h2 {
+		color: white;
+		background-image: none;
+		text-shadow: 2px 2px 2px black;
+		border: 1px solid;
+		border-width: 1px 0 0;
 	}
-    .override section article p {
-		line-height: 1.55;
+	footer {
+		background: url(../images/resource/sil_bg.png) no-repeat center top;
+		background-size: cover;
+		padding: 7em 0 0 0;
+	}
+	section>label {
+		font-weight: bold;
+	}
+	h3, section>label {
+		font-size: 1.4em;
+		font-size: 1.25rem;
+		margin: 0;
+		line-height: 1.75;
+		word-spacing: 1px;
+		letter-spacing: 1px;
+	}
+	header nav ul {
+		background: white;
+		-webkit-box-shadow: -3px 3px 6px hsla(300, 10%, 20%, .75);
+		box-shadow: -3px 3px 6px hsla(300, 10%, 20%, .75);
+		border-radius: 2px;
+	}
+	/* alt poloafrica logo */
+	header a h1 img {
+		visibility: visible;
+	}
+	header ul>li a {
+		background: none;
+		padding: 0 1em 0 0;
+		display: block;
+		text-align: right;
+		border-width: 0 0 1px;
+	}
+	.noir {
+		background: black;
 	}
 	.menu {
 		background: 50% 0% url("../images/resource/polo_ball_sprite.png") no-repeat;
@@ -245,78 +226,63 @@ h2 span {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
 	}
-	ul#nav {
-		background: white;
-		-webkit-box-shadow: -3px 3px 6px hsla(300, 10%, 20%, .75);
-		box-shadow: -3px 3px 6px hsla(300, 10%, 20%, .75);
-		border-radius: 2px;
+
+	section.show h3 a {
+		color: white;
+		background-color: transparent;
 	}
-	label, .js h3 {
-		font-size: 1.4em;
-		font-size: 1.25rem;
-		margin: 0;
-		background-color: #E7E7C7;
-		background-color: hsl(60, 40%, 84%);
-		line-height: 1.75;
-	}
-	label {
-		font-weight: bold;
-	}
+    
+    h2:hover, h2:focus, h2:active {
+        color: hsl(58, 60%, 90%);
+    }
+    
 	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
-	.js h3, .no-js section .read-more-trigger:before {
+	h3, .read-more-trigger:before {
 		padding: .5em .6em .4em;
+	}
+	h3, .read-more-trigger:before, .js section img {
 		border-bottom: solid 1px white;
 	}
-	.read-more-trigger:before, .no-js section:first-of-type .read-more-state:checked~.read-more-trigger:before {
-		color: #993;
+	.touchevents article p {
+		padding: 0 1em;
+	}
+	.override article p {
+		line-height: 1.55;
+	}
+	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
 		text-shadow: none;
 		background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
 	}
-	.js section img {
-		border-bottom: solid 1px white;
-	}
-	.no-js section .read-more-trigger:before:hover {
+	.read-more-trigger:before:hover {
 		background-color: white;
-		color: #993;
+		color: hsl(58, 60%, 45%);
+		color: #b8b32e;
 	}
-	section.show h3, .read-more-state:checked~.read-more-trigger:before, .no-js section:first-of-type .read-more-state~.read-more-trigger:before {
+	.no-touchevents h3 a:hover {
+		color: white;
+	}
+	section.show h3, .no-js .read-more-state:checked~.read-more-trigger:before, section:first-child .read-more-state~.read-more-trigger:before {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: #c8c87e;
 		background-color: hsl(60, 40%, 64%);
 	}
-    section.show h3 a {
-        color: white;
-        background-color: transparent;
-    }
-
-	ul#nav a {
-		text-align: right;
-	}
-	ul#nav li {
-		border-width: 0 0 1px;
-	}
-	#nav>li a {
-		background: none;
-		padding: 0 1em 0 0;
-		display: block;
-	}
-	h2 {
-		color: white;
-		background-image: none;
-		text-shadow: 2px 2px 2px black;
-		border: 1px solid;
-		border-width: 1px 0 0;
-	}
-	h3 {
-		line-height: 1.75;
-	}
-	.noir {
-		background: black;
-	}
-	#footer_girl a:last-child:before {
+	footer div:first-child a:last-child:before {
 		content: "";
+	}
+	#main_nav header nav ul {
+		font: bold 1em/2 "Arial Back", Arial, Verdana, Helvetica, sans-serif;
+	}
+	#main_nav ul li a:hover, #main_nav ul li a:active {
+		color: #b8b32e;
+		background-color: #E7E7C7;
+		background-color: hsl(60, 40%, 84%);
+		background-image: none;
+	}
+	#home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
+		color: #cc6;
+		color: hsl(58, 60%, 48%);
 	}
 }
 @media only screen and (max-width: 440px) {
@@ -324,59 +290,50 @@ h2 span {
 		padding: .75em .6em;
 	}
 }
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
 
 @media only screen and (min-width: 1024px) {
-    .override article, .override section > img, aside{
-        -webkit-transition-property: opacity, -webkit-transform;
-        transition-property: opacity, -webkit-transform;
-        -o-transition-property: transform, opacity;
-        transition-property: transform, opacity;
-        transition-property: transform, opacity, -webkit-transform;
-        -webkit-transition-duration: 3s;
-             -o-transition-duration: 3s;
-                transition-duration: 3s;
-        opacity: 0;
-    }
-    section > img, aside {
-        -webkit-transform: translate(100em, 0);
-            -ms-transform: translate(100em, 0);
-                transform: translate(100em, 0);
-    }
-    
-    section > img:last-of-type {
-        -webkit-transform: translate(150em, 0);
-            -ms-transform: translate(150em, 0);
-                transform: translate(150em, 0);
-    }
-    article, section:nth-child(even) > img {
-        -webkit-transform: translate(-100em, 0);
-            -ms-transform: translate(-100em, 0);
-                transform: translate(-100em, 0);
-    }
-    section:nth-child(even) article  {
-        -webkit-transform: translate(100em, 0);
-            -ms-transform: translate(100em, 0);
-                transform: translate(100em, 0);
-    }
-    .override .display article, .override .display > img, .display aside {
-        -webkit-transform: translate(0, 0);
-            -ms-transform: translate(0, 0);
-                transform: translate(0, 0);   
-        opacity: 1;
-    }
-    #enquiries article, #enquiries section img {
-        -webkit-transform: translate(0, 0);
-            -ms-transform: translate(0, 0);
-                transform: translate(0, 0);   
-        opacity: 1;
-        
-    }
 
+.js article, .js section>img, aside {
+		-webkit-transition-property: opacity, -webkit-transform;
+		transition-property: opacity, -webkit-transform;
+		-o-transition-property: transform, opacity;
+		transition-property: transform, opacity;
+		transition-property: transform, opacity, -webkit-transform;
+		-webkit-transition-duration: 3s;
+		-o-transition-duration: 3s;
+		transition-duration: 3s;
+		opacity: 0;
+	}
+	.js section>img, .js aside {
+		-webkit-transform: translate(100em, 0);
+		-ms-transform: translate(100em, 0);
+		transform: translate(100em, 0);
+	}
+	.js section>img:last-of-type {
+		-webkit-transform: translate(150em, 0);
+		-ms-transform: translate(150em, 0);
+		transform: translate(150em, 0);
+	}
+	.js article, .js section:nth-child(even)>img {
+		-webkit-transform: translate(-100em, 0);
+		-ms-transform: translate(-100em, 0);
+		transform: translate(-100em, 0);
+	}
+	.js section:nth-child(even) article {
+		-webkit-transform: translate(100em, 0);
+		-ms-transform: translate(100em, 0);
+		transform: translate(100em, 0);
+	}
+	.js .override .display article, .js .override .display>img, .js .display aside {
+		-webkit-transform: translate(0, 0);
+		-ms-transform: translate(0, 0);
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	#enquiries article, #enquiries section img {
+		-webkit-transform: translate(0, 0);
+		-ms-transform: translate(0, 0);
+		transform: translate(0, 0);
+		opacity: 1;
+	}
 }
-/*@*/

@@ -15,7 +15,9 @@ include_once '../classes/PageFactory.php';
     }
     ?>
     <?php if(!isset($style)){ ?>
+        <link href="../css/reset.css" media="screen" rel="stylesheet">
         <link href="../css/admin.css" media="screen" rel="stylesheet">
+        <link href="../css/myadmin.css" media="screen" rel="stylesheet">
     <?php }
     else { ?>
     <link href="../css/standard.css" media="screen" rel="stylesheet">

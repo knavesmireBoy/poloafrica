@@ -1,5 +1,5 @@
 <figcaption>
-       <label for="<?php htmlout($attribute['id']); ?>" title="<?php htmlout($attribute['alt']); ?>">delete</label><input type="checkbox" title= "<?php htmlout($path); ?>" name="deleteAsset[]" id="<?php htmlout($attribute['id']); ?>" value="<?php htmlout($attribute['id']); ?>"/></figcaption>
+       <label for="<?php htmlout($attribute['id']); ?>" title="<?php htmlout($attribute['alt']); ?>"></label><input type="checkbox" title= "<?php htmlout($path); ?>" name="deleteAsset[]" id="<?php htmlout($attribute['id']); ?>" value="<?php htmlout($attribute['id']); ?>"/></figcaption>
 
 <label for="editAsset[]">edit</label><input type="checkbox" title= "<?php htmlout($path); ?>" name="editAsset[]" id="<?php htmlout($attribute['id']); ?>" value="<?php htmlout($attribute['id']); ?>"/>
 <input type="hidden" name="asset_id" id="asset_id" value="<?php htmlout($attribute['id']); ?>">

@@ -8,7 +8,7 @@ if (!empty($loginError)): ?>
     <label for="password">Password</label>
     <input type="password" name="password" id="password"  maxlength="20" required/>
     <input type="hidden" name="action" value="login">
-    <div class="buttons">
+    <fieldset>
         <input type="submit" value="Log In">
-        </div>
+        </fieldset>
       </form>

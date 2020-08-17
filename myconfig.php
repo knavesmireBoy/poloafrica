@@ -20,6 +20,7 @@ define( "ARTICLE_ASSETS_PATH", "../assets" );
 define( "ARTICLE_UPLOAD_PATH", "../../../filestore/poloafrica" );
 define( "ARTICLE_GALLERY_PATH", "../images/gallery" );
 define( "ARTICLE_GALLERY_PATH_FULL", "../images/gallery/fullsize/" );
+define( "ARTICLE_GALLERY_PATH_THUMB", "../images/gallery/thumb/" );
 
 define( "GALLERY_DISPLAY_COUNT", 14 );
 define( "GALLERY_TOTAL_COUNT", 92 );
