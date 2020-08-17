@@ -11,7 +11,7 @@ nav, h1 {
 h1 {
 	margin: 0 0 .5em;
 	border-width: 0 0 6px;
-	font-size: 2.7em;
+	font-size: 2.95em;
 	line-height: 1;
 	text-transform: uppercase;
 }
@@ -52,8 +52,11 @@ th, table a {
 	font-weight: bold;
 }
 
+nav img {
+    border-radius: 0;
+}
+
 table tr>* {
-	table-layout: fixed;
 	border: 0 solid black;
 	padding: .5em;
 	line-height: normal;
@@ -63,12 +66,7 @@ form li label {
 	line-height: 1;
 }
 
-input[type="submit"] {
-	font: bold 1em Helvetica;
-	padding: .1em .9em;
-}
-
-.content input, select {
+input, select {
 	font: 1em/1.2 Optima, Arial, sans-serif;
 	border-radius: 5px;
 }
@@ -77,7 +75,6 @@ table, form  {
 	width: 40%;
 	min-width: 28em;
 }
-
 
 .del {
 	color: red;
@@ -139,6 +136,11 @@ form, .editor {
 	width: 44%;
 }
 
+input[type="submit"] {
+	font: bold 1em Helvetica;
+	padding: .1em .9em;
+}
+
 input[type="checkbox"] {
     margin: 0 0 0 .1em;
 }
@@ -146,6 +148,21 @@ input[type="checkbox"] {
 .login fieldset {
 	margin: 1em 0 0;
 	text-align: center;
+    border-width: 0;
+}
+.login fieldset input {
+    background-color: transparent;
+}
+
+h1+p a {
+    padding: .3em;
+    border-radius: 50%;
+    border: solid 1px;
+}
+
+h1+p a:hover {
+    background-color: black;
+    color: #DBD3DE;
 }
 
 .pp span, .pp a {
@@ -178,7 +195,7 @@ tr:first-child {
 }
 
 .asset figure {
-	width: 11%;
+	width: 15%;
 	min-width: 5em;
 	padding: .2em;
 	background-color: rgba(255, 255, 255, .7);
@@ -195,22 +212,21 @@ nav .icon {
 }
 .icon img {
 	background-color: hsl(285, 35%, 35%);
-	left: -1px;
 }
 
 .manage+form {
 	display: none;
 }
-.content li {
+form li {
 	margin: 0 0 1em;
 }
 
-.content li > *, li.mock ul>* {
+form li > *, li.mock ul>* {
     vertical-align: top;
     line-height: 1.25;
 }
 
-.content ul>li>input, .content ul>li>textarea {
+form ul>li>input, form ul>li>textarea {
 	margin: 0 0 1% 1%;
 }
 .neue, .asset, .asset figure, textarea, .manage fieldset {
@@ -218,7 +234,7 @@ nav .icon {
 	border-radius: 5px;
 }
 
-.neue, .asset, .asset figure, textarea, .manage fieldset, .mocklabel, .content>ul>li>label, .content .pp, .content .pp span, .content .pp a, ul.mock li:last-child, fieldset, .content input, select {
+.neue, .asset, .asset figure, textarea, .manage fieldset, .mocklabel, .content>ul>li>label, form .pp, form .pp span, form .pp a, ul.mock li:last-child, fieldset, input, select {
 	border: solid 1px white;
 }
 
@@ -250,7 +266,7 @@ nav .icon {
 	background-color: transparent;
 }
 
-.content .pp span, .content .pp a {
+form .pp span, form .pp a {
 	background-color: #CCB7CC;
 	background-color: rgba(77, 55, 77, .75);
 	padding: .33em .66em .44em .66em;
@@ -263,7 +279,7 @@ nav .icon {
 .pp span:first-child, .pp a:first-child {
 	margin: 0 .33em 0 0;
 }
-.content li.asset>* {
+form li.asset>* {
 	vertical-align: middle;
 }
 
@@ -275,7 +291,7 @@ nav .icon {
 	color: hsl(285, 35%, 85%);
 }
 
-.mocklabel, label, .manage fieldset legend {
+.mocklabel, label, .manage legend {
 	font: 1em 'Arial Black', Arial, sans-serif;
 }
 
@@ -284,12 +300,12 @@ nav .icon {
 	border-radius: 0 0 8px 8px;
 }
 
-.prompt.manage fieldset legend {
+.prompt.manage legend {
 	padding: .5em 0;
 	text-decoration: underline;
 }
 
-input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul .pp, .buttons, #controls, textarea#content, .content .buttons, #guide, .content ul li > *, li.mock ul>* {
+input, li>label, li>textarea, li.mock ul>li, ul .pp, .buttons, .content .buttons, form ul li > *, .mock ul>*, #guide, #controls, textarea#content {
 	box-sizing: border-box;
 }
 
@@ -297,7 +313,7 @@ input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul
 	background-color: #7C548C;
 	background-color: hsl(283, 25%, 44%);
 }
-.mock .neue, .mock .asset, .content>ul .pp, .content ul>li>input, .content ul>li>textarea, #controls, .content .buttons, #guide {
+.mock .neue, .mock .asset, ul .pp, ul>li>input, ul>li>textarea, .content .buttons, #guide, #controls {
 	width: 83%;
 }
 .content .buttons>* {
@@ -310,16 +326,16 @@ input, .content ul li>label, .content ul>li>textarea, li.mock ul>li, .content>ul
 	width: 15em;
 	margin: 0 0 1% 1%;
 }
-ul.mock li:last-child {
+.mock li:last-child {
 	padding: 0.5em;
 }
-.asset figure img.pdf_icon {
+.asset img.pdf_icon {
 	display: inline;
 }
-.asset figure.edit input {
+.asset .edit input {
 	width: 99%;
 }
-.asset figure img, .asset figure figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>*, #guide.show, .content>ul .pp, .no-js .nojs, nav .icon {
+.asset img, .asset figcaption, .asset figure label:first-of-type, .asset figure input:first-of-type, .asset figure.edit>*, #guide.show, .content>ul .pp, .no-js .nojs, nav .icon {
 	position: relative;
 	left: 0;
 }
@@ -364,7 +380,6 @@ input[type="email"], input[type="password"], #name {
 	padding: .3em;
     background-color: rgba(0,0,0, .05);
 }
-
 
 #guide > li strong {
     vertical-align: baseline;
@@ -433,15 +448,15 @@ input[type="email"], input[type="password"], .page_select, .manage, #asset, #nam
     border-width: 0;
 }
 
-h1, .pp, .msg, nav .icon, .content li > *, li.mock ul>*, li.asset input[type="checkbox"], .asset label:first-of-type, #controls li {
+h1, .pp, .msg, nav .icon, form li > *, li.mock ul>*, li.asset input[type="checkbox"], .asset label:first-of-type, #controls li {
    display: inline-block; 
 }
 
-#guide > li, .content li.neue input, .asset figure img, .prompt.manage fieldset legend, .mocklabel, .content>ul>li>label, li.mock, li.mock ul  {
+#guide > li, li.neue input, .asset figure img, .prompt.manage fieldset legend, .mocklabel, .content>ul>li>label, li.mock, li.mock ul  {
     margin: 0;
 }
 /*.login input[type="submit"] */
-input[type="submit"], .page, .content, .pp, input[type="checkbox"], .content>ul .neue li label, .content>ul .neue li input, .asset figure img.pdf_icon, #guide > li {
+input[type="submit"], .page, .content, .pp, input[type="checkbox"], .content>ul .neue li label, .content>ul .neue li input, .asset figure img.pdf_icon, #guide > li, #details input {
 	width: auto;
 }
 
@@ -475,7 +490,7 @@ input, .content~nav, .icon img, .asset figure img,  #asset, #controls li img, li
 	.mock .asset, .mock .neue, #editList > li > *{
 		width: 100%;
 	}
-	.content #editList>li>label, .mock .mocklabel {
+	#editList>li>label, .mock .mocklabel {
 		border-width: 0;
 		background: none;
 		box-shadow: none;
@@ -547,7 +562,7 @@ input, .content~nav, .icon img, .asset figure img,  #asset, #controls li img, li
 	#pubDate {
 		margin-right: 50%;
 	}
-	.content #page {
+	#page {
 		margin-right: 40%;
 	}
 }
@@ -571,7 +586,7 @@ input, .content~nav, .icon img, .asset figure img,  #asset, #controls li img, li
 	#pubDate {
 		margin-right: 50%;
 	}
-	.content #page {
+	#page {
 		margin-right: 40%;
 	}
 	#details+li {
