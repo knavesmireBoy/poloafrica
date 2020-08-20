@@ -62,6 +62,7 @@
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
+                //console.log(window.matchMedia(query).matches);
 				_.each(alternators, function (f) {
 					f();
 				});

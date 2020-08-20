@@ -177,6 +177,7 @@ poloAF.Util = (function() {
 	function thunk(f) {
 		return f.apply(f, _.rest(arguments));
 	}
+    
 
 	function prefix(p, str) {
 		return str.charAt(0) === p ? str : p + str;
@@ -795,6 +796,26 @@ poloAF.Util = (function() {
 			}
 			return curry3(setAnchor)(getNewElement)(null);
 		},
+        binder1: function(o, m){
+            if(_.isFunction(m)){
+                return _.bind(m, o);
+            }
+            if(_.isString(m)){
+                console.log(arguments)
+                /*construct(m, _.rest(arguments))*/
+                return _.bindAll(o, m);
+            }
+            return noOp;
+        },
+        binder: function(o, m){
+          var applier = function(f, args) {
+				return function() {
+					return f.apply(null, args);
+				};
+			};
+            return _.partial(thunk, _.bind(m, o))
+			//return applier(_.bind(m, o), _.rest(arguments));  
+        },
 		byIndex: byIndex,
 		conditional: function() {
 			var validators = _.toArray(arguments);
@@ -808,6 +829,7 @@ poloAF.Util = (function() {
 				return fun(arg);
 			};
 		},
+        construct: construct,
 		createTextNode: function(text, ancor) {
 			getResult(ancor).appendChild(document.createTextNode(text));
 			return ancor;
@@ -919,7 +941,6 @@ poloAF.Util = (function() {
 							getBody = curry3(simpleInvoke)('body')('getElementsByTagName'),
 							getLinks = curry3(simpleInvoke)('a')('getElementsByTagName'),
 							getTerm = _.compose(curry2(getter)('id'), ptL(byIndex, 0), getBody),
-							//links = _.compose(getLinks, curry3(simpleInvoke)('nav')('getElementById'))(document),
 							links = _.compose(getLinks, poloAF.Util.getZero, curry3(simpleInvoke)('nav')('getElementsByTagName'))(document),
 							found = ptL(_.filter, _.toArray(links), function(link) {
 								return new RegExp(link.innerHTML.replace(/ /gi, '_'), 'i').test(getTerm(document));

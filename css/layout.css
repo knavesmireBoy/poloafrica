@@ -108,17 +108,17 @@ footer div:first-child {
 #nav a, #fb a {
 	display: block;
 }
-nav li#current:hover ul, nav li#current.sfhover ul {
-	left: 0;
-}
+
 footer div:first-child a:first-child {
 	width: 12em;
 	margin: 0 -2.5em -1.5em 0;
 }
-#home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
+
+#home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul, li#current.sfhover ul {
 	left: auto;
 }
-#medley li:nth-child(7):hover ul, #enquiries li:nth-child(8):hover ul {
+
+#medley li:nth-child(7):hover ul, #enquiries li:nth-child(8):hover ul, #medley li#current.sfhover ul,  #enquiries li#current.sfhover ul {
 	left: auto;
 	right: 0px;
 }
