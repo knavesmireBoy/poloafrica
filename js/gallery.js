@@ -915,7 +915,8 @@
 			utils.$('placeholder').innerHTML = 'PHOTOS';
 		}());
 	}());
-}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], new RegExp('[^\\d]+(\\d+)[^\\d]+$'), function (path) {
+    //do not be tempted to change regex literal (picnum) to new regex object until we can get it to work*/
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], /[^\d]+\d(\d+)[^\d]+$/, function (path) {
 	"use strict";
 	return "images/0" + path + ".jpg";
 }, poloAF.Util.always(''), function () {"use strict"; }));
