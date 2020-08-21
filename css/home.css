@@ -20,6 +20,7 @@ h2 span {
 #ani img {
 	width: 100%;
 	float: left;
+    display: inline;
 	box-shadow: none;
 	border-width: 0;
 	margin: 0;
@@ -40,14 +41,25 @@ h2 span {
 #ani img:last-child {
 	margin: 0 0 0 -100%;
 }
-
-@media only screen {
-    
-	h2 span {
-		background: white 0% 0% url(../images/resource/sub_home.png) no-repeat;
-		background-size: contain;
-	}
+/* test float
+#wrap p {
+    font-size: 1.3em;
+    color: red;
 }
+*/
+@media only screen {
+    .backgroundsize h2 span {
+        background-image: url(../images/resource/sub_home.png);
+    }
+}
+
+/*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
+    h2 span {
+		background-image: url(../images/resource/sub_home.png);
+    }
+}
+
 @media screen and (max-width: 800px) {
 	#ani {
 		width: 14em;

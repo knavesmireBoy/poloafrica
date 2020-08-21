@@ -2,23 +2,27 @@ body {
 	font: normal .875em/1.75 Georgia, serif;
 	background-color: white;
 }
-
 .no-js body {
 	background-color: mintcream;
 }
-
 header {
+	/*
 	background: #b6b686 url(../images/resource/header.png) no-repeat 0 76%/100%;
 	background: hsl(60, 25%, 62%) url(../images/resource/header.png) no-repeat 0 76%/100%;
+    */
 	width: 100%;
-	/*
-    background-image: url(../images/resource/header.png);
+	background-image: url(../images/resource/header.png);
 	background-repeat: no-repeat;
 	background-color: #baba87;
 	background-color: hsl(60, 27%, 63%);
-	background-size: 100%;
 	background-position: 0 76%;
-    */
+}
+.backgroundsize header {
+	-o-background-size: 100%;
+	-moz-background-size: 100%;
+	-ms-background-size: 100%;
+	-webkit-background-size: 100%;
+	background-size: contain;
 }
 h2 {
 	margin: .8em 0 0;
@@ -28,12 +32,17 @@ h2 {
 	text-transform: uppercase;
 	padding: 1px 0;
 	text-shadow: 1px 1px 2px #444;
-	border: solid 0px red;
+	background-image: url(../images/resource/h2grad.jpg);
+	background-repeat: no-repeat;
+	-o-background-size: 100%;
+	-moz-background-size: 100%;
+	-ms-background-size: 100%;
+	-webkit-background-size: 100%;
 }
 h3 {
 	margin: 0 0 .3em 0;
 	line-height: 1.2;
-    font-size: 1.75em;
+	font-size: 1.75em;
 	word-spacing: 1px;
 	letter-spacing: 1px;
 }
@@ -45,17 +54,20 @@ p {
 footer {
 	background: url(../images/resource/footer_green_ko.png) no-repeat;
 	background-position: bottom right;
+	background-position: 100% 100%;
 }
 h2 span {
 	display: block;
+	padding: 0 0 0 12%;
 	padding: 0 0 0 8rem;
-	line-height: 1.5;
+	line-height: 1.3;
 }
 header ul {
 	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 }
 /* direct child selector, otherwise will have to override for animation */
-section>img {
+
+section img {
 	border-radius: 4px;
 	box-shadow: 0px 0px 4px #990;
 	border: solid 1px white;
@@ -82,7 +94,6 @@ footer>a:last-child {
 	text-align: right;
 	padding: .75em 1em;
 }
-
 header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding: 0 0 1em;
@@ -95,12 +106,10 @@ header ul a {
 	border: solid 1px;
 	border-color: #ccc #306 #306 #ccc;
 }
-
 header ul a:hover, header ul a:active {
 	background-image: url("../images/resource/navbghov1.gif");
 	background-image: linear-gradient(hsl(60, 25%, 62%), hsl(60, 35%, 72%), hsl(60, 25%, 62%));
 }
-
 header ul ul a, header ul ul a:hover {
 	background-image: none;
 }
@@ -108,7 +117,7 @@ h3, section>label, a:link, a:visited, .no-touchevents h3 a:hover, .no-touchevent
 	color: #990;
 	color: hsl(58, 60%, 40%);
 }
-h2, a:hover, a:active{
+h2, a:hover, a:active {
 	color: #cc6;
 	color: hsl(58, 60%, 48%);
 }
@@ -118,8 +127,8 @@ p a:hover, p a:active {
 footer a[href^="mailto:i"]:before {
 	content: " | ";
 }
-
 /* #wrap used as override for sub-menu*/
+
 header ul a:link, header ul a:visited, #wrap ul ul a:link, #wrap ul ul a:visited {
 	color: #306;
 	color: hsl(270, 100%, 20%);
@@ -132,6 +141,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	color: white;
 }
 /*spacer for submenu desktop*/
+
 #wrap ul ul li {
 	border: solid 1px transparent;
 	border-width: 3px 1px 0;
@@ -144,43 +154,73 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	background-color: white;
 	border-color: #900;
 }
-@media only screen {
-	h2 {
-		background-image: linear-gradient(to right, #b8b32e, white);
-		background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
-	}
+h2 span {
+	background-repeat: no-repeat;
+	background-color: white;
+	background-position: 0 50%;
 }
-
+.cssgradients h2 {
+	background-image: linear-gradient(to right, #b8b32e, white);
+	background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
+	background-color: transparent;
+}
+.backgroundsize h2 span {
+	-o-background-size: 14%;
+	-moz-background-size: 14%;
+	-ms-background-size: 14%;
+	-webkit-background-size: 14%;
+	background-size: contain;
+}
 @media screen and (max-width: 867px) {
 	#polo li:nth-child(6):hover ul {
 		left: auto;
 		right: 0px;
 	}
+	.backgroundsize h2 span {
+		-o-background-size: 16%;
+		-moz-background-size: 16%;
+		-ms-background-size: 16%;
+		-webkit-background-size: 16%;
+        background-size: contain;
+	}
 }
-
 @media screen and (max-width: 800px) {
 	header ul {
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
 }
 @media only screen and (max-width: 667px) {
-        
 	header {
 		background-image: url(../images/resource/header_only.png);
 		background-position: 0px 0px;
+	}
+	#wrap header {
+		-o-background-size: 182%;
+		-moz-background-size: 182%;
+		-ms-background-size: 182%;
+		-webkit-background-size: 182%;
 		background-size: cover;
+	}
+	/*ZAP*/
+	#wrap h2, #wrap h2 span {
+		background: none;
 	}
 	h2 {
 		color: white;
-		background-image: none;
+		background: none;
 		text-shadow: 2px 2px 2px black;
 		border: 1px solid;
 		border-width: 1px 0 0;
 	}
 	footer {
-		background: url(../images/resource/sil_bg.png) no-repeat center top;
+		background-image: url(../images/resource/sil_bg.png);
+		background-repeat: no-repeat;
+		background-position: center bottom;
+		-o-background-size: 240%;
+		-moz-background-size: 240%;
+		-ms-background-size: 240%;
+		-webkit-background-size: 240%;
 		background-size: cover;
-		padding: 7em 0 0 0;
 	}
 	section>label {
 		font-weight: bold;
@@ -215,6 +255,10 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	}
 	.menu {
 		background: 50% 0% url("../images/resource/polo_ball_sprite.png") no-repeat;
+		-o-background-size: 105%;
+		-moz-background-size: 100%;
+		-ms-background-size: 100%;
+		-webkit-background-size: 100%;
 		background-size: 100%;
 		cursor: pointer;
 		-webkit-transition: transform 1s;
@@ -226,16 +270,13 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
 	}
-
 	section.show h3 a {
 		color: white;
 		background-color: transparent;
 	}
-    
-    h2:hover, h2:focus, h2:active {
-        color: hsl(58, 60%, 90%);
-    }
-    
+	h2:hover, h2:focus, h2:active {
+		color: hsl(58, 60%, 90%);
+	}
 	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
 	h3, .read-more-trigger:before {
 		padding: .5em .6em .4em;
@@ -285,12 +326,37 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		color: hsl(58, 60%, 48%);
 	}
 }
+@media only screen and (max-width: 580px) {
+	footer {
+		-o-background-size: 280%;
+		-moz-background-size: 280%;
+		-ms-background-size: 280%;
+		-webkit-background-size: 280%;
+		background-size: cover;
+	}
+}
+@media only screen and (max-width: 480px) {
+	footer {
+		-o-background-size: 320%;
+		-moz-background-size: 320%;
+		-ms-background-size: 320%;
+		-webkit-background-size: 320%;
+		background-size: cover;
+	}
+}
 @media only screen and (max-width: 440px) {
 	footer>a:last-child {
 		padding: .75em .6em;
 	}
 }
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
 
+/*
 @media only screen and (min-width: 1024px) {
 
 .js article, .js section>img, aside {
@@ -324,7 +390,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		-ms-transform: translate(100em, 0);
 		transform: translate(100em, 0);
 	}
-	.js .override .display article, .js .override .display>img, .js .display aside {
+	.js .display article, .js .display>img, .js .display aside {
 		-webkit-transform: translate(0, 0);
 		-ms-transform: translate(0, 0);
 		transform: translate(0, 0);
@@ -337,3 +403,4 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		opacity: 1;
 	}
 }
+*/

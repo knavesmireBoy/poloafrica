@@ -1,5 +1,5 @@
 body {
-	margin: 4%;
+	margin: 2% 0 0;
 }
 html, body {
 	height: 100%;
@@ -20,11 +20,17 @@ section {
 	margin: 3em 0 0;
 }
 footer {
-	max-width: 80em;
-	padding: 5em 0 0 0;
-	margin: -10.1em auto 0;
+	max-width: 88em;
 	width: 100%;
+    margin: -10.1em auto 0;
 }
+
+footer div {
+	display: inline-block;
+	vertical-align: bottom;
+	position: relative;
+}
+
 header h1 {
 	margin: -2.2em 0 0 0;
 	white-space: nowrap;
@@ -33,28 +39,34 @@ header h1 {
 	overflow: hidden;
 	line-height: .3;
 }
-section > input, nav > input {
-	cursor: pointer;
-	position: absolute;
-	left: -9999px;
+section input, nav input {
+    cursor: pointer;
+    position: absolute;
+    left: -9999px;
 }
 section:after {
 	content: "";
 	display: table;
 	clear: both;
 }
-/* direct child selector, otherwise will have to override for animation */
-
-section>img {
+section img {
 	margin: .5em 2% 1em 0;
 	float: left;
 	width: 40%;
 }
-footer div {
-	display: inline-block;
-	vertical-align: bottom;
-	position: relative;
+
+#nav a, #fb a {
+	display: block;
 }
+nav li#current:hover ul, nav li#current.sfhover ul {
+	left: 0;
+}
+
+section.ptrt img {
+    float: right;
+    width: 18%;
+}
+
 header ul {
 	display: table;
 	width: 100%;
@@ -77,44 +89,51 @@ footer div img {
 section:first-child {
 	margin: 2em 0 0 0;
 }
-footer a:link {
-	display: inline-block;
-}
-footer>a:link:last-child {
-	display: block;
-}
+
 /* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
-section:nth-child(odd)>img, #ani {
-	margin: 0em 0 1em 2%;
+section:nth-child(odd) img, #ani, #tween {
+	margin: 0 0 1em 2em;
 	float: right;
+    overflow: hidden;
 }
 
 #wrap {
 	margin: 0 auto;
-	max-width: 84em;
+	max-width: 88em;
 	min-height: 100%;
 	overflow: hidden;
 	position: relative;
 }
+
+#footer_girl {
+	margin: 0 0 .75em 1%;
+    width: 74%;
+}
+
 #fb {
-	margin: 0 0 .75em -49em;
-	width: 7em;
-	left: 100%;
+	width: 8em;
+    margin: 0 0 .75em -9em;
+    left: 25%;
 }
-footer div:first-child {
-	margin: 0 0 .75em 1em;
-	width: 40em;
+
+#footer_girl a {
+    width: auto;
+    height: auto;
+    display: inline-block;
+    white-space: nowrap;
+    position: relative;
 }
-#nav a, #fb a {
-	display: block;
+#footer_girl a:first-child {
+    width: 12em;
+    margin: 0 -4em 0 0;
+    bottom: -2em;
 }
-nav li#current:hover ul, nav li#current.sfhover ul {
-	left: 0;
+
+footer a:last-child {
+    display: block;
 }
-footer div:first-child a:first-child {
-	width: 12em;
-	margin: 0 -2.5em -1.5em 0;
-}
+
+
 #home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
 	left: auto;
 }
@@ -123,7 +142,17 @@ footer div:first-child a:first-child {
 	right: 0px;
 }
 
+@media screen and (max-width: 1280px) {
+     body {
+        margin: 4%;
+    }
+}
+
 @media screen and (max-width: 667px) {
+    
+    body {
+        margin: 2%;
+    }
 	main {
 		padding: 0 0 10.1em 0;
 		margin: 0;
@@ -135,15 +164,14 @@ footer div:first-child a:first-child {
     
 	h2 {
 		position: relative;
-		margin: -8vw 0 0 0em;
+		margin: -8% 0 0 0;
+		margin: -8vw 0 0 0;
+		padding: 0 0 0 4%;
 		padding: 0 0 0 4vw;
 		font-size: 2em;
 		font-size: 1.75rem;
 	}
-	footer {
-		padding: 7em 0 0 0;
-	}
-    
+
     section {
 		margin: 0;
 	}
@@ -152,7 +180,9 @@ footer div:first-child a:first-child {
 		display: block;
 	}
 	header h1 {
+		margin: 0 0 0 4%;
 		margin: 0 0 0 4vw;
+		padding: 0% 0 7% 0;
 		padding: 0% 0 7vw 0;
 	}
 	header ul {
@@ -172,7 +202,8 @@ footer div:first-child a:first-child {
 		padding: 0;
 	}
 	header h1, h2 span {
-		width: 48vw;
+		width: 50%;
+        width: 48vw;
 	}
     /*width reqd, other properties reqd in no-js scenario; */
     section img {
@@ -188,7 +219,6 @@ footer div:first-child a:first-child {
 		visibility: visible;
 		min-width: 3em;
 		max-width: 100%;
-		border: solid 1px red;
 	}
     /*remove border's above when in production*/
 	header h1, h2 span, header h1 img {
@@ -203,7 +233,9 @@ footer div:first-child a:first-child {
 		transition: height .9s ease-out;
 	}
 	header input:checked+ul {
+		top: 4em;
 		top: 3.5rem;
+		right: 1em;
 		right: 1rem;
 		z-index: 2;
         /*override display:table not really required as li's set to block*/
@@ -215,13 +247,18 @@ footer div:first-child a:first-child {
 	}
 	.menu {
 		position: absolute;
-		top: .7rem;
+		top: .7em;
+        top: .7rem;
+        right: .7em;
 		right: .7rem;
+        height: 3em;
 		height: 2.5rem;
+        width: 3em;
 		width: 2.5rem;
 	}
+    
 	.no-flexwrap h2 {
-		margin: -1.6em 0 0em 0em;
+		margin: -1.4em 0 0em 0em;
 		margin: -2.73rem 0 0em 0em;
 		padding: 0 0 0 .7em;
 		padding: 0 0 0 1.2rem;
@@ -250,30 +287,26 @@ footer div:first-child a:first-child {
 	}
 
 	/*first section is shown by default?*/
-	.js .read-more-state, .no-js article>h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-child .read-more-state:checked~article, .no-js section:first-child .read-more-state:checked~img, .js article>*, footer div:first-child a:first-child, header ul ul {
+	.js .read-more-state, .no-js article h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-child .read-more-state:checked~article, .no-js section:first-child .read-more-state:checked~img, .js article>*,  header ul ul {
 		position: absolute;
 		top: 0px;
 		left: -999em;
 	}
-	.no-js section:first-child .read-more-state~article, .no-js section:first-child .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article h3:first-of-type {
+	.no-js section:first-child .read-more-state~article, .no-js section:first-child .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article h3 {
 		position: static;
 		left: 0em;
 	}
-	footer div:first-child {
-		width: 15em;
-	}
-	#fb {
-		margin: 0 0 .75em -24em;
-	}
-	footer div:first-child a {
-		display: block;
-		margin: .25em 0;
-	}
-	footer div:first-child img {
-        display: none;
-		width: 8em;
-	}
 
+    #footer_girl a:first-child {
+        width: 8em;
+        margin: 0;
+        visibility: hidden;
+    }
+
+    #footer_girl a {
+        display: block;
+    }
+  
 }
 @media only screen and (max-width: 568px) {
 	h2 {
@@ -290,6 +323,7 @@ footer div:first-child a:first-child {
 	}
 }
 @media only screen and (max-width: 480px) {
+
 	h2 {
 		margin: -10vw 0 0 0em;
 	}
@@ -320,12 +354,7 @@ footer div:first-child a:first-child {
 	section.ptrt img {
 		width: 40%;
 	}
-	footer div:first-child {
-		margin: 0 0 .75em .6em;
-	}
-	#fb {
-		margin: 0 0 .75em -23.5em;
-	}
+
 }
 @media only screen and (max-width: 414px) {
 	#wrap h2 {

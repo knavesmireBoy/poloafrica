@@ -1,5 +1,5 @@
 h2 span {
-	background: white 0% 0% url(../images/resource/sub_polo.jpg) no-repeat;
+	background-image: url(../images/resource/sub_polo.jpg);
 }
  
 .multi img {
@@ -10,13 +10,16 @@ h2 span {
 }
 
 @media only screen {
-	h2 span {
-		background: white 0% 0% url(../images/resource/sub_polo.png) no-repeat;
-        background-size: contain;
+	.backgroundsize h2 span {
+		background-image: url(../images/resource/sub_polo.png);
 	}
 }
-
-
+/*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
+    h2 span {
+		background-image: url(../images/resource/sub_polo.png);
+    }
+}
 
 @media screen and (max-width: 888px) {
     .multi img {
