@@ -35,8 +35,7 @@ window.poloAF.Eventing = (function (eventing) {
 		}
 	}
 
-	function isfunc(fn, context) {
-		//return _.isFunction(fn) || context && isfunc(context[fn]) || context && isfunc(fn[context]);
+	function isfunc(fn) {
 		return _.isFunction(fn);
 	}
 
@@ -69,12 +68,6 @@ window.poloAF.Eventing = (function (eventing) {
 						return item !== tgt;
 					});
 					list.unshift(tgt);
-				},
-				safeAddSimpleOrder = function (tgt) {
-					var i = remove(list, tgt);
-					if (i < 0) {
-						list.unshift(tgt);
-					}
 				},
 				getList = function () {
 					return list;

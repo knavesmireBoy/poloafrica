@@ -107,10 +107,8 @@
 	function isEqual(x, y) {
 		return Number(x) === Number(y);
 	}
-
-    
 	var utils = poloAF.Util,
-		con = window.console.log.bind(window),
+		//con = window.console.log.bind(window),
 		/*reporter = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
 			msg = undef(msg) ? document.documentElement.className : msg;
@@ -280,12 +278,12 @@
 		},
 		advanceRouteListener = _.wrap(advanceRouteBridge, function (orig, e) {
 			//sign that event is triggered
-			if (getTarget(e) === main) {
-				/*var mock = {};
+			/*if (getTarget(e) === main) {
+				var mock = {};
 				mock.target = $('gal_forward');
 				return advanceRoute(orig(mock));
-                */
 			}
+             */
 			return advanceRoute(orig(e));
 		}),
 		doSplice = function (bool, coll) {
@@ -917,6 +915,7 @@
 			utils.$('placeholder').innerHTML = 'PHOTOS';
 		}());
 	}());
+    //do not be tempted to change regex literal (picnum) to new regex object until we can get it to work*/
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], /[^\d]+\d(\d+)[^\d]+$/, function (path) {
 	"use strict";
 	return "images/0" + path + ".jpg";
