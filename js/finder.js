@@ -11,10 +11,6 @@
 		//console.log('default')
 	}
 
-	function undef(x) {
-		return typeof (x) === 'undefined';
-	}
-
 	function invokemethod(o, arg, m) {
 		return o[m](arg);
 	}
@@ -52,10 +48,12 @@
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
         //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment = (function () {
+            /*ORIGINAL TEST CHECKS FOR MIN-WIDTH OF 668px HOWEVER NETRENDERER REPORTS ZERO PX AND WILL THEN INVOKE MOVE
+            SO WE INVERT THE TEST IF NOT MIN-WIDTH */
 			if (mq) {
-				return _.partial(Modernizr.mq, query);
+				return _.negate(ptL(Modernizr.mq, query));
 			} else {
-				return _.partial(utils.isDesktop, threshold);
+				return _.negate(ptL(utils.isDesktop, threshold));
 			}
 		}()),
 		negater = function (alternators) {
@@ -72,7 +70,7 @@
 		headingmatch = doThrice(invokemethod)('match')(/^h\d$/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
 		bridge = function (e) {
-         var tgt = getTarget(e),
+            var tgt = getTarget(e),
 				section = tgt && getSection(tgt),
 				hit = section && utils.getClassList(section).contains('show');
 			if (!section || !isHeading(getParent(tgt))) {
@@ -95,7 +93,7 @@
 					unmove = function () {
                         utils.insertBefore(article, img);
 					};
-				return doAlt([move, unmove]);
+				return doAlt([unmove, move]);
 			}); //map           
 		},
 		float_handler,
@@ -119,7 +117,7 @@
 	float_handler = ptL(negater, floating_images(images));
 	float_handler();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
-    $sections = _.map(document.getElementsByTagName('section'), function(el){
+    $sections = _.map(document.getElementsByTagName('section'), function (el) {
         var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
         $el.unrender = noOp;
         return $el;
@@ -128,4 +126,4 @@
     poloAF.Util.setScrollHandlers($sections, doTwice(poloAF.Util.getScrollThreshold)(0.4), 'display', 1);
     window.setTimeout($sections[0].render, 666);
 	return true;
-}(Modernizr.mq('only all'), '(min-width: 668px)', window.matchMedia('only screen and (max-width: 668px)').matches));
+}(Modernizr.mq('only all'), '(min-width: 668px)'));
