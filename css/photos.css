@@ -80,7 +80,6 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	clear: none;
 }
 .showtime main ul.portrait {
-	margin: 0;
 	width: 40%;
 }
 .js .showtime main ul li {

@@ -6,7 +6,7 @@ if (!window.poloAF) {
 	window.poloAF = {};
 }
 poloAF.Iterator = function (rev) {
-    "use strict";
+	"use strict";
 	return function (index, coll, validate, doAdvance) {
 		var loop = function (bool) {
 				if (!bool) {
@@ -55,6 +55,9 @@ poloAF.Iterator = function (rev) {
 				},
 				getCollection: function () {
 					return coll;
+				},
+				setCollection: function (coll) {
+					this.coll = coll;
 				}
 			};
 		if (rev) {
@@ -64,46 +67,47 @@ poloAF.Iterator = function (rev) {
 	};
 };
 poloAF.Composite = (function () {
-    "use strict";
+	"use strict";
+
 	function noOp() {}
-    function isFalse(i){
-        return !i && _.isBoolean(i);
-    }
-    
-    function isTrue(i){
-        return i && _.isBoolean(i);
-    }
-    
-    
+
+	function isFalse(i) {
+		return !i && _.isBoolean(i);
+	}
+
+	function isTrue(i) {
+		return i && _.isBoolean(i);
+	}
 	return function (included) {
-		var intafaces = _.rest(arguments), /*, intafaces..*/
-            j,
-            k,
+		var intafaces = _.rest(arguments),
+			/*, intafaces..*/
+			j,
+			k,
 			comp_intaface = poloAF.Intaface('Composite', ['add', 'remove', 'get', 'find']),
 			leaf = {
 				add: noOp,
 				remove: noOp,
 				get: noOp,
 				find: noOp,
-                render: noOp,
-                unrender: noOp
+				render: noOp,
+				unrender: noOp
 			},
 			composite,
 			tmp,
 			comp_add = function (comp) {
 				intafaces.unshift(comp);
 				poloAF.Intaface.ensures.apply(poloAF.Intaface, intafaces);
-                var m = comp.head ? 'unshift' : 'push';
+				var m = comp.head ? 'unshift' : 'push';
 				included[m](intafaces.shift(comp));
 				comp.parent = this;
 			},
 			comp_remove = function (comp) {
 				if (!comp) {
-                    _.each(included, function(comp){
-                        comp.remove();
-                    });
+					_.each(included, function (comp) {
+						comp.remove();
+					});
 					included = [];
-                    return this;
+					return this;
 				} else {
 					included = _.filter(included, function (n_comp) {
 						if (n_comp !== comp) {
@@ -113,25 +117,24 @@ poloAF.Composite = (function () {
 					return comp;
 				}
 			},
-            comp_get = function (i) {
-                //console.log('recent', i)
-                if(_.isNull(i) && !isNaN(k)){
-                    return included[k];
-                }
-                if(_.isNull(i)){
-                    return included;
-                }
+			comp_get = function (i) {
+				//console.log('recent', i)
+				if (_.isNull(i) && !isNaN(k)) {
+					return included[k];
+				}
+				if (_.isNull(i)) {
+					return included;
+				}
 				var j = isTrue(i) ? 0 : isFalse(i) ? included.length - 1 : !isNaN(i) ? i : undefined,
-                    ret =  !isNaN(j) ? included[j] : included;
-                k = !isNaN(j) ? j : k;//store current
-                return ret;
+					ret = !isNaN(j) ? included[j] : included;
+				k = !isNaN(j) ? j : k; //store current
+				return ret;
 			},
-            comp_find  = function (m, e){
+			comp_find = function (m, e) {
 				return _[m](included, function (member) {
 					return member.find && member.find(e);
 				});
-            },
-            
+			},
 			doAdd = function (comp) {
 				try {
 					comp_add.call(composite, comp);
@@ -139,21 +142,25 @@ poloAF.Composite = (function () {
 					try {
 						comp_add(_.extend(leaf, comp));
 					} catch (error) {
-                        noOp();
-                    }
+						noOp();
+					}
 				}
-                return comp;
+				return comp;
 			},
 			render = function () {
 				var args = _.toArray(arguments);
 				_.each(included, function (member) {
-                    member.render && member.render.apply(member, args.concat(_.rest(arguments)));
+					if (member.render) {
+						member.render.apply(member, args.concat(_.rest(arguments)));
+					}
 				});
 			},
 			unrender = function () {
 				var args = _.toArray(arguments);
 				_.each(included, function (member) {
-					member.unrender && member.unrender.apply(member, args.concat(_.rest(arguments)));
+					if (member.render) {
+						member.render.apply(member, args.concat(_.rest(arguments)));
+					}
 				});
 			};
 		intafaces.unshift(comp_intaface);
@@ -169,9 +176,9 @@ poloAF.Composite = (function () {
 				included: included,
 				render: render,
 				unrender: unrender,
-                current: function(){
-                return included[j] || included;
-            }
+				current: function () {
+					return included[j] || included;
+				}
 			};
 			if (included.length) {
 				//copy and empty included; establish contents conform to interface

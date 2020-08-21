@@ -1,7 +1,6 @@
 /*jslint nomen: true */
 /*global window: false */
 /*global poloAF: false */
-/*global document: false */
 /*global _: false */
 if (!window.poloAF) {
 	window.poloAF = {};

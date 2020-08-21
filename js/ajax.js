@@ -1,24 +1,24 @@
 /*jslint browser: true*/
 /*global window: false */
-/*global document: false */
 /*global poloAF: false */
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-window.poloAF.SimpleXhrFactory = (function() {
+window.poloAF.SimpleXhrFactory = (function () {
+    "use strict";
 	// The three branches.
 	var standard = {
-			createXhrObject: function() {
+			createXhrObject: function () {
 				return new window.XMLHttpRequest();
 			}
 		},
 		activeXNew = {
-			createXhrObject: function() {
+			createXhrObject: function () {
 				return new window.ActiveXObject('Msxml2.XMLHTTP');
 			}
 		},
 		activeXOld = {
-			createXhrObject: function() {
+			createXhrObject: function () {
 				return new window.ActiveXObject('Microsoft.XMLHTTP');
 			}
 		},
@@ -31,38 +31,38 @@ window.poloAF.SimpleXhrFactory = (function() {
 		try {
 			testObject = activeXNew.createXhrObject();
 			return activeXNew; // Return this if no error was thrown.
-		} catch (e) {
+		} catch (er) {
 			try {
 				testObject = activeXOld.createXhrObject();
 				return activeXOld; // Return this if no error was thrown.
-			} catch (e) {
+			} catch (err) {
 				throw new Error('No XHR object found in this environment.');
 			}
 		}
 	}
-})();
+}());
 
-  function closeKeepAlive() {
-        if ( /AppleWebKit|MSIE/.test(navigator.userAgent)) {
-          var xhr = new XMLHttpRequest();
-          xhr.open( "GET", "/ping/close", false );
-          xhr.send();
+window.poloAF.Hijax = function () {
+    /*
+    function closeKeepAlive() {
+        if (/AppleWebKit|MSIE/.test(navigator.userAgent)) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/ping/close", false);
+            xhr.send();
         }
-      }
-
-function dummy() {}
-
-function always(val) {
-	return function() {
-		return val;
-	};
-}
-window.poloAF.Hijax = function() {
+    }
+    */
+    function dummy() {}
+    function always(val) {
+        return function () {
+            return val;
+        };
+    }
     
 	function fromPost(form) {
 		var i,
 			query = '';
-		for (i = 0; i < form.elements.length; i++) {
+		for (i = 0; i < form.elements.length; i += 1) {
 			query += form.elements[i].name;
 			query += "=";
 			query += encodeURI(form.elements[i].value);
@@ -70,35 +70,33 @@ window.poloAF.Hijax = function() {
 		}
 		return query;
 	}
-    
-    function captureDataOnClick(flag) {
-        //flag to override defaults
+
+	function captureDataOnClick(flag) {
+		//flag to override defaults
 		if (!container) {
 			return true;
 		}
 		var query = '';
-        /* persisting with onclick for simplicites sake, setting click on inner element and subit on outer, the reverse prevents click from working*/
-        if(container.nodeName.toLowerCase() === 'section' || flag){
-            container.onclick = function(e) {
-			if (e.target.getAttribute("href") && ret.validate(e.target)) {
-				query = e.target.getAttribute("href").split("?")[1];
-				url += "?" + query;
-				return !start();
-			}
-			return true;
-		};
-        }
-        else if((container.nodeName.toLowerCase() === 'form' || container.nodeName.toLowerCase() === 'main') && !flag){
-           container.onsubmit = function(e) {
-            if (ret.validate(e.target)) {
-                data = fromPost(e.target);
-                return !start(); //needs to return false to cancel default action, so success will cancel
-            }
-			return true;
-		};
-        }
+		/* persisting with onclick for simplicites sake, setting click on inner element and subit on outer, the reverse prevents click from working*/
+		if (container.nodeName.toLowerCase() === 'section' || flag) {
+			container.onclick = function (e) {
+				if (e.target.getAttribute("href") && ret.validate(e.target)) {
+					query = e.target.getAttribute("href").split("?")[1];
+					url += "?" + query;
+					return !start();
+				}
+				return true;
+			};
+		} else if ((container.nodeName.toLowerCase() === 'form' || container.nodeName.toLowerCase() === 'main') && !flag) {
+			container.onsubmit = function (e) {
+				if (ret.validate(e.target)) {
+					data = fromPost(e.target);
+					return !start(); //needs to return false to cancel default action, so success will cancel
+				}
+				return true;
+			};
+		}
 	}
-    
 	var container,
 		url,
 		canvas,
@@ -138,20 +136,21 @@ window.poloAF.Hijax = function() {
 	}
 
 	function completeRequest() {
-        try {
-		if (request.readyState == request.DONE /*4*/) {
-			if (request.status == 200 || request.status == 304) {
-				if (canvas) {
-					if (request.responseText) {
-						canvas.innerHTML = request.responseText;
+		try {
+			if (request.readyState == request.DONE /*4*/ ) {
+				if (request.status == 200 || request.status == 304) {
+					if (canvas) {
+						if (request.responseText) {
+							canvas.innerHTML = request.responseText;
+						}
 					}
+					callback();
 				}
-				callback();
 			}
+		} catch (e) {
+			true;
 		}
 	}
-        catch(e) { true; }
-    }
 
 	function initiateRequest() {
 		loading();
@@ -177,6 +176,5 @@ window.poloAF.Hijax = function() {
 		setCallback: setCallback
 	};
 	return ret;
-}
-
+};
 /*https://stackoverflow.com/questions/19233415/how-to-make-type-number-to-positive-numbers-only for browsers that don't support the min attribute*/
