@@ -1,5 +1,4 @@
 @import "flex_mod.css";
-
 .no-touchevents main {
 	-webkit-box-align: center;
 	-moz-box-align: center;
@@ -7,15 +6,14 @@
 	-webkit-align-items: center;
 	align-items: center;
 }
-
-@media (pointer: fine){
-    #wrap main {
-	-webkit-box-align: center;
-	-moz-box-align: center;
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-	align-items: center;
-}
+@media (pointer: fine) {
+	#wrap main {
+		-webkit-box-align: center;
+		-moz-box-align: center;
+		-ms-flex-align: center;
+		-webkit-align-items: center;
+		align-items: center;
+	}
 }
 .flexwrap .gallery li {
 	-ms-flex-item-align: start;
@@ -70,28 +68,27 @@
 	flex-wrap: wrap;
 }
 @supports(display: flex) or (display: -webkit-flex) or (display: -ms-flex) {
-
-    main {
-	/*display: -webkit-box;*/
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-}
-    #photos ul.gallery .pagenav {
-	-webkit-box-flex: 1;
-	-ms-flex: 1 1 1.6em;
-	-webkit-flex: 1 1 1.6em;
-	flex: 1 1 1.6em;
-}
-#photos ul.gallery {
-	min-width: 0;
-	-webkit-box-flex: 5;
-	-ms-flex: 5 1 50%;
-	flex: 5 1 50%;
-}
+	main {
+		/*display: -webkit-box;*/
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+	}
+	#photos ul.gallery .pagenav {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 1.6em;
+		-webkit-flex: 1 1 1.6em;
+		flex: 1 1 1.6em;
+	}
+	#photos ul.gallery {
+		min-width: 0;
+		-webkit-box-flex: 5;
+		-ms-flex: 5 1 50%;
+		flex: 5 1 50%;
+	}
 }
 @supports (flex-wrap: wrap) {
-ul.gallery {
+	ul.gallery {
 		/*display: -webkit-box;*/
 		display: -webkit-flex;
 		display: -ms-flexbox;
@@ -132,11 +129,11 @@ ul.gallery {
 	}
 }
 */
-@media only screen and (max-width: 667px) {
 
-     .touchevents main .pagenav {
-         margin: 0 2%;
-}
+@media only screen and (max-width: 667px) {
+	.touchevents main .pagenav {
+		margin: 0 2%;
+	}
 	.override .gallery li, .alt .gallery li.portrait, .alt .gallery li:nth-child(n+5), ul.gallery li:nth-last-child(-n+4) {
 		-webkit-box-flex: 3;
 		-ms-flex: 3 1 auto;
@@ -149,7 +146,7 @@ ul.gallery {
 		-webkit-flex: 2 1 auto;
 		flex: 2 1 auto;
 	}
-    /*
+	/*
 	@supports (column-gap: 20px) {
         	main {
 		padding: 2em 0 0 0;

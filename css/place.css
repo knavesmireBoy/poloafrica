@@ -5,11 +5,24 @@
         	background: white 0% 0% url(../images/resource/sub_place.jpg) no-repeat;
         }
         @media only screen {
-        	h2 span {
-        		background: white 0% 0% url(../images/resource/sub_place.png) no-repeat;
-                background-size: contain;
+        	.backgroundsize h2 span {
+        		background-image: url(../images/resource/sub_place.png);
         	}
+            .backgroundsize h2 span {
+                -o-background-size: 13%;
+                -moz-background-size: 13%;
+                -ms-background-size: 13%;
+                -webkit-background-size: 13%;
+                background-size: contain;
+                background-position: 0 center;
+            }
         }
+/*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
+    h2 span {
+		background-image: url(../images/resource/sub_place.png);
+    }
+}
         @media screen and (max-width: 667px) {
             h2, h2 span {
         		background: none;
@@ -30,6 +43,10 @@
         	.no-js section:nth-child(5) .read-more-trigger:before {
         		content: "Location";
         	}
+            section.ptrt img {
+                width: 40%;
+            }
+
         }
         @media screen and (max-width: 370px) {
         	.override section.ptrt article img {

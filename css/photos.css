@@ -10,23 +10,11 @@ main {
 	text-align: center;
 	height: 100%;
 }
-/*
-main > form {
-    flex: 0 0 100%;
-    display: grid;
-    font: .7em Courier;
-    text-align: left;
-    grid-template-columns: repeat(8, 1fr);
-}
-main > form  > label{
-    grid-column: 2/3;
-    text-align: right;
+
+#wrap h2 {
+    background: none;
 }
 
-main > form  > input, progress{
-    grid-column: 3/8;
-}
-*/
 main img, main ul {
 	border: 1px solid black;
 }
@@ -126,7 +114,7 @@ main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"],
 		width: 25%;
 	}
 .gallery li:nth-child(n+5), .gallery li.portrait{
-		width: 16.666%
+		width: 16.666%;
 	}
 
 .gallery li:nth-child(5), .gallery li:nth-child(11), .alt .gallery li:nth-child(9) {
@@ -140,13 +128,12 @@ main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"],
 	width: 100%;
 }
 main ul.portrait {
-	margin: 0 20%;
+	margin: 0 30%;
     width: auto;
 }
 .showtime main ul.portrait {
 	margin: 0;
-    width: 75%;
-    background: red;
+    width: 40%;
 }
 main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav {
 	position: absolute;
@@ -164,9 +151,6 @@ footer {
     margin: -4.1em auto 0;
 }
 
-.backgroundsize .showtime footer:hover {
-    background:  url(../images/resource/footer_green_ko.png) no-repeat bottom right, url(../images/resource/sky.png) no-repeat top left;
-}
 
 .js #exit {
 	width: 2em;
@@ -341,6 +325,10 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	#controls button {
 		background-image: url(../images/resource/buttons_sprite.png);
 		background-color: hsla(75, 50%, 40%, .3);
+         -o-background-size: 128%;
+    -moz-background-size: 128%;
+    -ms-background-size: 128%;
+    -webkit-background-size: 128%;
 		background-size: 128%;
 	}
 	#exit:hover, #exit:focus {
@@ -369,12 +357,12 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	}
     
     main ul.portrait {
-	margin: 0 30%;
+	margin: 0 15%;
     width: auto;
 }
 .showtime main ul.portrait {
 	margin: 0;
-    width: 40%;
+    width: 60%;
 }
     
 	.showtime main ul {
@@ -451,6 +439,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents a.pagenav:hover span, .touchevents a.pagenav:focus span {
 		border-color: silver;
 	}
+
 }
 /*667*/
 
@@ -497,6 +486,9 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
     }
     .no-js h2 span {;
         padding: .5em 0;
+    }
+    .backgroundsize .showtime footer:hover {
+        background:  url(../images/resource/footer_green_ko.png) no-repeat bottom right, url(../images/resource/sky.png) no-repeat top left;
     }
 }
 /*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/

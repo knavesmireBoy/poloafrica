@@ -201,7 +201,7 @@ var dum = {},
 	},
 	opt_dogsrc = {
 		alt: "",
-		src: "../images/resource/016.jpg"
+		src: "../images/resource/dogs.jpg"
 	},
 	opt_catsrc = {
 		alt: "",
@@ -217,13 +217,13 @@ var dum = {},
         comments: 'comments'
     },
 	listener = function(e) {
-		
+		/*
 		if(Modernizr.cssgrid && Modernizr.cssanimations){
             getNodes(neue_nodes, ['figure', 'img'], 0);
             getNodes(neue_nodes, ['figure', 'img'], -1);
             mod = true;
 		}
-		
+		*/
 		var $tgt = makeElement(ptL(setAttrs, {
 				id: 'response'
 			}), utils.always(myform.parentNode)),

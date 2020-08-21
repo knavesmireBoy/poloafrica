@@ -1,13 +1,18 @@
 @import "flex_mod.css";
 h2 span {
-        	background: white 0% 0% url(../images/resource/sub_stay.jpg) no-repeat;
+        	background-image: url(../images/resource/sub_stay.jpg);
         }
         @media only screen {
-        	h2 span {
-        		background: white 0% 0% url(../images/resource/sub_stay.png) no-repeat;
-                background-size: contain;
+        	.backgroundsize h2 span {
+        		background-image: url(../images/resource/sub_stay.png);
         	}
         }
+/*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
+    h2 span {
+		background-image: url(../images/resource/sub_stay.png);
+    }
+}
         @media screen and (max-width: 667px) {
             section {
                 display: block;
