@@ -47,7 +47,6 @@ main img:hover {
 	position: relative;
 	margin: 1px;
 }
-
 .showtime main {
 	border-width: 0;
 	position: relative;
@@ -85,11 +84,9 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 .js .showtime main ul li {
 	width: 100%;
 }
-
 .pagenav:hover, .pagenav:focus {
 	border-right-color: royalblue;
 }
-
 .gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused {
 	position: relative;
 	left: auto;
@@ -317,42 +314,38 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 	main {
 		padding: 2.5em 0 0 0;
 	}
-    h2 {
+	h2 {
 		text-shadow: 2px 2px 2px black;
 	}
 	main ul {
 		width: 80%;
 	}
-    .touchevents h2 {
+	.touchevents h2 {
 		position: relative;
 		left: auto;
 	}
-    	.touchevents footer {
+	.touchevents footer {
 		-webkit-transition: background-position 2s ease;
 		-moz-transition: background-position 2s ease;
 		-o-transition: background-position 2s ease;
 		transition: background-position 2s ease;
 	}
-    
 	main ul.portrait {
 		margin: 0 15%;
 		width: auto;
 	}
-    .showtime main ul {
+	.showtime main ul {
 		width: auto;
 		margin: 0 8%;
 		/*display: block;*/
 	}
-    
-    .touchevents .showtime main {
+	.touchevents .showtime main {
 		padding: .5em 0 0 0;
 	}
-    
 	.showtime main ul.portrait {
 		margin: 0;
 		width: 60%;
 	}
-    		
 	.touchevents ul.gallery li {
 		border: solid 3px white;
 	}
@@ -362,11 +355,9 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 	.gallery li:nth-child(n+5), .override .gallery li.portrait {
 		width: 33.333%;
 	}
-    
-    .touchevents main.override>a:active {
+	.touchevents main.override>a:active {
 		background: blue;
 	}
-    	
 	.touchevents #controls {
 		font-size: 1.3em;
 	}
@@ -383,22 +374,20 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 		overflow: hidden;
 		background-color: hsla(349, 86%, 45%, 100);
 	}
-    .touchevents a.pagenav span {
+	.touchevents a.pagenav span {
 		position: absolute;
 		top: 33%;
 		bottom: 33%;
 		display: block;
 		border: solid 1.2em whitesmoke;
 	}
-    
 	.touchevents a.pagenav:hover, .touchevents a.pagenav:focus {
 		background-color: hsla(349, 86%, 30%, 100);
 	}
-	
 	.touchevents a.pagenav:hover span, .touchevents a.pagenav:focus span {
 		border-color: silver;
 	}
-    .touchevents #wrap.inplay+footer {
+	.touchevents #wrap.inplay+footer {
 		background: url(../images/resource/resource/sil_bg.png) no-repeat 60% top;
 		background-size: cover;
 	}
@@ -408,7 +397,7 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 @media only screen and (max-width: 480px) {
 	.touchevents.no-flexbox main {
 		display: table;
-        border-spacing: 9px;
+		border-spacing: 9px;
 	}
 	.touchevents.no-flexbox main>* {
 		display: table-cell;
