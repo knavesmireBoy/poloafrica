@@ -55,10 +55,12 @@ main img:hover {
 	display: block;
 	/*force override flex ?*/
 }
+/*
 main ul.portrait {
 	margin: 0 30%;
 	width: auto;
 }
+*/
 main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="96"] {
 	border-color: white;
 }
@@ -78,8 +80,10 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 .alt li:nth-child(11) {
 	clear: none;
 }
-.showtime main ul.portrait {
+.showtime ul.portrait {
 	width: 40%;
+    margin: 0 auto;
+    display: block;
 }
 .js .showtime main ul li {
 	width: 100%;
@@ -125,8 +129,6 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	transition: all 1s;
 	clear: both;
 	display: table;
-	margin: 1em auto 0;
-	display: inline-block;
 }
 #tooltip {
 	position: absolute;

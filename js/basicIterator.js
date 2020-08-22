@@ -150,17 +150,17 @@ poloAF.Composite = (function () {
 			render = function () {
 				var args = _.toArray(arguments);
 				_.each(included, function (member) {
-					if (member.render) {
-						member.render.apply(member, args.concat(_.rest(arguments)));
-					}
+                    if(member.render){
+                       member.render.apply(member, args.concat(_.rest(arguments)));
+                       }
 				});
 			},
 			unrender = function () {
 				var args = _.toArray(arguments);
 				_.each(included, function (member) {
-					if (member.render) {
-						member.render.apply(member, args.concat(_.rest(arguments)));
-					}
+					if(member.unrender){
+                       member.unrender.apply(member, args.concat(_.rest(arguments)));
+                       }
 				});
 			};
 		intafaces.unshift(comp_intaface);

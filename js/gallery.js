@@ -304,7 +304,6 @@
 				return arr[0];
 			});
 			if (active) {
-				//return predicate() ? leader.concat('97', '80', trailer, '98') : leader.concat('80', '97', trailer, '99');
 				return predicate() ? leader.concat('97', '96', trailer, '98') : leader.concat('96', '97', trailer, '99');
 			}
 			return leader[0] ? leader : trailer;
