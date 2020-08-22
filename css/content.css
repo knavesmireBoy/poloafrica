@@ -52,7 +52,8 @@ p {
 	margin: .5em 0 0 0;
 }
 footer {
-	background: url(../images/resource/footer_green_ko.png) no-repeat;
+	background-image: url(../images/resource/footer_green_ko.png);
+	background-repeat:  no-repeat;
 	background-position: bottom right;
 	background-position: 100% 100%;
 }
