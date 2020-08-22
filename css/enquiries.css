@@ -18,6 +18,7 @@ fieldset {
 	padding: 0 0 0 2%;
 	border: solid 1px black;
 	border-width: 1px 0 0;
+    position: relative;
 }
 label, input, textarea, legend {
 	border-radius: 8px;
@@ -36,9 +37,16 @@ textarea {
 	height: 7em;
 	margin-right: 1.2%;
 }
+
 h2 span {
-	background: white 0% 0% url(../images/resource/sub_enq.jpg) no-repeat;
+	background-image: url(../images/resource/sub_enq.jpg);
 }
+/* reset*/
+form input {
+    position: static;
+    left: 0;
+}
+
 form label {
 	font: bold .8em/2 Verdana, Arial, Helvetica, sans-serif;
 	text-align: center;
@@ -57,6 +65,13 @@ legend, form label {
 textarea, form input, form label {
 	display: inline-block;
 	vertical-align: text-bottom;
+}
+
+#response img {
+    width: auto;
+    margin: 0;
+    border-width: 0;
+    box-shadow: none;
 }
 fieldset:last-child {
 	border-width: 0px;
@@ -117,12 +132,16 @@ fieldset:last-child input:last-child {
 #dogs {
 	margin: 0;
 	position: relative;
-	width: 26.9%;
-	left: 100%;
-	margin-left: -100%;
+	width: 26.8%;
 	border: solid 1px white;
+    box-sizing: border-box;
 }
-
+/*
+#dogs {
+left: 100%;
+margin-left: -100%;
+}
+*/
 #cat {
 	/* firefox 48.0.2 required this:*/
 	min-height: 25.75em;
@@ -131,16 +150,13 @@ fieldset:last-child input:last-child {
 	margin: 0;
 	object-fit: cover;
 	border-radius: 10px;
+    box-shadow: none;
 }
 
 #response {
 	background-color: whitesmoke;
 	border-radius: 10px;
 	overflow: hidden;
-}
-
-#web {
-	display: none;
 }
 
 label[for="email"]:before, label[for="name"]:before{
@@ -151,11 +167,8 @@ form, figure, #response>* {
 	display: table-cell;
 	/*crucial*/
 	vertical-align: top;
+	border-radius: 10px;
 	box-sizing: border-box;
-}
-
-form, figure {
-    border-radius: 10px;
 }
 
 #intro article {
@@ -239,7 +252,7 @@ div#response {
 	padding: .3em;
 	border-radius: 8px;
 }
-#response form, #response .top {
+#response form, #response figure:first-of-type, .no-cssanimations #response .top {
 	display: none;
 }
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
@@ -276,9 +289,15 @@ section:nth-child(2) {
 */
 
 @media only screen {
-	h2 span {
-		background: white 0% 0%/contain url(../images/resource/sub_enq.png) no-repeat;
+	.backgroundsize h2 span {
+		background-image: url(../images/resource/sub_enq.png);
 	}
+}
+/*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
+    h2 span {
+		background-image: url(../images/resource/sub_enq.png);
+    }
 }
 @media screen and (max-width: 888px) {
 	form {

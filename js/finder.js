@@ -11,32 +11,33 @@
 		//console.log('default')
 	}
 
-	function undef(x) {
-		return typeof (x) === 'undefined';
-	}
-
 	function invokemethod(o, arg, m) {
 		return o[m](arg);
 	}
 	var dummy = {},
         utils = poloAF.Util,
+        ptL = _.partial,
+        number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
+		threshold = Number(query.match(number_reg)[1]),
+        mytarget = !window.addEventListener ? 'srcElement' : 'target',
+        getTarget = utils.drillDown([mytarget]),
+        
         animation = utils.$("ani"),
+        tween = utils.$('tween'),
+        main = document.getElementsByTagName('main')[0],
         sections = document.getElementsByTagName('section'),
         firstlink = sections[0].getElementsByTagName('a')[0],
         getArticle = utils.getSibling(utils.getNodeByTag('article')),
         getSection = utils.getDomParent(utils.getNodeByTag('section')),
         getHeading = utils.getDomChild(utils.getNodeByTag('h3')),
         getParent = utils.drillDown(['parentNode']),
-		ptL = _.partial,
+		
         klasAdd = utils.addClass,
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
-		//con = window.console.log.bind(window),
-		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
-		threshold = Number(query.match(number_reg)[1]),
-		main = document.getElementsByTagName('main')[0],
-        mytarget = !window.addEventListener ? 'srcElement' : 'target',
-        getTarget = utils.drillDown([mytarget]),
+        doAlt = utils.doAlternate(),
+       
+        //con = window.console.log.bind(window),
         /*
 		report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
@@ -44,32 +45,32 @@
 			el.innerHTML = msg;
 		},
         */
-		
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
-		doAlt = utils.doAlternate(),
         //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment = (function () {
+            /*ORIGINAL TEST CHECKS FOR MIN-WIDTH OF 668px HOWEVER NETRENDERER REPORTS ZERO PX AND WILL THEN INVOKE MOVE
+            SO WE INVERT THE TEST IF NOT MIN-WIDTH */
 			if (mq) {
-				return _.partial(Modernizr.mq, query);
+				return _.negate(ptL(Modernizr.mq, query));
 			} else {
-				return _.partial(utils.isDesktop, threshold);
+				return _.negate(ptL(utils.isDesktop, threshold));
 			}
 		}()),
 		negater = function (alternators) {
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
+                //console.log(window.matchMedia(query).matches);
 				_.each(alternators, function (f) {
 					f();
 				});
-				//func();
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
-		headingmatch = doThrice(invokemethod)('match')(/h3/i),
+		headingmatch = doThrice(invokemethod)('match')(/^h\d$/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
 		bridge = function (e) {
-         var tgt = getTarget(e),
+            var tgt = getTarget(e),
 				section = tgt && getSection(tgt),
 				hit = section && utils.getClassList(section).contains('show');
 			if (!section || !isHeading(getParent(tgt))) {
@@ -92,35 +93,37 @@
 					unmove = function () {
                         utils.insertBefore(article, img);
 					};
-				return doAlt([move, unmove]);
+				return doAlt([unmove, move]);
 			}); //map           
 		},
 		float_handler,
-        $sections = _.map(sections, function(el){
-        var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
-        $el.unrender = noOp;
-        return $el;
-    });
+        $sections;
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order
 	if flex is fully supported we can re-order through css. We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels.
 	*/
 	utils.addHandler('click', main, bridge);
     dummy[mytarget] = firstlink;
 	bridge(dummy);
-        
+    
 	if (utils.$('enquiries')) {
 		return;
 	}
 	if (animation) {
 		images.splice(-3, 3);
 		images.push(animation);
-		utils.removeNodeOnComplete(utils.$('tween'));
+		utils.removeNodeOnComplete(tween);
 	}
     
 	float_handler = ptL(negater, floating_images(images));
 	float_handler();
 	utils.addHandler('resize', window, _.throttle(float_handler, 99));
+    $sections = _.map(document.getElementsByTagName('section'), function (el) {
+        var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
+        $el.unrender = noOp;
+        return $el;
+    });
+    
     poloAF.Util.setScrollHandlers($sections, doTwice(poloAF.Util.getScrollThreshold)(0.4), 'display', 1);
     window.setTimeout($sections[0].render, 666);
 	return true;
-}(Modernizr.mq('only all'), '(min-width: 668px)', window.matchMedia('only screen and (max-width: 668px)').matches));
+}(Modernizr.mq('only all'), '(min-width: 668px)'));

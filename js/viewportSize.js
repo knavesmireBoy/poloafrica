@@ -68,9 +68,10 @@
 			name = Name.toLowerCase(),
 			document = window.document,
 			documentElement = document.documentElement,
+            //sizeIs = window.getWinSize(),
 			bodyElement,
-			divElement,
-			sizeIs = window.getWinSize();
+			divElement;
+			
 		//return sizeIs[0];
 		if (window["inner" + Name] === undefined) {
 			// IE6 & IE7 don't have window.innerWidth or innerHeight

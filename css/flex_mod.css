@@ -1,6 +1,4 @@
-
 /*FLEX ATTRIBUTES IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO BUT SEPARATE INSTRUCTIONS FROM UNITS*/
-
 /*REMEMBER override class hardcoded in HTML*/
 
 section {
@@ -38,12 +36,20 @@ html.js body img, html.no-js body img {
 	-webkit-flex: 6 1 1%;
 	flex: 6 1 1%;
 }
-.flexwrap section>img {
+.flexwrap section img {
 	-webkit-box-flex: 4;
 	-ms-flex: 4 1 1%;
 	-webkit-flex: 4 1 1%;
 	flex: 4 1 1%;
 }
+
+.flexwrap section.ptrt img {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 %;
+		-webkit-flex: 1 1 1%;
+		flex: 1 1 1%;
+        margin: 1em 1em 0;
+	}
 .flexwrap body>footer {
 	/*display: -webkit-box; ipod not resizing on orientation*/
 	display: -webkit-flex;
@@ -91,15 +97,16 @@ body>footer {
 	align-items: flex-end;
 }
 
-/*https://stackoverflow.com/questions/36822370/flexbox-on-ie11-image-stretched-for-no-reason/36828291*/
-    /*
-	.no-flexwrap .override .ptrt {
-		display: block;
+@media only screen {
+	.backgroundsize h2 span {
+        background-size: contain;
 	}
-    */
-
+}
 
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+    header{
+        background-size: 100%;
+    }
 	article {
 		-webkit-box-flex: 6;
 		-ms-flex: 6 1 1%;
@@ -118,9 +125,6 @@ body>footer {
 		-webkit-flex: 1 1 1%;
 		flex: 1 1 1%;
         margin: 1em 1em 0;
-        /*float and width will apply until display flex is enabled by media query*/
-        float: right;
-		width: 18%;
 	}
 
 	body>footer {
@@ -201,18 +205,7 @@ hard code a class of flexy?
 
 @media only screen and (min-width: 1024px) {
 
-	.flexwrap section {
-		display: -webkit-box;
-		display: -webkit-flex;
-		display: -ms-flexbox;
-		display: flex;
-	}
-	.flexwrap h3 {
-		border-bottom: solid 1px;
-	}
-	.flexwrap p:first-of-type {
-		margin: 0;
-	}
+
 	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
 		/* by default the border will run up to the floating image, we choose to enable it on flexwrap support*/
@@ -229,4 +222,17 @@ hard code a class of flexy?
 			margin: 0;
 		}
 	}
+    	.flexwrap section {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	.flexwrap h3 {
+		border-bottom: solid 1px;
+	}
+	.flexwrap p:first-of-type {
+		margin: 0;
+	}
+
 }

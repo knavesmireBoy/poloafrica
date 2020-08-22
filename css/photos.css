@@ -1,8 +1,3 @@
-#wrap {
-	width: 832px;
-    background-color: white;
-}
-
 main {
 	position: relative;
 	font: normal 1rem Arial, sans-serif;
@@ -10,94 +5,23 @@ main {
 	text-align: center;
 	height: 100%;
 }
-/*
-main > form {
-    flex: 0 0 100%;
-    display: grid;
-    font: .7em Courier;
-    text-align: left;
-    grid-template-columns: repeat(8, 1fr);
-}
-main > form  > label{
-    grid-column: 2/3;
-    text-align: right;
-}
-
-main > form  > input, progress{
-    grid-column: 3/8;
-}
-*/
-main img, main ul {
-	border: 1px solid black;
-}
-#wrap .override img {
-	border-radius: 0px;
-	box-shadow: none;
-}
-main img:hover {
-	border-color: indigo;
-}
 main>* {
 	display: inline-block;
 	vertical-align: middle;
 }
-.pagenav {
-	border-top: 20px solid transparent;
-	border-bottom: 20px solid transparent;
-	position: relative;
-	margin: 1px;
+footer {
+	margin: 0 auto;
 }
-
-/*
-@keyframes myright {
-  from {border-right-color: mediumvioletred;}
-  to {border-right-color: crimson;}
-}
-
-@keyframes myleft {
-  from {border-left-color: mediumvioletred;}
-  to {border-left-color: crimson;}
-}
-*/
-#gal_back {
-	border-right: 31px solid crimson;
-    /*animation: myright 5s infinite;*/
-}
-#gal_forward {
-	border-left: 31px solid crimson;
-    /*animation: myleft 5s infinite;*/
-}
-.pagenav input {
-    position: absolute;
-    top: -7px;
-    left: -27px;
-    opacity: 0.5;
-}
-
-.pagenav input[type='checkbox']:checked {
-   background-color: yellow;
-}
-.pagenav:first-child input{
-    left: 14px;
-}
-.pagenav:hover, .pagenav:focus {
-	border-right-color: royalblue;
+main img, main ul {
+	border: 1px solid black;
 }
 main img {
 	width: 100%;
 }
-.showtime main {
-	border-width: 0;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	display: block;
-	/*force override flex ?*/
-}
 main ul {
 	text-align: center;
 	padding: 3px;
-	width: 90%;
+	width: 88%;
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
 	-webkit-transition: width 1s ease-in-out;
@@ -105,11 +29,6 @@ main ul {
 	transition: width 1s ease-in-out;
 	overflow: hidden;
 }
-li#slide, li#paused, li#base {
-	display: block;
-	opacity: 1;
-}
-
 main ul li {
 	float: left;
 	border: solid 6px white;
@@ -119,55 +38,66 @@ main ul li, main ul li img {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="96"]   {
-    border-color: white;
+main img:hover {
+	border-color: indigo;
 }
-.gallery li, .alt .gallery li:nth-child(n+5), .alt .gallery li.portrait, ul.gallery li:nth-last-child(-n+4) {
-		width: 25%;
-	}
-.gallery li:nth-child(n+5), .gallery li.portrait{
-		width: 16.666%
-	}
+.pagenav {
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	position: relative;
+	margin: 1px;
+}
+.showtime main {
+	border-width: 0;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	display: block;
+	/*force override flex ?*/
+}
+/*
+main ul.portrait {
+	margin: 0 30%;
+	width: auto;
+}
+*/
+main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="96"] {
+	border-color: white;
+}
+/* IMPORTANT class of alt goes on the UL in the CMS version (because of ajax) class of .gallery is also on the UL
+in the pure JS version .alt went on main. Suggest we change it on the JS version for consistency
+*/
 
-.gallery li:nth-child(5), .gallery li:nth-child(11), .alt .gallery li:nth-child(9) {
+.gallery li:nth-child(n+5), .gallery li.portrait {
+	width: 16.666%;
+}
+.alt li.portrait, .gallery li, .alt li:nth-child(n+5), .gallery li:nth-last-child(-n+4) {
+	width: 25%;
+}
+.gallery li:nth-child(5), .gallery li:nth-child(11), .alt li:nth-child(9) {
 	clear: left;
 }
-.alt .gallery li:nth-child(11) {
+.alt li:nth-child(11) {
 	clear: none;
 }
-
+.showtime ul.portrait {
+	width: 40%;
+    margin: 0 auto;
+    display: block;
+}
 .js .showtime main ul li {
 	width: 100%;
 }
-main ul.portrait {
-	margin: 0 20%;
-    width: auto;
-}
-.showtime main ul.portrait {
-	margin: 0;
-    width: 75%;
-    background: red;
-}
-main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav {
-	position: absolute;
-	top: 0em;
-	left: -9999px;
+.pagenav:hover, .pagenav:focus {
+	border-right-color: royalblue;
 }
 .gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused {
 	position: relative;
 	left: auto;
 }
-footer {
-	margin: 0 auto;
-}
 .showtime footer {
-    margin: -4.1em auto 0;
+	margin: -4.1em auto 0;
 }
-
-.backgroundsize .showtime footer:hover {
-    background:  url(../images/resource/footer_green_ko.png) no-repeat bottom right, url(../images/resource/sky.png) no-repeat top left;
-}
-
 .js #exit {
 	width: 2em;
 	height: 2em;
@@ -182,24 +112,8 @@ footer {
 .js #exit:hover, .js #exit:focus {
 	background-position: 50% 106%;
 }
-li#slide, li#paused {
+#slide, #paused {
 	margin-left: -100%;
-}
-#controls, #controls button {
-	display: inline-block;
-}
-#controls {
-	clear: both;
-	display: table;
-	margin: 1em auto 0;
-}
-#controls button {
-	width: 1.5em;
-	height: 1.5em;
-	padding: 0;
-	margin: 0 .3em;
-	display: table-cell;
-	border: solid 1px;
 }
 #controls {
 	top: 0em;
@@ -213,72 +127,8 @@ li#slide, li#paused {
 	-webkit-transition: all 1s;
 	-o-transition: all 1s;
 	transition: all 1s;
-	clear: left;
-}
-.touchevents controls {
-	opacity: 1;
-}
-#controls.static {
-	top: -3.5em;
-	opacity: 1;
-}
-#controls button {
-	cursor: pointer;
-	background-color: #990;
-	border: 1px solid #cc6;
-	border: 1px solid hsla(75, 50%, 40%, 1);
-	border-radius: .2em;
-	line-height: 1.6;
-	opacity: 1;
-	background-image: url(../images/resource/buttons_sprite_lowend8.png);
-	background-repeat: no-repeat;
-	background-position: 50% 0%;
-	-webkit-box-shadow: 2px 2px 4px black;
-	box-shadow: 2px 2px 4px black;
-	text-shadow: 1px 1px 1px black;
-}
-#controls.static button {
-	border: 1px solid #FFF;
-	border: 1px solid rgba(255, 255, 255, .75);
-}
-#controls>button {
-	background-image: url(../images/resource/buttons_sprite_lowend.png);
-	background-color: hsla(50, 50%, 40%, .3);
-}
-#controls button:hover, #controls button:focus {
-	background-color: silver;
-	background-color: rgba(150, 150, 150, .5);
-	color: black;
-	text-shadow: 1px 1px 1px rgba(255, 255, 255, .75);
-}
-#controls button#backbutton {
-	background-position: 50% 14.9%;
-}
-#controls button#playbutton {
-	background-position: 50% 29%;
-}
-#controls.playing button#playbutton {
-	background-position: 50% 44%;
-	opacity: 0.9;
-}
-/*.touchevents replaces media queries (hover: hover) || (pointer: fine) where support is doubtful
-logic dictates that we only get to this point courtesy of javascript so modernizr supplies the className .(no-)touchevents */
-
-.touchevents .inplay #controls {
-	top: 0em;
-	opacity: 1;
-}
-.no-touchevents button#forwardbutton:hover {
-	background-position: 50% 56%;
-}
-.no-touchevents button#backbutton:hover {
-	background-position: 50% 70.5%;
-}
-.no-touchevents button#playbutton:hover {
-	background-position: 50% 85%;
-}
-.no-touchevents.playing button#playbutton:hover {
-	background-position: 50% 100%;
+	clear: both;
+	display: table;
 }
 #tooltip {
 	position: absolute;
@@ -298,6 +148,39 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	-webkit-transition-duration: 2s;
 	-o-transition-duration: 2s;
 	transition-duration: 2s;
+}
+#controls button {
+	width: 1.5em;
+	height: 1.5em;
+	padding: 0;
+	margin: 0 .3em;
+	display: table-cell;
+	border: solid 1px;
+	display: inline-block;
+	cursor: pointer;
+	background-color: #990;
+	border: 1px solid #cc6;
+	border: 1px solid hsla(75, 50%, 40%, 1);
+	border-radius: .2em;
+	line-height: 1.6;
+	opacity: 1;
+	background-image: url(../images/resource/buttons_sprite_lowend8.png);
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	-webkit-box-shadow: 2px 2px 4px black;
+	box-shadow: 2px 2px 4px black;
+	text-shadow: 1px 1px 1px black;
+}
+#controls>button {
+	background-image: url(../images/resource/buttons_sprite_lowend.png);
+	background-color: hsla(50, 50%, 40%, .3);
+}
+#controls.static {
+	top: -3.5em;
+	opacity: 1;
+}
+.touchevents #controls {
+	opacity: 1;
 }
 #tooltip.tip {
 	-webkit-transform: translate(10em, -3em);
@@ -321,6 +204,61 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	background: #cc6;
 	padding: 3px;
 }
+#controls.static button {
+	border: 1px solid #FFF;
+	border: 1px solid rgba(255, 255, 255, .75);
+}
+#controls button:hover, #controls button:focus {
+	background-color: silver;
+	background-color: rgba(150, 150, 150, .5);
+	color: black;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, .75);
+}
+.touchevents .inplay #controls {
+	top: 0em;
+	opacity: 1;
+}
+#controls #backbutton {
+	background-position: 50% 14.9%;
+}
+#controls #playbutton {
+	background-position: 50% 29%;
+}
+#controls.playing #playbutton {
+	background-position: 50% 44%;
+	opacity: 0.9;
+}
+/*.touchevents replaces media queries (hover: hover) || (pointer: fine) where support is doubtful
+logic dictates that we only get to this point courtesy of javascript so modernizr supplies the className .(no-)touchevents */
+
+#wrap {
+	width: 832px;
+	background-color: white;
+}
+#slide, #paused, #base {
+	display: block;
+	opacity: 1;
+}
+#gal_back {
+	border-right: 31px solid crimson;
+	/*animation: myright 5s infinite;*/
+}
+#gal_forward {
+	border-left: 31px solid crimson;
+	/*animation: myleft 5s infinite;*/
+}
+#wrap h2 {
+	background: none;
+}
+main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav {
+	position: absolute;
+	top: 0em;
+	left: -9999px;
+}
+#wrap .override img {
+	border-radius: 0px;
+	box-shadow: none;
+}
 #tooltip #triangle {
 	width: 0;
 	height: 0;
@@ -329,26 +267,41 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	border-top: 12px solid #cc6;
 	margin: -1px 0px 0px 5em;
 }
+.no-touchevents #forwardbutton:hover {
+	background-position: 50% 56%;
+}
+.no-touchevents #backbutton:hover {
+	background-position: 50% 70.5%;
+}
+.no-touchevents #playbutton:hover {
+	background-position: 50% 85%;
+}
+.no-touchevents.playing #playbutton:hover {
+	background-position: 50% 100%;
+}
 @media only screen {
-	/*li.width/ul.width(-ul.padding)*/
-	#wrap {
-		max-width: 80em;
-		width: 100%;
-	}
 	.showtime main ul li {
 		width: 100%;
 	}
 	#controls button {
 		background-image: url(../images/resource/buttons_sprite.png);
 		background-color: hsla(75, 50%, 40%, .3);
+		-o-background-size: 128%;
+		-moz-background-size: 128%;
+		-ms-background-size: 128%;
+		-webkit-background-size: 128%;
 		background-size: 128%;
 	}
 	#exit:hover, #exit:focus {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
 	}
+	/*li.width/ul.width(-ul.padding)*/
+	#wrap {
+		max-width: 80em;
+		width: 100%;
+	}
 }
-
 @media only screen and (max-width: 1024px) {
 	main ul.portrait {
 		margin: 0 20%;
@@ -359,43 +312,53 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		margin: 0 10%;
 	}
 }
-
 @media only screen and (max-width: 667px) {
 	main {
 		padding: 2.5em 0 0 0;
 	}
-	main ul {
-		width: 80%;
-	}
-    
-    main ul.portrait {
-	margin: 0 30%;
-    width: auto;
-}
-.showtime main ul.portrait {
-	margin: 0;
-    width: 40%;
-}
-    
-	.showtime main ul {
-		width: auto;
-		margin: 0 8%;
-        /*display: block;*/
-	}
-	.touchevents .showtime main {
-		padding: .5em 0 0 0;
-	}
-	/*
-	.touchevents.flexboxlegacy .pagenav, .touchevents.flexbox .pagenav, .touchevents.flexboxtweener .pagenav {
-		margin: 0 1%;
-	}
-    */
 	h2 {
 		text-shadow: 2px 2px 2px black;
+	}
+	main ul {
+		width: 80%;
 	}
 	.touchevents h2 {
 		position: relative;
 		left: auto;
+	}
+	.touchevents footer {
+		-webkit-transition: background-position 2s ease;
+		-moz-transition: background-position 2s ease;
+		-o-transition: background-position 2s ease;
+		transition: background-position 2s ease;
+	}
+	main ul.portrait {
+		margin: 0 15%;
+		width: auto;
+	}
+	.showtime main ul {
+		width: auto;
+		margin: 0 8%;
+		/*display: block;*/
+	}
+	.touchevents .showtime main {
+		padding: .5em 0 0 0;
+	}
+	.showtime main ul.portrait {
+		margin: 0;
+		width: 60%;
+	}
+	.touchevents ul.gallery li {
+		border: solid 3px white;
+	}
+	.gallery li, ul.alt li:nth-child(n+5), .alt li.portrait, ul.gallery li:nth-last-child(-n+4) {
+		width: 50%;
+	}
+	.gallery li:nth-child(n+5), .override .gallery li.portrait {
+		width: 33.333%;
+	}
+	.touchevents main.override>a:active {
+		background: blue;
 	}
 	.touchevents #controls {
 		font-size: 1.3em;
@@ -406,40 +369,12 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	.touchevents .inplay #controls {
 		top: .2em;
 	}
-    
-    .touchevents #wrap.inplay+footer {
-		background: url(../images/resource/resource/sil_bg.png) no-repeat 60% top;
-        background-size: cover;
-	}
-	.touchevents ul.gallery li {
-		border: solid 3px white;
-	}
-    
-    .override .gallery li, .alt ul.gallery li:nth-child(n+5), .alt ul.gallery li.portrait, main ul.gallery li:nth-last-child(-n+4) {
-		width: 50%;
-	}
-	ul.gallery li:nth-child(n+5), .override ul.gallery li.portrait {
-		width: 33.333%;
-	}
-
-	.touchevents footer {
-		-webkit-transition: background-position 2s ease;
-		-moz-transition: background-position 2s ease;
-		-o-transition: background-position 2s ease;
-		transition: background-position 2s ease;
-	}
-	.touchevents main.override>a:active {
-		background: blue;
-	}
 	/*#photos specificity*/
 	.touchevents #photos a.pagenav {
 		width: 1.6em;
 		border-width: 0;
 		overflow: hidden;
 		background-color: hsla(349, 86%, 45%, 100);
-	}
-	.touchevents a.pagenav:hover, .touchevents a.pagenav:focus {
-		background-color: hsla(349, 86%, 30%, 100);
 	}
 	.touchevents a.pagenav span {
 		position: absolute;
@@ -448,24 +383,29 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		display: block;
 		border: solid 1.2em whitesmoke;
 	}
+	.touchevents a.pagenav:hover, .touchevents a.pagenav:focus {
+		background-color: hsla(349, 86%, 30%, 100);
+	}
 	.touchevents a.pagenav:hover span, .touchevents a.pagenav:focus span {
 		border-color: silver;
+	}
+	.touchevents #wrap.inplay+footer {
+		background: url(../images/resource/resource/sil_bg.png) no-repeat 60% top;
+		background-size: cover;
 	}
 }
 /*667*/
 
 @media only screen and (max-width: 480px) {
 	.touchevents.no-flexbox main {
-        display: table;
-    }
-    .touchevents.no-flexbox main>* {
+		display: table;
+		border-spacing: 9px;
+	}
+	.touchevents.no-flexbox main>* {
 		display: table-cell;
 		position: relative;
 	}
-	.touchevents.no-flexbox main {
-		border-spacing: 9px;
-	}
-	.touchevents.no-flexbox .showtime main, .touchevents.no-flexbox .showtime main > * {
+	.touchevents.no-flexbox .showtime main, .touchevents.no-flexbox .showtime main>* {
 		display: block;
 	}
 	/*reset */
@@ -481,22 +421,25 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 		background: none;
 		color: white;
 		text-shadow: none;
-        margin: 0;
+		margin: 0;
 	}
 	h2:hover {
 		color: white;
 	}
 	.showtime h2 {
 		position: absolute;
-        left: -9999px;
-        top: 0;
+		left: -9999px;
+		top: 0;
 	}
-    .no-js h2, .no-js h2:hover  {
-        color: #444;
-         font: 1.5em normal serif;
-    }
-    .no-js h2 span {;
-        padding: .5em 0;
-    }
+	.no-js h2, .no-js h2:hover {
+		color: #444;
+		font: 1.5em normal serif;
+	}
+	.no-js h2 span {
+		padding: .5em 0;
+	}
+	.backgroundsize .showtime footer:hover {
+		background: url(../images/resource/footer_green_ko.png) no-repeat bottom right, url(../images/resource/sky.png) no-repeat top left;
+	}
 }
 /*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/
