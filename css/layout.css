@@ -129,7 +129,7 @@ section:nth-child(odd) img, #ani, #tween {
     bottom: -2em;
 }
 
-footer a:last-child {
+#mark {
     display: block;
 }
 
