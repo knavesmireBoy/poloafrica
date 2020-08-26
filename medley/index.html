@@ -13,11 +13,9 @@
 	<script>
 	   document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/'; 
 	</script>
+    <script src="../js/matchMedia.js"></script>
     <script src="../js/modernizr.js"></script>
-	<script src="../js/matchMedia.js"></script>
 <!--[if (gte IE 6)&(lte IE 8)]>
-<script src="../js/jquery.js"></script>
-  <script type="text/javascript" src="../js/selectivizr.js"></script>
 <link href="../css/hacks.css" media="screen"rel="stylesheet">
 <![endif]-->
 </head>
@@ -152,8 +150,11 @@ https://developers.facebook.com/docs/javascript/quickstart/
                 <label class="read-more-trigger" for="post7"></label>
 				<article id="naledi">
 					<h3><a href="#" id="TV">TV and video coverage</a></h3>
-                    <video width="320" height="180" controls auto preload="metadata" poster="../images/lo/naledi.jpg">
-    <source src="../video/BeautifulNews.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video>
+                    
+                   <video width="320" height="180" controls auto preload="metadata" poster="../images/lo/naledi.jpg">
+                        <source src="../video/BeautifulNews.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+                        <source src="../video/BeautifulNews.webm" type='video/webm; codecs="vp8, vorbis"'>
+                        <source src="../video/BeautifulNews.ogv" type='video/ogg; codecs="theora, vorbis"'></video>
 					<p>In September 2018 <a href="https://www.beautifulnews.co.za/about" target="_blank">Beautiful News of South Africa</a> made a short video about Poloafrica <span>(shown</span> which focussed on the head groom, Naledi, who learnt about horses and polo working while at Poloafrica. Now he's a major part of the mission to make polo more accessible and to use the sport to help the local community.</p>
 				</article>
 				<article id="news24">
@@ -178,17 +179,10 @@ https://developers.facebook.com/docs/javascript/quickstart/
 					<nav>
                         <span>Some useful websites:</span>
 						<ul>
-							<li><a href="https://www.sapolo.org.za" target="_blank">South Africa Polo Association</a>
-							</li>
-							<li><a href="http://www.hpa-polo.co.uk" target="_blank">Hurlingham Polo Association</a>
-							</li>
-							<li><a href="http://www.poloschool.co.za/community.html?tab=1#TabbedPanels1." target="_blank">Franshoek Farm and Polo School</a>
-							</li>
-							<li><a href="http://www.northwolds.co.uk" target="_blank">North Wolds Printers - print design</a>
-							</li>
+							<li><a href="https://www.sapolo.org.za" target="_blank">South Africa Polo Association</a></li><li><a href="http://www.hpa-polo.co.uk" target="_blank">Hurlingham Polo Association</a></li><li><a href="http://www.poloschool.co.za/community.html?tab=1#TabbedPanels1." target="_blank">Franshoek Farm and Polo School</a></li><li><a href="http://www.northwolds.co.uk" target="_blank">North Wolds Printers - print design</a></li>
 						</ul>
 					</nav>
-					<p>All photographs on this site are &copy;copyright Mark Ward who reserves all rights to them. All enquiries should be directed to <a href="mailto:photos@mwinsight.com" id="mark" name="mark" target="_blank">photos@mwinsight.com.</a></p>
+					<p>All photographs on this site are &copy;copyright Mark Ward who reserves all rights to them. All enquiries should be directed to <a href="mailto:photos@mwinsight.com" name="mark" target="_blank">photos@mwinsight.com.</a></p>
 				</article>
 			</section>
 		</main></div>
@@ -203,12 +197,14 @@ https://developers.facebook.com/docs/javascript/quickstart/
         </div>
         <a href="mailto:photos@mwinsight.com">photos by <b>mark ward</b></a>
     </footer>
-    <script src="../js/viewportSize.js"></script>
+<script src="../js/viewportSize.js"></script>
+    <script src="../js/shims.js"></script>
     <script src="../js/underscore.js"></script>
     <script src="../js/eventing.js"></script>
     <script src="../js/classlist.js"></script>
     <script src="../js/global.js"></script>
-    <script src="../js/finder.js"></script>
+    <script src="../js/sfhover.js"></script>
+    <script src="../js/mover.js"></script>
     <script>
         function simpleInvoke(o, m, arg) {
 		return o[m](arg);

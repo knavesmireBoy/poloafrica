@@ -158,8 +158,8 @@ poloAF.Composite = (function () {
 			unrender = function () {
 				var args = _.toArray(arguments);
 				_.each(included, function (member) {
-					if (member.render) {
-						member.render.apply(member, args.concat(_.rest(arguments)));
+					if (member.unrender) {
+						member.unrender.apply(member, args.concat(_.rest(arguments)));
 					}
 				});
 			};

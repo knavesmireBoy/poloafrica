@@ -33,10 +33,11 @@ h2 span {
 		background: none;
 	}
     
-      section.multi img {
+      .override section.multi img {
         display: inline-block;
          vertical-align: top;
          width: 49%;
+          float: none;
     }
     
     section.multi img:first-of-type {

@@ -18,6 +18,10 @@ main img, main ul {
 main img {
 	width: 100%;
 }
+h2 span {
+    color: white;
+}
+
 main ul {
 	text-align: center;
 	padding: 3px;
@@ -55,9 +59,14 @@ main img:hover {
 	display: block;
 	/*force override flex ?*/
 }
+/*
 main ul.portrait {
 	margin: 0 30%;
 	width: auto;
+}
+*/
+.no-js h2 span {
+    color: #444;
 }
 main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="96"] {
 	border-color: white;
@@ -66,20 +75,31 @@ main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"],
 in the pure JS version .alt went on main. Suggest we change it on the JS version for consistency
 */
 
-.gallery li:nth-child(n+5), .gallery li.portrait {
+.gallery li:nth-child(n+5){
 	width: 16.666%;
 }
-.alt li.portrait, .gallery li, .alt li:nth-child(n+5), .gallery li:nth-last-child(-n+4) {
+
+alt li:nth-child(n+5), .gallery li:nth-last-child(-n+4) {
 	width: 25%;
 }
+
+.gallery li.portrait {
+	width: 16.666%;
+}
+.alt li.portrait, .gallery li {
+   width: 25%; 
+}
+
 .gallery li:nth-child(5), .gallery li:nth-child(11), .alt li:nth-child(9) {
 	clear: left;
 }
 .alt li:nth-child(11) {
 	clear: none;
 }
-.showtime main ul.portrait {
+.showtime ul.portrait {
 	width: 40%;
+    margin: 0 auto;
+    display: block;
 }
 .js .showtime main ul li {
 	width: 100%;
@@ -125,8 +145,6 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	transition: all 1s;
 	clear: both;
 	display: table;
-	margin: 1em auto 0;
-	display: inline-block;
 }
 #tooltip {
 	position: absolute;
@@ -246,7 +264,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 	/*animation: myleft 5s infinite;*/
 }
 #wrap h2 {
-	background: none;
+    background: none;
 }
 main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav {
 	position: absolute;

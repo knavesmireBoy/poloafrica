@@ -61,6 +61,7 @@ form label {
 legend, form label {
 	background-color: hsl(60, 40%, 55%);
 	border: solid 1px white;
+    color: black;
 }
 textarea, form input, form label {
 	display: inline-block;

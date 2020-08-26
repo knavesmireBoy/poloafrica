@@ -21,7 +21,6 @@
 		threshold = Number(query.match(number_reg)[1]),
         mytarget = !window.addEventListener ? 'srcElement' : 'target',
         getTarget = utils.drillDown([mytarget]),
-        
         animation = utils.$("ani"),
         tween = utils.$('tween'),
         main = document.getElementsByTagName('main')[0],
@@ -31,36 +30,43 @@
         getSection = utils.getDomParent(utils.getNodeByTag('section')),
         getHeading = utils.getDomChild(utils.getNodeByTag('h3')),
         getParent = utils.drillDown(['parentNode']),
-		
         klasAdd = utils.addClass,
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
         doAlt = utils.doAlternate(),
-       
         //con = window.console.log.bind(window),
-        /*
 		report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
-			msg = undef(msg) ? document.documentElement.className : msg;
+			msg = msg === undefined ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
-        */
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
         //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
+         /*ORIGINAL TEST CHECKS FOR MIN-WIDTH OF 668px HOWEVER NETRENDERER REPORTS ZERO PX AND WILL THEN INVOKE MOVE
+            SO WE INVERT THE TEST IF NOT MIN-WIDTH 
 		getEnvironment = (function () {
-            /*ORIGINAL TEST CHECKS FOR MIN-WIDTH OF 668px HOWEVER NETRENDERER REPORTS ZERO PX AND WILL THEN INVOKE MOVE
-            SO WE INVERT THE TEST IF NOT MIN-WIDTH */
+           
 			if (mq) {
 				return _.negate(ptL(Modernizr.mq, query));
 			} else {
 				return _.negate(ptL(utils.isDesktop, threshold));
 			}
 		}()),
+        */
+        getEnvironment = (function () {
+            return ptL(utils.isDesktop, threshold);
+			if (mq) {
+				return ptL(Modernizr.mq, query);
+			} else {
+				return ptL(utils.isDesktop, threshold);
+			}
+		}()),
+        
 		negater = function (alternators) {
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
-                //console.log(window.matchMedia(query).matches);
+                //report(window.matchMedia(query).matches)
 				_.each(alternators, function (f) {
 					f();
 				});
@@ -86,14 +92,20 @@
         floating_images = function (imgs) {
 			return _.map(imgs, function (img) {
 				var article = getArticle(img),
-                    h = getHeading(article.firstChild),
-					move = function () {
+                    move = function(){},
+                    unmove = function(){},
+                    h = article && getHeading(article.firstChild);
+                //report(h);
+                if(h){
+                    move = function () {
                         utils.insertAfter(img, h);
 					},
 					unmove = function () {
                         utils.insertBefore(article, img);
 					};
-				return doAlt([unmove, move]);
+                }
+				//return doAlt([unmove, move]);
+				return doAlt([move, unmove]);
 			}); //map           
 		},
 		float_handler,

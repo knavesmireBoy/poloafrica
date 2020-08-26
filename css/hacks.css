@@ -1,38 +1,48 @@
+/*https://stackoverflow.com/questions/28417056/how-to-target-only-ie-any-version-within-a-stylesheet*/
 section {
     clear: left;
 }
 
+form {
+	*background-color: #cc9;
+}
+
+footer {
+    _background-image: url("../images/resource/footer_green_ko8.png");
+}
+
 header {
 	background-image: url(../images/resource/header.jpg);
+	background-color: pink;
 }
 
 main ul {
     width: 754px;
 }
 
+h2 span {
+    width: 100%;
+    background-color: white;
+}
+
+section img {
+    _margin: .5em 1em 1em 0;
+}
+
 main > a {
     *border-width: 0px;
+    *display:inline-block;
+    *display: inline;
+	zoom: 1;
 }
 
 footer > a {
     *clear: both;
 }
 
-main .gallery li.portrait, main .gallery li:nth-child(n+5) {
-	*width: 113px;
-}
-main ul.gallery li:nth-last-child(-n+4) {
-	*width: 176px;
-}
-
 main ul.portrait {
     width: auto;
 }
-
-main ul.gallery li {
- *width: 176px;   
-}
-
 .js body {
     background-color: white;
 }
@@ -41,53 +51,158 @@ main ul.gallery li {
 		display: none;
 }
 
-.showtime main > * {
-    display: block;
-}
-
 .showtime main > a {
     display: none;
+}
+
+.showtime main > * {
+    display: block;
 }
 
 .showtime main ul {
     *padding: 12px;
     *width: auto;
 }
+
+/* FALLBACK FOR LACK OF NTH-CHILD SUPPORT, MUST BE SEPARATE IE CAN'T DO THIS, section:nth-child(odd) img, section.odd img {}*/
+section.odd img {
+	margin: 0 0 1em 2em;
+	float: right;
+    overflow: hidden;
+}
+
 .showtime main ul li {
     *width: auto;
     *border-width: 0;
+}
+/*ie <=7 should ignore hsl color mode BUT instead it prevents the fallback color from being applied this style sheet comes last and wins in the specificity stakes */
+a:link, a:visited, a:hover, a:active, .no-touchevents a:hover h3, .no-touchevents a:active h3 {
+	*color: #990;
+	/*color: hsl(58, 60%, 40%);*/
+}
+
+header ul a:link, header ul a:visited {
+	*color: #306;
+}
+header ul li a:hover, header ul li a:active {
+	*background-color: #b6b686;
 }
 
 #wrap {
     width: 832px;
 }
 
+#nav {
+    text-align: center;
+}
+
+#addr1, #addr2, #addr3, #addr4 {
+	*width: 36%;
+}
+
+#phone, #postcode {
+	*width: 25%;
+}
+
+#gal_back {
+	*border-right: 1px solid crimson;
+}
+#gal_forward {
+	*border-left: 0px solid crimson;
+}
+
+#mark {
+    clear: left;
+    padding: .75em 1em .75em 0;
+    *width: 100%;
+    text-align: right;
+    *position: relative;
+    *right: 1em;
+    border-top: dotted 1px #cc6;
+}
+
+#footer_girl {
+    *float: left;
+    *display: inline;
+}
+
+#fb {
+	*margin: 11em 1em .75em 0;
+    *left: 0;
+    *float: right;
+    *display: inline;
+}
+
+#cat{
+*height: auto !important;
+*height: 11em;
+*min-height: 11em;
+}
+
 #photos main > * {
     vertical-align: middle;
 }
 
-#wrap h2 {
-    /*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
-    background-image: none;
-    color: white;
-    margin: 0;
-	}
+#photos h2 {
+/*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+    font-size: 1.3em;
+    text-transform: none;
+    text-align: center;
+}
+#controls button {
+	*background-position: 50% 1%;
+}
+
+
+#contactarea form {
+    *float: left;
+    *display: inline;
+}
+
+#contactarea figure {
+*float: left;  
+*display: inline;
+}
+
+#footer_girl img, #tween {
+    _color: red;
+}
 
 #nav li {
-    *width: 87px;
+    *width: auto;
 }
 
-#nav li:nth-child(3){
-    *width: 118px;
+#wrap h2 {
+    *margin: .8em 0 0 0;
+    *background: 0% 0% url(../images/resource/h2grad.jpg) no-repeat;
+    *color: #990;
+}
+#wrap h2 span {
+	*padding: 0 0 0 3.5em;
+	*padding: 0 0 0 2.9em;
+    *line-height: normal;
+}
+/* not supporting ie6 on logo animation fallbak to animated gif */
+.js #tween {
+	_display: block;
+    _float: right;
 }
 
-#photos #wrap main {
-	text-align: center;
-    margin: 0 auto;
+.js #flower {
+	_display: none;
 }
 
-#wrap h2:hover {
-    color: white; 
+#nav li, #slide, #paused, #base, main ul, #enquiries form input, #enquiries form label, #controls, #controls button, footer a:link {
+	*display:inline-block;
+    *display: inline;
+	zoom: 1;
+}
+
+#nav li a{
+    *font-size: 1.2em;
+    *padding: 0 1%;
+    *display: block;
+    *white-space: nowrap;
 }
 
 #photos main > a {
@@ -102,8 +217,39 @@ main ul.gallery li {
     _background: none;
 }
 
-#controls button {
-	*background-position: 50% 1%;
+.js #exit {
+    width: 2.3em;
+    height: 2.3em;
+	background: url("../images/resource/sticks_sprite_fat_lowend.png") no-repeat;
+}
+
+#wrap h2:hover {
+    color: white; 
+}
+
+#photos ul.gallery li.portrait {
+	*width: 15%;
+	_width: 14.8%;
+}
+
+#photos ul.alt li.portrait, #photos ul.gallery li {
+   _width: 23.2%;
+}
+
+#photos #wrap h2 {
+    background: none;
+    margin: 1em 0;
+    padding: 0;
+}
+#photos #wrap main {
+	text-align: center;
+    margin: 0 auto;
+}
+
+#photos #wrap h2 span {
+    padding: 0;
+    margin: 0;
+    background: none;
 }
 
 #controls button#backbutton {
@@ -113,56 +259,35 @@ main ul.gallery li {
 	*background-position: 50% 30%;
 }
 
-a:link, a:visited, a:hover, a:active, .no-touchevents a:hover h3, .no-touchevents a:active h3 {
-	color: #993;
+#wrap ul ul a:link, #wrap ul ul a:visited {
+	*color: #306;
+    *background-color: #b6b686;
 }
 
-#nav li {
-    *display:inline-block;
-    *display: inline;
-	zoom: 1;
+#medley #presslinks img, #medley #medley_links img {
+    display: inline;
+    margin: 0;
 }
 
-main > a, main ul, #controls, #controls button, li#slide, li#paused, li#base, footer a:link{
-	display:inline-block;
-    *display: inline;
-	zoom: 1;
+#presslinks nav, #medley_links nav {
+    overflow: hidden;
+    _width: 39em;
 }
 
-#gal_back {
-	*border-right: 1px solid crimson;
-}
-#gal_forward {
-	*border-left: 0px solid crimson;
+#medley #presslinks ul {
+	text-indent: 0;
+	padding: 0;
 }
 
-#nav li a {
-    display: block;
+#post #contactarea figure {
+    *height: auto;
+    *overflow: hidden;
+    *width: 22%;
+    *margin-left: 2%;
 }
 
-#wrap h2 {
-    margin: .8em 0 0 0;
-    background: 0% 0% url(../images/resource/grad.jpg) no-repeat;
-    color: #993;
-}
-#wrap h2 span {
-	padding: 0 0 0 3.5em;
-	padding: 0 0 0 2.9em;
-    line-height: normal;
-}
-
-#footer_girl {
-    *float: left;
-}
-
-#fb {
-	*margin: 7.5em 1em .75em 0;
-    *left: 0;
-    *float: right;
-}
-
-.js #exit {
-    width: 2.3em;
-    height: 2.3em;
-	background: url("../images/resource/sticks_sprite_fat_lowend.png") no-repeat;
+#footer_girl #pologirl {
+    width: 12em;
+     margin: 0 -4em 0 0;
+    bottom: -2em;
 }

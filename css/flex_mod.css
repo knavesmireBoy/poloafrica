@@ -30,80 +30,16 @@ html.js body img, html.no-js body img {
 	flex-shrink: 0;
 }
 
-.flexwrap article {
-	-webkit-box-flex: 6;
-	-ms-flex: 6 1 1%;
-	-webkit-flex: 6 1 1%;
-	flex: 6 1 1%;
-}
-.flexwrap section img {
-	-webkit-box-flex: 4;
-	-ms-flex: 4 1 1%;
-	-webkit-flex: 4 1 1%;
-	flex: 4 1 1%;
+.backgroundsize h2 span {
+    background-size: contain;
 }
 
-.flexwrap section.ptrt img {
-		-webkit-box-flex: 1;
-		-ms-flex: 1 1 %;
-		-webkit-flex: 1 1 1%;
-		flex: 1 1 1%;
-        margin: 1em 1em 0;
-	}
-.flexwrap body>footer {
-	/*display: -webkit-box; ipod not resizing on orientation*/
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-}
-.flexwrap body>footer #fb {
-	-webkit-box-flex: 1;
-	-ms-flex: 1 1 6em;
-	-webkit-flex: 1 1 6em;
-	flex: 1 1 6em;
-}
-.flexwrap body>footer div:first-child {
-	-webkit-box-flex: 20;
-	-ms-flex: 20 1 auto;
-	-webkit-flex: 20 1 auto;
-	flex: 20 1 auto;
-	width: auto;
-	margin: 0 0 .25rem 1rem;
-}
-.flexwrap body>footer #fb {
-	-webkit-box-flex: 1;
-	-ms-flex: 1 1 6em;
-	-webkit-flex: 1 1 6em;
-	flex: 1 1 6em;
-	margin: 0 .7em .5rem 0;
-	left: 0;
-	min-width: 6em;
-}
-.flexwrap body>footer>a {
-	-webkit-box-flex: 0;
-	-ms-flex: 0 0 100%;
-	-webkit-flex: 0 0 100%;
-	flex: 0 0 100%;
-	box-sizing: border-box;
-	padding: .75em 1% .75em 0;
-}
-body>footer {
-	-ms-flex-wrap: wrap;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	-webkit-box-align: end;
-	-ms-flex-align: end;
-	-webkit-align-items: flex-end;
-	align-items: flex-end;
-}
-
-@media only screen {
-	.backgroundsize h2 span {
-        background-size: contain;
-	}
-}
+    .flexwrap body  {
+        background: lavender;
+    }
 
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+
     header{
         background-size: 100%;
     }
@@ -127,34 +63,31 @@ body>footer {
         margin: 1em 1em 0;
 	}
 
-	body>footer {
+	footer {
 		/*display: -webkit-box; ipod not resizing on orientation*/
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
 	}
-	body>footer #fb {
-		-webkit-box-flex: 1;
-		-ms-flex: 1 1 6em;
-		-webkit-flex: 1 1 6em;
-		flex: 1 1 6em;
-	}
-	body>footer div:first-child {
+	#footer_girl {
 		-webkit-box-flex: 20;
 		-ms-flex: 20 1 auto;
 		-webkit-flex: 20 1 auto;
 		flex: 20 1 auto;
 		width: auto;
+        margin: 0 0 .25rem 1rem;
 	}
-	body>footer div:first-child {
-		margin: 0 0 .25rem 1rem;
-	}
-	body>footer #fb {
+
+	#fb {
+        -webkit-box-flex: 1;
+		-ms-flex: 1 1 6em;
+		-webkit-flex: 1 1 6em;
+		flex: 1 1 6em;
 		margin: 0 .7em .5rem 0;
 		left: 0;
 		min-width: 6em;
 	}
-	body>footer>a:first-of-type {
+	#mark{
 		-webkit-box-flex: 0;
 		-ms-flex: 0 0 100%;
 		-webkit-flex: 0 0 100%;
@@ -165,47 +98,45 @@ body>footer {
 }
 @media screen and (max-width: 667px) {
     
-	.flexwrap body>footer div:first-child {
-		-webkit-box-flex: 5;
-		-ms-flex: 5 1 5em;
-		-webkit-flex: 5 1 5em;
-		flex: 5 1 5em;
-	}
-	.flexwrap body>footer #fb {
-		-webkit-box-flex: 1;
-		-ms-flex: 1 1 2em;
-		-webkit-flex: 1 1 2em;
-		flex: 1 1 2em;
-	}
-	.flexwrap body>footer>a {
-		padding: .75em 2% .75em 0;
-	}
-    
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-		body>footer div:first-child {
+		#footer_girl {
 			-webkit-box-flex: 5;
 			-ms-flex: 5 1 5em;
 			-webkit-flex: 5 1 5em;
 			flex: 5 1 5em;
 		}
-		body>footer #fb {
+		#fb {
 			-webkit-box-flex: 1;
 			-ms-flex: 1 1 2em;
 			-webkit-flex: 1 1 2em;
 			flex: 1 1 2em;
 		}
-		body>footer>a:first-of-type {
+		#mark {
 			padding: .75em 2% .75em 0;
 		}
 	}
+    	.flexwrap #footer_girl {
+		-webkit-box-flex: 5;
+		-ms-flex: 5 1 5em;
+		-webkit-flex: 5 1 5em;
+		flex: 5 1 5em;
+	}
+	.flexwrap #fb {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 2em;
+		-webkit-flex: 1 1 2em;
+		flex: 1 1 2em;
+	}
+	.flexwrap #mark{
+		padding: .75em 2% .75em 0;
+	}
+    
 }
 /*IF js disbaled and feature queries not supported what to do?
 hard code a class of flexy?
 */
 
 @media only screen and (min-width: 1024px) {
-
-
 	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
 		/* by default the border will run up to the floating image, we choose to enable it on flexwrap support*/
@@ -234,5 +165,67 @@ hard code a class of flexy?
 	.flexwrap p:first-of-type {
 		margin: 0;
 	}
+}
 
+.flexwrap header{
+        background-size: 100%;
+    }
+.flexwrap article {
+	-webkit-box-flex: 6;
+	-ms-flex: 6 1 1%;
+	-webkit-flex: 6 1 1%;
+	flex: 6 1 1%;
+}
+.flexwrap section img {
+	-webkit-box-flex: 4;
+	-ms-flex: 4 1 1%;
+	-webkit-flex: 4 1 1%;
+	flex: 4 1 1%;
+}
+
+.flexwrap section.ptrt img {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 %;
+		-webkit-flex: 1 1 1%;
+		flex: 1 1 1%;
+        margin: 1em 1em 0;
+	}
+
+.flexwrap #footer_girl {
+	-webkit-box-flex: 20;
+	-ms-flex: 20 1 auto;
+	-webkit-flex: 20 1 auto;
+	flex: 20 1 auto;
+	width: auto;
+	margin: 0 0 .25rem 1rem;
+}
+.flexwrap #fb {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 6em;
+	-webkit-flex: 1 1 6em;
+	flex: 1 1 6em;
+	margin: 0 .7em .5rem 0;
+	left: 0;
+	min-width: 6em;
+}
+.flexwrap #mark {
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 100%;
+	-webkit-flex: 0 0 100%;
+	flex: 0 0 100%;
+	box-sizing: border-box;
+	padding: .75em 1% .75em 0;
+}
+.flexwrap footer {
+    /*display: -webkit-box; ipod not resizing on orientation*/
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	-webkit-align-items: flex-end;
+	align-items: flex-end;
 }

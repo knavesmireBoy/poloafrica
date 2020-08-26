@@ -299,7 +299,7 @@
 		mixer = function (predicate, leader, trailer) {
 			/*'97' resolves to 097.jpg and is a signal to remove portrait class from the UL before loading the landscape pictures
 			    the '98' signal undoes the original action.
-			    '80' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
+			    '96' and '99' play the same roles in landscape to portrait BUT a blank portrait page '97', not a signal in this context, is required to prevent early exposure of the first portrait pic */
 			var active = _.every([leader, trailer], function (arr) {
 				return arr[0];
 			});
@@ -367,7 +367,7 @@
 			tmp = leader[0];
 			start = _.findIndex(tmp, ptL(isEqual, i));
 			leader[0] = tmp.splice(start).concat(tmp);
-			if (Modernizr.deviceorientation) {
+			if (Modernizr.touchevents) {
 				tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1])); //orientation
 			} else {
 				tmp = _.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0]))); //page
