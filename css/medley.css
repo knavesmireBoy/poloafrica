@@ -36,8 +36,8 @@ h2 span {
 	float: left;
 }
 #tvcoverage iframe, #tvcoverage video {
-	width: 320px;
-	height: 180px;
+	width: 480px;
+	height: 250px;
 	margin-left: 1em;
 	display: block;
 	float: right;

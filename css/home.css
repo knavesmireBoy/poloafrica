@@ -38,7 +38,7 @@ h2 span {
 	display: block;
 }
 
-#ani img:last-child {
+#ani img+img {
 	margin: 0 0 0 -100%;
 }
 /* test float

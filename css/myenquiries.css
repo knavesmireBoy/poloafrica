@@ -41,8 +41,8 @@
 /* response to form submission:
 restrict animation for proper grid support as we are using grid positioning to overlay images */
 @supports(column-gap: 20px) {
-    
-    #intro label {
+
+   #intro label {
 		position: absolute;
 		left: -999em;
 	}
@@ -61,7 +61,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 	}
 	#grooms {
 		grid-row: 1 / 4;
-        margin: 0;
+       margin: 0;
 		grid-column: 4/6;
 	}
 	#post>article>div {
@@ -77,11 +77,11 @@ restrict animation for proper grid support as we are using grid positioning to o
 	#contactarea>div form {
 		grid-column: 1/8;
 		height: auto;
-        width: 100%;
+       width: 100%;
 	}
 	#contactarea>div figure {
 		grid-column: 8/10;
-        width: 100%;
+       width: 100%;
 	}
 	#post #response {
 		display: grid;
@@ -98,7 +98,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 		grid-row-start: 1;
 		margin: 0;
 		padding: 0;
-        overflow: hidden;
+       overflow: hidden;
 	}
 	#response p {
 		animation-name: fader_rev;
@@ -125,27 +125,27 @@ restrict animation for proper grid support as we are using grid positioning to o
 		grid-column: 1/2;
 		border: solid 1px white;
 		border-width: 0 1px 0 0;
-        display: block;
-        width: 100%;
+       display: block;
+       width: 100%;
 	}
-    #response figure img {
-        object-fit: contain;
+   #response figure img {
+       object-fit: contain;
 }
 	#response .cat {
 		grid-column: 3/4;
 		border-width: 0 0 0 1px;
-        display: block;
-        width: 100%;
+       display: block;
+       width: 100%;
 	}
 	#response .top {
-        /*
-        animation-name: fader;
+       /*
+       animation-name: fader;
 		animation-timing-function: ease-in-out;
 		animation-iteration-count: 1;
 		animation-duration: 10s;
 		animation-fill-mode: forwards;
-        */
-        animation: 10s ease-in-out 1 forwards fader;
+       */
+       animation: 10s ease-in-out 1 forwards fader;
 	}
 	#post #response div {
 		grid-column: 2/3;
@@ -158,23 +158,23 @@ restrict animation for proper grid support as we are using grid positioning to o
 		animation-duration: 5s;
 		animation-fill-mode: forwards;
 		border-radius: 10px;
-        display: block;
-        width: 100%;
+       display: block;
+       width: 100%;
 	}
-    #post>article>div {
-        border-spacing: 0;
-    }
+   #post>article>div {
+       border-spacing: 0;
+   }
 
 }
 @media screen and (max-width: 888px) {
 
-    #post div {
-        border-radius: 0 !important;
+   #post div {
+       border-radius: 0 !important;
 	}
 	#post #response, #post>article>div, #intro {
 		display: block;
 	}
-    
+
 	/*TRIED flex-wrapping in fieldset: https://stackoverflow.com/questions/46472136/fieldset-as-flex-container-not-working-in-google-chrome*/
 }
 @media screen and (max-width: 667px) {

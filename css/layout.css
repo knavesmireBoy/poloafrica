@@ -91,7 +91,13 @@ section:first-child {
 }
 
 /* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
-section:nth-child(odd) img, #ani, #tween {
+#ani, #tween {
+	margin: 0 0 1em 2em;
+	float: right;
+    overflow: hidden;
+}
+
+section:nth-child(odd) img {
 	margin: 0 0 1em 2em;
 	float: right;
     overflow: hidden;

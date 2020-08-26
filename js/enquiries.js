@@ -76,7 +76,7 @@ if (!window.poloAF) {
 		};
 	}
 	var dum = {},
-		utils = poloAF.Util,
+        utils = poloAF.Util,
 		ptL = _.partial,
 		comp = _.compose,
 		invokemethod = function (o, arg, m) {
@@ -263,6 +263,5 @@ if (!window.poloAF) {
 	utils.addHandler('click', bridge, main);
 	utils.addHandler('focus', clear, utils.getByTag('textarea', myform)[0]);
 	dum[tgt] = articles[0].getElementsByTagName('a')[0];
-	dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
 	bridge(dum);
 }());
