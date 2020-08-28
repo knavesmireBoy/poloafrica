@@ -2,14 +2,14 @@
 /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
 
 @media only screen and (max-width: 667px) {
-	/*IF wrap not supported*/
-	.override .multi img {
-		float: right;
-		margin: 0 0 1em 1em;
-	}
-	.override .multi img:last-of-type {
-		margin: 0 0 0 1em;
-	}
+
+    .js .multi img:first-of-type {
+         margin: 1em 1% 0 0;
+		}
+    .js .multi img:last-of-type {
+       margin: 1em 0 0 1%;
+		}
+	
 	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
 		/*FLEX USED ON SECTION IN NO-JS SCENARIO */
 		.no-js .override .multi, .override .multi article {
@@ -34,7 +34,7 @@
 			flex: 1 0 100%;
 		}
             
-    		section.multi img {
+        section.multi img {
             width: 1%;
 			-webkit-box-flex: 1;
 			-ms-flex: 1 1 1%;
@@ -70,7 +70,43 @@
             -ms-flex-order: 3;
             order: 3;
         }
-	}
+	}/*@supports*/
+    
+    	.no-js .override .multi, .override .multi article {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			-ms-flex-wrap: wrap;
+			-webkit-flex-wrap: wrap;
+			flex-wrap: wrap;
+            -webkit-box-align: flex-start;
+            -moz-box-align: flex-start;
+            -ms-flex-align: flex-start;
+            -webkit-align-items: flex-start;
+            align-items: flex-start;
+		}
+    	section.multi h3 {
+			-webkit-box-flex: 1;
+			-ms-flex: 1 0 100%;
+			-webkit-flex: 1 0 100%;
+			flex: 1 0 100%;
+		}
+            
+    		.flexwrap section.multi img, .no-js section.multi img {
+            width: 1%;
+			-webkit-box-flex: 1;
+			-ms-flex: 1 1 1%;
+			-webkit-flex: 1 1 1%;
+			flex: 1 1 1%;
+		}
+    /*some to do w re-oreder*/
+    .no-js .multi img:first-of-type {
+			margin: 1em 0 0 .5em;
+		}
+    .no-js .multi img:last-of-type {
+        margin: 1em .5em 0 0;
+		}
 
 }
 

@@ -57,11 +57,11 @@ form label {
 	/*declaring width w/o height causes label to reduce vertically when clicked???*/
 	height: 2.4em;
 	box-sizing: border-box;
+    color: black;
 }
 legend, form label {
 	background-color: hsl(60, 40%, 55%);
 	border: solid 1px white;
-    color: black;
 }
 textarea, form input, form label {
 	display: inline-block;
@@ -253,7 +253,7 @@ div#response {
 	padding: .3em;
 	border-radius: 8px;
 }
-#response form, #response figure:first-of-type, .no-cssanimations #response .top {
+#response form, #response figure:first-of-type, .no-cssgrid #response .top {
 	display: none;
 }
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm

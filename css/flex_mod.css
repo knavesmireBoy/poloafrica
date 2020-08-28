@@ -34,10 +34,6 @@ html.js body img, html.no-js body img {
     background-size: contain;
 }
 
-    .flexwrap body  {
-        background: lavender;
-    }
-
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
 
     header{

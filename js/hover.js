@@ -7,7 +7,7 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-(function (logo_paths, tween) {
+(function (logo_paths) {
 	"use strict";
 
 	function modulo(i, n) {
@@ -61,6 +61,7 @@ if (!window.poloAF) {
 		$ = function (str) {
 			return document.getElementById(str);
 		},
+        tween = document.getElementById('tween'),
         ie6 = poloAF.Util.getComputedStyle(tween, 'color') === 'red' ? true : false,
 		doAlt = U.doAlternate(),
 		fader = (function () {
@@ -88,6 +89,7 @@ if (!window.poloAF) {
             if(!ie6){
                 ani(U);
                 flower(U);
+                U.removeNodeOnComplete(tween);
 			base_el = poloAF.Util.getDomChild(poloAF.Util.getNodeByTag('img'))($('ani'));
 			fade_el = base_el.cloneNode();
 			parent = base_el.parentNode;
@@ -112,4 +114,4 @@ if (!window.poloAF) {
             }
 		}());
 	setTimeout(curryDefer(fader)(101), 2222);
-}(["images/hi/poloafrica_flower_logo.jpg", "images/hi/polo150yrs_squared_logo.jpg", "images/hi/polo_armed_forces_logo.jpg"], document.getElementById('tween')));
+}(["images/hi/poloafrica_flower_logo.jpg", "images/hi/polo150yrs_squared_logo.jpg", "images/hi/polo_armed_forces_logo.jpg"]));

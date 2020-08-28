@@ -4,7 +4,7 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (mq, query, touchevents, main, footer, picnum, makePath, getDefAlt, makePathWrap) {
+(function (mq, query, touchevents, picnum, makePath) {
 	"use strict";
 
 	function modulo(n, i) {
@@ -120,6 +120,9 @@
 		},
 		ptL = _.partial,
 		once = doOnce(),
+        main = document.getElementsByTagName('main')[0],
+        footer = document.getElementsByTagName('footer')[0],
+        getDefAlt = utils.always(''),
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
 		doQuart = utils.curryFourFold(),
@@ -137,6 +140,7 @@
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
 		klasTog = utils.toggleClass,
+        makePathWrap = function () {},
 		isDesktop = (function () {
 			if (mq) {
 				return _.partial(Modernizr.mq, query);
@@ -916,7 +920,7 @@
 		}());
 	}());
     //do not be tempted to change regex literal (picnum) to new regex object until we can get it to work*/
-}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], /[^\d]+\d(\d+)[^\d]+$/, function (path) {
-	"use strict";
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, /[^\d]+\d(\d+)[^\d]+$/, function (path) {
+    "use strict";
 	return "images/0" + path + ".jpg";
-}, poloAF.Util.always(''), function () {"use strict"; }));
+}));

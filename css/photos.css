@@ -79,7 +79,7 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	width: 16.666%;
 }
 
-alt li:nth-child(n+5), .gallery li:nth-last-child(-n+4) {
+.alt li:nth-child(n+5), .gallery li:nth-last-child(-n+4) {
 	width: 25%;
 }
 
@@ -172,11 +172,9 @@ alt li:nth-child(n+5), .gallery li:nth-last-child(-n+4) {
 	margin: 0 .3em;
 	display: table-cell;
 	border: solid 1px;
-	display: inline-block;
 	cursor: pointer;
 	background-color: #990;
 	border: 1px solid #cc6;
-	border: 1px solid hsla(75, 50%, 40%, 1);
 	border-radius: .2em;
 	line-height: 1.6;
 	opacity: 1;
@@ -234,10 +232,10 @@ alt li:nth-child(n+5), .gallery li:nth-last-child(-n+4) {
 	top: 0em;
 	opacity: 1;
 }
-#controls #backbutton {
+button#backbutton {
 	background-position: 50% 14.9%;
 }
-#controls #playbutton {
+button#playbutton {
 	background-position: 50% 29%;
 }
 #controls.playing #playbutton {
