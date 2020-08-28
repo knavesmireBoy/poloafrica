@@ -222,6 +222,9 @@ h2 span {
 		width: 92vw;
 		height: 51.625vw;
 		float: none;
+        border: dashed 1px #444;
+        border-width: 0 12px;
+        border-style: dotted;
 	}
 	#tvcoverage article {
 		margin: 0;

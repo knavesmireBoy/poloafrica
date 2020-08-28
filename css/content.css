@@ -384,22 +384,15 @@ h2 span {
 		padding: .75em .6em;
 	}
 }
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
 
-/*
 @media only screen and (min-width: 1024px) {
 
 .js article, .js section>img, aside {
 		-webkit-transition-property: opacity, -webkit-transform;
 		transition-property: opacity, -webkit-transform;
 		-o-transition-property: transform, opacity;
-		transition-property: transform, opacity;
 		transition-property: transform, opacity, -webkit-transform;
+    transition-property: transform, opacity;
 		-webkit-transition-duration: 3s;
 		-o-transition-duration: 3s;
 		transition-duration: 3s;
@@ -410,7 +403,7 @@ h2 span {
 		-ms-transform: translate(100em, 0);
 		transform: translate(100em, 0);
 	}
-	.js section>img:last-of-type {
+	.js  section>img:last-of-type {
 		-webkit-transform: translate(150em, 0);
 		-ms-transform: translate(150em, 0);
 		transform: translate(150em, 0);
@@ -425,7 +418,7 @@ h2 span {
 		-ms-transform: translate(100em, 0);
 		transform: translate(100em, 0);
 	}
-	.js .display article, .js .display>img, .js .display aside {
+	.js .override .display article, .js .override .display>img, .js .display aside {
 		-webkit-transform: translate(0, 0);
 		-ms-transform: translate(0, 0);
 		transform: translate(0, 0);
@@ -438,4 +431,3 @@ h2 span {
 		opacity: 1;
 	}
 }
-*/

@@ -65,7 +65,7 @@ main ul.portrait {
 	width: auto;
 }
 */
-.no-js h2 span {
+.no-js #placeholder {
     color: #444;
 }
 main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="96"] {
@@ -333,6 +333,13 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 	h2 {
 		text-shadow: 2px 2px 2px black;
 	}
+    .no-js #placeholder {
+    font-size: .5em;
+    text-shadow: none;
+    text-align: left;
+    width: 100%;
+        color: yellow;
+    }
 	main ul {
 		width: 80%;
 	}
