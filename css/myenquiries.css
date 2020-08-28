@@ -42,7 +42,7 @@
 restrict animation for proper grid support as we are using grid positioning to overlay images */
 @supports(column-gap: 20px) {
 
-   #intro label {
+   .js #intro label {
 		position: absolute;
 		left: -999em;
 	}

@@ -1,44 +1,31 @@
 @import "flex_mod.css";
-
-   #medley>*, #medley_links>* {
-   	-ms-flex-item-align: start;
-   	-webkit-align-self: flex-start;
-   	align-self: flex-start;
-   }
-
-   @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-   	#presslinks, #medley_links:last-child {
-   		display: -webkit-box;
-   		display: -ms-flexbox;
-   		display: -webkit-flex;
-   		display: flex;
-   	}
-   }
-
-   .flexwrap #presslinks, .flexwrap #medley_links:last-child {
-   	display: -webkit-box;
-   	display: -ms-flexbox;
-   	display: -webkit-flex;
-   	display: flex;
-   }
+#medley>*, #medley_links>* {
+	-ms-flex-item-align: start;
+	-webkit-align-self: flex-start;
+	align-self: flex-start;
+}
 
 #presslinks img {
-   -webkit-box-flex: 2;
+	-webkit-box-flex: 2;
 	-ms-flex: 2 1 1%;
 	-webkit-flex: 2 1 1%;
 	flex: 2 1 1%;
 }
 
-#presslinks article{
-   margin: 0;
-}
 
-#tvcoverage h3{
-   width: 100%;
-}
 #medley_links img {
 	max-width: 13em;
 }
+
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+	#presslinks article, #medley_links article {
+		margin: 0;
+	}
+}/*@*/
+.flexwrap #medley_links article {
+	margin: 0;
+}
+
 @supports (column-gap: 20px) {
 	#tvcoverage {
 		display: -ms-grid;
@@ -68,8 +55,7 @@
 		grid-row: 1/6;
 		grid-column: 4/6;
 	}
-
-   #naledi>*:nth-child(2) {
+	#naledi>*:nth-child(2) {
 		-ms-grid-column: 2;
 		-ms-grid-column-span: 1;
 		-ms-grid-row: 2;
@@ -77,13 +63,11 @@
 		grid-row: 2/3;
 		grid-column: 4/6;
 	}
-
-   #naledi p:last-of-type {
+	#naledi p:last-of-type {
 		-ms-grid-row: 2;
 		-ms-grid-row-span: 1;
 		grid-row: 2/4;
 	}
-
 	#tvcoverage #naledi h3 {
 		-ms-grid-column: 1;
 		-ms-grid-column-span: 2;
@@ -91,8 +75,6 @@
 		-ms-grid-row: 1;
 		grid-row: 1/1;
 	}
-	
-	
 }
 .cssgrid #tvcoverage {
 	display: -ms-grid;
@@ -102,7 +84,6 @@
 	display: -ms-grid;
 	display: grid;
 }
-
 .no-cssgrid #tvcoverage, .no-cssgrid #tvcoverage article {
 	/*if not grid, block, NOT flex*/
 	display: block;
@@ -110,7 +91,6 @@
 .no-cssgrid #presslinks article {
 	margin: 0;
 }
-
 @media screen and (max-width: 667px) {
 	.no-js #presslinks article, .no-js #medley .override #medley_links article {
 		margin: 0 0 0 2%;
