@@ -4,7 +4,7 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (mq, query) {
+(function (mq, query, tween) {
 	"use strict";
 
 	function noOp() {
@@ -21,8 +21,8 @@
 			msg = msg === undefined ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
-        tween = document.getElementById('tween'),
         utils = poloAF.Util,
+        ie6 = utils.$('tween'),
         ptL = _.partial,
         doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
@@ -38,7 +38,6 @@
         getArticle = utils.getSibling(utils.getNodeByTag('article')),
         getSection = utils.getDomParent(utils.getNodeByTag('section')),
         getHeading = _.compose(utils.getDomChild(utils.getNodeByTag('h3')), utils.getChild),
-
         klasAdd = utils.addClass,
         headingmatch = doThrice(invokemethod)('match')(/^h\d$/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
@@ -50,6 +49,7 @@
          /*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
 				_.each(alternators, function (f) {
+                    //console.log(f);
 					f();
 				});
 				getEnvironment = _.negate(getEnvironment);
@@ -86,10 +86,9 @@
     dummy[mytarget] = firstlink;
 	bridge(dummy);
 
-	if (animation && !tween) {
-		images.splice(-3, 3);
+	if (animation && !ie6) {
+		images.splice(-2, 2);
 		images.push(animation);
-		utils.removeNodeOnComplete(tween);
 	}
     
 	float_handler = ptL(negater, floating_elements(images, getArticle, getHeading, utils.insertBefore, utils.insertAfter));
@@ -104,4 +103,4 @@
     utils.setScrollHandlers($sections, doTwice(utils.getScrollThreshold)(0.4), 'display', 1);
     window.setTimeout($sections[0].render, 666);
 	return true;
-}(Modernizr.mq('only all'), '(min-width: 668px)'));
+}(Modernizr.mq('only all'), '(min-width: 668px)'), document.getElementById('tween'));
