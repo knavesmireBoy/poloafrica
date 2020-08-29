@@ -57,11 +57,11 @@ form label {
 	/*declaring width w/o height causes label to reduce vertically when clicked???*/
 	height: 2.4em;
 	box-sizing: border-box;
+    color: black;
 }
 legend, form label {
 	background-color: hsl(60, 40%, 55%);
 	border: solid 1px white;
-    color: black;
 }
 textarea, form input, form label {
 	display: inline-block;
@@ -253,7 +253,7 @@ div#response {
 	padding: .3em;
 	border-radius: 8px;
 }
-#response form, #response figure:first-of-type, .no-cssanimations #response .top {
+#response form, #response figure:first-of-type, .no-cssgrid #response .top {
 	display: none;
 }
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
@@ -357,12 +357,12 @@ section:nth-child(2) {
 	}	
     
 	@supports(column-gap: 20px) {
-		article.show #cath {
+		#cath {
 			display: grid;
 			grid-template-columns: 2fr 3fr;
 			background: #cc6;
 		}
-		article.show #cath {
+		#cath {
 			margin-bottom: 1em;
 			font-size: 1.1em;
 		}
@@ -459,6 +459,10 @@ section:nth-child(2) {
         padding: .1em .5em;
         border-radius: 2px;
         border-width: 0;
+        background-color: rgba(255, 255, 255, .25);
+    }
+    #post form input[type="submit"]:hover {
+        background-color: rgba(255, 255, 255, .75);
     }
     
     #post>article>div {
@@ -467,11 +471,11 @@ section:nth-child(2) {
 	#intro article p {
 		margin: 1em 0 1.3em 0;
 	}
-	.no-js input~article p, .no-js #post1.read-more-state:checked~article:nth-of-type(1) p {
+	.no-js input~article p, .no-js #post1.read-more-state:checked~article:nth-of-type(1) p, .no-js #cath {
 		position: absolute;
 		left: -999em;
 	}
-	.no-js section:first-of-type .read-more-state:checked~article, .no-js #post1~article:nth-of-type(1) p, .no-js #post2.read-more-state:checked~article:nth-of-type(2) p, .no-js #post3.read-more-state:checked~article:nth-of-type(3) p, .no-js #post5.read-more-state:checked~article:nth-of-type(1) p, .js #wrap section article.show>* {
+	.no-js section:first-of-type .read-more-state:checked~article, .no-js #post1~article:nth-of-type(1) p, .no-js #post2.read-more-state:checked~article:nth-of-type(2) p, .no-js #post3.read-more-state:checked~article:nth-of-type(3) p, .no-js #post3.read-more-state:checked~article:nth-of-type(3) #cath, .no-js #post5.read-more-state:checked~article:nth-of-type(1) p, #wrap section article.show>* {
 		position: static;
 		left: 0em;
 	}

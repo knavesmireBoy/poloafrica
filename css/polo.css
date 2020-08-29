@@ -40,11 +40,11 @@ h2 span {
           float: none;
     }
     
-    section.multi img:first-of-type {
-        margin: 0 1% 0 0;
+    .multi img:first-of-type {
+        margin: 1em 1% 0 0;
     }
-    section.multi img:last-of-type {
-        margin: 0 0 0 1%;
+    .multi img:last-of-type {
+        margin: 1em 0 0 1%;
     }
     
 	.no-js section:first-child .read-more-trigger:before {

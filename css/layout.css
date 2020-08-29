@@ -135,7 +135,7 @@ section:nth-child(odd) img {
     bottom: -2em;
 }
 
-#mark {
+footer > a {
     display: block;
 }
 

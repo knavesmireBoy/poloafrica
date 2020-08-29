@@ -871,6 +871,9 @@ poloAF.Util = (function() {
 		getClassList: getClassList,
         getChild: _.compose(getNextElement, drillDown(['firstChild'])),
 		getComputedStyle: function(element, styleProperty) {
+            if(!element || !styleProperty){
+                return null;
+            }
 			var computedStyle = null,
 				def = document.defaultView || window;
 			if (typeof element.currentStyle !== 'undefined') {
