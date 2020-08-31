@@ -316,9 +316,10 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 		width: 100%;
 	}
 }
-@media only screen and (max-width: 1024px) {
-	main ul.portrait {
-		margin: 0 20%;
+@media only screen and (max-width: 968px) {
+	.showtime main ul.portrait {
+        width: 50%;
+		margin: 0 25%;
 	}
 }
 @media only screen and (max-width: 800px) {
