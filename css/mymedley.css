@@ -21,7 +21,20 @@
 	#presslinks article, #medley_links article {
 		margin: 0;
 	}
+        #presslinks {
+    		display: -webkit-box;
+    		display: -ms-flexbox;
+    		display: -webkit-flex;
+    		display: flex;
+    	}
 }/*@*/
+
+.flexwrap  #presslinks {
+    		display: -webkit-box;
+    		display: -ms-flexbox;
+    		display: -webkit-flex;
+    		display: flex;
+    	}
 .flexwrap #medley_links article {
 	margin: 0;
 }
@@ -184,6 +197,8 @@
 	.flexwrap #tvcoverage h3 {
 		width: 100%;
 	}
+    
+
 	@supports(column-gap: 20px) {
 		.override #tvcoverage article iframe, .override #tvcoverage article video {
 			width: 40vw;
@@ -194,13 +209,6 @@
 		width: 40vw;
 		height: 22.5vw;
 	}
-    
-    #presslinks {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-    }
 }
 @media only screen and (-ms-high-contrast: none) {
 	/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
