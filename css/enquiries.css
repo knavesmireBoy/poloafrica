@@ -105,8 +105,7 @@ form input:first-of-type, form label:first-of-type {
 	margin-top: 1em;
 }
 /*real submit button*/
-
-fieldset:last-child input:last-child {
+fieldset:last-child input:last-child, #web {
 	position: absolute;
 	left: -999em;
 }
