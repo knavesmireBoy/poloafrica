@@ -104,6 +104,10 @@ form label:hover {
 form input:first-of-type, form label:first-of-type {
 	margin-top: 1em;
 }
+label[for="email"]:before, label[for="name"]:before{
+    content: "*";
+    color: white;
+}
 /*real submit button*/
 fieldset:last-child input:last-child, #web {
 	position: absolute;
@@ -159,10 +163,7 @@ margin-left: -100%;
 	overflow: hidden;
 }
 
-label[for="email"]:before, label[for="name"]:before{
-    content: "*";
-    color: white;
-}
+
 form, figure, #response>* {
 	display: table-cell;
 	/*crucial*/
@@ -223,6 +224,10 @@ div#response {
 }
 #intro article p {
 	margin: 0 0 1.3em 0;
+}
+
+.no-js #intro {
+    display: block;
 }
 /* to prevent crazy heights if big message posted*/
 #response figure img {

@@ -97,7 +97,7 @@
 	display: -ms-grid;
 	display: grid;
 }
-.no-cssgrid #tvcoverage, .no-cssgrid #tvcoverage article {
+.no-cssgrid #tvcoverage, .no-js #tvcoverage{
 	/*if not grid, block, NOT flex*/
 	display: block;
 }

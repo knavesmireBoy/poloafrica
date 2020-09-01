@@ -31,9 +31,8 @@ h2 span {
     text-align: left;
 }
 
-#presslinks img, #medley_links img {
+#presslinks img {
 	width: 27%;
-	float: left;
 }
 
 #medley_links img {
@@ -235,9 +234,9 @@ h2 span {
 		margin: 0;
 	}
 	#tvcoverage iframe, #tvcoverage video {
-		margin: 0 auto;
-		width: 92vw;
-		height: 51.625vw;
+		margin: 0;
+		width: 94vw;
+		height: 52.875vw;
 		float: none;
 	}
 	#tvcoverage article {
@@ -282,6 +281,11 @@ h2 span {
     #tvcoverage p span:after {
 		content: " above)";
 	}
+    
+    #medley_links img {
+	width: 27%;
+}
+
 
 }/*667*/
 
