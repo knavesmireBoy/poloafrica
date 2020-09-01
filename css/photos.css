@@ -354,10 +354,6 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 		-o-transition: background-position 2s ease;
 		transition: background-position 2s ease;
 	}
-	main ul.portrait {
-		margin: 0 15%;
-		width: auto;
-	}
 	.showtime main ul {
 		width: auto;
 		margin: 0 8%;
@@ -367,7 +363,7 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 		padding: .5em 0 0 0;
 	}
 	.showtime main ul.portrait {
-		margin: 0;
+		margin: 0 20%;
 		width: 60%;
 	}
 	.touchevents ul.gallery li {
