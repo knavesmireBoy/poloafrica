@@ -598,9 +598,12 @@ poloAF.Util = (function() {
 		var i,
 			L = array.length,
 			old;
+        //FRWL, YOLT, OHMSS, LALD
 		array = _.toArray(array);
 		for (i = 0; i < Math.floor(L / 2); i += 1) {
 			old = array[i];
+            //1:FRWL / LALD
+            //2: YOLT / OHMSS
 			array[i] = array[L - 1 - i];
 			array[L - 1 - i] = old;
 		}
