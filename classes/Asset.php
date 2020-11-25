@@ -64,6 +64,24 @@ abstract class Asset implements AssetInterface
         $this->id = isset($id) ? $id : null; //only available on update not insert
         
     }
+    
+    
+    protected function setProperties($asset, $attrs = array())
+    {
+        $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
+        $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']) , '.')) : $this->getStoredProperty('extension');
+        //for gallery photos we want to be able to swap images BUT maintain order of insertion so decouple id from stored image name
+        $this->dom_id = $this->setDomId();
+
+        if (isset($attrs['alt']))
+        { //insert
+            $this->alt_text = $attrs['alt'];
+            $this->dom_id = $attrs['dom_id'];
+        }
+        $this->ratio = isset($attrs['ratio'])  ? floatval($attrs['ratio']) : null;
+        $this->offset = isset($attrs['edit_offset']) ? floatval($attrs['edit_offset']) : 0.5;
+        $this->maxi = !empty($attrs['maxi']) ? intval($attrs['maxi']) : 0;
+    }
 
     public function storeUploadedFile($asset, $attrs = array())
     {

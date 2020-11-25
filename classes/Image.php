@@ -47,20 +47,6 @@ class Image extends Asset implements AssetInterface
         return $res[0];
     }
     
-    protected function setProperties($asset, $attrs = array())
-    {
-        $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
-        $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']) , '.')) : $this->getStoredProperty('extension');
-        if (isset($attrs['alt']))
-        { //insert
-            $this->alt_text = $attrs['alt'];
-            $this->dom_id = $attrs['dom_id'];
-        }
-        $this->ratio = isset($attrs['ratio'])  ? floatval($attrs['ratio']) : null;
-        $this->offset = isset($attrs['edit_offset']) ? floatval($attrs['edit_offset']) : 0.5;
-        $this->maxi = !empty($attrs['maxi']) ? intval($attrs['maxi']) : 0;
-    }
-
     protected function removeFile($id)
     {
         //exit($id .'66');//CURRENTLY image files ar uploaded to two locations, may change, and may to decide to delete from only one location
