@@ -36,7 +36,7 @@ class Image extends Asset implements AssetInterface
         return isset($res[$prop]) ? $res[$prop] : "";
     }
     
-     protected function  getNameFromId()
+     protected function getNameFromId()
     {
         $conn = getConn();
         $sql = "SELECT name FROM assets INNER JOIN article_asset AS AA ON assets.id = AA.asset_id WHERE AA.article_id = :id";
@@ -47,8 +47,6 @@ class Image extends Asset implements AssetInterface
         return $res[0];
     }
     
-    
-
     protected function setProperties($asset, $attrs = array())
     {
         $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
@@ -58,9 +56,9 @@ class Image extends Asset implements AssetInterface
             $this->alt_text = $attrs['alt'];
             $this->dom_id = $attrs['dom_id'];
         }
-        $this->ratio = isset($attrs['ratio'])  ? (float)$attrs['ratio'] : null;
-        $this->offset = !empty($attrs['offset']) ? (float)$attrs['offset'] : 0.5;
-        $this->maxi = !empty($attrs['maxi']) ? (int)$attrs['maxi'] : 0;
+        $this->ratio = isset($attrs['ratio'])  ? floatval($attrs['ratio']) : null;
+        $this->offset = isset($attrs['edit_offset']) ? floatval($attrs['edit_offset']) : 0.5;
+        $this->maxi = !empty($attrs['maxi']) ? intval($attrs['maxi']) : 0;
     }
 
     protected function removeFile($id)

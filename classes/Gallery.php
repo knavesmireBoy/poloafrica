@@ -41,10 +41,11 @@ class Gallery extends Image implements AssetInterface
             $this->alt_text = $attrs['alt'];
             $this->dom_id = $attrs['dom_id'];
         }
-        $this->ratio = isset($attrs['ratio'])  ? (float)$attrs['ratio'] : null;
-        $this->offset = !empty($attrs['offset']) ? (float)$attrs['offset'] : 0.5;
-        $this->maxi = !empty($attrs['maxi']) ? (int)$attrs['maxi'] : 0;
+        $this->ratio = isset($attrs['ratio'])  ? floatval($attrs['ratio']) : null;
+        $this->offset = isset($attrs['edit_offset']) ? floatval($attrs['edit_offset']) : 0.5;
+        $this->maxi = !empty($attrs['maxi']) ? intval($attrs['maxi']) : 0;
     }
+    
     protected function getFilePath($type, $repo)
     {
         //currently storing images in root folder of site and out of root folder $repo refers to one or other locations
@@ -55,7 +56,7 @@ class Gallery extends Image implements AssetInterface
     protected function createImage()
     {
         // Get the image size and type
-        $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH);
+        $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH_GALLERY);
         buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), 1.5, $this->offset, 1600, 100);
         buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), 1.5, $this->offset, IMG_THUMB_WIDTH, JPEG_QUALITY);
     }
@@ -66,7 +67,7 @@ class Gallery extends Image implements AssetInterface
         $exec = $this->unlinkImages(unlinker(ARTICLE_GALLERY_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file.") , unlinker(ARTICLE_GALLERY_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
         $exec($id);
         //optional delete?
-        //$exec = $this->unlinkAsset(unlinker(ARTICLE_UPLOAD_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
+        //$exec = $this->unlinkAsset(unlinker(ARTICLE_UPLOAD_PATH_GALLERY, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
         //$exec($id);
     }
       
@@ -96,7 +97,7 @@ class Gallery extends Image implements AssetInterface
 
     protected function validate($asset)
     {
-        $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH));
+        $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH_GALLERY));
     }
     
      public function delete($id)
