@@ -144,13 +144,15 @@ abstract class Article implements ArticleInterface
         $uber = array();
         foreach($rows as $row){
             //create an asset object for every asset
-            //$uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes($flag);
-            $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']));
+            $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes($flag);
+            //$uber[] = $this->createAsset($row['ext'], array('id' => $row['id']));
         }
         $this->uber = $uber;
-        //return isset($uber[0]) ? $uber : array();
+        return isset($uber[0]) ? $uber : array();
+        /*
         return isset($uber[0]) ? array_map(function($inst){
             return $inst->getAttributes();
         }, $uber) : array();
+        */
     }
 }

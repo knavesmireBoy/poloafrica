@@ -112,9 +112,9 @@ abstract class Asset implements AssetInterface
                     
                     $this->extension = $this->getStoredProperty('extension');
                     $this->filename = $this->getStoredProperty('name');
-                    $this->ratio = isset($attrs['edit_ratio'])  ? (float)$attrs['edit_ratio'] : null;
-                    $this->offset = isset($attrs['edit_offset']) ? (float)$attrs['edit_offset'] : 0.5;
-                    $this->maxi = !empty($attrs['edit_maxi']) ? (int)$attrs['edit_maxi'] : 0;
+                    $this->ratio = isset($attrs['edit_ratio'])  ? (float)$attrs['edit_ratio'][$id] : null;
+                    $this->offset = isset($attrs['edit_offset']) ? (float)$attrs['edit_offset'][$id] : 0.5;
+                    $this->maxi = !empty($attrs['edit_maxi']) ? (int)$attrs['edit_maxi'][$id] : 0;
                     //exit(var_dump($this));
                     $this->createImage();
                     $this->update();
