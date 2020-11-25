@@ -48,7 +48,7 @@ abstract class Asset implements AssetInterface
                 $this->deleteAsset($this->id);
                 trigger_error("Asset::storeUploadedFile(): Couldn't move uploaded file.", E_USER_ERROR);
             }
-            if (!(chmod($repo, 0666)))
+            if (!(chmod($repo, octdec("0777"))))
             {
                 $this->deleteAsset($this->id);
                 trigger_error("Asset::storeUploadedFile(): Couldn't set permissions on uploaded file.", E_USER_ERROR);
@@ -67,6 +67,7 @@ abstract class Asset implements AssetInterface
 
     public function storeUploadedFile($asset, $attrs = array())
     {
+        //exit(var_dump($asset));
         if ($asset['error'] == UPLOAD_ERR_OK)
         { //fresh upload, inserting
             // Does the Image object have an articleID?
@@ -81,7 +82,7 @@ abstract class Asset implements AssetInterface
         }
         else if (!empty($attrs))
         { //modify img attributes, updating
-            $this->setProperties(array() , $attrs);
+            $this->setProperties(array(), $attrs);
 
             if (isset($attrs['edit_alt']) && isset($attrs['editAsset']))
             {
@@ -90,6 +91,14 @@ abstract class Asset implements AssetInterface
                     $this->alt_text = $attrs['edit_alt'][$id];
                     $this->dom_id = $attrs['edit_dom_id'][$id];
                     $this->id = $id;
+                    
+                    $this->extension = $this->getStoredProperty('extension');
+                    $this->filename = $this->getStoredProperty('name');
+                    $this->ratio = isset($attrs['edit_ratio'])  ? (float)$attrs['edit_ratio'] : null;
+                    $this->offset = !empty($attrs['edit_offset']) ? (float)$attrs['edit_offset'] : 0.5;
+                    $this->maxi = !empty($attrs['edit_maxi']) ? (int)$attrs['edit_maxi'] : 0;
+                    //exit(var_dump($this));
+                    $this->createImage();
                     $this->update();
                 }
             }
@@ -106,5 +115,5 @@ abstract class Asset implements AssetInterface
     }
     abstract public function getAttributes($flag = false);
     abstract protected function getFilePath($type, $repo);
-    abstract protected function createImage($asset);
+    abstract protected function createImage();
 }

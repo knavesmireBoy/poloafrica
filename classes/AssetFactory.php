@@ -21,6 +21,9 @@ class AssetFactory
        '.mp4',
        '.avi'
    );
+        //allow for uppercase extension
+        $img = array_merge($img, array_map('strtoupper', $img));
+        $video = array_merge($video, array_map('strtoupper', $img));
         
         //exit(var_dump(strrchr($filename,'.')));
         $id = isset($attrs['id']) ? $attrs['id'] : '';

@@ -1,5 +1,6 @@
 <?php
-$cur = 'post' . $count; ?>
+$cur = 'post' . $count; 
+if(empty($article->summary)){ ?>
 <section <?php htmlout(classify($article->attrID)); ?>>
 <input class="read-more-state" id="<?php echo $cur ?>" type="checkbox">
 <label class="read-more-trigger" for="<?php echo $cur ?>"></label>
@@ -16,3 +17,4 @@ endforeach; ?>
     <article> 
         <?php echo $article->mdcontent; ?>
     </article></section>
+<?php }

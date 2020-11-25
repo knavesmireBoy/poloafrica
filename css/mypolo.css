@@ -2,79 +2,66 @@
 /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
 
 @media only screen and (max-width: 667px) {
-	/*IF wrap not supported*/
-	.override .multi img {
-		float: right;
-		margin: 0 0 1em 1em;
+	.no-js section.multi h3, .flexwrap .multi article>* {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 0 100%;
+		-webkit-flex: 1 0 100%;
+		flex: 1 0 100%;
 	}
-	.override .multi img:last-of-type {
-		margin: 0 0 0 1em;
+	.flexwrap .multi article img {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 0 1%;
+		-webkit-flex: 1 0 1%;
+		flex: 1 0 1%;
 	}
-	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
-		/*FLEX USED ON SECTION IN NO-JS SCENARIO */
-		.no-js .override .multi, .override .multi article {
-			display: -webkit-box;
-			display: -ms-flexbox;
-			display: -webkit-flex;
-			display: flex;
-			-ms-flex-wrap: wrap;
-			-webkit-flex-wrap: wrap;
-			flex-wrap: wrap;
-            -webkit-box-align: flex-start;
-            -moz-box-align: flex-start;
-            -ms-flex-align: flex-start;
-            -webkit-align-items: flex-start;
-            align-items: flex-start;
-		}
-       
-		section.multi h3 {
-			-webkit-box-flex: 1;
-			-ms-flex: 1 0 100%;
-			-webkit-flex: 1 0 100%;
-			flex: 1 0 100%;
-		}
-            
-    		section.multi img {
-            width: 1%;
-			-webkit-box-flex: 1;
-			-ms-flex: 1 1 1%;
-			-webkit-flex: 1 1 1%;
-			flex: 1 1 1%;
-		}
-		.multi img:first-of-type {
-			margin: 1em .5em 0 0;
-		}
-		.multi img:last-of-type {
-			margin: 1em 0 0 .5em;
-		}
-        
-        /* in NO-JS scenario article is a flex ITEM but no longer a CONTAINER */
-         .no-js .multi article {
-            /* not really essential, but rather make it explicit that flex NOT required*/
-            display: block;
-        }
-	
-        .no-js .multi article {
-            -webkit-box-flex: 1;
-			-ms-flex: 1 0 100%;
-			-webkit-flex: 1 0 100%;
-			flex: 1 0 100%;
-        }
-        .no-js .multi img:first-of-type {
-            -webkit-order: 2;
-            -ms-flex-order: 2;
-            order: 2;
-        }
-        .no-js .multi article  {
-            -webkit-order: 3;
-            -ms-flex-order: 3;
-            order: 3;
-        }
+	.no-js .multi img:last-of-type, .flexwrap .multi img:last-of-type {
+		-webkit-order: 2;
+		-ms-flex-order: 2;
+		order: 2;
 	}
-
+	.no-js .multi img:first-of-type, .flexwrap .multi img:first-of-type {
+		-webkit-order: 3;
+		-ms-flex-order: 3;
+		order: 3;
+	}
+	.flexwrap .multi img:first-of-type, .no-js .multi img:last-of-type {
+		margin: 1em 0 0 1%;
+	}
+	.flexwrap .multi img:last-of-type, .no-js .multi img:first-of-type {
+		margin: 1em 1% 0 0;
+	}
+	.no-js .multi article, .flexwrap .multi article p {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 0 100%;
+		-webkit-flex: 1 0 100%;
+		flex: 1 0 100%;
+		-webkit-order: 3;
+		-ms-flex-order: 3;
+		order: 3;
+	}
+	/*FLEX USED ON SECTION IN NO-JS SCENARIO */
+	.no-js .override .multi, .flexwrap .multi article {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		-webkit-flex-wrap: wrap;
+		flex-wrap: wrap;
+		-webkit-box-align: flex-start;
+		-moz-box-align: flex-start;
+		-ms-flex-align: flex-start;
+		-webkit-align-items: flex-start;
+		align-items: flex-start;
+	}
+	#facilities article p:nth-of-type(2) {
+		margin: 0 0 1em;
+	}
 }
+/*667*/
 
 @media screen and (max-width: 480px) {
+	/*
 	.no-flexwrap #polo .multi {
 		display: block;
 	}
@@ -87,44 +74,45 @@
 		margin: 1em 1em 0;
 	}
     .override .multi img{
-			margin: 1em 1em 0;
+			margin: 1em 1% 0;
 		}
+    */
 }
-/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
-
-
 @media only screen and (min-width: 1024px) {
-    
-    /* flex only works when article/img is 1/1
-    we either need grid or persist with float, so display block overrides default, widht ensures bottom border of h3 is puched back from image*/
-	
-    .override .multi {
-        display: block;
-    }
-
-    .multi article {
+	/* flex only works when article/img is 1/1
+    we either need grid or persist with float, so display block overrides default, width ensures bottom border of h3 is puched back from image*/
+	.override .multi {
+		display: block;
+	}
+	.multi article {
 		width: 68%;
 	}
-	@supports (column-gap: 20px) {
-
+	@supports (column-gap: 20px) or (-ms-grid-column-span: 1) {
 		.override .multi {
 			display: -ms-grid;
 			display: grid;
 			grid-row-gap: 1em;
 			grid-column-gap: 2em;
+			-ms-grid-rows: 2;
+			grid-template-rows: 2;
+			-ms-grid-columns: 2;
+			grid-template-columns: 2;
+		}
+		.override .multi>*:nth-child(1) {
+			-ms-grid-row: 1;
+			-ms-grid-column: 1;
 		}
 		.override .multi img, .multi article {
 			width: 100%;
 			margin: 0;
 		}
-
 		.override .multi article {
 			-ms-grid-column: 1;
 			-ms-grid-column-span: 1;
 			grid-column: 1 / 2;
 			-ms-grid-row: 1;
-			-ms-grid-row-span: 5;
-			grid-row: 1/6;
+			-ms-grid-row-span: 2;
+			grid-row: 1/3;
 		}
 		.override .multi img:first-of-type {
 			-ms-grid-row: 1;
@@ -135,9 +123,9 @@
 			grid-column: 2 / 3;
 		}
 		.override .multi img:last-of-type {
-			-ms-grid-row: 3;
+			-ms-grid-row: 2;
 			-ms-grid-row-span: 1;
-			grid-row: 3/4;
+			grid-row: 2/3;
 			-ms-grid-column: 2;
 			-ms-grid-column-span: 1;
 			grid-column: 2 / 3;

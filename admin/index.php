@@ -11,6 +11,15 @@ function findArticle($id){
     return ArticleFactory::getById((int)$id);
 }
 
+function validateEdits(){
+    if(isset($_POST['editAsset']) && isset($_POST['deleteAsset'])){
+        return array_diff($_POST['editAsset'], $_POST['deleteAsset']);
+    }
+    elseif(isset($_POST['editAsset'])){
+        return $_POST['editAsset'];
+    }
+}
+
 $action = isset($_GET['action']) ? $_GET['action'] : "";
 $display = 10;
 $page = null;
@@ -81,7 +90,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Confirm')
 {
     $results['article'] = ArticleFactory::getById((int)$_POST['articleId']);
     $results['article']->delete();
-    $page = isset($_GET['page']) ? $_GET['page'] : '';
+    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
     $outer = array();    
     $outer[] = array('status', 'articleDeleted');
     $outer[] = array('page', false);//set page so we don't get an undefined index, but set to falsy
@@ -123,8 +132,8 @@ if (isset($_GET['action']) && ($_GET['action'] == 'editArticle' || $_GET['action
         if (isset($_FILES['asset']))
         {
             /* if the file wasn't an upload (UPLOAD_ERR_OK != 0) Asset will only update the attributes */
-            $article->storeUploadedFile($_FILES['asset'], $_POST);
-            $page = isset($_GET['page']) ? $_GET['page'] : '';
+            $article->storeUploadedFile($_FILES['asset'], $_POST, validateEdits());
+            $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
             redirect(array(array('status', 'changesSaved'), array('page', $page)));
         }
     }
@@ -132,7 +141,7 @@ if (isset($_GET['action']) && ($_GET['action'] == 'editArticle' || $_GET['action
     {
         //User has cancelled their edits: return to the article list
         //preserve page selection when exiting form
-        $page = isset($_GET['page']) ? $_GET['page'] : $_POST['page'];
+        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : $_POST['page'];
         redirect(array(array('page', $page)));
         exit();
     }
@@ -161,7 +170,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
     if (isset($_POST['saveChanges']))
     {
         // User has posted the article edit form: save the new article
-        $article = ArticleFactory::createArticle(array(), $_GET['page']);
+        $article = ArticleFactory::createArticle(array(), $_REQUEST['page']);
         $article->storeFormValues($_POST);
         $article->insert();
         $article->placeArticle($_POST['insert']);
@@ -169,20 +178,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'newArticle')
         if (isset($_FILES['asset']))
         {
             $article->storeUploadedFile($_FILES['asset'], $_POST);
-            $page = isset($_GET['page']) ? $_GET['page'] : '';
+            $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
             redirect(array(array('status', 'changesSaved'), array('page', $page)));
             //header("Location: ?status=changesSaved");
             exit();
         }
         //header("connection: close");
-        $page = isset($_GET['page']) ? $_GET['page'] : '';
+        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
         redirect(array(array('status', 'changesSaved'), array('page', $page)));
         //header("Location: ?status=changesSaved");
     }
     elseif (isset($_POST['cancel']))
     {
         // User has cancelled their edits: return to the article list
-        $page = isset($_GET['page']) ? $_GET['page'] : '';
+        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
         redirect(array(array('page', $page)));
         exit();
     }
@@ -217,16 +226,16 @@ else
         
     }
     //override if new page. NOTE form.page_select method is GET
-    if(!empty($_GET['page'])){
+    if(!empty($_REQUEST['page'])){
         //echo 'newpp : ';
-        $count = PagePaginator::getPageCount($_GET['page']);
+        $count = PagePaginator::getPageCount($_REQUEST['page']);
         $_SESSION["paginator"] = new PagePaginator(10, $count);
-        $page = $_GET['page'];
+        $page = $_REQUEST['page'];
         $_SESSION["paginator"]->setPage($page);
         //echo $_SERVER['REQUEST_URI']$_SERVER['QUERY_STRING'];
     }
     //or clearing page selection
-    if(isset($_GET['action']) && $_GET['action'] == 'selectedpage' && !$_GET['page']){
+    if(isset($_GET['action']) && $_GET['action'] == 'selectedpage' && !$_REQUEST['page']){
         $count = $data['totalRows'];
         $page = null;
         $_SESSION["paginator"] = new PagePaginator(10, $count);
@@ -298,6 +307,7 @@ echo '</section></main>';
         hijax.captureData();
     }
     prepareNavLinks();
+
     //prepareDropDown();
     
     </script>

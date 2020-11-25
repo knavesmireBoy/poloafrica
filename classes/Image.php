@@ -46,6 +46,8 @@ class Image extends Asset implements AssetInterface
         $res = $st->fetch(PDO::FETCH_NUM);
         return $res[0];
     }
+    
+    
 
     protected function setProperties($asset, $attrs = array())
     {
@@ -56,6 +58,9 @@ class Image extends Asset implements AssetInterface
             $this->alt_text = $attrs['alt'];
             $this->dom_id = $attrs['dom_id'];
         }
+        $this->ratio = isset($attrs['ratio'])  ? (float)$attrs['ratio'] : null;
+        $this->offset = !empty($attrs['offset']) ? (float)$attrs['offset'] : 0.5;
+        $this->maxi = !empty($attrs['maxi']) ? (int)$attrs['maxi'] : 0;
     }
 
     protected function removeFile($id)
@@ -64,7 +69,7 @@ class Image extends Asset implements AssetInterface
         $exec = $this->unlinkImages(unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."), unlinker(ARTICLE_IMAGE_PATH, IMG_TYPE_THUMB, "Couldn't delete thumbnail file."));
             $exec($id);
             //optional delete/archive?
-            $exec = $this->unlinkAsset(unlinker(ARTICLE_UPLOAD_PATH, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
+            $exec = $this->unlinkAsset(unlinker(ARTICLE_UPLOAD_PATH_ARTICLE, IMG_TYPE_FULLSIZE, "Couldn't delete image file."));
             $exec($id);
     }
     protected function deleteAsset()
@@ -94,36 +99,18 @@ class Image extends Asset implements AssetInterface
     }
     protected function validate($asset)
     {
-        $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH));
+        $this->doValidate($asset, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH_ARTICLE));
     }
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
     //https://stackoverflow.com/questions/46027710/display-image-from-outside-the-web-root-public-html
-    protected function createImage($image)
+    protected function createImage()
     {
         // Get the image size and type
-        $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH));
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_IMAGE_PATH) , JPEG_QUALITY, IMG_THUMB_WIDTH);
+        $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH_ARTICLE);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH), $this->ratio, $this->offset, $this->maxi);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_IMAGE_PATH), $this->ratio, $this->offset, IMG_THUMB_WIDTH, JPEG_QUALITY);
     }
-    /*
-    public function delete($id)
-    {
-        $conn = getConn();
-        $sql = "SELECT assets.id, assets.attr_id, extension FROM assets INNER JOIN article_asset AS AA ON AA.asset_id = assets.id INNER JOIN articles ON AA.article_id = articles.id WHERE articles.id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retreiving record');
-        
-        while ($row = $st->fetch(PDO::FETCH_NUM))
-        {
-            if ($id == $row[0])
-            {
-             $this->removeFile($id);
-            }
-        }
-    }
-    */
-    
+
     public function delete($id)
     {
         $conn = getConn();
@@ -169,4 +156,23 @@ class Image extends Asset implements AssetInterface
         $row['src'] = $this->path2file . $pathtype . '/' . $row['id'] . $row['ext'];
         return $row;
     }
+        /*
+    public function delete($id)
+    {
+        $conn = getConn();
+        $sql = "SELECT assets.id, assets.attr_id, extension FROM assets INNER JOIN article_asset AS AA ON AA.asset_id = assets.id INNER JOIN articles ON AA.article_id = articles.id WHERE articles.id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retreiving record');
+        
+        while ($row = $st->fetch(PDO::FETCH_NUM))
+        {
+            if ($id == $row[0])
+            {
+             $this->removeFile($id);
+            }
+        }
+    }
+    */
+    
 }

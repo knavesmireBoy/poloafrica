@@ -148,6 +148,9 @@ window.poloAF.Eventing = (function (eventing) {
 						e.cancelBubble = true;
 					}
 				},
+                pass: function(e){
+                    
+                },
                
 				getEventTarget: function (e) {
 					e = this.getEventObject(e);

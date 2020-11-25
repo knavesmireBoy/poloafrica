@@ -9,6 +9,8 @@ h2 span {
 	height: auto;
 	padding: 2em;
 	margin: -3em -2em 0 0;
+    position: relative;
+    z-index: -2;
 }
 
 #tween {
@@ -38,7 +40,7 @@ h2 span {
 	display: block;
 }
 
-#ani img:last-child {
+#ani img+img {
 	margin: 0 0 0 -100%;
 }
 /* test float
@@ -104,13 +106,13 @@ h2 span {
 	}
 
 }
-@media only screen and (max-width: 540px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
+@media only screen and (max-width: 510px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
 	section:last-child h3, section:last-child label {
 		line-height: normal;
 	}
 }
-@media only screen and (max-width: 410px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
-	.override section h3, section:first-child label {
+@media only screen and (max-width: 425px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
+	section:first-child h3, section:first-child label {
 		line-height: normal;
 	}
 }

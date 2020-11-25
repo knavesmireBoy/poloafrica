@@ -17,7 +17,8 @@ define( "ARTICLE_PDF_PATH", "../pdf/articles" );
 define( "ARTICLE_VIDEO_PATH", "../video" );
 
 define( "ARTICLE_ASSETS_PATH", "../assets" );
-define( "ARTICLE_UPLOAD_PATH", "../../../filestore/poloafrica" );
+define( "ARTICLE_UPLOAD_PATH_GALLERY", "../../../filestore/poloafrica/gallery" );
+define( "ARTICLE_UPLOAD_PATH_ARTICLE", "../../../filestore/poloafrica/articles" );
 define( "ARTICLE_GALLERY_PATH", "../images/gallery" );
 define( "ARTICLE_GALLERY_PATH_FULL", "../images/gallery/fullsize/" );
 define( "ARTICLE_GALLERY_PATH_THUMB", "../images/gallery/thumb/" );

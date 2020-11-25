@@ -126,6 +126,9 @@ if (!window.poloAF) {
 				isSpace = isEqual(' '),
 				isLine = isEqual('\n'),
 				isStop = isEqual('.'),
+                isLineOrSpace = function(){
+                    
+                },
 				header = 0,
                 cache = tx.value;
 			return {
@@ -152,7 +155,7 @@ if (!window.poloAF) {
                     }
 					
 					if (res) {
-                        t = res.lastIndexOf(' ');
+                        t = res.indexOf(' ');
                         if(t >= 0){
                             title = '"'+ res.substring(t+1)+'"';
                             res =  res.substring(0, t+1);
@@ -216,10 +219,15 @@ if (!window.poloAF) {
 					}
 				},
 				bold: function () {
+                    //cursor may be in first or last word in a para
+                    //for first word we need to find the GREATER 'from' value
+                    //for last word the LESSER 'to' value 
 					var o = fixSelection(isSpace, isSpace),
-						from = o.from,
-						to = o.to,
+                        o2 = fixSelection(isLine, isLine),
+						from = Math.max(o.from, o2.from),
+                        to = Math.min(o.to, o2.to),
 						cur = tx.value.slice(from, to);
+                   
 					if (hasEmphasis(cur.charAt(0))) { //bold, italics, both
 						if (!hasEmphasis(cur.charAt(1))) { //italics
 							setTextArea(from, to, cur.replace(emphasis, '***$1***'));
@@ -235,8 +243,9 @@ if (!window.poloAF) {
 				},
 				ital: function () {
 					var o = fixSelection(isSpace, isSpace),
-						from = o.from,
-						to = o.to,
+                        o2 = fixSelection(isLine, isLine),
+						from = Math.max(o.from, o2.from),
+                        to = Math.min(o.to, o2.to),
 						cur = tx.value.slice(from, to);
 					if (hasEmphasis(cur.charAt(0))) { //bold, italics, both
 						if (!hasEmphasis(cur.charAt(1))) { //italics
@@ -298,7 +307,9 @@ if (!window.poloAF) {
 				}
 			};
 		};
-	window.addEventListener('load', function () {
+
+    
+    window.addEventListener('load', function () {
         if(!$('content')){
             return;
         }
@@ -327,6 +338,7 @@ if (!window.poloAF) {
 			};
 		$el.render();
 		_.each(tags, prepIcons);
-         utils.addEvent(clicker, _.compose(check, utils.drillDown(['target'])))(ptL($, 'guide'));
+         utils.safeAddEvent('pass', clicker, _.compose(check, utils.drillDown(['target'])))(ptL($, 'guide'));
 	});
+
 }());

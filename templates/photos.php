@@ -25,11 +25,14 @@ $start = $_SESSION["gallery_paginator"]->getStart();
 $limit = $_SESSION["gallery_paginator"]->getDisplay();
 $results = $_SESSION["gallery_paginator"]->getList(); ?>
 
-<a id="gal_back" href="?b=<?php echo $results['start']; ?>" class="pagenav"><span></span></a><?php echo threshold($limit-$start);
+<a id="gal_back" href="?b=<?php echo $results['start']; ?>" class="pagenav"><span></span></a>
+<?php
+echo threshold($limit-$start);
 foreach($results['list'] as $image): 
     $src = $results['path'] . $image['src'] . $image['ext']; ?>
     <li>
         <a href="<?php htmlout($src); ?>">
         <img src="<?php htmlout($src); ?>" alt="<?php htmlout($image['alt']); ?>"></a>
     </li>
-<?php endforeach; echo '</ul>';?><a id="gal_forward" href="?f=<?php echo $results['limit']; ?>" class="pagenav"><span></span></a>
+<?php endforeach; echo '</ul>';?>
+<a id="gal_forward" href="?f=<?php echo $results['limit']; ?>" class="pagenav"><span></span></a>

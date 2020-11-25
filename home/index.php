@@ -22,5 +22,5 @@ echo '</main></div>';
 include '../templates/footer.php'; ?>
 <script src="../js/hover.js"></script>
 <!-- hover must come before finder -->
-<script src="../js/finder.js"></script>
+<script src="../js/mover.js"></script>
 <?php echo '</body></html>';

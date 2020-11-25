@@ -4,7 +4,7 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (mq, query, touchevents, main, footer, picnum, makePath, makePathWrap, getDefAlt) {
+(function (mq, query, touchevents, picnum) {
 	"use strict";
 
 	function modulo(n, i) {
@@ -103,8 +103,9 @@
 	function isEqual(x, y) {
 		return Number(x) === Number(y);
 	}
+    
 	var utils = poloAF.Util,
-		con = window.console.log.bind(window),
+		//con = window.console.log.bind(window),
 		reporter = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
 			msg = undef(msg) ? document.documentElement.className : msg;
@@ -113,8 +114,15 @@
 		$ = function (str) {
 			return document.getElementById(str);
 		},
+        getDefAlt = poloAF.Util.always(''),
+        makePathWrap = function () {},
+        makePath = function (path) {
+            return "../images/gallery/fullsize/0" + path + ".jpg";
+        },
 		ptL = _.partial,
 		once = doOnce(),
+         main = document.getElementsByTagName('main')[0],
+        footer = document.getElementsByTagName('footer')[0], 
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
 		doQuart = utils.curryFourFold(),
@@ -147,6 +155,7 @@
 		getDomTargetLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
        /* ON THIS VERSION we are using ajax to update when navigating to different pages this means a fresh ul is created along with the forward and back buttons. So we can't hardcode thise DOM elements and instead must use functions to query the current DOM, getByClass and getByTag use getResult to obtain an element, getResult either invokes a function or eturns it's argument*/
+       
 		getThumbs = _.compose(utils.getZero, ptL(utils.getByTag, 'ul', main)),
 		getListElements = _.compose(ptL(utils.getByTag, 'li'), getThumbs),
 		getCurrentSlide = _.compose(utils.getZero, ptL(utils.getByClass, 'show', getThumbs, 'li')),
@@ -826,8 +835,4 @@
 			utils.getByTag('span', document)[0].innerHTML = 'PHOTOS';
 		}());
 	}());
-}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, document.getElementsByTagName('main')[0], document.getElementsByTagName('footer')[0], /[^\d]+\d(\d+)[^\d]+$/, function (path) {
-   "use strict";
-	//return "../images/gallery/fullsize/013.jpg";
-	return "../images/gallery/fullsize/0" + path + ".jpg";
-}, function () {"use strict"; }, poloAF.Util.always('')));
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, /[^\d]+\d(\d+)[^\d]+$/));

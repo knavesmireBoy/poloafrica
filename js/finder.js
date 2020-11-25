@@ -47,17 +47,17 @@
         */
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
         //https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
-		/*ORIGINAL TEST CHECKS FOR MIN-WIDTH OF 668px HOWEVER NETRENDERER REPORTS ZERO PX AND WILL THEN INVOKE MOVE
+		 /*ORIGINAL TEST CHECKS FOR MIN-WIDTH OF 668px HOWEVER NETRENDERER REPORTS ZERO PX AND WILL THEN INVOKE MOVE
             SO WE INVERT THE TEST IF NOT MIN-WIDTH 
         getEnvironment = (function () {
-            
 			if (mq) {
 				return _.negate(ptL(Modernizr.mq, query));
 			} else {
 				return _.negate(ptL(utils.isDesktop, threshold));
 			}
 		}()),*/
-        getEnvironment = (function () {
+        
+        	getEnvironment = (function () {
 			if (mq) {
 				return ptL(Modernizr.mq, query);
 			} else {

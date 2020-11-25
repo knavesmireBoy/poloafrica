@@ -53,7 +53,6 @@ $mypage = '';
             <a class="nojs" href="https://www.markdownguide.org/getting-started/" title="Please enable Javascript for additional functionality"><strong>The Markdown Guide</strong> by Matt Cone</a>
            
           <li class="edit-content">
-              
             <label for="content">content</label>
               
              <?php include 'markdown_guide.html'; ?>
@@ -62,18 +61,18 @@ $mypage = '';
           </li>
             <?php endif; ?>
             <li id="details" class="mock"><ul><li class="mocklabel">details</li><li class="neue">
-              <label for="attr_id">id</label>
-                <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>">
-               <label for="page">page</label>
+              <p><label for="attr_id">id</label>
+                <input name="attr_id" id="attr_id" maxlength="20" value="<?php htmlout($results['article']->attrID); ?>"></p>
+               <p><label for="page">page</label>
               <?php if(!empty($_REQUEST['page'])) {  $mypage = strtolower(html($_REQUEST['page'])); }
               else if(!empty($results['article']->page)) {  $mypage = strtolower($results['article']->page); }
               /*strtolower(htmlout($results['article']->page));*/?>
-                <input name="page" id="page" placeholder="archive"  required maxlength="15" value="<?php echo $mypage; ?>">
-            <label for="pubDate">published</label><?php $now = new DateTime();?>
-                <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>">
+                   <input name="page" id="page" placeholder="archive"  required maxlength="15" value="<?php echo $mypage; ?>"></p>
+            <p><label for="pubDate">published</label><?php $now = new DateTime();?>
+                <input type="date" name="pubDate" id="pubDate" placeholder="YYYY-MM-DD" required maxlength="10" value="<?php echo date("Y-m-d", $now->getTimestamp());?>"></p>
                 <?php
                     if(isset($mypage)){ ?>
-                <label for="insert">place</label>
+                <p><label for="insert">place</label>
                   <?php 
                         $rows = ArticleFactory::getTitles($mypage, true);
                     echo "<select name='insert' id='insert'><option value=''>insert before</option>";
@@ -83,7 +82,7 @@ $mypage = '';
                            echo "<option value='$k'>$v</option>";
                        }
                     }
-                    echo '<option value="*">insert at end</option></select>';
+                    echo '<option value="*">insert at end</option></select></p>';
                     } ?>
                 
             </li></ul></li>            
@@ -114,7 +113,7 @@ $mypage = '';
             endif;//$results['article']
             ?>
                 <li class="mock"><ul><li class="mocklabel">uploads</li><li class="neue upload">
-                    <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf">
+                    <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,.pdf; capture=camera" >
             <?php 
             include "../templates/attributes.php";
                 ?></li></ul></li></ul>
@@ -131,7 +130,8 @@ $mypage = '';
                 <input type="hidden" name="articleId" id="articleId" value="<?php echo $results['article']->id ?>"></li></ul>
             </form>
 <script>
-    var asset = document.querySelector('.asset');
+    var max = document.getElementById('maxi'),
+        asset = document.querySelector('.asset');
     if(asset){
         asset.addEventListener('change',  function(e){
         if(e.target.type === 'checkbox' && e.target.name === 'editAsset[]'){
@@ -142,5 +142,6 @@ $mypage = '';
         }
         });
     }
+
 </script>
 <nav><a href="?page=<?php echo $mypage; ?>" title="Back to Article List" class="icon"><img src="../images/resource/icon_list.png"></a></nav>

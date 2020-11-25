@@ -16,8 +16,10 @@ include_once '../classes/PageFactory.php';
     ?>
     <?php if(!isset($style)){ ?>
         <link href="../css/reset.css" media="screen" rel="stylesheet">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
         <link href="../css/admin.css" media="screen" rel="stylesheet">
         <link href="../css/myadmin.css" media="screen" rel="stylesheet">
+    
     <?php }
     else { ?>
     <link href="../css/standard.css" media="screen" rel="stylesheet">
@@ -37,8 +39,6 @@ include_once '../classes/PageFactory.php';
 	<script src="../js/modernizr.js"></script>   
      <script src="../js/ajax.js"></script>
     <!--[if (gte IE 6)&(lte IE 8)]>
-<script src="../js/jquery.js"></script>
-<script src="../js/selectivizr.js"></script>
 <link href="../css/hacks.css" media="screen" rel="stylesheet">
 <![endif]-->
 </head>

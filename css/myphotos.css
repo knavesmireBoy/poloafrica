@@ -14,7 +14,7 @@
 	align-self: flex-start;
 }
 .flexwrap ul.gallery li, .flexwrap .alt ul.gallery li.portrait, .flexwrap .alt ul.gallery li:nth-child(n+5), .flexwrap main ul.gallery li:nth-last-child(-n+4) {
-	-webkit-box-flex: 3;
+    -webkit-box-flex: 3;
 	-ms-flex: 3 1 auto;
 	-webkit-flex: 3 1 auto;
 	flex: 3 1 auto;

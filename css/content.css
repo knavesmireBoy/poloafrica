@@ -37,6 +37,7 @@ h2 {
     background-color: #990;
 	background-image: url(../images/resource/h2grad.jpg);
 	background-repeat: no-repeat;
+    background-position: 100% center;
 	-o-background-size: 100%;
 	-moz-background-size: 100%;
 	-ms-background-size: 100%;
@@ -78,6 +79,18 @@ section img {
 	box-shadow: 0px 0px 4px #990;
 	border: solid 1px white;
 }
+/*
+p:last-child:after {
+    content: " ";
+    padding: 12em;
+    background-color: hsl(58, 30%, 90%);
+    border-radius: 50%;
+    position: relative;
+    right: 14em;
+    bottom: 6em;
+    z-index: -1;
+}
+*/
 article a {
 	font-weight: bold;
 	outline: none;
@@ -95,10 +108,10 @@ footer a:link, footer a:visited {
 	color: white;
 	line-height: normal;
 }
-footer>a:last-child {
+footer>a {
 	border-top: dotted 1px #cc6;
 	text-align: right;
-	padding: .75em 1em;
+	padding: .75em 1em .75em 0;
 }
 header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
@@ -120,7 +133,7 @@ header ul ul a, header ul ul a:hover {
 	background-image: none;
 }
 
-a:link, a:visited, .no-touchevents h3 a:hover, .no-touchevents h3 a:active  {
+a:link, a:visited, .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
 	color: hsl(58, 60%, 40%);
 }
@@ -146,7 +159,7 @@ header ul li a:hover, header ul li a:active {
 	background-color: hsl(60, 25%, 62%);
 }
 
-header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
+header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a{
 	color: white;
 }
 /*spacer for submenu desktop*/
@@ -172,6 +185,10 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 #wrap ul ul a:hover, #wrap ul ul a:active {
 	background-color: white;
 	border-color: #900;
+}
+
+li#current a {
+    color: white;
 }
 h2 span {
 	background-repeat: no-repeat;
@@ -298,6 +315,8 @@ h2 span {
 	}
 	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
 	h3, .read-more-trigger:before {
+        color: #990;
+        color: hsl(58, 60%, 40%);
 		padding: .5em .6em .4em;
 	}
 	h3, .read-more-trigger:before, .js section img {
@@ -309,11 +328,7 @@ h2 span {
 	.override article p {
 		line-height: 1.55;
 	}
-	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
-		text-shadow: none;
-		background-color: #E7E7C7;
-		background-color: hsl(60, 40%, 84%);
-	}
+
 	.read-more-trigger:before:hover {
 		background-color: white;
 		color: hsl(58, 60%, 45%);
@@ -322,7 +337,15 @@ h2 span {
 	.no-touchevents h3 a:hover {
 		color: white;
 	}
-	section.show h3, .no-js .read-more-state:checked~.read-more-trigger:before, section:first-child .read-more-state~.read-more-trigger:before {
+    
+    	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
+		color: #990;
+        color: hsl(58, 60%, 40%);
+        text-shadow: none;
+		background-color: #E7E7C7;
+		background-color: hsl(60, 40%, 84%);
+	}
+    	section.show h3, .read-more-state:checked~.read-more-trigger:before, section:first-child .read-more-state~.read-more-trigger:before {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: #c8c87e;
@@ -364,17 +387,10 @@ h2 span {
 	}
 }
 @media only screen and (max-width: 440px) {
-	footer>a:last-child {
+	footer>a{
 		padding: .75em .6em;
 	}
 }
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
-
 /*
 @media only screen and (min-width: 1024px) {
 
@@ -382,8 +398,8 @@ h2 span {
 		-webkit-transition-property: opacity, -webkit-transform;
 		transition-property: opacity, -webkit-transform;
 		-o-transition-property: transform, opacity;
-		transition-property: transform, opacity;
 		transition-property: transform, opacity, -webkit-transform;
+    transition-property: transform, opacity;
 		-webkit-transition-duration: 3s;
 		-o-transition-duration: 3s;
 		transition-duration: 3s;
@@ -394,7 +410,7 @@ h2 span {
 		-ms-transform: translate(100em, 0);
 		transform: translate(100em, 0);
 	}
-	.js section>img:last-of-type {
+	.js  section>img:last-of-type {
 		-webkit-transform: translate(150em, 0);
 		-ms-transform: translate(150em, 0);
 		transform: translate(150em, 0);
@@ -409,7 +425,7 @@ h2 span {
 		-ms-transform: translate(100em, 0);
 		transform: translate(100em, 0);
 	}
-	.js .display article, .js .display>img, .js .display aside {
+	.js .override .display article, .js .override .display>img, .js .display aside {
 		-webkit-transform: translate(0, 0);
 		-ms-transform: translate(0, 0);
 		transform: translate(0, 0);

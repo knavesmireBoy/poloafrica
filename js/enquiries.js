@@ -102,7 +102,7 @@ if (!window.poloAF) {
 		isHeading = _.compose(headingmatch, getNodeName),
 		main = document.getElementsByTagName('main')[0],
 		articles = document.getElementsByTagName('article'),
-		myform = document.forms[0],
+		myform = document.getElementsByTagName('form')[0],
 		legend = myform.getElementsByTagName('legend')[0],
 		isEmail = ptL(isEqual, 'email'),
 		isName = ptL(isEqual, 'name'),
@@ -259,10 +259,10 @@ if (!window.poloAF) {
 		};
 	//listener();
 	utils.addEvent(clicker, relocate)(legend);
-	utils.addEvent(submitter, listener)(myform);
+	//utils.addEvent(submitter, listener)(myform);
 	utils.addHandler('click', bridge, main);
 	utils.addHandler('focus', clear, utils.getByTag('textarea', myform)[0]);
 	dum[tgt] = articles[0].getElementsByTagName('a')[0];
-	dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
+	//dum[tgt].parentNode = articles[0].getElementsByTagName('h3')[0];
 	bridge(dum);
 }());

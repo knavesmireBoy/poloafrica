@@ -97,8 +97,8 @@ if (!empty($_POST))
         $headers = "From: $host";
         $headers .= "\r\nContent-Type: text/plain; charset=utf-8";
         $headers .= "\r\nReply-To: $email";
-        //$mailsent = mail($host, 'Website Enquiry', $message, $headers);
-        $mailsent = true;
+        $mailsent = mail($host, 'Website Enquiry', $message, $headers);
+        //$mailsent = true;
         
         if ($mailsent)
         {

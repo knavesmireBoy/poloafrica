@@ -7,6 +7,11 @@ html, body {
 img {
 	display: block;
 }
+
+section img.hide {
+    display: none;
+    }
+
 main {
 	overflow: hidden;
 	margin: .2em 0 0em;
@@ -129,10 +134,9 @@ section:nth-child(odd) img, #ani, #tween {
     bottom: -2em;
 }
 
-#mark {
+footer > a{
     display: block;
 }
-
 
 #home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
 	left: auto;
@@ -141,6 +145,7 @@ section:nth-child(odd) img, #ani, #tween {
 	left: auto;
 	right: 0px;
 }
+
 
 @media screen and (max-width: 1280px) {
      body {

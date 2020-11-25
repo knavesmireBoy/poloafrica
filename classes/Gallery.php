@@ -41,6 +41,9 @@ class Gallery extends Image implements AssetInterface
             $this->alt_text = $attrs['alt'];
             $this->dom_id = $attrs['dom_id'];
         }
+        $this->ratio = isset($attrs['ratio'])  ? (float)$attrs['ratio'] : null;
+        $this->offset = !empty($attrs['offset']) ? (float)$attrs['offset'] : 0.5;
+        $this->maxi = !empty($attrs['maxi']) ? (int)$attrs['maxi'] : 0;
     }
     protected function getFilePath($type, $repo)
     {
@@ -49,13 +52,14 @@ class Gallery extends Image implements AssetInterface
     }
 
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
-    protected function createImage($image)
+    protected function createImage()
     {
         // Get the image size and type
         $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), 100, 0, 1.5);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), JPEG_QUALITY, IMG_THUMB_WIDTH, 1.5);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), 1.5, $this->offset, 1600, 100);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), 1.5, $this->offset, IMG_THUMB_WIDTH, JPEG_QUALITY);
     }
+    
     protected function removeFile($id)
     {
         //CURRENTLY image files ar uploaded to two locations, may change, and may to decide to delete from only one location

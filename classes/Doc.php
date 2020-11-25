@@ -11,7 +11,9 @@ class Doc extends Image implements AssetInterface
        return $this->path2file . $this->page . '/' . $this->filename . $this->extension;
    }    
    
-    protected function createImage($asset){}
+    protected function createImage(){
+        exit('blast');
+    }
     
     public function getAttributes($flag = false){
         $st = $this->queryAttributes($this->queryAttrs);

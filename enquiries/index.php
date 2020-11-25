@@ -46,4 +46,5 @@ foreach($imagePaths as $image) : ?>
 </main>
 <?php 
 include "../templates/footer.php";
-echo "<script src='../js/enq.js'></script></body></html>";
+echo "<script src='../js/enquiries.js'></script></body></html>";
+//echo "</body></html>";

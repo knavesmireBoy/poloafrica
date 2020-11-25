@@ -4,144 +4,142 @@
 figcaption label:first-child:after {
 	content: 'delete';
 }
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
-
-@supports(display:flex) {
-	.mocklabel+.asset {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-		margin: -2em 0 1em 17%;
-	}
-	.asset figure {
-		-webkit-box-flex: 1;
-		-ms-flex: 1 1 15%;
-		flex: 1 1 15%;
-	}
-	.asset figure:first-child {
-		margin: 0;
-	}
-}
-.flexbox .asset, .flexboxlegacy .asset, .flexboxtweener .asset {
+.flexwrap .upload {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
 	margin: -2em 0 1em 17%;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
 }
-.flexbox .asset figure, .flexboxlegacy .asset figure, .flexboxtweener .asset figure {
+.flexwrap .upload p, .flexwrap #details .neue p {
+	margin: .25em;
+	flex: 2 1 5em;
+	display: flex;
+	align-items: center;
+}
+.flexwrap #details .neue {
+	display: flex;
+	align-items: center;
+	margin: -2em .25em .25em 17%;
+}
+.flexwrap .upload p:first-of-type {
+	flex: 4 1 3em;
+}
+.flexwrap .upload p:last-child {
+	flex: 3 1 3em;
+}
+.flexwrap .upload p input {
+	flex: 5 1 3em;
+	margin: 0 .25em;
+}
+.flexwrap .upload p:last-child input:last-child {
+	min-width: 3em;
+}
+.flexwrap #details .neue p {
+	flex: 1 1 10em;
+}
+.flexwrap #details .neue p input {
+	flex: 2 1 5em;
+}
+/*
+.flexwrap .upload label {
+	margin: 0 .25em;
+}
+.flexwrap .upload input {
 	-webkit-box-flex: 1;
-	-ms-flex: 1 1 15%;
-	flex: 1 1 15%;
+	-ms-flex: 1 1 1em;
+	flex: 1 1 1em;
+	margin: 0 .25em;
 }
-.flexbox .asset figure:first-child, .flexboxlegacy .asset figure:first-child, .flexboxtweener .asset figure:first-child {
-	margin: 0;
+.flexwrap #asset {
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 100%;
+	flex: 1 1 100%;
+}
+.flexwrap #alt {
+	-webkit-box-flex: 9;
+	-ms-flex: 9 1 5em;
+	flex: 9 1 5em;
+}
+.flexwrap #dom_id {
+	-webkit-box-flex: 3;
+	-ms-flex: 3 1 2em;
+	flex: 3 1 2em;
+	margin: 0 .5em 0 0;
+}
+.flexwrap label[for=dom_id] {
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 1em;
+	flex: 0 0 1em;
+}
+*/
+
+.flexwrap #dom_id, .flexwrap #alt {
+	width: auto;
 }
 /* MEEJA QUERIES */
 
+@media only screen and (max-width: 1200px) {
+	.flexwrap #details .neue p {
+		flex-wrap: wrap;
+	}
+	.flexwrap #details .neue {
+		align-items: flex-start;
+	}
+	.flexwrap #details .neue p label {
+		flex: 2 1 100%;
+		text-align: left;
+		margin: 0 0 .25em;
+	}
+}
 @media only screen and (max-width: 1100px) {
 	figcaption label:first-child:after {
 		content: 'del:';
 	}
-	@supports(column-gap: 20px) {
-		li.mock li.neue {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr 3fr) 2fr 4fr;
-			grid-template-rows: repeat(2, 1fr);
-			grid-gap: .5em;
-		}
-		li.mock li.upload {
-			grid-template-columns: repeat(2, 1fr 3fr) 2fr 4fr;
-			grid-template-rows: repeat(2, 1fr);
-		}
-		li.mock li.upload>*:nth-child(1) {
-			grid-column: 1 / span 6;
-		}
-		li.mock li.neue {
-			margin: -2em 0 0 17%;
-		}
-		li.mock li.neue>* {
-			width: 100% !important;
-		}
-		.neue>*:nth-child(7) {
-			grid-row-start: 2;
-		}
-		li.mock li.neue select {
-			grid-column: 2 / span 3;
-		}
-		.upload>*:nth-child(5) {
-			grid-column: 4 / span 3;
-		}
+}
+@media only screen and (max-width: 960px) {
+	.flexwrap .upload p:first-of-type {
+		flex: 4 1 100%;
+	}
+	.flexwrap .upload p:last-child {
+		flex: 3 1 3em;
+	}
+	.flexwrap #details .neue {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	.flexwrap #details .neue p:last-child {
+		flex: 1 0 auto;
 	}
 }
 @media only screen and (max-width: 736px) {
-	/*
-	.mock .mocklabel, .mock .asset, .mock .neue, .content #editList>li>* {
-		width: 100%;
+	.flexwrap .upload {
+		margin: 0 0 1em 0;
 	}
-    .edit-content ul, .content .edit-content>textarea, .content .buttons, .nojs {
-        margin: 0 0 2% 0%;
-        width: 100%;
-    }
-	.content>ul>li>label, .mock .mocklabel {
-		text-align: left;
-		border-width: 0;
-		background: none;
-		box-shadow: none;
-		padding: .3em .2em;
-	}
-	.edit-content ul, .edit-content textarea .content .buttons {
-		margin-left: 0;
-		width: 100%;
-	}
-
-	.content>ul .pp {
-		margin: .25em 0 0;
-		width: 100%;
-	}
-    */
-	@supports(column-gap: 20px) {
-		li.mock li.neue {
-			margin: 0;
-		}
+	.flexwrap #details .neue {
+		margin: 0 .25em;
 	}
 }
-@media only screen and (max-width: 667px) {
-	@supports(column-gap: 20px) {
-		li.mock li.neue {
-			grid-template-rows: repeat(3, 1fr);
-			grid-template-columns: repeat(2, 1fr 4fr);
-		}
-		li.mock li.upload {
-			grid-template-rows: repeat(2, 1fr);
-			grid-template-columns: 1fr 3fr 3fr 6fr;
-		}
-		.neue>*:nth-child(n+5) {
-			grid-row-start: 2;
-		}
-		.neue>*:nth-child(n+7) {
-			grid-row-start: 3;
-		}
-		.neue>*:nth-child(6) {
-			grid-column: 2 / span 3;
-		}
+@media only screen and (max-width: 667px) {}
+@media only screen and (max-width: 479px) {
+	.flexwrap .upload p:nth-child(3) {
+		flex: 5 1 100%;
 	}
-	fieldset.buttons {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-		text-align: center;
-		-ms-flex-wrap: wrap;
-		flex-wrap: wrap;
+}
+@media only screen and (max-width: 375px) {
+	.flexwrap #details .neue p {
+		flex: 1 1 100%;
 	}
-	fieldset.buttons>input {
-		-webkit-box-flex: 1;
-		-ms-flex: 1 1 1%;
-		flex: 1 1 1%;
-		margin: .25em;
+	.flexwrap #details .neue p label {
+		flex: 1 1 1em;
+	}
+	.flexwrap #details .neue p input, .flexwrap #details .neue p select {
+		flex: 5 1 10em;
+		margin: 0 0 0 .25em;
 	}
 }

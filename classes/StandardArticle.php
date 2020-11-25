@@ -5,6 +5,20 @@ require_once 'AssetFactory.php';
 class StandardArticle extends Article implements ArticleInterface
 {
     
+    
+    protected function reIndex(){
+        $tmp = "CREATE TEMPORARY TABLE articlestemp SELECT pubdate, title, summary, content, attr_id, page FROM articles";
+        $insert = "INSERT INTO articles (pubdate, title, summary, content, attr_id, page) SELECT pubdate, title, summary, content, attr_id, page FROM articlestemp";
+        //REMOVE FOREIGN KEY CONSTRAINT
+        $conn = getConn();
+        $st = prepSQL($conn, $tmp);
+        doPreparedQuery($st, 'Error creating temporary table');
+        $st = prepSQL($conn, "TRUNCATE TABLE articles");
+        doPreparedQuery($st, 'Error truncating table');
+        $st = prepSQL($conn, $insert);
+        doPreparedQuery($st, 'Error re-populating articles');
+    }
+    
      protected $queryExt = "SELECT assets.id, extension AS ext FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
     
          protected function createAsset($ext, $attrs = array())

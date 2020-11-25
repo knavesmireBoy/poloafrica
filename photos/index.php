@@ -34,9 +34,10 @@ echo '</main></div>'; ?>
     <script src="../js/basicIterator.js"></script>
     <script src="../js/tooltips.js"></script>
     <script>
-        var hijax = window.poloAF.Hijax();
-        hijax.setContainer(document.querySelector('main'));
-        hijax.setCanvas(document.querySelector('main'));
+        var hijax = window.poloAF.Hijax(),
+            main = document.getElementsByTagName('main')[0];
+        hijax.setContainer(main);
+        hijax.setCanvas(main);
         hijax.setUrl('../templates/photos.php');
         hijax.captureData(true);
         //preload images

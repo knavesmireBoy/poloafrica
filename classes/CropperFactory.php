@@ -5,12 +5,12 @@ include_once 'PortraitCropper.php';
 	{
 		public $cropper;
         
-        public function __construct($width, $height, $ratio){
-            if(greaterThan($width, $height)){
-              $this->cropper = new LandscapeCropper($width, $height, $ratio);
+        public function __construct($width, $height, $ratio, $offset, $portrait = false){
+            if($portrait){
+              $this->cropper = new PortraitCropper($width, $height, $ratio, $offset);
             }
             else {
-            $this->cropper = new PortraitCropper($width, $height, $ratio);
+            $this->cropper = new LandscapeCropper($width, $height, $ratio, $offset);
             }
         }
 	}
