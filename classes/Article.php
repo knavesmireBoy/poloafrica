@@ -8,7 +8,6 @@ abstract class Article implements ArticleInterface
     // Properties
     protected $ext = null;
     protected $reg = "/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/";
-    protected $uber = array();
     public $id = null;
     public $pubDate = null;
     public $title = null;
@@ -121,6 +120,7 @@ abstract class Article implements ArticleInterface
     public function storeUploadedFile($uploaded, $attrs = array(), $pass = false)
     {        
         if(empty($uploaded['name'])){
+            $uploaded = array();
             if($pass){
             $arr = $this->getFilePath()[0];
             $asset = $this->createAsset($arr['name'] . $arr['ext']);
@@ -130,7 +130,7 @@ abstract class Article implements ArticleInterface
         $asset = $this->createAsset($uploaded['name']);
         }
         if(isset($asset)){
-            $asset->storeUploadedFile($uploaded, $attrs);
+            $asset->updateFile($uploaded, $attrs);
         }
     }
 
@@ -145,14 +145,7 @@ abstract class Article implements ArticleInterface
         foreach($rows as $row){
             //create an asset object for every asset
             $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes($flag);
-            //$uber[] = $this->createAsset($row['ext'], array('id' => $row['id']));
         }
-        $this->uber = $uber;
         return isset($uber[0]) ? $uber : array();
-        /*
-        return isset($uber[0]) ? array_map(function($inst){
-            return $inst->getAttributes();
-        }, $uber) : array();
-        */
     }
 }

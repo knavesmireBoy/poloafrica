@@ -698,7 +698,6 @@ input:invalid {
 		padding: .3em .2em;
 	}
     
-
 	#controls, #content, .content .buttons {
 		margin-left: 0;
 		width: 100%;
@@ -760,7 +759,11 @@ input:invalid {
     .asset figure input[type="checkbox"] {
 	margin: 0 0 0 1em;
 }
- .buttons input {
+
+}
+
+@media only screen and (max-width: 667px) and (pointer: coarse){
+     .buttons input {
      font-size: 0px;
      padding: 1rem;
      border-radius: 50%;

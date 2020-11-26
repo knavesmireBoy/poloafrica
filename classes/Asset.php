@@ -82,11 +82,12 @@ abstract class Asset implements AssetInterface
         $this->offset = isset($attrs['edit_offset']) ? floatval($attrs['edit_offset']) : 0.5;
         $this->maxi = !empty($attrs['maxi']) ? intval($attrs['maxi']) : 0;
     }
-
-    public function storeUploadedFile($asset, $attrs = array())
+    
+    //Always ges called by Article:storeUploadedFile
+    public function updateFile($asset, $attrs = array())
     {
         //exit(var_dump($asset));
-        if ($asset['error'] == UPLOAD_ERR_OK)
+        if (!empty($asset))
         { //fresh upload, inserting
             // Does the Image object have an articleID?
             if (is_null($this->articleID))
@@ -101,6 +102,7 @@ abstract class Asset implements AssetInterface
         else if (!empty($attrs))
         { //modify img attributes, updating
             $this->setProperties(array(), $attrs);
+            exit(isset($attrs['edit_alt']));
 
             if (isset($attrs['edit_alt']) && isset($attrs['editAsset']))
             {
@@ -109,7 +111,6 @@ abstract class Asset implements AssetInterface
                     $this->alt_text = $attrs['edit_alt'][$id];
                     $this->dom_id = $attrs['edit_dom_id'][$id];
                     $this->id = $id;
-                    
                     $this->extension = $this->getStoredProperty('extension');
                     $this->filename = $this->getStoredProperty('name');
                     $this->ratio = isset($attrs['edit_ratio'])  ? (float)$attrs['edit_ratio'][$id] : null;

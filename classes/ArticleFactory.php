@@ -33,7 +33,6 @@ class ArticleFactory
     }
     /**
      * Returns all (or a range of) Article objects in the DB
-     *
      * @param int Optional The number of rows to return (default=all)
      * @return Array|false A two-element array : results => array, a list of Article objects; totalRows => Total number of articles
      */
@@ -79,7 +78,6 @@ class ArticleFactory
             return strtolower($str['title']);
         }, $rows));        
     }
-        
         return $rows;
     }
 
