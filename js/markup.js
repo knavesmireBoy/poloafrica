@@ -219,6 +219,7 @@ if (!window.poloAF) {
                         return listFromLine();
                     }
                     else {
+                        alert('go');
 						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\w+(\s|$))/g, '- $1\n'));
 					}
 				},
