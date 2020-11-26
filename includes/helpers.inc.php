@@ -64,12 +64,11 @@ function getpngsize( $img_loc ) {
                     $width  = hexdec( $width[1] );
                     $height = unpack( 'H*', $new_block[20] . $new_block[21] . $new_block[22] . $new_block[23] );
                     $height  = hexdec( $height[1] );
-
                     return array( $width, $height );
                 }
             }
         }
-
+    
     return false;
 }
 
@@ -85,14 +84,21 @@ function buildIMG($source_image, $filepath, $ratio, $offset = 0.5, $output_max =
     elseif($type === 'png'){
        list($width, $height) = getpngsize($source_image);    
    }
-    else {
-        list($width, $height) = getimagesize($source_image);    
+    //if above functions fail...
+    if(!isset($width) || intval($width) === 0){
+        try {
+            list($width, $height) = getimagesize($source_image);    
+        }
+        catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
     }
-    
+        
     $portrait = $height > $width ? true : false;
     $src_x = 0;
     $src_y = 0;
     $cropper = null;
+   
     if(!$ratio){
     $ratio = $portrait ? ($height / $width) : ($width / $height);
     }
