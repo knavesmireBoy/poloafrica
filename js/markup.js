@@ -114,14 +114,17 @@ if (!window.poloAF) {
 						return;
 					}
                     if (tx.value.slice(from, to).charAt(0) === '-' || tx.value.slice(from, to).match(/^1\./)) {
-						setTextArea(from-1, to, tx.value.slice(from - 1, to).replace(mylist[0][0], '\n'));
+						//setTextArea(from-1, to, tx.value.slice(from - 1, to).replace(mylist[0][0], '\n'));
+						setTextArea(from-1, to, tx.value.slice(from - 1, to).replace(mylist[1][0], ''));
 					}
                     else {
+                        alert(2)
 						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\n|$)/g, mylist[0][1]));
                         tx.value = tx.value.replace(/(\-|\W1\.)\s+(\n+)/, '$2');
                         mylist = mylist.reverse();
 					}
 				},
+             
 				hasEmphasis = isEqual('*'),
 				isSpace = isEqual(' '),
 				isLine = isEqual('\n'),
@@ -212,6 +215,7 @@ if (!window.poloAF) {
 						return;
 					}
                     if(tx.value.substring(from, to).match(/\n/)){
+                        alert('line');
                         return listFromLine();
                     }
                     else {
