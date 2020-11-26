@@ -118,7 +118,6 @@ if (!window.poloAF) {
 						setTextArea(from-1, to, tx.value.slice(from - 1, to).replace(mylist[1][0], ''));
 					}
                     else {
-                        alert(2)
 						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\n|$)/g, mylist[0][1]));
                         tx.value = tx.value.replace(/(\-|\W1\.)\s+(\n+)/, '$2');
                         mylist = mylist.reverse();
@@ -129,9 +128,6 @@ if (!window.poloAF) {
 				isSpace = isEqual(' '),
 				isLine = isEqual('\n'),
 				isStop = isEqual('.'),
-                isLineOrSpace = function(){
-                    
-                },
 				header = 0,
                 cache = tx.value;
 			return {
