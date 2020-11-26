@@ -22,7 +22,7 @@ if (!window.poloAF) {
 				return arg === char;
 			};
 		},
-        mylist = [ [/\n+1\.\s+/g, '\n- '], [/\n+\-\s+/g, '\n1. ']],
+        mylist = [[/\n+1\.\s+/g, '\n- '], [/\n+\-\s+/g, '\n1. ']],
         doAlt = utils.doAlternate(),
         toggleToolbar = doAlt([ptL(utils.show, ptL($, 'guide')), ptL(utils.hide, ptL($, 'guide'))]),
 		Maker = function (tx, inp) {
@@ -106,6 +106,11 @@ if (!window.poloAF) {
 				setTextArea = function (from, to, cur) {
 					tx.value = tx.value.slice(0, from) + cur + tx.value.slice(to);
 				},
+                hasEmphasis = isEqual('*'),
+				isSpace = isEqual(' '),
+				isLine = isEqual('\n'),
+				isStop = isEqual('.'),
+				header = 0,
                 listFromLine = function () {
 					var o = fixSelection(isLine, isLine),
 						from = o.from,
@@ -113,24 +118,48 @@ if (!window.poloAF) {
 					if (!isSelected(from, to)) {
 						return;
 					}
+                    /*THIS toggles:
+                    a
+                    b
+                    c
+                    - a
+                    - b
+                    - c
+                    a
+                    b
+                    c
+                    1. a
+                    1. b
+                    1. c
+                    IF
+                    */
                     if (tx.value.slice(from, to).charAt(0) === '-' || tx.value.slice(from, to).match(/^1\./)) {
-						//setTextArea(from-1, to, tx.value.slice(from - 1, to).replace(mylist[0][0], '\n'));
-						setTextArea(from-1, to, tx.value.slice(from - 1, to).replace(mylist[1][0], ''));
+						setTextArea(from - 1, to, tx.value.slice(from - 1, to).replace(mylist[0][0], '\n'));
 					}
                     else {
-						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\n|$)/g, mylist[0][1]));
+						setTextArea(from - 1, to, tx.value.slice(from - 1, to).replace(/(\n|$)/g, mylist[0][1]));
                         tx.value = tx.value.replace(/(\-|\W1\.)\s+(\n+)/, '$2');
                         mylist = mylist.reverse();
 					}
 				},
-             
-				hasEmphasis = isEqual('*'),
-				isSpace = isEqual(' '),
-				isLine = isEqual('\n'),
-				isStop = isEqual('.'),
-				header = 0,
                 cache = tx.value;
 			return {
+                				
+                list: function () {
+					var from = tx.selectionStart,
+						to = tx.selectionEnd;
+                    // tx.setSelectionRange(from, to);
+					if (!isSelected(from, to)) {
+						return;
+					}
+                    if(tx.value.substring(from, to).match(/\n/)){
+                        return listFromLine();
+                    }
+                    else {
+						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\w+(\s|$))/g, '- $1\n'));
+                        mylist = mylist.reverse();
+					}
+				},
 				link: function () {
 					var o,
                         fixed = false,
@@ -203,22 +232,7 @@ if (!window.poloAF) {
 						setTextArea(from, to, '![' + cur + '](' + res + ')');
 					}
 				},
-				
-                list: function () {
-					var from = tx.selectionStart,
-						to = tx.selectionEnd;
-					if (!isSelected(from, to)) {
-						return;
-					}
-                    if(tx.value.substring(from, to).match(/\n/)){
-                        alert('line');
-                        return listFromLine();
-                    }
-                    else {
-                        alert('go');
-						setTextArea(from, to, tx.value.slice(from - 1, to).replace(/(\w+(\s|$))/g, '- $1\n'));
-					}
-				},
+
 				bold: function () {
                     //cursor may be in first or last word in a para
                     //for first word we need to find the GREATER 'from' value
