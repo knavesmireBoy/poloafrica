@@ -213,6 +213,9 @@ fieldset, .buttons {
 .pp span {
 	background-color: hsl(283, 40%, 40%);
 	font-weight: bold;
+}
+
+.content .pp span {
     color: red;
 }
 p, .content, .content li {

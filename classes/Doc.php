@@ -12,7 +12,7 @@ class Doc extends Image implements AssetInterface
    }    
    
     protected function createImage(){
-        exit('blast');
+        //exit('blast');
     }
     
     public function getAttributes($flag = false){

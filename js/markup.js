@@ -321,7 +321,6 @@ if (!window.poloAF) {
 				}
 			};
 		};
-
     
     window.addEventListener('load', function () {
         if(!$('content')){
@@ -354,5 +353,4 @@ if (!window.poloAF) {
 		_.each(tags, prepIcons);
          utils.safeAddEvent('pass', clicker, _.compose(check, utils.drillDown(['target'])))(ptL($, 'guide'));
 	});
-
 }());

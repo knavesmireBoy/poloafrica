@@ -7,7 +7,7 @@ class StandardArticle extends Article implements ArticleInterface
     protected $queryExt = "SELECT assets.id, extension AS ext FROM article_asset AS AA INNER JOIN articles ON articles.id = AA.article_id INNER JOIN assets ON AA.asset_id = assets.id WHERE articles.id = :id";
     
     protected function reIndex(){
-        //WON'T WORK BECAUSE OF FOREIGN KEY CONSTRAINT, WE'D HAVE TO REMOVE THEN RE APPLY FROM JOIN TABLES
+        //WON'T WORK BECAUSE OF FOREIGN KEY CONSTRAINTS, WE'D HAVE TO REMOVE THEN RE APPLY FROM JOIN TABLES
         $tmp = "CREATE TEMPORARY TABLE articlestemp SELECT pubdate, title, summary, content, attr_id, page FROM articles";
         $insert = "INSERT INTO articles (pubdate, title, summary, content, attr_id, page) SELECT pubdate, title, summary, content, attr_id, page FROM articlestemp";
         $conn = getConn();
