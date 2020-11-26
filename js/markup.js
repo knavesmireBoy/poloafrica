@@ -144,7 +144,6 @@ if (!window.poloAF) {
 				},
                 cache = tx.value;
 			return {
-                				
                 list: function () {
 					var from = tx.selectionStart,
 						to = tx.selectionEnd;
