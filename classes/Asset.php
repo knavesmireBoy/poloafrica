@@ -89,7 +89,6 @@ abstract class Asset implements AssetInterface
             $this->sortProps($k, $v);
         }
     }
-
     
     //receives uploaded either
     protected function setProperties($asset, $attrs = array())
