@@ -67,7 +67,7 @@ abstract class Asset implements AssetInterface
     }
     
         
-    protected function sortProps($k, $v, $id){
+    protected function sortProps($k, $v, $id = null){
         if(preg_match('/^edit_/', $k)){
             $k = substr($k, 5);
         }
