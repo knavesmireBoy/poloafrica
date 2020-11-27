@@ -12,15 +12,18 @@ abstract class Asset implements AssetInterface
     public $articleID = null;
     protected $extension = "";
     protected $article = null;
-    protected $alt_text = "";
+    protected $alt = "";
     protected $dom_id = "";
     public $id = null;
     public $page = null;
     protected $filename = null;
     protected $table = 'assets';
-    protected function setDomId()
+    protected $ratio = null;
+    protected $offset = .5;
+    protected $maxi = 0;
+    protected function setDomId($arg = false)
     {
-        return $this->id;
+        return $arg;
     }
 
     protected function unlinkImages($f1, $f2)
@@ -58,37 +61,50 @@ abstract class Asset implements AssetInterface
 
     public function __construct($articleID, $page, $id)
     {
-        //var_dump(func_get_args());
         $this->articleID = $articleID;
         $this->page = $page;
         $this->id = isset($id) ? $id : null; //only available on update not insert
-        
     }
     
+        
+    protected function sortProps($k, $v, $id){
+        if(preg_match('/^edit_/', $k)){
+            $k = substr($k, 5);
+        }
+            $this->$k =  $id ? $v[$id] : $v;
+    }
     
+    protected function setAssetProperties($attrs, $flag = false){
+        $allowed = ['alt', 'dom_id', 'ratio', 'offset', 'maxi'];       
+        if($flag){
+          $allowed = array_map(function($v){
+              return "edit_$v";
+          }, $allowed);
+            $inter = array_filter(array_map(retWhen('isArray'), $attrs), 'notNull');
+            return array_filter($inter, function ($key) use ($allowed) { return in_array($key, $allowed); }, ARRAY_FILTER_USE_KEY);
+        }
+        $inter = array_filter(array_map(retWhen(negate('isArray')), $attrs), 'notNull');
+        $filtered = array_filter($inter, function ($key) use ($allowed) { return in_array($key, $allowed); }, ARRAY_FILTER_USE_KEY);
+        foreach($filtered as $k => $v){
+            $this->sortProps($k, $v);
+        }
+    }
+
+    
+    //receives uploaded either
     protected function setProperties($asset, $attrs = array())
     {
         $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
         $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']) , '.')) : $this->getStoredProperty('extension');
         //for gallery photos we want to be able to swap images BUT maintain order of insertion so decouple id from stored image name
-        $this->dom_id = $this->setDomId();
-
-        if (isset($attrs['alt']))
-        { //insert
-            $this->alt_text = $attrs['alt'];
-            $this->dom_id = $attrs['dom_id'];
-        }
-        $this->ratio = isset($attrs['ratio'])  ? floatval($attrs['ratio']) : null;
-        $this->offset = isset($attrs['edit_offset']) ? floatval($attrs['edit_offset']) : 0.5;
-        $this->maxi = !empty($attrs['maxi']) ? intval($attrs['maxi']) : 0;
+        $this->setAssetProperties($attrs);
+        //template pattern, only required for Gallery, as already set on above line
+        $this->dom_id = $this->setDomId($attrs['dom_id']);
     }
     
-    //Always ges called by Article:storeUploadedFile
-    public function updateFile($asset, $attrs = array())
+    //Always gets called by Article:storeUploadedFile
+    public function storeUploadedFile($asset, $attrs = array())
     {
-        //exit(var_dump($asset));
-        if (!empty($asset))
-        { //fresh upload, inserting
             // Does the Image object have an articleID?
             if (is_null($this->articleID))
             {
@@ -98,41 +114,34 @@ abstract class Asset implements AssetInterface
             $this->insert();
             $this->validate($asset);
             $this->createImage($asset);
-        }
-        else if (!empty($attrs))
-        { //modify img attributes, updating
-            $this->setProperties(array(), $attrs);
-            exit(isset($attrs['edit_alt']));
-
-            if (isset($attrs['edit_alt']) && isset($attrs['editAsset']))
-            {
+    }
+    
+    public function updateFile($attrs = array())
+    {
+        $asset_props = $this->setAssetProperties($attrs, true);
                 foreach ($attrs['editAsset'] as $id)
                 {
-                    $this->alt_text = $attrs['edit_alt'][$id];
-                    $this->dom_id = $attrs['edit_dom_id'][$id];
                     $this->id = $id;
                     $this->extension = $this->getStoredProperty('extension');
                     $this->filename = $this->getStoredProperty('name');
-                    $this->ratio = isset($attrs['edit_ratio'])  ? (float)$attrs['edit_ratio'][$id] : null;
-                    $this->offset = isset($attrs['edit_offset']) ? (float)$attrs['edit_offset'][$id] : 0.5;
-                    $this->maxi = !empty($attrs['edit_maxi']) ? (int)$attrs['edit_maxi'][$id] : 0;
-                    //exit(var_dump($this));
+                      foreach($asset_props as $k => $v){
+                          $this->sortProps($k, $v, $id);
+                      }
                     $this->createImage();
                     $this->update();
                 }
-            }
-        }
     }
 
-    protected function queryAttributes($sql)
+        public function getAttributes($flag = false)
     {
         $conn = getConn();
-        $st = prepSQL($conn, $sql);
+        $st = prepSQL($conn, $this->queryAttrs);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error retrieving filepath');
-        return $st;
+        $pathtype = $flag ? IMG_TYPE_THUMB : IMG_TYPE_FULLSIZE;
+        $row = $st->fetch(PDO::FETCH_ASSOC);
+        return $this->setFileSrc($row, $pathtype);
     }
-    abstract public function getAttributes($flag = false);
     abstract protected function getFilePath($type, $repo);
     abstract protected function createImage();
 }

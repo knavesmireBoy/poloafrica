@@ -142,6 +142,14 @@ function buildMsg($prop){
     };
 }
 
+function invoke($func){
+    return function($arg) use($func){
+        return $func($arg);
+    };
+}
+
+
+
 function flushMsg1($missing, $data){
     return function($k, $flag = false) use($missing, $data){
        $output = isset($missing[$k]) ? $missing[$k]() : null;
@@ -173,4 +181,3 @@ function preconditionsHI() {
         return $strategy->algorithm($arg);
     };
 }
-

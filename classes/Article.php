@@ -117,20 +117,19 @@ abstract class Article implements ArticleInterface
         $conn = null;
         $this->placeArticle($title);
     }
-    public function storeUploadedFile($uploaded, $attrs = array(), $pass = false)
+    public function storeUploadedFile($uploaded, $attrs = array(), $edit = false)
     {        
         if(empty($uploaded['name'])){
             $uploaded = array();
-            if($pass){
-            $arr = $this->getFilePath()[0];
-            $asset = $this->createAsset($arr['name'] . $arr['ext']);
+            if($edit){
+                $arr = $this->getFilePath()[0];
+                $asset = $this->createAsset($arr['name'] . $arr['ext']);
+                $asset->updateFile($attrs);
             }
         }
         else {
         $asset = $this->createAsset($uploaded['name']);
-        }
-        if(isset($asset)){
-            $asset->updateFile($uploaded, $attrs);
+        $asset->storeUploadedFile($uploaded, $attrs);
         }
     }
 
@@ -144,6 +143,7 @@ abstract class Article implements ArticleInterface
         $uber = array();
         foreach($rows as $row){
             //create an asset object for every asset
+            //grab extension 'jpg', 'pdf', 'mp4' to determine $asset class
             $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes($flag);
         }
         return isset($uber[0]) ? $uber : array();
