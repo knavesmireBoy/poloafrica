@@ -102,7 +102,6 @@ abstract class Asset implements AssetInterface
         else if (!empty($attrs))
         { //modify img attributes, updating
             $this->setProperties(array(), $attrs);
-            exit(isset($attrs['edit_alt']));
 
             if (isset($attrs['edit_alt']) && isset($attrs['editAsset']))
             {
