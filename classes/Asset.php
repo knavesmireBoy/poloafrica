@@ -114,7 +114,7 @@ abstract class Asset implements AssetInterface
             $this->createImage();
     }
     
-    public function updateFile($attrs = array())
+    public function updateFile1 ($attrs = array())
     {
         $asset_props = $this->setAssetProperties($attrs, true);
                 foreach ($attrs['editAsset'] as $id)
@@ -128,6 +128,27 @@ abstract class Asset implements AssetInterface
                     $this->createImage();
                     $this->update();
                 }
+    }
+    
+     public function updateFile($attrs = array())
+    {
+         //$this->id = $id;
+         
+         $this->extension = $this->getStoredProperty('ext');
+         $this->filename = $this->getStoredProperty('name');
+         if(in_array($this->id, $attrs['editAsset'])){
+            $asset_props = $this->setAssetProperties($attrs, true);
+             $coll = [];
+             foreach($asset_props as $k => $v){
+                 $coll[$k] = $v[$this->id];
+             }
+          foreach($coll as $k => $v){
+              $this->sortProps($k, $v);
+                      }
+             $this->createImage();
+             $this->update();  
+         }
+        
     }
 
         public function getAttributes($flag = false)
