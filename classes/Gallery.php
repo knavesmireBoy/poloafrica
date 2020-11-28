@@ -25,9 +25,11 @@ class Gallery extends Image implements AssetInterface
     {
         $conn = getConn();
         $onclause = " INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
-        $sql = "SELECT extension, name FROM gallery $onclause";
+        $sql = "SELECT extension AS ext, name FROM gallery $onclause";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);        
+        $st = prepSQL($conn, $this->queryAttrs);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, "Error retreiving $prop for this file");
         $res = $st->fetch(PDO::FETCH_ASSOC);
         return isset($res[$prop]) ? $res[$prop] : "";

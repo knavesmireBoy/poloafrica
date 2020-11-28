@@ -30,12 +30,10 @@ class Image extends Asset implements AssetInterface
     protected function getStoredProperty($prop)
     {
         $conn = getConn();
-        $sql = "SELECT extension, name FROM assets WHERE id = :id";
-        $st = prepSQL($conn, $sql);
+        $st = prepSQL($conn, $this->queryAttrs);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, "Error retreiving $prop for this file");
         $res = $st->fetch(PDO::FETCH_ASSOC);
-        //exit(var_dump($res));
         return isset($res[$prop]) ? $res[$prop] : "";
     }
     

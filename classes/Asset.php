@@ -10,13 +10,13 @@ abstract class Asset implements AssetInterface
      */
 
     public $articleID = null;
+    public $id = null;
+    public $page = null;
     protected $extension = "";
+    protected $filename = null;
     protected $article = null;
     protected $alt = "";
     protected $dom_id = "";
-    public $id = null;
-    public $page = null;
-    protected $filename = null;
     protected $table = 'assets';
     protected $ratio = null;
     protected $offset = .5;
@@ -65,7 +65,6 @@ abstract class Asset implements AssetInterface
         $this->page = $page;
         $this->id = isset($id) ? $id : null; //only available on update not insert
     }
-    
         
     protected function sortProps($k, $v, $id = null){
         if(preg_match('/^edit_/', $k)){
@@ -74,9 +73,9 @@ abstract class Asset implements AssetInterface
             $this->$k =  $id ? $v[$id] : $v;
     }
     
-    protected function setAssetProperties($attrs, $flag = false){
+    protected function setAssetProperties($attrs, $update = false){
         $allowed = ['alt', 'dom_id', 'ratio', 'offset', 'maxi'];       
-        if($flag){
+        if($update){
           $allowed = array_map(function($v){
               return "edit_$v";
           }, $allowed);
@@ -93,8 +92,8 @@ abstract class Asset implements AssetInterface
     //receives uploaded either
     protected function setProperties($asset, $attrs = array())
     {
-        $this->filename = !empty($asset) ? strtolower(explode('.', trim($asset['name'])) [0]) : $this->getStoredProperty('name');
-        $this->extension = !empty($asset) ? strtolower(strrchr(trim($asset['name']) , '.')) : $this->getStoredProperty('extension');
+        $this->filename = empty($asset) ? $this->getStoredProperty('name') : extractString($asset['name'], true);
+        $this->extension = empty($asset) ?  $this->getStoredProperty('ext') : extractString($asset['name']);
         //for gallery photos we want to be able to swap images BUT maintain order of insertion so decouple id from stored image name
         $this->setAssetProperties($attrs);
         //template pattern, only required for Gallery, as already set on above line
@@ -112,7 +111,7 @@ abstract class Asset implements AssetInterface
             $this->setProperties($asset, $attrs);
             $this->insert();
             $this->validate($asset);
-            $this->createImage($asset);
+            $this->createImage();
     }
     
     public function updateFile($attrs = array())
@@ -121,7 +120,7 @@ abstract class Asset implements AssetInterface
                 foreach ($attrs['editAsset'] as $id)
                 {
                     $this->id = $id;
-                    $this->extension = $this->getStoredProperty('extension');
+                    $this->extension = $this->getStoredProperty('ext');
                     $this->filename = $this->getStoredProperty('name');
                       foreach($asset_props as $k => $v){
                           $this->sortProps($k, $v, $id);
