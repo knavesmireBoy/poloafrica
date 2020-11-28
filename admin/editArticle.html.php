@@ -113,7 +113,7 @@ $mypage = '';
             endif;//$results['article']
             ?>
                 <li class="mock"><ul><li class="mocklabel">uploads</li><li class="neue upload">
-                    <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,application/pdf; capture=camera" >
+                    <input type="file" name="asset" id="asset" placeholder="Choose an asset to upload" accept="image/*, video/*,application/pdf" capture>
             <?php 
             include "../templates/attributes.php";
                 ?></li></ul></li></ul>
