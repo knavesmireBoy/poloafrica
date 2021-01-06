@@ -80,6 +80,10 @@
          return f(arg);
   }
     
+     function invoke(f, args) {
+         return f.apply(null, args);
+  }
+    
     function goCompare(o, p1, p2, invoker){
         var args = [p1, p2].map(function(ptl){
             return ptl(o);
@@ -171,7 +175,8 @@
             utils[m](klas, el);
         },
         
-        sortClass2 = function(m, el, klas){
+        sortClass2 = function(klas, el, m){
+            console.log(arguments)
             utils[m](klas, el);
         },
         doBigP = utils.curryFactory(3)(sortClass)('portrait'),
@@ -201,10 +206,10 @@
         
         doPortrait2 = function (el) {
           var f = ptL(_.map, [getLI, doClass], utils.curryFactory(2)(simpleinvoke)(el)),
-              g = _.compose(con, ptL(construct, 'portrait'), f);
+              g = _.compose(ptL(invoke, sortClass2), ptL(construct, 'portrait'), f);
             g();
             
-            doBigP(getLI(el))(doClass(el));
+            //doBigP(getLI(el))(doClass(el));
 		},
         
 		//fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
