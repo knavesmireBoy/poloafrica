@@ -171,12 +171,7 @@
         doCompare = utils.curryFactory(4)(goCompare)(greater)(getWidth)(getHeight),
         getLI = utils.getDomParent(utils.getNodeByTag('li')),        
         doClass = _.compose(utils.curryFactory(2)(onTruth)(['addClass','removeClass']), doCompare),
-        sortClass = function(m, el, klas){
-            utils[m](klas, el);
-        },
-        
-        sortClass2 = function(klas, el, m){
-            console.log(arguments)
+        sortClass = function(klas, el, m){
             utils[m](klas, el);
         },
         doBigP = utils.curryFactory(3)(sortClass)('portrait'),
@@ -200,20 +195,9 @@
 			return b;
 		};
         }()),
-        doPortrait = function (el) {
-			utils[doClass(el)]('portrait', getLI(el));
-		},
-        
-        doPortrait2 = function (el) {
-          var f = ptL(_.map, [getLI, doClass], utils.curryFactory(2)(simpleinvoke)(el)),
-              g = _.compose(ptL(invoke, sortClass2), ptL(construct, 'portrait'), f);
-            g();
-            
-            //doBigP(getLI(el))(doClass(el));
-		},
-        
-		//fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
-		fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait2)),
+        doPortrait = _.compose(ptL(invoke, sortClass), ptL(construct, 'portrait'), ptL(_.map, [getLI, doClass]), utils.curryFactory(2)(simpleinvoke)),
+		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
+		//fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
 		doPopulate = function (pagepics) {
 			_.each(allpics, function (img, i) {
 				var path = pagepics[i];
