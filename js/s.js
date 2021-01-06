@@ -59,16 +59,14 @@
 			return val;
 		};
 	}
-    
-     function existy(x) {
-    return x != null;
-  }
+    function existy(x) {
+        return x != null;
+    }
 
     
     function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
 	}
-
     
     function modulo(n, i) {
 		return i % n;
@@ -77,6 +75,10 @@
     function greater (a, b) {
         return a > b;
     }
+    
+     function simpleinvoke(f, arg) {
+         return f(arg);
+  }
     
     function goCompare(o, p1, p2, invoker){
         var args = [p1, p2].map(function(ptl){
@@ -93,17 +95,16 @@
     function partial(f, el) {
 		return _.partial(f, el);
 	}
-    
-     function cat(first) {
-    if (existy(first)) {
-      return first.concat.apply(first, _.rest());
+    function cat(first) {
+        if (existy(first)) {
+            return _.flatten(first.concat.apply(first, _.rest(arguments)));
     } else {
       return [];
     }
   }
 
   function construct(head) {
-    return head && cat([head], _.rest());
+    return head && cat([head], _.rest(arguments));
   }
     //https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
     function eventing(type, actions, fn, el) {
@@ -167,10 +168,16 @@
         getLI = utils.getDomParent(utils.getNodeByTag('li')),        
         doClass = _.compose(utils.curryFactory(2)(onTruth)(['addClass','removeClass']), doCompare),
         sortClass = function(m, el, klas){
-            console.log(arguments);
+            utils[m](klas, el);
+        },
+        
+        sortClass2 = function(m, el, klas){
             utils[m](klas, el);
         },
         doBigP = utils.curryFactory(3)(sortClass)('portrait'),
+        doF = _.compose(doBigP),
+        F = ptL(cat, 'portrait'),
+        g = _.compose(ptL(cat), getLI),
         doInvoke = utils.curryFactory(2)(doBigP),
         main = document.getElementsByTagName('main')[0],
         thumbs = utils.getByClass('gallery')[0],
@@ -193,6 +200,9 @@
 		},
         
         doPortrait2 = function (el) {
+          var f = ptL(_.map, [getLI, doClass], utils.curryFactory(2)(simpleinvoke)(el)),
+              g = _.compose(con, ptL(construct, 'portrait'), f);
+            g();
             
             doBigP(getLI(el))(doClass(el));
 		},
