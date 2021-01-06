@@ -60,6 +60,11 @@
 		};
 	}
     
+     function existy(x) {
+    return x != null;
+  }
+
+    
     function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
 	}
@@ -68,14 +73,38 @@
     function modulo(n, i) {
 		return i % n;
 	}
+    
+    function greater (a, b) {
+        return a > b;
+    }
+    
+    function goCompare(o, p1, p2, invoker){
+        var args = [p1, p2].map(function(ptl){
+            return ptl(o);
+        });
+        return invoker.apply(null, args);
+        }
+    
+    
+    function onTruth(bool, alts){
+        return bool ? alts[0] : alts[1];
+    }
 
     function partial(f, el) {
 		return _.partial(f, el);
 	}
     
-    function compare(f, a, b, o) {
-		return f(o[a], o[b]);
-	}
+     function cat(first) {
+    if (existy(first)) {
+      return first.concat.apply(first, _.rest());
+    } else {
+      return [];
+    }
+  }
+
+  function construct(head) {
+    return head && cat([head], _.rest());
+  }
     //https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
     function eventing(type, actions, fn, el) {
         actions = actions || ['preventDefault'];
@@ -114,7 +143,7 @@
 		all = [een, twee, drie, vier, vyf, ses, sewe],
         
         utils = poloAF.Util,
-		//con = window.console.log.bind(window),
+		con = window.console.log.bind(window),
 		/*reporter = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
 			msg = undef(msg) ? document.documentElement.className : msg;
@@ -127,21 +156,26 @@
 		setAttrs = utils.setAttributes,
 		klasAdd = utils.addClass,
 		klasTog = utils.toggleClass,
-        makeElement = utils.machElement,
-		clicker = ptL(utils.addHandler, 'click'),
 		getNodeName = utils.drillDown(['nodeName']),
 		getID = utils.drillDown(['id']),
         getLength = utils.drillDown(['length']),
 		mytarget = !window.addEventListener ? 'srcElement' : 'target',
         doVier = utils.curryFactory(4),
+        getHeight = utils.curryFactory(2)(utils.getter)('offsetHeight'),
+        getWidth = utils.curryFactory(2)(utils.getter)('offsetWidth'),
+        doCompare = utils.curryFactory(4)(goCompare)(greater)(getWidth)(getHeight),
+        getLI = utils.getDomParent(utils.getNodeByTag('li')),        
+        doClass = _.compose(utils.curryFactory(2)(onTruth)(['addClass','removeClass']), doCompare),
+        sortClass = function(m, el, klas){
+            console.log(arguments);
+            utils[m](klas, el);
+        },
+        doBigP = utils.curryFactory(3)(sortClass)('portrait'),
+        doInvoke = utils.curryFactory(2)(doBigP),
         main = document.getElementsByTagName('main')[0],
         thumbs = utils.getByClass('gallery')[0],
-		gallery = utils.getNextElement(main.firstChild),
-		//list_elements = thumbs.getElementsByTagName('li'),//needs to be a LIVE collection
 		getTarget = utils.drillDown([mytarget]),
         allpics = utils.getByTag('img', main),
-		getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
-		
 		negator = (function () {
            var neg = function (a, b) {
 			return getLength(b) !== 14;
@@ -155,15 +189,19 @@
 		};
         }()),
         doPortrait = function (el) {
-			var m = getOrientation(el) ? 'addClass' : 'removeClass';
-			utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
+			utils[doClass(el)]('portrait', getLI(el));
 		},
         
-		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
+        doPortrait2 = function (el) {
+            
+            doBigP(getLI(el))(doClass(el));
+		},
+        
+		//fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
+		fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait2)),
 		doPopulate = function (pagepics) {
-			var path = '001';
 			_.each(allpics, function (img, i) {
-				path = pagepics[i] || path; //? default to avoid null
+				var path = pagepics[i];
 				img.src = makePath(path);
                 //adds portrait class on browsers that don't support nth-child
 				img.onload = function (e) {
@@ -179,11 +217,11 @@
 					options = options.reverse();
 				},
 				unrender: function (el) {
-					var $el = makeElement(always(el)).render();
+					var $el = utils.machElement(always(el)).render();
 					$el.unrender();
 				},
 				render: function (el) {
-					return makeElement(anCr(thumbs), always(el)).render();
+					return utils.machElement(anCr(thumbs), always(el)).render();
 				}
 			};
 		}(['unrender', 'render'])),
@@ -210,16 +248,15 @@
 				id: id,
 				href: '.'
 			}), myAnCr(main), utils.always('a'))))('span');
-         //el.render();
             return el;
 		},
 		pageNavHandler = _.compose(ptL(eventing, 'click', null, _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
-        $nav = addPageNav(ptL(anCrIn, gallery), 'gal_back', pageNavHandler);
+        $nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler);
         addPageNav(anCr, 'gal_forward', function(){ return dummy; });
     $nav.render();
     _.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
-    
+        
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
             render: function(){},
             unrender: function(){}
