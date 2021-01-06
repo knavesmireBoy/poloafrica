@@ -400,6 +400,114 @@ poloAF.Util = (function() {
 		return el && (el.classList || poloAF.ClassList(el));
 	}
     
+    function curryFactory (i, defer){
+        
+          function curry1(fun) {
+			return function(firstArg) {
+				return fun(firstArg);
+			};
+	}
+        
+         function curry11(fun) {
+		return function(firstArg) {
+			return function() {
+				return fun(firstArg);
+			};
+		};
+	}
+        
+        function curry2(fun) {
+		return function(secondArg) {
+			return function(firstArg) {
+				return fun(firstArg, secondArg);
+			};
+		};
+	}
+
+	function curry22(fun) {
+		return function(secondArg) {
+			return function(firstArg) {
+				return function() {
+					return fun(firstArg, secondArg);
+				};
+			};
+		};
+	}
+
+	function curry3(fun) {
+		return function(last) {
+			return function(middle) {
+				return function(first) {
+					return fun(first, middle, last);
+				};
+			};
+		};
+	}
+
+	function curry33(fun) {
+		return function(last) {
+			return function(middle) {
+				return function(first) {
+					return function() {
+						return fun(first, middle, last);
+					};
+				};
+			};
+		};
+	}
+
+	function curry4(fun) {
+		return function(fourth) {
+			return function(third) {
+				return function(second) {
+					return function(first) {
+						return fun(first, second, third, fourth);
+					};
+				};
+			};
+		};
+	}
+
+	function curry44(fun) {
+		return function(fourth) {
+			return function(third) {
+				return function(second) {
+					return function(first) {
+						return function() {
+							return fun(first, second, third, fourth);
+						};
+					};
+				};
+			};
+		};
+	}
+        
+         var once = {
+        imm: curry1,
+        defer: curry11
+      },
+      twice = {
+        imm: curry2,
+        defer: curry22
+      },
+      thrice = {
+        imm: curry3,
+        defer: curry33
+      },
+      quart = {
+        imm: curry4,
+        defer: curry44
+      },
+      coll = [null, once, twice, thrice, quart],
+      ret = coll[i];
+    return ret && defer ? ret.defer : ret ? ret.imm : function() {};
+        
+    }//factory
+    
+    /*  imm: (f) => (arg) => f(arg),
+        defer: (f) => (arg) => () => f(arg)
+      },*/
+    
 
 	function curry2(fun) {
 		return function(secondArg) {
@@ -829,6 +937,7 @@ poloAF.Util = (function() {
 		curryFourFold: function(flag) {
 			return flag ? curry44 : curry4;
 		},
+        curryFactory: curryFactory,
 		doAlternate: doAlternate,
 		/*USAGE: 
         var once = doOnce(),
