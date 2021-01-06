@@ -183,10 +183,7 @@
         thumbs = utils.getByClass('gallery')[0],
 		getTarget = utils.drillDown([mytarget]),
         allpics = utils.getByTag('img', main),
-		negator = (function () {
-           var neg = function (a, b) {
-			return getLength(b) !== 14;
-		}; 
+		negator = (function (neg) {
             return function(cb, a, b){
 			if (neg(a, b)) {
                 cb();
@@ -194,7 +191,9 @@
 			}
 			return b;
 		};
-        }()),
+        }(function (a, b) {
+			return getLength(b) !== 14;
+		})),
         doPortrait = _.compose(ptL(invoke, sortClass), ptL(construct, 'portrait'), ptL(_.map, [getLI, doClass]), utils.curryFactory(2)(simpleinvoke)),
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
 		//fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
