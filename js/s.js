@@ -526,6 +526,7 @@
 		loadImage = function (url, id) {
 			return new Promise(function (resolve, reject) {
 				var img = document.getElementById(id).firstChild.firstChild;
+                con(img)
 				//img = removeElement(img);
 				//$(id).appendChild(img);
 				img.addEventListener('load', function (e) {
@@ -694,7 +695,8 @@
 							this.successor = s;
 						},
                         
-						handle: function () {
+						handle: function (str) {
+                            con(str);
 							if (predicate.apply(this, arguments)) {
 								return action.apply(this, arguments);
 							} else if (this.successor) {
@@ -710,8 +712,8 @@
 						}
 					};
 				},
-				mynext = COR(_.partial(invoke, equals, 'forwardbutton'), next_driver),
-				myprev = COR(_.partial(invoke, equals, 'backbutton'), prev_driver),
+				mynext = COR(_.partial(invokeArgs, equals, 'forwardbutton'), next_driver),
+				myprev = COR(_.partial(invokeArgs, equals, 'backbutton'), prev_driver),
 				listen,
 				myplayer = COR(function () {
 					pauser();
