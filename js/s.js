@@ -7,75 +7,6 @@
 (function (mq, query, touchevents, picnum, dummy, makePath) {
 	"use strict";
 
-	function LoopIterator(group) {
-		this.group = group;
-		this.position = 0;
-		this.rev = false;
-	}
-        
-    function Group() {
-      this.members = [];
-    }
-    Group.prototype = {
-    add: function(value) {
-      if (!this.has(value)) {
-        this.members.push(value);
-      }
-    },
-    delete: function(value) {
-        this.members = _.filter(this.members, _.negate(ptL(equals, value)));
-    },
-    has: function(value) {
-      return this.members.includes(value);
-    }
-  };
-    Group.from = function(collection) {
-          let group = new Group,
-              i = 0,
-              L = collection.length;
-        for (; i < L; i += 1) {
-            group.add(collection[i]);
-        }
-        return group;
-    };
-    
-	LoopIterator.prototype = {
-		forward: function (flag) {
-			if (!flag && this.rev) {
-				return this.previous(true);
-			}
-			this.position++;
-			this.position = this.position % this.group.members.length;
-			var result = {
-				value: this.group.members[this.position],
-				index: this.position
-			};
-			return result;
-		},
-		back: function (flag) {
-			if (!this.rev || flag) {
-				this.group.members = this.group.members.reverse();
-				this.position = this.group.members.length - 1 - (this.position);
-				this.position = this.position % this.group.members.length;
-				this.rev = !this.rev;
-				return this.forward(this.rev);
-			} else {
-				return this.forward(this.rev);
-			}
-		},
-		play: function () {
-			return this.forward(true).value;
-		},
-		find: function (tgt) {
-			this.position = this.group.members.findIndex(ptL(equals(tgt)));
-			var result = {
-				value: this.group.members[this.position],
-				index: this.position
-			};
-			return result;
-		}
-	};
-
 	function always(val) {
 		return function () {
 			return val;
@@ -97,13 +28,13 @@
 	function greater(a, b) {
 		return a > b;
 	}
-    
-    function equals(a, b) {
+
+	function equals(a, b) {
 		return a === b;
 	}
 
 	function invoke(f, arg) {
-        arg = _.isArray(arg) ? arg : [arg];
+		arg = _.isArray(arg) ? arg : [arg];
 		return f.apply(null, arg);
 	}
 
@@ -159,6 +90,76 @@
 			}
 		};
 	}
+    
+    function LoopIterator(group) {
+        this.group = group;
+        this.position = 0;
+        this.rev = false;
+	}
+
+	function Group() {
+		this.members = [];
+	}
+	Group.prototype = {
+		add: function (value) {
+			if (!this.has(value)) {
+				this.members.push(value);
+			}
+		},
+		remove: function (value) {
+			this.members = _.filter(this.members, _.negate(_.partial(equals, value)));
+		},
+		has: function (value) {
+			return this.members.includes(value);
+		}
+	};
+	Group.from = function (collection) {
+        var group = new Group(),
+			i,
+			L = collection.length;
+		for (i = 0; i < L; i += 1) {
+			group.add(collection[i]);
+		}
+		return group;
+	};
+	LoopIterator.prototype = {
+		forward: function (flag) {
+			if (!flag && this.rev) {
+				return this.previous(true);
+			}
+            this.position += 1;
+			this.position = this.position % this.group.members.length;
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		},
+		back: function (flag) {
+			if (!this.rev || flag) {
+				this.group.members = this.group.members.reverse();
+				this.position = this.group.members.length - 1 - (this.position);
+				this.position = this.position % this.group.members.length;
+				this.rev = !this.rev;
+				return this.forward(this.rev);
+			} else {
+				return this.forward(this.rev);
+			}
+		},
+		play: function () {
+			return this.forward(true).value;
+		},
+		find: function (tgt) {
+			this.position = this.group.members.findIndex(_.partial(equals(tgt)));
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		}
+	};
+    
+    
 	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
@@ -209,7 +210,7 @@
 		}(function (a, b) {
 			return getLength(b.value) !== 14;
 		})),
-        //awaits an img element, maps functions that are invoked with the incoming element argument
+		//awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = _.compose(ptL(invoke, sortClass), ptL(_.map, [always('portrait'), getLI, doClass]), utils.curryFactory(2)(invoke)),
 		//fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
 		fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
@@ -220,10 +221,11 @@
 				//adds portrait class on browsers that don't support nth-child
 				img.onload = function (e) {
 					fixNoNthChild(e.target);
-				}
+				};
 			});
 		},
 		$LI = (function (options) {
+            
 			return {
 				exec: function () { //cb
 					var action = options[0];
@@ -239,7 +241,7 @@
 				}
 			};
 		}(['unrender', 'render'])),
-        makeCrossPageIterator = function (coll) {
+		makeCrossPageIterator = function (coll) {
 			return new LoopIterator(Group.from(coll));
 		},
 		cross_page_iterator = makeCrossPageIterator(all),
@@ -272,11 +274,15 @@
 	_.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
-	render: function () {},
-	unrender: function () {}
+	render: function () {
+        "use strict";
+    },
+	unrender: function () {
+        "use strict";
+    }
 }, function (path) {
 	"use strict";
-	path = '' + path;
+	path = path.toString();
 	var mypath = path.length < 3 ? "images/0" + path : "images/" + path;
 	return mypath + ".jpg";
 }));
