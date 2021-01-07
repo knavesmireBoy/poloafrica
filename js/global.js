@@ -656,7 +656,6 @@ poloAF.Util = (function() {
 	}
 
 	function setFromArray(validate, method, classArray, target) {
-		//console.log(arguments)
 		//target may be a function returning a target element
 		if (!target) {
 			return null;

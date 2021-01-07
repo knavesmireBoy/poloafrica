@@ -59,6 +59,7 @@
 	}
 
 	function caller(o, v, p) {
+        console.log(arguments)
 		return o[p](v);
 	}
 
@@ -80,9 +81,7 @@
 			cb = function (prop) {
 				return attrMap(el, prop, true);
 			};
-		for (k in map) {
-			if (map.hasOwnProperty(k)) {
-				v = map[k];
+		for ([k,v] of map) {
 				if (Array.isArray(v)) {
 					_.forEach(v, cb);
 					break;
@@ -92,19 +91,21 @@
 					continue;
 				}
 				if (!style) {
+                    con(el, k, v)
 					el.setAttribute(k, v);
 				} else {
 					el.style.setProperty(k, v);
 				}
-			}
 		}
 		return el;
 	}
 	/* EXPECTS VALUE BEFORE KEY ON RIGHT CURRY*/
 	function doMap(el, v, k) {
+        //con(el,v,k);
 		var arg = v instanceof Map ? v : new Map([
 			[k, v]
 		]);
+        //con(arg);
 		return attrMap(getResult(el), arg);
 	}
 
@@ -224,7 +225,7 @@
 			return this.forward(true).value;
 		},
 		find: function (tgt) {
-			this.position = this.group.members.findIndex(_.partial(equals(tgt)));
+			this.position = this.group.members.findIndex(_.partial(equals, tgt));
 			var result = {
 				value: this.group.members[this.position],
 				index: this.position
@@ -232,6 +233,17 @@
 			return result;
 		}
 	};
+    
+     function searcher(obj, ary) {
+    /*noticed an issue with parentNode where on supply of an element, the initial value for reduce is the parent
+    but THAT parent would get set on the second iteration to ITS parent so. When array has just one item reduce not really required*/
+    if (ary && ary[1]) {
+      return ary.reduce((acc, cur) => {
+        return acc[cur] ? acc[cur] : acc;
+      }, obj[ary[0]]);
+    }
+    return ary[0] ? obj[ary[0]] : obj;
+  }
 
 	function machBase(source, target) {
 		return new Promise(function (resolve, reject) {
@@ -248,7 +260,8 @@
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
-			img.src = doParse(el.href);
+            img.src = doParse(el.href);
+			img.src = el.href;
 		});
 	}
 
@@ -326,17 +339,19 @@
         */
 		ptL = _.partial,
 		curryFactory = utils.curryFactory,
-		defer_once = curryFactory(0, true),
-		twice = curryFactory(1),
-		twicedefer = curryFactory(1, true),
-		thrice = curryFactory(2),
-		thricedefer = curryFactory(2, true),
-		quart = curryFactory(3),
-		driller = twice(utils.drillDown),
+		defer_once = curryFactory(1, true),
+		twice = curryFactory(2),
+		twicedefer = curryFactory(2, true),
+		thrice = curryFactory(3),
+		thricedefer = curryFactory(3, true),
+		quart = curryFactory(4),
+		//driller = twice(utils.drillDown),
+        driller = twice(searcher),
 		zero = twice(utils.getter)(0),
 		mysetter = thrice(setter),
 		defercall = thricedefer(callerBridge),
-		parser = thrice(caller)('match')(/[^\/]+\.(jpg|png)$/),
+		//parser = thrice(caller)('match')(/[^\/]+\.(jpg|png)$/),
+		parser = thrice(caller)('match')(/images\/[^\/]+\.(jpg|png)$/),
 		doParse = _.compose(zero, parser),
 		divideBy = twice(divide),
 		greaterOrEqual = ptL(invoke, greater),
@@ -399,19 +414,22 @@
 		close_aside = function () {
 			return _.compose(thrice(doMap)('id')('close'), anCrIn(thumbs, main))('aside');
 		},
-		mypics = new LoopIterator(Group.from(allpics.map(function (img) {
+		mypics = new LoopIterator(Group.from(_.map(allpics, function (img) {
 			return img.src;
 		}))),
-		setindex = thrice(callerBridge)('find')(mypics),
+		//setindex = thrice(callerBridge)('find')(mypics),
+		setindex = function(arg){
+            return mypics.find(arg);
+        },
 		getValue = function (v, o, p) {
 			return o[p]()[v];
 		},
 		nextcaller = thricedefer(getValue)('next')(mypics)('value'),
 		prevcaller = thricedefer(getValue)('previous')(mypics)('value'),
-		showtime = _.partial(klasAdd, 'showtime'),
-		playtime = _.partial(klasAdd, 'inplay'),
-		exitshow = _.partial(klasRem, 'showtime'),
-		exitplay = _.partial(klasAdd, 'inplay'),
+		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], document.body)),
+		playtime = ptL(klasAdd, 'inplay'),
+		exitshow = ptL(klasRem, 'showtime'),
+		exitplay = ptL(klasAdd, 'inplay'),
 		observers = [thrice(lazyVal)('href')($$('base'))],
 		publish = defercall('forEach')(observers)(function (ptl, i) {
 			return ptl(getImgSrc());
@@ -694,10 +712,14 @@
 			if (!node_from_target(e).match(/img/i)) {
 				return;
 			}
+            
 			_.compose(setindex, driller(['target', 'src']))(e);
 			_.compose(thrice(doMap)('id')('caption'), anCr(document.querySelector('main')))('aside');
 			_.compose(thrice(doMap)('id')('controls'), anCr(document.querySelector('main')))('section');
-			machBase(e.target, 'base').then(orient(lcsp, ptrt)).then(showtime);
+			//machBase(e.target, 'base').then(orient(lcsp, ptrt)).then(showtime);
+			machBase(e.target, 'base').then(showtime);
+            return;
+            
 			var buttons = ['previous', 'play', 'next'].map(buttons_cb),
 				chain = factory(),
 				controls = eventing('click', null, function (e) {
@@ -718,18 +740,23 @@
 					setup.render();
 				}, _.compose(close_cb, close_aside));
 			//listeners...
+            /*
 			[controls, exit, locate].forEach(function (o) {
 				o.render();
 			});
+            
 			setup.unrender();
+            */
 		}, thumbs);
+    
 	setup.render();
+    
 	addPageNav(anCr, 'gal_forward', function () {
 		return dummy;
 	});
-	$nav.render();
+	//$nav.render();
 	_.each(allpics, fixNoNthChild);
-	utils.$('placeholder').innerHTML = 'PHOTOS';
+	utils.$('placeholder').innerHTML = 'PHOTOS';    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
