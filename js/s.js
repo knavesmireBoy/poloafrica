@@ -1,6 +1,9 @@
 /*jslint nomen: true */
 /*global window: false */
 /*global document: false */
+/*global Map: false */
+/*global Promise: false */
+/*global console: false */
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
@@ -11,6 +14,10 @@
 		return function () {
 			return val;
 		};
+	}
+
+	function noOp() {
+		return function () {};
 	}
 
 	function existy(x) {
@@ -25,6 +32,10 @@
 		return i % n;
 	}
 
+	function divide(a, b) {
+		return a / b;
+	}
+
 	function greater(a, b) {
 		return a > b;
 	}
@@ -33,9 +44,72 @@
 		return a === b;
 	}
 
+	function subtract(a, b) {
+		return a - b;
+	}
+
 	function invoke(f, arg) {
 		arg = _.isArray(arg) ? arg : [arg];
 		return f.apply(null, arg);
+	}
+
+	function invokeArgs(f) {
+		var args = _.rest(arguments);
+		return f.apply(null, args.map(getResult));
+	}
+
+	function caller(o, v, p) {
+		return o[p](v);
+	}
+
+	function callerBridge(v, o, p) {
+		return caller(o, v, p);
+	}
+
+	function setter(v, o, p) {
+		o[p] = v;
+	}
+
+	function nested(e, s, g) {
+		return s(g(e));
+	}
+
+	function attrMap(el, map, style) {
+		var k,
+			v,
+			cb = function (prop) {
+				return attrMap(el, prop, true);
+			};
+		for (k in map) {
+			if (map.hasOwnProperty(k)) {
+				v = map[k];
+				if (Array.isArray(v)) {
+					_.forEach(v, cb);
+					break;
+				}
+				if (k.match(/^te?xt$/)) {
+					el.innerHTML = v;
+					continue;
+				}
+				if (!style) {
+					el.setAttribute(k, v);
+				} else {
+					el.style.setProperty(k, v);
+				}
+			}
+		}
+		return el;
+	}
+	/* EXPECTS VALUE BEFORE KEY ON RIGHT CURRY*/
+	function doMap(el, v, k) {
+		var arg = v instanceof Map ? v : new Map([
+			[k, v]
+		]);
+		return attrMap(getResult(el), arg);
+	}
+
+	function lazyVal(v, el, k) {
+		return invokeArgs(doMap, el, v, k);
 	}
 
 	function goCompare(o, p1, p2, invoker) {
@@ -90,11 +164,11 @@
 			}
 		};
 	}
-    
-    function LoopIterator(group) {
-        this.group = group;
-        this.position = 0;
-        this.rev = false;
+
+	function LoopIterator(group) {
+		this.group = group;
+		this.position = 0;
+		this.rev = false;
 	}
 
 	function Group() {
@@ -114,7 +188,7 @@
 		}
 	};
 	Group.from = function (collection) {
-        var group = new Group(),
+		var group = new Group(),
 			i,
 			L = collection.length;
 		for (i = 0; i < L; i += 1) {
@@ -127,7 +201,7 @@
 			if (!flag && this.rev) {
 				return this.previous(true);
 			}
-            this.position += 1;
+			this.position += 1;
 			this.position = this.position % this.group.members.length;
 			var result = {
 				value: this.group.members[this.position],
@@ -158,8 +232,82 @@
 			return result;
 		}
 	};
-    
-    
+
+	function machBase(source, target) {
+		return new Promise(function (resolve, reject) {
+			var el = anCr($q('.gallery'))('a'),
+				img = anCr(el)('img'),
+				partial = _.partial(doMap, el),
+				coll = [
+					['href', doParse(source.src)],
+					['id', target]
+				];
+			_.forEach(coll, function (arr) {
+				return partial(arr[1], arr[0]);
+			});
+			img.addEventListener('load', function (e) {
+				resolve(img);
+			});
+			img.src = doParse(el.href);
+		});
+	}
+
+	function machSlide(source, target) {
+		return new Promise(function (resolve, reject) {
+			var el = anCr($q('.gallery'))('a'),
+				img = anCr(el)('img'),
+				partial = _.partial(doMap, el),
+				coll = [
+					['href', doParse($(source).href)],
+					['id', target]
+				];
+			_.forEach(coll, function (arr) {
+				return partial(arr[1], arr[0]);
+			});
+			img.addEventListener('load', function (e) {
+				resolve(img);
+			});
+			img.src = doParse(el.href);
+		});
+	}
+
+	function machPause(src) {
+		return new Promise(function (resolve, reject) {
+			var el = anCr($q('.gallery'))('a'),
+				img = anCr(el)('img'),
+				partial = _.partial(doMap, el),
+				styleAttrs = new Map([
+					["opacity", 0.5]
+				]),
+				coll = [
+					['id', 'pause'],
+					['style', [styleAttrs]]
+				];
+			_.forEach(coll, function (arr) {
+				return partial(arr[1], arr[0]);
+			});
+			img.addEventListener('load', function (e) {
+				resolve(img);
+			});
+			img.src = doParse(src);
+			img.id = "pauser";
+		});
+	}
+
+	function doOpacity(flag) {
+		var style,
+			slide = $('slide'),
+			val;
+		if (slide) {
+			val = flag ? 1 : recur.i / 100;
+			style = new Map([
+				['opacity', val]
+			]);
+			doMap(slide, new Map([
+				['style', [style]]
+			]));
+		}
+	}
 	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
@@ -177,11 +325,41 @@
 		},
         */
 		ptL = _.partial,
+		curryFactory = utils.curryFactory,
+		defer_once = curryFactory(0, true),
+		twice = curryFactory(1),
+		twicedefer = curryFactory(1, true),
+		thrice = curryFactory(2),
+		thricedefer = curryFactory(2, true),
+		quart = curryFactory(3),
+		driller = twice(utils.drillDown),
+		zero = twice(utils.getter)(0),
+		mysetter = thrice(setter),
+		defercall = thricedefer(callerBridge),
+		parser = thrice(caller)('match')(/[^\/]+\.(jpg|png)$/),
+		doParse = _.compose(zero, parser),
+		divideBy = twice(divide),
+		greaterOrEqual = ptL(invoke, greater),
+		gtEq = ptL(greater),
+		doAlt = function (actions) {
+			return actions.reverse()[0]();
+		},
+		klasAdd = utils.addClass,
+		klasRem = utils.removeClass,
+		klasTog = utils.toggleClass,
+		$ = thrice(callerBridge)('getElementById')(document),
+		$q = thrice(callerBridge)('querySelector')(document),
+		$$ = thricedefer(callerBridge)('getElementById')(document),
+		lcsp = _.partial(klasAdd, 'lscp'),
+		ptrt = _.partial(klasRem, 'lscp'),
+		target = twice(utils.getter)('target'),
+		text_target = twice(utils.getter)('innerHTML'),
+		node_target = twice(utils.getter)('nodeName'),
+		text_from_target = thrice(nested)(target)(text_target),
+		node_from_target = thrice(nested)(target)(node_target),
 		anCr = utils.append(),
 		anCrIn = utils.insert(),
 		setAttrs = utils.setAttributes,
-		klasAdd = utils.addClass,
-		klasTog = utils.toggleClass,
 		getNodeName = utils.drillDown(['nodeName']),
 		getID = utils.drillDown(['id']),
 		getLength = utils.drillDown(['length']),
@@ -199,6 +377,51 @@
 		thumbs = utils.getByClass('gallery')[0],
 		getTarget = utils.drillDown([mytarget]),
 		allpics = utils.getByTag('img', main),
+		getSlideChild = _.compose(utils.getChild, $$('slide')),
+		getBaseChild = _.compose(utils.getChild, $$('base')),
+		getImgSrc = _.compose(utils.drillDown(['src']), getBaseChild),
+		buttons_cb = function (str) {
+			var el = anCr($('controls'))('button'),
+				coll = [
+					["innerHTML", str],
+					["id", str]
+				],
+				f = function (arr) {
+					el[arr[0]] = arr[1];
+				};
+			_.forEach(coll, f);
+			return el;
+		},
+		close_cb = function (ancr) {
+			return ancr;
+			//return compose(thrice(doMap)('class')('contain'), thrice(doMap)('src')('poppy.png'), anCr(ancr))('img');
+		},
+		close_aside = function () {
+			return _.compose(thrice(doMap)('id')('close'), anCrIn(thumbs, main))('aside');
+		},
+		mypics = new LoopIterator(Group.from(allpics.map(function (img) {
+			return img.src;
+		}))),
+		setindex = thrice(callerBridge)('find')(mypics),
+		getValue = function (v, o, p) {
+			return o[p]()[v];
+		},
+		nextcaller = thricedefer(getValue)('next')(mypics)('value'),
+		prevcaller = thricedefer(getValue)('previous')(mypics)('value'),
+		showtime = _.partial(klasAdd, 'showtime'),
+		playtime = _.partial(klasAdd, 'inplay'),
+		exitshow = _.partial(klasRem, 'showtime'),
+		exitplay = _.partial(klasAdd, 'inplay'),
+		observers = [thrice(lazyVal)('href')($$('base'))],
+		publish = defercall('forEach')(observers)(function (ptl, i) {
+			return ptl(getImgSrc());
+		}),
+		orient = function (l, p) {
+			return function (img) {
+				utils.getBest(_.partial(gtEq, getResult(img).clientWidth, getResult(img).clientHeight), [l, p])();
+				return img.src;
+			};
+		},
 		negator = (function (neg) {
 			return function (cb, a, b) {
 				if (neg(a, b)) {
@@ -225,7 +448,6 @@
 			});
 		},
 		$LI = (function (options) {
-            
 			return {
 				exec: function () { //cb
 					var action = options[0];
@@ -266,7 +488,242 @@
 			return el;
 		},
 		pageNavHandler = _.compose(ptL(eventing, 'click', null, _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
-		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler);
+		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
+		loadImage = function (url, id) {
+			return new Promise(function (resolve, reject) {
+				var img = document.getElementById(id).firstChild;
+				//img = removeElement(img);
+				//$(id).appendChild(img);
+				img.addEventListener('load', function (e) {
+					resolve(img);
+				});
+				img.addEventListener('error', function () {
+					reject(new Error("Failed to load image's URL:" + url()));
+				});
+				img.src = doParse(url());
+			});
+		},
+		loader = function (caller, id) {
+			return loadImage(caller, id).catch(function (e) {
+				console.error(e);
+			});
+		},
+		locator = function (forward, back) {
+			var getLoc = (function (div, subtract, isGreaterEq) {
+				var getThreshold = _.compose(div, subtract);
+				return function (e) {
+					var box = e.target.getBoundingClientRect(),
+						res = isGreaterEq(partial(subtract, e.clientX, box.left), partial(getThreshold, box.right, box.left));
+					//return e.clientX-box.left > (box.right-box.left)/2;
+					return res;
+				};
+			}(divideBy(2), subtract, greaterOrEqual));
+			return function (e) {
+				return utils.getBest(function (agg) {
+					return agg[0](e);
+				}, [
+					[getLoc, forward],
+					[always(true), back]
+				]);
+			};
+		},
+		locate = eventing('click', null, function (e) {
+			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
+			orient(lcsp, ptrt)(e.target);
+			publish();
+		}, thumbs),
+		recur = (function (l, p) {
+			function test() {
+				return _.map([getBaseChild(), getSlideChild()], function (img) {
+					return img.width > img.height;
+				});
+			}
+
+			function paint(str) {
+				var coll = test(),
+					bool = coll[0] === coll[1],
+					m = bool ? 'remove' : 'add';
+				document.body.classList[m]('swap');
+				return !bool;
+			}
+
+			function doBase() {
+				loader(mypics.play.bind(mypics), 'base').then(paint).then(setPlayer);
+			}
+
+			function doFormat(img) {
+				return utils.getBest(ptL(gtEq, img.width, img.height), [l, p])();
+			}
+
+			function doSlide() {
+				loader(_.compose(driller(['src']), utils.getChild, $$('base')), 'slide').then(doFormat);
+			}
+
+			function doRecur() {
+				player.inc();
+				recur.t = window.requestAnimationFrame(recur);
+			}
+			var playmaker = (function () {
+					var fadeOut = {
+							validate: function () {
+								return recur.i <= -81;
+							},
+							inc: function () {
+								recur.i -= 1;
+							},
+							reset: function () {
+								doSlide();
+								setPlayer(document.body.classList.contains('swap'));
+							}
+						},
+						fadeIn = {
+							validate: function () {
+								return recur.i >= 300;
+							},
+							inc: function () {
+								recur.i += 1;
+							},
+							reset: function () {
+								doBase();
+							}
+						},
+						fade = {
+							validate: function () {
+								return recur.i <= -1;
+							},
+							inc: function () {
+								recur.i -= 1;
+							},
+							reset: function () {
+								recur.i = 360;
+								doSlide();
+								doOpacity();
+								doBase();
+							}
+						},
+						actions = [fadeIn, fadeOut];
+					return function (flag) {
+						return flag ? actions.reverse()[0] : fade;
+					};
+				}()),
+				setPlayer = function (arg) {
+					player = playmaker(arg);
+					recur();
+				},
+				player = playmaker();
+			return function () {
+				if (player.validate()) {
+					player.reset();
+				} else {
+					doOpacity();
+					doRecur();
+				}
+			};
+		}(lcsp, ptrt)),
+		clear = function (flag) {
+			doOpacity(flag);
+			window.cancelAnimationFrame(recur.t);
+			recur.t = null;
+		},
+		factory = function () {
+			var playbutton = thricedefer(doMap)('txt')('play')($('play')),
+				pausebutton = thricedefer(doMap)('txt')('pause')($('play')),
+				removePause = _.compose(utils.removeNodeOnComplete, $$('pause')),
+				removeSlide = _.compose(utils.removeNodeOnComplete, $$('slide')),
+				removal = defercall('forEach')([removePause, removeSlide])(getResult),
+				doButton = defer_once(doAlt)([playbutton, pausebutton]),
+				doSlide = defer_once(doAlt)([clear, recur]),
+				doDisplay = defer_once(doAlt)([playtime]),
+				unpauser = function () {
+					machPause('pause.png').then(function (el) {
+						eventing('click', null, invoke_player, el).render();
+					});
+				},
+				doPause = defer_once(doAlt)([_.partial(utils.doWhen, $$('slide'), unpauser), removePause]),
+				invoke_player = defercall('forEach')([doSlide, doButton, doDisplay, doPause])(getResult),
+				setOrient = partial(orient(lcsp, ptrt), $$('base')),
+				relocate = _.partial(callerBridge, null, locate, 'render'),
+				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
+				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), playbutton('play'), exitplay, doReLocate, setOrient, publish, removal])(getResult),
+				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), playbutton('play'), exitplay, doReLocate, setOrient, publish, removal])(getResult),
+				pauser = function () {
+					if (!$('slide')) {
+						machSlide('base', 'slide').then(function (el) {
+							eventing('click', null, invoke_player, el).render();
+							locate.unrender();
+						});
+					}
+				},
+				COR = function (predicate, action) {
+					return {
+						setSuccessor: function (s) {
+							this.successor = s;
+						},
+						handle: function () {
+							if (predicate.apply(this, arguments)) {
+								return action.apply(this, arguments);
+							} else if (this.successor) {
+								return this.successor.handle.apply(this.successor, arguments);
+							}
+						},
+						validate: function (str) {
+							if (document.querySelector('.inplay') && recur.t && predicate(str)) {
+								//return fresh instance on exiting slideshow IF in play mode
+								return factory();
+							}
+							return this;
+						}
+					};
+				},
+				mynext = COR(_.partial(invoke, equals, 'next'), next_driver),
+				myprev = COR(_.partial(invoke, equals, 'previous'), prev_driver),
+				listen,
+				myplayer = COR(function () {
+					pauser();
+					return true;
+				}, invoke_player);
+			myplayer.validate = function () {
+				return this;
+			};
+			mynext.setSuccessor(myprev);
+			myprev.setSuccessor(myplayer);
+			recur.i = 50; //slide is clone of base initially, so fade can start
+			return mynext;
+		}, //factory
+		setup = eventing('click', null, function (e) {
+			if (!node_from_target(e).match(/img/i)) {
+				return;
+			}
+			_.compose(setindex, driller(['target', 'src']))(e);
+			_.compose(thrice(doMap)('id')('caption'), anCr(document.querySelector('main')))('aside');
+			_.compose(thrice(doMap)('id')('controls'), anCr(document.querySelector('main')))('section');
+			machBase(e.target, 'base').then(orient(lcsp, ptrt)).then(showtime);
+			var buttons = ['previous', 'play', 'next'].map(buttons_cb),
+				chain = factory(),
+				controls = eventing('click', null, function (e) {
+					var str = text_from_target(e),
+						node = node_from_target(e);
+					if (node.match(/button/i)) {
+						//!!REPLACE the original chain reference, validate will return either the original or brand new instance
+						chain = chain.validate(str);
+						chain.handle(str);
+					}
+				}, $('controls')),
+				exit = eventing('click', null, function (e) {
+					chain = chain.validate('next');
+					chain.handle('next');
+					exitshow();
+					[this, $('caption'), $('controls'), $('base'), $('slide')].forEach(utils.removeNodeOnComplete);
+					locate.unrender();
+					setup.render();
+				}, _.compose(close_cb, close_aside));
+			//listeners...
+			[controls, exit, locate].forEach(function (o) {
+				o.render();
+			});
+			setup.unrender();
+		}, thumbs);
+	setup.render();
 	addPageNav(anCr, 'gal_forward', function () {
 		return dummy;
 	});
@@ -275,11 +732,11 @@
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
-        "use strict";
-    },
+		"use strict";
+	},
 	unrender: function () {
-        "use strict";
-    }
+		"use strict";
+	}
 }, function (path) {
 	"use strict";
 	path = path.toString();

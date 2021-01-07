@@ -355,9 +355,11 @@
     defercall = thricedefer(caller),
     parser = thrice((o, v, p) => o[p](v))('match')(/[^\/]+\.(jpg|png)$/),
     divideBy = twice((a, b) => a / b),
+        
     $ = thrice(caller)('getElementById')(document),
     $q = thrice(caller)('querySelector')(document),
     $$ = thricedefer(caller)('getElementById')(document),
+        
     enable = document.body.classList.add.bind(document.body.classList),
     disable = document.body.classList.remove.bind(document.body.classList),
     lcsp = curryLeftDefer(enable, 'lscp'),
@@ -367,19 +369,24 @@
     node_target = twice(getter)('nodeName'),
     text_from_target = thrice((e, s, g) => s(g(e)))(target)(text_target),
     node_from_target = thrice((e, s, g) => s(g(e)))(target)(node_target),
+        
     getChild = compose(getNextElement, driller(['firstChild'])),
+        
     getNewElement = dispatch(document.createElement.bind(document), twice(cloneNode)(true), document.createDocumentFragment.bind(document)),
+        
     setAnchor = (function(render) {
       return function(anchor, refnode, strategy) {
         return compose(partial(partial(invoke, render), anchor, refnode), strategy);
       };
     }((anc, ref, el) => anc.insertBefore(el, ref))),
+        
     append = function(flag) {
       if (flag) {
         return thricedefer(setAnchor)(getNewElement)(null);
       }
       return thrice(setAnchor)(getNewElement)(null);
     },
+        
     insert = function(flag) {
       if (flag) {
         return function(ref, anc) {
@@ -390,13 +397,16 @@
         return thrice(setAnchor)(getNewElement)(ref)(anc);
       };
     },
+        
     anCr = append(),
     anCrIn = insert(),
+        
     removeNodeOnComplete = removeElement.wrap(function(f, node) {
       if (validateRemove(node)) {
         return f(node);
       }
     }),
+        
     locator = function(forward, back) {
       var getLoc = (function(div, subtract, isGreaterEq) {
         var getThreshold = compose(div, subtract);
@@ -424,11 +434,14 @@
       var res = f(str);
       return res.match(/^Is\s.+/i) ? res + '?' : res;
     }),
+        
     imgs = [...document.images].slice(0, -1), //kitchener
+        
     gallery = document.querySelector('.gallery'),
     getSlideChild = compose(getChild, $$('slide')),
     getBaseChild = compose(getChild, $$('base')),
     getImgSrc = compose(driller(['src']), getBaseChild),
+        
     buttons_cb = (str) => {
       var el = anCr($('controls'))('button');
       [
@@ -444,14 +457,17 @@
     close_aside = function() {
       return compose(thrice(doMap)('id')('close'), anCrIn(gallery, document.querySelector('main')))('aside');
     },
+        
     films = new LoopIterator(Group.from(imgs.map(img => img.src))),
     setindex = thrice(caller)('find')(films),
     nextcaller = thricedefer((v, o, p) => o[p]()[v])('next')(films)('value'),
     prevcaller = thricedefer((v, o, p) => o[p]()[v])('previous')(films)('value'),
+        
     showtime = curryLeftDefer(enable, 'showtime'),
     playtime = curryLeftDefer(enable, 'inplay'),
     exitplay = curryLeftDefer(disable, 'inplay'),
     exitshow = curryLeftDefer(disable, 'showtime'),
+        
     setCaptionOn = compose(thrice(lazyVal)('txt')($$('caption')), setCaption),
     setCaptionOnWrap = setCaptionOn.wrap((f, img) => {
       f(img.src);
