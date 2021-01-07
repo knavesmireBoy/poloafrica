@@ -207,7 +207,7 @@
 				return b;
 			};
 		}(function (a, b) {
-			return getLength(b) !== 14;
+			return getLength(b.value) !== 14;
 		})),
         //awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = _.compose(ptL(invoke, sortClass), ptL(_.map, [always('portrait'), getLI, doClass]), utils.curryFactory(2)(invoke)),
@@ -215,7 +215,7 @@
 		fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
 		doPopulate = function (pagepics) {
 			_.each(allpics, function (img, i) {
-				var path = pagepics[i];
+				var path = pagepics.value[i];
 				img.src = makePath(path);
 				//adds portrait class on browsers that don't support nth-child
 				img.onload = function (e) {
@@ -239,9 +239,8 @@
 				}
 			};
 		}(['unrender', 'render'])),
-		makeCrossPageIterator = function (coll) {
-			var prepIterator = doVier(window.poloAF.Iterator(false));
-			return prepIterator(ptL(modulo, coll.length))(utils.always(true))(coll)(0);
+        makeCrossPageIterator = function (coll) {
+			return new LoopIterator(Group.from(coll));
 		},
 		cross_page_iterator = makeCrossPageIterator(all),
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)), allpics)),
