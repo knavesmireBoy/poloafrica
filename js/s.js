@@ -91,7 +91,6 @@
 					continue;
 				}
 				if (!style) {
-                    con(el, k, v)
 					el.setAttribute(k, v);
 				} else {
 					el.style.setProperty(k, v);
@@ -362,11 +361,13 @@
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
 		klasTog = utils.toggleClass,
+        main = document.getElementsByTagName('main')[0],
+		thumbs = utils.getByClass('gallery')[0],
 		$ = thrice(callerBridge)('getElementById')(document),
 		$q = thrice(callerBridge)('querySelector')(document),
 		$$ = thricedefer(callerBridge)('getElementById')(document),
-		lcsp = _.partial(klasAdd, 'lscp'),
-		ptrt = _.partial(klasRem, 'lscp'),
+		lcsp = _.partial(klasRem, 'portrait', thumbs),
+		ptrt = _.partial(klasAdd, 'portrait', thumbs),
 		target = twice(utils.getter)('target'),
 		text_target = twice(utils.getter)('innerHTML'),
 		node_target = twice(utils.getter)('nodeName'),
@@ -388,8 +389,7 @@
 		sortClass = function (klas, el, m) {
 			utils[m](klas, el);
 		},
-		main = document.getElementsByTagName('main')[0],
-		thumbs = utils.getByClass('gallery')[0],
+		
 		getTarget = utils.drillDown([mytarget]),
 		allpics = utils.getByTag('img', main),
 		getSlideChild = _.compose(utils.getChild, $$('slide')),
@@ -412,7 +412,7 @@
 			//return compose(thrice(doMap)('class')('contain'), thrice(doMap)('src')('poppy.png'), anCr(ancr))('img');
 		},
 		close_aside = function () {
-			return _.compose(thrice(doMap)('id')('close'), anCrIn(thumbs, main))('aside');
+			return _.compose(thrice(doMap)('href')('.'), thrice(doMap)('id')('exit'), anCrIn(thumbs, main))('a');
 		},
 		mypics = new LoopIterator(Group.from(_.map(allpics, function (img) {
 			return img.src;
@@ -436,7 +436,7 @@
 		}),
 		orient = function (l, p) {
 			return function (img) {
-				utils.getBest(_.partial(gtEq, getResult(img).clientWidth, getResult(img).clientHeight), [l, p])();
+				utils.getBest(_.partial(gtEq, getResult(img).clientHeight, getResult(img).clientWidth), [p, l])();
 				return img.src;
 			};
 		},
@@ -659,7 +659,7 @@
 				},
 				doPause = defer_once(doAlt)([_.partial(utils.doWhen, $$('slide'), unpauser), removePause]),
 				invoke_player = defercall('forEach')([doSlide, doButton, doDisplay, doPause])(getResult),
-				setOrient = partial(orient(lcsp, ptrt), $$('base')),
+				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
 				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), playbutton('play'), exitplay, doReLocate, setOrient, publish, removal])(getResult),
@@ -714,11 +714,8 @@
 			}
             
 			_.compose(setindex, driller(['target', 'src']))(e);
-			_.compose(thrice(doMap)('id')('caption'), anCr(document.querySelector('main')))('aside');
 			_.compose(thrice(doMap)('id')('controls'), anCr(document.querySelector('main')))('section');
-			//machBase(e.target, 'base').then(orient(lcsp, ptrt)).then(showtime);
-			machBase(e.target, 'base').then(showtime);
-            return;
+			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
             
 			var buttons = ['previous', 'play', 'next'].map(buttons_cb),
 				chain = factory(),
@@ -735,18 +732,17 @@
 					chain = chain.validate('next');
 					chain.handle('next');
 					exitshow();
-					[this, $('caption'), $('controls'), $('base'), $('slide')].forEach(utils.removeNodeOnComplete);
+					[this, $('controls'), $('base'), $('slide')].forEach(utils.removeNodeOnComplete);
 					locate.unrender();
 					setup.render();
 				}, _.compose(close_cb, close_aside));
 			//listeners...
-            /*
+            
 			[controls, exit, locate].forEach(function (o) {
 				o.render();
 			});
             
 			setup.unrender();
-            */
 		}, thumbs);
     
 	setup.render();
