@@ -59,8 +59,7 @@
 	}
 
 	function caller(o, v, p) {
-        console.log(arguments)
-		return o[p](v);
+		return o[p] && o[p](v);
 	}
 
 	function callerBridge(v, o, p) {
@@ -199,10 +198,12 @@
 	LoopIterator.prototype = {
 		forward: function (flag) {
 			if (!flag && this.rev) {
-				return this.previous(true);
+				return this.back(true);
 			}
-			this.position += 1;
+            con(this.position)
+			this.position++;
 			this.position = this.position % this.group.members.length;
+             con(this.position)
 			var result = {
 				value: this.group.members[this.position],
 				index: this.position
@@ -210,6 +211,7 @@
 			return result;
 		},
 		back: function (flag) {
+            con('back')
 			if (!this.rev || flag) {
 				this.group.members = this.group.members.reverse();
 				this.position = this.group.members.length - 1 - (this.position);
@@ -221,10 +223,13 @@
 			}
 		},
 		play: function () {
+            con('play')
 			return this.forward(true).value;
 		},
 		find: function (tgt) {
+            con('find')
 			this.position = this.group.members.findIndex(_.partial(equals, tgt));
+            con(this.position)
 			var result = {
 				value: this.group.members[this.position],
 				index: this.position
@@ -386,7 +391,7 @@
 		lcsp = _.partial(klasRem, 'portrait', thumbs),
 		ptrt = _.partial(klasAdd, 'portrait', thumbs),
 		target = twice(utils.getter)('target'),
-		text_target = twice(utils.getter)('innerHTML'),
+		text_target = twice(utils.getter)('id'),
 		node_target = twice(utils.getter)('nodeName'),
 		text_from_target = thrice(nested)(target)(text_target),
 		node_from_target = thrice(nested)(target)(node_target),
@@ -435,8 +440,8 @@
 		getValue = function (v, o, p) {
 			return o[p]()[v];
 		},
-		nextcaller = thricedefer(getValue)('next')(mypics)('value'),
-		prevcaller = thricedefer(getValue)('previous')(mypics)('value'),
+		nextcaller = thricedefer(getValue)('forward')(mypics)('value'),
+		prevcaller = thricedefer(getValue)('back')(mypics)('value'),
 		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], document.body)),
 		playtime = ptL(klasAdd, 'inplay'),
 		exitshow = ptL(klasRem, 'showtime'),
@@ -464,8 +469,8 @@
 		})),
 		//awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = _.compose(ptL(invoke, sortClass), ptL(_.map, [always('portrait'), getLI, doClass]), utils.curryFactory(2)(invoke)),
-		//fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
-		fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
+		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
+		//fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
 		doPopulate = function (pagepics) {
 			_.each(allpics, function (img, i) {
 				var path = pagepics.value[i];
@@ -520,7 +525,7 @@
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
 		loadImage = function (url, id) {
 			return new Promise(function (resolve, reject) {
-				var img = document.getElementById(id).firstChild;
+				var img = document.getElementById(id).firstChild.firstChild;
 				//img = removeElement(img);
 				//$(id).appendChild(img);
 				img.addEventListener('load', function (e) {
@@ -542,9 +547,9 @@
 				var getThreshold = _.compose(div, subtract);
 				return function (e) {
 					var box = e.target.getBoundingClientRect(),
-						res = isGreaterEq(partial(subtract, e.clientX, box.left), partial(getThreshold, box.right, box.left));
-					//return e.clientX-box.left > (box.right-box.left)/2;
-					return res;
+						res = isGreaterEq(ptL(subtract, e.clientX, box.left), ptL(getThreshold, box.right, box.left));
+					return e.clientX-box.left > (box.right-box.left)/2;
+					//return res;
 				};
 			}(divideBy(2), subtract, greaterOrEqual));
 			return function (e) {
@@ -556,7 +561,7 @@
 				]);
 			};
 		},
-		locate = eventing('click', null, function (e) {
+		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			orient(lcsp, ptrt)(e.target);
 			publish();
@@ -688,6 +693,7 @@
 						setSuccessor: function (s) {
 							this.successor = s;
 						},
+                        
 						handle: function () {
 							if (predicate.apply(this, arguments)) {
 								return action.apply(this, arguments);
@@ -704,8 +710,8 @@
 						}
 					};
 				},
-				mynext = COR(_.partial(invoke, equals, 'next'), next_driver),
-				myprev = COR(_.partial(invoke, equals, 'previous'), prev_driver),
+				mynext = COR(_.partial(invoke, equals, 'forwardbutton'), next_driver),
+				myprev = COR(_.partial(invoke, equals, 'backbutton'), prev_driver),
 				listen,
 				myplayer = COR(function () {
 					pauser();
@@ -740,8 +746,8 @@
 					}
 				}, $('controls')),
 				exit = eventing('click', null, function (e) {
-					chain = chain.validate('next');
-					chain.handle('next');
+					chain = chain.validate('forward');
+					chain.handle('forward');
 					exitshow();
 					[this, $('controls'), $('base'), $('slide')].forEach(utils.removeNodeOnComplete);
 					locate.unrender();
