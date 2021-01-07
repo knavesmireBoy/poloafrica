@@ -246,56 +246,73 @@
 
 	function machBase(source, target) {
 		return new Promise(function (resolve, reject) {
-			var el = anCr($q('.gallery'))('a'),
-				img = anCr(el)('img'),
-				partial = _.partial(doMap, el),
+			var li = anCr($q('.gallery'))('li'),
+                a = anCr(li)('a'),
+				img = anCr(a)('img'),
+				partial = _.partial(doMap, a),
 				coll = [
 					['href', doParse(source.src)],
-					['id', target]
 				];
+            
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
+            coll = [['id', target]];
+            partial = _.partial(doMap, li);
+            _.forEach(coll, function (arr) {
+				return partial(arr[1], arr[0]);
+			});
+            
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
-            img.src = doParse(el.href);
-			img.src = el.href;
+            img.src = doParse(a.href);
 		});
 	}
 
 	function machSlide(source, target) {
 		return new Promise(function (resolve, reject) {
-			var el = anCr($q('.gallery'))('a'),
-				img = anCr(el)('img'),
-				partial = _.partial(doMap, el),
+			var li = anCr($q('.gallery'))('li'),
+                a = anCr(li)('a'),
+				img = anCr(a)('img'),
+				partial = _.partial(doMap, a),
 				coll = [
 					['href', doParse($(source).href)],
-					['id', target]
 				];
 			_.forEach(coll, function (arr) {
+				return partial(arr[1], arr[0]);
+			});
+            
+             coll = [['id', target]];
+            partial = _.partial(doMap, li);
+            _.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
-			img.src = doParse(el.href);
+			img.src = doParse(a.href);
 		});
 	}
 
 	function machPause(src) {
 		return new Promise(function (resolve, reject) {
-			var el = anCr($q('.gallery'))('a'),
-				img = anCr(el)('img'),
-				partial = _.partial(doMap, el),
+			var li = anCr($q('.gallery'))('li'),
+                a = anCr(li)('a'),
+				img = anCr(a)('img'),
+				partial = _.partial(doMap, a),
 				styleAttrs = new Map([
 					["opacity", 0.5]
 				]),
 				coll = [
-					['id', 'pause'],
 					['style', [styleAttrs]]
 				];
 			_.forEach(coll, function (arr) {
+				return partial(arr[1], arr[0]);
+			});
+            partial = _.partial(doMap, li);
+            coll = [['id', 'pause']];
+             _.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
 			img.addEventListener('load', function (e) {
