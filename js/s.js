@@ -396,15 +396,9 @@
 		getBaseChild = _.compose(utils.getChild, $$('base')),
 		getImgSrc = _.compose(utils.drillDown(['src']), getBaseChild),
 		buttons_cb = function (str) {
-			var el = anCr($('controls'))('button'),
-				coll = [
-					["innerHTML", str],
-					["id", str]
-				],
-				f = function (arr) {
-					el[arr[0]] = arr[1];
-				};
-			_.forEach(coll, f);
+			var el = anCr($('controls'))('button');
+            el.id = str;
+			//_.forEach(coll, f);
 			return el;
 		},
 		close_cb = function (ancr) {
@@ -644,8 +638,8 @@
 			recur.t = null;
 		},
 		factory = function () {
-			var playbutton = thricedefer(doMap)('txt')('play')($('play')),
-				pausebutton = thricedefer(doMap)('txt')('pause')($('play')),
+			var playbutton = thricedefer(doMap)('txt')('play')($('playbutton')),
+				pausebutton = thricedefer(doMap)('txt')('pause')($('playbutton')),
 				removePause = _.compose(utils.removeNodeOnComplete, $$('pause')),
 				removeSlide = _.compose(utils.removeNodeOnComplete, $$('slide')),
 				removal = defercall('forEach')([removePause, removeSlide])(getResult),
@@ -658,12 +652,12 @@
 					});
 				},
 				doPause = defer_once(doAlt)([_.partial(utils.doWhen, $$('slide'), unpauser), removePause]),
-				invoke_player = defercall('forEach')([doSlide, doButton, doDisplay, doPause])(getResult),
+				invoke_player = defercall('forEach')([doSlide, /*doButton, */doDisplay, doPause])(getResult),
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
-				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), playbutton('play'), exitplay, doReLocate, setOrient, publish, removal])(getResult),
-				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), playbutton('play'), exitplay, doReLocate, setOrient, publish, removal])(getResult),
+				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), exitplay, doReLocate, setOrient, publish, removal])(getResult),
+				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), exitplay, doReLocate, setOrient, publish, removal])(getResult),
 				pauser = function () {
 					if (!$('slide')) {
 						machSlide('base', 'slide').then(function (el) {
@@ -714,10 +708,10 @@
 			}
             
 			_.compose(setindex, driller(['target', 'src']))(e);
-			_.compose(thrice(doMap)('id')('controls'), anCr(document.querySelector('main')))('section');
+			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(document.querySelector('main')))('section');
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
             
-			var buttons = ['previous', 'play', 'next'].map(buttons_cb),
+			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 				chain = factory(),
 				controls = eventing('click', null, function (e) {
 					var str = text_from_target(e),
