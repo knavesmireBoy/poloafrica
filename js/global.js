@@ -117,7 +117,7 @@ poloAF.Util = (function() {
 	function construct(head, tail) {
 		return head && cat([head], _.toArray(tail));
 	}
-    
+
     function mapcat(fun, coll) {
 		var res = _.map(coll, fun);
 		return cat.apply(null, res);
@@ -159,7 +159,7 @@ poloAF.Util = (function() {
 	function byIndex(i, arg) {
 		return getResult(arg)[i];
 	}
-    
+
 	function simpleInvoke(o, m, arg) {
 		//console.log(arguments)
 		return o[m](arg);
@@ -177,7 +177,7 @@ poloAF.Util = (function() {
 	function thunk(f) {
 		return f.apply(f, _.rest(arguments));
 	}
-    
+
 
 	function prefix(p, str) {
 		return str.charAt(0) === p ? str : p + str;
@@ -376,7 +376,7 @@ poloAF.Util = (function() {
 	}
 
 	function getScrollThreshold(el, percent) {
-		/*park this 
+		/*park this
 		var documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
 		var po = getPageOffset(),
 		elementOffsetTop = utils.getElementOffset(el).top,
@@ -399,15 +399,15 @@ poloAF.Util = (function() {
 	function getClassList(el) {
 		return el && (el.classList || poloAF.ClassList(el));
 	}
-    
+
     function curryFactory (i, defer){
-        
+
           function curry1(fun) {
 			return function(firstArg) {
 				return fun(firstArg);
 			};
 	}
-        
+
          function curry11(fun) {
 		return function(firstArg) {
 			return function() {
@@ -415,7 +415,7 @@ poloAF.Util = (function() {
 			};
 		};
 	}
-        
+
         function curry2(fun) {
 		return function(secondArg) {
 			return function(firstArg) {
@@ -481,7 +481,7 @@ poloAF.Util = (function() {
 			};
 		};
 	}
-        
+
          var once = {
         imm: curry1,
         defer: curry11
@@ -501,13 +501,13 @@ poloAF.Util = (function() {
       coll = [null, once, twice, thrice, quart],
       ret = coll[i];
     return ret && defer ? ret.defer : ret ? ret.imm : function() {};
-        
+
     }//factory
-    
+
     /*  imm: (f) => (arg) => f(arg),
         defer: (f) => (arg) => () => f(arg)
       },*/
-    
+
 
 	function curry2(fun) {
 		return function(secondArg) {
@@ -580,7 +580,7 @@ poloAF.Util = (function() {
 			res = validate.apply(null, args);
 		return res && action.apply(null, args);
 	}
-    
+
 
 	function doWhen(cond, action) {
 		if (getResult(cond)) {
@@ -938,7 +938,7 @@ poloAF.Util = (function() {
 		},
         curryFactory: curryFactory,
 		doAlternate: doAlternate,
-		/*USAGE: 
+		/*USAGE:
         var once = doOnce(),
         actions = [func1, func2, ...];
         function (flag) {
@@ -974,13 +974,17 @@ poloAF.Util = (function() {
 			return _.findIndex(collection, predicate || always(true));
 		},
 		getBest: best,
-		getBody: function() {
-			return document.body || document.getElementsByTagName('body')[0];
+		getBody: function(flag) {
+			var body = document.body || document.getElementsByTagName('body')[0];
+			if(flag){
+				body.className = '';
+			}
+			return body;
 		},
 		getByClass: _.partial(getPolyClass, document),
 		getByTag: _.partial(mittleInvoke, 'getElementsByTagName'),
 		getClassList: getClassList,
-        getChild: _.compose(getNextElement, drillDown(['firstChild'])),
+		getChild: _.compose(getNextElement, drillDown(['firstChild'])),
 		getComputedStyle: function(element, styleProperty) {
             if(!element || !styleProperty){
                 return null;

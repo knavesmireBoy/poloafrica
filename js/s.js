@@ -451,12 +451,12 @@
 		},
 		nextcaller = thricedefer(getValue)('forward')(mypics)('value'),
 		prevcaller = thricedefer(getValue)('back')(mypics)('value'),
-		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], document.body)),
+		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], utils.getBody())),
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
 		playing = _.compose(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
 		notplaying = ptL(klasRem, 'playing', $$('controls')),
-		exitshow = _.compose(ptL(klasAdd, 'gallery', thumbs), _.partial(klasRem, 'showtime', document.body)),
-		exitswap = ptL(klasRem, 'swap', document.body),
+		exitshow = _.compose(ptL(klasAdd, 'gallery', thumbs), _.partial(klasRem, 'showtime', utils.getBody())),
+		exitswap = ptL(klasRem, 'swap', utils.getBody()),
 		exitplay = ptL(klasRem, 'inplay', $('wrap')),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
 		observers = [thrice(lazyVal)('href')($$('base'))],
@@ -592,8 +592,9 @@
 			function paint(str) {
 				var coll = test(),
 					bool = coll[0] === coll[1],
+					body = utils.getClassList(utils.getBody()),
 					m = bool ? 'remove' : 'add';
-				document.body.classList[m]('swap');
+				body[m]('swap');
 				return !bool;
 			}
 
@@ -623,7 +624,8 @@
 							},
 							reset: function () {
 								doSlide();
-								setPlayer(document.body.classList.contains('swap'));
+								var body = utils.getClassList(utils.getBody());
+								setPlayer(body.contains('swap'));
 							}
 						},
 						fadeIn = {
@@ -768,8 +770,8 @@
 					chain = chain.validate('forward');
 					chain.handle('forward');
 					exitshow();
-					con('cleanup');
-					_.each([$('exit'), $('tooltip'), $('controls'), $('base'), $('slide')], utils.removeNodeOnComplete);
+					utils.getBody(true);
+					_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
 					locate.unrender();
 					setup.render();
 				}, _.compose(close_cb, close_aside));
