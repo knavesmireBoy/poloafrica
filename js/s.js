@@ -202,7 +202,6 @@
 			}
 			this.position++;
 			this.position = this.position % this.group.members.length;
-            con(this.position)
 			var result = {
 				value: this.group.members[this.position],
 				index: this.position
@@ -272,25 +271,28 @@
 
 	function machSlide(source, target) {
 		return new Promise(function (resolve, reject) {
-			var li = anCr($q('.gallery'))('li'),
-                a = anCr(li)('a'),
-				img = anCr(a)('img'),
-				partial = _.partial(doMap, a),
-				coll = [
-					['href', doParse($(source).href)],
+			con(274)
+			var li = anCr(thumbs)('li');
+			con(li)
+			var a = anCr(li)('a'),
+			img = anCr(a)('img'),
+			partial = _.partial(doMap, a),
+			coll = [
+					['href', doParse(getBaseSrc())],
 				];
+				con(li, 281);
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
-
-             coll = [['id', target]];
-            partial = _.partial(doMap, li);
-            _.forEach(coll, function (arr) {
+			coll = [['id', target]];
+			partial = _.partial(doMap, li);
+			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
+			con(a.href)
 			img.src = doParse(a.href);
 		});
 	}
@@ -298,8 +300,8 @@
 	function machPause(src) {
 		return new Promise(function (resolve, reject) {
 			var li = anCr($q('.gallery'))('li'),
-                a = anCr(li)('a'),
-				img = anCr(a)('img'),
+			a = anCr(li)('a'),
+			img = anCr(a)('img'),
 				partial = _.partial(doMap, a),
 				styleAttrs = new Map([
 					["opacity", 0.5]
@@ -310,9 +312,9 @@
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
-            partial = _.partial(doMap, li);
-            coll = [['id', 'pause']];
-             _.forEach(coll, function (arr) {
+			partial = _.partial(doMap, li);
+			coll = [['id', 'pause']];
+			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
 			img.addEventListener('load', function (e) {
@@ -402,6 +404,7 @@
 		getWidth = utils.curryFactory(2)(utils.getter)('offsetWidth'),
 		doCompare = utils.curryFactory(4)(goCompare)(greater)(getWidth)(getHeight),
 		getLI = utils.getDomParent(utils.getNodeByTag('li')),
+		getLink = utils.getDomChild(utils.getNodeByTag('a')),
 		doClass = _.compose(utils.curryFactory(2)(onTruth)(['addClass', 'removeClass']), doCompare),
 		sortClass = function (klas, el, m) {
 			utils[m](klas, el);
@@ -409,9 +412,10 @@
 
 		getTarget = utils.drillDown([mytarget]),
 		allpics = utils.getByTag('img', main),
-		getSlideChild = _.compose(utils.getChild, $$('slide')),
-		getBaseChild = _.compose(utils.getChild, $$('base')),
-		getImgSrc = _.compose(utils.drillDown(['src']), getBaseChild),
+		getSlideChild = _.compose(utils.getChild, utils.getChild, $$('slide')),
+		getBaseChild = _.compose(utils.getChild, utils.getChild, $$('base')),
+		getBaseSrc = _.compose(utils.drillDown(['src']), getBaseChild),
+		getSlideSrc = _.compose(utils.drillDown(['src']), getSlideChild),
 		buttons_cb = function (str) {
 			var el = anCr($('controls'))('button');
             el.id = str;
@@ -443,7 +447,7 @@
 		exitplay = ptL(klasAdd, 'inplay'),
 		observers = [thrice(lazyVal)('href')($$('base'))],
 		publish = defercall('forEach')(observers)(function (ptl, i) {
-			return ptl(getImgSrc());
+			return ptl(getBaseSrc());
 		}),
 		orient = function (l, p) {
 			return function (img) {
@@ -519,12 +523,11 @@
 		pageNavHandler = _.compose(ptL(eventing, 'click', null, _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
 		loadImage = function (url, id) {
-			con('loadim',id);
-
 			return new Promise(function (resolve, reject) {
 				var img = utils.getDomChild(utils.getNodeByTag('img'))(document.getElementById(id));
 				//img = removeElement(img);
 				//$(id).appendChild(img);
+				if(img){
 				img.addEventListener('load', function (e) {
 					resolve(img);
 				});
@@ -532,6 +535,7 @@
 					reject(new Error("Failed to load image's URL:" + url()));
 				});
 				img.src = doParse(url());
+			}
             });
 		},
 		loader = function (caller, id) {
@@ -559,15 +563,15 @@
 			};
 		},
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
-			con(e);
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			orient(lcsp, ptrt)(e.target);
 			publish();
 		}, thumbs),
 		recur = (function (l, p) {
 			function test() {
-				return _.map([getBaseChild(), getSlideChild()], function (img) {
-					return img.width > img.height;
+				con(getBaseSrc(), getSlideSrc())
+				return _.map([getBaseSrc(), getSlideSrc()], function (img) {
+					return img && img.width > img.height;
 				});
 			}
 
@@ -588,7 +592,7 @@
 			}
 
 			function doSlide() {
-				loader(_.compose(driller(['src']), utils.getChild, $$('base')), 'slide').then(doFormat);
+				loader(_.compose(driller(['src']), utils.getChild, utils.getChild, $$('base')), 'slide').then(doFormat);
 			}
 
 			function doRecur() {
@@ -684,6 +688,8 @@
 						machSlide('base', 'slide').then(function (el) {
 							eventing('click', null, invoke_player, el).render();
 							locate.unrender();
+						}).catch(function(arg){
+							con(arg);
 						});
 					}
 				},
