@@ -80,30 +80,30 @@
 			cb = function (prop) {
 				return attrMap(el, prop, true);
 			};
-		for ([k,v] of map) {
-				if (Array.isArray(v)) {
-					_.forEach(v, cb);
-					break;
-				}
-				if (k.match(/^te?xt$/)) {
-					el.innerHTML = v;
-					continue;
-				}
-				if (!style) {
-					el.setAttribute(k, v);
-				} else {
-					el.style.setProperty(k, v);
-				}
+		for ([k, v] of map) {
+			if (Array.isArray(v)) {
+				_.forEach(v, cb);
+				break;
+			}
+			if (k.match(/^te?xt$/)) {
+				el.innerHTML = v;
+				continue;
+			}
+			if (!style) {
+				el.setAttribute(k, v);
+			} else {
+				el.style.setProperty(k, v);
+			}
 		}
 		return el;
 	}
 	/* EXPECTS VALUE BEFORE KEY ON RIGHT CURRY*/
 	function doMap(el, v, k) {
-        //con(el,v,k);
+		//con(el,v,k);
 		var arg = v instanceof Map ? v : new Map([
 			[k, v]
 		]);
-        //con(arg);
+		//con(arg);
 		return attrMap(getResult(el), arg);
 	}
 
@@ -220,7 +220,6 @@
 			}
 		},
 		play: function () {
-            con('ply')
 			return this.forward(true).value;
 		},
 		find: function (tgt) {
@@ -233,55 +232,58 @@
 		}
 	};
 
-     function searcher(obj, ary) {
-    /*noticed an issue with parentNode where on supply of an element, the initial value for reduce is the parent
-    but THAT parent would get set on the second iteration to ITS parent so. When array has just one item reduce not really required*/
-    if (ary && ary[1]) {
-      return ary.reduce((acc, cur) => {
-        return acc[cur] ? acc[cur] : acc;
-      }, obj[ary[0]]);
-    }
-    return ary[0] ? obj[ary[0]] : obj;
-  }
+	function searcher(obj, ary) {
+		/*noticed an issue with parentNode where on supply of an element, the initial value for reduce is the parent
+		but THAT parent would get set on the second iteration to ITS parent so. When array has just one item reduce not really required*/
+		if (ary && ary[1]) {
+			return ary.reduce(function (acc, cur) {
+				return acc[cur] || acc;
+			}, obj[ary[0]]);
+		}
+		return ary[0] ? obj[ary[0]] : obj;
+	}
 
 	function machBase(source, target) {
 		return new Promise(function (resolve, reject) {
 			var li = anCr(thumbs)('li'),
-                a = anCr(li)('a'),
+				a = anCr(li)('a'),
 				img = anCr(a)('img'),
 				partial = _.partial(doMap, a),
 				coll = [
-					['href', doParse(source.src)],
+					['href', doParse(source.src)]
 				];
-
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
-            coll = [['id', target]];
-            partial = _.partial(doMap, li);
-            _.forEach(coll, function (arr) {
+			coll = [
+				['id', target]
+			];
+			partial = _.partial(doMap, li);
+			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
-            img.src = doParse(a.href);
+			img.src = doParse(a.href);
 		});
 	}
 
 	function machSlide(source, target) {
 		return new Promise(function (resolve, reject) {
 			var li = anCr(thumbs)('li'),
-			a = anCr(li)('a'),
-			img = anCr(a)('img'),
-			partial = _.partial(doMap, a),
-			coll = [
-					['href', doParse(getBaseSrc())],
+				a = anCr(li)('a'),
+				img = anCr(a)('img'),
+				partial = _.partial(doMap, a),
+				coll = [
+					['href', doParse(getBaseSrc())]
 				];
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
-			coll = [['id', target]];
+			coll = [
+				['id', target]
+			];
 			partial = _.partial(doMap, li);
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
@@ -296,16 +298,15 @@
 	function machPause(src) {
 		return new Promise(function (resolve, reject) {
 			var li = anCr(thumbs)('li'),
-			a = anCr(li)('a'),
-			img = anCr(a)('img'),
+				a = anCr(li)('a'),
+				img = anCr(a)('img'),
 				partial = _.partial(doMap, li),
 				styleAttrs = new Map([
 					["opacity", 0.5]
 				]),
 				coll = [
 					['id', 'paused'],
-                    ['style', [styleAttrs]
-                    ]
+					['style', [styleAttrs]]
 				];
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
@@ -357,7 +358,7 @@
 		thricedefer = curryFactory(3, true),
 		quart = curryFactory(4),
 		//driller = twice(utils.drillDown),
-        driller = twice(searcher),
+		driller = twice(searcher),
 		zero = twice(utils.getter)(0),
 		mysetter = thrice(setter),
 		defercall = thricedefer(callerBridge),
@@ -373,7 +374,7 @@
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
 		klasTog = utils.toggleClass,
-        main = document.getElementsByTagName('main')[0],
+		main = document.getElementsByTagName('main')[0],
 		thumbs = utils.getByClass('gallery')[0],
 		$ = thrice(callerBridge)('getElementById')(document),
 		$q = thrice(callerBridge)('querySelector')(document),
@@ -402,7 +403,6 @@
 		sortClass = function (klas, el, m) {
 			utils[m](klas, el);
 		},
-
 		getTarget = utils.drillDown([mytarget]),
 		allpics = utils.getByTag('img', main),
 		getSlideChild = _.compose(utils.getChild, utils.getChild, $$('slide')),
@@ -411,7 +411,7 @@
 		getSlideSrc = _.compose(utils.drillDown(['src']), getSlideChild),
 		buttons_cb = function (str) {
 			var el = anCr($('controls'))('button');
-            el.id = str;
+			el.id = str;
 			//_.forEach(coll, f);
 			return el;
 		},
@@ -426,18 +426,20 @@
 			return img.src;
 		}))),
 		//setindex = thrice(callerBridge)('find')(mypics),
-		setindex = function(arg){
-            return mypics.find(arg);
-        },
+		setindex = function (arg) {
+			return mypics.find(arg);
+		},
 		getValue = function (v, o, p) {
 			return o[p]()[v];
 		},
 		nextcaller = thricedefer(getValue)('forward')(mypics)('value'),
 		prevcaller = thricedefer(getValue)('back')(mypics)('value'),
 		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], document.body)),
-		playtime = ptL(klasAdd, 'inplay'),
-		exitshow = ptL(klasRem, 'showtime'),
-		exitplay = ptL(klasAdd, 'inplay'),
+		playtime = ptL(klasAdd, 'inplay', $('wrap')),
+		playing = ptL(klasAdd, 'playing', $$('controls')),
+		notplaying = ptL(klasRem, 'playing', $$('controls')),
+		exitshow = ptL(klasRem, 'showtime', document.body),
+		exitplay = ptL(klasRem, 'inplay', $('wrap')),
 		observers = [thrice(lazyVal)('href')($$('base'))],
 		publish = defercall('forEach')(observers)(function (ptl, i) {
 			return ptl(getBaseSrc());
@@ -520,16 +522,16 @@
 				var img = utils.getDomChild(utils.getNodeByTag('img'))(document.getElementById(id));
 				//img = removeElement(img);
 				//$(id).appendChild(img);
-				if(img){
-				img.addEventListener('load', function (e) {
-					resolve(img);
-				});
-				img.addEventListener('error', function () {
-					reject(new Error("Failed to load image's URL:" + url()));
-				});
-				img.src = doParse(url());
-			}
-            });
+				if (img) {
+					img.addEventListener('load', function (e) {
+						resolve(img);
+					});
+					img.addEventListener('error', function () {
+						reject(new Error("Failed to load image's URL:" + url()));
+					});
+					img.src = doParse(url());
+				}
+			});
 		},
 		loader = function (caller, id) {
 			return loadImage(caller, id).catch(function (e) {
@@ -542,7 +544,7 @@
 				return function (e) {
 					var box = e.target.getBoundingClientRect(),
 						res = isGreaterEq(ptL(subtract, e.clientX, box.left), ptL(getThreshold, box.right, box.left));
-					return e.clientX-box.left > (box.right-box.left)/2;
+					return e.clientX - box.left > (box.right - box.left) / 2;
 					//return res;
 				};
 			}(divideBy(2), subtract, greaterOrEqual));
@@ -571,7 +573,6 @@
 				var coll = test(),
 					bool = coll[0] === coll[1],
 					m = bool ? 'remove' : 'add';
-					con(m)
 				document.body.classList[m]('swap');
 				return !bool;
 			}
@@ -655,35 +656,33 @@
 			recur.t = null;
 		},
 		factory = function () {
-			var playbutton = thricedefer(doMap)('txt')('play')($('playbutton')),
-				pausebutton = thricedefer(doMap)('txt')('pause')($('playbutton')),
-				removePause = _.compose(utils.removeNodeOnComplete, $$('paused')),
+			var removePause = _.compose(utils.removeNodeOnComplete, $$('paused')),
 				removeSlide = _.compose(utils.removeNodeOnComplete, $$('slide')),
 				removal = defercall('forEach')([removePause, removeSlide])(getResult),
-				doButton = defer_once(doAlt)([playbutton, pausebutton]),
 				doSlide = defer_once(doAlt)([clear, recur]),
+				doPlaying = defer_once(doAlt)([notplaying, playing]),
 				doDisplay = defer_once(doAlt)([playtime]),
-                
 				unpauser = function () {
-                    var path = utils.hasClass('portrait', thumbs) ? pausepath+'pauseLong.png' : pausepath+'pause.png';
+					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';
+					//notplaying();
 					machPause(path).then(function (el) {
 						eventing('click', null, invoke_player, el).render();
 					});
 				},
 				doPause = defer_once(doAlt)([_.partial(utils.doWhen, $$('slide'), unpauser), removePause]),
-				invoke_player = defercall('forEach')([doSlide, /*doButton, */doDisplay, doPause])(getResult),
+				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
-				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), exitplay, doReLocate, setOrient, publish, removal])(getResult),
-				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), exitplay, doReLocate, setOrient, publish, removal])(getResult),
+				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), notplaying, exitplay, doReLocate, setOrient, publish, removal])(getResult),
+				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), notplaying, exitplay, doReLocate, setOrient, publish, removal])(getResult),
 				pauser = function () {
 					if (!$('slide')) {
 						machSlide('base', 'slide').then(function (el) {
 							eventing('click', null, invoke_player, el).render();
 							locate.unrender();
-						}).catch(function(arg){
-							con(arg);
+						}).catch(function (arg) {
+							//con(arg);
 						});
 					}
 				},
@@ -692,7 +691,6 @@
 						setSuccessor: function (s) {
 							this.successor = s;
 						},
-
 						handle: function (str) {
 							if (predicate.apply(this, arguments)) {
 								return action.apply(this, arguments);
@@ -728,11 +726,9 @@
 			if (!node_from_target(e).match(/img/i)) {
 				return;
 			}
-
 			_.compose(setindex, driller(['target', 'src']))(e);
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
-
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 				chain = factory(),
 				controls = eventing('click', null, function (e) {
@@ -753,16 +749,12 @@
 					setup.render();
 				}, _.compose(close_cb, close_aside));
 			//listeners...
-
 			[controls, exit, locate].forEach(function (o) {
 				o.render();
 			});
-
 			setup.unrender();
 		}, thumbs);
-
 	setup.render();
-
 	addPageNav(anCr, 'gal_forward', function () {
 		return dummy;
 	});
