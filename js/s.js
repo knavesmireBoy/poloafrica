@@ -455,7 +455,8 @@
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
 		playing = _.compose(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
 		notplaying = ptL(klasRem, 'playing', $$('controls')),
-		exitshow = ptL(klasRem, 'showtime', document.body),
+		exitshow = _.compose(ptL(klasAdd, 'gallery', thumbs), _.partial(klasRem, 'showtime', document.body)),
+		exitswap = ptL(klasRem, 'swap', document.body),
 		exitplay = ptL(klasRem, 'inplay', $('wrap')),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
 		observers = [thrice(lazyVal)('href')($$('base'))],
@@ -694,8 +695,8 @@
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
-				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), notplaying, exitplay, doReLocate, setOrient, publish, removal])(getResult),
-				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), notplaying, exitplay, doReLocate, setOrient, publish, removal])(getResult),
+				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal])(getResult),
+				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal])(getResult),
 				pauser = function () {
 					if (!$('slide')) {
 						machSlide('base', 'slide').then(function (el) {
@@ -767,7 +768,8 @@
 					chain = chain.validate('forward');
 					chain.handle('forward');
 					exitshow();
-					[this, $('controls'), $('base'), $('slide')].forEach(utils.removeNodeOnComplete);
+					con('cleanup');
+					_.each([$('exit'), $('tooltip'), $('controls'), $('base'), $('slide')], utils.removeNodeOnComplete);
 					locate.unrender();
 					setup.render();
 				}, _.compose(close_cb, close_aside));

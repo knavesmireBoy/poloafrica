@@ -66,12 +66,14 @@ window.poloAF.Tooltip = function (anchor, instr, count, remove) {
 				utils.machElement(setText(instr[0]), doDiv).render();
 				utils.machElement(doAttr, doDiv).render();
 			}
+			/*
 			if(remove){
 				var that = this;
 				setTimeout(function(){
 					that.cancel();
 				}, 10000)
 			}
+			*/
 			return this;
 		},
 		dummytimer = {
