@@ -99,7 +99,7 @@
 	}
 	/* EXPECTS VALUE BEFORE KEY ON RIGHT CURRY*/
 	function doMap(el, v, k) {
-		con(el,v,k);
+		//con(el,v,k);
 		var arg = v instanceof Map ? v : new Map([
 			[k, v]
 		]);
@@ -115,6 +115,15 @@
 
 	function doFauxMap(el, v, k){
 		var arg = v instanceof FauxMap ? v : new FauxMap(k, v);
+	}
+
+	function shuffle(coll, flag) {
+		return function (start, deleteCount) {
+			deleteCount = isNaN(deleteCount) ? coll.length - 1 : deleteCount;
+			start = isNaN(start) ? 0 : start;
+			var res = coll.splice(start, deleteCount);
+			return flag ? res.concat(coll) : coll.concat(res);
+		};
 	}
 
 	function doOnce() {
@@ -422,6 +431,7 @@
 		doCompare = utils.curryFactory(4)(goCompare)(greater)(getWidth)(getHeight),
 		getLI = utils.getDomParent(utils.getNodeByTag('li')),
 		getLink = utils.getDomChild(utils.getNodeByTag('a')),
+		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
 		doClass = _.compose(utils.curryFactory(2)(onTruth)(['addClass', 'removeClass']), doCompare),
 		sortClass = function (klas, el, m) {
 			utils[m](klas, el);
@@ -525,6 +535,89 @@
 			return new LoopIterator(Group.from(coll));
 		},
 		cross_page_iterator = makeCrossPageIterator(all),
+
+				doSplice = function (bool, coll) {
+					if (coll[13]) {
+						var copy = coll.slice(0),
+							res = copy.splice(4, 6);
+						return bool ? res : copy;
+					}
+					return bool ? [] : coll;
+				},
+				getPortraitPics = ptL(doSplice, true),
+				getLscpPics = ptL(doSplice, false),
+
+				mixer = function (predicate, leader, trailer) {
+					var active = _.every([leader, trailer], function (arr) {
+						return arr[0];
+					});
+					if (active) {
+						return leader.concat(trailer);
+					}
+					return leader[0] ? leader : trailer;
+				},
+				mixerBridge = function (pred, zipped) {
+					return mixer.apply(null, [pred, zipped[0], zipped[1]]);
+				},
+				performSwap = function (inbound, outbound, enter, exit) {
+					return function (path) {
+						var action = utils.getBest(function (agg) {
+							return agg[0]();
+						}, _.zip([ptL(utils.isEqual, enter, path), ptL(utils.isEqual, exit, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, 'portrait')), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, 'portrait')), noOp]));
+						return action[1]();
+					};
+				},
+
+				getLeadingGroup = function (i, portrait, landscape) {
+					var filtered = _.filter(portrait, twice(_.find)(ptL(equals, i))),
+						leader = filtered[0] ? portrait : landscape,
+						trailer = filtered[0] ? landscape : portrait;
+					return [leader, trailer];
+				},
+				getSubGroup = function (j) {
+					var ret = {};
+					return _.reduce(all, function (cur, next) {
+						var i = _.findIndex(next, function (n) {
+							return Number(n) === Number(j);
+						});
+						if (!failed(i)) {
+							cur = next;
+							ret.page = cur;
+							ret.index = i;
+						}
+						return ret;
+					}, all[0]);
+				},
+
+
+				getSubGallery = function (i) {
+					//con(_.zip(ptrt, lscp))
+					var sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equals, i))), _.negate(_.isEmpty)),
+						reordered = shuffle(all.slice(0), true)(sub),
+						lscp = _.map(reordered, getLscpPics),
+						ptrt = _.map(reordered, getPortraitPics),
+						filtered = _.filter(ptrt, twice(_.find)(ptL(equals, i))),
+						group = getLeadingGroup(i, ptrt, lscp),
+						//start = twice(_.findIndex)(thrice(utils.gtThan)(true)(0))(_.map(group[0], twice(_.findIndex)(ptL(equals, i)))),
+						leader = group[0].slice(0),
+						tmp = leader[0],
+					start = _.findIndex(tmp, ptL(equals, i));
+
+					leader[0] = tmp.splice(start).concat(tmp);
+					if (Modernizr.touchevents) {
+						tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1])); //orientation
+					} else {
+						tmp = _.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0]))); //page
+					}
+					tmp = _.flatten(tmp).map(makePath);
+					return makeCrossPageIterator(tmp);
+				},
+
+				get_play_iterator = function () {
+					var myint = Number(getBaseSrc().match(picnum)[1]);
+					return getSubGallery(myint);
+				},
+
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)), allpics)),
 		advanceRouteBridge = function (e) {
 			if (!getNodeName(getTarget(e)).match(/a/i)) {
@@ -762,6 +855,8 @@
 			_.compose(setindex, driller(['target', 'src']))(e);
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
+			mypics = get_play_iterator();
+			con(mypics)
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 			dostatic = ptL(klasAdd, 'static', $$('controls')),
 				chain = factory(),
@@ -789,13 +884,15 @@
 			[controls, exit, locate, controls_undostat, controls_dostat].forEach(function (o) {
 				o.render();
 			});
+			get_play_iterator();
+
 			setup.unrender();
 		}, thumbs);
 	setup.render();
 	addPageNav(anCr, 'gal_forward', function () {
 		return dummy;
 	});
-	//$nav.render();
+	$nav.render();
 	_.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
