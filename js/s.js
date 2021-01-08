@@ -246,7 +246,7 @@
 
 	function machBase(source, target) {
 		return new Promise(function (resolve, reject) {
-			var li = anCr($q('.gallery'))('li'),
+			var li = anCr(thumbs)('li'),
                 a = anCr(li)('a'),
 				img = anCr(a)('img'),
 				partial = _.partial(doMap, a),
@@ -271,16 +271,13 @@
 
 	function machSlide(source, target) {
 		return new Promise(function (resolve, reject) {
-			con(274)
-			var li = anCr(thumbs)('li');
-			con(li)
-			var a = anCr(li)('a'),
+			var li = anCr(thumbs)('li'),
+			a = anCr(li)('a'),
 			img = anCr(a)('img'),
 			partial = _.partial(doMap, a),
 			coll = [
 					['href', doParse(getBaseSrc())],
 				];
-				con(li, 281);
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
@@ -292,14 +289,13 @@
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
-			con(a.href)
 			img.src = doParse(a.href);
 		});
 	}
 
 	function machPause(src) {
 		return new Promise(function (resolve, reject) {
-			var li = anCr($q('.gallery'))('li'),
+			var li = anCr(thumbs)('li'),
 			a = anCr(li)('a'),
 			img = anCr(a)('img'),
 				partial = _.partial(doMap, a),
@@ -569,8 +565,7 @@
 		}, thumbs),
 		recur = (function (l, p) {
 			function test() {
-				con(getBaseSrc(), getSlideSrc())
-				return _.map([getBaseSrc(), getSlideSrc()], function (img) {
+				return _.map([getBaseChild(), getSlideChild()], function (img) {
 					return img && img.width > img.height;
 				});
 			}
@@ -579,6 +574,7 @@
 				var coll = test(),
 					bool = coll[0] === coll[1],
 					m = bool ? 'remove' : 'add';
+					con(m)
 				document.body.classList[m]('swap');
 				return !bool;
 			}
@@ -648,7 +644,6 @@
 				},
 				player = playmaker();
 			return function () {
-                con('recur');
 				if (player.validate()) {
 					player.reset();
 				} else {
