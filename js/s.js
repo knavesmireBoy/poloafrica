@@ -440,6 +440,7 @@
 		notplaying = ptL(klasRem, 'playing', $$('controls')),
 		exitshow = ptL(klasRem, 'showtime', document.body),
 		exitplay = ptL(klasRem, 'inplay', $('wrap')),
+		undostatic = ptL(klasRem, 'static', $$('controls')),
 		observers = [thrice(lazyVal)('href')($$('base'))],
 		publish = defercall('forEach')(observers)(function (ptl, i) {
 			return ptl(getBaseSrc());
@@ -629,6 +630,7 @@
 								doSlide();
 								doOpacity();
 								doBase();
+								undostatic();
 							}
 						},
 						actions = [fadeIn, fadeOut];
@@ -730,6 +732,8 @@
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
+			dostatic = ptL(klasAdd, 'static', $$('controls')),
+
 				chain = factory(),
 				controls = eventing('click', null, function (e) {
 					var str = text_from_target(e),
@@ -740,6 +744,8 @@
 						chain.handle(str);
 					}
 				}, $('controls')),
+				controls_undostat = eventing('mouseover', null, undostatic, $q('footer')),
+				controls_dostat = eventing('mouseover', null, dostatic, $('controls')),
 				exit = eventing('click', null, function (e) {
 					chain = chain.validate('forward');
 					chain.handle('forward');
@@ -749,7 +755,7 @@
 					setup.render();
 				}, _.compose(close_cb, close_aside));
 			//listeners...
-			[controls, exit, locate].forEach(function (o) {
+			[controls, exit, locate, controls_undostat, controls_dostat].forEach(function (o) {
 				o.render();
 			});
 			setup.unrender();
