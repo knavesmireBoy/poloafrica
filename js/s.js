@@ -657,7 +657,7 @@
 		factory = function () {
 			var playbutton = thricedefer(doMap)('txt')('play')($('playbutton')),
 				pausebutton = thricedefer(doMap)('txt')('pause')($('playbutton')),
-				removePause = _.compose(utils.removeNodeOnComplete, $$('pause')),
+				removePause = _.compose(utils.removeNodeOnComplete, $$('paused')),
 				removeSlide = _.compose(utils.removeNodeOnComplete, $$('slide')),
 				removal = defercall('forEach')([removePause, removeSlide])(getResult),
 				doButton = defer_once(doAlt)([playbutton, pausebutton]),
