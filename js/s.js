@@ -99,12 +99,22 @@
 	}
 	/* EXPECTS VALUE BEFORE KEY ON RIGHT CURRY*/
 	function doMap(el, v, k) {
-		//con(el,v,k);
+		con(el,v,k);
 		var arg = v instanceof Map ? v : new Map([
 			[k, v]
 		]);
 		//con(arg);
 		return attrMap(getResult(el), arg);
+	}
+
+	function FauxMap(k, v){
+		return {
+			k: v
+		}
+	}
+
+	function doFauxMap(el, v, k){
+		var arg = v instanceof FauxMap ? v : new FauxMap(k, v);
 	}
 
 	function doOnce() {
