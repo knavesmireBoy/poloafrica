@@ -200,10 +200,9 @@
 			if (!flag && this.rev) {
 				return this.back(true);
 			}
-            con(this.position)
 			this.position++;
 			this.position = this.position % this.group.members.length;
-             con(this.position)
+            con(this.position)
 			var result = {
 				value: this.group.members[this.position],
 				index: this.position
@@ -211,7 +210,6 @@
 			return result;
 		},
 		back: function (flag) {
-            con('back')
 			if (!this.rev || flag) {
 				this.group.members = this.group.members.reverse();
 				this.position = this.group.members.length - 1 - (this.position);
@@ -223,13 +221,11 @@
 			}
 		},
 		play: function () {
-            con('play')
+            con('ply')
 			return this.forward(true).value;
 		},
 		find: function (tgt) {
-            con('find')
 			this.position = this.group.members.findIndex(_.partial(equals, tgt));
-            con(this.position)
 			var result = {
 				value: this.group.members[this.position],
 				index: this.position
@@ -237,7 +233,7 @@
 			return result;
 		}
 	};
-    
+
      function searcher(obj, ary) {
     /*noticed an issue with parentNode where on supply of an element, the initial value for reduce is the parent
     but THAT parent would get set on the second iteration to ITS parent so. When array has just one item reduce not really required*/
@@ -258,7 +254,7 @@
 				coll = [
 					['href', doParse(source.src)],
 				];
-            
+
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
@@ -267,7 +263,6 @@
             _.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
-            
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
@@ -287,7 +282,7 @@
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
-            
+
              coll = [['id', target]];
             partial = _.partial(doMap, li);
             _.forEach(coll, function (arr) {
@@ -411,7 +406,7 @@
 		sortClass = function (klas, el, m) {
 			utils[m](klas, el);
 		},
-		
+
 		getTarget = utils.drillDown([mytarget]),
 		allpics = utils.getByTag('img', main),
 		getSlideChild = _.compose(utils.getChild, $$('slide')),
@@ -524,9 +519,10 @@
 		pageNavHandler = _.compose(ptL(eventing, 'click', null, _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
 		loadImage = function (url, id) {
+			con('loadim',id);
+
 			return new Promise(function (resolve, reject) {
-				var img = document.getElementById(id).firstChild.firstChild;
-                con(img)
+				var img = utils.getDomChild(utils.getNodeByTag('img'))(document.getElementById(id));
 				//img = removeElement(img);
 				//$(id).appendChild(img);
 				img.addEventListener('load', function (e) {
@@ -536,7 +532,7 @@
 					reject(new Error("Failed to load image's URL:" + url()));
 				});
 				img.src = doParse(url());
-			});
+            });
 		},
 		loader = function (caller, id) {
 			return loadImage(caller, id).catch(function (e) {
@@ -563,6 +559,7 @@
 			};
 		},
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
+			con(e);
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			orient(lcsp, ptrt)(e.target);
 			publish();
@@ -647,6 +644,7 @@
 				},
 				player = playmaker();
 			return function () {
+                con('recur');
 				if (player.validate()) {
 					player.reset();
 				} else {
@@ -694,9 +692,8 @@
 						setSuccessor: function (s) {
 							this.successor = s;
 						},
-                        
+
 						handle: function (str) {
-                            con(str);
 							if (predicate.apply(this, arguments)) {
 								return action.apply(this, arguments);
 							} else if (this.successor) {
@@ -731,11 +728,11 @@
 			if (!node_from_target(e).match(/img/i)) {
 				return;
 			}
-            
+
 			_.compose(setindex, driller(['target', 'src']))(e);
-			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(document.querySelector('main')))('section');
+			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
-            
+
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 				chain = factory(),
 				controls = eventing('click', null, function (e) {
@@ -756,22 +753,22 @@
 					setup.render();
 				}, _.compose(close_cb, close_aside));
 			//listeners...
-            
+
 			[controls, exit, locate].forEach(function (o) {
 				o.render();
 			});
-            
+
 			setup.unrender();
 		}, thumbs);
-    
+
 	setup.render();
-    
+
 	addPageNav(anCr, 'gal_forward', function () {
 		return dummy;
 	});
 	//$nav.render();
 	_.each(allpics, fixNoNthChild);
-	utils.$('placeholder').innerHTML = 'PHOTOS';    
+	utils.$('placeholder').innerHTML = 'PHOTOS';
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
