@@ -9,7 +9,7 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-window.poloAF.Tooltip = function (anchor, instr, count) {
+window.poloAF.Tooltip = function (anchor, instr, count, remove) {
 	"use strict";
 	var $ = function (str) {
 			return document.getElementById(str);
@@ -65,6 +65,12 @@ window.poloAF.Tooltip = function (anchor, instr, count) {
 					});
 				utils.machElement(setText(instr[0]), doDiv).render();
 				utils.machElement(doAttr, doDiv).render();
+			}
+			if(remove){
+				var that = this;
+				setTimeout(function(){
+					that.cancel();
+				}, 10000)
 			}
 			return this;
 		},

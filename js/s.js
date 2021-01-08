@@ -107,6 +107,16 @@
 		return attrMap(getResult(el), arg);
 	}
 
+	function doOnce() {
+		return function (i) {
+			return function () {
+				var res = i > 0;
+				i -= 1;
+				return res > 0;
+			};
+		};
+	}
+
 	function lazyVal(v, el, k) {
 		return invokeArgs(doMap, el, v, k);
 	}
@@ -341,6 +351,7 @@
 		ses = _.range(67, 79),
 		sewe = _.range(79, 93),
 		all = [een, twee, drie, vier, vyf, ses, sewe],
+		allow = !touchevents ? 2 : 0,
 		utils = poloAF.Util,
 		con = window.console.log.bind(window),
 		/*reporter = function (msg, el) {
@@ -349,8 +360,10 @@
 			el.innerHTML = msg;
 		},
         */
+
 		ptL = _.partial,
 		curryFactory = utils.curryFactory,
+		once = doOnce(),
 		defer_once = curryFactory(1, true),
 		twice = curryFactory(2),
 		twicedefer = curryFactory(2, true),
@@ -422,6 +435,10 @@
 		close_aside = function () {
 			return _.compose(thrice(doMap)('href')('.'), thrice(doMap)('id')('exit'), anCrIn(thumbs, main))('a');
 		},
+		makeToolTip = function(flag){
+			var tooltip = poloAF.Tooltip(thumbs, ["move mouse in and out of footer...", "...to toggle the display of control buttons"], allow, flag);
+			tooltip.init();
+		},
 		mypics = new LoopIterator(Group.from(_.map(allpics, function (img) {
 			return img.src;
 		}))),
@@ -436,7 +453,7 @@
 		prevcaller = thricedefer(getValue)('back')(mypics)('value'),
 		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], document.body)),
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
-		playing = ptL(klasAdd, 'playing', $$('controls')),
+		playing = _.compose(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
 		notplaying = ptL(klasRem, 'playing', $$('controls')),
 		exitshow = ptL(klasRem, 'showtime', document.body),
 		exitplay = ptL(klasRem, 'inplay', $('wrap')),
@@ -492,6 +509,7 @@
 				}
 			};
 		}(['unrender', 'render'])),
+
 		makeCrossPageIterator = function (coll) {
 			return new LoopIterator(Group.from(coll));
 		},
@@ -733,7 +751,6 @@
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 			dostatic = ptL(klasAdd, 'static', $$('controls')),
-
 				chain = factory(),
 				controls = eventing('click', null, function (e) {
 					var str = text_from_target(e),
