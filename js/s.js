@@ -7,7 +7,7 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (mq, query, touchevents, picnum, dummy, makePath) {
+(function (mq, query, touchevents, pausepath, picnum, dummy, makePath) {
 	"use strict";
 
 	function always(val) {
@@ -298,25 +298,22 @@
 			var li = anCr(thumbs)('li'),
 			a = anCr(li)('a'),
 			img = anCr(a)('img'),
-				partial = _.partial(doMap, a),
+				partial = _.partial(doMap, li),
 				styleAttrs = new Map([
 					["opacity", 0.5]
 				]),
 				coll = [
-					['style', [styleAttrs]]
+					['id', 'paused'],
+                    ['style', [styleAttrs]
+                    ]
 				];
-			_.forEach(coll, function (arr) {
-				return partial(arr[1], arr[0]);
-			});
-			partial = _.partial(doMap, li);
-			coll = [['id', 'pause']];
 			_.forEach(coll, function (arr) {
 				return partial(arr[1], arr[0]);
 			});
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
-			img.src = doParse(src);
+			img.src = src;
 			img.id = "pauser";
 		});
 	}
@@ -598,7 +595,7 @@
 			var playmaker = (function () {
 					var fadeOut = {
 							validate: function () {
-								return recur.i <= -81;
+								return recur.i <= -61;
 							},
 							inc: function () {
 								recur.i -= 1;
@@ -627,7 +624,7 @@
 								recur.i -= 1;
 							},
 							reset: function () {
-								recur.i = 360;
+								recur.i = 300;
 								doSlide();
 								doOpacity();
 								doBase();
@@ -666,8 +663,10 @@
 				doButton = defer_once(doAlt)([playbutton, pausebutton]),
 				doSlide = defer_once(doAlt)([clear, recur]),
 				doDisplay = defer_once(doAlt)([playtime]),
+                
 				unpauser = function () {
-					machPause('pause.png').then(function (el) {
+                    var path = utils.hasClass('portrait', thumbs) ? pausepath+'pauseLong.png' : pausepath+'pause.png';
+					machPause(path).then(function (el) {
 						eventing('click', null, invoke_player, el).render();
 					});
 				},
@@ -770,7 +769,7 @@
 	//$nav.render();
 	_.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
-}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
 	},
