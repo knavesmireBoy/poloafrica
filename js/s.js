@@ -73,10 +73,6 @@
 	function nested(e, s, g) {
 		return s(g(e));
 	}
-	function getFileNumber(src) {
-		var t = src.split('/');
-		return Number(t[t.length - 1].split('.')[0].substr(1));
-	}
 
 	function attrMap(el, map, style) {
 		var k,
@@ -109,25 +105,6 @@
 		]);
 		//con(arg);
 		return attrMap(getResult(el), arg);
-	}
-
-	function FauxMap(k, v){
-		return {
-			k: v
-		}
-	}
-
-	function doFauxMap(el, v, k){
-		var arg = v instanceof FauxMap ? v : new FauxMap(k, v);
-	}
-
-	function shuffle(coll, flag) {
-		return function (start, deleteCount) {
-			deleteCount = isNaN(deleteCount) ? coll.length - 1 : deleteCount;
-			start = isNaN(start) ? 0 : start;
-			var res = coll.splice(start, deleteCount);
-			return flag ? res.concat(coll) : coll.concat(res);
-		};
 	}
 
 	function doOnce() {
@@ -366,6 +343,45 @@
 			]));
 		}
 	}
+    
+    function doSplice(bool, coll) {
+			if (coll[13]) {
+				var copy = coll.slice(0),
+					res = copy.splice(4, 6);
+				return bool ? res : copy;
+			}
+			return bool ? [] : coll;
+		}
+
+	function shuffle(coll, flag) {
+		return function (start, deleteCount) {
+			deleteCount = isNaN(deleteCount) ? coll.length - 1 : deleteCount;
+			start = isNaN(start) ? 0 : start;
+			var res = coll.splice(start, deleteCount);
+			return flag ? res.concat(coll) : coll.concat(res);
+		};
+	}
+
+	function getLeadingGroup(i, portrait, landscape) {
+		var filtered = _.filter(portrait, twice(_.find)(ptL(equals, i))),
+			leader = filtered[0] ? portrait : landscape,
+			trailer = filtered[0] ? landscape : portrait;
+		return [leader, trailer];
+	}
+
+	function mixer(predicate, leader, trailer) {
+		var active = _.every([leader, trailer], function (arr) {
+			return arr[0];
+		});
+		if (active) {
+			leader.concat(trailer);
+		}
+		return leader[0] ? leader : trailer;
+	}
+
+	function mixerBridge(pred, zipped) {
+		return mixer.apply(null, [pred, zipped[0], zipped[1]]);
+	}
 	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
@@ -383,7 +399,6 @@
 			el.innerHTML = msg;
 		},
         */
-
 		ptL = _.partial,
 		curryFactory = utils.curryFactory,
 		once = doOnce(),
@@ -412,7 +427,6 @@
 		klasTog = utils.toggleClass,
 		main = document.getElementsByTagName('main')[0],
 		thumbs = utils.getByClass('gallery')[0],
-		list_elements = _.toArray(thumbs.getElementsByTagName('li')),
 		$ = thrice(callerBridge)('getElementById')(document),
 		$q = thrice(callerBridge)('querySelector')(document),
 		$$ = thricedefer(callerBridge)('getElementById')(document),
@@ -437,7 +451,6 @@
 		getLI = utils.getDomParent(utils.getNodeByTag('li')),
 		getLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
-		get_src = _.compose(utils.drillDown(['src']), getDomTargetImg),
 		doClass = _.compose(utils.curryFactory(2)(onTruth)(['addClass', 'removeClass']), doCompare),
 		sortClass = function (klas, el, m) {
 			utils[m](klas, el);
@@ -461,7 +474,7 @@
 		close_aside = function () {
 			return _.compose(thrice(doMap)('href')('.'), thrice(doMap)('id')('exit'), anCrIn(thumbs, main))('a');
 		},
-		makeToolTip = function(flag){
+		makeToolTip = function (flag) {
 			var tooltip = poloAF.Tooltip(thumbs, ["move mouse in and out of footer...", "...to toggle the display of control buttons"], allow, flag);
 			tooltip.init();
 		},
@@ -536,139 +549,10 @@
 				}
 			};
 		}(['unrender', 'render'])),
-
 		makeCrossPageIterator = function (coll) {
 			return new LoopIterator(Group.from(coll));
 		},
 		cross_page_iterator = makeCrossPageIterator(all),
-
-				doSplice = function (bool, coll) {
-					if (coll[13]) {
-						var copy = coll.slice(0),
-							res = copy.splice(4, 6);
-						return bool ? res : copy;
-					}
-					return bool ? [] : coll;
-				},
-				getPortraitPics = ptL(doSplice, true),
-				getLscpPics = ptL(doSplice, false),
-
-				mixer = function (predicate, leader, trailer) {
-					var active = _.every([leader, trailer], function (arr) {
-						return arr[0];
-					});
-					if (active) {
-						return leader.concat(trailer);
-					}
-					return leader[0] ? leader : trailer;
-				},
-				mixerBridge = function (pred, zipped) {
-					return mixer.apply(null, [pred, zipped[0], zipped[1]]);
-				},
-				performSwap = function (inbound, outbound, enter, exit) {
-					return function (path) {
-						var action = utils.getBest(function (agg) {
-							return agg[0]();
-						}, _.zip([ptL(utils.isEqual, enter, path), ptL(utils.isEqual, exit, path), utils.always(true)], [ptL(_.map, [thumbs, $('wrap')], ptL(inbound, 'portrait')), ptL(_.map, [thumbs, $('wrap')], ptL(outbound, 'portrait')), noOp]));
-						return action[1]();
-					};
-				},
-
-				getLeadingGroup = function (i, portrait, landscape) {
-					var filtered = _.filter(portrait, twice(_.find)(ptL(equals, i))),
-						leader = filtered[0] ? portrait : landscape,
-						trailer = filtered[0] ? landscape : portrait;
-					return [leader, trailer];
-				},
-				getSubGroup = function (j) {
-					var ret = {};
-					return _.reduce(all, function (cur, next) {
-						var i = _.findIndex(next, function (n) {
-							return Number(n) === Number(j);
-						});
-						if (!failed(i)) {
-							cur = next;
-							ret.page = cur;
-							ret.index = i;
-						}
-						return ret;
-					}, all[0]);
-				},
-
-
-				getSubGallery = function (i) {
-					//con(_.zip(ptrt, lscp))
-					var sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equals, i))), _.negate(_.isEmpty)),
-						reordered = shuffle(all.slice(0), true)(sub),
-						lscp = _.map(reordered, getLscpPics),
-						ptrt = _.map(reordered, getPortraitPics),
-						filtered = _.filter(ptrt, twice(_.find)(ptL(equals, i))),
-						group = getLeadingGroup(i, ptrt, lscp),
-						//start = twice(_.findIndex)(thrice(utils.gtThan)(true)(0))(_.map(group[0], twice(_.findIndex)(ptL(equals, i)))),
-						leader = group[0].slice(0),
-						tmp = leader[0],
-					start = _.findIndex(tmp, ptL(equals, i));
-
-					leader[0] = tmp.splice(start).concat(tmp);
-					if (Modernizr.touchevents) {
-						tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1])); //orientation
-					} else {
-						tmp = _.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0]))); //page
-					}
-					tmp = _.flatten(tmp).map(makePath);
-					return makeCrossPageIterator(tmp);
-				},
-
-				get_play_iterator = function () {
-					var myint = Number(getBaseSrc().match(picnum)[1]);
-					return getSubGallery(myint);
-				},
-
-				goodbye = function(){
-					var findCurrent = function (f, li) {
-						var src = get_src(getResult(f));
-						return !li.id && get_src(li).match(src);
-					},
-					matchFromBase = ptL(_.filter, thumbs.getElementsByTagName('li'), ptL(findCurrent, ptL($, 'slide')));
-					con(matchFromBase());
-				},
-
-/*
-				prepareNavHandlers = function () {
-					var getNextAction = function (m) {
-							var src,
-								subgroup,
-								findCurrent = function (f, li) {
-									src = get_src(getResult(f));
-									return !li.id && get_src(li).match(src);
-								},
-								matchFromBase = ptL(_.filter, list_elements, ptL(findCurrent, ptL($, 'base'))),
-								fallback = function myfallback(result) {
-									if (!_.isEmpty(result)) {
-										return result[0];
-									} else {
-										poloAF.Eventing.triggerEvent(main, 'click');
-										window.setTimeout(function () {
-											var res,
-												map = _.map(thumbs.getElementsByTagName('img'), function (img) {
-													return getFileNumber(img.src);
-												});
-											res = _.contains(map, getFileNumber(src));
-											if (!res) {
-												//get on the right page
-												return myfallback([]);
-											}
-										}, 333);
-										subgroup = getSubGroup(getFileNumber(src));
-										return list_elements[subgroup.index];
-									}
-								};
-							return _.compose(utils.show, utils[m], fallback, matchFromBase);
-						},
-
-	*/
-
-
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)), allpics)),
 		advanceRouteBridge = function (e) {
 			if (!getNodeName(getTarget(e)).match(/a/i)) {
@@ -691,9 +575,35 @@
 		},
 		pageNavHandler = _.compose(ptL(eventing, 'click', null, _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
+		get_play_iterator = function () {
+			var myint = Number(getSlideSrc().match(picnum)[1]);
+			return getSubGallery(myint);
+		},
+		getPortraitPics = ptL(doSplice, true),
+		getLscpPics = ptL(doSplice, false),
+		getSubGallery = function (i) {
+			//con(_.zip(ptrt, lscp))
+			var sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equals, i))), _.negate(_.isEmpty)),
+				reordered = shuffle(all.slice(0), true)(sub),
+				lscp = _.map(reordered, getLscpPics),
+				ptrt = _.map(reordered, getPortraitPics),
+				filtered = _.filter(ptrt, twice(_.find)(ptL(equals, i))),
+				group = getLeadingGroup(i, ptrt, lscp),
+				start = twice(_.findIndex)(thrice(utils.gtThan)(true)(0))(_.map(group[0], twice(_.findIndex)(ptL(equals, i)))),
+				leader = group[0].slice(0),
+				tmp = leader[0];
+			start = _.findIndex(tmp, ptL(equals, i));
+			leader[0] = tmp.splice(start).concat(tmp);
+			if (Modernizr.touchevents) {
+				tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1])); //orientation
+			} else {
+				tmp = _.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0]))); //page
+			}
+			return makeCrossPageIterator(_.flatten(tmp));
+		},
 		loadImage = function (url, id) {
 			return new Promise(function (resolve, reject) {
-				var img = utils.getDomChild(utils.getNodeByTag('img'))(document.getElementById(id));
+				var img = getDomTargetImg($(id));
 				//img = removeElement(img);
 				//$(id).appendChild(img);
 				if (img) {
@@ -736,6 +646,7 @@
 			orient(lcsp, ptrt)(e.target);
 			publish();
 		}, thumbs),
+		///slideshow...
 		recur = (function (l, p) {
 			function test() {
 				return _.map([getBaseChild(), getSlideChild()], function (img) {
@@ -851,9 +762,10 @@
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
-				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
-				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
-				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
+				farewell = [get_play_iterator, defer_once(clear)(true), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
+				next_driver = defercall('forEach')(farewell)(getResult),
+				prev_driver = defercall('forEach')(farewell)(getResult),
+				//prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				pauser = function () {
 					if (!$('slide')) {
 						machSlide('base', 'slide').then(function (el) {
@@ -907,9 +819,8 @@
 			_.compose(setindex, driller(['target', 'src']))(e);
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
-			mypics = get_play_iterator();
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
-			dostatic = ptL(klasAdd, 'static', $$('controls')),
+				dostatic = ptL(klasAdd, 'static', $$('controls')),
 				chain = factory(),
 				controls = eventing('click', null, function (e) {
 					var str = text_from_target(e),
@@ -935,15 +846,13 @@
 			[controls, exit, locate, controls_undostat, controls_dostat].forEach(function (o) {
 				o.render();
 			});
-			get_play_iterator();
-
 			setup.unrender();
 		}, thumbs);
 	setup.render();
 	addPageNav(anCr, 'gal_forward', function () {
 		return dummy;
 	});
-	$nav.render();
+	//$nav.render();
 	_.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
