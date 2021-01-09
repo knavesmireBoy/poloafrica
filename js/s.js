@@ -73,6 +73,10 @@
 	function nested(e, s, g) {
 		return s(g(e));
 	}
+	function getFileNumber(src) {
+		var t = src.split('/');
+		return Number(t[t.length - 1].split('.')[0].substr(1));
+	}
 
 	function attrMap(el, map, style) {
 		var k,
@@ -408,6 +412,7 @@
 		klasTog = utils.toggleClass,
 		main = document.getElementsByTagName('main')[0],
 		thumbs = utils.getByClass('gallery')[0],
+		list_elements = _.toArray(thumbs.getElementsByTagName('li')),
 		$ = thrice(callerBridge)('getElementById')(document),
 		$q = thrice(callerBridge)('querySelector')(document),
 		$$ = thricedefer(callerBridge)('getElementById')(document),
@@ -432,6 +437,7 @@
 		getLI = utils.getDomParent(utils.getNodeByTag('li')),
 		getLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
+		get_src = _.compose(utils.drillDown(['src']), getDomTargetImg),
 		doClass = _.compose(utils.curryFactory(2)(onTruth)(['addClass', 'removeClass']), doCompare),
 		sortClass = function (klas, el, m) {
 			utils[m](klas, el);
@@ -618,6 +624,51 @@
 					return getSubGallery(myint);
 				},
 
+				goodbye = function(){
+					var findCurrent = function (f, li) {
+						var src = get_src(getResult(f));
+						return !li.id && get_src(li).match(src);
+					},
+					matchFromBase = ptL(_.filter, thumbs.getElementsByTagName('li'), ptL(findCurrent, ptL($, 'slide')));
+					con(matchFromBase());
+				},
+
+/*
+				prepareNavHandlers = function () {
+					var getNextAction = function (m) {
+							var src,
+								subgroup,
+								findCurrent = function (f, li) {
+									src = get_src(getResult(f));
+									return !li.id && get_src(li).match(src);
+								},
+								matchFromBase = ptL(_.filter, list_elements, ptL(findCurrent, ptL($, 'base'))),
+								fallback = function myfallback(result) {
+									if (!_.isEmpty(result)) {
+										return result[0];
+									} else {
+										poloAF.Eventing.triggerEvent(main, 'click');
+										window.setTimeout(function () {
+											var res,
+												map = _.map(thumbs.getElementsByTagName('img'), function (img) {
+													return getFileNumber(img.src);
+												});
+											res = _.contains(map, getFileNumber(src));
+											if (!res) {
+												//get on the right page
+												return myfallback([]);
+											}
+										}, 333);
+										subgroup = getSubGroup(getFileNumber(src));
+										return list_elements[subgroup.index];
+									}
+								};
+							return _.compose(utils.show, utils[m], fallback, matchFromBase);
+						},
+
+	*/
+
+
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)), allpics)),
 		advanceRouteBridge = function (e) {
 			if (!getNodeName(getTarget(e)).match(/a/i)) {
@@ -800,8 +851,9 @@
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
-				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal])(getResult),
-				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal])(getResult),
+				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
+				next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
+				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				pauser = function () {
 					if (!$('slide')) {
 						machSlide('base', 'slide').then(function (el) {
@@ -856,7 +908,6 @@
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
 			mypics = get_play_iterator();
-			con(mypics)
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 			dostatic = ptL(klasAdd, 'static', $$('controls')),
 				chain = factory(),
