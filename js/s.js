@@ -798,11 +798,11 @@
 				doReLocate = _.partial(utils.doWhen, $$('base'), relocate),
 				farewell = [get_play_iterator, defer_once(clear)(true), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
 				next_driver = defercall('forEach')(farewell)(getResult),
-				next_driver = function(){
-                    con(nextcaller());
-                },
 				prev_driver = defercall('forEach')(farewell)(getResult),
 				//prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
+                
+                next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal])(getResult),
+				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal])(getResult),
 				pauser = function () {
 					if (!$('slide')) {
 						machSlide('base', 'slide').then(function (el) {
