@@ -363,35 +363,6 @@
 			trailer = flag ? landscape : portrait;
 		return [leader, trailer];
 	}
-
-	function mixer(flag) {
-		return function(leader, trailer, index){
-            var active = _.every([leader, trailer], function (arr) {
-			return arr[0];
-		});
-		if (active) {
-            if(index){
-                if(trailer[0] < leader[0]){
-                    if(!flag){
-                       leader = trailer.concat(leader); 
-                        flag = !flag;
-                    }
-                    else {
-                        leader = leader.concat(trailer);
-                }
-                }
-            }
-                else {
-                    flag = flag ? !flag: flag;
-                    leader = leader.concat(trailer);
-                }
-            }
-            else {
-               leader = leader.concat(trailer);
-            }
-		return leader[0] ? leader : trailer;
-    };
-    }
     
      function mixer(flag) {
 		return function(leader, trailer, index){
@@ -403,50 +374,6 @@
     };
     }
     
-    function mixer(flag, outcomes) {
-		return function(leader, trailer, index){
-            if(index){
-                var f = outcomes.reverse()[0];
-                var pass = f(trailer[0], leader[0]);
-                pass = (trailer[0] === pass) ? trailer : leader;
-                if(pass === trailer){
-                        leader = trailer.concat(leader);
-                    }
-                    else {
-                      leader = leader.concat(trailer);  
-                    }
-                }
-            else {
-                leader = leader.concat(trailer);
-                //flag = flag ? !flag: flag;
-            }
-		return leader[0] ? leader : trailer;
-    };
-    }
-    
-		function mixer(leader, trailer, index){
-            Z.reverse();
-            con(Z[0])
-            if(index){
-                if(trailer.length && leader.length){
-                if(true){
-                    leader = trailer.concat(leader);
-                    }
-                    else {
-                      leader = leader.concat(trailer);  
-                    }
-                }
-            }
-            else {
-                leader = leader.concat(trailer);
-            }
-		return leader[0] ? leader : trailer;
-    }
-    
-    //05;15;
-    
-   
-
 	function mixerBridge(zipped, index) {
 		return mixer.apply(null, [zipped[0], zipped[1], index]);
 	}
@@ -688,21 +615,16 @@
                 tmp,
                 leader = group[0],
                 remixed = matchup(0)(_.zip(group[0], group[1]));
-            return con(remixed);
-
 
             //leader[0] = tmp.splice(start).concat(tmp);
 			if (Modernizr.touchevents) {
-				tmp = mixer(_.flatten(leader), _.flatten(group[1])); //orientation
+				tmp = mixer(_.flatten(group[0]), _.flatten(group[1])); //orientation
 			} else {
 				tmp = _.map(remixed, mixerBridge); //page
 			}
             
-                                                             return con(tmp);
-
-
-
-			return makeCrossPageIterator(_.map(_.flatten(tmp), makePath));
+           return con(tmp);
+            return makeCrossPageIterator(_.map(_.flatten(tmp), makePath));
 		},
 		loadImage = function (url, id) {
 			return new Promise(function (resolve, reject) {
