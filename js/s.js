@@ -599,29 +599,8 @@
 			}
 			return makeCrossPageIterator(_.map(group, makePath));
 		},
-        get_play_iterator1 = function () {
-            if($('slide')){
-            var myint = Number(getSlideSrc().match(picnum)[1]),
-                sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty));
-            if(!recur.t){
-                con('prep slide')
-                return prepareSlideshow(myint);  
-            }
-            else {
-                return con('cleanup')
-                allpics = _.filter(allpics, function(img){
-                    return !getLI(img).id;
-                });
-                cross_page_iterator = makeCrossPageIterator(utils.shuffleArray(all.slice(0))(sub));
-                _.each(allpics, function(img, i){
-                    populatePage(img, all[sub][i]);
-                });
-            }
-            }
-        },
         
         get_play_iterator = function() {
-            con(999);
 			if ($('slide')) {
 				var myint = Number(getSlideSrc().match(picnum)[1]),
 					sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty));
@@ -715,7 +694,6 @@
 		prevcaller = twicedefer(getValue)('back')('value'),
 		mycaller = twicedefer(getValue)('current')('value'),
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
-            con(e);
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			orient(lcsp, ptrt)(e.target);
 			publish();
@@ -841,9 +819,7 @@
                 farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient /*, publish,*/ , removal],
                 
 				next_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
-				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
-                
-                
+				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),                
                 //next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)])(getResult),
                 exit_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(mycaller)].concat(farewell))(getResult),
                 
