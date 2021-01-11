@@ -378,8 +378,7 @@
 	function mixerBridge(zipped) {
 		return mixer.apply(null, [zipped[0], zipped[1]]);
 	}
-	var Z = [7, 9],
-		een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
+	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
 		vier = _.range(43, 55),
@@ -513,14 +512,18 @@
 		//fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
 		doPopulate = function (pagepics) {
 			_.each(allpics, function (img, i) {
-				var path = pagepics.value[i];
+                populatePage(img, pagepics.value[i]);
+			});
+		},
+        populatePage = function(img, path){
 				img.src = makePath(path);
+                img.parentNode.href = doParse(img.src);
 				//adds portrait class on browsers that don't support nth-child
 				img.onload = function (e) {
 					fixNoNthChild(e.target);
 				};
-			});
-		},
+        },
+        
 		$LI = (function (options) {
 			return {
 				exec: function () { //cb
@@ -586,7 +589,7 @@
 						});
 					};
 				},
-				sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equals, i))), _.negate(_.isEmpty)),
+				sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, i))), _.negate(_.isEmpty)),
 				reordered = utils.shuffleArray(all.slice(0))(sub),
 				lscp = _.map(reordered, getLscpPics),
 				ptrt = _.map(reordered, getPortraitPics),
@@ -602,8 +605,27 @@
 			return makeCrossPageIterator(_.map(group, makePath));
 		},
         get_play_iterator = function () {
-            var myint = Number(getSlideSrc().match(picnum)[1]);
-            return prepareSlideshow(myint);
+            if($('slide')){
+            var myint = Number(getSlideSrc().match(picnum)[1]),
+                sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty));
+            if(!recur.t){
+                return prepareSlideshow(myint);  
+            }
+            else {
+                allpics = _.filter(allpics, function(img){
+                    return !getLI(img).id;
+                });                
+                _.each(allpics, function(img, i){
+                    populatePage(img, all[sub][i]);
+                })
+
+                /*
+                mypics = new LoopIterator(Group.from(_.map(allpics, function (img) {
+                    return img.src;
+                }))) 
+                */
+            }
+            }
         },
 		loadImage = function (url, id) {
 			return new Promise(function (resolve, reject) {
@@ -777,7 +799,7 @@
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
-				farewell = [defer_once(clear)(true), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
+				farewell = [get_play_iterator, defer_once(clear)(true), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
 				next_driver = defercall('forEach')(farewell)(getResult),
 				prev_driver = defercall('forEach')(farewell)(getResult),
 				//prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
