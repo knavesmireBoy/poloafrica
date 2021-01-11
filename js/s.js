@@ -236,8 +236,18 @@
 		play: function () {
 			return this.forward(true).value;
 		},
-		find: function (tgt) {
-			this.position = this.group.members.findIndex(_.partial(equals, tgt));
+        current: function() {
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		},
+		find: function(tgt) {
+			return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
+		},
+		set: function(pos) {
+			this.position = pos;
 			var result = {
 				value: this.group.members[this.position],
 				index: this.position
@@ -589,7 +599,7 @@
 			}
 			return makeCrossPageIterator(_.map(group, makePath));
 		},
-        get_play_iterator = function () {
+        get_play_iterator1 = function () {
             if($('slide')){
             var myint = Number(getSlideSrc().match(picnum)[1]),
                 sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty));
@@ -609,6 +619,35 @@
             }
             }
         },
+        
+        get_play_iterator = function() {
+            con(999);
+			if ($('slide')) {
+				var myint = Number(getSlideSrc().match(picnum)[1]),
+					sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty));
+				if (!recur.t) {
+					con('prep slide');
+					return prepareSlideshow(myint);
+				}
+             else {
+                 con('end');
+					allpics = _.filter(allpics, function(img) {
+						return !getLI(img).id;
+					});
+					//cross_page_iterator = makeCrossPageIterator(utils.shuffleArray(all.slice(0))(sub));
+					cross_page_iterator = makeCrossPageIterator(all.slice(0));
+					cross_page_iterator.set(sub);
+                    con(all[sub]);
+					_.each(allpics, function(img, i) {
+						populatePage(img, all[sub][i]);
+					});
+					mypics = new LoopIterator(Group.from(_.map(allpics, function(img) {
+						return img.src;
+					})));
+					mypics.find(getBaseSrc());
+				}
+            }
+		},
         
         getSubGroup = function (j) {
 			var ret = {};
@@ -674,6 +713,7 @@
 		},
 		nextcaller = twicedefer(getValue)('forward')('value'),
 		prevcaller = twicedefer(getValue)('back')('value'),
+		mycaller = twicedefer(getValue)('current')('value'),
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
             con(e);
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
@@ -798,13 +838,15 @@
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('base'), relocate),
-				farewell = [get_play_iterator, defer_once(clear)(true), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
-				next_driver = defercall('forEach')(farewell)(getResult),
-				prev_driver = defercall('forEach')(farewell)(getResult),
-				//prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
+                farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient /*, publish,*/ , removal],
                 
-                next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal])(getResult),
-				prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal])(getResult),
+				next_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
+				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
+                
+                
+                //next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)])(getResult),
+                exit_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(mycaller)].concat(farewell))(getResult),
+                
 				pauser = function () {
 					if (!$('slide')) {
 						machSlide('base', 'slide').then(function (el) {
@@ -882,7 +924,7 @@
 					setup.render();
 				}, _.compose(close_cb, close_aside));
 			//listeners...
-			[controls, exit, locate/*, controls_undostat, controls_dostat*/].forEach(function (o) {
+			[controls, exit, locate, controls_undostat, controls_dostat].forEach(function (o) {
 				o.render();
 			});
 			setup.unrender();
