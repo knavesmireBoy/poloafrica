@@ -43,10 +43,10 @@
 	function equals(a, b) {
 		return a === b;
 	}
-    
-    function equalNum(tgt, cur){
-        return cur === tgt || Number(cur) === Number(tgt);
-    }
+
+	function equalNum(tgt, cur) {
+		return cur === tgt || Number(cur) === Number(tgt);
+	}
 
 	function subtract(a, b) {
 		return a - b;
@@ -347,39 +347,39 @@
 			]));
 		}
 	}
-    
-    function doSplice(bool, coll) {
-        if (coll[13]) {
-            var copy = coll.slice(0),
-                res = copy.splice(4, 6);
-            return bool ? res : copy;
-        }
-        return bool ? [] : coll;
-    }
-    
-	
+
+	function doSplice(bool, coll) {
+		if (coll[13]) {
+			var copy = coll.slice(0),
+				res = copy.splice(4, 6);
+			return bool ? res : copy;
+		}
+		return bool ? [] : coll;
+	}
+
 	function getLeadingGroup(portrait, landscape, flag) {
 		var leader = flag ? portrait : landscape,
 			trailer = flag ? landscape : portrait;
 		return [leader, trailer];
 	}
-    
-     function mixer(flag) {
-		return function(leader, trailer, index){
-            var active = _.every([leader, trailer], function (arr) {
+
+	function mixer(leader, trailer) {
+		/*
+		var active = _.every([leader, trailer], function (arr) {
 			return arr[0];
 		});
-            leader = leader.concat(trailer);
+		if (active) {
+			leader.concat(trailer);
+		}
+        */
 		return leader[0] ? leader : trailer;
-    };
-    }
-    
-	function mixerBridge(zipped, index) {
-		return mixer.apply(null, [zipped[0], zipped[1], index]);
 	}
-    
+
+	function mixerBridge(zipped) {
+		return mixer.apply(null, [zipped[0], zipped[1]]);
+	}
 	var Z = [7, 9],
-        een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
+		een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
 		vier = _.range(43, 55),
@@ -475,18 +475,9 @@
 			var tooltip = poloAF.Tooltip(thumbs, ["move mouse in and out of footer...", "...to toggle the display of control buttons"], allow, flag);
 			tooltip.init();
 		},
-		mypics = new LoopIterator(Group.from(_.map(allpics, function (img) {
-			return img.src;
-		}))),
-		//setindex = thrice(callerBridge)('find')(mypics),
-		setindex = function (arg) {
-			return mypics.find(arg);
-		},
 		getValue = function (v, o, p) {
 			return o[p]()[v];
 		},
-		nextcaller = thricedefer(getValue)('forward')(mypics)('value'),
-		prevcaller = thricedefer(getValue)('back')(mypics)('value'),
 		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], utils.getBody())),
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
 		playing = _.compose(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
@@ -572,60 +563,48 @@
 		},
 		pageNavHandler = _.compose(ptL(eventing, 'click', null, _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
-		get_play_iterator = function () {
-			var myint = Number(getSlideSrc().match(picnum)[1]);
-            con(myint)
-            //myint === -1 ? getSlideSrc().match(picnum)[1] : myint;
-			return getSubGallery(myint);
-		},
-		getPortraitPics = ptL(doSplice, true),
-		getLscpPics = ptL(doSplice, false),
-        fixPageOrder = function(group, i){
-		var leader = group[0],
-				tmp = leader[0],
-                start = _.findIndex(tmp, ptL(equalNum, i));
-            leader[0] = utils.shuffleArray(tmp)(start);//fix on page order
-            return group;
-        },
-        matchup = function(j){
-            return function(arr){
-                return _.map(arr, function(a, i, myarr){
-                    if(a[0].length && a[1].length){
-                        j = i && myarr[i-1][1].length;
-                        if(j && (a[0].length !== j)){
-                            a = a.reverse();
-                        }
-                    }
-                    return a;
-                });
-            }
-        },
-		getSubGallery = function (i) {
-			//con(_.zip(ptrt, lscp))
-			var sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equals, i))), _.negate(_.isEmpty)),
+		prepareSlideshow = function (i) {
+			var getPortraitPics = ptL(doSplice, true),
+				getLscpPics = ptL(doSplice, false),
+				fixPageOrder = function (group, i) {
+					var leader = group[0],
+						tmp = leader[0],
+						start = _.findIndex(tmp, ptL(equalNum, i));
+					leader[0] = utils.shuffleArray(tmp)(start); //fix on page order
+					return group;
+				},
+				matchup = function (j) {
+					return function (arr) {
+						return _.map(arr, function (a, i, myarr) {
+							if (a[0].length && a[1].length) {
+								j = i && myarr[i - 1][1].length;
+								if (j && (a[0].length !== j)) {
+									a = a.reverse();
+								}
+							}
+							return a;
+						});
+					};
+				},
+				sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equals, i))), _.negate(_.isEmpty)),
 				reordered = utils.shuffleArray(all.slice(0))(sub),
 				lscp = _.map(reordered, getLscpPics),
 				ptrt = _.map(reordered, getPortraitPics),
-				is_portrait = _.filter(ptrt, function(arr){
-                    return _.find(arr, function(n){
-                        return Number(n) === i || n === i;
-                    })
-                }),
-				group = fixPageOrder(getLeadingGroup(ptrt, lscp, !!is_portrait[0]), i),
-                tmp,
-                leader = group[0],
-                remixed = matchup(0)(_.zip(group[0], group[1]));
-
-            //leader[0] = tmp.splice(start).concat(tmp);
+				is_portrait = _.filter(ptrt, function (arr) {
+					return _.find(arr, ptL(equalNum, i));
+				}),
+				group = fixPageOrder(getLeadingGroup(ptrt, lscp, !!is_portrait[0]), i);
 			if (Modernizr.touchevents) {
-				tmp = mixer(_.flatten(group[0]), _.flatten(group[1])); //orientation
+				group = _.flatten(group[0]).concat(_.flatten(group[1]));
 			} else {
-				tmp = _.map(remixed, mixerBridge); //page
+				group = _.flatten(matchup(0)(_.zip(group[0], group[1])));
 			}
-            
-           return con(tmp);
-            return makeCrossPageIterator(_.map(_.flatten(tmp), makePath));
+			return makeCrossPageIterator(_.map(group, makePath));
 		},
+        get_play_iterator = function () {
+            var myint = Number(getSlideSrc().match(picnum)[1]);
+            return prepareSlideshow(myint);
+        },
 		loadImage = function (url, id) {
 			return new Promise(function (resolve, reject) {
 				var img = getDomTargetImg($(id));
@@ -666,6 +645,14 @@
 				]);
 			};
 		},
+		mypics = new LoopIterator(Group.from(_.map(allpics, function (img) {
+			return img.src;
+		}))),
+		setindex = function (arg) {
+			return mypics.find(arg);
+		},
+		nextcaller = thricedefer(getValue)('forward')(mypics)('value'),
+		prevcaller = thricedefer(getValue)('back')(mypics)('value'),
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			orient(lcsp, ptrt)(e.target);
@@ -755,6 +742,9 @@
 				},
 				player = playmaker();
 			return function () {
+                if(!recur.t){
+                    mypics = get_play_iterator();
+                }
 				if (player.validate()) {
 					player.reset();
 				} else {
@@ -783,11 +773,11 @@
 					});
 				},
 				doPause = defer_once(doAlt)([_.partial(utils.doWhen, $$('slide'), unpauser), removePause]),
-				invoke_player = defercall('forEach')([get_play_iterator, doSlide, doDisplay, doPause, doPlaying])(getResult),
+				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
-				farewell = [get_play_iterator, defer_once(clear)(true), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
+				farewell = [defer_once(clear)(true), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
 				next_driver = defercall('forEach')(farewell)(getResult),
 				prev_driver = defercall('forEach')(farewell)(getResult),
 				//prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
@@ -880,7 +870,6 @@
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
-    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
