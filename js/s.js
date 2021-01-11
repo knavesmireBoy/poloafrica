@@ -363,21 +363,6 @@
 		return [leader, trailer];
 	}
 
-	function mixer(leader, trailer) {
-		/*
-		var active = _.every([leader, trailer], function (arr) {
-			return arr[0];
-		});
-		if (active) {
-			leader.concat(trailer);
-		}
-        */
-		return leader[0] ? leader : trailer;
-	}
-
-	function mixerBridge(zipped) {
-		return mixer.apply(null, [zipped[0], zipped[1]]);
-	}
 	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
@@ -609,24 +594,36 @@
             var myint = Number(getSlideSrc().match(picnum)[1]),
                 sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty));
             if(!recur.t){
+                con('prep slide')
                 return prepareSlideshow(myint);  
             }
             else {
+                return con('cleanup')
                 allpics = _.filter(allpics, function(img){
                     return !getLI(img).id;
-                });                
+                });
+                cross_page_iterator = makeCrossPageIterator(utils.shuffleArray(all.slice(0))(sub));
                 _.each(allpics, function(img, i){
                     populatePage(img, all[sub][i]);
-                })
-
-                /*
-                mypics = new LoopIterator(Group.from(_.map(allpics, function (img) {
-                    return img.src;
-                }))) 
-                */
+                });
             }
             }
         },
+        
+        getSubGroup = function (j) {
+			var ret = {};
+			return _.reduce(all, function (cur, next) {
+				var i = _.findIndex(next, function (n) {
+					return Number(n) === Number(j);
+				});
+				if (!failed(i)) {
+					cur = next;
+					ret.page = cur;
+					ret.index = i;
+				}
+				return ret;
+			}, all[0]);
+		},
 		loadImage = function (url, id) {
 			return new Promise(function (resolve, reject) {
 				var img = getDomTargetImg($(id));
@@ -676,6 +673,7 @@
 		nextcaller = thricedefer(getValue)('forward')(mypics)('value'),
 		prevcaller = thricedefer(getValue)('back')(mypics)('value'),
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
+            con(e);
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			orient(lcsp, ptrt)(e.target);
 			publish();
@@ -687,7 +685,6 @@
 					return img && img.width > img.height;
 				});
 			}
-
 			function paint(str) {
 				var coll = test(),
 					bool = coll[0] === coll[1],
@@ -798,9 +795,12 @@
 				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
-				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
+				doReLocate = _.partial(utils.doWhen, $$('base'), relocate),
 				farewell = [get_play_iterator, defer_once(clear)(true), notplaying, exitplay, exitswap, doReLocate, setOrient, publish, removal],
 				next_driver = defercall('forEach')(farewell)(getResult),
+				next_driver = function(){
+                    con(nextcaller());
+                },
 				prev_driver = defercall('forEach')(farewell)(getResult),
 				//prev_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				pauser = function () {
@@ -880,7 +880,7 @@
 					setup.render();
 				}, _.compose(close_cb, close_aside));
 			//listeners...
-			[controls, exit, locate, controls_undostat, controls_dostat].forEach(function (o) {
+			[controls, exit, locate/*, controls_undostat, controls_dostat*/].forEach(function (o) {
 				o.render();
 			});
 			setup.unrender();
