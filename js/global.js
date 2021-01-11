@@ -1023,6 +1023,12 @@ poloAF.Util = (function() {
 		getPreviousElement: getPreviousElement, //?//
 		getPrevious: _.partial(nested, curry2(getter)('previousSibling'), getPreviousElement),
 		getScrollThreshold: getScrollThreshold,
+        getSubArray: function(coll, tgt){
+            function reducer(acc, cur){
+                return _.contains(cur, tgt) ? cur : acc;
+            }
+            return _.reduce(coll, reducer);
+        },
 		getZero: _.partial(byIndex, 0),
 		getter: getter,
 		gtThan: gtThan,
@@ -1154,6 +1160,16 @@ poloAF.Util = (function() {
 		setText: curry3(setAdapter)('innerHTML'),
 		setter: setter,
 		show: _.partial(setFromArray, always(true), 'add', ['show']),
+        shuffleArray: function shuffle(coll) {
+		return function (start, deleteCount) {
+            if(start === -1){
+                return coll;
+            }
+            deleteCount = isNaN(deleteCount) ? coll.length - 1 : deleteCount;
+			start = isNaN(start) ? 0 : start;
+            return coll.splice(start, deleteCount).concat(coll);
+        };
+        },
 		silent_conditional: function() {
 			var validators = _.toArray(arguments);
 			return function(fun, arg) {

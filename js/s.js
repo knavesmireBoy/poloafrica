@@ -345,44 +345,110 @@
 	}
     
     function doSplice(bool, coll) {
-			if (coll[13]) {
-				var copy = coll.slice(0),
-					res = copy.splice(4, 6);
-				return bool ? res : copy;
-			}
-			return bool ? [] : coll;
-		}
-
-	function shuffle(coll, flag) {
-		return function (start, deleteCount) {
-			deleteCount = isNaN(deleteCount) ? coll.length - 1 : deleteCount;
-			start = isNaN(start) ? 0 : start;
-			var res = coll.splice(start, deleteCount);
-			return flag ? res.concat(coll) : coll.concat(res);
-		};
-	}
-
-	function getLeadingGroup(i, portrait, landscape) {
-		var filtered = _.filter(portrait, twice(_.find)(ptL(equals, i))),
-			leader = filtered[0] ? portrait : landscape,
-			trailer = filtered[0] ? landscape : portrait;
+        if (coll[13]) {
+            var copy = coll.slice(0),
+                res = copy.splice(4, 6);
+            return bool ? res : copy;
+        }
+        return bool ? [] : coll;
+    }
+    
+	
+	function getLeadingGroup(portrait, landscape, flag) {
+		var leader = flag ? portrait : landscape,
+			trailer = flag ? landscape : portrait;
 		return [leader, trailer];
 	}
 
-	function mixer(predicate, leader, trailer) {
-		var active = _.every([leader, trailer], function (arr) {
+	function mixer(flag) {
+		return function(leader, trailer, index){
+            var active = _.every([leader, trailer], function (arr) {
 			return arr[0];
 		});
 		if (active) {
-			leader.concat(trailer);
-		}
+            if(index){
+                if(trailer[0] < leader[0]){
+                    if(!flag){
+                       leader = trailer.concat(leader); 
+                        flag = !flag;
+                    }
+                    else {
+                        leader = leader.concat(trailer);
+                }
+                }
+            }
+                else {
+                    flag = flag ? !flag: flag;
+                    leader = leader.concat(trailer);
+                }
+            }
+            else {
+               leader = leader.concat(trailer);
+            }
 		return leader[0] ? leader : trailer;
-	}
+    };
+    }
+    
+     function mixer(flag) {
+		return function(leader, trailer, index){
+            var active = _.every([leader, trailer], function (arr) {
+			return arr[0];
+		});
+            leader = leader.concat(trailer);
+		return leader[0] ? leader : trailer;
+    };
+    }
+    
+    function mixer(flag, outcomes) {
+		return function(leader, trailer, index){
+            if(index){
+                var f = outcomes.reverse()[0];
+                var pass = f(trailer[0], leader[0]);
+                pass = (trailer[0] === pass) ? trailer : leader;
+                if(pass === trailer){
+                        leader = trailer.concat(leader);
+                    }
+                    else {
+                      leader = leader.concat(trailer);  
+                    }
+                }
+            else {
+                leader = leader.concat(trailer);
+                //flag = flag ? !flag: flag;
+            }
+		return leader[0] ? leader : trailer;
+    };
+    }
+    
+		function mixer(leader, trailer, index){
+            Z.reverse();
+            con(Z[0])
+            if(index){
+                if(trailer.length && leader.length){
+                if(true){
+                    leader = trailer.concat(leader);
+                    }
+                    else {
+                      leader = leader.concat(trailer);  
+                    }
+                }
+            }
+            else {
+                leader = leader.concat(trailer);
+            }
+		return leader[0] ? leader : trailer;
+    }
+    
+    //05;15;
+    
+   
 
-	function mixerBridge(pred, zipped) {
-		return mixer.apply(null, [pred, zipped[0], zipped[1]]);
+	function mixerBridge(zipped, index) {
+		return mixer.apply(null, [zipped[0], zipped[1], index]);
 	}
-	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
+    
+	var Z = [7, 9],
+        een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
 		vier = _.range(43, 55),
@@ -577,29 +643,66 @@
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
 		get_play_iterator = function () {
 			var myint = Number(getSlideSrc().match(picnum)[1]);
+            con(myint)
+            //myint === -1 ? getSlideSrc().match(picnum)[1] : myint;
 			return getSubGallery(myint);
 		},
 		getPortraitPics = ptL(doSplice, true),
 		getLscpPics = ptL(doSplice, false),
+        fixPageOrder = function(group){
+		var leader = group[0].slice(0),
+				tmp = leader[0],
+                start = _.findIndex(tmp, ptL(equals, i));
+            leader[0] = utils.shuffleArray(tmp)(start);//fix on page order
+            return leader;
+        },
+        look = function(j){
+            return function(arr){
+                return _.map(arr, function(a, i, myarr){
+                    if(a[0].length && a[1].length){
+                        j = i && myarr[i-1][1].length;
+                        if(j && (a[0].length !== j)){
+                            con(i, 'recorded:'+j, 'current: '+a[0].length);
+                            a = a.reverse();
+                             //j = i && myarr[i-1][1].length; 
+                        }
+                    }
+                     
+                    return a;
+                });
+            }
+        },
 		getSubGallery = function (i) {
 			//con(_.zip(ptrt, lscp))
 			var sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equals, i))), _.negate(_.isEmpty)),
-				reordered = shuffle(all.slice(0), true)(sub),
+				reordered = utils.shuffleArray(all.slice(0))(sub),
 				lscp = _.map(reordered, getLscpPics),
 				ptrt = _.map(reordered, getPortraitPics),
-				filtered = _.filter(ptrt, twice(_.find)(ptL(equals, i))),
-				group = getLeadingGroup(i, ptrt, lscp),
-				start = twice(_.findIndex)(thrice(utils.gtThan)(true)(0))(_.map(group[0], twice(_.findIndex)(ptL(equals, i)))),
-				leader = group[0].slice(0),
-				tmp = leader[0];
-			start = _.findIndex(tmp, ptL(equals, i));
-			leader[0] = tmp.splice(start).concat(tmp);
+				is_portrait = _.filter(ptrt, function(arr){
+                    return _.find(arr, function(n){
+                        return Number(n) === i || n === i;
+                    })
+                }),
+				group = getLeadingGroup(ptrt, lscp, !!is_portrait[0]),
+                tmp,
+                j = 1,
+                leader = group[0],
+                remixed = _.zip(leader, group[1]);
+            return con(look(0)(remixed));
+
+
+            //leader[0] = tmp.splice(start).concat(tmp);
 			if (Modernizr.touchevents) {
-				tmp = mixer(utils.always(filtered[0]), _.flatten(leader), _.flatten(group[1])); //orientation
+				tmp = mixer(_.flatten(leader), _.flatten(group[1])); //orientation
 			} else {
-				tmp = _.map(_.zip(leader, group[1]), ptL(mixerBridge, utils.always(filtered[0]))); //page
+				tmp = _.map(remixed, mixerBridge); //page
 			}
-			return makeCrossPageIterator(_.flatten(tmp));
+            
+                                                             return con(tmp);
+
+
+
+			return makeCrossPageIterator(_.map(_.flatten(tmp), makePath));
 		},
 		loadImage = function (url, id) {
 			return new Promise(function (resolve, reject) {
@@ -758,7 +861,7 @@
 					});
 				},
 				doPause = defer_once(doAlt)([_.partial(utils.doWhen, $$('slide'), unpauser), removePause]),
-				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
+				invoke_player = defercall('forEach')([get_play_iterator, doSlide, doDisplay, doPause, doPlaying])(getResult),
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('slide'), relocate),
@@ -852,9 +955,10 @@
 	addPageNav(anCr, 'gal_forward', function () {
 		return dummy;
 	});
-	//$nav.render();
+	$nav.render();
 	_.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
+    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
