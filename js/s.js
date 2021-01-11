@@ -43,6 +43,10 @@
 	function equals(a, b) {
 		return a === b;
 	}
+    
+    function equalNum(tgt, cur){
+        return cur === tgt || Number(cur) === Number(tgt);
+    }
 
 	function subtract(a, b) {
 		return a - b;
@@ -649,25 +653,22 @@
 		},
 		getPortraitPics = ptL(doSplice, true),
 		getLscpPics = ptL(doSplice, false),
-        fixPageOrder = function(group){
-		var leader = group[0].slice(0),
+        fixPageOrder = function(group, i){
+		var leader = group[0],
 				tmp = leader[0],
-                start = _.findIndex(tmp, ptL(equals, i));
+                start = _.findIndex(tmp, ptL(equalNum, i));
             leader[0] = utils.shuffleArray(tmp)(start);//fix on page order
-            return leader;
+            return group;
         },
-        look = function(j){
+        matchup = function(j){
             return function(arr){
                 return _.map(arr, function(a, i, myarr){
                     if(a[0].length && a[1].length){
                         j = i && myarr[i-1][1].length;
                         if(j && (a[0].length !== j)){
-                            con(i, 'recorded:'+j, 'current: '+a[0].length);
                             a = a.reverse();
-                             //j = i && myarr[i-1][1].length; 
                         }
                     }
-                     
                     return a;
                 });
             }
@@ -683,12 +684,11 @@
                         return Number(n) === i || n === i;
                     })
                 }),
-				group = getLeadingGroup(ptrt, lscp, !!is_portrait[0]),
+				group = fixPageOrder(getLeadingGroup(ptrt, lscp, !!is_portrait[0]), i),
                 tmp,
-                j = 1,
                 leader = group[0],
-                remixed = _.zip(leader, group[1]);
-            return con(look(0)(remixed));
+                remixed = matchup(0)(_.zip(group[0], group[1]));
+            return con(remixed);
 
 
             //leader[0] = tmp.splice(start).concat(tmp);
