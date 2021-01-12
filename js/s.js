@@ -391,8 +391,8 @@
 		thumbs = utils.getByClass('gallery')[0],
 		$ = thrice(callerBridge)('getElementById')(document),
 		$$ = thricedefer(callerBridge)('getElementById')(document),
-		lcsp = _.partial(klasRem, 'portrait', thumbs),
-		ptrt = _.partial(klasAdd, 'portrait', thumbs),
+		unsetPortrait = _.partial(klasRem, 'portrait', thumbs),
+        setPortrait = _.partial(klasAdd, 'portrait', thumbs),
 		target = twice(utils.getter)('target'),
 		text_target = twice(utils.getter)('id'),
 		node_target = twice(utils.getter)('nodeName'),
@@ -565,12 +565,12 @@
 					};
 				},
 				reordered = utils.shuffleArray(all.slice(0))(sub),
-				lscp = _.map(reordered, getLscpPics),
-				ptrt = _.map(reordered, getPortraitPics),
-				is_portrait = _.filter(ptrt, function (arr) {
+				mylscp = _.map(reordered, getLscpPics),
+				myptrt = _.map(reordered, getPortraitPics),
+				is_portrait = _.filter(myptrt, function (arr) {
 					return _.find(arr, ptL(equalNum, i));
 				}),
-				group = fixPageOrder(getLeadingGroup(ptrt, lscp, !!is_portrait[0]), i);
+				group = fixPageOrder(getLeadingGroup(myptrt, mylscp, !!is_portrait[0]), i);
 			if (Modernizr.touchevents) {
 				group = _.flatten(group[0]).concat(_.flatten(group[1]));
 			} else {
@@ -606,8 +606,6 @@
 		loadImage = function (getnexturl, id) {
 			return new Promise(function (resolve, reject) {
 				var img = getDomTargetImg($(id));
-				//img = removeElement(img);
-				//$(id).appendChild(img);
 				if (img) {
 					img.addEventListener('load', function (e) {
 						resolve(img);
@@ -659,7 +657,7 @@
 		mycaller = twicedefer(getValue)('current')('value'),
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
-			orient(lcsp, ptrt)(e.target);
+			orient(unsetPortrait,setPortrait)(e.target);
 			//publish();
 		}, thumbs),
 		///slideshow...
@@ -755,7 +753,7 @@
 					doRecur();
 				}
 			};
-		}(lcsp, ptrt)),
+		}(unsetPortrait,setPortrait)),
 		clear = function (flag) {
 			doOpacity(flag);
 			window.cancelAnimationFrame(recur.t);
@@ -777,7 +775,7 @@
 				},
 				doPause = defer_once(doAlt)([_.partial(utils.doWhen, $$('slide'), unpauser), removePause]),
 				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
-				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
+				setOrient = _.partial(orient(unsetPortrait,setPortrait), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('base'), relocate),
 				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, removal],
@@ -835,7 +833,7 @@
 			}
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
-			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
+			machBase(e.target, 'base').then(showtime).then(orient(unsetPortrait,setPortrait));
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 				dostatic = ptL(klasAdd, 'static', $$('controls')),
 				chain = factory(),
