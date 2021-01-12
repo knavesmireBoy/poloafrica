@@ -479,14 +479,10 @@
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
 		playing = _.compose(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
 		notplaying = ptL(klasRem, 'playing', $$('controls')),
-		exitshow = _.compose(ptL(klasAdd, 'gallery', thumbs), _.partial(klasRem, 'showtime', utils.getBody())),
-		exitswap = ptL(klasRem, 'swap', utils.getBody()),
-		exitplay = ptL(klasRem, 'inplay', $('wrap')),
+        exitplay = ptL(klasRem, 'inplay', $('wrap')),
+        exitswap = ptL(klasRem, 'swap'),
+		exitshow = _.compose(ptL(klasAdd, 'gallery', thumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exitplay),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
-		observers = [thrice(lazyVal)('href')($$('base'))],
-		publish = defercall('forEach')(observers)(function (ptl, i) {
-			return ptl(getBaseSrc());
-		}),
 		orient = function (l, p) {
 			return function (img) {
 				utils.getBest(_.partial(gtEq, getResult(img).clientHeight, getResult(img).clientWidth), [p, l])();
@@ -494,9 +490,7 @@
 			};
 		},
         
-          
 		$LI = (function (options) {
-            
             function getColl(){
                 return _.filter(thumbs.getElementsByTagName('li'), function(li){
                             return !li.id;
@@ -514,7 +508,10 @@
 					$el.unrender();
 				},
 				render: function (el) {
-					return utils.machElement(anCr(thumbs), always(el)).render();
+                    var base = $('base'),
+                        ancr = base ? anCrIn(base, thumbs) : ptL(anCr, thumbs);
+                    //doesn't really matter where #base is as all othe LIS are hidden when it is present. But it's tidier
+					   return utils.machElement(ancr, always(el)).render();
 				},
                 query: function(coll){
                     var lis = getColl(),
@@ -572,9 +569,10 @@
             if(utils.findByClass('inplay')){
                 return 'current';
             }
-			return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
+			return getID(getTarget(e)).match(/^back/) ? 'back' : 'forward';
 		},
 		advanceRoute = function (m) {
+            con(m);
 			return m && populate(cross_page_iterator[m]());
 		},
 		advanceRouteListener = _.wrap(advanceRouteBridge, function (orig, e) {
@@ -629,7 +627,6 @@
 		},
         
         get_play_iterator = function(flag) {
-            
 				var myint = Number(getBaseSrc().match(picnum)[1]),
 					page_index = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty)),
                     page,
@@ -657,20 +654,6 @@
 				}
 		},
         
-        getSubGroup = function (j) {
-			var ret = {};
-			return _.reduce(all, function (cur, next) {
-				var i = _.findIndex(next, function (n) {
-					return Number(n) === Number(j);
-				});
-				if (!failed(i)) {
-					cur = next;
-					ret.page = cur;
-					ret.index = i;
-				}
-				return ret;
-			}, all[0]);
-		},
 		loadImage = function (getnexturl, id) {
 			return new Promise(function (resolve, reject) {
 				var img = getDomTargetImg($(id));
@@ -845,12 +828,10 @@
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('base'), relocate),
-                farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient /*, publish,*/ , removal],
+                farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, removal],
                 
 				next_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
-				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),                
-                //next_driver = defercall('forEach')([defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)])(getResult),
-                exit_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(mycaller)].concat(farewell))(getResult),
+				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
                 
 				pauser = function () {
 					if (!$('slide')) {
@@ -875,7 +856,7 @@
 							}
 						},
 						validate: function (str) {
-							if (document.querySelector('.inplay') && recur.t && predicate(str)) {
+							if (utils.findByClass('inplay') && recur.t && predicate(str)) {
 								//return fresh instance on exiting slideshow IF in play mode
 								return factory();
 							}
@@ -919,12 +900,11 @@
 				}, $('controls')),
 				controls_undostat = eventing('mouseover', null, undostatic, $q('footer')),
 				controls_dostat = eventing('mouseover', null, dostatic, $('controls')),
-				exit = eventing('click', null, function (e) {
-					chain = chain.validate('forward');
-					chain.handle('forward');
-					exitshow();
-					utils.getBody(true);
+				exit = eventing('click', ['stopPropagation'], function (e) {
+					chain = chain.validate('play');
+					//chain.handle('playbutton');
 					_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
+                    exitshow();
 					locate.unrender();
 					setup.render();
 				}, _.compose(close_cb, close_aside));
