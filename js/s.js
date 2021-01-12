@@ -209,6 +209,11 @@
 		}
 		return group;
 	};
+	LoopIterator.from = function (coll) {
+		return new LoopIterator(Group.from(coll));
+	};
+	LoopIterator.page_iterator = null;
+	LoopIterator.cross_page_iterator = null;
 	LoopIterator.prototype = {
 		forward: function (flag) {
 			if (!flag && this.rev) {
@@ -256,10 +261,7 @@
 		},
 		get: function () {
 			return this.current().value;
-		},
-        init: function(coll){
-            return new LoopIterator(Group.from(coll));
-        }
+		}
 	};
 
 	function searcher(obj, ary) {
@@ -378,18 +380,36 @@
 			trailer = flag ? landscape : portrait;
 		return [leader, trailer];
 	}
-    function makeCrossPageIterator(coll) {
-        return new LoopIterator(Group.from(coll));
-		}
-    
-	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
-		twee = _.range(15, 29),
-		drie = _.range(29, 43),
-		vier = _.range(43, 55),
-		vyf = _.range(55, 67),
-		ses = _.range(67, 79),
-		sewe = _.range(79, 93),
-		all = [een, twee, drie, vier, vyf, ses, sewe],
+
+	function makeCrossPageIterator(coll) {
+		return new LoopIterator(Group.from(coll));
+	}
+	var pages = (function () {
+			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
+				twee = _.range(15, 29),
+				drie = _.range(29, 43),
+				vier = _.range(43, 55),
+				vyf = _.range(55, 67),
+				ses = _.range(67, 79),
+				sewe = _.range(79, 93),
+				all = [een, twee, drie, vier, vyf, ses, sewe];
+			return {
+				getAll: function () {
+					return all.slice(0);
+				},
+				findInt: function (finder) {
+					return Number(finder().match(picnum)[1]);
+				},
+				findIndex: function (finder) {
+					return _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
+				}
+				/*,
+				            findPage: function (finder){
+				                return all[this.findIndex(finder)];
+				            }
+				            */
+			};
+		}()),
 		allow = !touchevents ? 2 : 0,
 		utils = poloAF.Util,
 		con = window.console.log.bind(window),
@@ -479,7 +499,7 @@
 			tooltip.init();
 		},
 		getValue = function (v, p) {
-			return mypics[p]()[v];
+			return LoopIterator.page_iterator[p]()[v];
 		},
 		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], utils.getBody())),
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
@@ -557,8 +577,9 @@
 				fixNoNthChild(e.target);
 			};
 		},
-
-		cross_page_iterator = makeCrossPageIterator(all),
+		cross_page_iterator = function () {
+			LoopIterator.cross_page_iterator = LoopIterator.from(pages.getAll());
+		},
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)))),
 		advanceRouteBridge = function (e) {
 			if (!getNodeName(getTarget(e)).match(/a/i)) {
@@ -570,7 +591,10 @@
 			return getID(getTarget(e)).match(/^back/) ? 'back' : 'forward';
 		},
 		advanceRoute = function (m) {
-			return m && populate(cross_page_iterator[m]());
+			if (!LoopIterator.cross_page_iterator) {
+				cross_page_iterator();
+			}
+			return m && populate(LoopIterator.cross_page_iterator[m]());
 		},
 		advanceRouteListener = _.wrap(advanceRouteBridge, function (orig, e) {
 			return advanceRoute(orig(e));
@@ -620,31 +644,31 @@
 			} else {
 				group = _.flatten(matchup(0)(_.zip(group[0], group[1])));
 			}
-			return makeCrossPageIterator(_.map(group, makePath));
+			return LoopIterator.from(_.map(group, makePath));
 		},
 		get_play_iterator = function (flag) {
-			var myint = Number(getBaseSrc().match(picnum)[1]),
-				page_index = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty)),
+			var myint = pages.findInt(getBaseSrc),
+				page_index = pages.findIndex(getBaseSrc),
 				page,
 				gallery_pics;
 			if (flag) {
 				return prepareSlideshow(myint);
 			} else {
-				//cross_page_iterator = makeCrossPageIterator(utils.shuffleArray(all.slice(0))(sub));
-				cross_page_iterator = makeCrossPageIterator(all.slice(0));
-				cross_page_iterator.set(page_index);
-				page = cross_page_iterator.get();
+				LoopIterator.cross_page_iterator = LoopIterator.cross_page_iterator || LoopIterator.from(pages.getAll());
+				LoopIterator.cross_page_iterator.set(page_index);
+				page = LoopIterator.cross_page_iterator.get();
 				$LI.query(page);
+				con(page);
 				gallery_pics = _.filter(allpics, function (img) {
 					return !getLI(img).id;
 				});
 				_.each(gallery_pics, function (img, i) {
 					populatePage(img, page[i]);
 				});
-				mypics = new LoopIterator(Group.from(_.map(gallery_pics, function (img) {
+				LoopIterator.page_iterator = LoopIterator.from(_.map(gallery_pics, function (img) {
 					return img.src;
-				})));
-				mypics.find(getBaseSrc());
+				}));
+				LoopIterator.page_iterator.find(getBaseSrc());
 			}
 		},
 		loadImage = function (getnexturl, id) {
@@ -660,8 +684,9 @@
 						reject(new Error("Failed to load image's URL:" + url()));
 					});
 					//only run url once, otherwise advances
+					con(getnexturl())
 					img.src = doParse(getnexturl());
-					img.parentNode.href = doParse(img.src);
+					//img.parentNode.href = doParse(img.src);
 				}
 			});
 		},
@@ -689,11 +714,16 @@
 				]);
 			};
 		},
-		mypics = new LoopIterator(Group.from(_.map(allpics, function (img) {
-			return img.src;
-		}))),
+		do_page_iterator = function () {
+			LoopIterator.page_iterator = LoopIterator.from(_.map(allpics, function (img) {
+				return img.src;
+			}));
+		},
 		setindex = function (arg) {
-			return mypics.find(arg);
+			if (!LoopIterator.page_iterator) {
+				do_page_iterator();
+			}
+			return LoopIterator.page_iterator.find(arg);
 		},
 		nextcaller = twicedefer(getValue)('forward')('value'),
 		prevcaller = twicedefer(getValue)('back')('value'),
@@ -701,7 +731,7 @@
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			orient(lcsp, ptrt)(e.target);
-			publish();
+			//publish();
 		}, thumbs),
 		///slideshow...
 		recur = (function (l, p) {
@@ -721,7 +751,8 @@
 			}
 
 			function doBase() {
-				loader(mypics.play.bind(mypics), 'base').then(paint).then(setPlayer);
+				//loader(page_iterator.play.bind(page_iterator), 'base').then(paint).then(setPlayer);
+				loader(_.bind(page_iterator, page_iterator.play), 'base').then(paint).then(setPlayer);
 			}
 
 			function doFormat(img) {
@@ -788,7 +819,7 @@
 				player = playmaker();
 			return function () {
 				if (!recur.t) {
-					mypics = get_play_iterator(true);
+					LoopIterator.page_iterator = get_play_iterator(true);
 				}
 				if (player.validate()) {
 					player.reset();
