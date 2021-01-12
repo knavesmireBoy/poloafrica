@@ -236,17 +236,17 @@
 		play: function () {
 			return this.forward(true).value;
 		},
-        current: function() {
+		current: function () {
 			var result = {
 				value: this.group.members[this.position],
 				index: this.position
 			};
 			return result;
 		},
-		find: function(tgt) {
+		find: function (tgt) {
 			return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
 		},
-		set: function(pos) {
+		set: function (pos) {
 			this.position = pos;
 			var result = {
 				value: this.group.members[this.position],
@@ -254,9 +254,9 @@
 			};
 			return result;
 		},
-        get: function(){
-            return this.current().value;
-        }
+		get: function () {
+			return this.current().value;
+		}
 	};
 
 	function searcher(obj, ary) {
@@ -375,7 +375,6 @@
 			trailer = flag ? landscape : portrait;
 		return [leader, trailer];
 	}
-
 	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
@@ -479,8 +478,8 @@
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
 		playing = _.compose(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
 		notplaying = ptL(klasRem, 'playing', $$('controls')),
-        exitplay = ptL(klasRem, 'inplay', $('wrap')),
-        exitswap = ptL(klasRem, 'swap'),
+		exitplay = ptL(klasRem, 'inplay', $('wrap')),
+		exitswap = ptL(klasRem, 'swap'),
 		exitshow = _.compose(ptL(klasAdd, 'gallery', thumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exitplay),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
 		orient = function (l, p) {
@@ -489,16 +488,15 @@
 				return img.src;
 			};
 		},
-        
 		$LI = (function (options) {
-            function getColl(){
-                return _.filter(thumbs.getElementsByTagName('li'), function(li){
-                            return !li.id;
-                        });
-            }
+			function getColl() {
+				return _.filter(thumbs.getElementsByTagName('li'), function (li) {
+					return !li.id;
+				});
+			}
 			return {
-				exec: function () { 
-                    //used ONLY by negator swaps actions on failing predicate
+				exec: function () {
+					//used ONLY by negator swaps actions on failing predicate
 					var action = options[0];
 					_.each(_.last(getColl(), 2), this[action]);
 					options = options.reverse();
@@ -508,26 +506,23 @@
 					$el.unrender();
 				},
 				render: function (el) {
-                    var base = $('base'),
-                        ancr = base ? anCrIn(base, thumbs) : ptL(anCr, thumbs);
-                    //doesn't really matter where #base is as all othe LIS are hidden when it is present. But it's tidier
-					   return utils.machElement(ancr, always(el)).render();
+					var base = $('base'),
+						ancr = base ? anCrIn(base, thumbs) : ptL(anCr, thumbs);
+					//doesn't really matter where #base is as all othe LIS are hidden when it is present. But it's tidier
+					return utils.machElement(ancr, always(el)).render();
 				},
-                query: function(coll){
-                    var lis = getColl(),
-                    L = getColl().length;
-                    if(L > coll.length){
-                        _.each(_.last(lis, 2), this.unrender);
-                    }
-                        else if(L < coll.length){
-                        _.each(_.last(lis, 2), this.render);
-                    }
-                    
-                }
+				query: function (coll) {
+					var lis = getColl(),
+						L = getColl().length;
+					if (L > coll.length) {
+						_.each(_.last(lis, 2), this.unrender);
+					} else if (L < coll.length) {
+						_.each(_.last(lis, 2), this.render);
+					}
+				}
 			};
 		}(['unrender', 'render'])),
-
-        	negator = (function (pred) {
+		negator = (function (pred) {
 			return function (cb, page_coll) {
 				if (pred(page_coll.value)) {
 					cb();
@@ -536,7 +531,6 @@
 				return page_coll;
 			};
 		}(function (coll) {
-            con(coll)
 			return getLength(coll) !== 14;
 		})),
 		//awaits an img element, maps functions that are invoked with the incoming element argument
@@ -545,18 +539,17 @@
 		//fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
 		doPopulate = function (pagepics) {
 			_.each(allpics, function (img, i) {
-                populatePage(img, pagepics.value[i]);
+				populatePage(img, pagepics.value[i]);
 			});
 		},
-        populatePage = function(img, path){
-				img.src = makePath(path);
-                img.parentNode.href = doParse(img.src);
-				//adds portrait class on browsers that don't support nth-child
-				img.onload = function (e) {
-					fixNoNthChild(e.target);
-				};
-        },
-      
+		populatePage = function (img, path) {
+			img.src = makePath(path);
+			img.parentNode.href = doParse(img.src);
+			//adds portrait class on browsers that don't support nth-child
+			img.onload = function (e) {
+				fixNoNthChild(e.target);
+			};
+		},
 		makeCrossPageIterator = function (coll) {
 			return new LoopIterator(Group.from(coll));
 		},
@@ -566,13 +559,13 @@
 			if (!getNodeName(getTarget(e)).match(/a/i)) {
 				return;
 			}
-            if(utils.findByClass('inplay')){
-                return 'current';
-            }
+			if (utils.findByClass('inplay')) {
+				return 'current';
+			}
 			return getID(getTarget(e)).match(/^back/) ? 'back' : 'forward';
 		},
 		advanceRoute = function (m) {
-            con(m);
+			con(m);
 			return m && populate(cross_page_iterator[m]());
 		},
 		advanceRouteListener = _.wrap(advanceRouteBridge, function (orig, e) {
@@ -625,35 +618,31 @@
 			}
 			return makeCrossPageIterator(_.map(group, makePath));
 		},
-        
-        get_play_iterator = function(flag) {
-				var myint = Number(getBaseSrc().match(picnum)[1]),
-					page_index = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty)),
-                    page,
-                    gallery_pics;
-				if (flag) {
-					return prepareSlideshow(myint);
-				}
-             else {
-					
-					//cross_page_iterator = makeCrossPageIterator(utils.shuffleArray(all.slice(0))(sub));
-					cross_page_iterator = makeCrossPageIterator(all.slice(0));
-					cross_page_iterator.set(page_index);
-                 page = cross_page_iterator.get();
-                 $LI.query(page);
-                 gallery_pics = _.filter(allpics, function(img) {
-						return !getLI(img).id;
-					});
-					_.each(gallery_pics, function(img, i) {
-						populatePage(img, page[i]);
-					});
-					mypics = new LoopIterator(Group.from(_.map(gallery_pics, function(img) {
-						return img.src;
-					})));
-					mypics.find(getBaseSrc());
-				}
+		get_play_iterator = function (flag) {
+			var myint = Number(getBaseSrc().match(picnum)[1]),
+				page_index = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty)),
+				page,
+				gallery_pics;
+			if (flag) {
+				return prepareSlideshow(myint);
+			} else {
+				//cross_page_iterator = makeCrossPageIterator(utils.shuffleArray(all.slice(0))(sub));
+				cross_page_iterator = makeCrossPageIterator(all.slice(0));
+				cross_page_iterator.set(page_index);
+				page = cross_page_iterator.get();
+				$LI.query(page);
+				gallery_pics = _.filter(allpics, function (img) {
+					return !getLI(img).id;
+				});
+				_.each(gallery_pics, function (img, i) {
+					populatePage(img, page[i]);
+				});
+				mypics = new LoopIterator(Group.from(_.map(gallery_pics, function (img) {
+					return img.src;
+				})));
+				mypics.find(getBaseSrc());
+			}
 		},
-        
 		loadImage = function (getnexturl, id) {
 			return new Promise(function (resolve, reject) {
 				var img = getDomTargetImg($(id));
@@ -666,9 +655,9 @@
 					img.addEventListener('error', function () {
 						reject(new Error("Failed to load image's URL:" + url()));
 					});
-                    //only run url once, otherwise advances
+					//only run url once, otherwise advances
 					img.src = doParse(getnexturl());
-                    img.parentNode.href = doParse(img.src);
+					img.parentNode.href = doParse(img.src);
 				}
 			});
 		},
@@ -717,6 +706,7 @@
 					return img && img.width > img.height;
 				});
 			}
+
 			function paint(str) {
 				var coll = test(),
 					bool = coll[0] === coll[1],
@@ -793,9 +783,9 @@
 				},
 				player = playmaker();
 			return function () {
-                if(!recur.t){
-                    mypics = get_play_iterator(true);
-                }
+				if (!recur.t) {
+					mypics = get_play_iterator(true);
+				}
 				if (player.validate()) {
 					player.reset();
 				} else {
@@ -828,11 +818,9 @@
 				setOrient = _.partial(orient(lcsp, ptrt), $$('base')),
 				relocate = _.partial(callerBridge, null, locate, 'render'),
 				doReLocate = _.partial(utils.doWhen, $$('base'), relocate),
-                farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, removal],
-                
+				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, removal],
 				next_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
-                
 				pauser = function () {
 					if (!$('slide')) {
 						machSlide('base', 'slide').then(function (el) {
@@ -904,7 +892,7 @@
 					chain = chain.validate('play');
 					//chain.handle('playbutton');
 					_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
-                    exitshow();
+					exitshow();
 					locate.unrender();
 					setup.render();
 				}, _.compose(close_cb, close_aside));
@@ -930,9 +918,9 @@
 	}
 }, function (path) {
 	"use strict";
-    if(path){
-	path = path.toString();
-	var mypath = path.length < 3 ? "images/0" + path : "images/" + path;
-	return mypath + ".jpg";
-    }
+	if (path) {
+		path = path.toString();
+		var mypath = path.length < 3 ? "images/0" + path : "images/" + path;
+		return mypath + ".jpg";
+	}
 }));
