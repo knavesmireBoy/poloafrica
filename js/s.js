@@ -140,17 +140,6 @@
 		return _.partial(f, el);
 	}
 
-	function cat(first) {
-		if (existy(first)) {
-			return _.flatten(first.concat.apply(first, _.rest(arguments)));
-		} else {
-			return [];
-		}
-	}
-
-	function construct(head) {
-		return head && cat([head], _.rest(arguments));
-	}
 	//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
 	function eventing(type, actions, fn, el) {
 		actions = actions || ['preventDefault'];
@@ -263,76 +252,43 @@
 			return this.current().value;
 		}
 	};
-
-	function searcher(obj, ary) {
-		/*noticed an issue with parentNode where on supply of an element, the initial value for reduce is the parent
-		but THAT parent would get set on the second iteration to ITS parent so. When array has just one item reduce not really required*/
-		if (ary && ary[1]) {
-			return ary.reduce(function (acc, cur) {
-				return acc[cur] || acc;
-			}, obj[ary[0]]);
-		}
-		return ary[0] ? obj[ary[0]] : obj;
-	}
-
+    function doEach(coll, ptl){
+        _.forEach(coll, function (arr) {
+            return ptl(arr[1], arr[0]);
+        });
+    }
+    
+    function doElements(){
+        return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
+    }
+    
 	function machBase(source, target) {
 		return new Promise(function (resolve, reject) {
-			var li = anCr(thumbs)('li'),
-				a = anCr(li)('a'),
-				img = anCr(a)('img'),
-				partial = _.partial(doMap, a),
-				coll = [
-					['href', doParse(source.src)]
-				];
-			_.forEach(coll, function (arr) {
-				return partial(arr[1], arr[0]);
-			});
-			coll = [
-				['id', target]
-			];
-			partial = _.partial(doMap, li);
-			_.forEach(coll, function (arr) {
-				return partial(arr[1], arr[0]);
-			});
+			var img = doElements();
+            doEach([['href', doParse(source.src)]], ptL(doMap, img.parentNode));
+			doEach([['id', target]], ptL(doMap, img.parentNode.parentNode));
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
-			img.src = doParse(a.href);
+			img.src = doParse(img.parentNode.href);
 		});
 	}
 
 	function machSlide(source, target) {
 		return new Promise(function (resolve, reject) {
-			var li = anCr(thumbs)('li'),
-				a = anCr(li)('a'),
-				img = anCr(a)('img'),
-				partial = _.partial(doMap, a),
-				coll = [
-					['href', doParse(getBaseSrc())]
-				];
-			_.forEach(coll, function (arr) {
-				return partial(arr[1], arr[0]);
-			});
-			coll = [
-				['id', target]
-			];
-			partial = _.partial(doMap, li);
-			_.forEach(coll, function (arr) {
-				return partial(arr[1], arr[0]);
-			});
+			var img = doElements();
+            doEach([['href', doParse(getBaseSrc())]], ptL(doMap, img.parentNode));
+			doEach([['id', target]], ptL(doMap, img.parentNode.parentNode));
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
-			img.src = doParse(a.href);
+			img.src = doParse(img.parentNode.href);
 		});
 	}
 
 	function machPause(src) {
 		return new Promise(function (resolve, reject) {
-			var li = anCr(thumbs)('li'),
-				a = anCr(li)('a'),
-				img = anCr(a)('img'),
-				partial = _.partial(doMap, li),
+			var img = doElements(),
 				styleAttrs = new Map([
 					["opacity", 0.5]
 				]),
@@ -340,14 +296,11 @@
 					['id', 'paused'],
 					['style', [styleAttrs]]
 				];
-			_.forEach(coll, function (arr) {
-				return partial(arr[1], arr[0]);
-			});
+            doEach(coll, _.partial(doMap, img.parentNode.parentNode));
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
 			img.src = src;
-			img.id = "pauser";
 		});
 	}
 
@@ -381,9 +334,6 @@
 		return [leader, trailer];
 	}
 
-	function makeCrossPageIterator(coll) {
-		return new LoopIterator(Group.from(coll));
-	}
 	var pages = (function () {
 			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 				twee = _.range(15, 29),
@@ -403,11 +353,6 @@
 				findIndex: function (finder) {
 					return _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
 				}
-				/*,
-				            findPage: function (finder){
-				                return all[this.findIndex(finder)];
-				            }
-				            */
 			};
 		}()),
 		allow = !touchevents ? 2 : 0,
@@ -427,28 +372,24 @@
 		twicedefer = curryFactory(2, true),
 		thrice = curryFactory(3),
 		thricedefer = curryFactory(3, true),
-		quart = curryFactory(4),
-		//driller = twice(utils.drillDown),
-		driller = twice(searcher),
-		zero = twice(utils.getter)(0),
-		mysetter = thrice(setter),
 		defercall = thricedefer(callerBridge),
-		//parser = thrice(caller)('match')(/[^\/]+\.(jpg|png)$/),
 		parser = thrice(caller)('match')(/images\/[^\/]+\.(jpg|png)$/),
-		doParse = _.compose(zero, parser),
+		doParse = _.compose(twice(utils.getter)(0), parser),
 		divideBy = twice(divide),
 		greaterOrEqual = ptL(invoke, greater),
 		gtEq = ptL(greater),
 		doAlt = function (actions) {
 			return actions.reverse()[0]();
 		},
+        anCr = utils.append(),
+		anCrIn = utils.insert(),
+		setAttrs = utils.setAttributes,
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
 		klasTog = utils.toggleClass,
 		main = document.getElementsByTagName('main')[0],
 		thumbs = utils.getByClass('gallery')[0],
 		$ = thrice(callerBridge)('getElementById')(document),
-		$q = thrice(callerBridge)('querySelector')(document),
 		$$ = thricedefer(callerBridge)('getElementById')(document),
 		lcsp = _.partial(klasRem, 'portrait', thumbs),
 		ptrt = _.partial(klasAdd, 'portrait', thumbs),
@@ -457,14 +398,10 @@
 		node_target = twice(utils.getter)('nodeName'),
 		text_from_target = thrice(nested)(target)(text_target),
 		node_from_target = thrice(nested)(target)(node_target),
-		anCr = utils.append(),
-		anCrIn = utils.insert(),
-		setAttrs = utils.setAttributes,
 		getNodeName = utils.drillDown(['nodeName']),
 		getID = utils.drillDown(['id']),
 		getLength = utils.drillDown(['length']),
 		mytarget = !window.addEventListener ? 'srcElement' : 'target',
-		doVier = utils.curryFactory(4),
 		getHeight = utils.curryFactory(2)(utils.getter)('offsetHeight'),
 		getWidth = utils.curryFactory(2)(utils.getter)('offsetWidth'),
 		doCompare = utils.curryFactory(4)(goCompare)(greater)(getWidth)(getHeight),
@@ -477,7 +414,6 @@
 		},
 		getTarget = utils.drillDown([mytarget]),
 		allpics = utils.getByTag('img', main),
-        list_elements = utils.getByTag('li', thumbs),
 		getSlideChild = _.compose(utils.getChild, utils.getChild, $$('slide')),
 		getBaseChild = _.compose(utils.getChild, utils.getChild, $$('base')),
 		getBaseSrc = _.compose(utils.drillDown(['src']), getBaseChild),
@@ -485,14 +421,9 @@
 		buttons_cb = function (str) {
 			var el = anCr($('controls'))('button');
 			el.id = str;
-			//_.forEach(coll, f);
 			return el;
 		},
-		close_cb = function (ancr) {
-			return ancr;
-			//return compose(thrice(doMap)('class')('contain'), thrice(doMap)('src')('poppy.png'), anCr(ancr))('img');
-		},
-		close_aside = function () {
+		close_cb = function () {
 			return _.compose(thrice(doMap)('href')('.'), thrice(doMap)('id')('exit'), anCrIn(thumbs, main))('a');
 		},
 		makeToolTip = function (flag) {
@@ -530,12 +461,10 @@
 					options = options.reverse();
 				},
 				unrender: function (el) {
-                    con('unrender')
 					var $el = utils.machElement(always(el)).render();
 					$el.unrender();
 				},
 				render: function (el) {
-                    con('render', el)
 					var base = $('base'),
 						ancr = base ? anCrIn(base, thumbs) : anCr(thumbs);
 					//doesn't really matter where #base is as all othe LIS are hidden when it is present. But it's tidier
@@ -567,7 +496,6 @@
 		//awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = _.compose(ptL(invoke, sortClass), ptL(_.map, [always('portrait'), getLI, doClass]), utils.curryFactory(2)(invoke)),
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
-		//fixNoNthChild = _.compose(ptL(utils.doWhen, utils.always(Modernizr.nthchild)), ptL(partial, doPortrait)),
 		doPopulate = function (pagepics) {
 			_.each(allpics, function (img, i) {
 				populatePage(img, pagepics.value[i]);
@@ -636,8 +564,6 @@
 						});
 					};
 				},
-				//sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, i))), _.negate(_.isEmpty)),
-                //page_index = pages.findIndex(getBaseSrc),
 				reordered = utils.shuffleArray(all.slice(0))(sub),
 				lscp = _.map(reordered, getLscpPics),
 				ptrt = _.map(reordered, getPortraitPics),
@@ -651,7 +577,6 @@
 				group = _.flatten(matchup(0)(_.zip(group[0], group[1])));
 			}
             LoopIterator.page_iterator = LoopIterator.from(_.map(group, makePath));
-            con(LoopIterator.page_iterator)
 		},
 		get_play_iterator = function (flag) {
 			var myint = pages.findInt(getBaseSrc),
@@ -705,10 +630,8 @@
 			var getLoc = (function (div, subtract, isGreaterEq) {
 				var getThreshold = _.compose(div, subtract);
 				return function (e) {
-					var box = e.target.getBoundingClientRect(),
-						res = isGreaterEq(ptL(subtract, e.clientX, box.left), ptL(getThreshold, box.right, box.left));
+					var box = e.target.getBoundingClientRect();
 					return e.clientX - box.left > (box.right - box.left) / 2;
-					//return res;
 				};
 			}(divideBy(2), subtract, greaterOrEqual));
 			return function (e) {
@@ -746,7 +669,6 @@
 					return img && img.width > img.height;
 				});
 			}
-
 			function paint(str) {
 				var coll = test(),
 					bool = coll[0] === coll[1],
@@ -765,7 +687,7 @@
 			}
 
 			function doSlide() {
-				loader(_.compose(driller(['src']), utils.getChild, utils.getChild, $$('base')), 'slide').then(doFormat);
+				loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide').then(doFormat);
 			}
 
 			function doRecur() {
@@ -911,7 +833,7 @@
 			if (!node_from_target(e).match(/img/i)) {
 				return;
 			}
-			_.compose(setindex, driller(['target', 'src']))(e);
+			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
 			machBase(e.target, 'base').then(showtime).then(orient(lcsp, ptrt));
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
@@ -926,7 +848,7 @@
 						chain.handle(str);
 					}
 				}, $('controls')),
-				controls_undostat = eventing('mouseover', null, undostatic, $q('footer')),
+				controls_undostat = eventing('mouseover', null, undostatic, utils.getByTag('footer', document)[0]),
 				controls_dostat = eventing('mouseover', null, dostatic, $('controls')),
 				exit = eventing('click', ['stopPropagation'], function (e) {
 					chain = chain.validate('play');
@@ -935,7 +857,7 @@
 					exitshow();
 					locate.unrender();
 					setup.render();
-				}, _.compose(close_cb, close_aside));
+				}, close_cb);
 			//listeners...
 			[controls, exit, locate, controls_undostat, controls_dostat].forEach(function (o) {
 				o.render();
