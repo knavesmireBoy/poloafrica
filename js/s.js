@@ -16,20 +16,8 @@
 		};
 	}
 
-	function noOp() {
-		return function () {};
-	}
-
-	function existy(x) {
-		return x != null;
-	}
-
 	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
-	}
-
-	function modulo(n, i) {
-		return i % n;
 	}
 
 	function divide(a, b) {
@@ -62,12 +50,12 @@
 		return f.apply(null, args.map(getResult));
 	}
 
-	function caller(o, v, p) {
+	function callerBridge(o, v, p) {
 		return o[p] && o[p](v);
 	}
 
-	function callerBridge(v, o, p) {
-		return caller(o, v, p);
+	function mycaller(v, o, p) {
+		return callerBridge(o, v, p);
 	}
 
 	function setter(v, o, p) {
@@ -137,7 +125,7 @@
 	}
 
 	function partial(f, el) {
-		return _.partial(f, el);
+		return ptL(f, el);
 	}
 
 	//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
@@ -183,7 +171,7 @@
 			}
 		},
 		remove: function (value) {
-			this.members = _.filter(this.members, _.negate(_.partial(equals, value)));
+			this.members = _.filter(this.members, _.negate(ptL(equals, value)));
 		},
 		has: function (value) {
 			return this.members.includes(value);
@@ -238,7 +226,7 @@
 			return result;
 		},
 		find: function (tgt) {
-			return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
+			return this.set(this.group.members.findIndex(ptL(equals, tgt)));
 		},
 		set: function (pos) {
 			this.position = pos;
@@ -252,21 +240,22 @@
 			return this.current().value;
 		}
 	};
-    function doEach(coll, ptl){
+    
+    function addAttrs(coll, ptl){
         _.forEach(coll, function (arr) {
             return ptl(arr[1], arr[0]);
         });
     }
     
-    function doElements(){
+    function addElements(){
         return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
     }
     
 	function machBase(source, target) {
 		return new Promise(function (resolve, reject) {
-			var img = doElements();
-            doEach([['href', doParse(source.src)]], ptL(doMap, img.parentNode));
-			doEach([['id', target]], ptL(doMap, img.parentNode.parentNode));
+			var img = addElements();
+            addAttrs([['href', doParse(source.src)]], ptL(doMap, img.parentNode));
+			addAttrs([['id', target]], ptL(doMap, img.parentNode.parentNode));
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
@@ -276,9 +265,9 @@
 
 	function machSlide(source, target) {
 		return new Promise(function (resolve, reject) {
-			var img = doElements();
-            doEach([['href', doParse(getBaseSrc())]], ptL(doMap, img.parentNode));
-			doEach([['id', target]], ptL(doMap, img.parentNode.parentNode));
+			var img = addElements();
+            addAttrs([['href', doParse(getBaseSrc())]], ptL(doMap, img.parentNode));
+			addAttrs([['id', target]], ptL(doMap, img.parentNode.parentNode));
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
@@ -288,7 +277,7 @@
 
 	function machPause(src) {
 		return new Promise(function (resolve, reject) {
-			var img = doElements(),
+			var img = addElements(),
 				styleAttrs = new Map([
 					["opacity", 0.5]
 				]),
@@ -296,7 +285,7 @@
 					['id', 'paused'],
 					['style', [styleAttrs]]
 				];
-            doEach(coll, _.partial(doMap, img.parentNode.parentNode));
+            addAttrs(coll, ptL(doMap, img.parentNode.parentNode));
 			img.addEventListener('load', function (e) {
 				resolve(img);
 			});
@@ -319,7 +308,7 @@
 		}
 	}
 
-	function doSplice(bool, coll) {
+	function spliceOrientation(bool, coll) {
 		if (coll[13]) {
 			var copy = coll.slice(0),
 				res = copy.splice(4, 6);
@@ -355,7 +344,6 @@
 				}
 			};
 		}()),
-		allow = !touchevents ? 2 : 0,
 		utils = poloAF.Util,
 		con = window.console.log.bind(window),
 		/*reporter = function (msg, el) {
@@ -372,8 +360,8 @@
 		twicedefer = curryFactory(2, true),
 		thrice = curryFactory(3),
 		thricedefer = curryFactory(3, true),
-		defercall = thricedefer(callerBridge),
-		parser = thrice(caller)('match')(/images\/[^\/]+\.(jpg|png)$/),
+		defercall = thricedefer(mycaller),
+		parser = thrice(callerBridge)('match')(/images\/[^\/]+\.(jpg|png)$/),
 		doParse = _.compose(twice(utils.getter)(0), parser),
 		divideBy = twice(divide),
 		greaterOrEqual = ptL(invoke, greater),
@@ -389,10 +377,10 @@
 		klasTog = utils.toggleClass,
 		main = document.getElementsByTagName('main')[0],
 		thumbs = utils.getByClass('gallery')[0],
-		$ = thrice(callerBridge)('getElementById')(document),
-		$$ = thricedefer(callerBridge)('getElementById')(document),
-		unsetPortrait = _.partial(klasRem, 'portrait', thumbs),
-        setPortrait = _.partial(klasAdd, 'portrait', thumbs),
+		$ = thrice(mycaller)('getElementById')(document),
+		$$ = thricedefer(mycaller)('getElementById')(document),
+		unsetPortrait = ptL(klasRem, 'portrait', thumbs),
+        setPortrait = ptL(klasAdd, 'portrait', thumbs),
 		target = twice(utils.getter)('target'),
 		text_target = twice(utils.getter)('id'),
 		node_target = twice(utils.getter)('nodeName'),
@@ -418,16 +406,8 @@
 		getBaseChild = _.compose(utils.getChild, utils.getChild, $$('base')),
 		getBaseSrc = _.compose(utils.drillDown(['src']), getBaseChild),
 		getSlideSrc = _.compose(utils.drillDown(['src']), getSlideChild),
-		buttons_cb = function (str) {
-			var el = anCr($('controls'))('button');
-			el.id = str;
-			return el;
-		},
-		close_cb = function () {
-			return _.compose(thrice(doMap)('href')('.'), thrice(doMap)('id')('exit'), anCrIn(thumbs, main))('a');
-		},
 		makeToolTip = function (flag) {
-			var tooltip = poloAF.Tooltip(thumbs, ["move mouse in and out of footer...", "...to toggle the display of control buttons"], allow, flag);
+			var tooltip = poloAF.Tooltip(thumbs, ["move mouse in and out of footer...", "...to toggle the display of control buttons"], !touchevents ? 2 : 0, flag);
 			tooltip.init();
 		},
 		getValue = function (v, p) {
@@ -441,9 +421,9 @@
 		exitswap = ptL(klasRem, 'swap', utils.getBody()),
 		exitshow = _.compose(ptL(klasAdd, 'gallery', thumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exitplay),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
-		orient = function (l, p) {
+		doOrient = function (l, p) {
 			return function (img) {
-				utils.getBest(_.partial(gtEq, getResult(img).clientHeight, getResult(img).clientWidth), [p, l])();
+				utils.getBest(ptL(gtEq, getResult(img).clientHeight, getResult(img).clientWidth), [p, l])();
 				return img.src;
 			};
 		},
@@ -467,7 +447,7 @@
 				render: function (el) {
 					var base = $('base'),
 						ancr = base ? anCrIn(base, thumbs) : anCr(thumbs);
-					//doesn't really matter where #base is as all othe LIS are hidden when it is present. But it's tidier
+					//doesn't really matter where #base is as all other LIS are hidden when it is present. But it's tidier
 					return utils.machElement(ancr, always(el)).render();
 				},
 				query: function (coll) {
@@ -493,6 +473,7 @@
 		}(function (coll) {
 			return getLength(coll) !== 14;
 		})),
+        
 		//awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = _.compose(ptL(invoke, sortClass), ptL(_.map, [always('portrait'), getLI, doClass]), utils.curryFactory(2)(invoke)),
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
@@ -542,8 +523,8 @@
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
 		prepareSlideshow = function (i, sub) {
 			var all = pages.getAll(),
-                getPortraitPics = ptL(doSplice, true),
-				getLscpPics = ptL(doSplice, false),
+                getPortraitPics = ptL(spliceOrientation, true),
+				getLscpPics = ptL(spliceOrientation, false),
 				fixPageOrder = function (group, i) {
 					var leader = group[0],
 						tmp = leader[0],
@@ -590,7 +571,6 @@
 				LoopIterator.cross_page_iterator.set(page_index);
 				page = LoopIterator.cross_page_iterator.get();
 				$LI.query(page);
-				con(page);
 				gallery_pics = _.filter(allpics, function (img) {
 					return !getLI(img).id;
 				});
@@ -654,11 +634,9 @@
 		},
 		nextcaller = twicedefer(getValue)('forward')('value'),
 		prevcaller = twicedefer(getValue)('back')('value'),
-		mycaller = twicedefer(getValue)('current')('value'),
 		locate = eventing('click', ['preventDefault', 'stopPropagation'], function (e) {
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
-			orient(unsetPortrait,setPortrait)(e.target);
-			//publish();
+			doOrient(unsetPortrait,setPortrait)(e.target);
 		}, thumbs),
 		///slideshow...
 		recur = (function (l, p) {
@@ -760,25 +738,23 @@
 			recur.t = null;
 		},
 		factory = function () {
-			var removePause = _.compose(utils.removeNodeOnComplete, $$('paused')),
-				removeSlide = _.compose(utils.removeNodeOnComplete, $$('slide')),
-				removal = defercall('forEach')([removePause, removeSlide])(getResult),
+			var remPause = _.compose(utils.removeNodeOnComplete, $$('paused')),
+				remSlide = _.compose(utils.removeNodeOnComplete, $$('slide')),
 				doSlide = defer_once(doAlt)([clear, recur]),
 				doPlaying = defer_once(doAlt)([notplaying, playing]),
 				doDisplay = defer_once(doAlt)([playtime]),
 				unpauser = function () {
 					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';
-					//notplaying();
 					machPause(path).then(function (el) {
 						eventing('click', null, invoke_player, el).render();
 					});
 				},
-				doPause = defer_once(doAlt)([_.partial(utils.doWhen, $$('slide'), unpauser), removePause]),
+				doPause = defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), removePause]),
 				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
-				setOrient = _.partial(orient(unsetPortrait,setPortrait), $$('base')),
-				relocate = _.partial(callerBridge, null, locate, 'render'),
-				doReLocate = _.partial(utils.doWhen, $$('base'), relocate),
-				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, removal],
+				setOrient = ptL(doOrient(unsetPortrait,setPortrait), $$('base')),
+				relocate = ptL(mycaller, null, locate, 'render'),
+				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
+				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, defercall('forEach')([remPause, remSlide])(getResult)],
 				next_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				pauser = function () {
@@ -812,8 +788,8 @@
 						}
 					};
 				},
-				mynext = COR(_.partial(invokeArgs, equals, 'forwardbutton'), next_driver),
-				myprev = COR(_.partial(invokeArgs, equals, 'backbutton'), prev_driver),
+				mynext = COR(ptL(invokeArgs, equals, 'forwardbutton'), next_driver),
+				myprev = COR(ptL(invokeArgs, equals, 'backbutton'), prev_driver),
 				listen,
 				myplayer = COR(function () {
 					pauser();
@@ -824,17 +800,25 @@
 			};
 			mynext.setSuccessor(myprev);
 			myprev.setSuccessor(myplayer);
-			recur.i = 50; //slide is clone of base initially, so fade can start
+			recur.i = 50; //slide is clone of base initially, so fade can start quickly
 			return mynext;
 		}, //factory
 		setup = eventing('click', null, function (e) {
-			if (!node_from_target(e).match(/img/i)) {
+            if (!node_from_target(e).match(/img/i)) {
 				return;
 			}
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
-			machBase(e.target, 'base').then(showtime).then(orient(unsetPortrait,setPortrait));
-			var buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
+			machBase(e.target, 'base').then(showtime).then(doOrient(unsetPortrait,setPortrait));
+            var buttons_cb = function (str) {
+                var el = anCr($('controls'))('button');
+                el.id = str;
+                return el;
+            },
+                close_cb = function () {
+                    return _.compose(thrice(doMap)('href')('.'), thrice(doMap)('id')('exit'), anCrIn(thumbs, main))('a');
+                },
+                buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 				dostatic = ptL(klasAdd, 'static', $$('controls')),
 				chain = factory(),
 				controls = eventing('click', null, function (e) {
@@ -850,7 +834,6 @@
 				controls_dostat = eventing('mouseover', null, dostatic, $('controls')),
 				exit = eventing('click', ['stopPropagation'], function (e) {
 					chain = chain.validate('play');
-					//chain.handle('playbutton');
 					_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
 					exitshow();
 					locate.unrender();
