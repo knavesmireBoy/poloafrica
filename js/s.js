@@ -477,6 +477,7 @@
 		},
 		getTarget = utils.drillDown([mytarget]),
 		allpics = utils.getByTag('img', main),
+        list_elements = utils.getByTag('li', thumbs),
 		getSlideChild = _.compose(utils.getChild, utils.getChild, $$('slide')),
 		getBaseChild = _.compose(utils.getChild, utils.getChild, $$('base')),
 		getBaseSrc = _.compose(utils.drillDown(['src']), getBaseChild),
@@ -517,22 +518,25 @@
 		},
 		$LI = (function (options) {
 			function getColl() {
-				return _.filter(thumbs.getElementsByTagName('li'), function (li) {
+				/*return _.filter(thumbs.getElementsByTagName('li'), function (li) {
 					return !li.id;
-				});
+				});*/
+                return thumbs.getElementsByTagName('li');
 			}
 			return {
 				exec: function () {
 					//used ONLY by negator swaps actions on failing predicate
 					var action = options[0];
-					_.each(_.last(getColl(), 2), this[action]);
+					_.each(_.last(list_elements, 2), this[action]);
 					options = options.reverse();
 				},
 				unrender: function (el) {
+                    con('unrender')
 					var $el = utils.machElement(always(el)).render();
 					$el.unrender();
 				},
 				render: function (el) {
+                    con('render', el)
 					var base = $('base'),
 						ancr = base ? anCrIn(base, thumbs) : ptL(anCr, thumbs);
 					//doesn't really matter where #base is as all othe LIS are hidden when it is present. But it's tidier
