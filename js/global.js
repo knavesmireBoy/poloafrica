@@ -970,6 +970,7 @@ poloAF.Util = (function() {
 			};
 			element.fade = window.setTimeout(repeat, 100);
 		},
+        findByClass: _.compose(curry2(getter)(0), _.partial(getPolyClass, document)),
 		findIndex: function(collection, predicate) {
 			return _.findIndex(collection, predicate || always(true));
 		},

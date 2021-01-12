@@ -493,16 +493,54 @@
 				return img.src;
 			};
 		},
-		negator = (function (neg) {
-			return function (cb, a, b) {
-				if (neg(a, b)) {
-					cb();
-					neg = _.negate(neg);
-				}
-				return b;
+        
+          
+		$LI = (function (options) {
+            
+            function getColl(){
+                return _.filter(thumbs.getElementsByTagName('li'), function(li){
+                            return !li.id;
+                        });
+            }
+			return {
+				exec: function () { 
+                    //used ONLY by negator swaps actions on failing predicate
+					var action = options[0];
+					_.each(_.last(getColl(), 2), this[action]);
+					options = options.reverse();
+				},
+				unrender: function (el) {
+					var $el = utils.machElement(always(el)).render();
+					$el.unrender();
+				},
+				render: function (el) {
+					return utils.machElement(anCr(thumbs), always(el)).render();
+				},
+                query: function(coll){
+                    var lis = getColl(),
+                    L = getColl().length;
+                    if(L > coll.length){
+                        _.each(_.last(lis, 2), this.unrender);
+                    }
+                        else if(L < coll.length){
+                        _.each(_.last(lis, 2), this.render);
+                    }
+                    
+                }
 			};
-		}(function (a, b) {
-			return getLength(b.value) !== 14;
+		}(['unrender', 'render'])),
+
+        	negator = (function (pred) {
+			return function (cb, page_coll) {
+				if (pred(page_coll.value)) {
+					cb();
+					pred = _.negate(pred);
+				}
+				return page_coll;
+			};
+		}(function (coll) {
+            con(coll)
+			return getLength(coll) !== 14;
 		})),
 		//awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = _.compose(ptL(invoke, sortClass), ptL(_.map, [always('portrait'), getLI, doClass]), utils.curryFactory(2)(invoke)),
@@ -521,32 +559,19 @@
 					fixNoNthChild(e.target);
 				};
         },
-        
-		$LI = (function (options) {
-			return {
-				exec: function () { //cb
-					var action = options[0];
-					_.each(_.last(thumbs.getElementsByTagName('li'), 2), this[action]);
-					options = options.reverse();
-				},
-				unrender: function (el) {
-					var $el = utils.machElement(always(el)).render();
-					$el.unrender();
-				},
-				render: function (el) {
-					return utils.machElement(anCr(thumbs), always(el)).render();
-				}
-			};
-		}(['unrender', 'render'])),
+      
 		makeCrossPageIterator = function (coll) {
 			return new LoopIterator(Group.from(coll));
 		},
 		cross_page_iterator = makeCrossPageIterator(all),
-		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)), allpics)),
+		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)))),
 		advanceRouteBridge = function (e) {
 			if (!getNodeName(getTarget(e)).match(/a/i)) {
 				return;
 			}
+            if(utils.findByClass('inplay')){
+                return 'current';
+            }
 			return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
 		},
 		advanceRoute = function (m) {
@@ -613,13 +638,15 @@
 					return prepareSlideshow(myint);
 				}
              else {
-					gallery_pics = _.filter(allpics, function(img) {
-						return !getLI(img).id;
-					});
+					
 					//cross_page_iterator = makeCrossPageIterator(utils.shuffleArray(all.slice(0))(sub));
 					cross_page_iterator = makeCrossPageIterator(all.slice(0));
 					cross_page_iterator.set(page_index);
                  page = cross_page_iterator.get();
+                 $LI.query(page);
+                 gallery_pics = _.filter(allpics, function(img) {
+						return !getLI(img).id;
+					});
 					_.each(gallery_pics, function(img, i) {
 						populatePage(img, page[i]);
 					});
@@ -923,7 +950,9 @@
 	}
 }, function (path) {
 	"use strict";
+    if(path){
 	path = path.toString();
 	var mypath = path.length < 3 ? "images/0" + path : "images/" + path;
 	return mypath + ".jpg";
+    }
 }));
