@@ -253,7 +253,10 @@
 				index: this.position
 			};
 			return result;
-		}
+		},
+        get: function(){
+            return this.current().value;
+        }
 	};
 
 	function searcher(obj, ary) {
@@ -600,32 +603,31 @@
 			return makeCrossPageIterator(_.map(group, makePath));
 		},
         
-        get_play_iterator = function() {
-			if ($('slide')) {
-				var myint = Number(getSlideSrc().match(picnum)[1]),
-					sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty));
-				if (!recur.t) {
-					con('prep slide');
+        get_play_iterator = function(flag) {
+            
+				var myint = Number(getBaseSrc().match(picnum)[1]),
+					page_index = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, myint))), _.negate(_.isEmpty)),
+                    page,
+                    gallery_pics;
+				if (flag) {
 					return prepareSlideshow(myint);
 				}
              else {
-                 con('end');
-					allpics = _.filter(allpics, function(img) {
+					gallery_pics = _.filter(allpics, function(img) {
 						return !getLI(img).id;
 					});
 					//cross_page_iterator = makeCrossPageIterator(utils.shuffleArray(all.slice(0))(sub));
 					cross_page_iterator = makeCrossPageIterator(all.slice(0));
-					cross_page_iterator.set(sub);
-                    con(all[sub]);
-					_.each(allpics, function(img, i) {
-						populatePage(img, all[sub][i]);
+					cross_page_iterator.set(page_index);
+                 page = cross_page_iterator.get();
+					_.each(gallery_pics, function(img, i) {
+						populatePage(img, page[i]);
 					});
-					mypics = new LoopIterator(Group.from(_.map(allpics, function(img) {
+					mypics = new LoopIterator(Group.from(_.map(gallery_pics, function(img) {
 						return img.src;
 					})));
 					mypics.find(getBaseSrc());
 				}
-            }
 		},
         
         getSubGroup = function (j) {
@@ -782,7 +784,7 @@
 				player = playmaker();
 			return function () {
                 if(!recur.t){
-                    mypics = get_play_iterator();
+                    mypics = get_play_iterator(true);
                 }
 				if (player.validate()) {
 					player.reset();
