@@ -507,7 +507,7 @@
 		playing = _.compose(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
 		notplaying = ptL(klasRem, 'playing', $$('controls')),
 		exitplay = ptL(klasRem, 'inplay', $('wrap')),
-		exitswap = ptL(klasRem, 'swap'),
+		exitswap = ptL(klasRem, 'swap', utils.getBody()),
 		exitshow = _.compose(ptL(klasAdd, 'gallery', thumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exitplay),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
 		orient = function (l, p) {
@@ -518,16 +518,15 @@
 		},
 		$LI = (function (options) {
 			function getColl() {
-				/*return _.filter(thumbs.getElementsByTagName('li'), function (li) {
+				return _.filter(thumbs.getElementsByTagName('li'), function (li) {
 					return !li.id;
-				});*/
-                return thumbs.getElementsByTagName('li');
+				});
 			}
 			return {
 				exec: function () {
 					//used ONLY by negator swaps actions on failing predicate
 					var action = options[0];
-					_.each(_.last(list_elements, 2), this[action]);
+					_.each(_.last(getColl(), 2), this[action]);
 					options = options.reverse();
 				},
 				unrender: function (el) {
@@ -538,7 +537,7 @@
 				render: function (el) {
                     con('render', el)
 					var base = $('base'),
-						ancr = base ? anCrIn(base, thumbs) : ptL(anCr, thumbs);
+						ancr = base ? anCrIn(base, thumbs) : anCr(thumbs);
 					//doesn't really matter where #base is as all othe LIS are hidden when it is present. But it's tidier
 					return utils.machElement(ancr, always(el)).render();
 				},
@@ -553,6 +552,7 @@
 				}
 			};
 		}(['unrender', 'render'])),
+        
 		negator = (function (pred) {
 			return function (cb, page_coll) {
 				if (pred(page_coll.value)) {
@@ -592,7 +592,7 @@
 			if (utils.findByClass('inplay')) {
 				return 'current';
 			}
-			return getID(getTarget(e)).match(/^back/) ? 'back' : 'forward';
+			return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
 		},
 		advanceRoute = function (m) {
 			if (!LoopIterator.cross_page_iterator) {
@@ -612,8 +612,9 @@
 		},
 		pageNavHandler = _.compose(ptL(eventing, 'click', null, _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
-		prepareSlideshow = function (i) {
-			var getPortraitPics = ptL(doSplice, true),
+		prepareSlideshow = function (i, sub) {
+			var all = pages.getAll(),
+                getPortraitPics = ptL(doSplice, true),
 				getLscpPics = ptL(doSplice, false),
 				fixPageOrder = function (group, i) {
 					var leader = group[0],
@@ -635,7 +636,8 @@
 						});
 					};
 				},
-				sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, i))), _.negate(_.isEmpty)),
+				//sub = _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, i))), _.negate(_.isEmpty)),
+                //page_index = pages.findIndex(getBaseSrc),
 				reordered = utils.shuffleArray(all.slice(0))(sub),
 				lscp = _.map(reordered, getLscpPics),
 				ptrt = _.map(reordered, getPortraitPics),
@@ -648,7 +650,8 @@
 			} else {
 				group = _.flatten(matchup(0)(_.zip(group[0], group[1])));
 			}
-			return LoopIterator.from(_.map(group, makePath));
+            LoopIterator.page_iterator = LoopIterator.from(_.map(group, makePath));
+            con(LoopIterator.page_iterator)
 		},
 		get_play_iterator = function (flag) {
 			var myint = pages.findInt(getBaseSrc),
@@ -656,7 +659,7 @@
 				page,
 				gallery_pics;
 			if (flag) {
-				return prepareSlideshow(myint);
+				prepareSlideshow(myint, page_index);
 			} else {
 				LoopIterator.cross_page_iterator = LoopIterator.cross_page_iterator || LoopIterator.from(pages.getAll());
 				LoopIterator.cross_page_iterator.set(page_index);
@@ -688,9 +691,8 @@
 						reject(new Error("Failed to load image's URL:" + url()));
 					});
 					//only run url once, otherwise advances
-					con(getnexturl())
 					img.src = doParse(getnexturl());
-					//img.parentNode.href = doParse(img.src);
+					img.parentNode.href = doParse(img.src);
 				}
 			});
 		},
@@ -755,8 +757,7 @@
 			}
 
 			function doBase() {
-				//loader(page_iterator.play.bind(page_iterator), 'base').then(paint).then(setPlayer);
-				loader(_.bind(page_iterator, page_iterator.play), 'base').then(paint).then(setPlayer);
+				loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base').then(paint).then(setPlayer);
 			}
 
 			function doFormat(img) {
@@ -823,7 +824,7 @@
 				player = playmaker();
 			return function () {
 				if (!recur.t) {
-					LoopIterator.page_iterator = get_play_iterator(true);
+                    get_play_iterator(true);
 				}
 				if (player.validate()) {
 					player.reset();
