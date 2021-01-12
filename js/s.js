@@ -256,7 +256,10 @@
 		},
 		get: function () {
 			return this.current().value;
-		}
+		},
+        init: function(coll){
+            return new LoopIterator(Group.from(coll));
+        }
 	};
 
 	function searcher(obj, ary) {
@@ -375,6 +378,10 @@
 			trailer = flag ? landscape : portrait;
 		return [leader, trailer];
 	}
+    function makeCrossPageIterator(coll) {
+        return new LoopIterator(Group.from(coll));
+		}
+    
 	var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 		twee = _.range(15, 29),
 		drie = _.range(29, 43),
@@ -550,9 +557,7 @@
 				fixNoNthChild(e.target);
 			};
 		},
-		makeCrossPageIterator = function (coll) {
-			return new LoopIterator(Group.from(coll));
-		},
+
 		cross_page_iterator = makeCrossPageIterator(all),
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)))),
 		advanceRouteBridge = function (e) {
@@ -565,7 +570,6 @@
 			return getID(getTarget(e)).match(/^back/) ? 'back' : 'forward';
 		},
 		advanceRoute = function (m) {
-			con(m);
 			return m && populate(cross_page_iterator[m]());
 		},
 		advanceRouteListener = _.wrap(advanceRouteBridge, function (orig, e) {
