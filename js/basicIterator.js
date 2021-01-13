@@ -192,3 +192,92 @@ poloAF.Composite = (function () {
 		return composite || leaf;
 	}; //ret func
 }());
+
+
+	poloAF.LoopIterator = function (group) {
+        "use strict";
+		this.group = group;
+		this.position = 0;
+		this.rev = false;
+	}
+
+	poloAF.Group = function () {
+        "use strict";
+		this.members = [];
+	}
+	poloAF.Group.prototype = {
+		add: function (value) {
+			if (!this.has(value)) {
+				this.members.push(value);
+			}
+		},
+		remove: function (value) {
+			this.members = _.filter(this.members, _.negate(ptL(equals, value)));
+		},
+		has: function (value) {
+			return this.members.includes(value);
+		}
+	};
+	poloAF.Group.from = function (collection) {
+		var group = new Group(),
+			i,
+			L = collection.length;
+		for (i = 0; i < L; i += 1) {
+			group.add(collection[i]);
+		}
+		return group;
+	};
+	poloAF.LoopIterator.from = function (coll) {
+		return new LoopIterator(Group.from(coll));
+	};
+	poloAF.LoopIterator.page_iterator = null;
+	poloAF.LoopIterator.cross_page_iterator = null;
+	poloAF.LoopIterator.prototype = {
+		forward: function (flag) {
+			if (!flag && this.rev) {
+				return this.back(true);
+			}
+			this.position++;
+			this.position = this.position % this.group.members.length;
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		},
+		back: function (flag) {
+			if (!this.rev || flag) {
+				this.group.members = this.group.members.reverse();
+				this.position = this.group.members.length - 1 - (this.position);
+				this.position = this.position % this.group.members.length;
+				this.rev = !this.rev;
+				return this.forward(this.rev);
+			} else {
+				return this.forward(this.rev);
+			}
+		},
+		play: function () {
+			return this.forward(true).value;
+		},
+		current: function () {
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		},
+		find: function (tgt) {
+			return this.set(this.group.members.findIndex(ptL(equals, tgt)));
+		},
+		set: function (pos) {
+			this.position = pos;
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		},
+		get: function () {
+			return this.current().value;
+		}
+	};
