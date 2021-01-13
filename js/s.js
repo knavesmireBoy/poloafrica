@@ -140,6 +140,7 @@
 		}
 		fn = _.wrap(fn, preventer);
 		el = getResult(el);
+        
 		return {
 			render: function () {
 				el.addEventListener(type, fn, false);
