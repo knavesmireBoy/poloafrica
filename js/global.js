@@ -164,6 +164,11 @@ poloAF.Util = (function() {
 		//console.log(arguments)
 		return o[m](arg);
 	}
+    
+    function doInvoke(o, m) {
+		//console.log(_.rest(arguments, 2));
+		return o[m].apply(o, _.rest(arguments, 2));
+	}
 
 	function mittleInvoke(m, arg, o) {
 		//console.log(arguments);
@@ -668,6 +673,40 @@ poloAF.Util = (function() {
 			return target;
 		}
 		fn = tgt && _.partial(simpleInvoke, tgt, method);
+		if (validate) {
+			fn = _.partial(invokeWhen, validate, fn);
+		}
+		_.each(_.flatten([classArray]), fn);
+		return target;
+	}
+    
+    
+        //toggleClas can have boolean argument del = _.partial(utils.toggleClass, 'del'),
+    function setFromArray(validate, method, classArray, target) {
+		//target may be a function returning a target element
+        var fn,
+            tgt,
+            args,
+            bool = false,
+            rest = 3;
+         if(_.isBoolean(target)){
+             rest = 4;
+             bool = target;
+             target = _.rest(arguments, rest)[0];
+           }
+		else if (!target) {
+			return null;
+		}
+        tgt = getClassList(getResult(target));
+        args = _.rest(arguments, rest);
+		validate = _.partial(applyFunction, validate, args);
+		if (!tgt) {
+			return target;
+		}
+		fn = tgt && _.partial(simpleInvoke, tgt, method);
+        if(rest === 4){
+            fn = tgt && _.partial(doInvoke, tgt, method, classArray, bool);
+        }
 		if (validate) {
 			fn = _.partial(invokeWhen, validate, fn);
 		}
