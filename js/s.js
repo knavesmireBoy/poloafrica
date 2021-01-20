@@ -750,7 +750,7 @@
 						eventing('click', null, invoke_player, el).render();
 					});
 				},
-				doPause = defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), removePause]),
+				doPause = defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]),
 				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
 				setOrient = ptL(doOrient(unsetPortrait,setPortrait), $$('base')),
 				relocate = ptL(mycaller, null, locate, 'render'),
