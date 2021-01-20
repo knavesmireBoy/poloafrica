@@ -293,6 +293,85 @@
 			img.src = src;
 		});
 	}
+    
+    
+     function FauxPromise(cbs) {
+		this.cbs = function(e) {
+			return _.compose.apply(null, cbs)(e);
+		};
+		this.reset();
+	}
+	/*
+	    FauxPromise.prototype.then = function(){
+	        if(!this.end){
+	            var f = this._cbs.splice(0, 1);
+	        if(f[0]){
+	            f[0].apply(null, arguments);
+	        }
+	        else {
+	            this.reset(true);
+	            this.end = true;
+	        }  
+	        }//
+	        return !this.end && this;
+	    };
+	    */
+	FauxPromise.prototype.then = function(e) {
+		return this.cbs(e);
+	};
+	FauxPromise.prototype.reset = function(bool) {
+		//this._cbs = this.cbs.slice(0);
+		//this.end = false;
+	}
+	FauxPromise.catch = function() {}
+
+	function onImage(img, path, promise) {
+        
+		img.addEventListener('load', function(e) {
+			return promise.then(e.target);
+		});
+		//img.src = doParse(path);
+		img.src = path;
+	}
+
+	function doMakeBase(source, target) {
+		var img = addElements();
+		doMap(img.parentNode, [
+			['href', doParse(source.src)]
+		]);
+		doMap(img.parentNode.parentNode, [
+			['id', target]
+		]);
+        //s();
+		return onImage(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
+	}
+
+	function doMakeSlide(target) {
+		var img = addElements();
+		doMap(img.parentNode, [
+			['href', doParse(getBaseSrc())]
+		]);
+		doMap(img.parentNode.parentNode, [
+			['id', target]
+		]);
+        con(_.rest(arguments));
+		return onImage(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments)));
+	}
+
+	function doMakePause(path) {
+		var img = addElements();
+
+		doMap(img.parentNode.parentNode, [
+			['id', 'paused']
+		]);
+		doMap(img.parentNode.parentNode, [
+			[
+				["opacity", 0.5]
+			]
+		]);
+		return onImage(img, path, new FauxPromise(_.rest(arguments)));
+	}
+
 
 	function doOpacity(flag) {
 		var style,
