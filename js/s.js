@@ -51,6 +51,7 @@
 	}
 
 	function callerBridge(o, v, p) {
+        //con(arguments);
 		return o[p] && o[p](v);
 	}
 
@@ -442,6 +443,7 @@
 		thricedefer = curryFactory(3, true),
 		defercall = thricedefer(mycaller),
 		parser = thrice(callerBridge)('match')(/images\/[^\/]+\.(jpg|png)$/),
+
 		doParse = _.compose(twice(utils.getter)(0), parser),
 		divideBy = twice(divide),
 		greaterOrEqual = ptL(invoke, greater),
@@ -823,14 +825,15 @@
 				doSlide = defer_once(doAlt)([clear, recur]),
 				doPlaying = defer_once(doAlt)([notplaying, playing]),
 				doDisplay = defer_once(doAlt)([playtime]),
+                go_render = thrice(callerBridge)('render')(null),
+                go_unrender = thricedefer(callerBridge)('unrender')(null),
 				unpauser = function () {
-					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';
-					machPause(path).then(function (el) {
-						eventing('click', null, invoke_player, el).render();
-					});
+					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';					machPause(path).then(do_invoke_player).then(go_render);
 				},
+                
 				doPause = defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]),
 				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
+                do_invoke_player = ptL(eventing, 'click', null, invoke_player), 
 				setOrient = ptL(doOrient(unsetPortrait,setPortrait), $$('base')),
 				relocate = ptL(mycaller, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
@@ -839,14 +842,10 @@
 				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				pauser = function () {
 					if (!$('slide')) {
-						machSlide('base', 'slide').then(function (el) {
-							eventing('click', null, invoke_player, el).render();
-							locate.unrender();
-						}).catch(function (arg) {
-							//con(arg);
-						});
+                        machSlide('base', 'slide').then(do_invoke_player).then(go_render).then(go_unrender(locate));
 					}
 				},
+                
 				COR = function (predicate, action) {
 					return {
 						setSuccessor: function (s) {
@@ -889,7 +888,9 @@
 			}
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
+            
 			machBase(e.target, 'base').then(showtime).then(doOrient(unsetPortrait,setPortrait));
+            
             var buttons_cb = function (str) {
                 var el = anCr($('controls'))('button');
                 el.id = str;
