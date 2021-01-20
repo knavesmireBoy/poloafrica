@@ -9,19 +9,12 @@
 /*global _: false */
 (function (mq, query, touchevents, pausepath, picnum, dummy, makePath) {
 	"use strict";
-
-	function composeES5() {
-		for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
-			fns[_key] = arguments[_key];
+    
+    function reporter (msg, el) {
+        el = el || utils.getByTag('h2', document)[0];
+        msg = typeof msg === 'undefined' ? document.documentElement.className : msg;
+        el.innerHTML = msg;
 		}
-		return fns.reduce(function (f, g) {
-			//anon is the iteratee
-			return function anon() {
-				//expects arguments to first function
-				return f(g.apply(void 0, arguments)); //SETS THE NEW f AND g
-			};
-		});
-	}
 
 	function always(val) {
 		return function () {
@@ -30,7 +23,7 @@
 	}
 
 	function getResult(arg) {
-		return _.isFunction (arg) ? arg() : arg;
+		return _.isFunction(arg) ? arg() : arg;
 	}
 
 	function divide(a, b) {
@@ -70,46 +63,9 @@
 	function mycaller(v, o, p) {
 		return callerBridge(o, v, p);
 	}
-
-	function setter(v, o, p) {
-		o[p] = v;
-	}
-
+    
 	function nested(e, s, g) {
 		return s(g(e));
-	}
-
-	function attrMap1(el, map, style) {
-		var k,
-			v,
-			cb = function (prop) {
-				return attrMap(el, prop, true);
-			};
-		for ([k, v] of map) {
-			if (Array.isArray(v)) {
-				_.forEach(v, cb);
-				break;
-			}
-			if (k.match(/^te?xt$/)) {
-				el.innerHTML = v;
-				continue;
-			}
-			if (!style) {
-				el.setAttribute(k, v);
-			} else {
-				el.style.setProperty(k, v);
-			}
-		}
-		return el;
-	}
-	/* EXPECTS VALUE BEFORE KEY ON RIGHT CURRY*/
-	function doMap1(el, v, k) {
-		//con(el,v,k);
-		var arg = v instanceof Map ? v : new Map([
-			[k, v]
-		]);
-		//con(arg);
-		return attrMap(getResult(el), arg);
 	}
 
 	function doOnce() {
@@ -120,10 +76,6 @@
 				return res > 0;
 			};
 		};
-	}
-
-	function lazyVal(v, el, k) {
-		return invokeArgs(doMapBridge, el, v, k);
 	}
 
 	function goCompare(o, p1, p2, invoker) {
@@ -143,6 +95,7 @@
 	//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
 	function eventing(type, actions, fn, el) {
 		actions = actions || ['preventDefault'];
+
 		function preventer(wrapped, e) {
 			actions.forEach(function (a) {
 				e[a]();
@@ -257,15 +210,13 @@
 		return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
 	}
 
-    
 	function onImage(img, path, promise) {
 		img.addEventListener('load', function (e) {
 			return promise.then(e.target);
 		});
 		img.src = path;
 	}
-
-    //base and pause 
+	//base and pause 
 	function onSlide(img, path, promise) {
 		promise.then(getLI(img));
 		img.src = path;
@@ -274,34 +225,12 @@
 	function FauxPromise(args) {
 		//must be an array of functions, AND the first gets run last
 		this.cbs = _.compose.apply(null, args);
-		//this.reset();
 	}
-	/*
-	    FauxPromise.prototype.then = function (){
-	        if(!this.end){
-	            var f = this._cbs.splice(0, 1);
-	        if(f[0]){
-	            f[0].apply(null, arguments);
-	        }
-	        else {
-	            this.reset(true);
-	            this.end = true;
-	        }  
-	        }//
-	        return !this.end && this;
-	    };
-	    */
 	FauxPromise.prototype.then = function () {
 		return this.cbs.apply(null, arguments);
 	};
-	FauxPromise.prototype.reset = function (bool) {
-		//this._cbs = this.cbs.slice(0);
-		//this.end = false;
-	}
-	FauxPromise.catch = function () {}
-    
-    
-    function attrMap(el, map, style) {
+
+	function attrMap(el, map, style) {
 		var k;
 		for (k in map) {
 			if (map.hasOwnProperty(k)) {
@@ -318,18 +247,16 @@
 		}
 		return el;
 	}
-	
 
-
-function doMap(el, v) {
+	function doMap(el, v) {
 		if (Array.isArray(v[0][0])) {
-			_.each(v[0], function(sub) {
+			_.each(v[0], function (sub) {
 				return attrMap(getResult(el), _.object([
 					[sub[0], sub[1]]
 				]), true);
 			});
 		} else {
-			_.each(v, function(sub) {
+			_.each(v, function (sub) {
 				return attrMap(getResult(el), _.object([
 					[sub[0], sub[1]]
 				]));
@@ -344,10 +271,8 @@ function doMap(el, v) {
 		]);
 	}
 
-
-function doOpacity(flag) {
-		var style,
-			slide = $('slide'),
+	function doOpacity(flag) {
+		var slide = $('slide'),
 			val;
 		if (slide) {
 			val = flag ? 1 : recur.i / 100;
@@ -431,12 +356,6 @@ function doOpacity(flag) {
 		}()),
 		utils = poloAF.Util,
 		con = window.console.log.bind(window),
-		/*reporter = function (msg, el) {
-			el = el || utils.getByTag('h2', document)[0];
-			msg = undef(msg) ? document.documentElement.className : msg;
-			el.innerHTML = msg;
-		},
-        */
 		ptL = _.partial,
 		curryFactory = utils.curryFactory,
 		once = doOnce(),
@@ -831,8 +750,8 @@ function doOpacity(flag) {
 				unlocate = thricedefer(callerBridge)('unrender')(null)(locate),
 				unpauser = function () {
 					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';
-                    //because we're adding invoke_player to the slide LI, pause LI, it's immediate sibling, will prevent the click reaching it
-                    //so we again invoke_player here too, the listener is deleted along with the LI
+					//because we're adding invoke_player to the slide LI, pause LI, it's immediate sibling, will prevent the click reaching it
+					//so we again invoke_player here too, the listener is deleted along with the LI
 					doMakePause(path, go_render, do_invoke_player);
 				},
 				doPause = defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]),
@@ -844,7 +763,7 @@ function doOpacity(flag) {
 				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, defercall('forEach')([remPause, remSlide])(getResult)],
 				next_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
-                pauser = ptL(utils.invokeWhen,_.negate(ptL($, 'slide')), ptL(doMakeSlide, 'base', 'slide', unlocate, go_render, do_invoke_player)),
+				pauser = ptL(utils.invokeWhen, _.negate(ptL($, 'slide')), ptL(doMakeSlide, 'base', 'slide', unlocate, go_render, do_invoke_player)),
 				COR = function (predicate, action) {
 					return {
 						setSuccessor: function (s) {
