@@ -64,7 +64,6 @@
 	}
 
 	function callerBridge(o, v, p) {
-		//con(arguments);
 		return o[p] && o[p](v);
 	}
 
@@ -80,7 +79,7 @@
 		return s(g(e));
 	}
 
-	function attrMap(el, map, style) {
+	function attrMap1(el, map, style) {
 		var k,
 			v,
 			cb = function (prop) {
@@ -104,7 +103,7 @@
 		return el;
 	}
 	/* EXPECTS VALUE BEFORE KEY ON RIGHT CURRY*/
-	function doMap(el, v, k) {
+	function doMap1(el, v, k) {
 		//con(el,v,k);
 		var arg = v instanceof Map ? v : new Map([
 			[k, v]
@@ -124,7 +123,7 @@
 	}
 
 	function lazyVal(v, el, k) {
-		return invokeArgs(doMap, el, v, k);
+		return invokeArgs(doMapBridge, el, v, k);
 	}
 
 	function goCompare(o, p1, p2, invoker) {
@@ -144,8 +143,6 @@
 	//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
 	function eventing(type, actions, fn, el) {
 		actions = actions || ['preventDefault'];
-		con(el)
-
 		function preventer(wrapped, e) {
 			actions.forEach(function (a) {
 				e[a]();
@@ -256,16 +253,11 @@
 		}
 	};
 
-	function addAttrs(coll, ptl) {
-		_.forEach(coll, function (arr) {
-			return ptl(arr[1], arr[0]);
-		});
-	}
-
 	function addElements() {
 		return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
 	}
 
+    
 	function onImage(img, path, promise) {
 		img.addEventListener('load', function (e) {
 			return promise.then(e.target);
@@ -273,46 +265,10 @@
 		img.src = path;
 	}
 
-	function onSlide(img, path, promise, n) {
+    //base and pause 
+	function onSlide(img, path, promise) {
 		promise.then(getLI(img));
 		img.src = path;
-	}
-
-	function doMachBase(source, target) {
-		var img = addElements(),
-			promise = new FauxPromise(_.rest(arguments, 2));
-		addAttrs([
-			['href', doParse(source)]
-		], ptL(doMap, img.parentNode));
-		addAttrs([
-			['id', target]
-		], ptL(doMap, img.parentNode.parentNode));
-		return onImage(img, doParse(img.parentNode.href), promise);
-	}
-	function doMachSlide(source, target) {
-		var img = addElements(),
-			promise = new FauxPromise(_.rest(arguments, 2));
-		addAttrs([
-			['href', doParse(getBaseSrc())]
-		], ptL(doMap, img.parentNode));
-		addAttrs([
-			['id', target]
-		], ptL(doMap, img.parentNode.parentNode));
-		return onSlide(img, doParse(img.parentNode.href), promise);
-	}
-
-	function doMachPause(source) {
-		var img = addElements(),
-			promise = new FauxPromise(_.rest(arguments)),
-			styleAttrs = new Map([
-				["opacity", 0.5]
-			]),
-			coll = [
-				['id', 'paused'],
-				['style', [styleAttrs]]
-			];
-		addAttrs(coll, ptL(doMap, img.parentNode.parentNode));
-		return onImage(img, source, promise);
 	}
 
 	function FauxPromise(args) {
@@ -343,20 +299,78 @@
 		//this.end = false;
 	}
 	FauxPromise.catch = function () {}
+    
+    
+    function attrMap(el, map, style) {
+		var k;
+		for (k in map) {
+			if (map.hasOwnProperty(k)) {
+				if (k.match(/^te?xt$/)) {
+					el.innerHTML = map[k];
+					continue;
+				}
+				if (style) {
+					el.style.setProperty(k, map[k]);
+				} else {
+					el.setAttribute(k, map[k]);
+				}
+			}
+		}
+		return el;
+	}
+	
+
+
+function doMap(el, v) {
+		if (Array.isArray(v[0][0])) {
+			_.each(v[0], function(sub) {
+				return attrMap(getResult(el), _.object([
+					[sub[0], sub[1]]
+				]), true);
+			});
+		} else {
+			_.each(v, function(sub) {
+				return attrMap(getResult(el), _.object([
+					[sub[0], sub[1]]
+				]));
+			});
+		}
+		return el;
+	}
+	/* EXPECTS VALUE BEFORE KEY ON RIGHT CURRY*/
+	function doMapBridge(el, v, k) {
+		return doMap(el, [
+			[k, v]
+		]);
+	}
+
+
+function doOpacity(flag) {
+		var style,
+			slide = $('slide'),
+			val;
+		if (slide) {
+			val = flag ? 1 : recur.i / 100;
+			doMap(slide, [
+				[
+					['opacity', val]
+				]
+			]);
+		}
+	}
 
 	function doMakeBase(source, target) {
 		var img = addElements();
 		doMap(img.parentNode, [
-			['href', doParse(source.src)]
+			['href', source]
 		]);
 		doMap(img.parentNode.parentNode, [
 			['id', target]
 		]);
-		//s();
 		return onImage(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
 	}
 
-	function doMakeSlide(target) {
+	function doMakeSlide(source, target) {
 		var img = addElements();
 		doMap(img.parentNode, [
 			['href', doParse(getBaseSrc())]
@@ -364,8 +378,7 @@
 		doMap(img.parentNode.parentNode, [
 			['id', target]
 		]);
-		con(_.rest(arguments));
-		return onImage(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments)));
+		return onSlide(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
 	}
 
 	function doMakePause(path) {
@@ -379,21 +392,6 @@
 			]
 		]);
 		return onImage(img, path, new FauxPromise(_.rest(arguments)));
-	}
-
-	function doOpacity(flag) {
-		var style,
-			slide = $('slide'),
-			val;
-		if (slide) {
-			val = flag ? 1 : recur.i / 100;
-			style = new Map([
-				['opacity', val]
-			]);
-			doMap(slide, new Map([
-				['style', [style]]
-			]));
-		}
 	}
 
 	function spliceOrientation(bool, coll) {
@@ -833,9 +831,9 @@
 				unlocate = thricedefer(callerBridge)('unrender')(null)(locate),
 				unpauser = function () {
 					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';
-                    //because we're adding invoke_player to the slide LI, pause LI will prevent the click reaching it
+                    //because we're adding invoke_player to the slide LI, pause LI, it's immediate sibling, will prevent the click reaching it
                     //so we again invoke_player here too, the listener is deleted along with the LI
-					doMachPause(path, go_render, do_invoke_player);
+					doMakePause(path, go_render, do_invoke_player);
 				},
 				doPause = defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]),
 				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
@@ -846,7 +844,7 @@
 				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, defercall('forEach')([remPause, remSlide])(getResult)],
 				next_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
-                pauser = ptL(utils.invokeWhen,_.negate(ptL($, 'slide')), ptL(doMachSlide, 'base', 'slide', unlocate, go_render, do_invoke_player)),
+                pauser = ptL(utils.invokeWhen,_.negate(ptL($, 'slide')), ptL(doMakeSlide, 'base', 'slide', unlocate, go_render, do_invoke_player)),
 				COR = function (predicate, action) {
 					return {
 						setSuccessor: function (s) {
@@ -888,16 +886,16 @@
 				return;
 			}
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
-			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
+			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			//machBase(e.target, 'base').then(showtime).then(doOrient(unsetPortrait,setPortrait));
-			doMachBase(e.target.src, 'base', showtime, doOrient(unsetPortrait, setPortrait));
+			doMakeBase(e.target.src, 'base', showtime, doOrient(unsetPortrait, setPortrait));
 			var buttons_cb = function (str) {
 					var el = anCr($('controls'))('button');
 					el.id = str;
 					return el;
 				},
 				close_cb = function () {
-					return _.compose(thrice(doMap)('href')('.'), thrice(doMap)('id')('exit'), anCrIn(thumbs, main))('a');
+					return _.compose(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(thumbs, main))('a');
 				},
 				buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
 				dostatic = ptL(klasAdd, 'static', $$('controls')),
@@ -933,7 +931,7 @@
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
-	con(new FauxPromise([twice(divide)(2), _.partial(subtract, 10)]).then(4));
+	//con(new FauxPromise([twice(divide)(2), _.partial(subtract, 10)]).then(4));
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
