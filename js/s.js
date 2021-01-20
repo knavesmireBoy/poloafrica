@@ -9,6 +9,21 @@
 /*global _: false */
 (function (mq, query, touchevents, pausepath, picnum, dummy, makePath) {
 	"use strict";
+    
+    
+      function composeES5() {
+    for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+      fns[_key] = arguments[_key];
+    }
+    return fns.reduce(function(f, g) {
+      //anon is the iteratee
+      return function anon() {
+        //expects arguments to first function
+        return f(g.apply(void 0, arguments)); //SETS THE NEW f AND g
+      };
+    });
+  }
+
 
 	function always(val) {
 		return function () {
@@ -132,7 +147,7 @@
 	//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
 	function eventing(type, actions, fn, el) {
 		actions = actions || ['preventDefault'];
-
+        con(el)
 		function preventer(wrapped, e) {
 			actions.forEach(function (a) {
 				e[a]();
@@ -144,6 +159,7 @@
         
 		return {
 			render: function () {
+                //con(el)
 				el.addEventListener(type, fn, false);
 				return this;
 			},
@@ -253,6 +269,19 @@
         return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
     }
     
+    function onImage(img, path, promise) {
+        con(arguments)
+		img.addEventListener('load', function(e) {
+			return promise.then(e.target);
+		});
+		img.src = path;
+	}
+    
+     function onSlide(img, path, promise, n) {
+         promise.then(thumbs);
+		img.src = path;
+	}
+    
 	function machBase(source, target) {
 		return new Promise(function (resolve, reject) {
 			var img = addElements();
@@ -264,6 +293,14 @@
 			img.src = doParse(img.parentNode.href);
 		});
 	}
+    
+    function doMachBase(source, target) {
+			var img = addElements(),
+                promise = new FauxPromise(_.rest(arguments, 2));
+            addAttrs([['href', doParse(source)]], ptL(doMap, img.parentNode));
+			addAttrs([['id', target]], ptL(doMap, img.parentNode.parentNode));
+        return onImage(img, doParse(img.parentNode.href), promise);
+    }
 
 	function machSlide(source, target) {
 		return new Promise(function (resolve, reject) {
@@ -276,6 +313,28 @@
 			img.src = doParse(img.parentNode.href);
 		});
 	}
+    
+    function doMachSlide(source, target) {
+			var img = addElements(),
+                promise = new FauxPromise(_.rest(arguments, 2));
+            addAttrs([['href', doParse(getBaseSrc())]], ptL(doMap, img.parentNode));
+			addAttrs([['id', target]], ptL(doMap, img.parentNode.parentNode));
+        return onSlide(img, doParse(img.parentNode.href), promise);
+    }
+    
+     function doMachPause(source) {
+			var img = addElements(),
+                promise = new FauxPromise(_.rest(arguments)),
+                styleAttrs = new Map([
+					["opacity", 0.5]
+				]),
+				coll = [
+					['id', 'paused'],
+					['style', [styleAttrs]]
+				];
+            addAttrs(coll, ptL(doMap, img.parentNode.parentNode));
+        return onImage(img, source, promise);
+    }
 
 	function machPause(src) {
 		return new Promise(function (resolve, reject) {
@@ -296,11 +355,10 @@
 	}
     
     
-     function FauxPromise(cbs) {
-		this.cbs = function(e) {
-			return _.compose.apply(null, cbs)(e);
-		};
-		this.reset();
+     function FauxPromise(args) {
+         //must be an array of functions
+		this.cbs = _.compose.apply(null, args);
+		//this.reset();
 	}
 	/*
 	    FauxPromise.prototype.then = function(){
@@ -317,8 +375,8 @@
 	        return !this.end && this;
 	    };
 	    */
-	FauxPromise.prototype.then = function(e) {
-		return this.cbs(e);
+	FauxPromise.prototype.then = function() {
+		return this.cbs.apply(null, arguments);
 	};
 	FauxPromise.prototype.reset = function(bool) {
 		//this._cbs = this.cbs.slice(0);
@@ -828,7 +886,7 @@
                 go_render = thrice(callerBridge)('render')(null),
                 go_unrender = thricedefer(callerBridge)('unrender')(null),
 				unpauser = function () {
-					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';					machPause(path).then(do_invoke_player).then(go_render);
+					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';					doMachPause(path, function(){});
 				},
                 
 				doPause = defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]),
@@ -842,9 +900,9 @@
 				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				pauser = function () {
 					if (!$('slide')) {
-                        machSlide('base', 'slide').then(do_invoke_player).then(go_render).then(go_unrender(locate));
-					}
-				},
+                        doMachSlide('base', 'slide', go_render, do_invoke_player);
+                    }
+                },
                 
 				COR = function (predicate, action) {
 					return {
@@ -889,7 +947,8 @@
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMap)('class')('static'), thrice(doMap)('id')('controls'), anCr(main))('section');
             
-			machBase(e.target, 'base').then(showtime).then(doOrient(unsetPortrait,setPortrait));
+			//machBase(e.target, 'base').then(showtime).then(doOrient(unsetPortrait,setPortrait));
+			doMachBase(e.target.src, 'base', showtime, doOrient(unsetPortrait,setPortrait));
             
             var buttons_cb = function (str) {
                 var el = anCr($('controls'))('button');
@@ -933,6 +992,8 @@
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
+    
+    con(new FauxPromise([twice(divide)(2), _.partial(subtract, 10)]).then(4));
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
