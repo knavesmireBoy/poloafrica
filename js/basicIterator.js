@@ -5,6 +5,8 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
+
+
 poloAF.Iterator = function (rev) {
 	"use strict";
 	return function (index, coll, validate, doAdvance) {
@@ -193,6 +195,10 @@ poloAF.Composite = (function () {
 	}; //ret func
 }());
 
+function equals(a, b) {
+		return a === b;
+	}
+
 
 	poloAF.LoopIterator = function (group) {
         "use strict";
@@ -219,7 +225,7 @@ poloAF.Composite = (function () {
 		}
 	};
 	poloAF.Group.from = function (collection) {
-		var group = new Group(),
+		var group = new poloAF.Group(),
 			i,
 			L = collection.length;
 		for (i = 0; i < L; i += 1) {
@@ -228,10 +234,12 @@ poloAF.Composite = (function () {
 		return group;
 	};
 	poloAF.LoopIterator.from = function (coll) {
-		return new LoopIterator(Group.from(coll));
+		return new poloAF.LoopIterator(poloAF.Group.from(coll));
 	};
 	poloAF.LoopIterator.page_iterator = null;
 	poloAF.LoopIterator.cross_page_iterator = null;
+
+
 	poloAF.LoopIterator.prototype = {
 		forward: function (flag) {
 			if (!flag && this.rev) {
@@ -267,7 +275,7 @@ poloAF.Composite = (function () {
 			return result;
 		},
 		find: function (tgt) {
-			return this.set(this.group.members.findIndex(ptL(equals, tgt)));
+			return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
 		},
 		set: function (pos) {
 			this.position = pos;

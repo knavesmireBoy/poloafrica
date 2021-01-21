@@ -128,91 +128,6 @@
 		};
 	}
 
-	function LoopIterator(group) {
-		this.group = group;
-		this.position = 0;
-		this.rev = false;
-	}
-
-	function Group() {
-		this.members = [];
-	}
-	Group.prototype = {
-		add: function (value) {
-			if (!this.has(value)) {
-				this.members.push(value);
-			}
-		},
-		remove: function (value) {
-			this.members = _.filter(this.members, _.negate(ptL(equals, value)));
-		},
-		has: function (value) {
-			return this.members.includes(value);
-		}
-	};
-	Group.from = function (collection) {
-		var group = new Group(),
-			i,
-			L = collection.length;
-		for (i = 0; i < L; i += 1) {
-			group.add(collection[i]);
-		}
-		return group;
-	};
-	LoopIterator.from = function (coll) {
-		return new LoopIterator(Group.from(coll));
-	};
-	LoopIterator.page_iterator = null;
-	LoopIterator.cross_page_iterator = null;
-	LoopIterator.prototype = {
-		forward: function (flag) {
-			if (!flag && this.rev) {
-				return this.back(true);
-			}
-			this.position++;
-			this.position = this.position % this.group.members.length;
-			var result = {
-				value: this.group.members[this.position],
-				index: this.position
-			};
-			return result;
-		},
-		back: function (flag) {
-			if (!this.rev || flag) {
-				this.group.members = this.group.members.reverse();
-				this.position = this.group.members.length - 1 - (this.position);
-				this.position = this.position % this.group.members.length;
-				this.rev = !this.rev;
-				return this.forward(this.rev);
-			} else {
-				return this.forward(this.rev);
-			}
-		},
-		play: function () {
-			return this.forward(true).value;
-		},
-		current: function () {
-			var result = {
-				value: this.group.members[this.position],
-				index: this.position
-			};
-			return result;
-		},
-		find: function (tgt) {
-			return this.set(this.group.members.findIndex(ptL(equals, tgt)));
-		},
-		set: function (pos) {
-			this.position = pos;
-			var result = {
-				value: this.group.members[this.position],
-				index: this.position
-			};
-			return result;
-		},
-		get: function () {
-			return this.current().value;
-		}
-	};
 
 	function addElements() {
 		return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
@@ -420,7 +335,7 @@
 			tooltip.init();
 		},
 		getValue = function (v, p) {
-			return LoopIterator.page_iterator[p]()[v];
+			return poloAF.LoopIterator.page_iterator[p]()[v];
 		},
 		showtime = _.compose(ptL(klasRem, ['gallery'], thumbs), ptL(klasAdd, ['showtime'], utils.getBody())),
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
@@ -498,7 +413,7 @@
 			};
 		},
 		cross_page_iterator = function () {
-			LoopIterator.cross_page_iterator = LoopIterator.from(pages.getAll());
+			poloAF.LoopIterator.cross_page_iterator = poloAF.LoopIterator.from(pages.getAll());
 		},
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)))),
 		advanceRouteBridge = function (e) {
@@ -511,10 +426,10 @@
 			return text_from_target(e).match(/back$/) ? 'back' : 'forward';
 		},
 		advanceRoute = function (m) {
-			if (!LoopIterator.cross_page_iterator) {
+			if (!poloAF.LoopIterator.cross_page_iterator) {
 				cross_page_iterator();
 			}
-			return m && populate(LoopIterator.cross_page_iterator[m]());
+			return m && populate(poloAF.LoopIterator.cross_page_iterator[m]());
 		},
 		advanceRouteListener = _.wrap(advanceRouteBridge, function (orig, e) {
 			return advanceRoute(orig(e));
@@ -564,7 +479,7 @@
 			} else {
 				group = _.flatten(matchup(0)(_.zip(group[0], group[1])));
 			}
-			LoopIterator.page_iterator = LoopIterator.from(_.map(group, makePath));
+			poloAF.LoopIterator.page_iterator = poloAF.LoopIterator.from(_.map(group, makePath));
 		},
 		get_play_iterator = function (flag) {
 			var myint = pages.findInt(getBaseSrc),
@@ -574,9 +489,9 @@
 			if (flag) {
 				prepareSlideshow(myint, page_index);
 			} else {
-				LoopIterator.cross_page_iterator = LoopIterator.cross_page_iterator || LoopIterator.from(pages.getAll());
-				LoopIterator.cross_page_iterator.set(page_index);
-				page = LoopIterator.cross_page_iterator.get();
+				poloAF.LoopIterator.cross_page_iterator = poloAF.LoopIterator.cross_page_iterator || poloAF.LoopIterator.from(pages.getAll());
+				poloAF.LoopIterator.cross_page_iterator.set(page_index);
+				page = poloAF.LoopIterator.cross_page_iterator.get();
 				$LI.query(page);
 				gallery_pics = _.filter(allpics, function (img) {
 					return !getLI(img).id;
@@ -584,10 +499,10 @@
 				_.each(gallery_pics, function (img, i) {
 					populatePage(img, page[i]);
 				});
-				LoopIterator.page_iterator = LoopIterator.from(_.map(gallery_pics, function (img) {
+				poloAF.LoopIterator.page_iterator = poloAF.LoopIterator.from(_.map(gallery_pics, function (img) {
 					return img.src;
 				}));
-				LoopIterator.page_iterator.find(getBaseSrc());
+				poloAF.LoopIterator.page_iterator.find(getBaseSrc());
 			}
 		},
 		loadImage = function (getnexturl, id, promise) {
@@ -623,15 +538,15 @@
 			};
 		},
 		do_page_iterator = function () {
-			LoopIterator.page_iterator = LoopIterator.from(_.map(allpics, function (img) {
+			poloAF.LoopIterator.page_iterator = poloAF.LoopIterator.from(_.map(allpics, function (img) {
 				return img.src;
 			}));
 		},
 		setindex = function (arg) {
-			if (!LoopIterator.page_iterator) {
+			if (!poloAF.LoopIterator.page_iterator) {
 				do_page_iterator();
 			}
-			return LoopIterator.page_iterator.find(arg);
+			return poloAF.LoopIterator.page_iterator.find(arg);
 		},
 		nextcaller = twicedefer(getValue)('forward')('value'),
 		prevcaller = twicedefer(getValue)('back')('value'),
@@ -661,7 +576,7 @@
 			}
 
 			function doBase() {
-				loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base', setPlayer, paint);
+				loader(_.bind(poloAF.LoopIterator.page_iterator.play, poloAF.LoopIterator.page_iterator), 'base', setPlayer, paint);
 			}
 
 			function doSlide() {
