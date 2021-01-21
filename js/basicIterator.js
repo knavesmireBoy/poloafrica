@@ -201,9 +201,7 @@ poloAF.LoopIterator = function(group, advancer) {
 	this.group = group;
 	this.position = 0;
 	this.rev = false;
-    this.advance = function(){
-        return advancer(this.position);
-    }
+    this.advance = advancer;
 }
 poloAF.Group = function() {
 	"use strict";
@@ -241,9 +239,9 @@ poloAF.LoopIterator.prototype = {
 		if (!flag && this.rev) {
 			return this.back(true);
 		}
-		this.position++;
-		this.position = this.position % this.group.members.length;
-        //this.position = this.advance(this.position);
+		//this.position++;
+		//this.position = this.position % this.group.members.length;
+        this.position = this.advance(this.position);
 		var result = {
 			value: this.group.members[this.position],
 			index: this.position
@@ -253,8 +251,10 @@ poloAF.LoopIterator.prototype = {
 	back: function(flag) {
 		if (!this.rev || flag) {
 			this.group.members = this.group.members.reverse();
-			this.position = this.group.members.length - 1 - (this.position);
-			this.position = this.position % this.group.members.length;
+			//this.position = this.group.members.length - 1 - (this.position);
+			this.position = this.group.members.length - 2 - (this.position);
+			//this.position = this.position % this.group.members.length;
+			this.position = this.advance(this.position);
 			this.rev = !this.rev;
 			return this.forward(this.rev);
 		} else {
