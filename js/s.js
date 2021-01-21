@@ -9,12 +9,12 @@
 /*global _: false */
 (function (mq, query, touchevents, pausepath, picnum, dummy, makePath) {
 	"use strict";
-    
-    function reporter (msg, el) {
-        el = el || utils.getByTag('h2', document)[0];
-        msg = typeof msg === 'undefined' ? document.documentElement.className : msg;
-        el.innerHTML = msg;
-		}
+
+	function reporter(msg, el) {
+		el = el || utils.getByTag('h2', document)[0];
+		msg = typeof msg === 'undefined' ? document.documentElement.className : msg;
+		el.innerHTML = msg;
+	}
 
 	function always(val) {
 		return function () {
@@ -56,14 +56,22 @@
 		return f.apply(null, args.map(getResult));
 	}
 
-	function callerBridge(o, v, p) {
+	function doMethod(o, v, p) {
 		return o[p] && o[p](v);
 	}
+    
+    function do_method(o, p, coll, cb) {
+		return o[p](coll, cb);
+	}
 
-	function mycaller(v, o, p) {
-		return callerBridge(o, v, p);
+	function lazyVal(v, o, p) {
+		return doMethod(o, v, p);
 	}
     
+    function doCallbacks(v, o, p) {
+        return _[p](o, v);
+	}
+
 	function nested(e, s, g) {
 		return s(g(e));
 	}
@@ -209,13 +217,20 @@
 	function addElements() {
 		return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
 	}
-
 	//base and pause 
 	function onLoad(img, path, promise) {
 		promise.then(getLI(img));
 		img.src = path;
 	}
-    
+    //height and widht of image are compared BUT a) must invoke the comparison AFTER image loaded
+    //b) must remove load listener or will intefere with slideshow
+    function onBase(img, path, promise) {
+        img.src = path;
+        var ev = eventing('load', null, function(e){
+            promise.then(e.target);
+            ev.unrender();
+        }, img).render();
+        }
 
 	function FauxPromise(args) {
 		//must be an array of functions, AND the first gets run last
@@ -287,7 +302,7 @@
 		doMap(img.parentNode.parentNode, [
 			['id', target]
 		]);
-		return onLoad(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
+		return onBase(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
 	}
 
 	function doMakeSlide(source, target) {
@@ -328,6 +343,7 @@
 			trailer = flag ? landscape : portrait;
 		return [leader, trailer];
 	}
+    
 	var pages = (function () {
 			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 				twee = _.range(15, 29),
@@ -359,9 +375,10 @@
 		twicedefer = curryFactory(2, true),
 		thrice = curryFactory(3),
 		thricedefer = curryFactory(3, true),
-		defercall = thricedefer(mycaller),
-		parser = thrice(callerBridge)('match')(/images\/[^\/]+\.(jpg|png)$/),
-		doParse = _.compose(twice(utils.getter)(0), parser),
+		deferEach = thricedefer(doCallbacks)('each'),
+		parser = thrice(doMethod)('match')(/images\/[^\/]+\.(jpg|png)$/),
+        doGet = twice(utils.getter),
+		doParse = _.compose(doGet(0), parser),
 		divideBy = twice(divide),
 		greaterOrEqual = ptL(invoke, greater),
 		gtEq = ptL(greater),
@@ -376,30 +393,24 @@
 		klasTog = utils.toggleClass,
 		main = document.getElementsByTagName('main')[0],
 		thumbs = utils.getByClass('gallery')[0],
-		$ = thrice(mycaller)('getElementById')(document),
-		$$ = thricedefer(mycaller)('getElementById')(document),
+		$ = thrice(lazyVal)('getElementById')(document),
+		$$ = thricedefer(lazyVal)('getElementById')(document),
 		unsetPortrait = ptL(klasRem, 'portrait', thumbs),
 		setPortrait = ptL(klasAdd, 'portrait', thumbs),
-		target = twice(utils.getter)('target'),
-		text_target = twice(utils.getter)('id'),
-		node_target = twice(utils.getter)('nodeName'),
-		text_from_target = thrice(nested)(target)(text_target),
-		node_from_target = thrice(nested)(target)(node_target),
-		getNodeName = utils.drillDown(['nodeName']),
-		getID = utils.drillDown(['id']),
-		getLength = utils.drillDown(['length']),
-		mytarget = !window.addEventListener ? 'srcElement' : 'target',
-		getHeight = utils.curryFactory(2)(utils.getter)('offsetHeight'),
-		getWidth = utils.curryFactory(2)(utils.getter)('offsetWidth'),
-		doCompare = utils.curryFactory(4)(goCompare)(greater)(getWidth)(getHeight),
+        mytarget = !window.addEventListener ? 'srcElement' : 'target',
+        getTarget = utils.drillDown([mytarget]),
+        doGet = twice(utils.getter),
+		text_from_target = _.compose(doGet('id'), getTarget),
+		node_from_target = _.compose(doGet('nodeName'), getTarget),
+        
+		doCompare = utils.curryFactory(4)(goCompare)(greater)(doGet('offsetWidth'))(doGet('offsetHeight')),
 		getLI = utils.getDomParent(utils.getNodeByTag('li')),
 		getLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
-		doClass = _.compose(utils.curryFactory(2)(onTruth)(['addClass', 'removeClass']), doCompare),
+		doClass = _.compose(twice(onTruth)(['addClass', 'removeClass']), doCompare),
 		sortClass = function (klas, el, m) {
 			utils[m](klas, el);
 		},
-		getTarget = utils.drillDown([mytarget]),
 		allpics = utils.getByTag('img', main),
 		getSlideChild = _.compose(utils.getChild, utils.getChild, $$('slide')),
 		getBaseChild = _.compose(utils.getChild, utils.getChild, $$('base')),
@@ -422,7 +433,8 @@
 		undostatic = ptL(klasRem, 'static', $$('controls')),
 		doOrient = function (l, p) {
 			return function (img) {
-				utils.getBest(ptL(gtEq, getResult(img).clientHeight, getResult(img).clientWidth), [p, l])();
+                con(img)
+				utils.getBest(ptL(gtEq, img.clientHeight, img.clientWidth), [p, l])();
 				return img.src;
 			};
 		},
@@ -469,10 +481,10 @@
 				return page_coll;
 			};
 		}(function (coll) {
-			return getLength(coll) !== 14;
+			return coll.length !== 14;
 		})),
 		//awaits an img element, maps functions that are invoked with the incoming element argument
-		doPortrait = _.compose(ptL(invoke, sortClass), ptL(_.map, [always('portrait'), getLI, doClass]), utils.curryFactory(2)(invoke)),
+		doPortrait = _.compose(ptL(invoke, sortClass), ptL(_.map, [always('portrait'), getLI, doClass]), twice(invoke)),
 		fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
 		doPopulate = function (pagepics) {
 			_.each(allpics, function (img, i) {
@@ -492,13 +504,13 @@
 		},
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)))),
 		advanceRouteBridge = function (e) {
-			if (!getNodeName(getTarget(e)).match(/a/i)) {
+			if (!node_from_target(e).match(/a/i)) {
 				return;
 			}
 			if (utils.findByClass('inplay')) {
 				return 'current';
 			}
-			return getID(getTarget(e)).match(/back$/) ? 'back' : 'forward';
+			return text_from_target(e).match(/back$/) ? 'back' : 'forward';
 		},
 		advanceRoute = function (m) {
 			if (!LoopIterator.cross_page_iterator) {
@@ -596,25 +608,25 @@
 				}
 			});
 		},
-        loadImage = function (getnexturl, id, promise) {
-            var img = getDomTargetImg($(id));
-            if (img) {
-                img.onload = function (e) {
-                    promise.then(e.target);
-                };
-                img.src = doParse(getnexturl());
-                img.parentNode.href = doParse(img.src);           
-		};
-        },
+		loadImage = function (getnexturl, id, promise) {
+			var img = getDomTargetImg($(id));
+			if (img) {
+				img.onload = function (e) {
+					promise.then(e.target);
+				};
+				img.src = doParse(getnexturl());
+				img.parentNode.href = doParse(img.src);
+			};
+		},
 		loader = function (caller, id) {
 			return loadImage(caller, id).catch(function (e) {
 				console.error(e);
 			});
 		},
-        loader = function (caller, id) {
-            var args = _.rest(arguments, 2);
-            args = args.length ? args : [function(){}];
-            loadImage(caller, id, new FauxPromise(args));
+		loader = function (caller, id) {
+			var args = _.rest(arguments, 2);
+			args = args.length ? args : [function () {}];
+			loadImage(caller, id, new FauxPromise(args));
 		},
 		locator = function (forward, back) {
 			var getLoc = (function (div, subtract, isGreaterEq) {
@@ -659,29 +671,28 @@
 			}
 
 			function paint(str) {
-                //con('paint')
+				//con('paint')
 				var coll = test(),
 					bool = coll[0] === coll[1],
 					body = utils.getClassList(utils.getBody()),
 					m = bool ? 'remove' : 'add';
-               // _.compose(doFormat, getDomTargetImg, $)('slide');
+				// _.compose(doFormat, getDomTargetImg, $)('slide');
 				body[m]('swap');
 				return !bool;
 			}
 
-			
 			function doFormat(img) {
 				return utils.getBest(ptL(gtEq, img.width, img.height), [l, p])();
 			}
-            function doBase() {
-				//loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base').then(paint).then(setPlayer);
-                loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base', setPlayer, paint);
-			}
 
+			function doBase() {
+				//loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base').then(paint).then(setPlayer);
+				loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base', setPlayer, paint);
+			}
 
 			function doSlide() {
 				//loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide').then(doFormat);
-                loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doFormat);
+				loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doFormat);
 			}
 
 			function doRecur() {
@@ -730,7 +741,6 @@
 						},
 						actions = [fadeIn, fadeOut];
 					return function (flag) {
-                        con(flag)
 						return flag ? actions.reverse()[0] : fade;
 					};
 				}()),
@@ -762,8 +772,8 @@
 				doSlide = defer_once(doAlt)([clear, recur]),
 				doPlaying = defer_once(doAlt)([notplaying, playing]),
 				doDisplay = defer_once(doAlt)([playtime]),
-				go_render = thrice(callerBridge)('render')(null),
-				unlocate = thricedefer(callerBridge)('unrender')(null)(locate),
+				go_render = thrice(doMethod)('render')(null),
+				unlocate = thricedefer(doMethod)('unrender')(null)(locate),
 				unpauser = function () {
 					var path = utils.hasClass('portrait', thumbs) ? pausepath + 'pauseLong.png' : pausepath + 'pause.png';
 					//because we're adding invoke_player to the slide LI, pause LI, it's immediate sibling, will prevent the click reaching it
@@ -771,14 +781,14 @@
 					doMakePause(path, go_render, do_invoke_player);
 				},
 				doPause = defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]),
-				invoke_player = defercall('forEach')([doSlide, doDisplay, doPause, doPlaying])(getResult),
+				invoke_player = deferEach([doSlide, doDisplay, doPause, doPlaying])(getResult),
 				do_invoke_player = ptL(eventing, 'click', null, invoke_player),
 				setOrient = ptL(doOrient(unsetPortrait, setPortrait), $$('base')),
-				relocate = ptL(mycaller, null, locate, 'render'),
+				relocate = ptL(lazyVal, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
-				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, defercall('forEach')([remPause, remSlide])(getResult)],
-				next_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
-				prev_driver = defercall('forEach')([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
+				farewell = [notplaying, exitplay, exitswap, doReLocate, setOrient, deferEach([remPause, remSlide])(getResult)],
+				next_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
+				prev_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				pauser = ptL(utils.invokeWhen, _.negate(ptL($, 'slide')), ptL(doMakeSlide, 'base', 'slide', unlocate, go_render, do_invoke_player)),
 				COR = function (predicate, action) {
 					return {
@@ -823,7 +833,7 @@
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			//machBase(e.target, 'base').then(showtime).then(doOrient(unsetPortrait,setPortrait));
-			doMakeBase(e.target.src, 'base', showtime, doOrient(unsetPortrait, setPortrait));
+			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
 			var buttons_cb = function (str) {
 					var el = anCr($('controls'))('button');
 					el.id = str;

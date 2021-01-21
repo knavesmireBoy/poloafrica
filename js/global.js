@@ -316,9 +316,14 @@ poloAF.Util = (function() {
 		return node.parentNode.removeChild(node);
 	}
 
-	function getElementHeight(el) {
-		return el.offsetHeight || el.getBoundingClientRect().height;
+	function getElementWidth(el) {
+		return el.getBoundingClientRect().height || el.offsetWidth;
 	}
+    
+    function getElementHeight(el) {
+		return  el.getBoundingClientRect().height || el.offsetHeight;
+	}
+
 
 	function baseNestedElements(ancor, outer, inner, hash) {
 		var anCr = poloAF.Util.append();
@@ -1048,6 +1053,7 @@ poloAF.Util = (function() {
 		getDefaultAction: _.partial(best, noOp()),
 		getDomChild: curry3(getTargetNode)('firstChild'),
 		getDomParent: curry3(getTargetNode)('parentNode'),
+		getElementWidth: getElementWidth,
 		getElementHeight: getElementHeight,
 		getElementOffset: getElementOffset,
 		getFirstChild: getWhatElement('firstChild'),
