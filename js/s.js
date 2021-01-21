@@ -217,7 +217,7 @@
 	function addElements() {
 		return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
 	}
-	//base and pause 
+	//slide and pause 
 	function onLoad(img, path, promise) {
 		promise.then(getLI(img));
 		img.src = path;
@@ -295,6 +295,7 @@
 	}
 
 	function doMakeBase(source, target) {
+        showtime();
 		var img = addElements();
 		doMap(img.parentNode, [
 			['href', source]
@@ -329,7 +330,7 @@
 		return onLoad(img, path, new FauxPromise(_.rest(arguments)));
 	}
 
-	function spliceOrientation(bool, coll) {
+	function getAspectPriority(bool, coll) {
 		if (coll[13]) {
 			var copy = coll.slice(0),
 				res = copy.splice(4, 6);
@@ -402,10 +403,8 @@
         doGet = twice(utils.getter),
 		text_from_target = _.compose(doGet('id'), getTarget),
 		node_from_target = _.compose(doGet('nodeName'), getTarget),
-        
 		doCompare = utils.curryFactory(4)(goCompare)(greater)(doGet('offsetWidth'))(doGet('offsetHeight')),
 		getLI = utils.getDomParent(utils.getNodeByTag('li')),
-		getLink = utils.getDomChild(utils.getNodeByTag('a')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
 		doClass = _.compose(twice(onTruth)(['addClass', 'removeClass']), doCompare),
 		sortClass = function (klas, el, m) {
@@ -433,7 +432,6 @@
 		undostatic = ptL(klasRem, 'static', $$('controls')),
 		doOrient = function (l, p) {
 			return function (img) {
-                con(img)
 				utils.getBest(ptL(gtEq, img.clientHeight, img.clientWidth), [p, l])();
 				return img.src;
 			};
@@ -532,8 +530,8 @@
 		$nav = addPageNav(ptL(anCrIn, thumbs), 'gal_back', pageNavHandler),
 		prepareSlideshow = function (i, sub) {
 			var all = pages.getAll(),
-				getPortraitPics = ptL(spliceOrientation, true),
-				getLscpPics = ptL(spliceOrientation, false),
+				getPortraitPics = ptL(getAspectPriority, true),
+				getLscpPics = ptL(getAspectPriority, false),
 				fixPageOrder = function (group, i) {
 					var leader = group[0],
 						tmp = leader[0],
@@ -592,22 +590,6 @@
 				LoopIterator.page_iterator.find(getBaseSrc());
 			}
 		},
-		loadImage = function (getnexturl, id) {
-			return new Promise(function (resolve, reject) {
-				var img = getDomTargetImg($(id));
-				if (img) {
-					img.addEventListener('load', function (e) {
-						resolve(img);
-					});
-					img.addEventListener('error', function () {
-						reject(new Error("Failed to load image's URL:" + url()));
-					});
-					//only run url once, otherwise advances
-					img.src = doParse(getnexturl());
-					img.parentNode.href = doParse(img.src);
-				}
-			});
-		},
 		loadImage = function (getnexturl, id, promise) {
 			var img = getDomTargetImg($(id));
 			if (img) {
@@ -617,11 +599,6 @@
 				img.src = doParse(getnexturl());
 				img.parentNode.href = doParse(img.src);
 			};
-		},
-		loader = function (caller, id) {
-			return loadImage(caller, id).catch(function (e) {
-				console.error(e);
-			});
 		},
 		loader = function (caller, id) {
 			var args = _.rest(arguments, 2);
@@ -671,12 +648,10 @@
 			}
 
 			function paint(str) {
-				//con('paint')
 				var coll = test(),
 					bool = coll[0] === coll[1],
 					body = utils.getClassList(utils.getBody()),
 					m = bool ? 'remove' : 'add';
-				// _.compose(doFormat, getDomTargetImg, $)('slide');
 				body[m]('swap');
 				return !bool;
 			}
@@ -686,12 +661,10 @@
 			}
 
 			function doBase() {
-				//loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base').then(paint).then(setPlayer);
 				loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base', setPlayer, paint);
 			}
 
 			function doSlide() {
-				//loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide').then(doFormat);
 				loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doFormat);
 			}
 
@@ -833,7 +806,7 @@
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			//machBase(e.target, 'base').then(showtime).then(doOrient(unsetPortrait,setPortrait));
-			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait));
 			var buttons_cb = function (str) {
 					var el = anCr($('controls'))('button');
 					el.id = str;
@@ -864,9 +837,7 @@
 					setup.render();
 				}, close_cb);
 			//listeners...
-			[controls, exit, locate, controls_undostat, controls_dostat].forEach(function (o) {
-				o.render();
-			});
+			_.each([controls, exit, locate, controls_undostat, controls_dostat], function (o) { o.render(); });
 			setup.unrender();
 		}, thumbs);
 	setup.render();
