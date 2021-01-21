@@ -589,6 +589,8 @@
 			return new Promise(function (resolve, reject) {
 				var img = getDomTargetImg($(id));
 				if (img) {
+                                    con(img)
+
 					img.addEventListener('load', function (e) {
 						resolve(img);
 					});
@@ -601,19 +603,15 @@
 				}
 			});
 		},
-        loadImage2 = function (getnexturl, id, promise) {
-            var img = getDomTargetImg($(id));
-            return function(){
-                var f = ptL(utils.doWhen, once(1), function(){
-                    if (img) {
-                        img.addEventListener('load', function (e) {
-                            promise.then(e.target);
-                        });
-                        }
-                });
-            f();
-            img.src = doParse(getnexturl());
-            img.parentNode.href = doParse(img.src);
+        loadImage = function (getnexturl, id, promise) {
+            var f,
+                img = getDomTargetImg($(id));
+            if (img) {
+                img.onload = function (e) {
+                    promise.then(e.target);
+                };
+                img.src = doParse(getnexturl());
+                img.parentNode.href = doParse(img.src);           
 		};
         },
 		loader = function (caller, id) {
@@ -621,10 +619,10 @@
 				console.error(e);
 			});
 		},
-        loader2 = function (caller, id) {
+        loader = function (caller, id) {
             var args = _.rest(arguments, 2);
             args = args.length ? args : [function(){}];
-			return loadImage(caller, id, new FauxPromise(args));
+            loadImage(caller, id, new FauxPromise(args));
 		},
 		locator = function (forward, back) {
 			var getLoc = (function (div, subtract, isGreaterEq) {
@@ -678,8 +676,8 @@
 			}
 
 			function doBase() {
-				loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base').then(paint).then(setPlayer);
-                //loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base', setPlayer, paint);
+				//loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base').then(paint).then(setPlayer);
+                loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base', setPlayer, paint);
 			}
 
 			function doFormat(img) {
@@ -687,8 +685,8 @@
 			}
 
 			function doSlide() {
-				loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide').then(doFormat);
-                //loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doFormat);
+				//loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide').then(doFormat);
+                loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doFormat);
 			}
 
 			function doRecur() {
@@ -737,6 +735,7 @@
 						},
 						actions = [fadeIn, fadeOut];
 					return function (flag) {
+                        con(flag)
 						return flag ? actions.reverse()[0] : fade;
 					};
 				}()),
