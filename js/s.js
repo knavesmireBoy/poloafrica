@@ -37,6 +37,18 @@
 	function equals(a, b) {
 		return a === b;
 	}
+    
+    function LT(n, i) {
+		return i > n;
+	}
+    
+    function modulo(n, i) {
+		return i % n;
+	}
+    
+    function increment(i){
+        return i += 1;
+    }
 
 	function equalNum(tgt, cur) {
 		return cur === tgt || Number(cur) === Number(tgt);
@@ -326,6 +338,11 @@
 			utils[m](klas, el);
 		},
 		allpics = utils.getByTag('img', main),
+        doIncrement = function(L){
+            return function(i){
+                return utils.getBest(twicedefer(LT)(L)(i), [ptL(increment, i), always(i)])();
+            }
+        },
 		getSlideChild = _.compose(utils.getChild, utils.getChild, $$('slide')),
 		getBaseChild = _.compose(utils.getChild, utils.getChild, $$('base')),
 		getBaseSrc = _.compose(utils.drillDown(['src']), getBaseChild),
@@ -413,7 +430,8 @@
 			};
 		},
 		cross_page_iterator = function () {
-			poloAF.LoopIterator.cross_page_iterator = poloAF.LoopIterator.from(pages.getAll());
+			poloAF.LoopIterator.cross_page_iterator = poloAF.LoopIterator.from(pages.getAll(), ptL(modulo, pages.getAll().length));
+			//poloAF.LoopIterator.cross_page_iterator = poloAF.LoopIterator.from(pages.getAll(), doIncrement(pages.getAll().length-1));
 		},
 		populate = _.compose(doPopulate, ptL(negator, _.compose(ptL(klasTog, 'alt', thumbs), _.bind($LI.exec, $LI)))),
 		advanceRouteBridge = function (e) {
@@ -479,7 +497,7 @@
 			} else {
 				group = _.flatten(matchup(0)(_.zip(group[0], group[1])));
 			}
-			poloAF.LoopIterator.page_iterator = poloAF.LoopIterator.from(_.map(group, makePath));
+			poloAF.LoopIterator.page_iterator = poloAF.LoopIterator.from(_.map(group, makePath), ptL(modulo, group.length));
 		},
 		get_play_iterator = function (flag) {
 			var myint = pages.findInt(getBaseSrc),
@@ -489,7 +507,7 @@
 			if (flag) {
 				prepareSlideshow(myint, page_index);
 			} else {
-				poloAF.LoopIterator.cross_page_iterator = poloAF.LoopIterator.cross_page_iterator || poloAF.LoopIterator.from(pages.getAll());
+				poloAF.LoopIterator.cross_page_iterator = poloAF.LoopIterator.cross_page_iterator || poloAF.LoopIterator.from(pages.getAll(), ptL(modulo, pages.getAll().length));
 				poloAF.LoopIterator.cross_page_iterator.set(page_index);
 				page = poloAF.LoopIterator.cross_page_iterator.get();
 				$LI.query(page);
@@ -501,7 +519,7 @@
 				});
 				poloAF.LoopIterator.page_iterator = poloAF.LoopIterator.from(_.map(gallery_pics, function (img) {
 					return img.src;
-				}));
+				}), ptL(modulo, gallery_pics.length));
 				poloAF.LoopIterator.page_iterator.find(getBaseSrc());
 			}
 		},
@@ -540,7 +558,7 @@
 		do_page_iterator = function () {
 			poloAF.LoopIterator.page_iterator = poloAF.LoopIterator.from(_.map(allpics, function (img) {
 				return img.src;
-			}));
+			}), ptL(modulo, allpics.length));
 		},
 		setindex = function (arg) {
 			if (!poloAF.LoopIterator.page_iterator) {
