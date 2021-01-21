@@ -210,17 +210,12 @@
 		return _.compose(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(thumbs))('li');
 	}
 
-	function onImage(img, path, promise) {
-		img.addEventListener('load', function (e) {
-			return promise.then(e.target);
-		});
-		img.src = path;
-	}
 	//base and pause 
-	function onSlide(img, path, promise) {
+	function onLoad(img, path, promise) {
 		promise.then(getLI(img));
 		img.src = path;
 	}
+    
 
 	function FauxPromise(args) {
 		//must be an array of functions, AND the first gets run last
@@ -292,7 +287,7 @@
 		doMap(img.parentNode.parentNode, [
 			['id', target]
 		]);
-		return onImage(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
+		return onLoad(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
 	}
 
 	function doMakeSlide(source, target) {
@@ -303,7 +298,7 @@
 		doMap(img.parentNode.parentNode, [
 			['id', target]
 		]);
-		return onSlide(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
+		return onLoad(img, doParse(img.parentNode.href), new FauxPromise(_.rest(arguments, 2)));
 	}
 
 	function doMakePause(path) {
@@ -316,7 +311,7 @@
 				["opacity", 0.5]
 			]
 		]);
-		return onImage(img, path, new FauxPromise(_.rest(arguments)));
+		return onLoad(img, path, new FauxPromise(_.rest(arguments)));
 	}
 
 	function spliceOrientation(bool, coll) {
@@ -589,8 +584,6 @@
 			return new Promise(function (resolve, reject) {
 				var img = getDomTargetImg($(id));
 				if (img) {
-                                    con(img)
-
 					img.addEventListener('load', function (e) {
 						resolve(img);
 					});
@@ -604,8 +597,7 @@
 			});
 		},
         loadImage = function (getnexturl, id, promise) {
-            var f,
-                img = getDomTargetImg($(id));
+            var img = getDomTargetImg($(id));
             if (img) {
                 img.onload = function (e) {
                     promise.then(e.target);
@@ -667,22 +659,25 @@
 			}
 
 			function paint(str) {
+                //con('paint')
 				var coll = test(),
 					bool = coll[0] === coll[1],
 					body = utils.getClassList(utils.getBody()),
 					m = bool ? 'remove' : 'add';
+               // _.compose(doFormat, getDomTargetImg, $)('slide');
 				body[m]('swap');
 				return !bool;
 			}
 
-			function doBase() {
+			
+			function doFormat(img) {
+				return utils.getBest(ptL(gtEq, img.width, img.height), [l, p])();
+			}
+            function doBase() {
 				//loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base').then(paint).then(setPlayer);
                 loader(_.bind(LoopIterator.page_iterator.play, LoopIterator.page_iterator), 'base', setPlayer, paint);
 			}
 
-			function doFormat(img) {
-				return utils.getBest(ptL(gtEq, img.width, img.height), [l, p])();
-			}
 
 			function doSlide() {
 				//loader(_.compose(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide').then(doFormat);
