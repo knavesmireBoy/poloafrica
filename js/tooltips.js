@@ -58,12 +58,14 @@ window.poloAF.Tooltip = function (anchor, instr, count, remove) {
 		init = function () {
 			var that,
 				tip,
-				doDiv = _.compose(anCr(tip), utils.always('div')),
+				doDiv,
+				doAttr;
+			if (isPos(count--)) {
+				tip = utils.machElement(_.partial(_.bind(timer.run, timer), prep()), doAttrs, doElement).render().getElement();
+                doDiv = _.compose(anCr(tip), utils.always('div'));
 				doAttr = _.partial(setAttrs, {
 					id: 'triangle'
 				});
-			if (isPos(count--)) {
-				tip = utils.machElement(_.partial(_.bind(timer.run, timer), prep()), doAttrs, doElement).render().getElement();
 				utils.machElement(setText(instr[0]), doDiv).render();
 				utils.machElement(doAttr, doDiv).render();
 			}
