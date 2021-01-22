@@ -779,6 +779,7 @@
                 return;
             }
             utils.$('placeholder').innerHTML = 'bliss';
+            return;
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
             doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
