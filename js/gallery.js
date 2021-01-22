@@ -809,6 +809,8 @@
 			if (!node_from_target(e).match(/img/i)) {
 				return;
 			}
+             utils.$('placeholder').innerHTML = 'wow';
+            //return;
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			try{
@@ -845,7 +847,7 @@
 				}, close_cb);
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
-			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
+			//_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
 			setup.unrender();
 		}, thumbs);
 	setup.render();
