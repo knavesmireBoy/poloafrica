@@ -5,37 +5,37 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-poloAF.Iterator = function(rev) {
+poloAF.Iterator = function (rev) {
 	"use strict";
-	return function(index, coll, validate, doAdvance) {
-		var loop = function(bool) {
+	return function (index, coll, validate, doAdvance) {
+		var loop = function (bool) {
 				if (!bool) {
 					index = poloAF.Util.doWhen(validate, _.partial(doAdvance, index += 1));
 				}
 				//document.getElementsByTagName('h2')[0].innerHTML = index;
 				return index;
 			},
-			switchDirection = function() {
+			switchDirection = function () {
 				//console.log('sw..')
 				coll = poloAF.Util.reverse(coll);
 				//coll.reverse();
 				index = coll.length - 1 - index;
 				rev = !rev;
 			},
-			isReversed = function() {
+			isReversed = function () {
 				return (rev === true);
 			},
-			getnext = function(isRev, bool) {
+			getnext = function (isRev, bool) {
 				//console.log('next..', isRev())
 				poloAF.Util.doWhen(isRev(), switchDirection);
 				return coll[loop(bool)];
 			},
-			getNow = function(bool) {
+			getNow = function (bool) {
 				return coll[loop(bool)];
 			},
 			forward = _.partial(getnext, isReversed),
 			back = _.partial(getnext, _.negate(isReversed)),
-			invoke = function(bool) {
+			invoke = function (bool) {
 				//console.log('invoke..')
 				return poloAF.Util.getBest(isReversed, [_.bind(back, null, bool), _.bind(forward, null, bool)])();
 			},
@@ -44,19 +44,19 @@ poloAF.Iterator = function(rev) {
 				back: back,
 				getCurrent: _.partial(getNow, true),
 				getNext: invoke,
-				getIndex: function() {
+				getIndex: function () {
 					return index;
 				},
-				setIndex: function(i) {
+				setIndex: function (i) {
 					index = i;
 				},
-				getLength: function() {
+				getLength: function () {
 					return coll.length;
 				},
-				getCollection: function() {
+				getCollection: function () {
 					return coll;
 				},
-				setCollection: function(coll) {
+				setCollection: function (coll) {
 					this.coll = coll;
 				}
 			};
@@ -66,7 +66,7 @@ poloAF.Iterator = function(rev) {
 		return ret;
 	};
 };
-poloAF.Composite = (function() {
+poloAF.Composite = (function () {
 	"use strict";
 
 	function noOp() {}
@@ -78,7 +78,7 @@ poloAF.Composite = (function() {
 	function isTrue(i) {
 		return i && _.isBoolean(i);
 	}
-	return function(included) {
+	return function (included) {
 		var intafaces = _.rest(arguments),
 			/*, intafaces..*/
 			j,
@@ -94,22 +94,22 @@ poloAF.Composite = (function() {
 			},
 			composite,
 			tmp,
-			comp_add = function(comp) {
+			comp_add = function (comp) {
 				intafaces.unshift(comp);
 				poloAF.Intaface.ensures.apply(poloAF.Intaface, intafaces);
 				var m = comp.head ? 'unshift' : 'push';
 				included[m](intafaces.shift(comp));
 				comp.parent = this;
 			},
-			comp_remove = function(comp) {
+			comp_remove = function (comp) {
 				if (!comp) {
-					_.each(included, function(comp) {
+					_.each(included, function (comp) {
 						comp.remove();
 					});
 					included = [];
 					return this;
 				} else {
-					included = _.filter(included, function(n_comp) {
+					included = _.filter(included, function (n_comp) {
 						if (n_comp !== comp) {
 							return n_comp;
 						}
@@ -117,7 +117,7 @@ poloAF.Composite = (function() {
 					return comp;
 				}
 			},
-			comp_get = function(i) {
+			comp_get = function (i) {
 				//console.log('recent', i)
 				if (_.isNull(i) && !isNaN(k)) {
 					return included[k];
@@ -130,12 +130,12 @@ poloAF.Composite = (function() {
 				k = !isNaN(j) ? j : k; //store current
 				return ret;
 			},
-			comp_find = function(m, e) {
-				return _[m](included, function(member) {
+			comp_find = function (m, e) {
+				return _[m](included, function (member) {
 					return member.find && member.find(e);
 				});
 			},
-			doAdd = function(comp) {
+			doAdd = function (comp) {
 				try {
 					comp_add.call(composite, comp);
 				} catch (er) {
@@ -147,17 +147,17 @@ poloAF.Composite = (function() {
 				}
 				return comp;
 			},
-			render = function() {
+			render = function () {
 				var args = _.toArray(arguments);
-				_.each(included, function(member) {
+				_.each(included, function (member) {
 					if (member.render) {
 						member.render.apply(member, args.concat(_.rest(arguments)));
 					}
 				});
 			},
-			unrender = function() {
+			unrender = function () {
 				var args = _.toArray(arguments);
-				_.each(included, function(member) {
+				_.each(included, function (member) {
 					if (member.unrender) {
 						member.unrender.apply(member, args.concat(_.rest(arguments)));
 					}
@@ -167,7 +167,7 @@ poloAF.Composite = (function() {
 		if (included && _.isArray(included)) {
 			composite = {
 				add: doAdd,
-				addAll: function() {
+				addAll: function () {
 					_.each(_.toArray(arguments), doAdd);
 				},
 				remove: comp_remove,
@@ -176,7 +176,7 @@ poloAF.Composite = (function() {
 				included: included,
 				render: render,
 				unrender: unrender,
-				current: function() {
+				current: function () {
 					return included[j] || included;
 				}
 			};
@@ -184,7 +184,7 @@ poloAF.Composite = (function() {
 				//copy and empty included; establish contents conform to interface
 				tmp = included.slice();
 				included = [];
-				_.each(tmp, function(comp) {
+				_.each(tmp, function (comp) {
 					doAdd(comp);
 				});
 			}
@@ -192,97 +192,98 @@ poloAF.Composite = (function() {
 		return composite || leaf;
 	}; //ret func
 }());
+(function () {
+	"use strict";
 
-function equals(a, b) {
-	return a === b;
-}
-poloAF.LoopIterator = function(group, advancer) {
-	"use strict";
-	this.group = group;
-	this.position = 0;
-	this.rev = false;
-    this.advance = advancer;
-}
-poloAF.Group = function() {
-	"use strict";
-	this.members = [];
-}
-poloAF.Group.prototype = {
-	add: function(value) {
-		if (!this.has(value)) {
-			this.members.push(value);
-		}
-	},
-	remove: function(value) {
-		this.members = _.filter(this.members, _.negate(ptL(equals, value)));
-	},
-	has: function(value) {
-		return this.members.includes(value);
+	function equals(a, b) {
+		return a === b;
 	}
-};
-poloAF.Group.from = function(collection) {
-	var group = new poloAF.Group(),
-		i,
-		L = collection.length;
-	for (i = 0; i < L; i += 1) {
-		group.add(collection[i]);
-	}
-	return group;
-};
-poloAF.LoopIterator.from = function(coll, advancer) {
-	return new poloAF.LoopIterator(poloAF.Group.from(coll), advancer);
-};
-poloAF.LoopIterator.page_iterator = null;
-poloAF.LoopIterator.cross_page_iterator = null;
-poloAF.LoopIterator.prototype = {
-	forward: function(flag) {
-		if (!flag && this.rev) {
-			return this.back(true);
+	poloAF.LoopIterator = function (group, advancer) {
+		this.group = group;
+		this.position = 0;
+		this.rev = false;
+		this.advance = advancer;
+	};
+	poloAF.Group = function () {
+		this.members = [];
+	};
+	poloAF.Group.prototype = {
+		add: function (value) {
+			if (!this.has(value)) {
+				this.members.push(value);
+			}
+		},
+		remove: function (value) {
+			this.members = _.filter(this.members, _.negate(_.partial(equals, value)));
+		},
+		has: function (value) {
+			return this.members.includes(value);
 		}
-		//this.position++;
-		//this.position = this.position % this.group.members.length;
-        this.position = this.advance(this.position);
-		var result = {
-			value: this.group.members[this.position],
-			index: this.position
-		};
-		return result;
-	},
-	back: function(flag) {
-		if (!this.rev || flag) {
-			this.group.members = this.group.members.reverse();
-			//this.position = this.group.members.length - 1 - (this.position);
-			this.position = this.group.members.length - 2 - (this.position);
+	};
+	poloAF.Group.from = function (collection) {
+		var group = new poloAF.Group(),
+			i,
+			L = collection.length;
+		for (i = 0; i < L; i += 1) {
+			group.add(collection[i]);
+		}
+		return group;
+	};
+	poloAF.LoopIterator.from = function (coll, advancer) {
+		return new poloAF.LoopIterator(poloAF.Group.from(coll), advancer);
+	};
+	poloAF.LoopIterator.page_iterator = null;
+	poloAF.LoopIterator.cross_page_iterator = null;
+	poloAF.LoopIterator.prototype = {
+		forward: function (flag) {
+			if (!flag && this.rev) {
+				return this.back(true);
+			}
+			//this.position++;
 			//this.position = this.position % this.group.members.length;
 			this.position = this.advance(this.position);
-			this.rev = !this.rev;
-			return this.forward(this.rev);
-		} else {
-			return this.forward(this.rev);
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		},
+		back: function (flag) {
+			if (!this.rev || flag) {
+				this.group.members = this.group.members.reverse();
+				//this.position = this.group.members.length - 1 - (this.position);
+				this.position = this.group.members.length - 2 - (this.position);
+				//this.position = this.position % this.group.members.length;
+				this.position = this.advance(this.position);
+				this.rev = !this.rev;
+				return this.forward(this.rev);
+			} else {
+				return this.forward(this.rev);
+			}
+		},
+		play: function () {
+			return this.forward(true).value;
+		},
+		current: function () {
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		},
+		find: function (tgt) {
+			return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
+		},
+		set: function (pos) {
+			this.position = pos;
+			var result = {
+				value: this.group.members[this.position],
+				index: this.position
+			};
+			return result;
+		},
+		get: function () {
+			return this.current().value;
 		}
-	},
-	play: function() {
-		return this.forward(true).value;
-	},
-	current: function() {
-		var result = {
-			value: this.group.members[this.position],
-			index: this.position
-		};
-		return result;
-	},
-	find: function(tgt) {
-		return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
-	},
-	set: function(pos) {
-		this.position = pos;
-		var result = {
-			value: this.group.members[this.position],
-			index: this.position
-		};
-		return result;
-	},
-	get: function() {
-		return this.current().value;
-	}
-};
+	};
+}());
