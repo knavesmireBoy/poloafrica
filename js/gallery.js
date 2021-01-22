@@ -9,6 +9,24 @@
 /*global _: false */
 (function (mq, query, touchevents, pausepath, picnum, dummy, makePath) {
 	"use strict";
+    
+    
+    	////$element.triggerEvent($element.getElement(), 'scroll');
+	function triggerEvent(el, type) {
+		var e;
+		if ('createEvent' in document) {
+       // if (document.hasOwnProperty('createEvent')) {
+			// modern browsers, IE9+
+			e = document.createEvent('HTMLEvents');
+			e.initEvent(type, false, true);
+			el.dispatchEvent(e);
+		} else {
+			// IE 8
+			e = document.createEventObject();
+			e.eventType = type;
+			el.fireEvent('on' + e.eventType, e);
+		}
+	}
 
 	function reporter(msg, el) {
 		el = el || utils.getByTag('h2', document)[0];
@@ -793,7 +811,6 @@
 			}
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-            reporter('hello');
 			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
     
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
@@ -829,7 +846,11 @@
 	addPageNav(anCr, 'gal_forward', always(dummy));
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
-    //utils.$('placeholder').innerHTML = 'PHOTOS';
+    
+    utils.$('placeholder').innerHTML = 'PHOTOS';
+    
+    triggerEvent(document.images[1]);
+    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
