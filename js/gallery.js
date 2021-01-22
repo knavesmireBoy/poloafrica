@@ -811,14 +811,10 @@
                 utils.$('placeholder').innerHTML = 'wow';
 				return;
 			}
+            
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-			try{
                 doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
-            }
-            catch(e){
-                reporter(e);
-                }
                  
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
@@ -847,6 +843,8 @@
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
 			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
+            
+            
 			setup.unrender();
 		}, thumbs);
 	setup.render();
@@ -857,7 +855,7 @@
     utils.$('placeholder').innerHTML = 'PHOTOS';
     //utils.$('placeholder').innerHTML = document.images[1].src;
     
-    triggerEvent(document.images[3], 'click');
+    triggerEvent(document.images[4], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
