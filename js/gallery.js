@@ -831,7 +831,7 @@
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
             _.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
             setup.unrender();
-		}, document.images[1]);
+		}, thumbs);
 	setup.render();
 	addPageNav(anCr, 'gal_forward', always(dummy));
 	$nav.render();
