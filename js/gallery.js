@@ -813,6 +813,7 @@
             //return;
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
+            return;
 			try{
                 doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
             }
@@ -847,7 +848,7 @@
 				}, close_cb);
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
-			//_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
+			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
 			setup.unrender();
 		}, thumbs);
 	setup.render();
