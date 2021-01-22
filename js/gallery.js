@@ -346,7 +346,7 @@
 					e.cancelBubble = true;
 				},
 				stopImmediatePropagation: function () {}
-			}
+			};
 		}()),
 		//con = _.bind(window.console.log, window),
 		ptL = _.partial,
@@ -382,7 +382,6 @@
 		setPortrait = ptL(klasAdd, 'portrait', thumbs),
 		mytarget = !window.addEventListener ? 'srcElement' : 'target',
 		getTarget = utils.drillDown([mytarget]),
-		doGet = twice(utils.getter),
 		text_from_target = _.compose(doGet('id'), getTarget),
 		node_from_target = _.compose(doGet('nodeName'), getTarget),
 		doCompare = utils.curryFactory(4)(goCompare)(greater)(doGet('offsetWidth'))(doGet('offsetHeight')),
@@ -397,7 +396,7 @@
 		doIncrement = function (L) {
 			return function (i) {
 				return utils.getBest(twicedefer(LT)(L)(i), [ptL(increment, i), always(i)])();
-			}
+			};
 		},
 		getSlideChild = _.compose(utils.getChild, utils.getChild, $$('slide')),
 		getBaseChild = _.compose(utils.getChild, utils.getChild, $$('base')),
@@ -587,7 +586,7 @@
 				};
 				img.src = doParse(getnexturl());
 				img.parentNode.href = doParse(img.src);
-			};
+			}
 		},
 		loader = function (caller, id) {
 			var args = _.rest(arguments, 2);
