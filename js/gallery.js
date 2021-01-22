@@ -829,6 +829,7 @@
 	addPageNav(anCr, 'gal_forward', always(dummy));
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
+    utils.$('placeholder').innerHTML = 'PHOTOS';
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
