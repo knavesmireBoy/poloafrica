@@ -20,6 +20,7 @@
 			e = document.createEvent('HTMLEvents');
 			e.initEvent(type, false, true);
 			el.dispatchEvent(e);
+            e.preventDefault();
 		} else {
 			// IE 8
 			e = document.createEventObject();
@@ -807,13 +808,11 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
 			if (!node_from_target(e).match(/img/i)) {
+                utils.$('placeholder').innerHTML = 'wow';
 				return;
 			}
-             utils.$('placeholder').innerHTML = 'wow';
-            return;
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-            return;
 			try{
                 doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
             }
@@ -821,7 +820,6 @@
                 reporter(e);
                 }
                  
-            return;
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
 				close_cb = ptL(_.compose(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(thumbs, main)), 'a'),
@@ -852,9 +850,9 @@
 			setup.unrender();
 		}, thumbs);
 	setup.render();
-	addPageNav(anCr, 'gal_forward', always(dummy));
-	$nav.render();
-	_.each(allpics, fixNoNthChild);
+	//addPageNav(anCr, 'gal_forward', always(dummy));
+	//$nav.render();
+	//_.each(allpics, fixNoNthChild);
     
     utils.$('placeholder').innerHTML = 'PHOTOS';
     //utils.$('placeholder').innerHTML = document.images[1].src;
