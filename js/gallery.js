@@ -17,12 +17,9 @@
 		if ('createEvent' in document) {
        // if (document.hasOwnProperty('createEvent')) {
 			// modern browsers, IE9+
-
 			e = document.createEvent('HTMLEvents');
 			e.initEvent(type, false, true);
-            console.log(el)
 			el.dispatchEvent(e);
-            //e.preventDefault();
 		} else {
 			// IE 8
 			e = document.createEventObject();
@@ -810,13 +807,12 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
-            e.preventDefault();
+            //e.preventDefault();
             
 			if (!node_from_target(e).match(/img/i)) {
-                utils.$('placeholder').innerHTML = 'wow';
-			}
-            //e.target = document.images[4];
-            
+                //utils.$('placeholder').innerHTML = 'wow';
+                return;
+			}            
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
                 doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
@@ -851,7 +847,7 @@
             
             
 			setup.unrender();
-		}, document.images[4]);
+		}, document.images[2]);
 	setup.render();
 	addPageNav(anCr, 'gal_forward', always(dummy));
 	$nav.render();
@@ -860,7 +856,7 @@
     utils.$('placeholder').innerHTML = 'PHOTOS';
     //utils.$('placeholder').innerHTML = document.images[1].src;
     
-   triggerEvent(document.images[1], 'click');
+   triggerEvent(document.images[2], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
