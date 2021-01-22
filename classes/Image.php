@@ -8,9 +8,16 @@ include_once '../includes/helpers.inc.php';
 class Image extends Asset implements AssetInterface
 {
 
+    protected $queryAttrs = "SELECT assets.id, extension AS ext, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM assets WHERE id = :id";
+    
     protected function getFilePath($type, $repo)
     {
         return $repo . "/$type/" . $this->id . $this->extension;
+    }
+    
+    protected function setFileSrc($row, $pathtype){
+        $row['src'] = ARTICLE_IMAGE_PATH . '/' . $pathtype . '/' . $row['id'] . $row['ext'];
+        return $row;
     }
     
     protected function doBind($st, $props){
@@ -20,19 +27,13 @@ class Image extends Asset implements AssetInterface
     }
     }
     
-    protected $path2file = ARTICLE_IMAGE_PATH . '/' ;
-
-    protected $queryAttrs = "SELECT assets.id, extension AS ext, alt, assets.attr_id AS dom_id, name, alt AS edit_alt FROM assets WHERE id = :id";
-  
     protected function getStoredProperty($prop)
     {
         $conn = getConn();
-        $sql = "SELECT extension, name FROM assets WHERE id = :id";
-        $st = prepSQL($conn, $sql);
+        $st = prepSQL($conn, $this->queryAttrs);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, "Error retreiving $prop for this file");
         $res = $st->fetch(PDO::FETCH_ASSOC);
-        //exit(var_dump($res));
         return isset($res[$prop]) ? $res[$prop] : "";
     }
     
@@ -74,7 +75,7 @@ class Image extends Asset implements AssetInterface
         $conn = getConn();
         $sql = "UPDATE assets INNER JOIN article_asset AS AA ON AA.asset_id = assets.id SET alt=:alt, attr_id=:attr WHERE AA.article_id = :art AND assets.id = :id";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
+        $st->bindValue(":alt", $this->alt, PDO::PARAM_STR);
         $st->bindValue(":attr", $this->dom_id, PDO::PARAM_STR);
         $st->bindValue(":art", $this->articleID, PDO::PARAM_INT);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
@@ -91,21 +92,10 @@ class Image extends Asset implements AssetInterface
     {
         // Get the image size and type
         $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH_ARTICLE);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH), $this->ratio, $this->offset, $this->maxi);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_IMAGE_PATH), $this->ratio, $this->offset, IMG_THUMB_WIDTH, JPEG_QUALITY);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_IMAGE_PATH), floatval($this->ratio), floatval($this->offset), intval($this->maxi));
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_IMAGE_PATH), floatval($this->ratio), floatval($this->offset), IMG_THUMB_WIDTH, JPEG_QUALITY);
     }
-
-    public function delete($id)
-    {
-        $conn = getConn();
-        $sql = "SELECT id, attr_id FROM assets WHERE id = :id";
-        $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $id, PDO::PARAM_INT);
-        doPreparedQuery($st, 'Error retreiving record');
-        $row = $st->fetch(PDO::FETCH_NUM);
-        $this->removeFile($row[0]);
-    }
-    
+  
     public function insert()
     {
         // Does the Image object already have an ID?
@@ -118,7 +108,7 @@ class Image extends Asset implements AssetInterface
         $sql = "INSERT INTO assets (extension, name, alt, attr_id) VALUES (:extension, :name, :alt, :domid)";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":extension", $this->extension, PDO::PARAM_STR);
-        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
+        $st->bindValue(":alt", $this->alt, PDO::PARAM_STR);
         $st->bindValue(":domid", $this->dom_id, PDO::PARAM_STR);
         $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
         doPreparedQuery($st, "Error inserting record into assets table");
@@ -131,15 +121,18 @@ class Image extends Asset implements AssetInterface
         doPreparedQuery($st, "Error inserting record into article_asset table");
         $conn = null;
     }
-
-    public function getAttributes($flag = false)
+    
+      public function delete($id)
     {
-        $st = $this->queryAttributes($this->queryAttrs);
-        $pathtype = $flag ? IMG_TYPE_THUMB : IMG_TYPE_FULLSIZE;
-        $row = $st->fetch(PDO::FETCH_ASSOC);
-        $row['src'] = $this->path2file . $pathtype . '/' . $row['id'] . $row['ext'];
-        return $row;
+        $conn = getConn();
+        $sql = "SELECT id, attr_id FROM assets WHERE id = :id";
+        $st = prepSQL($conn, $sql);
+        $st->bindValue(":id", $id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retreiving record');
+        $row = $st->fetch(PDO::FETCH_NUM);
+        $this->removeFile($row[0]);
     }
+    
         /*
     public function delete($id)
     {

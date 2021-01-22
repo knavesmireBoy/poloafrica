@@ -3,10 +3,10 @@ require_once 'Image.php';
 
 class Gallery extends Image implements AssetInterface
 {
-    protected $onclause = " INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
-    protected $table = "gallery";
+    protected $queryAttrs = "SELECT id, extension AS ext, alt, attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE id = :id";
+    //protected $table = "gallery";
 
-    protected function setDomId()
+    protected function setDomId($arg = false)
     {
         if (strlen($this->id) < 3)
         {
@@ -14,16 +14,22 @@ class Gallery extends Image implements AssetInterface
         }
         return $this->id;
     }
+    
+      protected function setFileSrc($row, $pathtype){
+        $row['src'] = ARTICLE_GALLERY_PATH . '/' . $pathtype . '/' . $row['dom_id'] . $row['ext'];
+        return $row;
+    }
 
-    protected $path2file = ARTICLE_GALLERY_PATH . '/';
-    protected $queryAttrs = "SELECT id, extension AS ext, alt, attr_id AS dom_id, name, alt AS edit_alt FROM gallery WHERE id = :id";
 
     protected function getStoredProperty($prop)
     {
         $conn = getConn();
-        $sql = "SELECT extension, name FROM gallery $this->onclause";
+        $onclause = " INNER JOIN articles ON gallery.article_id = articles.id WHERE articles.id = :id";
+        $sql = "SELECT extension AS ext, name FROM gallery $onclause";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);
+        $st->bindValue(":id", $this->articleID, PDO::PARAM_INT);        
+        $st = prepSQL($conn, $this->queryAttrs);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, "Error retreiving $prop for this file");
         $res = $st->fetch(PDO::FETCH_ASSOC);
         return isset($res[$prop]) ? $res[$prop] : "";
@@ -32,7 +38,7 @@ class Gallery extends Image implements AssetInterface
     protected function getFilePath($type, $repo)
     {
         //currently storing images in root folder of site and out of root folder $repo refers to one or other locations
-        return $repo . "/$type/" . $this->setDomId() . $this->extension;
+        return $repo . "/$type/" . $this->setDomId($this->id) . $this->extension;
     }
 
     /* https://www.elated.com/add-image-uploading-to-your-cms/ */
@@ -40,8 +46,9 @@ class Gallery extends Image implements AssetInterface
     {
         // Get the image size and type
         $source_image = $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_UPLOAD_PATH_GALLERY);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), 1.5, $this->offset, 1600, 100);
-        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), 1.5, $this->offset, IMG_THUMB_WIDTH, JPEG_QUALITY);
+        $offset = isset($this->offset) ? $this->offset : .5;
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_FULLSIZE, ARTICLE_GALLERY_PATH), 1.5, $offset, 1600, 100);
+        buildIMG($source_image, $this->getFilePath(IMG_TYPE_THUMB, ARTICLE_GALLERY_PATH), 1.5, $offset, IMG_THUMB_WIDTH, JPEG_QUALITY);
     }
     
     protected function removeFile($id)
@@ -71,7 +78,7 @@ class Gallery extends Image implements AssetInterface
         $conn = getConn();
         $sql = "UPDATE gallery SET alt = :alt, attr_id = :attr WHERE gallery.id = :id";
         $st = prepSQL($conn, $sql);
-        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
+        $st->bindValue(":alt", $this->alt, PDO::PARAM_STR);
         $st->bindValue(":attr", $this->dom_id, PDO::PARAM_STR);
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, 'Error updating asset');
@@ -107,7 +114,7 @@ class Gallery extends Image implements AssetInterface
         $sql = "INSERT INTO gallery (extension, name, alt, attr_id, article_id) VALUES (:extension, :name, :alt, :domid, :articleID)";
         $st = prepSQL($conn, $sql);
         $st->bindValue(":extension", $this->extension, PDO::PARAM_STR);
-        $st->bindValue(":alt", $this->alt_text, PDO::PARAM_STR);
+        $st->bindValue(":alt", $this->alt, PDO::PARAM_STR);
         $st->bindValue(":domid", $this->dom_id, PDO::PARAM_STR);
         $st->bindValue(":name", $this->filename, PDO::PARAM_STR);
         $st->bindValue(":articleID", $this->articleID, PDO::PARAM_STR);
@@ -120,14 +127,5 @@ class Gallery extends Image implements AssetInterface
         $st->bindValue(":id", $this->id, PDO::PARAM_INT);
         doPreparedQuery($st, "Error updating record in gallery table");
         $conn = null;
-    }
-    
-    public function getAttributes($flag = false)
-    {
-        $st = $this->queryAttributes($this->queryAttrs);
-        $pathtype = $flag ? IMG_TYPE_THUMB : IMG_TYPE_FULLSIZE;
-        $row = $st->fetch(PDO::FETCH_ASSOC);
-        $row['src'] = $this->path2file . $pathtype . '/' . $row['dom_id'] . $row['ext'];
-        return $row;
     }
 }

@@ -15,9 +15,12 @@ class Doc extends Image implements AssetInterface
         //exit('blast');
     }
     
-    public function getAttributes($flag = false){
-        $st = $this->queryAttributes($this->queryAttrs);
-        $pathtype = $flag ?  IMG_TYPE_THUMB  :  IMG_TYPE_FULLSIZE;
+   public function getAttributes($flag = false)
+    {
+        $conn = getConn();
+        $st = prepSQL($conn, $this->queryAttrs);
+        $st->bindValue(":id", $this->id, PDO::PARAM_INT);
+        doPreparedQuery($st, 'Error retrieving filepath');
         $row = $st->fetch(PDO::FETCH_ASSOC);
         $row['path'] = $this->path2file . $this->page . '/' . $row['name'] . $row['ext'];
         return $row;

@@ -13,7 +13,7 @@ class GalleryArticle extends Article implements ArticleInterface
         {
             $conn = getConn();
             $sql = "SELECT extension FROM gallery WHERE id = {$attrs['id']}";
-            $ext = $conn->query($sql)->fetch(PDO::FETCH_NUM) [0];
+            $ext = $conn->query($sql)->fetch(PDO::FETCH_NUM)[0];
             $conn = null;
         }
         return AssetFactory::createAsset($this->id, $this->page, $ext, $attrs);

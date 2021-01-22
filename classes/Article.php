@@ -8,6 +8,7 @@ abstract class Article implements ArticleInterface
     // Properties
     protected $ext = null;
     protected $reg = "/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/";
+    protected $uber = array();
     public $id = null;
     public $pubDate = null;
     public $title = null;
@@ -117,20 +118,37 @@ abstract class Article implements ArticleInterface
         $conn = null;
         $this->placeArticle($title);
     }
-    public function storeUploadedFile($uploaded, $attrs = array(), $pass = false)
+    public function storeUploadedFile1($uploaded, $attrs = array(), $edit = false)
     {        
         if(empty($uploaded['name'])){
             $uploaded = array();
-            if($pass){
-            $arr = $this->getFilePath()[0];
-            $asset = $this->createAsset($arr['name'] . $arr['ext']);
+            if($edit){
+                $arr = $this->getFilePath()[0];
+                $asset = $this->createAsset($arr['name'] . $arr['ext']);
+                $asset->updateFile($attrs);
             }
         }
         else {
         $asset = $this->createAsset($uploaded['name']);
+        $asset->storeUploadedFile($uploaded, $attrs);
         }
-        if(isset($asset)){
-            $asset->updateFile($uploaded, $attrs);
+    }
+    
+    public function storeUploadedFile($uploaded, $attrs = array(), $edit = false)
+    {        
+        if(empty($uploaded['name'])){
+            $uploaded = array();
+            if($edit){
+                $this->getFilePath();
+                $assets = $this->uber;
+                foreach($assets as $asset){
+                    $asset->updateFile($attrs);
+                }
+            }
+        }
+        else {
+        $asset = $this->createAsset($uploaded['name']);
+        $asset->storeUploadedFile($uploaded, $attrs);
         }
     }
 
@@ -144,8 +162,11 @@ abstract class Article implements ArticleInterface
         $uber = array();
         foreach($rows as $row){
             //create an asset object for every asset
-            $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']))->getAttributes($flag);
+            //grab extension 'jpg', 'pdf', 'mp4' to determine $asset class
+            $uber[] = $this->createAsset($row['ext'], array('id' => $row['id']));
         }
-        return isset($uber[0]) ? $uber : array();
+        $this->uber = $uber;
+        //template expects array of attributes
+        return isset($uber[0]) ? array_map(function($asset) use($flag) { return $asset->getAttributes($flag); }, $uber) : array();
     }
 }
