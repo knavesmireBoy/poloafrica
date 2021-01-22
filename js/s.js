@@ -118,6 +118,36 @@
 	function partial(f, el) {
 		return ptL(f, el);
 	}
+    
+    function F(flag){
+        
+        if(flag){
+            return {
+            preventDefault: function(e){
+                e.preventDefault();
+            },
+            stopPropagation: function(e){
+               e.stopPropagation();
+            },
+            stopImmediatePropagation: function(e){
+                e.stopImmediatePropagation();
+            }
+        };
+        }
+        return {
+            preventDefault: function(e){
+                e.returnValue = false;
+            },
+            stopPropagation: function(e){
+               e.cancelBubble = true;
+            },
+            stopImmediatePropagation: function(e){
+                
+            }
+        }
+    }
+    
+    
 	//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
 	function eventing(type, actions, fn, el) {
 		actions = actions || ['preventDefault'];
@@ -213,22 +243,33 @@
 			[k, v]
 		]);
 	}
+    
+        function getNativeOpacity(bool) {
+		return {
+			getKey: function () {
+				return bool ? 'filter' : Modernizr.prefixedCSS('opacity');
+			},
+			getValue: function (val) {
+				return bool ? 'alpha(opacity=' + val * 100 + ')' : val;
+			}
+		};
+	}
 
 	function doOpacity(flag) {
 		var slide = $('slide'),
 			val;
 		if (slide) {
 			val = flag ? 1 : recur.i / 100;
+            val = cssopacity.getValue(val);
 			doMap(slide, [
 				[
-					['opacity', val]
+					[cssopacity.getKey(), val]
 				]
 			]);
 		}
 	}
 
 	function doMakeBase(source, target) {
-        showtime();
 		var img = addElements();
 		doMap(img.parentNode, [
 			['href', source]
@@ -252,12 +293,13 @@
 
 	function doMakePause(path) {
 		var img = addElements();
+            
 		doMap(img.parentNode.parentNode, [
 			['id', 'paused']
 		]);
 		doMap(img.parentNode.parentNode, [
 			[
-				["opacity", 0.5]
+				[cssopacity.getKey(), cssopacity.getValue(0.5)]
 			]
 		]);
 		return onLoad(img, path, new FauxPromise(_.rest(arguments)));
@@ -277,6 +319,8 @@
 			trailer = flag ? landscape : portrait;
 		return [leader, trailer];
 	}
+    
+
     
 	var pages = (function () {
 			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
@@ -325,6 +369,7 @@
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
 		klasTog = utils.toggleClass,
+        cssopacity = getNativeOpacity(!window.addEventListener),
 		main = document.getElementsByTagName('main')[0],
 		thumbs = utils.getByClass('gallery')[0],
 		$ = thrice(lazyVal)('getElementById')(document),
@@ -746,7 +791,7 @@
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			//machBase(e.target, 'base').then(showtime).then(doOrient(unsetPortrait,setPortrait));
-			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait));
+			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
 			var buttons_cb = function (str) {
 					var el = anCr($('controls'))('button');
 					el.id = str;

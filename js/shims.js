@@ -215,7 +215,8 @@ function getNativeOpacity(bool) {
 		};
 	};
 }
-poloAF.getOpacity = getNativeOpacity(poloAF.slice_shim);
+poloAF.getOpacity = getNativeOpacity(!window.addEventListener);
+
 if (typeof Object.getPrototypeOf !== "function") {
 	if (typeof "test".__proto__ === "object") {
 		Object.getPrototypeOf = function (object) {
