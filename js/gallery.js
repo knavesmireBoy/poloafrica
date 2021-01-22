@@ -814,9 +814,10 @@
 			try{
                 doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
             }
-            catch{
+            catch(e){
                 reporter(e);
                 }
+                 
     
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
@@ -852,10 +853,10 @@
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
     
-    //utils.$('placeholder').innerHTML = 'PHOTOS';
+    utils.$('placeholder').innerHTML = 'PHOTOS';
     //utils.$('placeholder').innerHTML = document.images[1].src;
     
-    triggerEvent(document.images[1], 'click');
+    triggerEvent(document.images[2], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
