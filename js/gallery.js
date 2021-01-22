@@ -149,16 +149,16 @@
 	}
 	//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
 	function eventing(type, actions, fn, el) {
-		actions = actions || ['preventDefault'];
-
+        
 		function preventer(wrapped, e) {
 			_.each(actions, function (a) {
 				myEvent[a](e);
 			});
 			return wrapped(e);
 		}
-		fn = _.wrap(fn, preventer);
+		//fn = _.wrap(fn, preventer);
 		el = getResult(el);
+        
 		return {
 			render: function () {
 				el.addEventListener(type, fn, false);
@@ -810,11 +810,47 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
+            e.preventDefault();
+            
 			if (!node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = 'wow';
 			}
-            reporter('o');
-          
+            //e.target = document.images[4];
+            
+			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
+			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
+                doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+                 
+			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
+				aButton = anCr($('controls')),
+				close_cb = ptL(_.compose(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(thumbs, main)), 'a'),
+				dombuttons = _.map(buttons, _.compose(thrice(doMapLateVal)('id'), aButton, thrice(doMethod)('slice')(-6))),
+				dostatic = ptL(klasAdd, 'static', $$('controls')),
+				chain = factory(),
+				controls = eventing('click', ['preventDefault'], function (e) {
+					var str = text_from_target(e),
+						node = node_from_target(e);
+					if (node.match(/button/i)) {
+						//!!REPLACE the original chain reference, validate will return either the original or brand new instance
+						chain = chain.validate(str);
+						chain.handle(str);
+					}
+				}, $('controls')),
+				controls_undostat = eventing('mouseover', [], undostatic, utils.getByTag('footer', document)[0]),
+				controls_dostat = eventing('mouseover', [], dostatic, $('controls')),
+				exit = eventing('click', ['stopPropagation'], function () {
+					chain = chain.validate('play');
+					_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
+					exitshow();
+					locate.unrender();
+					setup.render();
+				}, close_cb);
+			//listeners...
+			_.each(_.zip(dombuttons, buttons), invokeBridge);
+			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
+            
+            
+			setup.unrender();
 		}, document.images[4]);
 	setup.render();
 	addPageNav(anCr, 'gal_forward', always(dummy));
@@ -824,7 +860,7 @@
     utils.$('placeholder').innerHTML = 'PHOTOS';
     //utils.$('placeholder').innerHTML = document.images[1].src;
     
-   triggerEvent(document.images[4], 'click');
+   triggerEvent(document.images[1], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
