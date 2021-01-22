@@ -153,7 +153,7 @@
 			});
 			return wrapped(e);
 		}
-		//fn = _.wrap(fn, preventer);
+		fn = _.wrap(fn, preventer);
 		el = getResult(el);
         
 		return {
@@ -807,12 +807,13 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
-            //e.preventDefault();
+            utils.$('placeholder').innerHTML = 'blissIT';
             
 			if (!node_from_target(e).match(/img/i)) {
                 //utils.$('placeholder').innerHTML = 'wow';
                 return;
 			}            
+            utils.$('placeholder').innerHTML = 'bliss';
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
                 doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
@@ -843,9 +844,7 @@
 				}, close_cb);
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
-			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
-            
-            
+			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);            
 			setup.unrender();
 		}, document.images[2]);
 	setup.render();
