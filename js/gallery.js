@@ -811,7 +811,12 @@
 			}
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+			try{
+                doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+            }
+            catch{
+                reporter(e);
+                }
     
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
@@ -847,8 +852,8 @@
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
     
-    utils.$('placeholder').innerHTML = 'PHOTOS';
-    utils.$('placeholder').innerHTML = document.images[1].src;
+    //utils.$('placeholder').innerHTML = 'PHOTOS';
+    //utils.$('placeholder').innerHTML = document.images[1].src;
     
     triggerEvent(document.images[1], 'click');
     
