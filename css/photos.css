@@ -289,6 +289,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 }
 #wrap h2 {
     background: none;
+    background-color: indigo;
 }
 main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav {
 	position: absolute;

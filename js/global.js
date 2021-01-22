@@ -226,7 +226,7 @@ poloAF.Util = (function () {
 	}
 
 	function render(anc, refnode, el) {
-		//console.log(arguments)
+		console.log(arguments)
 		return getResult(anc).insertBefore(getResult(el), getResult(refnode));
 	}
 	//get ye this. setAnchor effectively returns strategy(getNewElement in reality), which expects one argument
