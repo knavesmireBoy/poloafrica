@@ -1,8 +1,6 @@
 /*jslint nomen: true */
 /*global window: false */
 /*global document: false */
-/*global Map: false */
-/*global Promise: false */
 /*global console: false */
 /*global Modernizr: false */
 /*global poloAF: false */
@@ -10,8 +8,7 @@
 (function (mq, query, touchevents, pausepath, picnum, dummy, makePath) {
 	"use strict";
     
-    
-    	////$element.triggerEvent($element.getElement(), 'scroll');
+    ////$element.triggerEvent($element.getElement(), 'scroll');
 	function triggerEvent(el, type) {
 		var e;
 		if ('createEvent' in document) {
@@ -46,20 +43,12 @@
 		return _.isFunction(arg) ? arg() : arg;
 	}
 
-	function divide(a, b) {
-		return a / b;
-	}
-
 	function greater(a, b) {
 		return a > b;
 	}
 
 	function equals(a, b) {
 		return a === b;
-	}
-
-	function LT(n, i) {
-		return i > n;
 	}
 
 	function modulo(n, i) {
@@ -74,10 +63,6 @@
 		return cur === tgt || Number(cur) === Number(tgt);
 	}
 
-	function subtract(a, b) {
-		return a - b;
-	}
-
 	function invoke(f, arg) {
 		arg = _.isArray(arg) ? arg : [arg];
 		return f.apply(null, arg);
@@ -87,10 +72,6 @@
 		return invoke(arr[0], arr[1]);
 	}
 
-	function revCall(arg, f) {
-		return f(arg);
-	}
-
 	function invokeArgs(f) {
 		var args = _.rest(arguments);
 		return f.apply(null, _.map(args, getResult));
@@ -98,10 +79,6 @@
 
 	function doMethod(o, v, p) {
 		return o[p] && o[p](v);
-	}
-
-	function do_method(o, p, coll, cb) {
-		return o[p](coll, cb);
 	}
 
 	function lazyVal(v, o, p) {
@@ -363,7 +340,7 @@
 					e = getEventObject(e);
 					e.cancelBubble = true;
 				},
-				stopImmediatePropagation: function () {}
+				stopImmediatePropagation: noOp
 			};
 		}()),
 		//con = _.bind(window.console.log, window),
@@ -379,8 +356,6 @@
 		parser = thrice(doMethod)('match')(/images\/[^\/]+\.(jpg|png)$/),
 		doGet = twice(utils.getter),
 		doParse = _.compose(doGet(0), parser),
-		divideBy = twice(divide),
-		greaterOrEqual = ptL(invoke, greater),
 		gtEq = ptL(greater),
 		doAlt = function (actions) {
 			return actions.reverse()[0]();
@@ -411,15 +386,9 @@
 			utils[m](klas, el);
 		},
 		allpics = utils.getByTag('img', main),
-		doIncrement = function (L) {
-			return function (i) {
-				return utils.getBest(twicedefer(LT)(L)(i), [ptL(increment, i), always(i)])();
-			};
-		},
 		getSlideChild = _.compose(utils.getChild, utils.getChild, $$('slide')),
 		getBaseChild = _.compose(utils.getChild, utils.getChild, $$('base')),
 		getBaseSrc = _.compose(utils.drillDown(['src']), getBaseChild),
-		getSlideSrc = _.compose(utils.drillDown(['src']), getSlideChild),
 		makeToolTip = function (flag) {
 			var tooltip = poloAF.Tooltip(thumbs, ["move mouse in and out of footer...", "...to toggle the display of control buttons"], !touchevents ? 2 : 0, flag);
 			tooltip.init();
@@ -612,13 +581,12 @@
 			loadImage(caller, id, new FauxPromise(args));
 		},
 		locator = function (forward, back) {
-			var getLoc = (function (div, subtract, isGreaterEq) {
-				var getThreshold = _.compose(div, subtract);
+			var getLoc = (function () {
 				return function (e) {
 					var box = e.target.getBoundingClientRect();
 					return e.clientX - box.left > (box.right - box.left) / 2;
 				};
-			}(divideBy(2), subtract, greaterOrEqual));
+			}());
 			return function (e) {
 				return utils.getBest(function (agg) {
 					return agg[0](e);
@@ -653,7 +621,7 @@
 				});
 			}
 
-			function paint(str) {
+			function paint() {
 				var coll = test(),
 					bool = coll[0] === coll[1],
 					body = utils.getClassList(utils.getBody()),
@@ -774,7 +742,7 @@
 						setSuccessor: function (s) {
 							this.successor = s;
 						},
-						handle: function (str) {
+						handle: function () {
 							if (predicate.apply(this, arguments)) {
 								return action.apply(this, arguments);
 							} else if (this.successor) {
@@ -792,7 +760,6 @@
 				},
 				mynext = COR(ptL(invokeArgs, equals, 'forwardbutton'), next_driver),
 				myprev = COR(ptL(invokeArgs, equals, 'backbutton'), prev_driver),
-				listen,
 				myplayer = COR(function () {
 					pauser();
 					return true;
@@ -807,16 +774,14 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
-            utils.$('placeholder').innerHTML = 'blissIT';
-            
 			if (!node_from_target(e).match(/img/i)) {
                 //utils.$('placeholder').innerHTML = 'wow';
                 return;
-			}            
+            }
             utils.$('placeholder').innerHTML = 'bliss';
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-                doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+            doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
                  
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
@@ -844,17 +809,14 @@
 				}, close_cb);
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
-			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);            
-			setup.unrender();
+            _.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
+            setup.unrender();
 		}, document.images[2]);
 	setup.render();
 	addPageNav(anCr, 'gal_forward', always(dummy));
 	$nav.render();
-	//_.each(allpics, fixNoNthChild);
+	_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
-    //utils.$('placeholder').innerHTML = document.images[1].src;
-    //triggerEvent(document.images[2], 'click');
-    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
