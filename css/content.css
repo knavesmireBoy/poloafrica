@@ -1,6 +1,9 @@
 body {
 	font: normal .875em/1.75 Georgia, serif;
-	background-color: yellow;
+	background-color: white;
+}
+main {
+  background-color: yellow;  
 }
 .no-js body {
 	background-color: mintcream;
