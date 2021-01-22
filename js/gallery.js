@@ -126,7 +126,7 @@
         
 		function preventer(wrapped, e) {
 			_.each(actions, function (a) {
-				myEvent[a](e);
+				myEvent.preventers[a](e);
 			});
 			return wrapped(e);
 		}
@@ -135,11 +135,11 @@
         
 		return {
 			render: function () {
-				el.addEventListener(type, fn, false);
+                myEvent.add(el, type, fn);
 				return this;
 			},
 			unrender: function () {
-				el.removeEventListener(type, fn, false);
+				myEvent.remove(el, type, fn);
 				return this;
 			},
 			getEl: function () {
@@ -320,6 +320,7 @@
 		myEvent = (function (flag) {
 			if (flag) {
 				return {
+                    preventers: {
 					preventDefault: function (e) {
 						e.preventDefault();
 					},
@@ -329,10 +330,18 @@
 					stopImmediatePropagation: function (e) {
 						e.stopImmediatePropagation();
 					}
-				};
+				},
+                    add: function(el, type, fn){
+                        el.addEventListener(type, fn, false);
+                    },
+                    remove: function(el, type, fn){
+                        el.removeEventListener(type, fn, false);
+                    }
+                };
 			}
 			return {
-				preventDefault: function (e) {
+				preventers: {
+                    preventDefault: function (e) {
 					e = getEventObject(e);
 					e.returnValue = false;
 				},
@@ -341,8 +350,16 @@
 					e.cancelBubble = true;
 				},
 				stopImmediatePropagation: noOp
-			};
-		}()),
+                },
+                add: function(el, type, fn){
+                    el.attachEvent('on' + type, fn);
+                    },
+                remove: function(el, type, fn){
+                    el.detachEvent('on' + type, fn);
+                }
+            };
+                
+		}(window.addEventListener)),
 		//con = _.bind(window.console.log, window),
 		ptL = _.partial,
 		curryFactory = utils.curryFactory,
@@ -774,12 +791,14 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
+            e.preventDefault();
+            
 			if (!node_from_target(e).match(/img/i)) {
                 //utils.$('placeholder').innerHTML = 'wow';
                 return;
             }
-            utils.$('placeholder').innerHTML = 'bliss';
-            return;
+           // utils.$('placeholder').innerHTML = 'bliss';
+  
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
             doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
