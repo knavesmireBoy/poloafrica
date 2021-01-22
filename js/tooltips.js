@@ -56,22 +56,22 @@ window.poloAF.Tooltip = function (anchor, instr, count, remove) {
 			return gang;
 		},
 		init = function () {
-			//console.log('tool: '+count)
+			var that,
+				tip,
+				doDiv = _.compose(anCr(tip), utils.always('div')),
+				doAttr = _.partial(setAttrs, {
+					id: 'triangle'
+				});
 			if (isPos(count--)) {
-				var tip = utils.machElement(_.partial(_.bind(timer.run, timer), prep()), doAttrs, doElement).render().getElement(),
-					doDiv = _.compose(anCr(tip), utils.always('div')),
-					doAttr = _.partial(setAttrs, {
-						id: 'triangle'
-					});
+				tip = utils.machElement(_.partial(_.bind(timer.run, timer), prep()), doAttrs, doElement).render().getElement();
 				utils.machElement(setText(instr[0]), doDiv).render();
 				utils.machElement(doAttr, doDiv).render();
 			}
-
-			if(remove){
-				var that = this;
-				setTimeout(function(){
+			if (remove) {
+				that = this;
+				setTimeout(function () {
 					that.cancel();
-				}, 10000)
+				}, 10000);
 			}
 			return this;
 		},
