@@ -61,13 +61,22 @@
 	}
 
 	function invoke(f, arg) {
+        con(f, arg);
 		arg = _.isArray(arg) ? arg : [arg];
 		return f.apply(null, arg);
 	}
+    
+    function invokeBridge(arr){
+        return invoke(arr[0], arr[1]);
+    }
+    
+    function revCall(arg, f){
+        return f(arg);
+    }
 
 	function invokeArgs(f) {
 		var args = _.rest(arguments);
-		return f.apply(null, args.map(getResult));
+		return f.apply(null,_.map(args, getResult));
 	}
 
 	function doMethod(o, v, p) {
@@ -85,10 +94,7 @@
 	function doCallbacks(v, o, p) {
 		return _[p](o, v);
 	}
-
-	function nested(e, s, g) {
-		return s(g(e));
-	}
+    
 
 	function doInc(n) {
 		return _.compose(_.partial(modulo, n), increment);
@@ -792,16 +798,10 @@
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
-			var buttons_cb = function(str) {
-					var el = anCr($('controls'))('button');
-					el.id = str;
-					return el;
-				},
-				close_cb = function() {
-					return _.compose(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(thumbs, main))('a');
-				},
-				buttons = ['backbutton', 'playbutton', 'forwardbutton'].map(buttons_cb),
-                thrice(doMapBridge)('id')
+			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
+                aButton = anCr($('controls')),
+                close_cb = ptL(_.compose(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(thumbs, main)),'a'),
+                dombuttons = _.map(buttons, _.compose(thrice(doMapLateVal)('id'), aButton, thrice(doMethod)('slice')(-6))),
 				dostatic = ptL(klasAdd, 'static', $$('controls')),
 				chain = factory(),
 				controls = eventing('click', ['preventDefault'], function(e) {
@@ -815,7 +815,7 @@
 				}, $('controls')),
 				controls_undostat = eventing('mouseover', [], undostatic, utils.getByTag('footer', document)[0]),
 				controls_dostat = eventing('mouseover', [], dostatic, $('controls')),
-				exit = eventing('click', ['stopPropagation'], function(e) {
+				exit = eventing('click', ['stopPropagation'], function() {
 					chain = chain.validate('play');
 					_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
 					exitshow();
@@ -823,6 +823,7 @@
 					setup.render();
 				}, close_cb);
 			//listeners...
+            _.each(_.zip(dombuttons, buttons), invokeBridge);
 			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
 			setup.unrender();
 		}, thumbs);
@@ -830,8 +831,6 @@
 	addPageNav(anCr, 'gal_forward', always(dummy));
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
-	utils.$('placeholder').innerHTML = 'PHOTOS';
-	//con(new FauxPromise([twice(divide)(2), _.partial(subtract, 10)]).then(4));
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function() {
 		"use strict";
