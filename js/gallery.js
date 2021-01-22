@@ -810,7 +810,7 @@
 				return;
 			}
              utils.$('placeholder').innerHTML = 'wow';
-            //return;
+            return;
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
             return;
