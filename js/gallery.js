@@ -336,7 +336,8 @@
                     },
                     remove: function(el, type, fn){
                         el.removeEventListener(type, fn, false);
-                    }
+                    },
+                    name: 'MODERN'
                 };
 			}
 			return {
@@ -356,7 +357,8 @@
                     },
                 remove: function(el, type, fn){
                     el.detachEvent('on' + type, fn);
-                }
+                },
+                name: 'IE'
             };
                 
 		}(window.addEventListener)),
@@ -791,7 +793,7 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
-            e.preventDefault();
+            //e.preventDefault();
             
 			if (!node_from_target(e).match(/img/i)) {
                 //utils.$('placeholder').innerHTML = 'wow';
@@ -837,6 +839,7 @@
 	$nav.render();
 	_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
+    utils.$('placeholder').innerHTML = myEvent.name;
     //triggerEvent(document.images[1], 'click');
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
