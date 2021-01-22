@@ -6,7 +6,7 @@
 	<meta content="IE=edge" http-equiv="X-UA-Compatible">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Gallery</title>
-    <link href="../css/standard.css" media="screen" rel="stylesheet">
+		<link href="../css/standard.css" media="screen" rel="stylesheet">
     <link href="../css/photos.css" media="screen" rel="stylesheet">
     <link href="../css/myphotos.css" media="screen" rel="stylesheet">
     	<script>
@@ -15,24 +15,28 @@
 	<script src="../js/modernizr.js">
 	</script>
 <!--[if (gte IE 6)&(lte IE 8)]>
+<script src="../js/jquery.js"></script>
+  <script type="text/javascript" src="../js/selectivizr.js"></script>
 <link href="../css/hacks.css" media="screen"rel="stylesheet">
 <![endif]-->
-<!--[if IE 9]>
+    <!--[if IE 9]>
 <style>
 main ul.gallery {
 width: 90%;
 margin: 0%;
 }
+
 .showtime main ul {
 width: auto;
 }
-</style><![endif]-->
+</style>
+<![endif]-->
 	</head>
     <body id="photos">
-    	<div id="wrap">
+    	<div id="wrap" class="showtime">
 		   <header>
                <a href=".">
-			<h1>POLOAFRICA<img src="../images/resource/logo_alt.png"></h1></a>
+			<h1>POLOAFRICA<img src="../images/logo_alt.png"></h1></a>
                 <nav id="main_nav">
                     <label class="menu" for="menu-toggle"></label>
                     <input id="menu-toggle" type="checkbox">
@@ -48,13 +52,16 @@ width: auto;
 						<li><a href=".">photos</a></li>
 			</ul>
                </nav></header>
-             <h2><span id="placeholder">Please enable javascript to navigate the gallery or play a slideshow</span></h2>
-
+             <h2><span>photos</span></h2>
     <main class="override">
-        <ul class="gallery"><li><a href="images/001.jpg"><img src="images/001.jpg" alt=""></a></li><li><a href="images/002.jpg"><img src="images/002.jpg" alt=""></a></li><li><a href="images/003.jpg"><img src="images/003.jpg" alt=""></a></li><li><a href="images/004.jpg"><img src="images/004.jpg" alt=""></a></li><li><a href="images/005.jpg"><img src="images/005.jpg" alt=""></a></li><li><a href="images/006.jpg"><img src="images/006.jpg" alt=""></a></li><li><a href="images/007.jpg"><img src="images/007.jpg" alt=""></a></li><li><a href="images/008.jpg"><img src="images/008.jpg" alt=""></a></li><li><a href="images/009.jpg"><img src="images/009.jpg" alt=""></a></li><li><a href="images/010.jpg"><img src="images/010.jpg" alt=""></a></li><li><a href="images/011.jpg"><img src="images/011.jpg" alt=""></a></li><li><a href="images/012.jpg"><img src="images/012.jpg" alt=""></a></li><li><a href="images/013.jpg"><img src="images/013.jpg" alt=""></a></li><li><a href="images/014.jpg"><img src="images/014.jpg" alt=""></a></li></ul>
-            </main>
-        </div>    
-            <footer>
+        <!--<input alt="" src="../images/dogsform.gif" tabindex="9" type="image" id="dogs">-->
+<a href="." id="gal_back"></a><a id="exit" href="."></a><ul class="portrait"><li><a href="images/001.jpg"><img src="images/001.jpg" alt=""></a></li><li><a href="images/002.jpg"><img src="images/002.jpg" alt=""></a></li><li><a href="images/003.jpg"><img src="images/003.jpg" alt=""></a></li><li><a href="images/009.jpg"><img src="images/009.jpg" alt=""></a></li><li class="show"><a href="images/004.jpg"><img src="images/004.jpg" alt=""></a></li><li><a href="images/005.jpg"><img src="images/005.jpg" alt=""></a></li><li><a href="images/006.jpg"><img src="images/006.jpg" alt=""></a></li><li><a href="images/007.jpg"><img src="images/007.jpg" alt=""></a></li><li><a href="images/008.jpg"><img src="images/008.jpg" alt=""></a></li><li><a href="images/024.jpg"><img src="images/024.jpg" alt=""></a></li><li><a href="images/010.jpg"><img src="images/010.jpg" alt=""></a></li><li><a href="images/011.jpg"><img src="images/011.jpg" alt=""></a></li><li><a href="images/012.jpg"><img src="images/012.jpg" alt=""></a></li><li><a href="images/013.jpg"><img src="images/013.jpg" alt=""></a></li></ul><a href="." id="gal_forward"></a><div id="controls" class="static">
+        <button id="backbutton"></button>
+        <button id="playbutton"></button>
+        <button id="forwardbutton"></button>
+        </div>
+            </main></div>    
+      <footer>
         <div id="footer_girl">
 			<a href="#"><img src="../images/resource/footer_girl.png"></a>
             <a href="."><b>tel: </b>(+27) 84 290 0000</a>
@@ -65,50 +72,6 @@ width: auto;
         </div>
         <a href="mailto:photos@mwinsight.com">photos by <b>mark ward</b></a>
     </footer>
-   <script src="../js/viewportSize.js"></script>
-    <script src="../js/shims.js"></script>
-    <script src="../js/underscore.js"></script>
-    <script src="../js/eventing.js"></script>
-    <script src="../js/classlist.js"></script>
-    <script src="../js/intaface.js"></script>
-    <script src="../js/global.js"></script>
-    <script src="../js/sfhover.js"></script>
-    <script src="../js/basicIterator.js"></script>
-    <script src="../js/tooltips.js"></script> 
-    <script src="../js/gallery.js"></script>
-        <script>
-            /*initial assignment of portrait class on browsers not supporting nth-child
-            var utils = poloAF.Util,
-                ptL = _.partial,
-                main = document.getElementsByTagName('main')[0],
-                partial = function (f, el) {
-                    return _.partial(f, el);
-                },
-                compare = function(f, a, b, o) {
-                return f(o[a], o[b]);
-            },
-                getOrientation = ptL(compare, utils.gtThan, 'offsetHeight', 'offsetWidth'),
-                allpics = utils.getByTag('img', main),
-                doPortrait = function (el) {
-                    var m = getOrientation(el) ? 'addClass' : 'removeClass';
-                    utils[m]('portrait', utils.getDomParent(utils.getNodeByTag('li'))(el));
-                },
-                fixNoNthChild = _.compose(ptL(utils.doWhen, _.negate(utils.always(Modernizr.nthchild))), ptL(partial, doPortrait)),
-                doPortraitLoop = ptL(_.each, allpics, fixNoNthChild);
-            doPortraitLoop();
-            var report = function (msg, el) {
-			el = el || poloAF.Util.getByTag('h2', document)[0];
-			msg = msg === undefined ? document.documentElement.className : msg;
-			el.innerHTML = msg;
-            */
-		};
-        
-        //report();
-        </script>
-        <!--<div id="controls" class="static">
-        <button id="backbutton"></button>
-        <button id="playbutton"></button>
-        <button id="forwardbutton"></button>
-        </div>-->
+
     </body>
 </html>
