@@ -217,7 +217,7 @@ poloAF.Composite = (function () {
 			this.members = _.filter(this.members, _.negate(_.partial(equals, value)));
 		},
 		has: function (value) {
-			return this.members.includes(value);
+			return _.contains(this.members, value);
 		}
 	};
 	poloAF.Group.from = function (collection) {
