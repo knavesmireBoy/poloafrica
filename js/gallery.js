@@ -837,11 +837,10 @@
             setup.unrender();
 		}, thumbs);
 	setup.render();
-	//addPageNav(anCr, 'gal_forward', always(dummy));
-	//$nav.render();
-	//_.each(allpics, fixNoNthChild);
+	addPageNav(anCr, 'gal_forward', always(dummy));
+	$nav.render();
+	_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
-    //utils.$('placeholder').innerHTML = myEvent.name;
     
     //triggerEvent(document.images[1], 'click');
     
