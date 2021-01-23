@@ -841,7 +841,7 @@
     utils.$('placeholder').innerHTML = 'PHOTOS';
     //utils.$('placeholder').innerHTML = myEvent.name;
     
-    //triggerEvent(document.images[2], 'click');
+    triggerEvent(document.images[2], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
