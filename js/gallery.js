@@ -800,8 +800,8 @@
             }
            try {
             _.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
-			//_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-           //doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+			_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
+           doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
            }
             catch(e){
                utils.$('placeholder').innerHTML = e; 
