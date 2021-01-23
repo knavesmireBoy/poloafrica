@@ -793,10 +793,9 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
-            utils.$('placeholder').innerHTML = 'wow';
             
 			if (node_from_target(e).match(/img/i)) {
-                utils.$('placeholder').innerHTML = 'wow';
+                utils.$('placeholder').innerHTML = 'wowee';
                 return;
             }
            // utils.$('placeholder').innerHTML = 'bliss';
