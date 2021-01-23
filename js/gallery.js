@@ -797,10 +797,14 @@
                 utils.$('placeholder').innerHTML = 'wowee';
                 return;
             }
-           // utils.$('placeholder').innerHTML = 'bliss';
+           try {
             _.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
 			_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
             doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+           }
+            catch(e){
+               utils.$('placeholder').innerHTML = e; 
+            }
                  
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
@@ -830,11 +834,11 @@
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
             _.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
             setup.unrender();
-		}, document.images[1]);
+		}, thumbs);
 	setup.render();
-	addPageNav(anCr, 'gal_forward', always(dummy));
-	$nav.render();
-	_.each(allpics, fixNoNthChild);
+	//addPageNav(anCr, 'gal_forward', always(dummy));
+	//$nav.render();
+	//_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
     //utils.$('placeholder').innerHTML = myEvent.name;
     
