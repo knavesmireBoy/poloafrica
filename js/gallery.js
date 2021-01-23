@@ -794,14 +794,14 @@
 		setup = eventing('click', ['preventDefault'], function (e) {
             e.preventDefault();
             
-			if (node_from_target(e).match(/img/i)) {
+			if (!node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = 'wowee';
                 return;
             }
            try {
             _.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
-			//_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-           // doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+			_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
+           doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
            }
             catch(e){
                utils.$('placeholder').innerHTML = e; 
