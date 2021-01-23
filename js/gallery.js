@@ -793,11 +793,18 @@
 			return mynext;
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
-            //e.preventDefault();
+            
+            
+            try {
+            e.preventDefault();
             
 			if (node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = e[mytarget].src;
                 return;
+            }
+            }
+            catch(e){
+                utils.$('placeholder').innerHTML = e; 
             }
            try {
             _.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
