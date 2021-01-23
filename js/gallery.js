@@ -809,11 +809,7 @@
             _.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
 			_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
            doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
-           }
-            catch(e){
-               utils.$('placeholder').innerHTML = e; 
-            }
-                 
+    
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
 				close_cb = ptL(_.compose(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(thumbs, main)), 'a'),
@@ -839,6 +835,10 @@
 					setup.render();
 				}, close_cb);
 			//listeners...
+                      }
+            catch(e){
+               utils.$('placeholder').innerHTML = e; 
+            }
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
             _.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
             setup.unrender();
@@ -849,7 +849,7 @@
 	//_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
     
-    //triggerEvent(document.images[7], 'click');
+    triggerEvent(document.images[1], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
