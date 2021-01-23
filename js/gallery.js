@@ -833,14 +833,16 @@
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
             _.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
             setup.unrender();
-		}, document.images[1]);
+		}, document.images[2]);
 	setup.render();
-	addPageNav(anCr, 'gal_forward', always(dummy));
-	$nav.render();
-	_.each(allpics, fixNoNthChild);
+	//addPageNav(anCr, 'gal_forward', always(dummy));
+	//$nav.render();
+	//_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
-    utils.$('placeholder').innerHTML = myEvent.name;
-    triggerEvent(document.images[1], 'click');
+    //utils.$('placeholder').innerHTML = myEvent.name;
+    
+    //triggerEvent(document.images[2], 'click');
+    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
