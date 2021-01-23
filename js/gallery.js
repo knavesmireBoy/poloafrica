@@ -838,12 +838,12 @@
             setup.unrender();
 		}, thumbs);
 	setup.render();
-	addPageNav(anCr, 'gal_forward', always(dummy));
-	$nav.render();
-	_.each(allpics, fixNoNthChild);
+	//addPageNav(anCr, 'gal_forward', always(dummy));
+	//$nav.render();
+	//_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
     
-    triggerEvent(document.images[4], 'click');
+    triggerEvent(document.images[5], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
