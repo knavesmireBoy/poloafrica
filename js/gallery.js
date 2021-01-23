@@ -801,7 +801,7 @@
            // utils.$('placeholder').innerHTML = 'bliss';
   try{
 			_.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
-			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
+			_.compose(thrice(doMapBridge)('className')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
            
             //doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
   }
