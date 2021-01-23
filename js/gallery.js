@@ -797,9 +797,9 @@
             try {
             e.preventDefault();
             
-			if (node_from_target(e).match(/img/i)) {
+			if (!node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = e[mytarget].src;
-                return;
+                return false;
             }
             }
             catch(e){
