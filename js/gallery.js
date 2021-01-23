@@ -794,18 +794,13 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
-            try {
             e.preventDefault();
             
 			if (!node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = e[mytarget].src;
                 return false;
             }
-            }
-            catch(e){
-                utils.$('placeholder').innerHTML = e; 
-            }
-           try {
+
             _.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
 			_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
            doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
@@ -835,14 +830,10 @@
 					setup.render();
 				}, close_cb);
 			//listeners...
-                      }
-            catch(e){
-               utils.$('placeholder').innerHTML = e; 
-            }
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
             _.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
             setup.unrender();
-		}, document.images[5]);
+		}, thumbs);
 	setup.render();
 	addPageNav(anCr, 'gal_forward', always(dummy));
 	$nav.render();
