@@ -127,6 +127,7 @@
 		function preventer(wrapped, e) {
 			_.each(actions, function (a) {
 				myEvent.preventers[a](e);
+                utils.$('placeholder').innerHTML = e[mytarget].src;
 			});
 			return wrapped(e);
 		}
