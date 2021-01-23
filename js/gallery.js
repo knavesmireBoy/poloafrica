@@ -800,10 +800,10 @@
             }
            // utils.$('placeholder').innerHTML = 'bliss';
   try{
-			_.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
-			//_.compose(utils.addClass('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
+			//_.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
+			_.compose(utils.addClass('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
            
-            //doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+            doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
   }
             catch(e){
                 utils.$('placeholder').innerHTML = e;
