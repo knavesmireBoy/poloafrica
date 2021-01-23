@@ -7,11 +7,12 @@
 /*global _: false */
 (function (mq, query, touchevents, pausepath, picnum, dummy, makePath) {
 	"use strict";
-	////$element.triggerEvent($element.getElement(), 'scroll');
+    
+    ////$element.triggerEvent($element.getElement(), 'scroll');
 	function triggerEvent(el, type) {
 		var e;
 		if ('createEvent' in document) {
-			// if (document.hasOwnProperty('createEvent')) {
+       // if (document.hasOwnProperty('createEvent')) {
 			// modern browsers, IE9+
 			e = document.createEvent('HTMLEvents');
 			e.initEvent(type, false, true);
@@ -122,18 +123,19 @@
 	}
 	//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
 	function eventing(type, actions, fn, el) {
+        
 		function preventer(wrapped, e) {
 			_.each(actions, function (a) {
 				myEvent.preventers[a](e);
-				utils.$('placeholder').innerHTML = e[mytarget].src;
 			});
 			return wrapped(e);
 		}
 		fn = _.wrap(fn, preventer);
 		el = getResult(el);
+        
 		return {
 			render: function () {
-				myEvent.add(el, type, fn);
+                myEvent.add(el, type, fn);
 				return this;
 			},
 			unrender: function () {
@@ -318,46 +320,47 @@
 		myEvent = (function (flag) {
 			if (flag) {
 				return {
-					preventers: {
-						preventDefault: function (e) {
-							e.preventDefault();
-						},
-						stopPropagation: function (e) {
-							e.stopPropagation();
-						},
-						stopImmediatePropagation: function (e) {
-							e.stopImmediatePropagation();
-						}
+                    preventers: {
+					preventDefault: function (e) {
+						e.preventDefault();
 					},
-					add: function (el, type, fn) {
-						el.addEventListener(type, fn, false);
+					stopPropagation: function (e) {
+						e.stopPropagation();
 					},
-					remove: function (el, type, fn) {
-						el.removeEventListener(type, fn, false);
-					},
-					name: 'MODERN'
-				};
+					stopImmediatePropagation: function (e) {
+						e.stopImmediatePropagation();
+					}
+				},
+                    add: function(el, type, fn){
+                        el.addEventListener(type, fn, false);
+                    },
+                    remove: function(el, type, fn){
+                        el.removeEventListener(type, fn, false);
+                    },
+                    name: 'MODERN'
+                };
 			}
 			return {
 				preventers: {
-					preventDefault: function (e) {
-						e = getEventObject(e);
-						e.returnValue = false;
-					},
-					stopPropagation: function (e) {
-						e = getEventObject(e);
-						e.cancelBubble = true;
-					},
-					stopImmediatePropagation: noOp
+                    preventDefault: function (e) {
+					e = getEventObject(e);
+					e.returnValue = false;
 				},
-				add: function (el, type, fn) {
-					el.attachEvent('on' + type, fn);
+				stopPropagation: function (e) {
+					e = getEventObject(e);
+					e.cancelBubble = true;
 				},
-				remove: function (el, type, fn) {
-					el.detachEvent('on' + type, fn);
-				},
-				name: 'IE'
-			};
+				stopImmediatePropagation: noOp
+                },
+                add: function(el, type, fn){
+                    el.attachEvent('on' + type, fn);
+                    },
+                remove: function(el, type, fn){
+                    el.detachEvent('on' + type, fn);
+                },
+                name: 'IE'
+            };
+                
 		}(window.addEventListener)),
 		//con = _.bind(window.console.log, window),
 		ptL = _.partial,
@@ -789,14 +792,21 @@
 			return mynext;
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
-			e.preventDefault();
+            e.preventDefault();
+            
 			if (!node_from_target(e).match(/img/i)) {
-				utils.$('placeholder').innerHTML = e[mytarget].src;
-				return false;
-			}
-			_.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
+                utils.$('placeholder').innerHTML = 'wowee';
+                return;
+            }
+           try {
+            _.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
 			_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-			doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+           doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+           }
+            catch(e){
+               utils.$('placeholder').innerHTML = e; 
+            }
+                 
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
 				close_cb = ptL(_.compose(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(thumbs, main)), 'a'),
@@ -823,15 +833,18 @@
 				}, close_cb);
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
-			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
-			setup.unrender();
+            _.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
+            setup.unrender();
 		}, thumbs);
 	setup.render();
-	addPageNav(anCr, 'gal_forward', always(dummy));
-	$nav.render();
-	_.each(allpics, fixNoNthChild);
-	utils.$('placeholder').innerHTML = 'PHOTOS';
-	//triggerEvent(document.images[5], 'click');
+	//addPageNav(anCr, 'gal_forward', always(dummy));
+	//$nav.render();
+	//_.each(allpics, fixNoNthChild);
+    utils.$('placeholder').innerHTML = 'PHOTOS';
+    //utils.$('placeholder').innerHTML = myEvent.name;
+    
+    //triggerEvent(document.images[1], 'click');
+    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
 		"use strict";
