@@ -794,15 +794,20 @@
 		setup = eventing('click', ['preventDefault'], function (e) {
             
             
-			if (node_from_target(e).match(/img/i)) {
+			if (!node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = 'wowee';
                 return;
             }
            // utils.$('placeholder').innerHTML = 'bliss';
-  
+  try{
 			_.compose(setindex, utils.drillDown(['target', 'src']))(e);
 			_.compose(thrice(doMapBridge)('class')('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
+           
             doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
+  }
+            catch(e){
+                utils.$('placeholder').innerHTML = e;
+            }
                  
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
