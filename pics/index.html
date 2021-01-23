@@ -62,9 +62,10 @@ width: auto;
                </nav></header>
              <h2><span id="placeholder">Please enable javascript to navigate the gallery or play a slideshow</span></h2>
 
-    <main class="override">
+    <main class="override" id="main">
         <p id="blue">BLUE</p>
         <p id="red">RED</p>
+        <a id="gal" href="../images/resource/footer_girl.png"><img src="../images/resource/footer_girl.png"></a>
   
             </main>
         </div>    
@@ -83,6 +84,13 @@ width: auto;
     <script src="../js/shims.js"></script>
     <script src="../js/underscore.js"></script>
         <script>
+            
+            function reporter(msg, el) {
+		el = el || document.getElementsByTagName('h2')[0];
+		msg = typeof msg === 'undefined' ? document.documentElement.className : msg;
+		el.innerHTML = msg;
+	}
+
             
 function triggerEvent(el, type) {
 		var e;
@@ -107,7 +115,8 @@ function triggerEvent(el, type) {
             }
             
             function remove(e){
-                e[mytarget].parentNode.removeChild(e[mytarget]);
+                reporter(e[mytarget].innerHTML);
+                //e[mytarget].parentNode.removeChild(e[mytarget]);
             }
             
             function eventing(type, actions, fn, el) {
@@ -181,10 +190,10 @@ function triggerEvent(el, type) {
                 
 		}(window.addEventListener));
             var mytarget = !window.addEventListener ? 'srcElement' : 'target',
-                remover = eventing("click", [], remove, document.getElementById('blue'));
+                remover = eventing("click", ['preventDefault'], remove, document.getElementById('gal'));
             remover.render();
             
-            triggerEvent(document.getElementById('blue'), 'click');
+           triggerEvent(document.getElementById('gal'), 'click');
 
         </script>
         <!--<div id="controls" class="static">
