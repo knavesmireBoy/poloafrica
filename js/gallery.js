@@ -793,21 +793,14 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
-            
 			if (!node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = 'wowee';
                 return;
             }
            // utils.$('placeholder').innerHTML = 'bliss';
-  try{
-			//_.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
-			_.compose(utils.addClass('static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-           
+            _.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
+			_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
             doMakeBase(e.target.src, 'base', doOrient(unsetPortrait, setPortrait), getBaseChild, showtime);
-  }
-            catch(e){
-                utils.$('placeholder').innerHTML = e;
-            }
                  
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
@@ -839,9 +832,9 @@
             setup.unrender();
 		}, thumbs);
 	setup.render();
-	//addPageNav(anCr, 'gal_forward', always(dummy));
-	//$nav.render();
-	//_.each(allpics, fixNoNthChild);
+	addPageNav(anCr, 'gal_forward', always(dummy));
+	$nav.render();
+	_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
     //utils.$('placeholder').innerHTML = myEvent.name;
     
