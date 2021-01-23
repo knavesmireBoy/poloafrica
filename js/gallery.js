@@ -793,7 +793,7 @@
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
             
-            //e.preventDefault();
+            utils.$('placeholder').innerHTML = 'wow';
             
 			if (node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = 'wow';
