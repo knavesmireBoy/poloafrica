@@ -25,6 +25,20 @@ margin: 0%;
 width: auto;
 }
 </style><![endif]-->
+    <style>
+        #blue {
+            background: blue;
+        }
+        
+         #red {
+            background: red;
+        }
+        p {
+            color:white;
+        }
+        
+    
+    </style>
 	</head>
     <body id="photos">
     	<div id="wrap">
@@ -69,6 +83,25 @@ width: auto;
     <script src="../js/shims.js"></script>
     <script src="../js/underscore.js"></script>
         <script>
+            
+function triggerEvent(el, type) {
+		var e;
+		if ('createEvent' in document) {
+       // if (document.hasOwnProperty('createEvent')) {
+			// modern browsers, IE9+
+			e = document.createEvent('HTMLEvents');
+			e.initEvent(type, false, true);
+			el.dispatchEvent(e);
+		} else {
+			// IE 8
+			e = document.createEventObject();
+			e.eventType = type;
+			el.fireEvent('on' + e.eventType, e);
+		}
+	}
+            	function getResult(arg) {
+		return _.isFunction(arg) ? arg() : arg;
+	}
             function getEventObject(e) {
                 return e || window.event;
             }
@@ -148,7 +181,10 @@ width: auto;
                 
 		}(window.addEventListener));
             var mytarget = !window.addEventListener ? 'srcElement' : 'target',
-                remover = eventing('load', [], remove, document.getElementById('blue'));
+                remover = eventing("click", [], remove, document.getElementById('blue'));
+            remover.render();
+            
+            triggerEvent(document.getElementById('blue'), 'click');
 
         </script>
         <!--<div id="controls" class="static">
