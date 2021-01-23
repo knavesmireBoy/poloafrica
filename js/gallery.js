@@ -792,10 +792,10 @@
 			return mynext;
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
-            e.preventDefault();
+            //e.preventDefault();
             
 			if (node_from_target(e).match(/img/i)) {
-                utils.$('placeholder').innerHTML = 'wowee';
+                utils.$('placeholder').innerHTML = e[mytarget].src;
                 return;
             }
            try {
@@ -842,7 +842,7 @@
 	_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
     
-    triggerEvent(document.images[2], 'click');
+    triggerEvent(document.images[3], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
