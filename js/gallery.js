@@ -792,8 +792,9 @@
 			return mynext;
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
+            e.preventDefault();
             
-			if (!node_from_target(e).match(/img/i)) {
+			if (node_from_target(e).match(/img/i)) {
                 utils.$('placeholder').innerHTML = 'wowee';
                 return;
             }
