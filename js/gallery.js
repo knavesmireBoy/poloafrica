@@ -842,14 +842,14 @@
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
             _.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
             setup.unrender();
-		}, document.images[2]);
+		}, thumbs);
 	setup.render();
 	//addPageNav(anCr, 'gal_forward', always(dummy));
 	//$nav.render();
 	//_.each(allpics, fixNoNthChild);
     utils.$('placeholder').innerHTML = 'PHOTOS';
     
-    triggerEvent(document.images[2], 'click');
+    triggerEvent(document.images[3], 'click');
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), {
 	render: function () {
