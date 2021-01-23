@@ -272,7 +272,8 @@ poloAF.Composite = (function () {
 			return result;
 		},
 		find: function (tgt) {
-			return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
+			return this.set(_.findIndex(this.group.members, _.partial(equals, tgt)));
+			//return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
 		},
 		set: function (pos) {
 			this.position = pos;
