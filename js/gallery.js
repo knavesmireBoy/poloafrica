@@ -320,6 +320,7 @@
 				return {
 					preventers: {
 						preventDefault: function (e) {
+                            con(e);
 							e.preventDefault();
 						},
 						stopPropagation: function (e) {
@@ -359,7 +360,7 @@
 				name: 'IE'
 			};
 		}(window.addEventListener)),
-		//con = _.bind(window.console.log, window),
+		con = _.bind(window.console.log, window),
 		ptL = _.partial,
 		curryFactory = utils.curryFactory,
 		once = doOnce(),
@@ -789,10 +790,10 @@
 			return mynext;
 		}, //factory
 		setup = eventing('click', ['preventDefault'], function (e) {
-			e.preventDefault();
+            
+            con(e.target);
 			if (!node_from_target(e).match(/img/i)) {
-				utils.$('placeholder').innerHTML = e[mytarget].src;
-				return false;
+				return;
 			}
 			_.compose(setindex, utils.drillDown([mytarget, 'src']))(e);
 			_.compose(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
