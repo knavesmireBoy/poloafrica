@@ -114,4 +114,4 @@ if (!window.poloAF) {
 			}
 		}());
 	setTimeout(curryDefer(fader)(101), 2222);
-}(["images/hi/poloafrica_flower_logo.jpg", "images/hi/polo150yrs_squared_logo.jpg", "images/hi/polo_armed_forces_logo.jpg"]));
+}(["images/articles/fullsize/poloafrica_flower_logo.jpg", "images/articles/fullsize/polo150yrs_squared_logo.jpg", "images/articles/fullsize/polo_armed_forces_logo.jpg"]));
