@@ -232,8 +232,8 @@ poloAF.Composite = (function () {
 	poloAF.LoopIterator.from = function (coll, advancer) {
 		return new poloAF.LoopIterator(poloAF.Group.from(coll), advancer);
 	};
-	poloAF.LoopIterator.page_iterator = null;
-	poloAF.LoopIterator.cross_page_iterator = null;
+	//poloAF.LoopIterator.page_iterator = null;
+	//poloAF.LoopIterator.cross_page_iterator = null;
 	poloAF.LoopIterator.prototype = {
 		forward: function (flag) {
 			if (!flag && this.rev) {

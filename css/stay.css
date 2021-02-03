@@ -1,38 +1,59 @@
 @import "flex_mod.css";
 h2 span {
-        	background-image: url(../images/resource/sub_stay.jpg);
-        }
-        @media only screen {
-        	.backgroundsize h2 span {
-        		background-image: url(../images/resource/sub_stay.png);
-        	}
-        }
-/*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
-@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
-    h2 span {
-		background-image: url(../images/resource/sub_stay.png);
-    }
+	background-image: url(../images/resource/sub_stay.jpg);
 }
-        @media screen and (max-width: 667px) {
-            section {
-                display: block;
-            }
-        	h2, h2 span {
-        		background: none;
-        	}
-        	.no-js section:nth-child(1) .read-more-trigger:before {
-        		content: "Timing";
-        	}
-        	.no-js section:nth-child(2) .read-more-trigger:before {
-        		content: "Living";
-        	}
-        	.no-js section:nth-child(3) .read-more-trigger:before {
-        		content: "Relaxing";
-        	}
-        	.no-js section:nth-child(4) .read-more-trigger:before {
-        		content: "Dining";
-        	}
-        	.no-js section:nth-child(5) .read-more-trigger:before {
-        		content: "Day visiting";
-        	}
-        }
+@media only screen {
+	.backgroundsize h2 span {
+		background-image: url(../images/resource/sub_stay.png);
+	}
+}
+/*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
+
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+	h2 span {
+		background-image: url(../images/resource/sub_stay.png);
+	}
+}
+@media screen and (min-width: 1024px) {
+	section:nth-child(2) p:nth-of-type(2):after {
+		content: '';
+		border-top: solid 1px hsl(58, 60%, 40%);
+		display: block;
+		margin: 1em 15%;
+	}
+	section:nth-child(2) p:nth-of-type(2)+p:before {
+		content: '';
+		display: block;
+		height: 1em;
+		width: 1em;
+		background: hsl(58, 60%, 40%);
+		margin: -1.5em auto 1em;
+		border-radius: 50%;
+	}
+	section:nth-child(5) p:first-of-type:after, section:nth-child(5) p:first-of-type+p:before {
+		content: none;
+	}
+}
+@media screen and (max-width: 667px) {
+	section {
+		display: block;
+	}
+	h2, h2 span {
+		background: none;
+	}
+	.no-js section:nth-child(1) .read-more-trigger:before {
+		content: "Timing";
+	}
+	.no-js section:nth-child(2) .read-more-trigger:before {
+		content: "Living";
+	}
+	.no-js section:nth-child(3) .read-more-trigger:before {
+		content: "Relaxing";
+	}
+	.no-js section:nth-child(4) .read-more-trigger:before {
+		content: "Dining";
+	}
+	.no-js section:nth-child(5) .read-more-trigger:before {
+		content: "Day visiting";
+	}
+}

@@ -6,12 +6,12 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-poloAF.Util = (function () {
+poloAF.Util = (function() {
 	"use strict";
 
 	function spreadify(fn, fnThis) {
-        /* accepts unlimited arguments */
-		return function () {
+		/* accepts unlimited arguments */
+		return function() {
 			// Holds the processed arguments for use by `fn`
 			var i,
 				spreadArgs = [],
@@ -30,8 +30,8 @@ poloAF.Util = (function () {
 	}
 
 	function doOnce() {
-		return function (i) {
-			return function () {
+		return function(i) {
+			return function() {
 				var res = i > 0;
 				i -= 1;
 				return res > 0;
@@ -43,15 +43,15 @@ poloAF.Util = (function () {
 		this.key = k;
 		this.value = v;
 	}
-	Message.prototype.getKey = function () {
+	Message.prototype.getKey = function() {
 		return this.key;
 	};
-	Message.prototype.getValue = function () {
+	Message.prototype.getValue = function() {
 		return this.value;
 	};
 
 	function toCamelCase(variable) {
-		return variable.replace(/-([a-z])/g, function (str, letter) {
+		return variable.replace(/-([a-z])/g, function(str, letter) {
 			return letter.toUpperCase();
 		});
 	}
@@ -65,7 +65,7 @@ poloAF.Util = (function () {
 	}
 
 	function noOp() {
-		return function () {};
+		return function() {};
 	}
 
 	function sum(x, y) {
@@ -125,7 +125,7 @@ poloAF.Util = (function () {
 	}
 
 	function always(val) {
-		return function () {
+		return function() {
 			return val;
 		};
 	}
@@ -190,14 +190,14 @@ poloAF.Util = (function () {
 
 	function doAlternate() {
 		function alternate(i, n) {
-			return function () {
+			return function() {
 				i = (i += 1) % n;
 				return i;
 			};
 		}
-		return function (actions) {
+		return function(actions) {
 			var f = _.partial(thunk, alternate(0, 2));
-			return function () {
+			return function() {
 				//return poloAF.Util.getBest(f, [_.partial(actions[0], arg), _.partial(actions[1], arg)])();
 				return poloAF.Util.getBest(f, [_.partial.apply(null, construct(actions[0], arguments)), _.partial.apply(null, construct(actions[1], arguments))])();
 			};
@@ -206,11 +206,11 @@ poloAF.Util = (function () {
 
 	function doNTimes() {
 		function once(i) {
-			return function () {
+			return function() {
 				return i-- > 0;
 			};
 		}
-		return function (actions) {
+		return function(actions) {
 			return spreadify(actions[0]);
 		};
 	}
@@ -303,7 +303,7 @@ poloAF.Util = (function () {
 				return o && o[prop];
 			};
 		}
-		return function (o) {
+		return function(o) {
 			return o;
 		};
 	}
@@ -411,31 +411,31 @@ poloAF.Util = (function () {
 
 	function curryFactory(i, defer) {
 		function curry1(fun) {
-			return function (firstArg) {
+			return function(firstArg) {
 				return fun(firstArg);
 			};
 		}
 
 		function curry11(fun) {
-			return function (firstArg) {
-				return function () {
+			return function(firstArg) {
+				return function() {
 					return fun(firstArg);
 				};
 			};
 		}
 
 		function curry2(fun) {
-			return function (secondArg) {
-				return function (firstArg) {
+			return function(secondArg) {
+				return function(firstArg) {
 					return fun(firstArg, secondArg);
 				};
 			};
 		}
 
 		function curry22(fun) {
-			return function (secondArg) {
-				return function (firstArg) {
-					return function () {
+			return function(secondArg) {
+				return function(firstArg) {
+					return function() {
 						return fun(firstArg, secondArg);
 					};
 				};
@@ -443,9 +443,9 @@ poloAF.Util = (function () {
 		}
 
 		function curry3(fun) {
-			return function (last) {
-				return function (middle) {
-					return function (first) {
+			return function(last) {
+				return function(middle) {
+					return function(first) {
 						return fun(first, middle, last);
 					};
 				};
@@ -453,10 +453,10 @@ poloAF.Util = (function () {
 		}
 
 		function curry33(fun) {
-			return function (last) {
-				return function (middle) {
-					return function (first) {
-						return function () {
+			return function(last) {
+				return function(middle) {
+					return function(first) {
+						return function() {
 							return fun(first, middle, last);
 						};
 					};
@@ -465,10 +465,10 @@ poloAF.Util = (function () {
 		}
 
 		function curry4(fun) {
-			return function (fourth) {
-				return function (third) {
-					return function (second) {
-						return function (first) {
+			return function(fourth) {
+				return function(third) {
+					return function(second) {
+						return function(first) {
 							return fun(first, second, third, fourth);
 						};
 					};
@@ -477,11 +477,11 @@ poloAF.Util = (function () {
 		}
 
 		function curry44(fun) {
-			return function (fourth) {
-				return function (third) {
-					return function (second) {
-						return function (first) {
-							return function () {
+			return function(fourth) {
+				return function(third) {
+					return function(second) {
+						return function(first) {
+							return function() {
 								return fun(first, second, third, fourth);
 							};
 						};
@@ -507,23 +507,23 @@ poloAF.Util = (function () {
 			},
 			coll = [null, once, twice, thrice, quart],
 			ret = coll[i];
-		return ret && defer ? ret.defer : ret ? ret.imm : function () {};
+		return ret && defer ? ret.defer : ret ? ret.imm : function() {};
 	} //factory
 	/*  imm: (f) => (arg) => f(arg),
 	    defer: (f) => (arg) => () => f(arg)
 	  },*/
 	function curry2(fun) {
-		return function (secondArg) {
-			return function (firstArg) {
+		return function(secondArg) {
+			return function(firstArg) {
 				return fun(firstArg, secondArg);
 			};
 		};
 	}
 
 	function curry22(fun) {
-		return function (secondArg) {
-			return function (firstArg) {
-				return function () {
+		return function(secondArg) {
+			return function(firstArg) {
+				return function() {
 					return fun(firstArg, secondArg);
 				};
 			};
@@ -531,9 +531,9 @@ poloAF.Util = (function () {
 	}
 
 	function curry3(fun) {
-		return function (last) {
-			return function (middle) {
-				return function (first) {
+		return function(last) {
+			return function(middle) {
+				return function(first) {
 					return fun(first, middle, last);
 				};
 			};
@@ -541,10 +541,10 @@ poloAF.Util = (function () {
 	}
 
 	function curry33(fun) {
-		return function (last) {
-			return function (middle) {
-				return function (first) {
-					return function () {
+		return function(last) {
+			return function(middle) {
+				return function(first) {
+					return function() {
 						return fun(first, middle, last);
 					};
 				};
@@ -553,10 +553,10 @@ poloAF.Util = (function () {
 	}
 
 	function curry4(fun) {
-		return function (fourth) {
-			return function (third) {
-				return function (second) {
-					return function (first) {
+		return function(fourth) {
+			return function(third) {
+				return function(second) {
+					return function(first) {
 						return fun(first, second, third, fourth);
 					};
 				};
@@ -565,11 +565,11 @@ poloAF.Util = (function () {
 	}
 
 	function curry44(fun) {
-		return function (fourth) {
-			return function (third) {
-				return function (second) {
-					return function (first) {
-						return function () {
+		return function(fourth) {
+			return function(third) {
+				return function(second) {
+					return function(first) {
+						return function() {
 							return fun(first, second, third, fourth);
 						};
 					};
@@ -583,6 +583,12 @@ poloAF.Util = (function () {
 			res = validate.apply(null, args);
 		return res && action.apply(null, args);
 	}
+    
+    function invokeThen(validate, action) {
+		var args = _.rest(arguments, 2),
+			res = validate.apply(null, args);
+		return res && action(res);
+	}
 
 	function doWhen(cond, action) {
 		if (getResult(cond)) {
@@ -591,15 +597,15 @@ poloAF.Util = (function () {
 			return undefined;
 		}
 	}
-
-	function invoker(NAME, METHOD) {
-		return function (target) {
+    
+    function invoker(NAME, METHOD) {
+		return function(target) {
 			if (!existy(target)) {
 				fail("Must provide a target");
 			}
 			var targetMethod = target[NAME],
 				args = _.rest(arguments);
-			return doWhen((existy(targetMethod) && METHOD === targetMethod), function () {
+			return doWhen((existy(targetMethod) && METHOD === targetMethod), function() {
 				return targetMethod.apply(target, args);
 			});
 		};
@@ -608,7 +614,7 @@ poloAF.Util = (function () {
 	function dispatch() {
 		var funs = _.toArray(arguments),
 			size = funs.length;
-		return function (target) {
+		return function(target) {
 			var ret,
 				args = _.rest(arguments),
 				fun,
@@ -634,12 +640,12 @@ poloAF.Util = (function () {
 			if (bool) {
 				return _.partial(_.extendOwn, target, config);
 			}
-			return function () {
+			return function() {
 				_.forEach(_.invert(config), bound);
 			};
 		}
-		return function (validate, method, config, target) {
-			var unbound = function () {
+		return function(validate, method, config, target) {
+			var unbound = function() {
 					//console.log(validate, method, config, target)
 					target[method].apply(target, arguments);
 				},
@@ -715,7 +721,7 @@ poloAF.Util = (function () {
 
 	function getPolyClass(proto, klas, el, tag) {
 		var classInvokers = [invoker('querySelectorAll', document.querySelectorAll), invoker('getElementsByClassName', document.getElementsByClassName)],
-			mefilter = function (elem) {
+			mefilter = function(elem) {
 				klas = klas.match(/^\./) ? klas.substring(1) : klas;
 				return poloAF.Util.getClassList(elem).contains(klas);
 			},
@@ -723,7 +729,7 @@ poloAF.Util = (function () {
 			pre = _.partial(prefix, '.'),
 			byTag = _.partial(filterTagsByClass, getResult(el) || document, tag || '*', mefilter),
 			dispatcher = dispatch.apply(null, classInvokers.concat(byTag)),
-			nested = function (klass) {
+			nested = function(klass) {
 				var res = dispatcher(proto, klass);
 				if ((!res || !res[0]) && klass && !ran) {
 					ran = true;
@@ -732,6 +738,24 @@ poloAF.Util = (function () {
 				return res;
 			};
 		return nested(pre(klas));
+	}
+
+	function attrMap(el, map, style) {
+		var k;
+		for (k in map) {
+			if (map.hasOwnProperty(k)) {
+				if (k.match(/^te?xt$/)) {
+					el.innerHTML = map[k];
+					continue;
+				}
+				if (style) {
+					el.style.setProperty(k, map[k]);
+				} else {
+					el.setAttribute(k, map[k]);
+				}
+			}
+		}
+		return el;
 	}
 
 	function reverseArray(array) {
@@ -759,9 +783,9 @@ poloAF.Util = (function () {
 	}
 
 	function prepareListener(extent) {
-		return function (handler, fn, el) {
+		return function(handler, fn, el) {
 			var listener,
-				wrapper = function (func) {
+				wrapper = function(func) {
 					var args = _.rest(arguments),
 						e = _.last(arguments);
 					extent = extent || 'prevent';
@@ -783,16 +807,17 @@ poloAF.Util = (function () {
 	}
 
 	function validator(message, fun) {
-		var f = function () {
+		var f = function() {
 			//console.log(arguments)
 			return fun.apply(fun, arguments);
 		};
 		f.message = message;
 		return f;
 	}
-	//note a function that ignores any state of x or y will return the first element if true and last if false
-	function best(fun, coll) {
-		return _.reduce(_.toArray(coll), function (champ, contender) {
+	//note a function that ignores any state of champ or contender will return the first element if true and last if false
+	function best(fun, coll, arg) {
+        fun = arg ? _.partial(fun, arg) : fun;
+		return _.reduce(_.toArray(coll), function(champ, contender) {
 			return fun(champ, contender) ? champ : contender;
 		});
 	}
@@ -802,15 +827,15 @@ poloAF.Util = (function () {
 		NOT [['shout', 'bark'],['cry', 'whine']]
 		ALSO no arguments are assumed. It is simple*/
 		var ptl,
-			prepPairs = function (allpairs) {
+			prepPairs = function(allpairs) {
 				return _.zip(allpairs[0], allpairs[1]);
 			},
-			performer = function (that, subject, method) {
+			performer = function(that, subject, method) {
 				subject[method]();
 				return that;
 			};
-		_.each(prepPairs(allpairs), function (pairs) {
-			_.each(pairs, function (method, i) {
+		_.each(prepPairs(allpairs), function(pairs) {
+			_.each(pairs, function(method, i) {
 				if (!i) {
 					ptl = method;
 				} else {
@@ -818,48 +843,52 @@ poloAF.Util = (function () {
 				}
 			});
 		});
-		adapter.getSubject = function () {
+		adapter.getSubject = function() {
 			return subject;
 		};
 		return adapter;
 	}
+
+	function getEventObject(e) {
+		return e || window.event;
+	}
 	var getNewElement = dispatch(curry2(cloneNode)(true), _.bind(document.createElement, document), _.bind(document.createDocumentFragment, document)),
-		removeNodeOnComplete = _.wrap(removeElement, function (f, node) {
+		removeNodeOnComplete = _.wrap(removeElement, function(f, node) {
 			if (validateRemove(node)) {
 				return f(node);
 			}
 		}),
 		slice = Array.prototype.slice,
-		makeElement = function () {
+		makeElement = function() {
 			var el,
 				args = slice.call(arguments);
 			return {
-				init: function () {},
-				add: function () {
+				init: function() {},
+				add: function() {
 					el = composer.apply(null, args);
 					return this;
 				},
-				add2: function (e) {
+				add2: function(e) {
 					el = composer.apply(null, args.concat(always(e)));
 					return this;
 				},
-				remove: function () {
+				remove: function() {
 					var removed = removeNodeOnComplete(el);
 					el = null;
 					return removed;
 				},
-				get: function () {
+				get: function() {
 					return el;
 				}
 			};
 		},
-		machElement = function () {
+		machElement = function() {
 			var el,
 				args = slice.call(arguments),
 				//slice because we want a copy
 				select = args[1] ? args.slice(0).splice(-1, 1)[0] : args[0];
 			return {
-				render: function (e) {
+				render: function(e) {
 					//console.log(e && e.target && e.target.src)
 					/*don't do this: args = args.concat(always(e))
 					add 'select' argument on-the-fly (see composer)
@@ -868,34 +897,76 @@ poloAF.Util = (function () {
 					el = composer.apply(null, e ? args.concat(always(e)) : args);
 					return this;
 				},
-				init: function () {
+				init: function() {
 					/*may sometimes just want to get a reference to an (existing) element without adding class, attrs, eventHandlers*/
 					el = select();
 				},
-				unrender: function () {
+				unrender: function() {
 					var removed = removeNodeOnComplete(getResult(el));
 					el = null;
 					return removed;
 				},
-				getElement: function () {
+				getElement: function() {
 					return el;
 				}
 			};
 		},
-		SimpleXhrFactory = (function () {
+		myEventListener = (function(flag) {
+			if (flag) {
+				return {
+					add: function(el, type, fn) {
+						el.addEventListener(type, fn, false);
+					},
+					remove: function(el, type, fn) {
+						el.removeEventListener(type, fn, false);
+					},
+					preventers: {
+						preventDefault: function(e) {
+							e.preventDefault();
+						},
+						stopPropagation: function(e) {
+							e.stopPropagation();
+						},
+						stopImmediatePropagation: function(e) {
+							e.stopImmediatePropagation();
+						}
+					}
+				};
+			}
+			return {
+				add: function(el, type, fn) {
+					el.attachEvent('on' + type, fn);
+				},
+				remove: function(el, type, fn) {
+					el.detachEvent('on' + type, fn);
+				},
+				preventers: {
+					preventDefault: function(e) {
+						e = getEventObject(e);
+						e.returnValue = false;
+					},
+					stopPropagation: function(e) {
+						e = getEventObject(e);
+						e.cancelBubble = true;
+					},
+					stopImmediatePropagation: function() {}
+				}
+			};
+		}(window.addEventListener)),
+		SimpleXhrFactory = (function() {
 			// The three branches.
 			var standard = {
-					createXhrObject: function () {
+					createXhrObject: function() {
 						return new window.XMLHttpRequest();
 					}
 				},
 				activeXNew = {
-					createXhrObject: function () {
+					createXhrObject: function() {
 						return new window.ActiveXObject('Msxml2.XMLHTTP');
 					}
 				},
 				activeXOld = {
-					createXhrObject: function () {
+					createXhrObject: function() {
 						return new window.ActiveXObject('Microsoft.XMLHTTP');
 					}
 				},
@@ -919,14 +990,14 @@ poloAF.Util = (function () {
 			}
 		}());
 	return {
-		$: function (str) {
+		$: function(str) {
 			return document.getElementById(str);
 		},
 		addClass: _.partial(setFromArray, always(true), 'add'),
 		/*handlers MAY need wrapping in a function that calls prevent default, stop propagation etc..
 		which needs to be cross browser see EventCache.prevent */
-		addEvent: function (handler, func, extent) {
-			return function (el) {
+		addEvent: function(handler, func, extent) {
+			return function(el) {
 				//console.log(el);
 				el = getResult(el);
 				var partial = el && _.isElement(el) ? _.partial(handler, el) : _.partial(handler);
@@ -935,17 +1006,17 @@ poloAF.Util = (function () {
 		},
 		addHandler: addHandler,
 		always: always,
-		append: function (flag) {
+		append: function(flag) {
 			if (flag) {
 				return curry33(setAnchor)(getNewElement)(null);
 			}
 			return curry3(setAnchor)(getNewElement)(null);
 		},
 		byIndex: byIndex,
-		conditional: function () {
+		conditional: function() {
 			var validators = _.toArray(arguments);
-			return function (fun, arg) {
-				var errors = mapcat(function (isValid) {
+			return function(fun, arg) {
+				var errors = mapcat(function(isValid) {
 					return isValid(arg) ? [] : [isValid.message];
 				}, validators);
 				if (!_.isEmpty(errors)) {
@@ -955,22 +1026,38 @@ poloAF.Util = (function () {
 			};
 		},
 		construct: construct,
-		createTextNode: function (text, ancor) {
+		createTextNode: function(text, ancor) {
 			getResult(ancor).appendChild(document.createTextNode(text));
 			return ancor;
 		},
 		curry4: curry4,
-		curryTwice: function (flag) {
+		curryTwice: function(flag) {
 			return flag ? curry22 : curry2;
 		},
-		curryThrice: function (flag) {
+		curryThrice: function(flag) {
 			return flag ? curry33 : curry3;
 		},
-		curryFourFold: function (flag) {
+		curryFourFold: function(flag) {
 			return flag ? curry44 : curry4;
 		},
 		curryFactory: curryFactory,
 		doAlternate: doAlternate,
+		doMap: function doMap(el, v) {
+			if (Array.isArray(v[0][0])) {
+				_.each(v[0], function(sub) {
+					return attrMap(getResult(el), _.object([
+						[sub[0], sub[1]]
+					]), true);
+				});
+			} else {
+				_.each(v, function(sub) {
+					return attrMap(getResult(el), _.object([
+						[sub[0], sub[1]]
+					]));
+				});
+			}
+			return el;
+		},
 		/*USAGE:
         var once = doOnce(),
         actions = [func1, func2, ...];
@@ -981,7 +1068,31 @@ poloAF.Util = (function () {
 		doOnce: doOnce,
 		doWhen: doWhen,
 		drillDown: drillDown,
-		fadeUp: function (element, red, green, blue) {
+		//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
+		eventer: function(type, actions, fn, el) {
+			function preventer(wrapped, e) {
+				_.each(actions, function(a) {
+					myEventListener.preventers[a](e);
+				});
+				return wrapped(e);
+			}
+			fn = _.wrap(fn, preventer);
+			el = getResult(el);
+			return {
+				render: function() {
+					myEventListener.add(el, type, fn);
+					return this;
+				},
+				unrender: function() {
+					myEventListener.remove(el, type, fn);
+					return this;
+				},
+				getEl: function() {
+					return el;
+				}
+			};
+		},
+		fadeUp: function(element, red, green, blue) {
 			var fromFull = curry2(subtract)(255),
 				byTen = curry2(divideBy)(10),
 				mysums = _.map([red, green, blue], curry2(sum)),
@@ -995,20 +1106,20 @@ poloAF.Util = (function () {
 			if (_.every([red, green, blue], terminate)) {
 				return;
 			}
-			mysums = [red, green, blue].map(ceil).map(function (n, i) {
+			mysums = [red, green, blue].map(ceil).map(function(n, i) {
 				return mysums[i](n);
 			});
-			repeat = function () {
+			repeat = function() {
 				poloAF.Util.fadeUp.apply(null, [element].concat(mysums));
 			};
 			element.fade = window.setTimeout(repeat, 100);
 		},
 		findByClass: _.compose(curry2(getter)(0), _.partial(getPolyClass, document)),
-		findIndex: function (collection, predicate) {
+		findIndex: function(collection, predicate) {
 			return _.findIndex(collection, predicate || always(true));
 		},
 		getBest: best,
-		getBody: function (flag) {
+		getBody: function(flag) {
 			var body = document.body || document.getElementsByTagName('body')[0];
 			if (flag) {
 				body.className = '';
@@ -1019,7 +1130,7 @@ poloAF.Util = (function () {
 		getByTag: _.partial(mittleInvoke, 'getElementsByTagName'),
 		getClassList: getClassList,
 		getChild: _.compose(getNextElement, drillDown(['firstChild'])),
-		getComputedStyle: function (element, styleProperty) {
+		getComputedStyle: function(element, styleProperty) {
 			if (!element || !styleProperty) {
 				return null;
 			}
@@ -1051,13 +1162,13 @@ poloAF.Util = (function () {
 		getNextElement: getNextElement, //expects node.nextSibling
 		getNodeByTag: curry2(regExp)('i'),
 		getParent: drillDown(['parentNode']),
-		getPredicate: function (cond, predicate) {
+		getPredicate: function(cond, predicate) {
 			return predicate(getResult(cond)) ? predicate : _.negate(predicate);
 		},
 		getPreviousElement: getPreviousElement, //?//
 		getPrevious: _.partial(nested, curry2(getter)('previousSibling'), getPreviousElement),
 		getScrollThreshold: getScrollThreshold,
-		getSubArray: function (coll, tgt) {
+		getSubArray: function(coll, tgt) {
 			function reducer(acc, cur) {
 				return _.contains(cur, tgt) ? cur : acc;
 			}
@@ -1066,81 +1177,82 @@ poloAF.Util = (function () {
 		getZero: _.partial(byIndex, 0),
 		getter: getter,
 		gtThan: gtThan,
-		hasClass: (function () {
+		hasClass: (function() {
 			var html = document.documentElement || document.getElementsByTagName('html')[0];
-			return function (str, el) {
+			return function(str, el) {
 				el = el || html;
 				return poloAF.Util.getClassList(el).contains(str);
 			};
 		}()),
-		hasFeature: (function () {
+		hasFeature: (function() {
 			var html = document.documentElement || document.getElementsByTagName('html')[0];
-			return function (str) {
+			return function(str) {
 				return poloAF.Util.getClassList(html).contains(str);
 			};
 		}()),
 		hide: _.partial(setFromArray, always(true), 'remove', ['show']),
 		highLighter: {
-			perform: function () {
+			perform: function() {
 				if (!poloAF.Util.hasFeature('nthchild')) { // utils.hasFeature('nthchild') || Modernizr.nthchild
-					this.perform = function () {
+					this.perform = function() {
 						var ptL = _.partial,
 							getBody = curry3(simpleInvoke)('body')('getElementsByTagName'),
 							getLinks = curry3(simpleInvoke)('a')('getElementsByTagName'),
 							getTerm = _.compose(curry2(getter)('id'), ptL(byIndex, 0), getBody),
 							links = _.compose(getLinks, poloAF.Util.getZero, curry3(simpleInvoke)('nav')('getElementsByTagName'))(document),
-							found = ptL(_.filter, _.toArray(links), function (link) {
+							found = ptL(_.filter, _.toArray(links), function(link) {
 								return new RegExp(link.innerHTML.replace(/ /gi, '_'), 'i').test(getTerm(document));
 							});
 						_.compose(ptL(poloAF.Util.addClass, 'current'), ptL(byIndex, 0), found)();
 					};
 				} else {
-					this.perform = function () {};
+					this.perform = function() {};
 				}
 				this.perform();
 			}
 		},
-		insert: function (flag) {
+		insert: function(flag) {
 			if (flag) {
-				return function (ref, anc) {
+				return function(ref, anc) {
 					return curry33(setAnchor)(getNewElement)(ref)(anc);
 				};
 			}
-			return function (ref, anc) {
+			return function(ref, anc) {
 				return curry3(setAnchor)(getNewElement)(ref)(anc);
 			};
 		},
 		insertAfter: insertAfter,
-		insertBefore: function (refnode, tgt) {
+		insertBefore: function(refnode, tgt) {
 			refnode.parentNode.insertBefore(tgt, refnode);
 		},
 		invokeOnFirst: _.partial(invokeWhen, _.compose(_.negate, always)),
-		invokeRest: function (m, o) {
+		invokeRest: function(m, o) {
 			return o[m].apply(o, _.rest(arguments, 2));
 		},
+		invokeThen: invokeThen,
 		invokeWhen: invokeWhen,
 		invoker: invoker,
 		isDesktop: _.partial(gtThan, window.viewportSize.getWidth),
-		isEqual: function (x, y) {
+		isEqual: function(x, y) {
 			return getResult(x) === getResult(y);
 		},
 		lsThan: lsThan,
 		machElement: machElement,
 		makeElement: makeElement,
-		map: function (coll, mapper) {
+		map: function(coll, mapper) {
 			return _.map(coll, mapper);
 		},
 		mapcat: mapcat,
-		move: function (flag) {
+		move: function(flag) {
 			if (flag) {
 				return curry33(setAnchor)(_.identity)(null);
 			}
 			return curry3(setAnchor)(_.identity)(null);
 		},
-		each: function (o, m, coll) {
-			o[m] = function () {
+		each: function(o, m, coll) {
+			o[m] = function() {
 				var args = arguments;
-				_.each(coll, function (member) {
+				_.each(coll, function(member) {
 					return member[m].apply(member, args);
 				});
 			};
@@ -1150,21 +1262,23 @@ poloAF.Util = (function () {
 		render: render,
 		reverse: reverseArray,
 		//https://gomakethings.com/how-to-serialize-form-data-into-an-object-with-vanilla-js
-		serializeObject: function (form) {
+		serializeObject: function(form) {
 			var obj = {},
 				options = [];
 			// Loop through each field in the form
-			Array.prototype.slice.call(form.elements).forEach(function (field) {
+			Array.prototype.slice.call(form.elements).forEach(function(field) {
 				// Skip some fields we don't need
-				if (!field.name || field.disabled || ['file', 'reset', 'submit', 'button'].indexOf(field.type) > -1) { return; }
+				if (!field.name || field.disabled || ['file', 'reset', 'submit', 'button'].indexOf(field.type) > -1) {
+					return;
+				}
 				// Handle multi-select fields
 				if (field.type === 'select-multiple') {
 					// Create an array of selected values
 					// Loop through the options and add selected ones
-					Array.prototype.slice.call(field.options).forEach(function (option) {
+					Array.prototype.slice.call(field.options).forEach(function(option) {
 						if (!option.selected) {
-                            return;
-                        }
+							return;
+						}
 						options.push(option.value);
 					});
 				}
@@ -1174,8 +1288,8 @@ poloAF.Util = (function () {
 				}
 				// If it's a checkbox or radio button and it's not checked, skip it
 				if (['checkbox', 'radio'].indexOf(field.type) > -1 && !field.checked) {
-                    return;
-                }
+					return;
+				}
 				obj[field.name] = field.value;
 			});
 			// Do stuff with the field...
@@ -1186,7 +1300,7 @@ poloAF.Util = (function () {
 		setAttributes: _.partial(setFromFactory(!window.addEventListener), always(true), 'setAttribute'),
 		//setAttrsValidate: _.partial(setFromFactory(!window.addEventListener)),
 		setFromArray: setFromArray,
-		setScrollHandlers: function (collection, getThreshold, klas) {
+		setScrollHandlers: function(collection, getThreshold, klas) {
 			// ensure we don't fire this handler too often
 			// for a good intro into throttling and debouncing, see:
 			// https://css-tricks.com/debouncing-throttling-explained-examples/
@@ -1199,7 +1313,7 @@ poloAF.Util = (function () {
 		setter: setter,
 		show: _.partial(setFromArray, always(true), 'add', ['show']),
 		shuffleArray: function shuffle(coll) {
-			return function (start, deleteCount) {
+			return function(start, deleteCount) {
 				if (start === -1) {
 					return coll;
 				}
@@ -1208,10 +1322,10 @@ poloAF.Util = (function () {
 				return coll.splice(start, deleteCount).concat(coll);
 			};
 		},
-		silent_conditional: function () {
+		silent_conditional: function() {
 			var validators = _.toArray(arguments);
-			return function (fun, arg) {
-				var errors = mapcat(function (isValid) {
+			return function(fun, arg) {
+				var errors = mapcat(function(isValid) {
 					return isValid(arg) ? [] : [isValid.message];
 				}, validators);
 				if (!_.isEmpty(errors)) {
@@ -1221,10 +1335,10 @@ poloAF.Util = (function () {
 				return fun(arg);
 			};
 		},
-		simple_conditional: function () {
+		simple_conditional: function() {
 			var validators = _.toArray(arguments);
-			return function (v, k) {
-				var errors = mapcat(function (isValid) {
+			return function(v, k) {
+				var errors = mapcat(function(isValid) {
 					return isValid(k, v) ? [] : [k, isValid.message];
 					//return isValid(k, v) ? [] : [new Message(k, v)];
 				}, validators);
@@ -1233,29 +1347,29 @@ poloAF.Util = (function () {
 		},
 		simpleAdapter: simpleAdapter,
 		SimpleXhrFactory: SimpleXhrFactory,
-		shout: function (m) {
-			var applier = function (f, args) {
-				return function () {
+		shout: function(m) {
+			var applier = function(f, args) {
+				return function() {
 					f.apply(null, args);
 				};
 			};
 			return applier(_.bind(window[m], window), _.rest(arguments));
 		},
-		supportTest: function (el, prop, reg) {
+		supportTest: function(el, prop, reg) {
 			var getBg = curry3(simpleInvoke)(reg)('match');
 			return getBg(poloAF.Util.getComputedStyle(el, prop));
 		},
 		toggleClass: _.partial(setFromArray, always(true), 'toggle'),
 		toggle: _.partial(setFromArray, always(true), 'toggle', ['show']),
 		validator: validator,
-		getDummyTarget: function (k, v) {
+		getDummyTarget: function(k, v) {
 			var tgt = {};
 			tgt[k] = v;
 			return {
 				target: tgt
 			};
 		},
-		report: function (arg) {
+		report: function(arg) {
 			document.getElementsByTagName('h2')[0].innerHTML = arg;
 		},
 		dog: 'spadger'

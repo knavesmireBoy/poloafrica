@@ -7,10 +7,28 @@ html, body {
 img {
 	display: block;
 }
+section img.hide {
+	display: none;
+}
+header>a {
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 50%;
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	margin: 0 0 2% 3%;
+    border: solid 1px red;
+}
+#svg {
+	box-sizing: border-box;
+}
+
 main {
 	overflow: hidden;
 	margin: .2em 0 0em;
-	padding: 0 1em 10.1em;
+	padding: 0 2em 10.1em;
 }
 header {
 	position: relative;
@@ -20,29 +38,19 @@ section {
 	margin: 3em 0 0;
 }
 footer {
-	max-width: 88em;
 	width: 100%;
-    margin: -10.1em auto 0;
+	margin: -10.1em auto 0;
 }
-
 footer div {
 	display: inline-block;
 	vertical-align: bottom;
 	position: relative;
 }
 
-header h1 {
-	margin: -2.2em 0 0 0;
-	white-space: nowrap;
-	width: 40%;
-	text-indent: 100%;
-	overflow: hidden;
-	line-height: .3;
-}
 section input, nav input {
-    cursor: pointer;
-    position: absolute;
-    left: -9999px;
+	cursor: pointer;
+	position: absolute;
+	left: -9999px;
 }
 section:after {
 	content: "";
@@ -54,19 +62,16 @@ section img {
 	float: left;
 	width: 40%;
 }
-
 #nav a, #fb a {
 	display: block;
 }
 nav li#current:hover ul, nav li#current.sfhover ul {
 	left: 0;
 }
-
 section.ptrt img {
-    float: right;
-    width: 18%;
+	float: right;
+	width: 18%;
 }
-
 header ul {
 	display: table;
 	width: 100%;
@@ -82,6 +87,7 @@ header ul ul {
 header h1 img {
 	width: 100%;
 	visibility: hidden;
+	display: none;
 }
 footer div img {
 	width: 100%;
@@ -89,57 +95,43 @@ footer div img {
 section:first-child {
 	margin: 2em 0 0 0;
 }
-
 /* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
-#ani, #tween {
+
+section:nth-child(odd) img, #ani, #tween {
 	margin: 0 0 1em 2em;
 	float: right;
-    overflow: hidden;
+	overflow: hidden;
 }
-
-section:nth-child(odd) img {
-	margin: 0 0 1em 2em;
-	float: right;
-    overflow: hidden;
-}
-
 #wrap {
 	margin: 0 auto;
-	max-width: 88em;
 	min-height: 100%;
 	overflow: hidden;
 	position: relative;
 }
-
 #footer_girl {
 	margin: 0 0 .75em 2%;
-    width: 73%;
+	width: 73%;
 }
-
 #fb {
 	width: 8em;
-    margin: 0 0 .75em -9em;
-    left: 25%;
+	margin: 0 0 .75em -9em;
+	left: 25%;
 }
-
 #footer_girl a {
-    width: auto;
-    height: auto;
-    display: inline-block;
-    white-space: nowrap;
-    position: relative;
+	width: auto;
+	height: auto;
+	display: inline-block;
+	white-space: nowrap;
+	position: relative;
 }
 #footer_girl a:first-child {
-    width: 12em;
-    margin: 0 -4em 0 0;
-    bottom: -2em;
+	width: 12em;
+	margin: 0 -4em 0 0;
+	bottom: -2em;
 }
-
-footer > a {
-    display: block;
+footer>a {
+	display: block;
 }
-
-
 #home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
 	left: auto;
 }
@@ -148,48 +140,51 @@ footer > a {
 	right: 0px;
 }
 
+
+@media screen and (min-width: 1281px) {
+	#wrap, footer {
+		max-width: 100em;
+	}
+}
 @media screen and (max-width: 1280px) {
-     body {
-        margin: 4%;
-    }
+	body {
+		margin: 0%;
+	}
+}
+@media screen and (min-width: 1024px) {
+	header>a {
+		margin: 0% auto 12%;
+	}
 }
 
 @media screen and (max-width: 667px) {
-    
-    body {
-        margin: 2%;
-    }
+	body {
+		margin: 2%;
+	}
+	svg #onmobile {
+		visibility: hidden;
+	}
 	main {
 		padding: 0 0 10.1em 0;
 		margin: 0;
 	}
-    
-    p {
-        margin: 0;
-    }
-    
+	header>a {
+		margin: 0 0 0 4.2%;
+		padding: 0;
+	}
+	p {
+		margin: 0;
+	}
 	h2 {
 		position: relative;
-		margin: -8% 0 0 0;
-		margin: -8vw 0 0 0;
+		margin:  -11vw 0 0 0;
 		padding: 0 0 0 4%;
-		padding: 0 0 0 4vw;
+		padding: 1.5vw 0 0 4vw;
 		font-size: 2em;
 		font-size: 1.75rem;
 	}
-
-    section {
+	section {
 		margin: 0;
-	}
-	/*ie*/
-	header>a {
-		display: block;
-	}
-	header h1 {
-		margin: 0 0 0 4%;
-		margin: 0 0 0 4vw;
-		padding: 0% 0 7% 0;
-		padding: 0% 0 7vw 0;
 	}
 	header ul {
 		position: absolute;
@@ -207,32 +202,24 @@ footer > a {
 		border: solid 1px blue;
 		padding: 0;
 	}
-	header h1, h2 span {
+	h2 span {
 		width: 50%;
-        width: 48vw;
+		width: 50vw;
 	}
-    /*width reqd, other properties reqd in no-js scenario; */
-    section img {
-        /* explicitly set float to none in case browser doesn't support flex/grid*/
-        float: none;
-        border-radius: 0;
-        box-shadow: none;
-        margin: 0;
-        border-width: 0;
-        width: 100%;
-    }
-	header h1 img {
-		visibility: visible;
-		min-width: 3em;
-		max-width: 100%;
-	}
-    /*remove border's above when in production*/
-	header h1, h2 span, header h1 img {
-		border-width: 0px;
+	/*width reqd, other properties reqd in no-js scenario; */
+	section img {
+		/* explicitly set float to none in case browser doesn't support flex/grid*/
+		float: none;
+		border-radius: 0;
+		box-shadow: none;
+		margin: 0;
+		border-width: 0;
+		width: 100%;
 	}
 	header ul a, header ul li {
-		display: block;/*a may not be reqd check ie*/
-        line-height: 2.6;
+		display: block;
+		/*a may not be reqd check ie*/
+		line-height: 2.6;
 	}
 	header ul>li {
 		height: 0px;
@@ -244,8 +231,8 @@ footer > a {
 		right: 1em;
 		right: 1rem;
 		z-index: 2;
-        /*override display:table not really required as li's set to block*/
-        display: block;
+		/*override display:table not really required as li's set to block*/
+		display: block;
 	}
 	/*no need to fix advanced selectors for ie as mobile only layout*/
 	header input:checked+ul>li {
@@ -253,32 +240,26 @@ footer > a {
 	}
 	.menu {
 		position: absolute;
-		top: .7em;
-        top: .7rem;
-        right: .7em;
-		right: .7rem;
-        height: 3em;
+		top: 1em;
+		top: 1rem;
+		right: 1em;
+		right: 1rem;
+		height: 3em;
 		height: 2.5rem;
-        width: 3em;
+		width: 3em;
 		width: 2.5rem;
 	}
-    
 	.no-flexwrap h2 {
-		margin: -1.4em 0 0em 0em;
-		margin: -2.73rem 0 0em 0em;
+		margin: -1.4em 0 0;
+		margin: -2.73rem 0 0;
 		padding: 0 0 0 .7em;
 		padding: 0 0 0 1.2rem;
 	}
 	.touchevents body {
 		margin: 0;
 	}
-
-	.no-flexwrap header h1, .no-flexwrap h2 span {
+	.no-flexwrap h2 span {
 		width: 15rem;
-	}
-	.no-flexwrap header h1 {
-		margin: 0 0 0 1.2rem;
-		padding: 0% 0 3.1rem 0;
 	}
 	article p:first-of-type, article p:last-child {
 		margin: 1em 0;
@@ -287,13 +268,11 @@ footer > a {
 		width: 30%;
 		margin: 1em 0 1em 1em;
 	}
-    
 	.read-more-trigger:before, .no-js section:first-child, .no-js .read-more-state:checked~.read-more-trigger:before {
 		display: block;
 	}
-
 	/*first section is shown by default?*/
-	.js .read-more-state, .no-js article h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-child .read-more-state:checked~article, .no-js section:first-child .read-more-state:checked~img, .js article>*,  header ul ul {
+	.js .read-more-state, .no-js article h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-child .read-more-state:checked~article, .no-js section:first-child .read-more-state:checked~img, .js article>*, header ul ul {
 		position: absolute;
 		top: 0px;
 		left: -999em;
@@ -302,91 +281,101 @@ footer > a {
 		position: static;
 		left: 0em;
 	}
-
-    #footer_girl a:first-child {
-        width: 8em;
-        margin: 0;
-        visibility: hidden;
-    }
-
-    #footer_girl a {
-        display: block;
-    }
-  
+	#footer_girl a:first-child {
+		width: 8em;
+		margin: 0;
+		visibility: hidden;
+	}
+	#footer_girl a {
+		display: block;
+	}
+    
 }
+
 @media only screen and (max-width: 568px) {
 	h2 {
-		margin: -9vw 0 0 0em;
-	}
-	header h1 {
-		padding: 0 0 8.5vw 0;
+		margin: -12vw 0 0;
 	}
 	.no-flexwrap h2 {
 		margin: -2.8rem 0 0 0em;
 	}
-	.no-flexwrap header h1 {
-		padding: 0 0 3rem 0;
-	}
 }
 @media only screen and (max-width: 480px) {
-
 	h2 {
-		margin: -10vw 0 0 0em;
+		margin: -12vw 0 0;
+		padding: 0 0 0 1%;
+		padding: 1vw 0 0 1vw;
 	}
 	header input:checked+ul {
 		top: 3rem;
 	}
-	header h1, h2 span {
-		width: 58vw;
-	}
-	header h1 {
-		padding: 0 0 9vw 0;
-		/*quick way to lift up logo*/
-		font-size: .5rem;
+	h2 span {
+		width: 55vw;
 	}
 	.menu {
 		height: 2rem;
 		width: 2rem;
 	}
-	.no-flexwrap h2 span, .no-flexwrap header h1 {
+	.no-flexwrap h2 span {
 		width: 15.7rem;
 	}
 	.no-touchevents h2 {
 		line-height: 1.4;
 	}
-	.no-flexwrap header h1 {
-		padding: 0 0 2.5rem 0;
-	}
 	section.ptrt img {
 		width: 40%;
 	}
-
+     header>a {
+		margin: -12% 0 0 4.2%;
+	}
 }
 @media only screen and (max-width: 414px) {
 	#wrap h2 {
 		line-height: 1.4;
+	}
+    h2 span {
+		width: 55vw;
 	}
 }
 @media only screen and (max-width: 400px) {
 	h2 {
 		font-size: 1.7em;
 		font-size: 1.5rem;
-		padding: 0 0 0 1.5vw
+		padding: 1vw 0 1vw;
 	}
-	header h1 {
-		margin: 0 0 0 1.5vw;
-	}
-	header h1, h2 span {
-		width: 64vw;
-	}
-	.no-flexwrap header h1 {
-		margin: 0 0 0 .3rem;
+	h2 span {
+		width: 55.5vw;
 	}
 	.no-flexwrap h2 {
 		padding: 0 0 0 .3rem;
 	}
-	.no-flexwrap header h1, .no-flexwrap h2 span {
+	no-flexwrap h2 span {
 		width: 13rem;
+	}
+     header>a {
+		margin: -15% 0 0 3%;
+	}
+}
+
+@media only screen and (max-width: 340px) {
+
+    h2 span {
+		width: 58vw;
+	}
+    
+    header>a {
+		margin: -12% 0 0 6%;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+
+    h2 span {
+		width: 62vw;
+	}
+    
+    header>a {
+		margin: -12% 0 0 7%;
 	}
 }
 @media only screen and (-ms-high-contrast: none) {
@@ -396,3 +385,8 @@ footer > a {
 		padding: 7em 0 0 0;
 	}
 }
+
+    	/*remove border's above when in production*/
+	header > a, h2 span {
+		border-width: 0px;
+	}

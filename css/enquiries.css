@@ -257,9 +257,17 @@ div#response {
 	padding: .3em;
 	border-radius: 8px;
 }
+/*
+non-cms?
 #response form, #response figure:first-of-type, .no-cssgrid #response .top {
 	display: none;
 }
+*/
+
+.no-cssgrid #response .top {
+	display: none;
+}
+
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
 section:nth-child(2) {
 	clear:left;
@@ -292,6 +300,10 @@ section:nth-child(2) {
 	overflow:hidden;
 }
 */
+
+#enquiries p:after, #enquiries p:before {
+    content: none;
+}
 
 @media only screen {
 	.backgroundsize h2 span {
