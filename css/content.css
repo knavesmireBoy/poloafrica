@@ -1,8 +1,7 @@
 body {
-	font: normal .875em/1.75 Georgia, serif;
+	font: normal .875em/1.75 'Lora', Georgia, serif;
 	background-color: white;
 }
-
 .no-js body {
 	background-color: mintcream;
 }
@@ -12,18 +11,16 @@ header {
 	background: hsl(60, 25%, 62%) url(../images/resource/header.png) no-repeat 0 76%/100%;
     */
 	width: 100%;
-	background-image: url(../images/resource/header.png);
+	background-image: url(../images/resource/header_only.png);
 	background-repeat: no-repeat;
-	background-color: #baba87;
-	background-color: hsl(60, 27%, 63%);
 	background-position: 0 76%;
+    box-sizing: border-box;
 }
-.backgroundsize header {
-	-o-background-size: 100%;
-	-moz-background-size: 100%;
-	-ms-background-size: 100%;
-	-webkit-background-size: 100%;
-	background-size: contain;
+.backgroundsize header, .backgroundsize footer {
+	-o-background-size: cover;
+	-moz-background-size: cover -ms-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
 }
 h2 {
 	margin: .8em 0 0;
@@ -32,13 +29,13 @@ h2 {
 	font-weight: normal;
 	text-transform: uppercase;
 	padding: 1px 0;
-    color: #cc6;
+	color: #cc6;
 	color: hsl(58, 60%, 48%);
 	text-shadow: 1px 1px 2px #444;
-    background-color: #990;
+	background-color: #990;
 	background-image: url(../images/resource/h2grad.jpg);
 	background-repeat: no-repeat;
-    background-position: 100% center;
+	background-position: 100% center;
 	-o-background-size: 100%;
 	-moz-background-size: 100%;
 	-ms-background-size: 100%;
@@ -50,8 +47,9 @@ h3 {
 	font-size: 1.75em;
 	word-spacing: 1px;
 	letter-spacing: 1px;
-    color: #990;
+	color: #990;
 	color: hsl(58, 60%, 40%);
+	font: normal 1.75em/1.2 'Lora', Georgia, serif;
 }
 p {
 	color: #444;
@@ -60,9 +58,10 @@ p {
 }
 footer {
 	background-image: url(../images/resource/footer_green_ko.png);
-	background-repeat:  no-repeat;
+	background-repeat: no-repeat;
 	background-position: bottom right;
 	background-position: 100% 100%;
+	background-blend-mode: multiply;
 }
 h2 span {
 	display: block;
@@ -71,39 +70,23 @@ h2 span {
 	line-height: 1.3;
 }
 header ul {
-	font: bold 1em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
+	font: bold 1em/2 'Roboto', 'Arial Black', Arial, Verdana, Helvetica, serif;
 }
-/* direct child selector, otherwise will have to override for animation */
-
 section img {
 	border-radius: 4px;
 	box-shadow: 0px 0px 4px #990;
 	border: solid 1px white;
 }
-/*
-p:last-child:after {
-    content: " ";
-    padding: 12em;
-    background-color: hsl(58, 30%, 90%);
-    border-radius: 50%;
-    position: relative;
-    right: 14em;
-    bottom: 6em;
-    z-index: -1;
-}
-*/
+
 article a {
 	font-weight: bold;
 	outline: none;
-}
-p:first-of-type {
-	margin: 0;
 }
 footer b, footer div a:hover {
 	color: #cc6;
 }
 header h1, h2 span, header h1 img {
-	border-width: 1px;
+	border-width: 0px;
 }
 footer a:link, footer a:visited {
 	color: white;
@@ -133,7 +116,6 @@ header ul a:hover, header ul a:active {
 header ul ul a, header ul ul a:hover {
 	background-image: none;
 }
-
 a:link, a:visited, .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
 	color: hsl(58, 60%, 40%);
@@ -142,7 +124,6 @@ a:hover, a:active {
 	color: #cc6;
 	color: hsl(58, 60%, 48%);
 }
-
 p a:hover, p a:active {
 	text-decoration: underline;
 }
@@ -159,8 +140,7 @@ header ul li a:hover, header ul li a:active {
 	background-color: #b6b686;
 	background-color: hsl(60, 25%, 62%);
 }
-
-header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a{
+header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
 	color: white;
 }
 /*spacer for submenu desktop*/
@@ -169,27 +149,23 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	border: solid 1px transparent;
 	border-width: 3px 1px 0;
 }
-
 #wrap ul ul a {
 	padding: 0 .7em;
 }
-
 #wrap ul ul a:link, #wrap ul ul a:visited {
 	color: #306;
 	color: hsl(270, 100%, 20%);
-    background-color: #b6b686;
+	background-color: #b6b686;
 	background-color: hsl(60, 25%, 62%);
-    border-color: #999 #000 #000 #999;
+	border-color: #999 #000 #000 #999;
 	padding: 0 .7em;
 }
-
 #wrap ul ul a:hover, #wrap ul ul a:active {
 	background-color: white;
 	border-color: #900;
 }
-
 li#current a {
-    color: white;
+	color: white;
 }
 h2 span {
 	background-repeat: no-repeat;
@@ -208,6 +184,88 @@ h2 span {
 	-webkit-background-size: 14%;
 	background-size: contain;
 }
+
+header>a svg {
+		filter: opacity(80%) contrast(120%);
+	}
+@media screen and (min-width: 1024px) {
+	header {
+		background-image: url(../images/resource/crop.JPG);
+		background-repeat: no-repeat;
+		background-position: 0 40%;
+		background-color: hsl(258, 60%, 67%);
+		background-blend-mode: multiply;
+	}
+    header>a svg {
+		mix-blend-mode: hard-light;
+		filter: opacity(80%) contrast(250%) hue-rotate(-2deg);
+	}
+	
+	#wrap h2 span {
+		background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+		padding: 0 1em;
+		display: inline-block;
+		border-radius: 1em;
+		color: white;
+	}
+	h3 {
+		margin: 0 0 1.5em 0;
+		text-transform: uppercase;
+		text-align: center;
+		border-width: 0 !important;
+	}
+	h2 {
+		background: none !important;
+		text-align: center;
+	}
+	header ul {
+		text-transform: uppercase;
+	}
+	h2:after {
+		content: '';
+		display: block;
+		height: .1em;
+		margin: -.9em 1% 1em;
+		border-radius: 1em;
+		background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
+	}
+	section img {
+		box-shadow: none;
+		border-color: #444;
+		border-radius: 1em;
+	}
+	.override h3 a {
+		border: solid 1px hsl(58, 60%, 40%);
+		padding: .2em .6em;
+		border-radius: 1em;
+		background: white;
+		color: #666;
+	}
+	h3:after {
+		content: '';
+		display: block;
+		border-top: solid 1px hsl(58, 60%, 40%);
+		margin: -.6em 0 0;
+	}
+	p:first-of-type {
+		margin: 0;
+	}
+	p:first-of-type:after {
+		content: '';
+		border-top: solid 1px hsl(58, 60%, 40%);
+		display: block;
+		margin: 1em 15%;
+	}
+	p:first-of-type+p:before {
+		content: '';
+		height: 1em;
+		width: 1em;
+		display: block;
+		background: hsl(58, 60%, 40%);
+		margin: -1.5em auto 1em;
+		border-radius: 50%;
+	}
+}
 @media screen and (max-width: 867px) {
 	#polo li:nth-child(6):hover ul {
 		left: auto;
@@ -218,7 +276,11 @@ h2 span {
 		-moz-background-size: 16%;
 		-ms-background-size: 16%;
 		-webkit-background-size: 16%;
-        background-size: contain;
+		background-size: contain;
+	}
+	.backgroundsize header {
+		background-size: 100%;
+        background-position: 0 0;
 	}
 }
 @media screen and (max-width: 800px) {
@@ -228,7 +290,6 @@ h2 span {
 }
 @media only screen and (max-width: 667px) {
 	header {
-		background-image: url(../images/resource/header_only.png);
 		background-position: 0px 0px;
 	}
 	#wrap header {
@@ -237,6 +298,17 @@ h2 span {
 		-ms-background-size: 182%;
 		-webkit-background-size: 182%;
 		background-size: cover;
+	}
+	header>a svg {
+		mix-blend-mode: hard-light;
+		filter: opacity(80%) contrast(250%) hue-rotate(-2deg);
+	}
+	.backgroundsize header {
+		background-color: hsl(258, 60%, 67%);
+		background-blend-mode: multiply;
+		background-image: url(../images/resource/crop.JPG);
+		background-size: 240% !important;
+		background-position: 70% 0;
 	}
 	/*ZAP*/
 	#wrap h2, #wrap h2 span {
@@ -316,8 +388,8 @@ h2 span {
 	}
 	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
 	h3, .read-more-trigger:before {
-        color: #990;
-        color: hsl(58, 60%, 40%);
+		color: #990;
+		color: hsl(58, 60%, 40%);
 		padding: .5em .6em .4em;
 	}
 	h3, .read-more-trigger:before, .js section img {
@@ -329,7 +401,6 @@ h2 span {
 	.override article p {
 		line-height: 1.55;
 	}
-
 	.read-more-trigger:before:hover {
 		background-color: white;
 		color: hsl(58, 60%, 45%);
@@ -338,15 +409,14 @@ h2 span {
 	.no-touchevents h3 a:hover {
 		color: white;
 	}
-    
-    	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
+	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
 		color: #990;
-        color: hsl(58, 60%, 40%);
-        text-shadow: none;
+		color: hsl(58, 60%, 40%);
+		text-shadow: none;
 		background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
 	}
-    	section.show h3, .read-more-state:checked~.read-more-trigger:before, section:first-child .read-more-state~.read-more-trigger:before {
+	section.show h3, .read-more-state:checked~.read-more-trigger:before, section:first-child .read-more-state~.read-more-trigger:before {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: #c8c87e;
@@ -388,7 +458,7 @@ h2 span {
 	}
 }
 @media only screen and (max-width: 440px) {
-	footer>a{
+	footer>a {
 		padding: .75em .6em;
 	}
 }

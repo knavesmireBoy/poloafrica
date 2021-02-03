@@ -7,8 +7,26 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-(function () {
+(function (mq, query) {
 	"use strict";
+    
+    
+      function doSvg(svg){
+            return function(str){
+                svg.setAttribute('viewBox', str);
+            }
+        }
+        function SVGview() {
+                var mq  = window.matchMedia("(max-width: 667px)"),
+                    setViewBox = doSvg(document.getElementById('svg')),
+                    doMobile = ptL(setViewBox, "0 40 149 120"),
+                    doDesktop = ptL(setViewBox, "0 0 340 38");
+                if(mq.matches){//onload
+                    
+                    doMobile();
+                }
+            return doAlt([doMobile, doDesktop]);
+			}; //map           
 
 	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
@@ -90,6 +108,7 @@ if (!window.poloAF) {
 		undoWarning = ptL(klasRem, 'warning'),
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
+        doAlt = utils.doAlternate(),
 		clicker = ptL(utils.addHandler, 'click'),
 		submitter = ptL(utils.addHandler, 'submit'),
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
@@ -102,6 +121,17 @@ if (!window.poloAF) {
 		isHeading = _.compose(headingmatch, getNodeName),
 		main = document.getElementsByTagName('main')[0],
 		articles = document.getElementsByTagName('article'),
+        number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
+		threshold = Number(query.match(number_reg)[1]),
+        getEnvironment = ptL(utils.isDesktop, threshold),
+		negater = function (alternator) {
+         //report();
+         /*NOTE netrenderer reports window.width AS ZERO*/
+			if (!getEnvironment()) {
+                alternator();
+				getEnvironment = _.negate(getEnvironment);
+			}
+		},        
 		myform = document.forms[0],
 		legend = myform.getElementsByTagName('legend')[0],
 		isEmail = ptL(isEqual, 'email'),
@@ -256,12 +286,15 @@ if (!window.poloAF) {
 			} else {
 				doAlert(res);
 			}
-		};
+		},
+        svg_handler = ptL(negater, SVGview());
 	//listener();
 	utils.addEvent(clicker, relocate)(legend);
 	utils.addEvent(submitter, listener)(myform);
 	utils.addHandler('click', bridge, main);
 	utils.addHandler('focus', clear, utils.getByTag('textarea', myform)[0]);
 	dum[tgt] = articles[0].getElementsByTagName('a')[0];
+    svg_handler();
+    utils.addHandler('resize', window, _.throttle(svg_handler, 99));
 	bridge(dum);
-}());
+}(Modernizr.mq('only all'), '(min-width: 668px)'));

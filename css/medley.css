@@ -9,7 +9,7 @@ h2 span {
 }
 
 #tvcoverage h3 {
-	margin: 0 0 1em 0;
+	margin: 1em 0 2em 0;
 }
 #presslinks ul {
     padding-left: 1em;
@@ -153,7 +153,6 @@ h2 span {
 	background-size: cover;
 }
 
-
 @media only screen {
     .backgroundsize h2 span {
         background-image: url(../images/resource/sub_medley.png);
@@ -174,22 +173,30 @@ h2 span {
     }
 }
 
-  @media screen and (min-width: 983px) {
-    	.flexwrap #medley section:nth-child(2) {
-    		display: -webkit-box;
-    		display: -ms-flexbox;
-    		display: -webkit-flex;
-    		display: flex;
-    	}
-    	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) {
-    		#medley section:nth-child(2) {
-    			display: -webkit-box;
-    			display: -ms-flexbox;
-    			display: -webkit-flex;
-    			display: flex;
-    		}
-    	}
-    }
+@media screen and (min-width: 1024px) {
+
+section:nth-child(5) p:after {
+    content: '';
+    border-top: solid 1px hsl(58, 60%, 40%);
+    display: block;
+    margin: 1em 15%;
+}
+
+section:nth-child(5) p+p:before {
+    content: '';
+    display: block;
+    height: 1em;
+    width: 1em;
+    background: hsl(58, 60%, 40%);
+    margin: -1.5em auto 1em;
+    border-radius: 50%;
+}
+
+
+#medley_links p:after, #medley_links p:before, section:nth-child(7) p:after, section:nth-child(7) p+p:before, #presslinks p:after, section:nth-child(5) p:last-child:after, section:nth-child(3) p:first-of-type:after, section:nth-child(3) p:first-of-type+p:before {
+    content: none;
+}
+}
 
 @media screen and (max-width: 667px) {
     
