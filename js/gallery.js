@@ -293,7 +293,16 @@
 			doMobile();
 		}
 		return doAltSVG([doMobile, doDesktop]);
-	}; //map           
+	}
+    
+    function populatePage(img, path) {
+        img.src = path;
+        img.onload = function (e) {
+            fixNoNthChild(e.target);
+            img.parentNode.href = doParse(img.src);
+        };
+    }
+    
 	var pages = (function () {
 			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 				twee = _.range(15, 29),
@@ -491,18 +500,11 @@
 		},
 		sortClass = invokeMethod(utils),
 		pathMaker = doComp(thrice(doMapBridge)('src'), makePath),
-		doPop = ptL(invokeArgs, doMapBridge),
-		setLinks = doComp(ptL(invoke, doMapBridge), doComp(ptL(_.map, [getLINK, doComp(doParse, doGet('src'), getDomTargetImg), always('href')]), twice(invoke))),
 		//awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = doComp(ptL(invoke, sortClass), ptL(_.map, [doClass, always('portrait'), getLI]), twice(invoke)),
 		//fixNoNthChild = ptL(utils.invokeWhen, _.negate(utils.always(Modernizr.nthchild)), doPortrait),
 		fixNoNthChild = ptL(utils.invokeWhen, utils.always(!Modernizr.nthchild), doPortrait),
-		populatePage1 = doComp(thrice(setret)('onload')(doComp(setLinks, fixNoNthChild, getTarget)), doPop),
-        
-        populatePage = function(img){
-            doPop.apply(null, arguments);
-            setLinks(img);
-        },
+
 		/*invokeBridge expects a two element array of [function, arguments], zip expects two arrays, one delivered on the fly one obtained querying the dom(getAllpics), the on-the-fly is a collection of curried functions expecting the last argument from the dom collection, getAllPics is preloaded, we need to reverse the [img, function] to [function, img] passed to invokeBridge.
 		The big idea is to avoid using the function keyword as much as possible making the transition to ES6 a little easier*/
 		populate = doComp(twice(_.each)(invokeBridge), twice(_.map)(thrice(doMethod)('reverse')(null)), ptL(invokeArgs, _.zip, getAllPics), twice(_.map)(pathMaker), ptL(negator, doComp(ptL(klasTog, 'alt', getThumbs), _.bind($LI.exec, $LI)))),
@@ -514,8 +516,6 @@
 		getDirection = ptL(utils.getBest, get_back, ['back', 'forward']),
 		every = doComp(doValidate, doPartial(true, invokeCB)),
 		advanceRouteBridge = ptL(utils.invokeWhen, every, getDirection),
-		setOnPage = ptL(setIterator, 'onpage'),
-		setCrossPage = ptL(setIterator, 'cross_page'),
 		advanceRoute = function (m) {
 			if (!Looper.cross_page) {
 				Looper.cross_page = Looper.from(pages.getList(), doInc(pages.getList().length));
@@ -527,7 +527,6 @@
 		$nav = addPageNav(ptL(anCrIn, getThumbs), 'gal_back', pageNavHandler),
 		slide_player = {
 			render: function (page_index, picsrc) {
-                con('re')
 				var reordered = utils.shuffleArray(pages.getList())(page_index),
 					mylscp = _.map(reordered, pages.getLscpPics),
 					myptrt = _.map(reordered, pages.getPortraitPics),
@@ -538,7 +537,8 @@
 				Looper.onpage = Looper.from(_.map(group, makePath), doInc(getLength(group)));
 			},
 			unrender: function (page_index) {
-                //return con('unre');
+                /*restores on page iterator post slideshow
+                if omitted manual navigation would cross page boundaries*/
 				var page,
 					gallery_pics,
 					list = pages.getList();
@@ -690,6 +690,7 @@
 		clear = _.bind(recur.undo, recur),
 		doplay = _.bind(recur.execute, recur),
 		go_render = thrice(doMethod)('render')(null),
+        doExitShow = doComp(thrice(lazyVal)('unrender')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
 		factory = function () {
 			var remPause = doComp(utils.removeNodeOnComplete, $$('paused')),
 				remSlide = doComp(utils.removeNodeOnComplete, $$('slide')),
@@ -710,7 +711,6 @@
 				//setOrient = ptL(doOrient(unsetPortrait, setPortrait), $('base')),
 				relocate = ptL(lazyVal, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
-                doExitShow = doComp(thrice(lazyVal)('unrender')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
 				farewell = [notplaying, exit_inplay, exitswap, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				next_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
@@ -777,7 +777,6 @@
 					//con(event_actions.slice(1, 2))
 					if (e.target.id === 'exit') {
 						chain = chain.validate('play');
-						//slide_player.unrender(pages.findIndex(getBaseSrc));
                         doExitShow();
 						_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
 						exitshow();
