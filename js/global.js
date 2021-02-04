@@ -28,6 +28,14 @@ poloAF.Util = (function() {
 			fn.apply(fnThis || null, spreadArgs);
 		};
 	}
+    
+    function FauxPromise (args) {
+		//must be an array of functions, AND the first gets run last
+		this.cbs = _.compose.apply(null, args);
+	}
+	FauxPromise.prototype.then = function() {
+		return this.cbs.apply(null, arguments);
+	};
 
 	function doOnce() {
 		return function(i) {
@@ -1114,6 +1122,7 @@ poloAF.Util = (function() {
 			};
 			element.fade = window.setTimeout(repeat, 100);
 		},
+        FauxPromise: FauxPromise,
 		findByClass: _.compose(curry2(getter)(0), _.partial(getPolyClass, document)),
 		findIndex: function(collection, predicate) {
 			return _.findIndex(collection, predicate || always(true));
