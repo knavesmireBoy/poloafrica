@@ -418,9 +418,9 @@
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
 		playing = doComp(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
 		notplaying = ptL(klasRem, 'playing', $$('controls')),
-		exitplay = ptL(klasRem, 'inplay', $('wrap')),
+		exit_inplay = ptL(klasRem, 'inplay', $('wrap')),
 		exitswap = ptL(klasRem, 'swap', utils.getBody()),
-		exitshow = doComp(ptL(klasAdd, 'gallery', getThumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exitplay),
+		exitshow = doComp(ptL(klasAdd, 'gallery', getThumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exit_inplay),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
 		doOrient = doComp(ptL(invoke), ptL(utils.getBest, queryOrientation, [setPortrait, unsetPortrait])),
 		galleryCount = doComp(twice(equals)(12), getLength),
@@ -495,8 +495,14 @@
 		setLinks = doComp(ptL(invoke, doMapBridge), doComp(ptL(_.map, [getLINK, doComp(doParse, doGet('src'), getDomTargetImg), always('href')]), twice(invoke))),
 		//awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = doComp(ptL(invoke, sortClass), ptL(_.map, [doClass, always('portrait'), getLI]), twice(invoke)),
-		fixNoNthChild = ptL(utils.invokeWhen, utils.always(Modernizr.nthchild), doPortrait),
-		populatePage = doComp(thrice(setret)('onload')(doComp(setLinks, fixNoNthChild, getTarget)), doPop),
+		//fixNoNthChild = ptL(utils.invokeWhen, _.negate(utils.always(Modernizr.nthchild)), doPortrait),
+		fixNoNthChild = ptL(utils.invokeWhen, utils.always(!Modernizr.nthchild), doPortrait),
+		populatePage1 = doComp(thrice(setret)('onload')(doComp(setLinks, fixNoNthChild, getTarget)), doPop),
+        
+        populatePage = function(img){
+            doPop.apply(null, arguments);
+            setLinks(img);
+        },
 		/*invokeBridge expects a two element array of [function, arguments], zip expects two arrays, one delivered on the fly one obtained querying the dom(getAllpics), the on-the-fly is a collection of curried functions expecting the last argument from the dom collection, getAllPics is preloaded, we need to reverse the [img, function] to [function, img] passed to invokeBridge.
 		The big idea is to avoid using the function keyword as much as possible making the transition to ES6 a little easier*/
 		populate = doComp(twice(_.each)(invokeBridge), twice(_.map)(thrice(doMethod)('reverse')(null)), ptL(invokeArgs, _.zip, getAllPics), twice(_.map)(pathMaker), ptL(negator, doComp(ptL(klasTog, 'alt', getThumbs), _.bind($LI.exec, $LI)))),
@@ -521,6 +527,7 @@
 		$nav = addPageNav(ptL(anCrIn, getThumbs), 'gal_back', pageNavHandler),
 		slide_player = {
 			render: function (page_index, picsrc) {
+                con('re')
 				var reordered = utils.shuffleArray(pages.getList())(page_index),
 					mylscp = _.map(reordered, pages.getLscpPics),
 					myptrt = _.map(reordered, pages.getPortraitPics),
@@ -531,6 +538,7 @@
 				Looper.onpage = Looper.from(_.map(group, makePath), doInc(getLength(group)));
 			},
 			unrender: function (page_index) {
+                //return con('unre');
 				var page,
 					gallery_pics,
 					list = pages.getList();
@@ -538,12 +546,14 @@
 				Looper.cross_page.set(page_index);
 				page = Looper.cross_page.get();
 				$LI.query(page);
+             
 				gallery_pics = _.filter(getAllPics(), function (img) {
 					return !getLI(img).id;
 				});
 				_.each(gallery_pics, function (img, i) {
 					populatePage(img, makePath(page[i]), 'src');
 				});
+                  
 				Looper.onpage = Looper.from(_.map(gallery_pics, function (img) {
 					return img.src;
 				}), doInc(getLength(gallery_pics)));
@@ -578,6 +588,7 @@
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			doOrient(e.target);
 		}, getThumbs()),
+        
 		///slideshow...
 		recur = (function () {
 			function test() {
@@ -699,7 +710,8 @@
 				//setOrient = ptL(doOrient(unsetPortrait, setPortrait), $('base')),
 				relocate = ptL(lazyVal, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
-				farewell = [notplaying, exitplay, exitswap, doReLocate, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
+                doExitShow = doComp(thrice(lazyVal)('unrender')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
+				farewell = [notplaying, exit_inplay, exitswap, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				next_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				pauser = ptL(utils.invokeWhen, _.negate(ptL($, 'slide')), ptL(doMakeSlide, 'base', 'slide', unlocate, go_render, do_invoke_player)),
@@ -765,7 +777,8 @@
 					//con(event_actions.slice(1, 2))
 					if (e.target.id === 'exit') {
 						chain = chain.validate('play');
-						slide_player.unrender(pages.findIndex(getBaseSrc));
+						//slide_player.unrender(pages.findIndex(getBaseSrc));
+                        doExitShow();
 						_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
 						exitshow();
 						locate.unrender();
