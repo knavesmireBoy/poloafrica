@@ -34,72 +34,89 @@
 		}
 		return F;
 	}
-	var doubleGet = function (o, sub, v, p) {
-			return o[sub][p](v);
-		},
-		getResult = function (arg) {
-			return _.isFunction(arg) ? arg() : arg;
-		},
-		greater = function (a, b) {
-			return a > b;
-		},
-		greaterBridge = function (o, p1, p2) {
-			return greater(o[p1], o[p2]);
-		},
-		equals = function (a, b) {
-			return a === b;
-		},
-		add = function (a, b) {
-			return a + b;
-		},
-		modulo = function (n, i) {
-			return i % n;
-		},
-		increment = function (i) {
-			return i + 1;
-		},
-		equalNum = function (tgt, cur) {
-			return cur === tgt || parseFloat(cur) === parseFloat(tgt);
-		},
-		invoke = function (f, arg) {
-			arg = _.isArray(arg) ? arg : [arg];
-			return f.apply(null, arg);
-		},
-		invokeCB = function (arg, cb) {
-			arg = _.isArray(arg) ? arg : [arg];
-			return cb.apply(null, arg);
-		},
-		invokeBridge = function (arr) {
-			return invoke(arr[0], arr[1]);
-		},
-		invokeArgs = function (f) {
-			var args = _.rest(arguments);
-			return f.apply(null, _.map(args, getResult));
-		},
-		doMethod = function (o, v, p) {
-			return o[p] && o[p](v);
-		},
-		lazyVal = function (v, o, p) {
-			return doMethod(o, v, p);
-		},
-		doCallbacks = function (cb, coll, p) {
-			return _[p](coll, cb);
-		},
-		spread = function (f, j, group) {
-			if (!group || !group[j]) {
-				return [
-					[],
-					[]
-				];
-			}
-			//allow for partial
-			if (j) {
-				return f(group[0], group[j]);
-			}
-			//or curry
-			return f(group[1])(group[0]);
-		},
-		pages = (function () {
+    
+    
+    function doubleGet(o, sub, v, p) {
+		return o[sub][p](v);
+	}
+    
+    function greater(a, b) {
+		return a > b;
+	}
+
+	function greaterBridge(o, p1, p2) {
+		return greater(o[p1], o[p2]);
+	}
+
+	function getResult(arg) {
+		return _.isFunction(arg) ? arg() : arg;
+	}
+
+	function equals(a, b) {
+		return a === b;
+	}
+
+	function add(a, b) {
+		return a + b;
+	}
+
+	function modulo(n, i) {
+		return i % n;
+	}
+
+	function increment(i) {
+		return i + 1;
+	}
+
+	function equalNum(tgt, cur) {
+		return cur === tgt || parseFloat(cur) === parseFloat(tgt);
+	}
+
+	function invoke(f, arg) {
+		arg = _.isArray(arg) ? arg : [arg];
+		return f.apply(null, arg);
+	}
+
+	function invokeCB(arg, cb) {
+		arg = _.isArray(arg) ? arg : [arg];
+		return cb.apply(null, arg);
+	}
+
+	function invokeBridge(arr) {
+		return invoke(arr[0], arr[1]);
+	}
+
+	function invokeArgs(f) {
+		var args = _.rest(arguments);
+		return f.apply(null, _.map(args, getResult));
+	}
+
+	function doMethod(o, v, p) {
+		return o[p] && o[p](v);
+	}
+
+	function lazyVal(v, o, p) {
+		return doMethod(o, v, p);
+	}
+    function doCallbacks(cb, coll, p) {
+        return _[p](coll, cb);
+    }
+    function spread(f, j, group) {
+        if (!group || !group[j]) {
+            return [
+                [],
+                []
+            ];
+        }
+        //allow for partial
+        if (j) {
+            return f(group[0], group[j]);
+        }
+        //or curry
+        return f(group[1])(group[0]);
+    }
+    
+	var pages = (function () {
 			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 				twee = _.range(15, 29),
 				drie = _.range(29, 43),
