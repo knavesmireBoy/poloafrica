@@ -488,6 +488,7 @@
 				page_index = pages.findIndex(getBaseSrc),
 				m = flag ? 'render' : 'unrender',
 				slider = get_player();
+            con(slider, in_play());
 			slider[m](page_index, myint);
 		},
 		do_page_iterator = function () {
@@ -643,7 +644,7 @@
 				doPlaying = defer_once(doAlt)([playing, notplaying]),
 				doDisplay = defer_once(doAlt)([playtime]),
 				unlocate = thricedefer(doMethod)('unrender')(null)(locate),
-				invoke_player = deferEach([doSlide, doDisplay, doPlaying])(getResult),
+				invoke_player = deferEach([doSlide, doPlaying, ptL(setTimeout, doDisplay, 1)])(getResult),
 				//do_invoke_player = ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player),
 				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), utils.getDomParent(utils.getNodeByTag('main'))),
 				relocate = ptL(lazyVal, null, locate, 'render'),
