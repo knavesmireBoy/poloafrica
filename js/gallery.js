@@ -162,12 +162,14 @@
 					});
 				},
 				//bookEnd is a strategy for ordering an array, can be easily swapped on client request
+                twice = poloAF.Util.curryFactory(2),
+                thrice = poloAF.Util.curryFactory(3),
 				desktop = _.compose(_.flatten, _.partial(bookEnd, 0), _.partial(spread, _.zip, 1)),
-				mobile = _.compose(_.flatten, _.partial(spread, poloAF.Util.curryFactory(3)(doMethod)('concat'), 0));
+				mobile = _.compose(_.flatten, _.partial(spread, thrice(doMethod)('concat'), 0));
 			return {
 				getList: function() {
 					//crucial slice, remember arrays passed as reference, so if we interfere with above we're in trubble
-					return _.map(all, poloAF.Util.curryFactory(3)(doMethod)('slice')(0)).slice(0);
+					return _.map(all, thrice(doMethod)('slice')(0)).slice(0);
 				},
 				findInt: function(finder) {
 					var str = doMatch(getResult(finder));
@@ -177,7 +179,7 @@
 					return str && parseFloat(str.match(picnum)[1]);
 				},
 				findIndex: function(finder) {
-					return _.findIndex(_.map(all, poloAF.Util.curryFactory(3)(_.filter)(_.partial(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
+					return _.findIndex(_.map(this.getList(), twice(_.filter)(_.partial(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
 				},
 				getPortraitPics: _.partial(getAspectPriority, true),
 				getLscpPics: _.partial(getAspectPriority, false),
