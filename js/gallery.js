@@ -5,22 +5,22 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (mq, query, touchevents, pausepath, imagepath, picnum, tooltip_msg, dummy, makePath) {
+(function(mq, query, touchevents, pausepath, imagepath, picnum, tooltip_msg, dummy, makePath) {
 	"use strict";
 
 	function getNativeOpacity(bool) {
 		return {
-			getKey: function () {
+			getKey: function() {
 				return bool ? 'filter' : Modernizr.prefixedCSS('opacity');
 			},
-			getValue: function (val) {
+			getValue: function(val) {
 				return bool ? 'alpha(opacity=' + val * 100 + ')' : val;
 			}
 		};
 	}
 
 	function invokeMethod(o) {
-		return function (m) {
+		return function(m) {
 			return o[m] && o[m].apply(null, _.rest(arguments));
 		};
 	}
@@ -28,19 +28,18 @@
 	function doPartial(flag, f) {
 		var F = _.partial(flag, f);
 		if (flag && _.isBoolean(flag)) {
-			F = function (elem) {
+			F = function(elem) {
 				return _.partial(f, elem);
 			};
 		}
 		return F;
 	}
-    
-    
-    function doubleGet(o, sub, v, p) {
+
+	function doubleGet(o, sub, v, p) {
 		return o[sub][p](v);
 	}
-    
-    function greater(a, b) {
+
+	function greater(a, b) {
 		return a > b;
 	}
 
@@ -98,25 +97,26 @@
 	function lazyVal(v, o, p) {
 		return doMethod(o, v, p);
 	}
-    function doCallbacks(cb, coll, p) {
-        return _[p](coll, cb);
-    }
-    function spread(f, j, group) {
-        if (!group || !group[j]) {
-            return [
-                [],
-                []
-            ];
-        }
-        //allow for partial
-        if (j) {
-            return f(group[0], group[j]);
-        }
-        //or curry
-        return f(group[1])(group[0]);
-    }
-    
-	var pages = (function () {
+
+	function doCallbacks(cb, coll, p) {
+		return _[p](coll, cb);
+	}
+
+	function spread(f, j, group) {
+		if (!group || !group[j]) {
+			return [
+				[],
+				[]
+			];
+		}
+		//allow for partial
+		if (j) {
+			return f(group[0], group[j]);
+		}
+		//or curry
+		return f(group[1])(group[0]);
+	}
+	var pages = (function() {
 			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 				twee = _.range(15, 29),
 				drie = _.range(29, 43),
@@ -125,7 +125,7 @@
 				ses = _.range(67, 79),
 				sewe = _.range(79, 93),
 				all = [een, twee, drie, vier, vyf, ses, sewe],
-				getAspectPriority = function (bool, coll) {
+				getAspectPriority = function(bool, coll) {
 					if (coll[13]) {
 						var copy = coll.slice(0),
 							res = copy.splice(4, 6);
@@ -133,23 +133,23 @@
 					}
 					return bool ? [] : coll;
 				},
-				doMatch = function (str) {
+				doMatch = function(str) {
 					return str.match(imagepath);
 				},
-				getLeadingGroup = function (portrait, landscape, flag) {
+				getLeadingGroup = function(portrait, landscape, flag) {
 					var leader = flag ? portrait : landscape,
 						trailer = flag ? landscape : portrait;
 					return [leader, trailer];
 				},
-				fixPageOrder = function (group, i) {
+				fixPageOrder = function(group, i) {
 					var leader = group[0],
 						tmp = leader[0],
 						start = _.findIndex(tmp, _.partial(equalNum, i));
 					leader[0] = poloAF.Util.shuffleArray(tmp)(start); //fix on page order
 					return group;
 				},
-				bookEnd = function (count, zipped) {
-					return _.map(zipped, function (nested, idx, zip) {
+				bookEnd = function(count, zipped) {
+					return _.map(zipped, function(nested, idx, zip) {
 						//a = [[1,2,3], [456]] || a = [[], [4,5,6]]
 						if (nested[0].length && nested[1].length) {
 							count = idx && zip[idx - 1][1].length;
@@ -165,16 +165,18 @@
 				desktop = _.compose(_.flatten, _.partial(bookEnd, 0), _.partial(spread, _.zip, 1)),
 				mobile = _.compose(_.flatten, _.partial(spread, poloAF.Util.curryFactory(3)(doMethod)('concat'), 0));
 			return {
-				getList: function () {
+				getList: function() {
 					//crucial slice, remember arrays passed as reference, so if we interfere with above we're in trubble
 					return _.map(all, poloAF.Util.curryFactory(3)(doMethod)('slice')(0)).slice(0);
 				},
-				findInt: function (finder) {
-					var str = doMatch(finder());
+				findInt: function(finder) {
+					var str = doMatch(getResult(finder));
+                    con(str)
 					str = str && str[0];
+                    
 					return str && parseFloat(str.match(picnum)[1]);
 				},
-				findIndex: function (finder) {
+				findIndex: function(finder) {
 					return _.findIndex(_.map(all, poloAF.Util.curryFactory(3)(_.filter)(_.partial(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
 				},
 				getPortraitPics: _.partial(getAspectPriority, true),
@@ -185,13 +187,13 @@
 			};
 		}()),
 		utils = poloAF.Util,
-		/*con = window.console.log.bind(window),
+		con = window.console.log.bind(window),
 		reporter = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
 			msg = typeof msg === 'undefined' ? document.documentElement.className : msg;
 			el.innerHTML = msg;
 		},
-        */
+        
 		ptL = _.partial,
 		doComp = _.compose,
 		Looper = poloAF.LoopIterator,
@@ -218,12 +220,12 @@
 		getThumbs = doComp(utils.getZero, ptL(utils.getByTag, 'ul', main)),
 		getAllPics = doComp(ptL(utils.getByTag, 'img'), getThumbs),
 		doAltSVG = utils.doAlternate(),
-		doSvg = function (svg) {
-			return function (str) {
+		doSvg = function(svg) {
+			return function(str) {
 				svg.setAttribute('viewBox', str);
 			};
 		},
-		doSVGview = function () {
+		doSVGview = function() {
 			var mq = window.matchMedia("(max-width: 667px)"),
 				setViewBox = doSvg(document.getElementById('svg')),
 				doMobile = ptL(setViewBox, "0 40 149 120"),
@@ -254,38 +256,38 @@
 		getSlideChild = doComp(utils.getChild, utils.getChild, $$('slide')),
 		getBaseChild = doComp(utils.getChild, utils.getChild, $$('base')),
 		getBaseSrc = doComp(utils.drillDown(['src']), getBaseChild),
-		//slide and pause 
-		onLoad = function (img, path, promise) {
-			promise.then(getLI(img));
-			img.src = path;
-		},
-		doMapBridge = function (el, v, k) {
-			return doMap(el, [
-				[k, v]
-			]);
-		},
-		addElements = function () {
+		addElements = function() {
 			return doComp(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(getThumbs))('li');
 		},
 		//height and width of image are compared BUT a) must invoke the comparison AFTER image loaded
 		//b) must remove load listener or will intefere with slideshow
-		onBase = function (img, path, promise) {
+		onBase = function(img, path, promise) {
 			img.src = path;
-			var ev = eventing('load', event_actions.slice(0, 1), function (e) {
+			var ev = eventing('load', event_actions.slice(0, 1), function(e) {
 				promise.then(e.target);
 				ev.unrender();
 			}, img).render();
 		},
-		doInc = function (n) {
+		doInc = function(n) {
 			return doComp(_.partial(modulo, n), increment);
 		},
-		doMapLateVal = function (v, el, k) {
+		doMapLateVal = function(v, el, k) {
 			return doMap(el, [
 				[k, v]
 			]);
 		},
-        getPausePath = ptL(utils.getBest, doComp(ptL(utils.hasClass, 'portrait'), getThumbs), [ pausepath + 'pauseLong.png', pausepath + 'pause.png']),
-		doMakeBase = function (source, target) {
+		//slide and pause 
+		onLoad = function(img, path, promise) {
+			promise && promise.then(getLI(img));
+			img.src = path;
+		},
+		doMapBridge = function(el, v, k) {
+			return doMap(el, [
+				[k, v]
+			]);
+		},
+		getPausePath = ptL(utils.getBest, doComp(ptL(utils.hasClass, 'portrait'), getThumbs), [pausepath + 'pauseLong.png', pausepath + 'pause.png']),
+		doMakeBase = function(source, target) {
 			var img = addElements();
 			doMap(img.parentNode, [
 				['href', doParse(source)]
@@ -295,7 +297,7 @@
 			]);
 			return onBase(img, doParse(img.parentNode.href), new utils.FauxPromise(_.rest(arguments, 2)));
 		},
-		doMakeSlide = function (source, target) {
+		doMakeSlide = function(source, target) {
 			var img = addElements();
 			doMap(img.parentNode, [
 				['href', doParse(getBaseSrc())]
@@ -305,7 +307,7 @@
 			]);
 			return onLoad(img, doParse(img.parentNode.href), new utils.FauxPromise(_.rest(arguments, 2)));
 		},
-		doMakePause = function (path) {
+		doMakePause = function(path) {
 			var img = addElements();
 			doMap(img.parentNode.parentNode, [
 				['id', 'paused']
@@ -315,32 +317,32 @@
 					[cssopacity.getKey(), cssopacity.getValue(0.5)]
 				]
 			]);
-			return onLoad(img, path, new utils.FauxPromise(_.rest(arguments)));
+			return onLoad(img, path /*, new utils.FauxPromise(_.rest(arguments))*/ );
 		},
-		loadImage = function (getnexturl, id, promise) {
+		loadImage = function(getnexturl, id, promise) {
 			var img = getDomTargetImg($(id));
 			if (img) {
-				img.onload = function (e) {
+				img.onload = function(e) {
 					promise.then(e.target);
 				};
 				img.src = doParse(getnexturl());
 				img.parentNode.href = doParse(img.src);
 			}
 		},
-		loader = function (caller, id) {
+		loader = function(caller, id) {
 			var args = _.rest(arguments, 2);
-			args = args.length ? args : [function () {}];
+			args = args.length ? args : [function() {}];
 			loadImage(caller, id, new utils.FauxPromise(args));
 		},
-		addPageNav = function (myAnCr, id, cb) {
+		addPageNav = function(myAnCr, id, cb) {
 			return doComp(cb, anCr(doComp(ptL(klasAdd, 'pagenav'), doComp(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')(id)), myAnCr(main), utils.always('a'))))('span');
 		},
 		makeToolTip = doComp(thrice(doMethod)('init')(null), ptL(poloAF.Tooltip, getThumbs, tooltip_msg, touchevents ? 0 : 2)),
 		getValue = doComp(doVal, ptL(doubleGet, Looper, 'onpage')),
 		showtime = doComp(ptL(klasRem, ['gallery'], getThumbs), ptL(klasAdd, ['showtime'], utils.getBody())),
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
-		playing = doComp(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', $$('controls'))),
-		notplaying = ptL(klasRem, 'playing', $$('controls')),
+		playing = doComp(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', main)),
+		notplaying = ptL(klasRem, 'playing', main),
 		exit_inplay = ptL(klasRem, 'inplay', $('wrap')),
 		exitswap = ptL(klasRem, 'swap', utils.getBody()),
 		exitshow = doComp(ptL(klasAdd, 'gallery', getThumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exit_inplay),
@@ -350,15 +352,15 @@
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
 		getEnvironment = ptL(utils.isDesktop, threshold),
-		svg_resizer = function (alternator) {
+		svg_resizer = function(alternator) {
 			if (!getEnvironment()) {
 				alternator();
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
-		$LI = (function (options) {
+		$LI = (function(options) {
 			function getColl() {
-				return _.filter(getThumbs().getElementsByTagName('li'), function (li) {
+				return _.filter(getThumbs().getElementsByTagName('li'), function(li) {
 					return !li.id;
 				});
 			}
@@ -372,25 +374,26 @@
 			var addAlt = doComp(ptL(klasAdd, 'alt'), getThumbs),
 				remAlt = doComp(ptL(klasRem, 'alt'), getThumbs);
 			return {
-				exec: function () {
+				exec: function() {
 					//used ONLY by negator swaps actions on failing predicate
 					var action = options[0];
 					_.each(_.last(getColl(), 2), this[action]);
 					options = options.reverse();
 				},
-				unrender: function (el) {
+				unrender: function(el) {
 					var $el = utils.machElement(utils.always(el)).render();
 					$el.unrender();
 				},
-				render: function (el) {
+				render: function(el) {
 					var base = $('base'),
 						ancr = base ? anCrIn(base, getThumbs) : anCr(getThumbs);
 					//doesn't really matter where #base is placed as all other LIS are hidden when it is present. But tidier to append
 					return utils.machElement(ancr, utils.always(el)).render();
 				},
-				query: function (coll) {
+				query: function(coll) {
 					var lis = getColl(),
 						L = getColl().length;
+                    
 					if (L > coll.length) {
 						_.each(_.last(lis, 2), this.unrender);
 						addAlt();
@@ -405,7 +408,7 @@
 				}
 			};
 		}(['unrender', 'render'])),
-		negator = function (cb, page_coll) {
+		negator = function(cb, page_coll) {
 			if (galleryCount(page_coll.value)) {
 				cb();
 				galleryCount = _.negate(galleryCount);
@@ -417,9 +420,9 @@
 		//awaits an img element, maps functions that are invoked with the incoming element argument
 		doPortrait = doComp(ptL(invoke, sortClass), ptL(_.map, [doClass, utils.always('portrait'), getLI]), twice(invoke)),
 		fixNoNthChild = ptL(utils.invokeWhen, utils.always(!Modernizr.nthchild), doPortrait),
-		populatePage = function (img, path) {
+		populatePage = function(img, path) {
 			img.src = path;
-			img.onload = function (e) {
+			img.onload = function(e) {
 				fixNoNthChild(e.target);
 			};
 		},
@@ -434,7 +437,7 @@
 		getDirection = ptL(utils.getBest, get_back, ['back', 'forward']),
 		every = doComp(doValidate, doPartial(true, invokeCB)),
 		advanceRouteBridge = ptL(utils.invokeWhen, every, getDirection),
-		advanceRoute = function (m) {
+		advanceRoute = function(m) {
 			if (!Looper.cross_page) {
 				Looper.cross_page = Looper.from(pages.getList(), doInc(pages.getList().length));
 			}
@@ -444,33 +447,35 @@
 		pageNavHandler = doComp(ptL(eventing, 'click', event_actions.slice(0, 1), _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
 		$nav = addPageNav(ptL(anCrIn, getThumbs), 'gal_back', pageNavHandler),
 		slide_player = {
-			render: function (page_index, picsrc) {
+			render: function(page_index, picsrc) {
 				var reordered = utils.shuffleArray(pages.getList())(page_index),
 					mylscp = _.map(reordered, pages.getLscpPics),
 					myptrt = _.map(reordered, pages.getPortraitPics),
-					is_portrait = _.filter(myptrt, function (arr) {
+					is_portrait = _.filter(myptrt, function(arr) {
 						return _.find(arr, ptL(equalNum, picsrc));
 					}),
 					group = pages.doGroup(pages.fixPageOrder(pages.getLeadingGroup(myptrt, mylscp, !!is_portrait[0]), picsrc));
 				Looper.onpage = Looper.from(_.map(group, makePath), doInc(getLength(group)));
 			},
-			unrender: function (page_index) {
+			unrender: function(page_index) {
 				/*restores on page iterator post slideshow
 				if omitted manual navigation would cross page boundaries*/
 				var page,
 					gallery_pics,
 					list = pages.getList();
+                console.log(getBaseSrc())
 				Looper.cross_page = Looper.from(list, doInc(getLength(list)));
 				Looper.cross_page.set(page_index);
 				page = Looper.cross_page.get();
+                console.log(page_index, page)
 				$LI.query(page);
-				gallery_pics = _.filter(getAllPics(), function (img) {
+				gallery_pics = _.filter(getAllPics(), function(img) {
 					return !getLI(img).id;
 				});
-				_.each(gallery_pics, function (img, i) {
+				_.each(gallery_pics, function(img, i) {
 					populatePage(img, makePath(page[i]), 'src');
 				});
-				Looper.onpage = Looper.from(_.map(gallery_pics, function (img) {
+				Looper.onpage = Looper.from(_.map(gallery_pics, function(img) {
 					return img.src;
 				}), doInc(getLength(gallery_pics)));
 				Looper.onpage.find(getBaseSrc());
@@ -479,7 +484,7 @@
 		in_play = thricedefer(doMethod)('findByClass')('inplay')(utils),
 		//could find a none dom dependent predicate
 		get_player = ptL(utils.getBest, _.negate(in_play), [slide_player, dummy]),
-		get_play_iterator = function (flag) {
+		get_play_iterator = function(flag) {
 			//if we are inplay (ie pause or playing) we neither want to call enter or exit so a dummy object is returned
 			var myint = pages.findInt(getBaseSrc),
 				page_index = pages.findIndex(getBaseSrc),
@@ -487,12 +492,12 @@
 				slider = get_player();
 			slider[m](page_index, myint);
 		},
-		do_page_iterator = function () {
-			Looper.onpage = Looper.from(_.map(getAllPics(), function (img) {
+		do_page_iterator = function() {
+			Looper.onpage = Looper.from(_.map(getAllPics(), function(img) {
 				return img.src;
 			}), doInc(getLength(getAllPics())));
 		},
-		setindex = function (arg) {
+		setindex = function(arg) {
 			if (!Looper.onpage) {
 				do_page_iterator();
 			}
@@ -500,13 +505,13 @@
 		},
 		nextcaller = twicedefer(getValue)('forward')('value'),
 		prevcaller = twicedefer(getValue)('back')('value'),
-		locator = function (forward, back) {
-			var getLoc = function (e) {
+		locator = function(forward, back) {
+			var getLoc = function(e) {
 				var box = e.target.getBoundingClientRect();
 				return e.clientX - box.left > box.width / 2;
 			};
-			return function (e) {
-				return utils.getBest(function (agg) {
+			return function(e) {
+				return utils.getBest(function(agg) {
 					return agg[0](e);
 				}, [
 					[getLoc, forward],
@@ -514,14 +519,14 @@
 				]);
 			};
 		},
-		locate = eventing('click', event_actions.slice(0, 2), function (e) {
+		locate = eventing('click', event_actions.slice(0, 2), function(e) {
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			doOrient(e.target);
 		}, getThumbs()),
 		///slideshow...
-		recur = (function (player) {
+		recur = (function(player) {
 			function test() {
-				return _.map([getBaseChild(), getSlideChild()], function (img) {
+				return _.map([getBaseChild(), getSlideChild()], function(img) {
 					return img && img.width > img.height;
 				});
 			}
@@ -553,51 +558,50 @@
 					]);
 				}
 			}
-            
-            function doSlide() {
-                return loader(doComp(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doOrient);
-            }
-            
-			var playmaker = (function () {
-				var setPlayer = function (arg) {
+
+			function doSlide() {
+				return loader(doComp(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doOrient);
+			}
+			var playmaker = (function() {
+				var setPlayer = function(arg) {
 						player = playmaker(arg);
 						recur.execute();
 					},
-					doBase = function () {
-                        return loader(_.bind(Looper.onpage.play, Looper.onpage), 'base', setPlayer, doSwap);
-                    },
+					doBase = function() {
+						return loader(_.bind(Looper.onpage.play, Looper.onpage), 'base', setPlayer, doSwap);
+					},
 					fadeOut = {
-						validate: function () {
+						validate: function() {
 							return recur.i <= -15.5;
 						},
-						inc: function () {
+						inc: function() {
 							recur.i -= 1;
 						},
-						reset: function () {
+						reset: function() {
 							doSlide();
 							var body = utils.getClassList(utils.getBody());
 							setPlayer(body.contains('swap'));
 						}
 					},
 					fadeIn = {
-						validate: function () {
+						validate: function() {
 							return recur.i >= 134.5;
 						},
-						inc: function () {
+						inc: function() {
 							recur.i += 1;
 						},
-						reset: function () {
+						reset: function() {
 							doBase();
 						}
 					},
 					fade = {
-						validate: function () {
+						validate: function() {
 							return recur.i <= -1;
 						},
-						inc: function () {
+						inc: function() {
 							recur.i -= 1;
 						},
-						reset: function () {
+						reset: function() {
 							recur.i = 150;
 							doSlide();
 							doOpacity();
@@ -606,13 +610,13 @@
 						}
 					},
 					actions = [fadeIn, fadeOut];
-				return function (flag) {
+				return function(flag) {
 					return flag ? actions.reverse()[0] : fade;
 				};
 			}());
 			player = playmaker();
 			return {
-				execute: function () {
+				execute: function() {
 					if (!recur.t) {
 						get_play_iterator(true);
 					}
@@ -623,7 +627,7 @@
 						doRecur();
 					}
 				},
-				undo: function (flag) {
+				undo: function(flag) {
 					doOpacity(flag);
 					window.cancelAnimationFrame(recur.t);
 					recur.t = null;
@@ -634,45 +638,46 @@
 		doplay = _.bind(recur.execute, recur),
 		go_render = thrice(doMethod)('render')(null),
 		doExitShow = doComp(thrice(lazyVal)('unrender')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
-
-		factory = function () {
+		factory = function() {
 			var remPause = doComp(utils.removeNodeOnComplete, $$('paused')),
 				remSlide = doComp(utils.removeNodeOnComplete, $$('slide')),
-				doSlide = defer_once(doAlt)([clear, doplay]),
-				doPlaying = defer_once(doAlt)([notplaying, playing]),
+				doSlide = defer_once(doAlt)([doplay, clear]),
+				doPlaying = defer_once(doAlt)([playing, notplaying]),
 				doDisplay = defer_once(doAlt)([playtime]),
 				unlocate = thricedefer(doMethod)('unrender')(null)(locate),
-                
-                //chicke egg. invoke_player has a reference to unpauser, which has a reference to do_invoke_player which has a ref to invoke_player
-                unpauser = function () {
-                    //works by virtue of the function keyword
-                    doMakePause(getPausePath(), go_render, do_invoke_player);
+				//chicke egg. invoke_player has a reference to unpauser, which has a reference to do_invoke_player which has a ref to invoke_player
+				unpauser = function() {
+					//works by virtue of the function keyword
+					doMakePause(getPausePath(), go_render, do_invoke_player);
 				},
-				invoke_player = deferEach([doSlide, doDisplay, defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]), doPlaying])(getResult),
-                
-				do_invoke_player = ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player),
-                
-                //utils.getDomParent(utils.getNodeByTag('main'))
-                
+				invoke_player = deferEach([doSlide, doDisplay, /*defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]), */ doPlaying])(getResult),
+				//do_invoke_player = ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player),
+				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), utils.getDomParent(utils.getNodeByTag('main'))),
 				relocate = ptL(lazyVal, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
 				farewell = [notplaying, exit_inplay, exitswap, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				next_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
-				pauser = ptL(utils.invokeWhen, _.negate(ptL($, 'slide')), ptL(doMakeSlide, 'base', 'slide', unlocate, go_render, do_invoke_player)),
-				COR = function (predicate, action) {
+				pauser1 = ptL(utils.invokeWhen, _.negate(ptL($, 'slide')), ptL(doMakeSlide, 'base', 'slide', unlocate, go_render, do_invoke_player)),
+				pauser = function() {
+					if (!$('slide')) {
+						doMakeSlide('base', 'slide', unlocate, go_render, do_invoke_player);
+						doMakePause(getPausePath());
+					}
+				},
+				COR = function(predicate, action) {
 					return {
-						setSuccessor: function (s) {
+						setSuccessor: function(s) {
 							this.successor = s;
 						},
-						handle: function () {
+						handle: function() {
 							if (predicate.apply(this, arguments)) {
 								return action.apply(this, arguments);
 							} else if (this.successor) {
 								return this.successor.handle.apply(this.successor, arguments);
 							}
 						},
-						validate: function (str) {
+						validate: function(str) {
 							if (utils.findByClass('inplay') && recur.t && predicate(str)) {
 								//return fresh instance on exiting slideshow IF in play mode
 								clear();
@@ -684,11 +689,11 @@
 				},
 				mynext = COR(ptL(invokeArgs, equals, 'forwardbutton'), next_driver),
 				myprev = COR(ptL(invokeArgs, equals, 'backbutton'), prev_driver),
-				myplayer = COR(function () {
+				myplayer = COR(function() {
 					pauser();
 					return true;
 				}, invoke_player);
-			myplayer.validate = function () {
+			myplayer.validate = function() {
 				return this;
 			};
 			mynext.setSuccessor(myprev);
@@ -699,7 +704,7 @@
 		setup_val = doComp(thrice(doMethod)('match')(/img/i), node_from_target),
 		svg_handler = ptL(svg_resizer, doSVGview()),
 		$setup = {},
-		setup = function (e) {
+		setup = function(e) {
 			doComp(setindex, utils.drillDown(['target', 'src']))(e);
 			doComp(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			doMakeBase(e.target.src, 'base', doOrient, getBaseChild, showtime);
@@ -709,7 +714,7 @@
 				dombuttons = _.map(buttons, doComp(thrice(doMapLateVal)('id'), aButton, thrice(doMethod)('slice')(-6))),
 				dostatic = ptL(klasAdd, 'static', $$('controls')),
 				chain = factory(),
-				controls = eventing('click', event_actions.slice(0, 1), function (e) {
+				controls = eventing('click', event_actions.slice(0, 1), function(e) {
 					var str = text_from_target(e),
 						node = node_from_target(e);
 					if (node.match(/button/i)) {
@@ -720,7 +725,7 @@
 				}, $('controls')),
 				controls_undostat = eventing('mouseover', [], undostatic, utils.getByTag('footer', document)[0]),
 				controls_dostat = eventing('mouseover', [], dostatic, $('controls')),
-				exit = eventing('click', event_actions.slice(0, 1), function (e) {
+				exit = eventing('click', event_actions.slice(0, 1), function(e) {
 					//con(event_actions.slice(1, 2))
 					if (e.target.id === 'exit') {
 						chain = chain.validate('play');
@@ -745,13 +750,13 @@
 	svg_handler();
 	utils.addHandler('resize', window, _.throttle(svg_handler, 99));
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], {
-	render: function () {
+	render: function() {
 		"use strict";
 	},
-	unrender: function () {
+	unrender: function() {
 		"use strict";
 	}
-}, function (path) {
+}, function(path) {
 	"use strict";
 	if (path) {
 		var mypath,
