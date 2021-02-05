@@ -1078,6 +1078,7 @@ poloAF.Util = (function() {
 		drillDown: drillDown,
 		//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
 		eventer: function(type, actions, fn, el) {
+            console.log(arguments);
 			function preventer(wrapped, e) {
 				_.each(actions, function(a) {
 					myEventListener.preventers[a](e);

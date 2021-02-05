@@ -651,6 +651,9 @@
 				invoke_player = deferEach([doSlide, doDisplay, defer_once(doAlt)([ptL(utils.doWhen, $$('slide'), unpauser), remPause]), doPlaying])(getResult),
                 
 				do_invoke_player = ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player),
+                
+                //utils.getDomParent(utils.getNodeByTag('main'))
+                
 				relocate = ptL(lazyVal, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
 				farewell = [notplaying, exit_inplay, exitswap, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
@@ -733,7 +736,7 @@
 			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
 			$setup.unrender();
 		};
-	$setup = eventing('click', event_actions.slice(0, 1), ptL(utils.invokeWhen, setup_val, setup), main);
+	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
 	$setup.render();
 	addPageNav(anCr, 'gal_forward', utils.always(dummy));
 	$nav.render();
