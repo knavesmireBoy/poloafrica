@@ -116,83 +116,8 @@
 		//or curry
 		return f(group[1])(group[0]);
 	}
-	var pages = (function () {
-			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
-				twee = _.range(15, 29),
-				drie = _.range(29, 43),
-				vier = _.range(43, 55),
-				vyf = _.range(55, 67),
-				ses = _.range(67, 79),
-				sewe = _.range(79, 93),
-				all = [een, twee, drie, vier, vyf, ses, sewe],
-				getAspectPriority = function (bool, coll) {
-					if (coll[13]) {
-						var copy = coll.slice(0),
-							res = copy.splice(4, 6);
-						return bool ? res : copy;
-					}
-					return bool ? [] : coll;
-				},
-				doMatch = function (str) {
-					return str.match(imagepath);
-				},
-				getLeadingGroup = function (portrait, landscape, flag) {
-					var leader = flag ? portrait : landscape,
-						trailer = flag ? landscape : portrait;
-					return [leader, trailer];
-				},
-				fixPageOrder = function (group, i) {
-					var leader = group[0],
-						tmp = leader[0],
-						start = _.findIndex(tmp, _.partial(equalNum, i));
-					leader[0] = poloAF.Util.shuffleArray(tmp)(start); //fix on page order
-					return group;
-				},
-				bookEnd = function (count, zipped) {
-					return _.map(zipped, function (nested, idx, zip) {
-						//a = [[1,2,3], [456]] || a = [[], [4,5,6]]
-						if (nested[0].length && nested[1].length) {
-							count = idx && zip[idx - 1][1].length;
-							//ensures leading array of pp2 is same aspect as trailing array of pp1 
-							if (count && (nested[0].length !== count)) {
-								nested = nested.reverse();
-							}
-						}
-						return nested;
-					});
-				},
-				//bookEnd is a strategy for ordering an array, can be easily swapped on client request
-				twice = poloAF.Util.curryFactory(2),
-				thrice = poloAF.Util.curryFactory(3),
-				desktop = _.compose(_.flatten, _.partial(bookEnd, 0), _.partial(spread, _.zip, 1)),
-				mobile = _.compose(_.flatten, _.partial(spread, thrice(doMethod)('concat'), 0));
-			return {
-				getList: function () {
-					//crucial slice, remember arrays passed as reference, so if we interfere with above we're in trubble
-					return _.map(all, thrice(doMethod)('slice')(0)).slice(0);
-				},
-				findInt: function (finder) {
-					var str = doMatch(getResult(finder));
-					str = str && str[0];
-					return str && parseFloat(str.match(picnum)[1]);
-				},
-				findIndex: function (finder) {
-					return _.findIndex(_.map(this.getList(), twice(_.filter)(_.partial(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
-				},
-				getPortraitPics: _.partial(getAspectPriority, true),
-				getLscpPics: _.partial(getAspectPriority, false),
-				getLeadingGroup: getLeadingGroup,
-				fixPageOrder: fixPageOrder,
-				doGroup: Modernizr.touchevents ? mobile : desktop
-			};
-		}()),
-		utils = poloAF.Util,
+	var utils = poloAF.Util,
 		con = window.console.log.bind(window),
-		reporter = function (msg, el) {
-			el = el || utils.getByTag('h2', document)[0];
-			msg = typeof msg === 'undefined' ? document.documentElement.className : msg;
-			el.innerHTML = msg;
-		},
 		ptL = _.partial,
 		doComp = _.compose,
 		Looper = poloAF.LoopIterator,
@@ -268,7 +193,7 @@
 			}, img).render();
 		},
 		doInc = function (n) {
-			return doComp(_.partial(modulo, n), increment);
+			return doComp(ptL(modulo, n), increment);
 		},
 		doMapLateVal = function (v, el, k) {
 			return doMap(el, [
@@ -277,7 +202,7 @@
 		},
 		//slide and pause 
 		onLoad = function (img, path, promise) {
-			if(promise){
+			if (promise) {
                 promise.then(getLI(img));
             }
 			img.src = path;
@@ -359,6 +284,74 @@
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
+        pages = (function () {
+			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
+				twee = _.range(15, 29),
+				drie = _.range(29, 43),
+				vier = _.range(43, 55),
+				vyf = _.range(55, 67),
+				ses = _.range(67, 79),
+				sewe = _.range(79, 93),
+				all = [een, twee, drie, vier, vyf, ses, sewe],
+				getAspectPriority = function (bool, coll) {
+					if (coll[13]) {
+						var copy = coll.slice(0),
+							res = copy.splice(4, 6);
+						return bool ? res : copy;
+					}
+					return bool ? [] : coll;
+				},
+				doMatch = function (str) {
+					return str.match(imagepath);
+				},
+				getLeadingGroup = function (portrait, landscape, flag) {
+					var leader = flag ? portrait : landscape,
+						trailer = flag ? landscape : portrait;
+					return [leader, trailer];
+				},
+				fixPageOrder = function (group, i) {
+					var leader = group[0],
+						tmp = leader[0],
+						start = _.findIndex(tmp, ptL(equalNum, i));
+					leader[0] = poloAF.Util.shuffleArray(tmp)(start); //fix on page order
+					return group;
+				},
+				bookEnd = function (count, zipped) {
+					return _.map(zipped, function (nested, idx, zip) {
+						//a = [[1,2,3], [456]] || a = [[], [4,5,6]]
+						if (nested[0].length && nested[1].length) {
+							count = idx && zip[idx - 1][1].length;
+							//ensures leading array of pp2 is same aspect as trailing array of pp1 
+							if (count && (nested[0].length !== count)) {
+								nested = nested.reverse();
+							}
+						}
+						return nested;
+					});
+				},
+				//bookEnd is a strategy for ordering an array, can be easily swapped on client request
+				desktop = _.compose(_.flatten, ptL(bookEnd, 0), ptL(spread, _.zip, 1)),
+				mobile = _.compose(_.flatten, ptL(spread, thrice(doMethod)('concat'), 0));
+			return {
+				getList: function () {
+					//crucial slice, remember arrays passed as reference, so if we interfere with above we're in trubble
+					return _.map(all, thrice(doMethod)('slice')(0)).slice(0);
+				},
+				findInt: function (finder) {
+					var str = doMatch(getResult(finder));
+					str = str && str[0];
+					return str && parseFloat(str.match(picnum)[1]);
+				},
+				findIndex: function (finder) {
+					return _.findIndex(_.map(this.getList(), twice(_.filter)(ptL(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
+				},
+				getPortraitPics: ptL(getAspectPriority, true),
+				getLscpPics: ptL(getAspectPriority, false),
+				getLeadingGroup: getLeadingGroup,
+				fixPageOrder: fixPageOrder,
+				doGroup: Modernizr.touchevents ? mobile : desktop
+			};
+		}()),
 		$LI = (function (options) {
 			function getColl() {
 				return _.filter(getThumbs().getElementsByTagName('li'), function (li) {
@@ -616,7 +609,6 @@
 			player = playmaker();
 			return {
 				execute: function () {
-                    con('exec')
 					if (!recur.t) {
 						get_play_iterator(true);
 					}
@@ -628,7 +620,6 @@
 					}
 				},
 				undo: function (flag) {
-                    con('undo')
 					doOpacity(flag);
 					window.cancelAnimationFrame(recur.t);
 					recur.t = null;
@@ -647,16 +638,12 @@
 				doDisplay = defer_once(doAlt)([playtime]),
 				unlocate = thricedefer(doMethod)('unrender')(null)(locate),
 				invoke_player = deferEach([doSlide, doPlaying, doDisplay])(getResult),
-				//do_invoke_player = ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player),
 				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), getThumbs),
 				relocate = ptL(lazyVal, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
 				farewell = [notplaying, exit_inplay, exitswap, doReLocate, doExitShow, exitswap, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				next_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
-                /*
-				pauser = ptL(utils.getBest, _.negate(ptL($, 'slide')), [ptL(doMakeSlide, 'base', 'slide', unlocate, go_render, do_invoke_player), invoke_player]),
-                */
 				pauser = function () {
 					//make BOTH slide and pause but only make pause visible on NOT playing
 					if (!$('slide')) {
