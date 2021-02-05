@@ -287,9 +287,6 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
     zoom: 1; /* Triggers "hasLayout" in IE 7 and lower */
 }
 
-.playing #paused {
-    visibility: hidden;
-}
 #gal_back {
 	border-right: 31px solid crimson;
 	/*animation: myright 5s infinite;*/
@@ -301,7 +298,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 #wrap h2 {
     background: none;
 }
-main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav {
+main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav, .playing li#paused {
 	position: absolute;
 	top: 0em;
 	left: -9999px;

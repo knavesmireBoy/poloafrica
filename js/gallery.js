@@ -616,6 +616,7 @@
 			player = playmaker();
 			return {
 				execute: function () {
+                    con('exec')
 					if (!recur.t) {
 						get_play_iterator(true);
 					}
@@ -627,29 +628,30 @@
 					}
 				},
 				undo: function (flag) {
+                    con('undo')
 					doOpacity(flag);
 					window.cancelAnimationFrame(recur.t);
 					recur.t = null;
 				}
 			};
 		}({})),
-		clear = _.bind(recur.undo, recur),
+        clear = _.bind(recur.undo, recur),
 		doplay = _.bind(recur.execute, recur),
 		go_render = thrice(doMethod)('render')(null),
 		doExitShow = doComp(thrice(lazyVal)('unrender')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
 		factory = function () {
 			var remPause = doComp(utils.removeNodeOnComplete, $$('paused')),
 				remSlide = doComp(utils.removeNodeOnComplete, $$('slide')),
-				doSlide = defer_once(doAlt)([doplay, clear]),
-				doPlaying = defer_once(doAlt)([playing, notplaying]),
+				doSlide = defer_once(doAlt)([clear, doplay]),
+				doPlaying = defer_once(doAlt)([notplaying, playing]),
 				doDisplay = defer_once(doAlt)([playtime]),
 				unlocate = thricedefer(doMethod)('unrender')(null)(locate),
-				invoke_player = deferEach([doSlide, doPlaying, ptL(setTimeout, doDisplay, 1)])(getResult),
+				invoke_player = deferEach([doSlide, doPlaying, doDisplay])(getResult),
 				//do_invoke_player = ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player),
-				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), utils.getDomParent(utils.getNodeByTag('main'))),
+				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), getThumbs),
 				relocate = ptL(lazyVal, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
-				farewell = [notplaying, exit_inplay, exitswap, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
+				farewell = [notplaying, exit_inplay, exitswap, doReLocate, doExitShow, exitswap, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				next_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
                 /*
