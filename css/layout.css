@@ -164,6 +164,13 @@ footer>a {
 	svg #onmobile {
 		visibility: hidden;
 	}
+    .svg header a h1 {
+        font-size: 0;
+    }
+    
+    #pink{
+        display: none;
+    }
 	main {
 		padding: 0 0 10.1em 0;
 		margin: 0;

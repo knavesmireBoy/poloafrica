@@ -1,11 +1,10 @@
 /*jslint nomen: true */
 /*global window: false */
 /*global document: false */
-/*global console: false */
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (mq, query, touchevents, pausepath, imagepath, picnum, tooltip_msg, dummy, makePath) {
+(function (mq, query, touchevents, pausepath, imagepath, picnum, tooltip_msg, makePath) {
 	"use strict";
 
 	function getNativeOpacity(bool) {
@@ -16,6 +15,13 @@
 			getValue: function (val) {
 				return bool ? 'alpha(opacity=' + val * 100 + ')' : val;
 			}
+		};
+	}
+
+	function makeDummy() {
+		return {
+			render: function () {},
+			unrender: function () {}
 		};
 	}
 
@@ -202,10 +208,12 @@
 		},
 		//slide and pause 
 		onLoad = function (img, path, promise) {
+			var ret;
 			if (promise) {
-                promise.then(getLI(img));
-            }
+				ret = promise.then(getLI(img));
+			}
 			img.src = path;
+			return ret;
 		},
 		doMapBridge = function (el, v, k) {
 			return doMap(el, [
@@ -284,7 +292,7 @@
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
-        pages = (function () {
+		pages = (function () {
 			var een = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14],
 				twee = _.range(15, 29),
 				drie = _.range(29, 43),
@@ -474,14 +482,14 @@
 		},
 		in_play = thricedefer(doMethod)('findByClass')('inplay')(utils),
 		//could find a none dom dependent predicate
-		get_player = ptL(utils.getBest, _.negate(in_play), [slide_player, dummy]),
+		get_player = ptL(utils.getBest, _.negate(in_play), [slide_player, makeDummy()]),
 		get_play_iterator = function (flag) {
 			//if we are inplay (ie pause or playing) we neither want to call enter or exit so a dummy object is returned
 			var myint = pages.findInt(getBaseSrc),
 				page_index = pages.findIndex(getBaseSrc),
 				m = flag ? 'render' : 'unrender',
 				slider = get_player();
-            con(slider, in_play());
+			con(slider, in_play());
 			slider[m](page_index, myint);
 		},
 		do_page_iterator = function () {
@@ -511,7 +519,7 @@
 				]);
 			};
 		},
-		locate = eventing('click', event_actions.slice(0, 2), function (e) {
+		locate = eventing('click', event_actions.slice(0), function (e) {
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
 			doOrient(e.target);
 		}, getThumbs()),
@@ -626,31 +634,32 @@
 				}
 			};
 		}({})),
-        clear = _.bind(recur.undo, recur),
+		clear = _.bind(recur.undo, recur),
 		doplay = _.bind(recur.execute, recur),
 		go_render = thrice(doMethod)('render')(null),
+		go_unrender = thrice(doMethod)('unrender')(null),
+		$controller = makeDummy(),
 		doExitShow = doComp(thrice(lazyVal)('unrender')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
 		factory = function () {
 			var remPause = doComp(utils.removeNodeOnComplete, $$('paused')),
 				remSlide = doComp(utils.removeNodeOnComplete, $$('slide')),
-				doSlide = defer_once(doAlt)([clear, doplay]),
-				doPlaying = defer_once(doAlt)([notplaying, playing]),
-				doDisplay = defer_once(doAlt)([playtime]),
+				defer = defer_once(doAlt),
+				doSlide = defer([clear, doplay]),
+				doPlaying = defer([notplaying, playing]),
+				doDisplay = defer([function () {}, playtime]),
 				unlocate = thricedefer(doMethod)('unrender')(null)(locate),
 				invoke_player = deferEach([doSlide, doPlaying, doDisplay])(getResult),
 				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), getThumbs),
 				relocate = ptL(lazyVal, null, locate, 'render'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
-				farewell = [notplaying, exit_inplay, doReLocate, doExitShow, exitswap, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
+				farewell = [notplaying, exit_inplay, exitswap, doComp(go_unrender, utils.always($controller)), doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				next_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
-				pauser = function () {
+				controller = function () {
 					//make BOTH slide and pause but only make pause visible on NOT playing
 					if (!$('slide')) {
-						doMakeSlide('base', 'slide', unlocate, go_render, do_invoke_player);
+						$controller = doMakeSlide('base', 'slide', go_render, do_invoke_player, unlocate);
 						doMakePause(getPausePath());
-					} else {
-						invoke_player();
 					}
 				},
 				COR = function (predicate, action) {
@@ -678,7 +687,7 @@
 				mynext = COR(ptL(invokeArgs, equals, 'forwardbutton'), next_driver),
 				myprev = COR(ptL(invokeArgs, equals, 'backbutton'), prev_driver),
 				myplayer = COR(function () {
-					pauser();
+					controller();
 					return true;
 				}, invoke_player);
 			myplayer.validate = function () {
@@ -731,20 +740,13 @@
 		};
 	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
 	$setup.render();
-	addPageNav(anCr, 'gal_forward', utils.always(dummy));
+	addPageNav(anCr, 'gal_forward', makeDummy);
 	$nav.render();
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 	_.each(getAllPics(), fixNoNthChild);
 	svg_handler();
 	utils.addHandler('resize', window, _.throttle(svg_handler, 99));
-}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], {
-	render: function () {
-		"use strict";
-	},
-	unrender: function () {
-		"use strict";
-	}
-}, function (path) {
+}(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
 	if (path) {
 		var mypath,
