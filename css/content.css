@@ -1,6 +1,7 @@
 body {
 	font: normal .875em/1.75 'Lora', Georgia, serif;
-	background-color: white;
+	background-color: rgb(255, 233, 100);
+    background-color: white;
 }
 .no-js body {
 	background-color: mintcream;
@@ -18,7 +19,8 @@ header {
 }
 .backgroundsize header, .backgroundsize footer {
 	-o-background-size: cover;
-	-moz-background-size: cover -ms-background-size: cover;
+	-moz-background-size: cover;
+    -ms-background-size: cover;
 	-webkit-background-size: cover;
 	background-size: cover;
 }
@@ -184,10 +186,11 @@ h2 span {
 	-webkit-background-size: 14%;
 	background-size: contain;
 }
-
+/*
 header>a svg {
 		filter: opacity(80%) contrast(120%);
 	}
+*/
 @media screen and (min-width: 1024px) {
 	header {
 		background-image: url(../images/resource/crop.JPG);
@@ -196,11 +199,12 @@ header>a svg {
 		background-color: hsl(258, 60%, 67%);
 		background-blend-mode: multiply;
 	}
+    /*
     header>a svg {
 		mix-blend-mode: hard-light;
 		filter: opacity(80%) contrast(250%) hue-rotate(-2deg);
 	}
-	
+	*/
 	#wrap h2 span {
 		background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
 		padding: 0 1em;

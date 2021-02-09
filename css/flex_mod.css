@@ -67,7 +67,7 @@ footer>a {
 /* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 
 @supports(background-size: contain) {
-    /* background shorthand is used for individual pages and background-size: is omiitted to support older browsers. ZAP @ no-js*/
+    /* background shorthand is used for individual pages and background-size: is omitted to support older browsers. ZAP @ no-js*/
 	#wrap h2 span, header {
 		background-size: contain;
 	}
@@ -132,12 +132,7 @@ hard code a class of flexy? ot fallback to inline-block
 			p:first-of-type {
 				margin: 0;
 			}
-			header {
-				background-size: 100%;
-			}
-			section.ptrt img {
-				margin: 1em 1em 0;
-			}
+		
 			header {
 				background-size: 100%;
 			}
@@ -160,7 +155,7 @@ hard code a class of flexy? ot fallback to inline-block
 		}
 		/*@@*/
 		.flexwrap header {
-			background-size: 100%;
+			background-size:100%;
 		}
 		.flexwrap section.ptrt img {
 			margin: 1em 1em 0;

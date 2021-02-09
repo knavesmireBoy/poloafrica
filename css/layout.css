@@ -18,8 +18,6 @@ header>a {
 	position: relative;
 	display: block;
 	box-sizing: border-box;
-	margin: 0 0 2% 3%;
-    border: solid 1px red;
 }
 #svg {
 	box-sizing: border-box;
@@ -153,7 +151,8 @@ footer>a {
 }
 @media screen and (min-width: 1024px) {
 	header>a {
-		margin: 0% auto 12%;
+		margin: 0% auto 19em;
+        top: 5em;
 	}
 }
 

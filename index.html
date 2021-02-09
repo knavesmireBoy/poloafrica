@@ -24,8 +24,7 @@
 	<header>
                          <a href=".">
                    
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="0px" height="0px">
+<svg version="1.1"  xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="polologo" style="filter:url(#dropshadow)">
                <title>PoloAfrica Logo</title>
 <path fill="#A8A542" d="M160.36,1.883C160.939,0.29,161.132,0,161.422,0s0.483,0.241,1.062,1.739
@@ -248,19 +247,26 @@
         </g></symbol>
 </svg>
 			<h1>POLOAFRICA<img src="../images/resource/logo_alt.png"></h1>
-               <svg id="svg" viewBox="0 0 340 38">
+               <svg id="svg" viewBox="0 0 340 40">
                      <filter id="dropshadow" >
-                         <feGaussianBlur in="SourceAlpha" stdDeviation=".75"/> <!-- stdDeviation is how much to blur -->
-                         <feOffset dx=".75" dy=".75" result="offsetblur"/> <!-- how much to offset -->
-                         <feComponentTransfer>
+                        <feFlood flood-color="#fe0" flood-opacity=".45" result="flood"/>
+                         <feComposite in="flood" in2="SourceGraphic" operator="in" result="comp"/>
+                        <feGaussianBlur in="SourceAlpha" stdDeviation=".75" result="blur"/> <!-- stdDeviation is how much to blur -->
+
+                         <feOffset dx="2" dy="2" in="blur" result="offsetblur"/> <!-- how much to offset -->
+                          <feComponentTransfer>
                              <feFuncA type="linear" slope="0.9"/> <!-- slope is the opacity of the shadow -->
                          </feComponentTransfer>
-                         <feMerge> 
-                             <feMergeNode/> <!-- this contains the offset blurred image -->
-                             <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+                         <feComposite operator="out" in="offsetblur" in2="SourceGraphic" result="bev"/>
+          
+                         <feMerge>
+                             <feMergeNode /> <!-- this contains the offset blurred image -->
+                             <feMergeNode in="comp"/> <!-- this contains the offset blurred image -->
+                             <feMergeNode in="comp"/> <!-- this contains the offset blurred image -->
                          </feMerge></filter>
                      <use xlink:href="#polologo"></use>
-                 </svg></a>
+                 </svg>
+        </a>
 			<nav id="main_nav">
                 <label class="menu" for="menu-toggle"></label>
                 <input id="menu-toggle" type="checkbox">
