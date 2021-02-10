@@ -74,6 +74,11 @@
 			}
 			// 
 		},
+          doSvg = function(svg){
+            return function(str){
+                svg && str && svg.setAttribute('viewBox', str);
+            }
+        },
 		//this.querySelector("svg > path:nth-of-type(2)").classList.toggle("invisible");
 		/*
        floating_elementsSVG = function (elements, getArticle, getHeading, before, after) {
@@ -100,10 +105,13 @@
 				var mq = window.matchMedia("(max-width: 667px)"),
 					article = getArticle(el),
 					h = article && getHeading(article),
-					onmobile = _.compose(ptL(after, el, h), _.compose(execMobile, undoDesktop)),
-					ondesktop = _.compose(ptL(before, article, el), _.compose(undoMobile, execDesktop));
+                    setViewBox = doSvg(document.getElementById('logo')),
+                   doMobile = ptL(setViewBox, "0 0 155 130"),
+                   doDesktop = ptL(setViewBox, "0 0 340 75"),
+					onmobile = _.compose(ptL(after, el, h), execMobile, undoDesktop, doMobile),
+					ondesktop = _.compose(ptL(before, article, el), undoMobile, execDesktop, doDesktop);
 				if (mq.matches) { //onload
-					_.compose(execMobile, undoDesktop)();
+					_.compose(execMobile, undoDesktop, doMobile)();
 				}
 				if (h) {
 					return doAlt([onmobile, ondesktop]);

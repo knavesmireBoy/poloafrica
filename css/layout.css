@@ -162,7 +162,7 @@ footer>a {
 }
 @media screen and (min-width: 1024px) {
 	header>a {
-		margin: 0% auto 19em;
+		margin: 0% auto 13em;
         top: 5em;
 	}
 }
@@ -187,7 +187,8 @@ footer>a {
 	}
 	header>a {
 		margin: 0 0 0 4.2%;
-        width: 44%;
+        width: 48%;
+        top: 1.5em;
 	}
 	p {
 		margin: 0;
@@ -195,10 +196,11 @@ footer>a {
 	h2 {
 		position: relative;
 		margin:  -8vw 0 0 0;
-		margin:  -8% 0 0 0;
-		padding: 0 0 0 4vw;
+		margin:  -11% 0 0 0;
+		padding: 0 0 0 4%;
 		font-size: 2em;
 		font-size: 1.75rem;
+        line-height: 2;
 	}
 	section {
 		margin: 0;
@@ -220,8 +222,7 @@ footer>a {
 		padding: 0;
 	}
 	h2 span {
-		width: 44%;
-		width: 44vw;
+		width: 50%;
 	}
 	/*width reqd, other properties reqd in no-js scenario; */
 	section img {
