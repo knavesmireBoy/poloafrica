@@ -21,12 +21,13 @@ header>a {
 }
 
 header>a {
-    margin: 0 0 2.2em 1em;
-    top: 1.5em;
+    margin: 0 0 1em 1em;
+    top: 2.5em;
     width: 55%;
 	}
 #logo {
 	box-sizing: border-box;
+    width: 100%;
 }
 
 main {
@@ -142,6 +143,10 @@ footer>a {
 #medley li:nth-child(7):hover ul, #enquiries li:nth-child(8):hover ul {
 	left: auto;
 	right: 0px;
+}
+
+.invisible {
+    visibility: hidden;
 }
 
 

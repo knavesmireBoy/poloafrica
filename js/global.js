@@ -1160,6 +1160,7 @@ poloAF.Util = (function() {
 		},
 		getDefaultAction: _.partial(best, noOp()),
 		getDomChild: curry3(getTargetNode)('firstChild'),
+		getDomChildDefer: curry33(getTargetNode)('firstChild'),
 		getDomParent: curry3(getTargetNode)('parentNode'),
 		getElementWidth: getElementWidth,
 		getElementHeight: getElementHeight,

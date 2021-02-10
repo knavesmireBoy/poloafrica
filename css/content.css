@@ -194,8 +194,7 @@ header>a svg {
 	background-size: cover;
 }
  header{
-	background-size: 100%;
-     background-position: 0 0;
+     background-position: 0 center;
 }
    
 @media screen and (min-width: 1024px) {
