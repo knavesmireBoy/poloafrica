@@ -10,20 +10,14 @@ header {
 	/*
 	background: #b6b686 url(../images/resource/header.png) no-repeat 0 76%/100%;
 	background: hsl(60, 25%, 62%) url(../images/resource/header.png) no-repeat 0 76%/100%;
+    background-position: 0 76%;
     */
 	width: 100%;
 	background-image: url(../images/resource/header_only.png);
 	background-repeat: no-repeat;
-	background-position: 0 76%;
     box-sizing: border-box;
 }
-.backgroundsize header, .backgroundsize footer {
-	-o-background-size: cover;
-	-moz-background-size: cover;
-    -ms-background-size: cover;
-	-webkit-background-size: cover;
-	background-size: cover;
-}
+
 h2 {
 	margin: .8em 0 0;
 	font-size: 2.8em;
@@ -191,14 +185,34 @@ header>a svg {
 		filter: opacity(80%) contrast(120%);
 	}
 */
+
+    .backgroundsize footer {
+	-o-background-size: cover;
+	-moz-background-size: cover;
+    -ms-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+ header{
+	background-size: 100%;
+     background-position: 0 0;
+}
+   
 @media screen and (min-width: 1024px) {
 	header {
 		background-image: url(../images/resource/crop.JPG);
 		background-repeat: no-repeat;
-		background-position: 0 40%;
 		background-color: hsl(258, 60%, 67%);
 		background-blend-mode: multiply;
+        /*background-position: 0 40%;*/
 	}
+    .backgroundsize header{
+	-o-background-size: cover;
+	-moz-background-size: cover;
+    -ms-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
     /*
     header>a svg {
 		mix-blend-mode: hard-light;
@@ -282,10 +296,7 @@ header>a svg {
 		-webkit-background-size: 16%;
 		background-size: contain;
 	}
-	.backgroundsize header {
-		background-size: 100%;
-        background-position: 0 0;
-	}
+	
 }
 @media screen and (max-width: 800px) {
 	header ul {
