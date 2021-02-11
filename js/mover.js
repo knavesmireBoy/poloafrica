@@ -79,6 +79,9 @@
                 svg && str && svg.setAttribute('viewBox', str);
             }
         },
+        setViewBox = doSvg(document.getElementById('logo')),
+        doMobile = ptL(setViewBox, "0 0 155 130"),
+        doDesktop = ptL(setViewBox, "0 0 340 75"),
 		//this.querySelector("svg > path:nth-of-type(2)").classList.toggle("invisible");
 		/*
        floating_elementsSVG = function (elements, getArticle, getHeading, before, after) {
@@ -101,20 +104,23 @@
 		},
        */
 		floating_elements = function(elements, getArticle, getHeading, before, after) {
-			return _.map(elements, function(el) {
-				var mq = window.matchMedia("(max-width: 667px)"),
-					article = getArticle(el),
+            var mq = window.matchMedia("(max-width: 667px)");
+			return _.map(elements, function(el, i) {
+				var article = getArticle(el),
 					h = article && getHeading(article),
-                    setViewBox = doSvg(document.getElementById('logo')),
-                   doMobile = ptL(setViewBox, "0 0 155 130"),
-                   doDesktop = ptL(setViewBox, "0 0 340 75"),
-					onmobile = _.compose(ptL(after, el, h), execMobile, undoDesktop, doMobile),
-					ondesktop = _.compose(ptL(before, article, el), undoMobile, execDesktop, doDesktop);
-				if (mq.matches) { //onload
-					_.compose(execMobile, undoDesktop, doMobile)();
+                    n = i ? 0 : 1,
+                    justMobile = ptL(utils.doWhen, n, _.compose(execMobile, undoDesktop, doMobile)),
+                    justDesktop = ptL(utils.doWhen, n, _.compose(undoMobile, execDesktop, doDesktop)),
+					onmobile = _.compose(ptL(after, el, h), justMobile),
+					ondesktop = _.compose(ptL(before, article, el), justDesktop),
+                    outcomes = [onmobile, ondesktop];
+                
+				if (mq.matches && !n) { //onload
+                    console.log(999)
+                    onmobile();
 				}
 				if (h) {
-					return doAlt([onmobile, ondesktop]);
+					return doAlt(outcomes);
 				}
 			}); //map           
 		},
@@ -140,4 +146,4 @@
 	utils.setScrollHandlers($sections, doTwice(utils.getScrollThreshold)(0.4), 'display', 1);
 	window.setTimeout($sections[0].render, 666);
 	return true;
-}(Modernizr.mq('only all'), '(min-width: 668px)'), document.getElementById('tween'));
+}(Modernizr.mq('only all'), '(min-width: 667px)'), document.getElementById('tween'));

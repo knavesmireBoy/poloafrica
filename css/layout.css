@@ -11,13 +11,15 @@ section img.hide {
 	display: none;
 }
 header>a {
-	text-indent: 200%;
 	white-space: nowrap;
 	overflow: hidden;
 	width: 50%;
 	position: relative;
 	display: block;
 	box-sizing: border-box;
+}
+h1 {
+    	text-indent: 200%;
 }
 
 header>a {
