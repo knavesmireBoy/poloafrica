@@ -31,13 +31,39 @@ article {
 }
 
 section img {
-	-webkit-box-flex: 3;
-	-ms-flex: 3 1 1%;
-	-webkit-flex: 3 1 1%;
-	flex: 3 1 1%;
+	-webkit-box-flex: 4;
+	-ms-flex: 4 1 1%;
+	-webkit-flex: 4 1 1%;
+	flex: 4 1 1%;
+
 }
 
-section.ptrt img, #ani {
+section div .poligon {
+  display: inline-block;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  background: red;
+  box-sizing: border-box;
+ clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    margin-left: calc(-12.5% - 1px);
+}
+section div .poligon:first-child {
+    margin: 0;
+}
+section div .poligon img {
+  position: absolute;
+  top: 1px; /* equal to border thickness */
+  left: 1px; /* equal to border thickness */
+  width: 148px; /* container height - (border thickness * 2) */
+  height: 148px; /* container height - (border thickness * 2) */
+ clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    border-radius: 0;
+    border-width: 0;
+    margin: 0;
+}
+
+section.ptrt img {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 %;
 	-webkit-flex: 1 1 1%;

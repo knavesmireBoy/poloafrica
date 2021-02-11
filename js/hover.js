@@ -9,6 +9,18 @@ if (!window.poloAF) {
 }
 (function (logo_paths) {
 	"use strict";
+    
+    
+    	function getNativeOpacity(bool) {
+		return {
+			getKey: function () {
+				return bool ? 'filter' : Modernizr.prefixedCSS('opacity');
+			},
+			getValue: function (val) {
+				return bool ? 'alpha(opacity=' + val + ')' : val / 100;
+			}
+		};
+	}
 
 	function modulo(i, n) {
 		return i % n;
@@ -63,6 +75,8 @@ if (!window.poloAF) {
 		},
 		tween = document.getElementById('tween'),
 		ie6 = poloAF.Util.getComputedStyle(tween, 'color') === 'red' ? true : false,
+        cssopacity = getNativeOpacity(!window.addEventListener),
+        key = cssopacity.getKey(),
 		doAlt = U.doAlternate(),
 		fader = (function () {
 			var base_el,
@@ -73,14 +87,14 @@ if (!window.poloAF) {
 				timer;
 
 			function doFade(i) {
-				fade_el.style.opacity = i / 100;
+				fade_el.style[key] = cssopacity.getValue(i);
 				return setTimeout(curryDefer(fader)(i), 9);
 			}
 
 			function exit() {
 				window.clearTimeout(timer);
-				exit.opacity = fade_el.style.opacity;
-				fade_el.style.opacity = 100;
+				exit.opacity = fade_el.style[key];
+				fade_el.style[key] = 100;
 			}
 
 			function enter() {
@@ -96,7 +110,7 @@ if (!window.poloAF) {
 				parent.appendChild(fade_el);
 				base_el.src = logo_paths[j];
 				fade_el.onload = function () {
-					this.style.opacity = 100;
+					this.style[key] = 100;
 					//isNaN : divide by zero
 					j = isNaN(j) ? 0 : domod(j += 1);
 					base_el.src = logo_paths[j];

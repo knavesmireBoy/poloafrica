@@ -206,8 +206,9 @@ header>a svg {
     }
     
     h3 {
-    white-space: nowrap;
-}
+        white-space: nowrap
+    }
+    
 	header {
 		background-image: url(../images/resource/crop.JPG);
 		background-repeat: no-repeat;
@@ -244,6 +245,7 @@ header>a svg {
 	h2 {
 		background: none !important;
 		text-align: center;
+
 	}
 	header ul {
 		text-transform: uppercase;
