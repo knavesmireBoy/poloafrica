@@ -1,17 +1,19 @@
 body {
 	font: normal .875em/1.75 'Lora', Georgia, serif;
 	background-color: rgb(255, 233, 100);
-    background-color: white;
+    background-color: cornsilk;
 }
 .no-js body {
 	background-color: mintcream;
 }
+.no-svg body {
+    background-color: blue;
+}
 header {
 	/*
 	background: #b6b686 url(../images/resource/header.png) no-repeat 0 76%/100%;
-	background: hsl(60, 25%, 62%) url(../images/resource/header.png) no-repeat 0 76%/100%;
+	background: hsl(60, 25%, 62%) url(../images/resource/header.png) no-repeat 0 76%/100%;*/
     background-position: 0 76%;
-    */
 	width: 100%;
 	background-image: url(../images/resource/header_only.png);
 	background-repeat: no-repeat;
@@ -46,6 +48,7 @@ h3 {
 	color: #990;
 	color: hsl(58, 60%, 40%);
 	font: normal 1.75em/1.2 'Lora', Georgia, serif;
+    width: 100%;
 }
 p {
 	color: #444;
@@ -198,6 +201,13 @@ header>a svg {
 }
    
 @media screen and (min-width: 1024px) {
+    body {
+        background-color: white;
+    }
+    
+    h3 {
+    white-space: nowrap;
+}
 	header {
 		background-image: url(../images/resource/crop.JPG);
 		background-repeat: no-repeat;
@@ -301,8 +311,11 @@ header>a svg {
 	header ul {
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
+ 
 }
 @media only screen and (max-width: 667px) {
+    
+   
 	header {
 		background-position: 0px 0px;
 	}
@@ -461,6 +474,9 @@ header>a svg {
 		-webkit-background-size: 280%;
 		background-size: cover;
 	}
+        .no-svg body {
+        background-color: blueviolet;
+    }
 }
 @media only screen and (max-width: 480px) {
 	footer {

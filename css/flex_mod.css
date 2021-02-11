@@ -29,17 +29,26 @@ article {
 	-webkit-flex: 6 1 1%;
 	flex: 6 1 1%;
 }
+
 section img {
-	-webkit-box-flex: 4;
-	-ms-flex: 4 1 1%;
-	-webkit-flex: 4 1 1%;
-	flex: 4 1 1%;
+	-webkit-box-flex: 3;
+	-ms-flex: 3 1 1%;
+	-webkit-flex: 3 1 1%;
+	flex: 3 1 1%;
 }
-section.ptrt img {
+
+section.ptrt img, #ani {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 %;
 	-webkit-flex: 1 1 1%;
 	flex: 1 1 1%;
+}
+
+#ani {
+	-webkit-box-flex: 2;
+	-ms-flex: 2 1 %;
+	-webkit-flex: 2 1 1%;
+	flex: 2 1 1%;
 }
 html.js body img, html.no-js body img {
 	-ms-flex-negative: 0;

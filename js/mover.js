@@ -74,50 +74,49 @@
 			}
 			// 
 		},
-          doSvg = function(svg){
-            return function(str){
-                svg && str && svg.setAttribute('viewBox', str);
-            }
-        },
-        setViewBox = doSvg(document.getElementById('logo')),
-        doMobile = ptL(setViewBox, "0 0 155 130"),
-        doDesktop = ptL(setViewBox, "0 0 340 75"),
+         doSvg = function(svg){
+             //utils.report(utils.$('logo').id);
+           return function(str){
+               svg && str && svg.setAttribute('viewBox', str);
+           }
+       },
+       setViewBox = doSvg(document.getElementById('logo')),
+       doMobile = ptL(setViewBox, "0 0 155 130"),
+       doDesktop = ptL(setViewBox, "0 0 340 75"),
 		//this.querySelector("svg > path:nth-of-type(2)").classList.toggle("invisible");
 		/*
-       floating_elementsSVG = function (elements, getArticle, getHeading, before, after) {
+      floating_elementsSVG = function (elements, getArticle, getHeading, before, after) {
 			return _.map(elements, function (el) {
-               var mq  = window.matchMedia("(max-width: 667px)"),
-                   setViewBox = doSvg(document.getElementsByTagName('svg')[0]),
-                   //doMobile = ptL(setViewBox, "0 0 150 75"),
-                   doDesktop = ptL(setViewBox, "0 0 340 75"),
-                   article = getArticle(el),
-                   h = article && getHeading(article),
-                   onmobile = _.compose(ptL(after, el, h), doMobile),
-                   ondesktop = _.compose(ptL(before, article, el), doDesktop);
-               if(mq.matches){//onload
-                   doMobile();
-               }
-               if(h){
-                   return doAlt([onmobile, ondesktop]);
-               }
+              var mq  = window.matchMedia("(max-width: 667px)"),
+                  setViewBox = doSvg(document.getElementsByTagName('svg')[0]),
+                  //doMobile = ptL(setViewBox, "0 0 150 75"),
+                  doDesktop = ptL(setViewBox, "0 0 340 75"),
+                  article = getArticle(el),
+                  h = article && getHeading(article),
+                  onmobile = _.compose(ptL(after, el, h), doMobile),
+                  ondesktop = _.compose(ptL(before, article, el), doDesktop);
+              if(mq.matches){//onload
+                  doMobile();
+              }
+              if(h){
+                  return doAlt([onmobile, ondesktop]);
+              }
 			}); //map           
 		},
-       */
+      */
 		floating_elements = function(elements, getArticle, getHeading, before, after) {
-            var mq = window.matchMedia("(max-width: 667px)");
+           var mq = window.matchMedia("(max-width: 667px)");
 			return _.map(elements, function(el, i) {
 				var article = getArticle(el),
 					h = article && getHeading(article),
-                    n = i ? 0 : 1,
-                    justMobile = ptL(utils.doWhen, n, _.compose(execMobile, undoDesktop, doMobile)),
-                    justDesktop = ptL(utils.doWhen, n, _.compose(undoMobile, execDesktop, doDesktop)),
+                   n = i ? 0 : 1,
+                   justMobile = ptL(utils.doWhen, n, _.compose(execMobile, undoDesktop, doMobile)),
+                   justDesktop = ptL(utils.doWhen, n, _.compose(undoMobile, execDesktop, doDesktop)),
 					onmobile = _.compose(ptL(after, el, h), justMobile),
 					ondesktop = _.compose(ptL(before, article, el), justDesktop),
-                    outcomes = [onmobile, ondesktop];
-                
+                   outcomes = [onmobile, ondesktop];
 				if (mq.matches && !n) { //onload
-                    console.log(999)
-                    onmobile();
+                   onmobile();
 				}
 				if (h) {
 					return doAlt(outcomes);

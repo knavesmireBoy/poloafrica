@@ -11,9 +11,11 @@ footer {
     _background-image: url("../images/resource/footer_green_ko8.png");
 }
 
-header {
-	background-image: url(../images/resource/header.jpg);
-	background-color: pink;
+
+#wrap header>a {
+    width: 100%;
+    border: solid 1px red !important;
+    top: 0;
 }
 
 main ul {
@@ -29,12 +31,25 @@ section img {
     _margin: .5em 1em 1em 0;
 }
 
+ .no-svgfilters  #wrap header a {
+     text-align: left;
+     margin: 0;
+     width: auto;
+    }
+
 main > a {
     *border-width: 0px;
     *display:inline-block;
     *display: inline;
 	zoom: 1;
 }
+.no-svgfilters header a h1 {
+    _text-indent: -9999px;
+    margin: 1.5em 0 1.5em .5em;
+    _background-image: url("../images/resource/logo_desktop8.png");
+    background-position: left top;
+}
+
 
 footer > a {
     *clear: both;
