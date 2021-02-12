@@ -25,7 +25,7 @@ header>a {
 	position: relative;
 	display: block;
 	box-sizing: border-box;
-    margin: 0 0 4em 1em;
+    margin: 0 0 3em 1em;
     top: 5em;
     width: 55%;
     text-align: left;
@@ -356,7 +356,7 @@ footer>a {
 }
 @media only screen and (max-width: 480px) {
 	h2 {
-		margin: -12vw 0 0;
+		margin: -11vw 0 0;
 		padding: 0 0 0 1%;
 		padding: 1vw 0 0 1vw;
 	}
@@ -380,7 +380,7 @@ footer>a {
 		width: 40%;
 	}
      header>a {
-		margin: -12% 0 0 4.2%;
+		margin: 0 0 0 4.2%;
 	}
 }
 @media only screen and (max-width: 414px) {
@@ -388,7 +388,11 @@ footer>a {
 		line-height: 1.4;
 	}
     h2 span {
-		width: 55vw;
+		width: 56vw;
+	}
+    header>a {
+		width: 55%;
+        margin: 0 0 0 1%;
 	}
 }
 @media only screen and (max-width: 400px) {
@@ -398,7 +402,7 @@ footer>a {
 		padding: 1vw 0 1vw;
 	}
 	h2 span {
-		width: 55.5vw;
+		width: 57vw;
 	}
 	.no-flexwrap h2 {
 		padding: 0 0 0 .3rem;
@@ -406,20 +410,19 @@ footer>a {
 	no-flexwrap h2 span {
 		width: 13rem;
 	}
-     header>a {
-		margin: -15% 0 0 3%;
-	}
+     
 }
 
 @media only screen and (max-width: 340px) {
 
     h2 span {
-		width: 58vw;
+		width: 60vw;
 	}
     
-    header>a {
-		margin: -12% 0 0 6%;
-	}
+    
+    h2 {
+		margin: -12vw 0 0;
+    }
 }
 
 @media only screen and (max-width: 320px) {
@@ -429,8 +432,16 @@ footer>a {
 	}
     
     header>a {
-		margin: -12% 0 0 7%;
+		margin: 0 0 0 4%;
 	}
+}
+@media only screen and (max-width: 280px) {
+
+    h2  {
+		font-size: 1.5em;
+	}
+    
+   
 }
 @media only screen and (-ms-high-contrast: none) {
 	.touchevents footer {
