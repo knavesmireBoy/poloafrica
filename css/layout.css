@@ -1,3 +1,7 @@
+@media screen and (min-width: 980px){
+/* CSS Document */
+}
+
 body {
 	margin: 2% 0 0;
 }
@@ -221,7 +225,7 @@ footer>a {
 		margin: 0 0 0 4.2%;
         width: 48%;
         top: 1.5em;
-         border: solid 1px green;
+        border: solid 1px green;
 	}
 	p {
 		margin: 0;
@@ -229,12 +233,10 @@ footer>a {
 	h2 {
 		position: relative;
 		margin:  -8vw 0 0 0;
-		margin:  -11% 0 0 0;
+		margin:  -9% 0 0 0;
 		padding: 0 0 0 4%;
 		font-size: 2em;
 		font-size: 1.75rem;
-        line-height: 2;
-        
 	}
 	section {
 		margin: 0;
@@ -278,8 +280,8 @@ footer>a {
 		transition: height .9s ease-out;
 	}
 	header input:checked+ul {
-		top: 4em;
-		top: 3.5rem;
+		top: 4.6em;
+        top: 3.6rem;
 		right: 1em;
 		right: 1rem;
 		z-index: 2;

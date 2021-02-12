@@ -21,8 +21,9 @@ main {
 main img {
 	width: 100%;
 }
-h2 span {
+#photos .override h2 span {
 	color: white;
+    background: white;
 }
 main ul {
 	text-align: center;
@@ -330,9 +331,16 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 #photos h2 span {
 	background: none;
 }
+
 #photos h2:after {
 	content: none;
 }
+
+#photos #wrap h2 span {
+	color: white;
+    background: none;
+}
+
 @media only screen {
 	.showtime main ul li {
 		width: 100%;

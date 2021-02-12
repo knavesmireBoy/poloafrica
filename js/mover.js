@@ -38,13 +38,13 @@
 		getArticle = utils.getSibling(utils.getNodeByTag('article')),
 		getSection = utils.getDomParent(utils.getNodeByTag('section')),
 		getHeading = _.compose(utils.getDomChild(utils.getNodeByTag('h3')), utils.getChild),
-		getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
 		klasAdd = utils.addClass,
 		headingmatch = doThrice(invokemethod)('match')(/^h\d$/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
 		//https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment = ptL(utils.isDesktop, threshold),
+        getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
 		execMobile = _.compose(ptL(utils.removeClass, 'invisible'), getSvgPath),
 		execDesktop = _.compose(ptL(utils.removeClass, 'invisible'), utils.getNext, getSvgPath),
 		undoMobile = _.compose(ptL(utils.addClass, 'invisible'), getSvgPath),
@@ -81,29 +81,8 @@
            }
        },
        setViewBox = doSvg(document.getElementById('logo')),
-       doMobile = ptL(setViewBox, "0 0 155 130"),
+       doMobile = ptL(setViewBox, "0 0 155 125"),
        doDesktop = ptL(setViewBox, "0 0 340 75"),
-		//this.querySelector("svg > path:nth-of-type(2)").classList.toggle("invisible");
-		/*
-      floating_elementsSVG = function (elements, getArticle, getHeading, before, after) {
-			return _.map(elements, function (el) {
-              var mq  = window.matchMedia("(max-width: 667px)"),
-                  setViewBox = doSvg(document.getElementsByTagName('svg')[0]),
-                  //doMobile = ptL(setViewBox, "0 0 150 75"),
-                  doDesktop = ptL(setViewBox, "0 0 340 75"),
-                  article = getArticle(el),
-                  h = article && getHeading(article),
-                  onmobile = _.compose(ptL(after, el, h), doMobile),
-                  ondesktop = _.compose(ptL(before, article, el), doDesktop);
-              if(mq.matches){//onload
-                  doMobile();
-              }
-              if(h){
-                  return doAlt([onmobile, ondesktop]);
-              }
-			}); //map           
-		},
-      */
 		floating_elements = function(elements, getArticle, getHeading, before, after) {
            var mq = window.matchMedia("(max-width: 667px)");
 			return _.map(elements, function(el, i) {
