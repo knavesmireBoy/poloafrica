@@ -10,12 +10,21 @@ if (!window.poloAF) {
 (function (mq, query) {
 	"use strict";
     
+    function viewBoxDims(s){
+        var a = s.split(' ').slice(-2);
+        return a;
+    }
     
       function doSvg(svg){
             return function(str){
+                var o = viewBoxDims(str);
                 svg.setAttribute('viewBox', str);
+                //'px' is assumed a[0]+'px'
+                svg.setAttribute('width', o[0]);
+                svg.setAttribute('height', o[1]);
             }
         }
+    
     
      function SVGview() {
             var mq  = window.matchMedia("(max-width: 667px)"),
@@ -29,6 +38,8 @@ if (!window.poloAF) {
                     return doAlt([doMobile, doDesktop]);
         };
      }
+    
+    
 
 	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
@@ -95,8 +106,6 @@ if (!window.poloAF) {
 			return errors;
 		};
 	}
-    
-    	
 	var dum = {},
         utils = poloAF.Util,
 		ptL = _.partial,
@@ -129,10 +138,10 @@ if (!window.poloAF) {
 		threshold = Number(query.match(number_reg)[1]),
         getEnvironment = ptL(utils.isDesktop, threshold),
         getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
-		execMobile = _.compose(ptL(utils.removeClass, 'invisible'), getSvgPath),
-		execDesktop = _.compose(ptL(utils.removeClass, 'invisible'), utils.getNext, getSvgPath),
-		undoMobile = _.compose(ptL(utils.addClass, 'invisible'), getSvgPath),
-		undoDesktop = _.compose(ptL(utils.addClass, 'invisible'), utils.getNext, getSvgPath),
+		execMobile = _.compose(ptL(klasRem, 'invisible'), getSvgPath),
+		execDesktop = _.compose(ptL(klasRem, 'invisible'), utils.getNext, getSvgPath),
+		undoMobile = _.compose(ptL(klasAdd, 'invisible'), getSvgPath),
+		undoDesktop = _.compose(ptL(klasAdd, 'invisible'), utils.getNext, getSvgPath),
 		negater = function (alternator) {
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
@@ -306,4 +315,7 @@ if (!window.poloAF) {
     svg_handler();
     utils.addHandler('resize', window, _.throttle(svg_handler, 99));
 	bridge(dum);
+
+    
+    
 }(Modernizr.mq('only all'), '(min-width: 667px)'));

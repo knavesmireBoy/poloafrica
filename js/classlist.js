@@ -11,17 +11,27 @@ poloAF.ClassList = (function () {
 	function existy(x) {
 		return x != null;
 	}
+    //https://stackoverflow.com/questions/29454340/detecting-classname-of-svganimatedstring/29454358
+     function isSVG(node){
+        return typeof node.className.baseVal !== 'undefined'
+    }
 
 	function setter(o, k, v) {
-		o[k] = v;
+        if(isSVG(o)){
+           o[k].baseVal = v; 
+        }
+		else {
+            o[k] = v;
+        }
 	}
 
 	function setterplus(o, k, v) {
-		o[k] += v;
-	}
-
-	function isset(o, k, v) {
-		return o[k] === v;
+        if(isSVG(o)){
+           o[k].baseVal += v; 
+        }
+        else {
+         o[k] += v;   
+        }
 	}
 
 	function best(fun, coll) {
@@ -74,18 +84,20 @@ poloAF.ClassList = (function () {
 		var set = _.partial(setter, node, 'className'),
 			superset = _.partial(setterplus, node, 'className'),
 			contains = function (klas) {
-				var pattern = new RegExp('(^| )' + klas + '( |$)');
-				return pattern.test(node.className) ? true : false;
+				var pattern = new RegExp('(^| )' + klas + '( |$)'),
+                    name = node.className.baseVal || node.className;
+				return pattern.test(name) ? true : false;
 			},
 			add = function (klas) {
 				if (!contains(klas)) {
-					var k = isset(node, 'className', '') ? klas : ' ' + klas;
-					superset(k);
+                    var k = isSVG(node) ? node.className.baseVal : node.className;
+					superset(_.isEmpty(k) ? klas : ' ' + klas);
 				}
 			},
 			remove = function (klas) {
-				var pattern = new RegExp('(^| )' + klas + '( |$)');
-				set(node.className.replace(pattern, '$1').replace(/ $/, ''));
+				var pattern = new RegExp('(^| )' + klas + '( |$)'),
+                    name = isSVG(node) ? node.className.baseVal : node.className;
+				set(name.replace(pattern, '$1').replace(/ $/, ''));
 			},
             outcomes = [add, remove],
 			toggle = function (klas, bool) {

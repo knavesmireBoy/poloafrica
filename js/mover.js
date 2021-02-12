@@ -14,6 +14,12 @@
 	function invokemethod(o, arg, m) {
 		return o[m](arg);
 	}
+    
+    function viewBoxDims(s){
+        var a = s.split(' ').slice(-2);
+        return a;
+    }
+    
 	var dummy = {},
 		//con = window.console.log.bind(window),
 		report = function(msg, el) {
@@ -77,7 +83,13 @@
          doSvg = function(svg){
              //utils.report(utils.$('logo').id);
            return function(str){
-               svg && str && svg.setAttribute('viewBox', str);
+               if(svg && str){
+                 var o = viewBoxDims(str);
+                svg.setAttribute('viewBox', str);
+                //'px' is assumed a[0]+'px'
+                svg.setAttribute('width', o[0]);
+                svg.setAttribute('height', o[1]);  
+               }
            }
        },
        setViewBox = doSvg(document.getElementById('logo')),

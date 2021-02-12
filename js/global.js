@@ -692,6 +692,7 @@ poloAF.Util = (function() {
 	}
 	//ALLOW toggleClass to have boolean argument del = _.partial(utils.toggleClass, 'del'),
 	function setFromArray(validate, method, classArray, target) {
+        //poloAF.Util.report(target.classList);
 		//target may be a function returning a target element
 		var fn,
 			tgt,
