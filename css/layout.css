@@ -10,20 +10,28 @@ img {
 section img.hide {
 	display: none;
 }
-header>a {
-	white-space: nowrap;
-	overflow: hidden;
-	width: 50%;
+header {
 	position: relative;
-	display: block;
-	box-sizing: border-box;
+	width: 100%;
 }
 
 header>a {
-    margin: 0 0 1em 1em;
-    top: 2.5em;
+	white-space: nowrap;
+	overflow: hidden;
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+    margin: 0 0 4em 1em;
+    top: 5em;
     width: 55%;
-	}
+    text-align: left;
+}
+
+.no-svgfilters header>a {
+    margin: 0 0 9em 1em;
+    top: 5em;
+}
+
 #logo {
 	box-sizing: border-box;
     width: 100%;
@@ -34,10 +42,7 @@ main {
 	margin: .2em 0 0em;
 	padding: 0 2em 10.1em;
 }
-header {
-	position: relative;
-	width: 100%;
-}
+
 section {
 	margin: 3em 0 0;
 }
@@ -93,7 +98,7 @@ header h1 img {
 	visibility: hidden;
 	display: none;
 }
- .svgfilters header a h1 {
+.svgfilters header a h1 {
         font-size: 0;
     }
 footer div img {
@@ -150,30 +155,10 @@ footer>a {
 .invisible {
     visibility: hidden;
 }
-.no-svgfilters header a {
-    width: auto;
-    top: 5em;
-}
-.no-svgfilters #logo {
+
+.no-svgfilters svg {
     display: none;
 }
-
-  .no-svgfilters header a {
-      text-align: center;
-    }
-    
-
-.no-svgfilters header a h1 {
-        text-indent: 200%;
-        background-image: url("../images/resource/logo_desktop.png");
-        background-repeat: no-repeat;
-        background-position: center;
-        line-height: 2.7;
-        margin: 0;
-        width: 100%;
-        font-size: 2em;
-        display: inline-block;
-    }
 
 @media screen and (min-width: 1281px) {
 	#wrap, footer {
@@ -187,14 +172,15 @@ footer>a {
 }
 @media screen and (min-width: 1024px) {
 	header>a {
-		margin: 0% auto 16em;
+		margin: 0 auto 16em;
         top: 7em;
-        border: solid 1px red;
 	}
-  
-    
-      .no-svgfilters header a {
+
+    .no-svgfilters header > a {
         text-align: center;
+        width: 25%;
+        margin: 0 auto 16em;
+        border: solid 1px red;
     }
     
     .no-svgfilters header a h1 {
@@ -235,6 +221,7 @@ footer>a {
 		margin: 0 0 0 4.2%;
         width: 48%;
         top: 1.5em;
+         border: solid 1px green;
 	}
 	p {
 		margin: 0;

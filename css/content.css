@@ -13,9 +13,9 @@ header {
 	/*
 	background: #b6b686 url(../images/resource/header.png) no-repeat 0 76%/100%;
 	background: hsl(60, 25%, 62%) url(../images/resource/header.png) no-repeat 0 76%/100%;*/
-    background-position: 0 76%;
 	width: 100%;
-	background-image: url(../images/resource/header_only.png);
+	background-image: url(../images/resource/header_only.jpg);
+    background-color: hsl(258, 60%, 67%);
 	background-repeat: no-repeat;
     box-sizing: border-box;
 }
@@ -96,6 +96,18 @@ footer>a {
 	text-align: right;
 	padding: .75em 1em .75em 0;
 }
+
+header a h1 {
+    text-indent: -9999px;
+        background-image: url("../images/resource/logo_sprite.png");
+        background-repeat: no-repeat;
+        background-position: left top;
+        line-height: 2.5;
+        margin: 0;
+        font-size: 2em;
+    width: 100%;
+    }
+
 header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding: 0 0 1em;
@@ -183,21 +195,8 @@ h2 span {
 	-webkit-background-size: 14%;
 	background-size: contain;
 }
-/*
-header>a svg {
-		filter: opacity(80%) contrast(120%);
-	}
-*/
-
-    .backgroundsize footer {
-	-o-background-size: cover;
-	-moz-background-size: cover;
-    -ms-background-size: cover;
-	-webkit-background-size: cover;
-	background-size: cover;
-}
  header{
-     background-position: 0 center;
+     background-position: 0 76%;
 }
    
 @media screen and (min-width: 1024px) {
@@ -208,14 +207,12 @@ header>a svg {
     h3 {
         white-space: nowrap
     }
-    
-	header {
+    header {
 		background-image: url(../images/resource/crop.JPG);
-		background-repeat: no-repeat;
-		background-color: hsl(258, 60%, 67%);
 		background-blend-mode: multiply;
-        /*background-position: 0 40%;*/
+        background-position: 0 40%;
 	}
+	
     .backgroundsize header{
 	-o-background-size: cover;
 	-moz-background-size: cover;
@@ -223,19 +220,24 @@ header>a svg {
 	-webkit-background-size: cover;
 	background-size: cover;
 }
-    /*
-    header>a svg {
-		mix-blend-mode: hard-light;
-		filter: opacity(80%) contrast(250%) hue-rotate(-2deg);
-	}
-	*/
-	#wrap h2 span {
-		background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+ 
+    
+      h2 span {
 		padding: 0 1em;
 		display: inline-block;
 		border-radius: 1em;
 		color: white;
 	}
+    
+      .no-cssgradients h2 span {
+          background-color: purple;
+          background-color: hsl(265, 64%, 74%);
+           background-image: none !important;
+	}
+      .cssgradients  #wrap h2 span {
+		background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+	}
+ 
 	h3 {
 		margin: 0 0 1.5em 0;
 		text-transform: uppercase;
@@ -243,10 +245,9 @@ header>a svg {
 		border-width: 0 !important;
 
 	}
-	h2 {
+	#wrap h2 {
 		background: none !important;
 		text-align: center;
-
 	}
 	header ul {
 		text-transform: uppercase;
@@ -257,7 +258,13 @@ header>a svg {
 		height: .1em;
 		margin: -.9em 1% 1em;
 		border-radius: 1em;
+	}
+    
+    .cssgradients h2:after {
 		background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
+	}
+    .no-cssgradients h2:after {
+		background-color: hsl(265, 64%, 74%);
 	}
 	section img {
 		box-shadow: none;
@@ -271,22 +278,26 @@ header>a svg {
 		background: white;
 		color: #666;
 	}
-	h3:after {
+    p:first-of-type {
+		margin: 0;
+	}
+    
+/* para rules before/after don't work on float layout */
+    
+	.flexbox h3:after {
 		content: '';
 		display: block;
 		border-top: solid 1px hsl(58, 60%, 40%);
 		margin: -.6em 0 0;
 	}
-	p:first-of-type {
-		margin: 0;
-	}
-	p:first-of-type:after {
+	
+	.flexbox p:first-of-type:after {
 		content: '';
 		border-top: solid 1px hsl(58, 60%, 40%);
 		display: block;
 		margin: 1em 15%;
 	}
-	p:first-of-type+p:before {
+	.flexbox p:first-of-type+p:before {
 		content: '';
 		height: 1em;
 		width: 1em;
@@ -318,30 +329,27 @@ header>a svg {
 }
 @media only screen and (max-width: 667px) {
     
-   
-	header {
-		background-position: 0px 0px;
+        header {
+		background-image: url(../images/resource/crop.JPG);
+		background-position: 70% 0;
 	}
-	#wrap header {
-		-o-background-size: 182%;
+    .backgroundsize header {
+		background-blend-mode: multiply;
+		background-size: 240% !important;
+        	-o-background-size: 182%;
 		-moz-background-size: 182%;
 		-ms-background-size: 182%;
 		-webkit-background-size: 182%;
 		background-size: cover;
 	}
-	header>a svg {
-		mix-blend-mode: hard-light;
-		filter: opacity(80%) contrast(250%) hue-rotate(-2deg);
-	}
-	.backgroundsize header {
-		background-color: hsl(258, 60%, 67%);
-		background-blend-mode: multiply;
-		background-image: url(../images/resource/crop.JPG);
-		background-size: 240% !important;
-		background-position: 70% 0;
-	}
+    /* older mobile browsers */
+.no-svgfilters header a h1 {
+    background-position: left bottom;
+    line-height: 4.5;
+}
+
 	/*ZAP*/
-	#wrap h2, #wrap h2 span {
+	#wrap h2 {
 		background: none;
 	}
 	h2 {
