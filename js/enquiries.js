@@ -16,17 +16,19 @@ if (!window.poloAF) {
                 svg.setAttribute('viewBox', str);
             }
         }
-        function SVGview() {
-                var mq  = window.matchMedia("(max-width: 667px)"),
-                    setViewBox = doSvg(document.getElementById('svg')),
-                    doMobile = ptL(setViewBox, "0 40 149 120"),
-                    doDesktop = ptL(setViewBox, "0 0 340 38");
-                if(mq.matches){//onload
-                    
-                    doMobile();
-                }
-            return doAlt([doMobile, doDesktop]);
-			}; //map           
+    
+     function SVGview() {
+            var mq  = window.matchMedia("(max-width: 667px)"),
+                setViewBox = doSvg(document.getElementById('logo')),
+                doMobile = _.compose(execMobile, undoDesktop, ptL(setViewBox, "0 0 155 125")),
+                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "0 0 340 75"));
+         return function(){
+                    if(mq.matches){//onload
+                        doMobile();
+                    }
+                    return doAlt([doMobile, doDesktop]);
+        };
+     }
 
 	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
@@ -93,6 +95,8 @@ if (!window.poloAF) {
 			return errors;
 		};
 	}
+    
+    	
 	var dum = {},
         utils = poloAF.Util,
 		ptL = _.partial,
@@ -124,6 +128,11 @@ if (!window.poloAF) {
         number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
         getEnvironment = ptL(utils.isDesktop, threshold),
+        getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
+		execMobile = _.compose(ptL(utils.removeClass, 'invisible'), getSvgPath),
+		execDesktop = _.compose(ptL(utils.removeClass, 'invisible'), utils.getNext, getSvgPath),
+		undoMobile = _.compose(ptL(utils.addClass, 'invisible'), getSvgPath),
+		undoDesktop = _.compose(ptL(utils.addClass, 'invisible'), utils.getNext, getSvgPath),
 		negater = function (alternator) {
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
@@ -287,7 +296,7 @@ if (!window.poloAF) {
 				doAlert(res);
 			}
 		},
-        svg_handler = ptL(negater, SVGview());
+        svg_handler = ptL(negater, SVGview()());
 	//listener();
 	utils.addEvent(clicker, relocate)(legend);
 	utils.addEvent(submitter, listener)(myform);
@@ -297,4 +306,4 @@ if (!window.poloAF) {
     svg_handler();
     utils.addHandler('resize', window, _.throttle(svg_handler, 99));
 	bridge(dum);
-}(Modernizr.mq('only all'), '(min-width: 668px)'));
+}(Modernizr.mq('only all'), '(min-width: 667px)'));

@@ -17,6 +17,25 @@
 			}
 		};
 	}
+    
+         function doSvg(svg){
+            return function(str){
+                svg.setAttribute('viewBox', str);
+            }
+        }
+    
+     function doSVGview() {
+            var mq  = window.matchMedia("(max-width: 667px)"),
+                setViewBox = doSvg(document.getElementById('logo')),
+                doMobile = _.compose(execMobile, undoDesktop, ptL(setViewBox, "0 0 155 125")),
+                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "0 0 340 75"));
+         return function(){
+                    if(mq.matches){//onload
+                        doMobile();
+                    }
+                    return doAltSVG([doMobile, doDesktop]);
+        };
+     }
 
 	function makeDummy() {
 		return {
@@ -150,21 +169,11 @@
 		getThumbs = doComp(utils.getZero, ptL(utils.getByTag, 'ul', main)),
 		getAllPics = doComp(ptL(utils.getByTag, 'img'), getThumbs),
 		doAltSVG = utils.doAlternate(),
-		doSvg = function (svg) {
-			return function (str) {
-				svg.setAttribute('viewBox', str);
-			};
-		},
-		doSVGview = function () {
-			var mq = window.matchMedia("(max-width: 667px)"),
-				setViewBox = doSvg(document.getElementById('svg')),
-				doMobile = ptL(setViewBox, "0 40 149 120"),
-				doDesktop = ptL(setViewBox, "0 0 340 38");
-			if (mq.matches) { //onload
-				doMobile();
-			}
-			return doAltSVG([doMobile, doDesktop]);
-		},
+        getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
+		execMobile = _.compose(ptL(utils.removeClass, 'invisible'), getSvgPath),
+		execDesktop = _.compose(ptL(utils.removeClass, 'invisible'), utils.getNext, getSvgPath),
+		undoMobile = _.compose(ptL(utils.addClass, 'invisible'), getSvgPath),
+		undoDesktop = _.compose(ptL(utils.addClass, 'invisible'), utils.getNext, getSvgPath),
 		parser = thrice(doMethod)('match')(/images[a-z\/]+\d+\.jpe?g$/),
 		doMap = utils.doMap,
 		doGet = twice(utils.getter),
@@ -699,7 +708,7 @@
 			return mynext;
 		}, //factory
 		setup_val = doComp(thrice(doMethod)('match')(/img/i), node_from_target),
-		svg_handler = ptL(svg_resizer, doSVGview()),
+		svg_handler = ptL(svg_resizer, doSVGview()()),
 		$setup = {},
 		setup = function (e) {
 			doComp(setindex, utils.drillDown(['target', 'src']))(e);

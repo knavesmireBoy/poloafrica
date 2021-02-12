@@ -193,7 +193,7 @@ section:nth-child(5) p+p:before {
 }
 
 
-#medley_links p:after, #medley_links p:before, section:nth-child(7) p:after, section:nth-child(7) p+p:before, #presslinks p:after, section:nth-child(5) p:last-child:after, section:nth-child(3) p:first-of-type:after, section:nth-child(3) p:first-of-type+p:before {
+#medley_links p:after, #medley_links p:before, #medley section:nth-child(7) p:after, #medley section:nth-child(7) p+p:before, #presslinks p:after, section:nth-child(5) p:last-child:after, section:nth-child(3) p:first-of-type:after, section:nth-child(3) p:first-of-type+p:before {
     content: none;
 }
 }
@@ -202,6 +202,9 @@ section:nth-child(5) p+p:before {
     
     section {
 		display: block;
+	}
+    h2, h2 span {
+		background: none;
 	}
     
      section:nth-child(5) article p:nth-of-type(n+3){

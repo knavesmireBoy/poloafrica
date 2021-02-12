@@ -1,3 +1,7 @@
+@media screen and (min-width: 980px){
+/* CSS Document */
+}
+
 body {
 	margin: 2% 0 0;
 }
@@ -10,19 +14,31 @@ img {
 section img.hide {
 	display: none;
 }
+header {
+	position: relative;
+	width: 100%;
+}
+
 header>a {
-	text-indent: 200%;
 	white-space: nowrap;
 	overflow: hidden;
-	width: 50%;
 	position: relative;
 	display: block;
 	box-sizing: border-box;
-	margin: 0 0 2% 3%;
-    border: solid 1px red;
+    margin: 0 0 4em 1em;
+    top: 5em;
+    width: 55%;
+    text-align: left;
 }
-#svg {
+
+.no-svgfilters header>a {
+    margin: 0 0 9em 1em;
+    top: 5em;
+}
+
+#logo {
 	box-sizing: border-box;
+    width: 100%;
 }
 
 main {
@@ -30,10 +46,7 @@ main {
 	margin: .2em 0 0em;
 	padding: 0 2em 10.1em;
 }
-header {
-	position: relative;
-	width: 100%;
-}
+
 section {
 	margin: 3em 0 0;
 }
@@ -89,6 +102,9 @@ header h1 img {
 	visibility: hidden;
 	display: none;
 }
+.svgfilters header a h1 {
+        font-size: 0;
+    }
 footer div img {
 	width: 100%;
 }
@@ -140,6 +156,13 @@ footer>a {
 	right: 0px;
 }
 
+.invisible {
+    visibility: hidden;
+}
+
+.no-svgfilters svg {
+    display: none;
+}
 
 @media screen and (min-width: 1281px) {
 	#wrap, footer {
@@ -153,8 +176,31 @@ footer>a {
 }
 @media screen and (min-width: 1024px) {
 	header>a {
-		margin: 0% auto 12%;
+		margin: 0 auto 16em;
+        top: 7em;
 	}
+
+    .no-svgfilters header > a {
+        text-align: center;
+        width: 25%;
+        margin: 0 auto 16em;
+        border: solid 1px red;
+    }
+    
+    .no-svgfilters header a h1 {
+        display: inline-block;
+    }
+    
+}
+    @media screen and (min-width: 1024px) and (-ms-high-contrast: none){
+        /*Hacks to account for extra space around svg IE 10/11*/
+        header>a {
+            margin: 0% auto 10em;
+            top: 4.4em;
+    }
+        #logo {
+            margin: 0 0 0 -.3em;
+        }
 }
 
 @media screen and (max-width: 667px) {
@@ -177,16 +223,18 @@ footer>a {
 	}
 	header>a {
 		margin: 0 0 0 4.2%;
-		padding: 0;
+        width: 48%;
+        top: 1.5em;
+        border: solid 1px green;
 	}
 	p {
 		margin: 0;
 	}
 	h2 {
 		position: relative;
-		margin:  -11vw 0 0 0;
+		margin:  -8vw 0 0 0;
+		margin:  -9% 0 0 0;
 		padding: 0 0 0 4%;
-		padding: 1.5vw 0 0 4vw;
 		font-size: 2em;
 		font-size: 1.75rem;
 	}
@@ -211,7 +259,6 @@ footer>a {
 	}
 	h2 span {
 		width: 50%;
-		width: 50vw;
 	}
 	/*width reqd, other properties reqd in no-js scenario; */
 	section img {
@@ -233,8 +280,8 @@ footer>a {
 		transition: height .9s ease-out;
 	}
 	header input:checked+ul {
-		top: 4em;
-		top: 3.5rem;
+		top: 4.6em;
+        top: 3.6rem;
 		right: 1em;
 		right: 1rem;
 		z-index: 2;
