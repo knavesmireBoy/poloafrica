@@ -1387,7 +1387,7 @@ poloAF.Util = (function() {
 			};
 		},
 		report: function(arg) {
-			document.getElementsByTagName('h2')[0].innerHTML = arg;
+            document.getElementsByTagName('h2')[0].innerHTML = arg ? arg : document.documentElement.className;
 		},
 		dog: 'spadger'
 	}; //end
