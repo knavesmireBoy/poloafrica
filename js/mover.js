@@ -87,8 +87,8 @@
                  var o = viewBoxDims(str);
                 svg.setAttribute('viewBox', str);
                 //'px' is assumed a[0]+'px'
-                svg.setAttribute('width', o[0]);
-                svg.setAttribute('height', o[1]);  
+               // svg.setAttribute('width', o[0]);
+               // svg.setAttribute('height', o[1]);  
                }
            }
        },

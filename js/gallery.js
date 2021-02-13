@@ -18,11 +18,21 @@
 		};
 	}
     
-         function doSvg(svg){
+        function viewBoxDims(s){
+        var a = s.split(' ').slice(-2);
+        return a;
+    }
+    
+      function doSvg(svg){
             return function(str){
+                var o = viewBoxDims(str);
                 svg.setAttribute('viewBox', str);
+                //'px' is assumed a[0]+'px'
+                //svg.setAttribute('width', o[0]);
+                //svg.setAttribute('height', o[1]);
             }
         }
+    
     
      function doSVGview() {
             var mq  = window.matchMedia("(max-width: 667px)"),
