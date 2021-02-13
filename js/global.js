@@ -413,8 +413,14 @@ poloAF.Util = (function() {
 		}
 	}
 
-	function getClassList(el) {
-		return el && (el.classList || poloAF.ClassList(el));
+    function getClassList(el) {
+        if(el){
+        if(typeof el.classList === 'undefined'){
+            return poloAF.ClassList(el);
+        }
+		return el.classList;
+        }
+        return '';
 	}
 
 	function curryFactory(i, defer) {
