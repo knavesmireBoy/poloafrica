@@ -767,6 +767,8 @@ poloAF.Util = (function() {
 					el.style.setProperty(k, map[k]);
 				} else {
 					el.setAttribute(k, map[k]);
+                    //to support ie 6,7
+                    //poloAF.Util.setAttributes({k: map[k]}, el);
 				}
 			}
 		}
