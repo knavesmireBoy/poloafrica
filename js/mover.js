@@ -92,7 +92,7 @@
            }
        },
        setViewBox = doSvg(document.getElementById('logo')),
-       doMobile = ptL(setViewBox, "0 0 155 125"),
+       doMobile = ptL(setViewBox, "0 0 155 130"),
        doDesktop = ptL(setViewBox, "2 0 340 75"),
 		floating_elements = function(elements, getArticle, getHeading, before, after) {
            var mq = window.matchMedia("(max-width: 667px)");

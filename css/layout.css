@@ -29,6 +29,12 @@ header>a {
     top: 5em;
     width: 55%;
     text-align: left;
+    border: solid 1px lime;
+}
+
+.no-js header > a {
+    margin: 0 0 7em .5em;
+    width: 56%;
 }
 
 .no-svgfilters header>a {
@@ -36,6 +42,10 @@ header>a {
     top: 5em;
 }
 
+.no-js #logo {
+    position: absolute;
+    left: -999em;
+}
 #logo {
 	box-sizing: border-box;
     width: 100%;
@@ -175,13 +185,17 @@ footer>a {
 	}
 }
 @media screen and (min-width: 1024px) {
-	header>a {
+	#wrap header>a {
 		margin: 0 auto 16em;
         top: 7em;
+         text-align: center;
 	}
+    
+    .no-js header a h1 {
+        line-height: 3.1;
+    }
 
     .no-svgfilters header > a {
-        text-align: center;
         width: 25%;
         margin: 0 auto 16em;
         border: solid 1px red;
@@ -213,10 +227,7 @@ footer>a {
     .svg header a h1 {
         font-size: 0;
     }
-    
-    #pink{
-        display: none;
-    }
+  
 	main {
 		padding: 0 0 10.1em 0;
 		margin: 0;
@@ -225,8 +236,20 @@ footer>a {
 		margin: 0 0 0 4.2%;
         width: 48%;
         top: 1.5em;
-        border: solid 1px green;
+        border: solid 1px lime;
 	}
+      .no-js header > a {
+        width: 100%;
+        margin: 0 0 0 6%;
+    }
+    	/* older mobile browsers ie9 supports inline svg but not filters*/
+	.no-svgfilters header a h1, .no-js header a h1 {
+        line-height: 4.45;
+        margin-bottom: 3em;
+	}
+    .no-js header {
+        background-size: 200%;
+    }
 	p {
 		margin: 0;
 	}
@@ -254,7 +277,7 @@ footer>a {
 		text-align: center;
 		display: inline-block;
 		margin: 0 auto;
-		border: solid 1px blue;
+		border: solid 1px yellow;
 		padding: 0;
 	}
 	h2 span {
@@ -348,7 +371,7 @@ footer>a {
 
 @media only screen and (max-width: 568px) {
 	h2 {
-		margin: -12vw 0 0;
+		margin: -11vw 0 0;
 	}
 	.no-flexwrap h2 {
 		margin: -2.8rem 0 0 0em;
@@ -356,7 +379,6 @@ footer>a {
 }
 @media only screen and (max-width: 480px) {
 	h2 {
-		margin: -11vw 0 0;
 		padding: 0 0 0 1%;
 		padding: 1vw 0 0 1vw;
 	}
