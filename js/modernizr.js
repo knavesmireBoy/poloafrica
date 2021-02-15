@@ -1767,6 +1767,23 @@ Detects support for inline SVG in HTML (not within XHTML).
    */
 
   var testStyles = ModernizrProto.testStyles = injectElementWithStyles;
+    
+    /*!
+{
+  "name": "classList",
+  "caniuse": "classlist",
+  "property": "classlist",
+  "tags": ["dom"],
+  "builderAliases": ["dataview_api"],
+  "notes": [{
+    "name": "MDN Docs",
+    "href": "https://developer.mozilla.org/en/DOM/element.classList"
+  }]
+}
+!*/
+
+  Modernizr.addTest('classlist', 'classList' in docElement);
+
   
 /*!
 {
@@ -2886,6 +2903,53 @@ eg `background-position: right 10px bottom 10px`
 
     Modernizr.addTest('cssvwunit', roundedEquals(compStyle, width));
   });
+    
+    /*!
+{
+  "name": "CSS Calc",
+  "property": "csscalc",
+  "caniuse": "calc",
+  "tags": ["css"],
+  "builderAliases": ["css_calc"],
+  "authors": ["@calvein"]
+}
+!*/
+/* DOC
+Method of allowing calculated values for length units. For example:
+
+```css
+//lem {
+  width: calc(100% - 3em);
+}
+```
+*/
+
+  Modernizr.addTest('csscalc', function() {
+    var prop = 'width:';
+    var value = 'calc(10px);';
+    var el = createElement('a');
+
+    el.style.cssText = prop + prefixes.join(value + prop);
+
+    return !!el.style.length;
+  });
+    
+      
+/*!
+{
+  "name": "CSS Object Fit",
+  "caniuse": "object-fit",
+  "property": "objectfit",
+  "tags": ["css"],
+  "builderAliases": ["css_objectfit"],
+  "notes": [{
+    "name": "Opera Article on Object Fit",
+    "href": "https://dev.opera.com/articles/css3-object-fit-object-position/"
+  }]
+}
+!*/
+
+  Modernizr.addTest('objectfit', !!prefixed('objectFit'), {aliases: ['object-fit']});
 
 
 

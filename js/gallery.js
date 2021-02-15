@@ -18,20 +18,22 @@
 		};
 	}
     
-        function viewBoxDims(s){
+       function viewBoxDims(s){
         var a = s.split(' ').slice(-2);
-        return a;
+        return {width: a[0], height: a[1]};
     }
     
-      function doSvg(svg){
-            return function(str){
-                var o = viewBoxDims(str);
-                svg.setAttribute('viewBox', str);
-                //'px' is assumed a[0]+'px'
-                //svg.setAttribute('width', o[0]);
-                //svg.setAttribute('height', o[1]);
-            }
-        }
+    function doSvg(svg){
+           return function(str){
+               if(svg && str){
+                   utils.setAttributes({viewBox: str}, svg);
+                   //ipod ios(6.1.6) requires height, arbitrary choice of unsupported feature
+                   if(!Modernizr.objectfit){
+                       utils.setAttributes(viewBoxDims(str), svg);
+                   }
+               }
+           }
+       }
     
     
      function doSVGview() {
