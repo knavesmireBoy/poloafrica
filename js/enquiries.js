@@ -10,18 +10,29 @@ if (!window.poloAF) {
 (function (mq, query) {
 	"use strict";
     
+     function viewBoxDims(s){
+        var a = s.split(' ').slice(-2);
+        return {width: a[0], height: a[1]};
+    }
     
-      function doSvg(svg){
-            return function(str){
-                svg.setAttribute('viewBox', str);
-            }
-        }
+     function doSvg(svg){
+           return function(str){
+               if(svg && str){
+                   utils.setAttributes({viewBox: str}, svg);
+                   //ipod ios(6.1.6) requires height
+                   if(!Modernizr.objectfit){
+                       utils.setAttributes(viewBoxDims(str), svg);
+                   }
+               }
+           }
+       }
+    
     
      function SVGview() {
             var mq  = window.matchMedia("(max-width: 667px)"),
                 setViewBox = doSvg(document.getElementById('logo')),
                 doMobile = _.compose(execMobile, undoDesktop, ptL(setViewBox, "0 0 155 125")),
-                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "0 0 340 75"));
+                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "2 0 340 75"));
          return function(){
                     if(mq.matches){//onload
                         doMobile();
@@ -29,6 +40,8 @@ if (!window.poloAF) {
                     return doAlt([doMobile, doDesktop]);
         };
      }
+    
+    
 
 	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
@@ -95,8 +108,6 @@ if (!window.poloAF) {
 			return errors;
 		};
 	}
-    
-    	
 	var dum = {},
         utils = poloAF.Util,
 		ptL = _.partial,
@@ -129,10 +140,10 @@ if (!window.poloAF) {
 		threshold = Number(query.match(number_reg)[1]),
         getEnvironment = ptL(utils.isDesktop, threshold),
         getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
-		execMobile = _.compose(ptL(utils.removeClass, 'invisible'), getSvgPath),
-		execDesktop = _.compose(ptL(utils.removeClass, 'invisible'), utils.getNext, getSvgPath),
-		undoMobile = _.compose(ptL(utils.addClass, 'invisible'), getSvgPath),
-		undoDesktop = _.compose(ptL(utils.addClass, 'invisible'), utils.getNext, getSvgPath),
+		execMobile = _.compose(ptL(klasRem, 'invisible'), getSvgPath),
+		execDesktop = _.compose(ptL(klasRem, 'invisible'), utils.getNext, getSvgPath),
+		undoMobile = _.compose(ptL(klasAdd, 'invisible'), getSvgPath),
+		undoDesktop = _.compose(ptL(klasAdd, 'invisible'), utils.getNext, getSvgPath),
 		negater = function (alternator) {
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
@@ -306,4 +317,7 @@ if (!window.poloAF) {
     svg_handler();
     utils.addHandler('resize', window, _.throttle(svg_handler, 99));
 	bridge(dum);
+
+    
+    
 }(Modernizr.mq('only all'), '(min-width: 667px)'));

@@ -18,17 +18,29 @@
 		};
 	}
     
-         function doSvg(svg){
-            return function(str){
-                svg.setAttribute('viewBox', str);
-            }
-        }
+       function viewBoxDims(s){
+        var a = s.split(' ').slice(-2);
+        return {width: a[0], height: a[1]};
+    }
+    
+    function doSvg(svg){
+           return function(str){
+               if(svg && str){
+                   utils.setAttributes({viewBox: str}, svg);
+                   //ipod ios(6.1.6) requires height, arbitrary choice of unsupported feature
+                   if(!Modernizr.objectfit){
+                       utils.setAttributes(viewBoxDims(str), svg);
+                   }
+               }
+           }
+       }
+    
     
      function doSVGview() {
             var mq  = window.matchMedia("(max-width: 667px)"),
                 setViewBox = doSvg(document.getElementById('logo')),
                 doMobile = _.compose(execMobile, undoDesktop, ptL(setViewBox, "0 0 155 125")),
-                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "0 0 340 75"));
+                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "2 0 340 75"));
          return function(){
                     if(mq.matches){//onload
                         doMobile();

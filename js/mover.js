@@ -14,6 +14,12 @@
 	function invokemethod(o, arg, m) {
 		return o[m](arg);
 	}
+    
+    function viewBoxDims(s){
+        var a = s.split(' ').slice(-2);
+        return {width: a[0], height: a[1]};
+    }
+    
 	var dummy = {},
 		//con = window.console.log.bind(window),
 		report = function(msg, el) {
@@ -75,14 +81,19 @@
 			// 
 		},
          doSvg = function(svg){
-             //utils.report(utils.$('logo').id);
            return function(str){
-               svg && str && svg.setAttribute('viewBox', str);
+               if(svg && str){
+                   utils.setAttributes({viewBox: str}, svg);
+                   //ipod ios(6.1.6) requires height
+                   if(!Modernizr.objectfit){
+                       utils.setAttributes(viewBoxDims(str), svg);
+                   }
+               }
            }
        },
        setViewBox = doSvg(document.getElementById('logo')),
-       doMobile = ptL(setViewBox, "0 0 155 125"),
-       doDesktop = ptL(setViewBox, "0 0 340 75"),
+       doMobile = ptL(setViewBox, "0 0 155 130"),
+       doDesktop = ptL(setViewBox, "2 0 340 75"),
 		floating_elements = function(elements, getArticle, getHeading, before, after) {
            var mq = window.matchMedia("(max-width: 667px)");
 			return _.map(elements, function(el, i) {

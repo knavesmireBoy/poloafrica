@@ -413,8 +413,14 @@ poloAF.Util = (function() {
 		}
 	}
 
-	function getClassList(el) {
-		return el && (el.classList || poloAF.ClassList(el));
+    function getClassList(el) {
+        if(el){
+        if(typeof el.classList === 'undefined'){
+            return poloAF.ClassList(el);
+        }
+		return el.classList;
+        }
+        return '';
 	}
 
 	function curryFactory(i, defer) {
@@ -692,6 +698,7 @@ poloAF.Util = (function() {
 	}
 	//ALLOW toggleClass to have boolean argument del = _.partial(utils.toggleClass, 'del'),
 	function setFromArray(validate, method, classArray, target) {
+        //poloAF.Util.report(target.classList);
 		//target may be a function returning a target element
 		var fn,
 			tgt,
@@ -760,6 +767,8 @@ poloAF.Util = (function() {
 					el.style.setProperty(k, map[k]);
 				} else {
 					el.setAttribute(k, map[k]);
+                    //to support ie 6,7
+                    //poloAF.Util.setAttributes({k: map[k]}, el);
 				}
 			}
 		}
@@ -1380,7 +1389,7 @@ poloAF.Util = (function() {
 			};
 		},
 		report: function(arg) {
-			document.getElementsByTagName('h2')[0].innerHTML = arg;
+            document.getElementsByTagName('h2')[0].innerHTML = arg ? arg : document.documentElement.className;
 		},
 		dog: 'spadger'
 	}; //end
