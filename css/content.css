@@ -332,8 +332,6 @@ header {
 	header {
 		background-image: url(../images/resource/crop.JPG);
 		background-position: 70% 0;
-	}
-	.no-js header {
 		background-blend-mode: multiply;
 		background-size: 240% !important;
 		-o-background-size: 182%;
@@ -345,6 +343,10 @@ header {
 	.no-svgfilters header a h1 {
 		background-position: left bottom;
 	}
+    
+    header > a {
+        top: 0;
+    }
    
 	/*ZAP*/
 	#wrap h2, #wrap h2 span {

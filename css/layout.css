@@ -225,22 +225,26 @@ footer>a {
     visibility: visible;
 }
 
-.no-js path:nth-child(2) {
+.no-js path:nth-of-type(2) {
     visibility: hidden;
 }
-
-  
   
 	main {
 		padding: 0 0 10.1em 0;
 		margin: 0;
 	}
 	header>a {
-		margin: 0 0 0 4.2%;
+		margin: 0 0 -3em 4.2%;
         width: 48%;
         border: solid 1px lime;
 	}
-    .no-js header h1 {
+    
+    .no-js header>a {
+        width: 105%;
+        margin: 0 0 -3em 5%;
+        padding-bottom: 7.5em;
+	}
+    header h1 {
         position: absolute;
     }
     	/* older mobile browsers ie9 supports inline svg but not filters*/
@@ -474,5 +478,5 @@ footer>a {
 
     	/*remove border's above when in production*/
 	header > a, h2 span {
-		border-width: 1px;
+		border-width: 0px;
 	}
