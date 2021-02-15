@@ -48,7 +48,7 @@ h3 {
 	color: hsl(58, 60%, 40%);
 	font: normal 1.75em/1.2 'Lora', Georgia, serif;
 	width: 100%;
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 p {
 	color: #444;
@@ -109,6 +109,7 @@ header a h1 {
     background-size: cover;
 }
 */
+
 header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding: 0 0 1em;
@@ -200,15 +201,15 @@ header {
 	background-position: 0 60%;
 }
 header {
-		-o-background-size: cover;
-		-moz-background-size: cover;
-		-ms-background-size: cover;
-		-webkit-background-size: cover;
-		background-size: cover;
-	}
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	-ms-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
 @media screen and (min-width: 1024px) {
 	body {
-		background-color:  hsla(265, 64%, 74%, .05);
+		background-color: hsla(265, 64%, 74%, .05);
 	}
 	h3 {
 		white-space: nowrap
@@ -218,18 +219,16 @@ header {
 		background-blend-mode: multiply;
 		background-position: 0 40%;
 	}
-    
 	h2 span {
 		padding: 0 1em;
 		display: inline-block;
 		border-radius: 1em;
 		color: white;
 	}
-	.no-cssgradients h2 span, .no-js h2 span{
+	.no-cssgradients h2 span, .no-js h2 span {
 		background-color: purple;
 		background-color: hsl(265, 64%, 74%);
 	}
-    
 	h3 {
 		margin: 0 0 1.5em 0;
 		text-transform: uppercase;
@@ -249,36 +248,32 @@ header {
 		height: .1em;
 		margin: -.9em 1% 1em;
 		border-radius: 1em;
-        background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
-        background-color: transparent;
+		background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
+		background-color: transparent;
 	}
-	
 	.no-cssgradients h2:after, .no-js h2:after {
 		background-color: hsl(265, 64%, 74%);
-        
 	}
-    .no-js h2 span {
-       background-image: none; 
-    }
-    
-         @supports (background-image: linear-gradient(black, white)) {
-        /*default to flat color on no-js, override here wrap required to trump individual pages*/
-        #wrap h2 span {
-            background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
-        }
-        #wrap h2:after {
-            background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
-            background-color: transparent;
-          }
-    }
-	
+	.no-js h2 span {
+		background-image: none;
+	}
+	@supports (background-image: linear-gradient(black, white)) {
+		/*default to flat color on no-js, override here wrap required to trump individual pages*/
+		#wrap h2 span {
+			background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+		}
+		#wrap h2:after {
+			background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
+			background-color: transparent;
+		}
+	}
 	section img {
 		box-shadow: none;
 		border-color: #444;
 		border-radius: 1em;
 	}
 	.override h3 a {
-        border: solid 1px #a39f29;
+		border: solid 1px #a39f29;
 		border: solid 1px hsl(58, 60%, 40%);
 		padding: .2em .6em;
 		border-radius: 1em;
@@ -289,12 +284,12 @@ header {
 		margin: 0;
 	}
 	/* para rules before/after don't work on float layout */
-    h3:after, p:first-of-type:after, p:first-of-type+p:before {
-        content: '';
+	h3:after, p:first-of-type:after, p:first-of-type+p:before {
+		content: '';
 		display: block;
-        border-top: solid 1px #a39f29;
+		border-top: solid 1px #a39f29;
 		border-top: solid 1px hsl(58, 60%, 40%);
-    }
+	}
 	h3:after {
 		margin: -.6em 0 0;
 	}
@@ -308,8 +303,9 @@ header {
 		margin: -1.5em auto 1em;
 		border-radius: 50%;
 	}
-  
-}/*1024*/
+}
+/*1024*/
+
 @media screen and (max-width: 867px) {
 	#polo li:nth-child(6):hover ul {
 		left: auto;
@@ -343,11 +339,9 @@ header {
 	.no-svgfilters header a h1 {
 		background-position: left bottom;
 	}
-    
-    header > a {
-        top: 0;
-    }
-   
+	header>a {
+		top: 0;
+	}
 	/*ZAP*/
 	#wrap h2, #wrap h2 span {
 		background-image: none;
@@ -392,9 +386,9 @@ header {
 		text-align: right;
 		border-width: 0 0 1px;
 	}
-    header ul>li:last-child a{
-        border-width: 0;
-    }
+	header ul>li:last-child a {
+		border-width: 0;
+	}
 	.noir {
 		background: black;
 	}
