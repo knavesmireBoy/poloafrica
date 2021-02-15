@@ -53,6 +53,7 @@ header>a {
 	box-sizing: border-box;
 	width: 100%;
 }
+
 main {
 	overflow: hidden;
 	margin: .2em 0 0em;
@@ -232,6 +233,9 @@ footer>a {
 	header h1 {
 		position: absolute;
 	}
+    .no-objectfit #logo, .no-js #logo {
+        height: 130px;
+    }
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-svgfilters header a h1 {
 		line-height: 4.45;

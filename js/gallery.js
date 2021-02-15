@@ -40,7 +40,7 @@
             var mq  = window.matchMedia("(max-width: 667px)"),
                 setViewBox = doSvg(document.getElementById('logo')),
                 doMobile = _.compose(execMobile, undoDesktop, ptL(setViewBox, "0 0 155 125")),
-                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "0 0 340 75"));
+                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "2 0 340 75"));
          return function(){
                     if(mq.matches){//onload
                         doMobile();
