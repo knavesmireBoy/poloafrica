@@ -329,12 +329,13 @@ header {
 		background-image: url(../images/resource/crop.JPG);
 		background-position: 70% 0;
 		background-blend-mode: multiply;
-		background-size: 240% !important;
-		-o-background-size: 182%;
-		-moz-background-size: 182%;
-		-ms-background-size: 182%;
-		-webkit-background-size: 182%;
+        	-o-background-size: 222%;
+		-moz-background-size: 222%;
+		-ms-background-size: 222%;
+		-webkit-background-size: 222%;
+        background-size: 222% !important;
 	}
+ 
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-svgfilters header a h1 {
 		background-position: left bottom;
@@ -468,6 +469,18 @@ header {
 		color: #cc6;
 		color: hsl(58, 60%, 48%);
 	}
+}
+
+@media only screen and (max-width: 667px) and (orientation: portrait) {
+    
+    header {
+		-o-background-size: 300%;
+		-moz-background-size: 300%;
+		-ms-background-size: 300%;
+		-webkit-background-size: 300%;
+        background-size: 300% !important;
+	}
+    
 }
 @media only screen and (max-width: 580px) {
 	footer {

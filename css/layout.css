@@ -53,7 +53,6 @@ header>a {
 	box-sizing: border-box;
 	width: 100%;
 }
-
 main {
 	overflow: hidden;
 	margin: .2em 0 0em;
@@ -221,10 +220,16 @@ footer>a {
 		margin: 0;
 	}
 	header>a {
-		margin: 0 0 -3em 4.2%;
+		margin: 0 0 0 4.2%;
+		line-height: 0;
 		width: 48%;
 		border: solid 1px lime;
 	}
+	/*
+    #logo {
+        margin: 0 0 -5% 0;
+    }
+    */
 	.no-js header>a {
 		width: 105%;
 		margin: 0 0 -3em 5%;
@@ -233,9 +238,11 @@ footer>a {
 	header h1 {
 		position: absolute;
 	}
+	/*
     .no-objectfit #logo, .no-js #logo {
         height: 130px;
     }
+    */
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-svgfilters header a h1 {
 		line-height: 4.45;
@@ -246,8 +253,7 @@ footer>a {
 	}
 	h2 {
 		position: relative;
-		margin: -8vw 0 0 0;
-		margin: -9% 0 0 0;
+		margin: -8% 0 0 0;
 		padding: 0 0 0 4%;
 		font-size: 2em;
 		font-size: 1.75rem;
@@ -269,10 +275,8 @@ footer>a {
 		display: inline-block;
 		margin: 0 auto;
 		border: solid 1px yellow;
-		padding: 0;
-	}
-	h2 span {
 		width: 50%;
+		padding: 0;
 	}
 	/*width reqd, other properties reqd in no-js scenario; */
 	section img {
@@ -358,9 +362,22 @@ footer>a {
 		display: block;
 	}
 }
-@media only screen and (max-width: 568px) {
+@media only screen and (max-width: 667px) and (orientation: portrait) {
+	#logo {
+		margin: 0;
+	}
+	header>a {
+		margin: 0 0 0 4.2%;
+		line-height: normal;
+	}
 	h2 {
-		margin: -11vw 0 0;
+		margin: -13% 0 0;
+		padding: 1% 0 0 2%;
+	}
+}
+@media only screen and (max-width: 568px) and (orientation: landscape) {
+	h2 {
+		margin: -10% 0 0;
 	}
 	.no-flexwrap h2 {
 		margin: -2.8rem 0 0 0em;
@@ -368,18 +385,17 @@ footer>a {
 }
 @media only screen and (max-width: 480px) {
 	h2 {
-		padding: 0 0 0 1%;
-		padding: 1vw 0 0 1vw;
+		padding: 1% 0 0 2%;
 	}
 	header input:checked+ul {
-		top: 3rem;
+		top: 4rem;
 	}
 	h2 span {
-		width: 55vw;
+		width: 53%;
 	}
 	.menu {
-		height: 2rem;
-		width: 2rem;
+		height: 3rem;
+		width: 3rem;
 	}
 	.no-flexwrap h2 span {
 		width: 15.7rem;
@@ -392,25 +408,51 @@ footer>a {
 	}
 	header>a {
 		margin: 0 0 0 4.2%;
+		top: 1.5em;
+	}
+	.no-objectfit #logo {
+		border: solid 1px orange;
+	}
+	/*https://css-tricks.com/scale-svg/*/
+	.no-objectfit header>a {
+		position: relative;
+		height: 0;
+		padding: 0;
+		width: 55%;
+		/* 100% * 155/130 */
+		padding-bottom: 46.12%;
+		margin: 0 0 6% 2%;
+	}
+	.no-objectfit #logo {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		left: 0;
+		top: 0;
+	}
+	.no-objectfit h2 {
+		margin: -17% 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 55%;
 	}
 }
 @media only screen and (max-width: 414px) {
 	#wrap h2 {
-		line-height: 1.4;
+		line-height: 1.6;
 	}
 	h2 span {
 		width: 56vw;
 	}
 	header>a {
-		width: 55%;
-		margin: 0 0 0 1%;
+		width: 60%;
+		margin: 0 0 0% 1%;
 	}
 }
 @media only screen and (max-width: 400px) {
 	h2 {
 		font-size: 1.7em;
 		font-size: 1.5rem;
-		padding: 1vw 0 1vw;
 	}
 	h2 span {
 		width: 57vw;
@@ -427,15 +469,40 @@ footer>a {
 		width: 60vw;
 	}
 	h2 {
-		margin: -12vw 0 0;
+		margin: -14% 0 0;
 	}
 }
 @media only screen and (max-width: 320px) {
 	h2 span {
-		width: 62vw;
+		width: 64%;
+		width: 65% !important;
 	}
 	header>a {
-		margin: 0 0 0 4%;
+		margin: 0 0 0 3%;
+		top: 1.3em;
+	}
+	.menu {
+		height: 2rem;
+		width: 2rem;
+	}
+	header input:checked+ul {
+		top: 3rem;
+	}
+	.no-objectfit #logo {
+		border: solid 1px orange;
+	}
+	/*https://css-tricks.com/scale-svg/*/
+	.no-objectfit header>a {
+		width: 62%;
+		/* 100% * 155/130 */
+		padding-bottom: 52%;
+		margin: 0 0 6% 3%;
+	}
+	.no-objectfit h2 {
+		margin: -19% 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 55%;
 	}
 }
 @media only screen and (max-width: 280px) {
@@ -452,6 +519,6 @@ footer>a {
 }
 /*remove border's above when in production*/
 
-header>a, h2 span {
+header>a, h2 span, .no-objectfit #logo {
 	border-width: 0px;
 }
