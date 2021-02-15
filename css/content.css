@@ -101,14 +101,14 @@ header a h1 {
 	font-size: 2em;
 	width: 100%;
 }
-
+/*
 .no-js header a h1 {
     background-image: url("../images/resource/logo_sprite.png");
 	background-repeat: no-repeat;
 	background-position: center top;
     background-size: cover;
 }
-
+*/
 header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding: 0 0 1em;
@@ -230,7 +230,6 @@ header {
 		background-color: hsl(265, 64%, 74%);
 	}
     
-  
 	h3 {
 		margin: 0 0 1.5em 0;
 		text-transform: uppercase;
@@ -334,19 +333,16 @@ header {
 		background-image: url(../images/resource/crop.JPG);
 		background-position: 70% 0;
 	}
-	.backgroundsize header {
+	.no-js header {
 		background-blend-mode: multiply;
-        /*
 		background-size: 240% !important;
 		-o-background-size: 182%;
 		-moz-background-size: 182%;
 		-ms-background-size: 182%;
 		-webkit-background-size: 182%;
-        */
-		background-size: cover;
 	}
 	/* older mobile browsers ie9 supports inline svg but not filters*/
-	.no-svgfilters header a h1, .no-js header a h1 {
+	.no-svgfilters header a h1 {
 		background-position: left bottom;
 	}
    

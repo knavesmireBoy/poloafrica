@@ -25,27 +25,32 @@ header>a {
 	position: relative;
 	display: block;
 	box-sizing: border-box;
-    margin: 0 0 3em 1em;
-    top: 5em;
+    margin: 0 0 0 1em;
+    top: 2em;
     width: 55%;
     text-align: left;
     border: solid 1px lime;
 }
-
+/*
 .no-js header > a {
     margin: 0 0 7em .5em;
     width: 56%;
-}
-
-.no-svgfilters header>a {
-    margin: 0 0 9em 1em;
-    top: 5em;
 }
 
 .no-js #logo {
     position: absolute;
     left: -999em;
 }
+*/
+.no-svgfilters #logo {
+    position: absolute;
+    left: -999em;
+}
+.no-svgfilters header>a {
+    margin: 0 0 9em 1em;
+    top: 5em;
+}
+
 #logo {
 	box-sizing: border-box;
     width: 100%;
@@ -112,9 +117,7 @@ header h1 img {
 	visibility: hidden;
 	display: none;
 }
-.svgfilters header a h1 {
-        font-size: 0;
-    }
+
 footer div img {
 	width: 100%;
 }
@@ -170,10 +173,6 @@ footer>a {
     visibility: hidden;
 }
 
-.no-svgfilters svg {
-    display: none;
-}
-
 @media screen and (min-width: 1281px) {
 	#wrap, footer {
 		max-width: 100em;
@@ -187,14 +186,14 @@ footer>a {
 @media screen and (min-width: 1024px) {
 	#wrap header>a {
 		margin: 0 auto 16em;
-        top: 7em;
+        top: 4em;
          text-align: center;
 	}
-    
+    /*
     .no-js header a h1 {
         line-height: 3.1;
     }
-
+*/
     .no-svgfilters header > a {
         width: 25%;
         margin: 0 auto 16em;
@@ -221,12 +220,16 @@ footer>a {
 	body {
 		margin: 2%;
 	}
-	svg #onmobile {
-		visibility: hidden;
-	}
-    .svg header a h1 {
-        font-size: 0;
-    }
+    
+    .no-js path.invisible {
+    visibility: visible;
+}
+
+.no-js path:nth-child(2) {
+    visibility: hidden;
+}
+
+  
   
 	main {
 		padding: 0 0 10.1em 0;
@@ -235,21 +238,17 @@ footer>a {
 	header>a {
 		margin: 0 0 0 4.2%;
         width: 48%;
-        top: 1.5em;
         border: solid 1px lime;
 	}
-      .no-js header > a {
-        width: 100%;
-        margin: 0 0 0 6%;
+    .no-js header h1 {
+        position: absolute;
     }
     	/* older mobile browsers ie9 supports inline svg but not filters*/
-	.no-svgfilters header a h1, .no-js header a h1 {
+	.no-svgfilters header a h1{
         line-height: 4.45;
         margin-bottom: 3em;
 	}
-    .no-js header {
-        background-size: 200%;
-    }
+   
 	p {
 		margin: 0;
 	}
@@ -475,5 +474,5 @@ footer>a {
 
     	/*remove border's above when in production*/
 	header > a, h2 span {
-		border-width: 0px;
+		border-width: 1px;
 	}
