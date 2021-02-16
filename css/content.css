@@ -426,9 +426,7 @@ header {
 	h3, .read-more-trigger:before, .js section img {
 		border-bottom: solid 1px white;
 	}
-	.touchevents article p {
-		padding: 0 1em;
-	}
+
 	.override article p {
 		line-height: 1.55;
 	}
@@ -490,9 +488,7 @@ header {
 		-webkit-background-size: 280%;
 		background-size: cover;
 	}
-	.no-svg body {
-		background-color: blueviolet;
-	}
+
 }
 @media only screen and (max-width: 480px) {
 	footer {

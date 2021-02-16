@@ -165,6 +165,8 @@ footer>a {
 .invisible {
 	visibility: hidden;
 }
+
+
 @media screen and (min-width: 1281px) {
 	#wrap, footer {
 		max-width: 100em;
@@ -177,8 +179,8 @@ footer>a {
 }
 @media screen and (min-width: 1024px) {
 	#wrap header>a {
-		margin: 0 auto 16em;
-		top: 4em;
+		margin: 0 auto 12em;
+		top: 3em;
 		text-align: center;
 	}
 	/*
@@ -209,6 +211,32 @@ footer>a {
 	body {
 		margin: 2%;
 	}
+    
+    p {
+		margin: 0;
+	}
+	h2 {
+		position: relative;
+		margin: -3.4rem 0 0 0;
+		padding: 0 0 0 1.75rem;
+		font-size: 2rem;
+        line-height: 1.6;
+	}
+    	h2 span {
+		text-align: center;
+		display: inline-block;
+		margin: 0 auto;
+		padding: 0;
+        box-sizing: border-box;
+        border: solid 1px yellow;
+	}
+	section, section img, .touchevents body {
+		margin: 0;
+	}
+    
+    .touchevents article p {
+		padding: 0 1rem;
+	}
 	.no-js path.invisible {
 		visibility: visible;
 	}
@@ -219,17 +247,20 @@ footer>a {
 		padding: 0 0 10.1em 0;
 		margin: 0;
 	}
-	header>a {
-		margin: 0 0 0 4.2%;
-		line-height: 0;
-		width: 48%;
-		border: solid 1px lime;
+    
+    header>a {
+		margin: 0 0 0 1.75rem;	
+        border: solid 1px lime;
 	}
-	/*
-    #logo {
-        margin: 0 0 -5% 0;
+    
+    header>a, h2 span {
+        width: 20rem;
     }
-    */
+	
+    #logo {
+        margin: 0 0 -1.5rem 0;
+    }
+    
 	.no-js header>a {
 		width: 105%;
 		margin: 0 0 -3em 5%;
@@ -238,54 +269,29 @@ footer>a {
 	header h1 {
 		position: absolute;
 	}
-	/*
-    .no-objectfit #logo, .no-js #logo {
-        height: 130px;
-    }
-    */
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-svgfilters header a h1 {
 		line-height: 4.45;
 		margin-bottom: 3em;
 	}
-	p {
-		margin: 0;
-	}
-	h2 {
-		position: relative;
-		margin: -8% 0 0 0;
-		padding: 0 0 0 4%;
-		font-size: 2em;
-		font-size: 1.75rem;
-	}
-	section {
-		margin: 0;
-	}
+	
 	header ul {
 		position: absolute;
-		right: -99em;
-		width: 9.5em;
+		right: -99rem;
+		width: 8rem;
 	}
 	section>label {
 		display: block;
 		width: 100%;
 	}
-	h2 span {
-		text-align: center;
-		display: inline-block;
-		margin: 0 auto;
-		border: solid 1px yellow;
-		width: 50%;
-		padding: 0;
-	}
+
 	/*width reqd, other properties reqd in no-js scenario; */
 	section img {
 		/* explicitly set float to none in case browser doesn't support flex/grid*/
 		float: none;
 		border-radius: 0;
+        border-width: 0;
 		box-shadow: none;
-		margin: 0;
-		border-width: 0;
 		width: 100%;
 	}
 	header ul a, header ul li {
@@ -298,9 +304,7 @@ footer>a {
 		transition: height .9s ease-out;
 	}
 	header input:checked+ul {
-		top: 4.6em;
 		top: 3.6rem;
-		right: 1em;
 		right: 1rem;
 		z-index: 2;
 		/*override display:table not really required as li's set to block*/
@@ -308,37 +312,21 @@ footer>a {
 	}
 	/*no need to fix advanced selectors for ie as mobile only layout*/
 	header input:checked+ul>li {
-		height: 2.6em;
+		height: 2rem;
 	}
 	.menu {
 		position: absolute;
-		top: 1em;
 		top: 1rem;
-		right: 1em;
 		right: 1rem;
-		height: 3em;
 		height: 2.5rem;
-		width: 3em;
 		width: 2.5rem;
 	}
-	.no-flexwrap h2 {
-		margin: -1.4em 0 0;
-		margin: -2.73rem 0 0;
-		padding: 0 0 0 .7em;
-		padding: 0 0 0 1.2rem;
-	}
-	.touchevents body {
-		margin: 0;
-	}
-	.no-flexwrap h2 span {
-		width: 15rem;
-	}
+	
 	article p:first-of-type, article p:last-child {
-		margin: 1em 0;
+		margin: .8rem 0;
 	}
 	section.ptrt img {
-		width: 30%;
-		margin: 1em 0 1em 1em;
+		margin: 1rem 0 1rem 1rem;
 	}
 	.read-more-trigger:before, .no-js section:first-child, .no-js .read-more-state:checked~.read-more-trigger:before {
 		display: block;
@@ -351,7 +339,7 @@ footer>a {
 	}
 	.no-js section:first-child .read-more-state~article, .no-js section:first-child .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article h3 {
 		position: static;
-		left: 0em;
+		left: 0;
 	}
 	#footer_girl a:first-child {
 		width: 8em;
@@ -362,66 +350,55 @@ footer>a {
 		display: block;
 	}
 }
-@media only screen and (max-width: 667px) and (orientation: portrait) {
-	#logo {
-		margin: 0;
+
+@media only screen and (max-width: 568px) {
+    
+    header>a, h2 span{
+		width: 18rem;
 	}
-	header>a {
-		margin: 0 0 0 4.2%;
-		line-height: normal;
+    header>a {
+		top: 1.3rem;
+        margin: 0 0 0 1rem;
 	}
-	h2 {
-		margin: -13% 0 0;
-		padding: 1% 0 0 2%;
-	}
-}
-@media only screen and (max-width: 568px) and (orientation: landscape) {
-	h2 {
-		margin: -10% 0 0;
-	}
-	.no-flexwrap h2 {
-		margin: -2.8rem 0 0 0em;
-	}
+    h2 {
+        padding: 0 0 0 1rem;
+    }
 }
 @media only screen and (max-width: 480px) {
-	h2 {
-		padding: 1% 0 0 2%;
+    
+    header>a, h2 span {
+		width: 16rem;
 	}
+    h2 {
+        margin: -2.7rem 0 0 0;
+        font-size: 1.75rem;
+        line-height: 1.4;
+    }
+	
 	header input:checked+ul {
 		top: 4rem;
 	}
-	h2 span {
-		width: 53%;
-	}
+	
 	.menu {
 		height: 3rem;
 		width: 3rem;
 	}
-	.no-flexwrap h2 span {
+	.no-objectfit h2 span {
 		width: 15.7rem;
 	}
 	.no-touchevents h2 {
 		line-height: 1.4;
 	}
-	section.ptrt img {
-		width: 40%;
-	}
-	header>a {
-		margin: 0 0 0 4.2%;
-		top: 1.5em;
-	}
-	.no-objectfit #logo {
-		border: solid 1px orange;
-	}
+
 	/*https://css-tricks.com/scale-svg/*/
 	.no-objectfit header>a {
 		position: relative;
 		height: 0;
 		padding: 0;
-		width: 55%;
+		width: 15.7rem;
 		/* 100% * 155/130 */
 		padding-bottom: 46.12%;
-		margin: 0 0 6% 2%;
+		margin: 0 0 0 1rem;
 	}
 	.no-objectfit #logo {
 		position: absolute;
@@ -431,56 +408,45 @@ footer>a {
 		top: 0;
 	}
 	.no-objectfit h2 {
-		margin: -17% 0 0;
+		margin: -3.5rem 0 0;
+        line-height: 2;
 	}
 	.no-objectfit h2 span {
-		width: 55%;
+		width: 15.7rem;
 	}
 }
-@media only screen and (max-width: 414px) {
-	#wrap h2 {
-		line-height: 1.6;
-	}
-	h2 span {
-		width: 56vw;
-	}
-	header>a {
-		width: 60%;
-		margin: 0 0 0% 1%;
-	}
-}
+
 @media only screen and (max-width: 400px) {
-	h2 {
-		font-size: 1.7em;
-		font-size: 1.5rem;
-	}
-	h2 span {
-		width: 57vw;
-	}
-	.no-flexwrap h2 {
-		padding: 0 0 0 .3rem;
-	}
-	no-flexwrap h2 span {
+
+	
+	.no-objectfit h2 span {
 		width: 13rem;
 	}
 }
-@media only screen and (max-width: 340px) {
-	h2 span {
-		width: 60vw;
+
+@media only screen and (max-width: 360px) {
+
+	header>a, h2 span {
+		width: 14rem;
 	}
-	h2 {
-		margin: -14% 0 0;
-	}
+
+    #logo {
+        margin: 0 0 -1rem 0;
+    }
 }
+
 @media only screen and (max-width: 320px) {
-	h2 span {
-		width: 64%;
-		width: 65% !important;
+
+    h2 {
+        font-size: 1.6rem;
+    }
+     header>a {
+		top: 1rem;
+        margin: 0 0 0 .6rem;
 	}
-	header>a {
-		margin: 0 0 0 3%;
-		top: 1.3em;
-	}
+    h2 {
+        padding: 0 0 0 .6rem;
+    }
 	.menu {
 		height: 2rem;
 		width: 2rem;
@@ -488,27 +454,37 @@ footer>a {
 	header input:checked+ul {
 		top: 3rem;
 	}
-	.no-objectfit #logo {
-		border: solid 1px orange;
-	}
+
 	/*https://css-tricks.com/scale-svg/*/
 	.no-objectfit header>a {
-		width: 62%;
+		width: 12rem;
 		/* 100% * 155/130 */
 		padding-bottom: 52%;
-		margin: 0 0 6% 3%;
+		margin: 0 0 6% .6rem;
 	}
 	.no-objectfit h2 {
-		margin: -19% 0 0;
+		margin: -3.6rem 0 0;
 	}
 	.no-objectfit h2 span {
-		width: 55%;
+		width: 12rem;
+	}
+    
+    .no-objectfit h2 {
+        line-height: 1.5;
 	}
 }
 @media only screen and (max-width: 280px) {
 	h2 {
-		font-size: 1.5em;
+		font-size: 1.3rem;
 	}
+    header>a, h2 span {
+		width: 12rem;
+	}
+     h2 {
+        margin: -2.3rem 0 0 0;
+         line-height: 1.8;
+    }
+
 }
 @media only screen and (-ms-high-contrast: none) {
 	.touchevents footer {

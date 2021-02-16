@@ -63,7 +63,7 @@ h2 span {
 		content: "Location";
 	}
 	section.ptrt img {
-		width: 40%;
+		width: 15rem;
 	}
 }
 @media screen and (max-width: 370px) {

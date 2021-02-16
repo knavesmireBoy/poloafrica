@@ -2,12 +2,7 @@
 /* https://stackoverflow.com/questions/43882869/margin-collapsing-in-flexbox */
 
 @media only screen and (max-width: 667px) {
-	.no-js section.multi h3, .flexwrap .multi article>* {
-		-webkit-box-flex: 1;
-		-ms-flex: 1 0 100%;
-		-webkit-flex: 1 0 100%;
-		flex: 1 0 100%;
-	}
+	
 	.flexwrap .multi article img {
 		-webkit-box-flex: 1;
 		-ms-flex: 1 0 1%;
@@ -25,16 +20,17 @@
 		order: 3;
 	}
 	.flexwrap .multi img:first-of-type, .no-js .multi img:last-of-type {
-		margin: 1em 0 0 1%;
+		margin: 1rem 0 0 .5rem;
 	}
 	.flexwrap .multi img:last-of-type, .no-js .multi img:first-of-type {
-		margin: 1em 1% 0 0;
+		margin: 1rem .5rem 0 0;
 	}
 	.no-js .multi article, .flexwrap .multi article p {
+        /*allow to shrink to preserve padding right*/
 		-webkit-box-flex: 1;
-		-ms-flex: 1 0 100%;
-		-webkit-flex: 1 0 100%;
-		flex: 1 0 100%;
+		-ms-flex: 1 1 100%;
+		-webkit-flex: 1 1 100%;
+		flex: 1 1 100%;
 		-webkit-order: 3;
 		-ms-flex-order: 3;
 		order: 3;
