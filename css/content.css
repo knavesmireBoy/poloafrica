@@ -257,8 +257,8 @@ header {
 	.no-js h2 span {
 		background-image: none;
 	}
-	@supports (background-image: linear-gradient(black, white)) {
-		/*default to flat color on no-js, override here wrap required to trump individual pages*/
+	/*default to flat color on no-js, override here wrap required to trump individual pages*/
+    @supports (background-image: linear-gradient(black, white)) {
 		#wrap h2 span {
 			background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
 		}
