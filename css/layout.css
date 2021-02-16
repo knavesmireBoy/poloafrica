@@ -262,9 +262,9 @@ footer>a {
     }
     
 	.no-js header>a {
-		width: 105%;
-		margin: 0 0 -3em 5%;
-		padding-bottom: 7.5em;
+		width: 133%;
+		margin: 0 0 0 1.75rem;
+		padding-bottom: 7.5rem;
 	}
 	header h1 {
 		position: absolute;
