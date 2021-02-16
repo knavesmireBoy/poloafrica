@@ -257,8 +257,8 @@ header {
 	.no-js h2 span {
 		background-image: none;
 	}
-	@supports (background-image: linear-gradient(black, white)) {
-		/*default to flat color on no-js, override here wrap required to trump individual pages*/
+	/*default to flat color on no-js, override here wrap required to trump individual pages*/
+    @supports (background-image: linear-gradient(black, white)) {
 		#wrap h2 span {
 			background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
 		}
@@ -329,12 +329,13 @@ header {
 		background-image: url(../images/resource/crop.JPG);
 		background-position: 70% 0;
 		background-blend-mode: multiply;
-		background-size: 240% !important;
-		-o-background-size: 182%;
-		-moz-background-size: 182%;
-		-ms-background-size: 182%;
-		-webkit-background-size: 182%;
+        	-o-background-size: 222%;
+		-moz-background-size: 222%;
+		-ms-background-size: 222%;
+		-webkit-background-size: 222%;
+        background-size: 222% !important;
 	}
+ 
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-svgfilters header a h1 {
 		background-position: left bottom;
@@ -425,9 +426,7 @@ header {
 	h3, .read-more-trigger:before, .js section img {
 		border-bottom: solid 1px white;
 	}
-	.touchevents article p {
-		padding: 0 1em;
-	}
+
 	.override article p {
 		line-height: 1.55;
 	}
@@ -469,6 +468,18 @@ header {
 		color: hsl(58, 60%, 48%);
 	}
 }
+
+@media only screen and (max-width: 667px) and (orientation: portrait) {
+    
+    header {
+		-o-background-size: 300%;
+		-moz-background-size: 300%;
+		-ms-background-size: 300%;
+		-webkit-background-size: 300%;
+        background-size: 300% !important;
+	}
+    
+}
 @media only screen and (max-width: 580px) {
 	footer {
 		-o-background-size: 280%;
@@ -477,9 +488,7 @@ header {
 		-webkit-background-size: 280%;
 		background-size: cover;
 	}
-	.no-svg body {
-		background-color: blueviolet;
-	}
+
 }
 @media only screen and (max-width: 480px) {
 	footer {
@@ -495,7 +504,7 @@ header {
 		padding: .75em .6em;
 	}
 }
-/*
+
 @media only screen and (min-width: 1024px) {
 
 .js article, .js section>img, aside {
@@ -542,4 +551,3 @@ header {
 		opacity: 1;
 	}
 }
-*/
