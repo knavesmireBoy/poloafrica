@@ -141,23 +141,7 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 .swap #slide {
 	margin-left: 0%;
 }
-#controls {
-	top: 0em;
-	position: relative;
-	text-align: center;
-	font-size: 1.5em;
-	margin: 0 auto;
-	z-index: 2;
-	border-spacing: .5em;
-	-webkit-transition: all 1s;
-	-o-transition: all 1s;
-	transition: all 1s;
-	clear: both;
-	display: table;
-	opacity: 0;
-	filter: alpha(opacity=0);
-	zoom: 1;
-}
+
 #tooltip {
 	position: absolute;
 	z-index: 3;
@@ -179,6 +163,50 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	filter: alpha(opacity=0);
 	zoom: 1;
 }
+#tooltip.tip {
+	-webkit-transform: translate(10em, -3em);
+	-ms-transform: translate(10em, -3em);
+	transform: translate(10em, -3em);
+	opacity: .75;
+	filter: alpha(opacity=75);
+	zoom: 1;
+}
+#tooltip.tb1 {
+	-webkit-transform: translate(2em, -3em);
+	-ms-transform: translate(2em, -3em);
+	transform: translate(2em, -3em);
+	opacity: 1;
+	filter: alpha(opacity=100);
+	zoom: 1;
+}
+#tooltip.tb2 {
+	-webkit-transform: translate(2em, 10em);
+	-ms-transform: translate(2em, 10em);
+	transform: translate(2em, 10em);
+	z-index: 5;
+}
+#tooltip div:first-child {
+	background: #cc6;
+	padding: 3px;
+}
+#controls {
+	top: 0em;
+	position: relative;
+	text-align: center;
+	font-size: 1.5em;
+	margin: 0 auto;
+	z-index: 2;
+	border-spacing: .5em;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+	clear: both;
+	display: table;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	zoom: 1;
+}
+
 #controls button {
 	width: 1.5em;
 	height: 1.5em;
@@ -216,32 +244,7 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	filter: alpha(opacity=100);
 	zoom: 1;
 }
-#tooltip.tip {
-	-webkit-transform: translate(10em, -3em);
-	-ms-transform: translate(10em, -3em);
-	transform: translate(10em, -3em);
-	opacity: .75;
-	filter: alpha(opacity=75);
-	zoom: 1;
-}
-#tooltip.tb1 {
-	-webkit-transform: translate(2em, -3em);
-	-ms-transform: translate(2em, -3em);
-	transform: translate(2em, -3em);
-	opacity: 1;
-	filter: alpha(opacity=100);
-	zoom: 1;
-}
-#tooltip.tb2 {
-	-webkit-transform: translate(2em, 10em);
-	-ms-transform: translate(2em, 10em);
-	transform: translate(2em, 10em);
-	z-index: 5;
-}
-#tooltip div:first-child {
-	background: #cc6;
-	padding: 3px;
-}
+
 #controls.static button {
 	border: 1px solid #FFF;
 	border: 1px solid rgba(255, 255, 255, .75);
