@@ -696,7 +696,7 @@
 							}
 						},
 						validate: function (str) {
-							if (utils.findByClass('inplay') && recur.t && predicate(str)) {
+							if (utils.findByClass('inplay') && recur.t && this.handle(str)) {
 								//return fresh instance on exiting slideshow IF in play mode
 								clear();
 								return factory();
