@@ -18,13 +18,10 @@ window.poloAF.Tooltip = function (anchor, instr, count, remove) {
 			return _.isFunction(arg) ? arg() : arg;
 		},
 		utils = poloAF.Util,
-		setText = utils.setText,
-		setAttrs = utils.setAttributes,
+		curryFactory = utils.curryFactory,
+		twice = curryFactory(2),
 		anCr = utils.append(),
 		doElement = _.compose(anCr(getResult(anchor)), utils.always('div')),
-		doAttrs = _.partial(setAttrs, {
-			id: 'tooltip'
-		}),
 		timeout = function (fn, delay, el) {
 			return window.setTimeout(_.bind(fn, null, el), delay);
 		},
@@ -44,7 +41,9 @@ window.poloAF.Tooltip = function (anchor, instr, count, remove) {
 						var parent = $('tooltip'),
 							tgt = utils.getDomChild(utils.getNodeByTag('div'));
 						if (parent) {
-							utils.machElement(setText(instr[1]), _.partial(_.identity, tgt(parent.firstChild))).render();
+							utils.doMap(tgt(parent.firstChild), [
+								['txt', instr[1]]
+							]);
 						}
 					}
 				},
@@ -65,17 +64,18 @@ window.poloAF.Tooltip = function (anchor, instr, count, remove) {
 			}, delay);
 		},
 		init = function () {
-			var tip,
-				doDiv,
-				doAttr;
-			if (isPos(count--)) {
-				tip = utils.machElement(_.partial(_.bind(timer.run, timer), prep()), doAttrs, doElement).render().getElement();
-				doDiv = _.compose(anCr(tip), utils.always('div'));
-				doAttr = _.partial(setAttrs, {
-					id: 'triangle'
-				});
-				utils.machElement(setText(instr[0]), doDiv).render();
-				utils.machElement(doAttr, doDiv).render();
+			if (isPos(count -= 1)) {
+				var doMap = twice(utils.doMap),
+					tip = _.compose(_.partial(_.bind(timer.run, timer), prep()), doMap([
+						['id', 'tooltip']
+					]), doElement)(),
+					doDiv = _.compose(anCr(tip), utils.always('div'));
+				_.compose(doMap([
+					['txt', instr[0]]
+				]), doDiv)();
+				_.compose(doMap([
+					['id', 'triangle']
+				]), doDiv)();
 			}
 			if (remove) {
 				exit.call(this, 10000);

@@ -52,7 +52,7 @@
 	function makeDummy() {
 		return {
 			render: function () {},
-			unrender: function () {}
+			undo: function () {}
 		};
 	}
 
@@ -213,11 +213,12 @@
 		//height and width of image are compared BUT a) must invoke the comparison AFTER image loaded
 		//b) must remove load listener or will intefere with slideshow
 		onBase = function (img, path, promise) {
-			img.src = path;
 			var ev = eventing('load', event_actions.slice(0, 1), function (e) {
-				promise.then(e.target);
-				ev.unrender();
-			}, img).render();
+				promise.then(e[mytarget]);
+				ev.undo();
+			}, img).execute();
+            
+            img.src = path;
 		},
 		doInc = function (n) {
 			return doComp(ptL(modulo, n), increment);
@@ -278,7 +279,7 @@
 			var img = getDomTargetImg($(id));
 			if (img) {
 				img.onload = function (e) {
-					promise.then(e.target);
+					promise.then(e[mytarget]);
 				};
 				img.src = doParse(getnexturl());
 				img.parentNode.href = doParse(img.src);
@@ -403,25 +404,27 @@
 					_.each(_.last(getColl(), 2), this[action]);
 					options = options.reverse();
 				},
-				unrender: function (el) {
-					var $el = utils.machElement(utils.always(el)).render();
-					$el.unrender();
+				undo: function (el) {
+					//var $el = utils.machElement(utils.always(el)).execute();
+                     return utils.removeNodeOnComplete(el);
+					//$el.undo();
 				},
-				render: function (el) {
+				execute: function (el) {
 					var base = $('base'),
 						ancr = base ? anCrIn(base, getThumbs) : anCr(getThumbs);
 					//doesn't really matter where #base is placed as all other LIS are hidden when it is present. But tidier to append
-					return utils.machElement(ancr, utils.always(el)).render();
+                    return ancr(el);
+					//return utils.machElement(ancr, utils.always(el)).execute();
 				},
 				query: function (coll) {
 					var lis = getColl(),
 						L = getColl().length;
 					if (L > coll.length) {
-						_.each(_.last(lis, 2), this.unrender);
+						_.each(_.last(lis, 2), this.undo);
 						addAlt();
 						sync(getColl());
 					} else if (L < coll.length) {
-						_.each(_.last(lis, 2), this.render);
+						_.each(_.last(lis, 2), this.execute);
 						remAlt();
 						//12 to 14
 						sync(getColl());
@@ -429,7 +432,7 @@
 					//else 14 === 14 || 12 === 12
 				}
 			};
-		}(['unrender', 'render'])),
+		}(['undo', 'execute'])),
 		negator = function (cb, page_coll) {
 			if (galleryCount(page_coll.value)) {
 				cb();
@@ -445,7 +448,7 @@
 		populatePage = function (img, path) {
 			img.src = path;
 			img.onload = function (e) {
-				fixNoNthChild(e.target);
+				fixNoNthChild(e[mytarget]);
 			};
 		},
 		/*invokeBridge expects a two element array of [function, arguments], zip expects two arrays, one delivered on the fly one obtained querying the dom(getAllpics), the on-the-fly is a collection of curried functions expecting the last argument from the dom collection, getAllPics is preloaded, we need to reverse the [img, function] to [function, img] passed to invokeBridge.
@@ -479,7 +482,7 @@
 					group = pages.doGroup(pages.fixPageOrder(pages.getLeadingGroup(myptrt, mylscp, !!is_portrait[0]), picsrc));
 				Looper.onpage = Looper.from(_.map(group, makePath), doInc(getLength(group)));
 			},
-			unrender: function (page_index) {
+			undo: function (page_index) {
 				/*restores on page iterator post slideshow
 				if omitted manual navigation would cross page boundaries*/
 				var page,
@@ -508,7 +511,7 @@
 			//if we are inplay (ie pause or playing) we neither want to call enter or exit so a dummy object is returned
 			var myint = pages.findInt(getBaseSrc),
 				page_index = pages.findIndex(getBaseSrc),
-				m = flag ? 'render' : 'unrender',
+				m = flag ? 'execute' : 'undo',
 				slider = get_player();
 			con(slider, in_play());
 			slider[m](page_index, myint);
@@ -528,7 +531,7 @@
 		prevcaller = twicedefer(getValue)('back')('value'),
 		locator = function (forward, back) {
 			var getLoc = function (e) {
-				var box = e.target.getBoundingClientRect();
+				var box = e[mytarget].getBoundingClientRect();
 				return e.clientX - box.left > box.width / 2;
 			};
 			return function (e) {
@@ -542,7 +545,7 @@
 		},
 		locate = eventing('click', event_actions.slice(0), function (e) {
 			locator(twicedefer(loader)('base')(nextcaller), twicedefer(loader)('base')(prevcaller))(e)[1]();
-			doOrient(e.target);
+			doOrient(e[mytarget]);
 		}, getThumbs()),
 		///slideshow...
 		recur = (function (player) {
@@ -657,10 +660,10 @@
 		}({})),
 		clear = _.bind(recur.undo, recur),
 		doplay = _.bind(recur.execute, recur),
-		go_render = thrice(doMethod)('render')(null),
-		go_unrender = thrice(doMethod)('unrender')(null),
+		go_execute = thrice(doMethod)('execute')(null),
+		go_undo = thrice(doMethod)('undo')(null),
 		$controller = makeDummy(),
-		doExitShow = doComp(thrice(lazyVal)('unrender')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
+		doExitShow = doComp(thrice(lazyVal)('undo')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
 		factory = function () {
 			var remPause = doComp(utils.removeNodeOnComplete, $$('paused')),
 				remSlide = doComp(utils.removeNodeOnComplete, $$('slide')),
@@ -668,18 +671,18 @@
 				doSlide = defer([clear, doplay]),
 				doPlaying = defer([notplaying, playing]),
 				doDisplay = defer([function () {}, playtime]),
-				unlocate = thricedefer(doMethod)('unrender')(null)(locate),
+				unlocate = thricedefer(doMethod)('undo')(null)(locate),
 				invoke_player = deferEach([doSlide, doPlaying, doDisplay])(getResult),
 				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), getThumbs),
-				relocate = ptL(lazyVal, null, locate, 'render'),
+				relocate = ptL(lazyVal, null, locate, 'execute'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
-				farewell = [notplaying, exit_inplay, exitswap, doComp(go_unrender, utils.always($controller)), doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
+				farewell = [notplaying, exit_inplay, exitswap, doComp(go_undo, utils.always($controller)), doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				next_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([get_play_iterator, defer_once(clear)(true), twicedefer(loader)('base')(prevcaller)].concat(farewell))(getResult),
 				controller = function () {
 					//make BOTH slide and pause but only make pause visible on NOT playing
 					if (!$('slide')) {
-						$controller = doMakeSlide('base', 'slide', go_render, do_invoke_player, unlocate);
+						$controller = doMakeSlide('base', 'slide', go_execute, do_invoke_player, unlocate);
 						doMakePause(getPausePath());
 					}
 				},
@@ -698,7 +701,6 @@
 						validate: function (str) {
 							if (utils.findByClass('inplay') && recur.t && this.handle(str)) {
 								//return fresh instance on exiting slideshow IF in play mode
-								clear();
 								return factory();
 							}
 							return this;
@@ -725,7 +727,7 @@
 		setup = function (e) {
 			doComp(setindex, utils.drillDown(['target', 'src']))(e);
 			doComp(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-			doMakeBase(e.target.src, 'base', doOrient, getBaseChild, showtime);
+			doMakeBase(e[mytarget].src, 'base', doOrient, getBaseChild, showtime);
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
 				close_cb = ptL(doComp(utils.getDomParent(utils.getNodeByTag('main')), thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(getThumbs, main)), 'a'),
@@ -745,24 +747,24 @@
 				controls_dostat = eventing('mouseover', [], dostatic, $('controls')),
 				exit = eventing('click', event_actions.slice(0, 1), function (e) {
 					//con(event_actions.slice(1, 2))
-					if (e.target.id === 'exit') {
-						chain = chain.validate('play');
+					if (e[mytarget].id === 'exit') {
+						chain = chain.validate();
 						doExitShow();
 						_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
 						exitshow();
-						locate.unrender();
-						$setup.render();
+						locate.undo();
+						$setup.execute();
 					}
 				}, close_cb);
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
-			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_render);
-			$setup.unrender();
+			_.each([controls, exit, locate, controls_undostat, controls_dostat], go_execute);
+			$setup.undo();
 		};
 	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
-	$setup.render();
+	$setup.execute();
 	addPageNav(anCr, 'gal_forward', makeDummy);
-	$nav.render();
+	$nav.execute();
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 	_.each(getAllPics(), fixNoNthChild);
 	svg_handler();

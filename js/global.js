@@ -754,25 +754,53 @@ poloAF.Util = (function() {
 			};
 		return nested(pre(klas));
 	}
+    
+    function toObject(arr) {
+		return _.object([
+			[arr[0], arr[1]]
+		]);
+	}
+
 
 	function attrMap(el, map, style) {
-		var k;
+		var k,
+			o;
 		for (k in map) {
 			if (map.hasOwnProperty(k)) {
+                
 				if (k.match(/^te?xt$/)) {
 					el.innerHTML = map[k];
 					continue;
 				}
 				if (style) {
-					el.style.setProperty(k, map[k]);
+                    if (poloAF.slice_shim) {
+						el.style[toCamelCase(k)] = map[k];
+					} else {
+						el.style.setProperty(k, map[k]);
+					}
 				} else {
-					el.setAttribute(k, map[k]);
-                    //to support ie 6,7
-                    //poloAF.Util.setAttributes({k: map[k]}, el);
+					o = {};
+					o[k] = map[k]; //to support ie 6,7
+                    poloAF.Util.setAttributes(o, el);
 				}
 			}
 		}
 		return el;
+	}
+
+	function doMapRecur(el, v) {
+		/*second argument (v) should be an array of arrays [[p,v], [p,v], [[p,v]]]
+		    with style properties wrapped in an extra array and sent last
+		    eg [id, 'fred'], [title, 'our fred'], [txt, 'freddie'], [[opacity: '0.5'], [background-color: 'blue']]*/
+		var tgt = v.length && v.splice(0, 1)[0],
+			pass;
+		if (!tgt) {
+			return el;
+		}
+		pass = _.isArray(tgt[0]);
+		tgt = pass ? tgt[0] : tgt;
+		el = attrMap(getResult(el), toObject(tgt), pass);
+		return doMapRecur(el, v);
 	}
 
 	function reverseArray(array) {
@@ -1059,22 +1087,7 @@ poloAF.Util = (function() {
 		},
 		curryFactory: curryFactory,
 		doAlternate: doAlternate,
-		doMap: function doMap(el, v) {
-			if (Array.isArray(v[0][0])) {
-				_.each(v[0], function(sub) {
-					return attrMap(getResult(el), _.object([
-						[sub[0], sub[1]]
-					]), true);
-				});
-			} else {
-				_.each(v, function(sub) {
-					return attrMap(getResult(el), _.object([
-						[sub[0], sub[1]]
-					]));
-				});
-			}
-			return el;
-		},
+		doMap: doMapRecur,
 		/*USAGE:
         var once = doOnce(),
         actions = [func1, func2, ...];
@@ -1086,7 +1099,7 @@ poloAF.Util = (function() {
 		doWhen: doWhen,
 		drillDown: drillDown,
 		//https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
-		eventer: function(type, actions, fn, el) {
+		eventer1: function(type, actions, fn, el) {
 			function preventer(wrapped, e) {
 				_.each(actions, function(a) {
 					myEventListener.preventers[a](e);
@@ -1106,6 +1119,50 @@ poloAF.Util = (function() {
 				},
 				getEl: function() {
 					return el;
+				}
+			};
+		},
+        
+        //https://medium.com/@dtipson/creating-an-es6ish-compose-in-javascript-ac580b95104a
+		eventer: function (type, actions, fn, el) {
+			function preventer(wrapped, e) {
+				//invoke method allows a function to be invoked directly NOT as an event listener
+				if (e) {
+					_.each(actions, function (a) {
+						if (myEventListener.preventers[a]) {
+							myEventListener.preventers[a](e);
+						}
+					});
+				}
+				return wrapped(e);
+			}
+			fn = _.wrap(fn, preventer);
+			el = getResult(el);
+			return {
+				execute: function (flag) {
+					myEventListener.add(el, type, fn);
+					gAlp.Util.eventCache.add(this, flag);
+					return this;
+				},
+				undo: function (flag) {
+					myEventListener.remove(el, type, fn);
+					if (flag && _.isBoolean(flag)) {
+						el = removeNodeOnComplete(el);
+					}
+					gAlp.Util.eventCache.remove(this);
+					return el;
+				},
+				getEl: function () {
+					return el;
+				},
+				invoke: function () {
+					fn.apply(null, arguments);
+				},
+				restore: function (i) {
+					var $e = gAlp.Util.eventCache(i);
+					if ($e) {
+						$e.execute();
+					}
 				}
 			};
 		},
@@ -1394,3 +1451,77 @@ poloAF.Util = (function() {
 		dog: 'spadger'
 	}; //end
 }());
+
+poloAF.Util.eventCache = (function (list) {
+	"use strict";
+
+	function splice(i, l) {
+		list.splice(i, l || 1);
+	}
+
+	function isNoNum(arg) {
+		return _.isBoolean(arg) && isNaN(parseFloat(arg));
+	}
+
+	function find(arg, m) {
+		//assume arg is listener object  
+		var i = _[m](list, function ($cur) {
+			return $cur === arg;
+		});
+		if (i === -1 || typeof i === 'undefined') {
+			i = isNoNum(arg) ? i = list.length - 1 : arg;
+		}
+		return i;
+	}
+	return {
+		add: function ($tgt, flag) {
+			var m = flag ? 'unshift' : 'push';
+			list = _.filter(list, function ($item) {
+				return $item !== $tgt;
+			});
+			list[m]($tgt);
+			return this;
+		},
+		remove: function ($tgt) {
+			var i = find.call(this, $tgt, 'findIndex');
+			splice(i);
+			return this.get(i);
+		},
+		erase: function ($tgt) {
+			var i = find.call(this, $tgt, 'findIndex');
+			$tgt = this.get(i);
+			if ($tgt) {
+				return $tgt.undo(true);
+			}
+		},
+		get: function ($tgt) {
+			if (!isNoNum($tgt)) {
+				return list[$tgt];
+			}
+			return find.call(this, $tgt, 'find');
+		},
+		flush: function () {
+			list = [];
+			return this;
+		},
+		getList: function (flag) {
+			return flag ? list.length : list;
+		},
+		////$element.triggerEvent($element.getElement(), 'scroll');
+		triggerEvent: function (el, type) {
+			var e;
+			//if ('createEvent' in document) {
+            if (document.hasOwnProperty('createEvent')) {
+				// modern browsers, IE9+
+				e = document.createEvent('HTMLEvents');
+				e.initEvent(type, false, true);
+				el.dispatchEvent(e);
+			} else {
+				// IE 8
+				e = document.createEventObject();
+				e.eventType = type;
+				el.fireEvent('on' + e.eventType, e);
+			}
+		}
+	};
+}([]));
