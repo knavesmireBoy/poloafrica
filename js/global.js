@@ -1141,7 +1141,7 @@ poloAF.Util = (function() {
 			return {
 				execute: function (flag) {
 					myEventListener.add(el, type, fn);
-					gAlp.Util.eventCache.add(this, flag);
+					poloAF.Util.eventCache.add(this, flag);
 					return this;
 				},
 				undo: function (flag) {
@@ -1149,7 +1149,7 @@ poloAF.Util = (function() {
 					if (flag && _.isBoolean(flag)) {
 						el = removeNodeOnComplete(el);
 					}
-					gAlp.Util.eventCache.remove(this);
+					poloAF.Util.eventCache.remove(this);
 					return el;
 				},
 				getEl: function () {
@@ -1159,7 +1159,7 @@ poloAF.Util = (function() {
 					fn.apply(null, arguments);
 				},
 				restore: function (i) {
-					var $e = gAlp.Util.eventCache(i);
+					var $e = poloAF.Util.eventCache(i);
 					if ($e) {
 						$e.execute();
 					}

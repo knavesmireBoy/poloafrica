@@ -55,9 +55,6 @@ poloAF.Iterator = function (rev) {
 				},
 				getCollection: function () {
 					return coll;
-				},
-				setCollection: function (coll) {
-					this.coll = coll;
 				}
 			};
 		if (rev) {
@@ -97,8 +94,7 @@ poloAF.Composite = (function () {
 			comp_add = function (comp) {
 				intafaces.unshift(comp);
 				poloAF.Intaface.ensures.apply(poloAF.Intaface, intafaces);
-				var m = comp.head ? 'unshift' : 'push';
-				included[m](intafaces.shift(comp));
+				included.push(intafaces.shift(comp));
 				comp.parent = this;
 			},
 			comp_remove = function (comp) {
@@ -119,15 +115,15 @@ poloAF.Composite = (function () {
 			},
 			comp_get = function (i) {
 				//console.log('recent', i)
-				if (_.isNull(i) && !isNaN(k)) {
+				if (_.isNull(i) && !isNaN(parseFloat(k))) {
 					return included[k];
 				}
 				if (_.isNull(i)) {
 					return included;
 				}
-				var j = isTrue(i) ? 0 : isFalse(i) ? included.length - 1 : !isNaN(i) ? i : undefined,
-					ret = !isNaN(j) ? included[j] : included;
-				k = !isNaN(j) ? j : k; //store current
+				var j = isTrue(i) ? 0 : isFalse(i) ? included.length - 1 : !isNaN(parseFloat(i)) ? i : undefined,
+					ret = !isNaN(parseFloat(j)) ? included[j] : included;
+				k = !isNaN(parseFloat(j)) ? j : k; //store current
 				return ret;
 			},
 			comp_find = function (m, e) {
@@ -192,12 +188,38 @@ poloAF.Composite = (function () {
 		return composite || leaf;
 	}; //ret func
 }());
-(function () {
+poloAF.Looper = function () {
 	"use strict";
 
 	function equals(a, b) {
 		return a === b;
 	}
+
+	function modulo(n, i) {
+		return i % n;
+	}
+
+	function increment(i) {
+		return i + 1;
+	}
+
+	function doInc(n) {
+		return _.compose(_.partial(modulo, n), increment);
+	}
+
+	function makeProxyIterator(src, tgt, methods) {
+		function mapper(method) {
+			if (src[method] && _.isFunction(src[method])) {
+				tgt[method] = function () {
+					return this.$subject[method].apply(this.$subject, arguments);
+				};
+			}
+		}
+		tgt.setSubject(src);
+		_.each(methods, mapper);
+		return tgt;
+	}
+    
 	poloAF.LoopIterator = function (group, advancer) {
 		this.group = group;
 		this.position = 0;
@@ -208,6 +230,7 @@ poloAF.Composite = (function () {
 		this.members = [];
 	};
 	poloAF.Group.prototype = {
+		constructor: poloAF.Group,
 		add: function (value) {
 			if (!this.has(value)) {
 				this.members.push(value);
@@ -218,6 +241,9 @@ poloAF.Composite = (function () {
 		},
 		has: function (value) {
 			return _.contains(this.members, value);
+		},
+		visit: function (cb) {
+			_.each(this.members, cb, this);
 		}
 	};
 	poloAF.Group.from = function (collection) {
@@ -235,56 +261,67 @@ poloAF.Composite = (function () {
 	poloAF.LoopIterator.onpage = null;
 	poloAF.LoopIterator.cross_page = null;
 	poloAF.LoopIterator.prototype = {
-		forward: function (flag) {
-			if (!flag && this.rev) {
-				return this.back(true);
-			}
-			//this.position++;
-			//this.position = this.position % this.group.members.length;
-			this.position = this.advance(this.position);
-			var result = {
-				value: this.group.members[this.position],
-				index: this.position
-			};
-			return result;
-		},
+		constructor: poloAF.LoopIterator,
 		back: function (flag) {
 			if (!this.rev || flag) {
 				this.group.members = this.group.members.reverse();
-				//this.position = this.group.members.length - 1 - (this.position);
 				this.position = this.group.members.length - 2 - (this.position);
-				//this.position = this.position % this.group.members.length;
 				this.position = this.advance(this.position);
 				this.rev = !this.rev;
-				return this.forward(this.rev);
-			} else {
-				return this.forward(this.rev);
 			}
+			return this.forward(this.rev);
 		},
-		play: function () {
-			return this.forward(true).value;
-		},
-		current: function () {
-			var result = {
-				value: this.group.members[this.position],
-				index: this.position
-			};
-			return result;
-		},
+		
 		find: function (tgt) {
 			return this.set(_.findIndex(this.group.members, _.partial(equals, tgt)));
-			//return this.set(this.group.members.findIndex(_.partial(equals, tgt)));
 		},
-		set: function (pos) {
-			this.position = pos;
-			var result = {
+        forward: function (flag) {
+			if (!flag && this.rev) {
+				return this.back(true);
+			}
+			this.position = this.advance(this.position);
+			return this.status();
+		},
+		get: function (m) {
+			m = m || 'value';
+			return this.status()[m];
+		},
+        set: function (pos) {
+			if (!isNaN(parseFloat(pos)) && pos >= 0) {
+				this.position = pos;
+			}
+			return {
 				value: this.group.members[this.position],
 				index: this.position
 			};
-			return result;
 		},
-		get: function () {
-			return this.current().value;
+        status: function () {
+			return {
+				members: this.group.members,
+				value: this.group.members[this.position],
+				index: this.position
+			};
+		},
+		visit: function (cb) {
+			this.group.visit(cb);
 		}
 	};
-}());
+    
+    var target = {
+        setSubject: function (s) {
+			this.$subject = s;
+        },
+        getSubject: function () {
+			return this.$subject;
+        },
+        build: function (coll, advancer) {
+            this.setSubject(poloAF.LoopIterator.from(coll, advancer(coll)));
+        }
+    },
+        twice = poloAF.Util.curryFactory(2),
+		doGet = twice(poloAF.Util.getter),
+		getLength = doGet('length'),
+		incrementer = _.compose(doInc, getLength);
+	
+	return makeProxyIterator(poloAF.LoopIterator.from([], incrementer), target, ['back', 'status', 'find', 'forward', 'get', 'play', 'set',  'visit']);
+};
