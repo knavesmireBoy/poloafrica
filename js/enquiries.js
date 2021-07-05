@@ -15,40 +15,13 @@ if (!window.poloAF) {
         return {width: a[0], height: a[1]};
     }
     
-     function doSvg(svg){
-           return function(str){
-               if(svg && str){
-                   utils.setAttributes({viewBox: str}, svg);
-                   //ipod ios(6.1.6) requires height
-                   if(!Modernizr.objectfit){
-                       utils.setAttributes(viewBoxDims(str), svg);
-                   }
-               }
-           }
-       }
-    
-    
-     function SVGview() {
-            var mq  = window.matchMedia("(max-width: 667px)"),
-                setViewBox = doSvg(document.getElementById('logo')),
-                doMobile = _.compose(execMobile, undoDesktop, ptL(setViewBox, "0 0 155 125")),
-                doDesktop = _.compose(undoMobile, execDesktop, ptL(setViewBox, "2 0 340 75"));
-         return function(){
-                    if(mq.matches){//onload
-                        doMobile();
-                    }
-                    return doAlt([doMobile, doDesktop]);
-        };
-     }
-    
-    
-
-	function getResult(arg) {
+    function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
 	}
 
 	function helper(ancor, tag, config) {
 		var anCr = poloAF.Util.append();
+        //return _.compose(config, anCr(ancor))(tag);
 		return poloAF.Util.machElement(config, anCr(ancor), poloAF.Util.always(tag)).render();
 	}
 
@@ -144,6 +117,29 @@ if (!window.poloAF) {
 		execDesktop = _.compose(ptL(klasRem, 'invisible'), utils.getNext, getSvgPath),
 		undoMobile = _.compose(ptL(klasAdd, 'invisible'), getSvgPath),
 		undoDesktop = _.compose(ptL(klasAdd, 'invisible'), utils.getNext, getSvgPath),
+        doSvg = function (svg){
+            return function(str){
+                if(svg && str){
+                    utils.setAttributes({viewBox: str}, svg);
+                   //ipod ios(6.1.6) requires height
+                    if(!Modernizr.objectfit){
+                        utils.setAttributes(viewBoxDims(str), svg);
+                    }
+                }
+            }
+        },
+        doSVGview = function () {
+            var mq = window.matchMedia("(max-width: 667px)"),
+                setViewBox = doSvg(document.getElementById('logo')),
+                doMobile = _.compose(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 125")),
+                doDesktop = _.compose(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
+            return function () {
+                if (mq.matches) { //onload
+                    doMobile();
+                }
+                return doAlt([doMobile, doDesktop]);
+            };
+        },  
 		negater = function (alternator) {
          //report();
          /*NOTE netrenderer reports window.width AS ZERO*/
@@ -307,7 +303,7 @@ if (!window.poloAF) {
 				doAlert(res);
 			}
 		},
-        svg_handler = ptL(negater, SVGview()());
+        svg_handler = ptL(negater, doSVGview()());
 	//listener();
 	utils.addEvent(clicker, relocate)(legend);
 	utils.addEvent(submitter, listener)(myform);

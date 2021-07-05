@@ -22,11 +22,6 @@
     
 	var dummy = {},
 		//con = window.console.log.bind(window),
-		report = function(msg, el) {
-			el = el || utils.getByTag('h2', document)[0];
-			msg = msg === undefined ? document.documentElement.className : msg;
-			el.innerHTML = msg;
-		},
 		utils = poloAF.Util,
 		ie6 = utils.$('tween'),
 		ptL = _.partial,

@@ -3,7 +3,7 @@
 /*global poloAF: false */
 /*global document: false */
 /*global _: false */
-(function (paths, home) {
+(function (paths) {
 	"use strict";
 
 	function simpleInvoke(o, m, arg) {
@@ -21,41 +21,6 @@
 
 	function getter(o, k) {
 		return o && o[k];
-	}
-
-	function setId(el, id) {
-		utils.setAttributes({
-			id: id
-		}, el);
-	}
-
-	function setIdBridge(i, el, id) {
-		setId(el.parentNode, id);
-	}
-
-	function invokeWhen(action, validate) {
-		var args = _.rest(arguments, 2),
-			res = validate.apply(null, args);
-		return res && action.apply(null, args);
-	}
-
-	function fallback(test_el, deco, config) {
-		var fb = utils.$("FacebookBadge").getElementsByTagName("img")[0],
-			insta = utils.$("InstagramIcon").getElementsByTagName("img")[0];
-		_.each(_.zip(paths, [test_el, insta, fb]), function (arr, i) {
-			deco(i, arr[1], 'pologirl');
-			utils.setAttributes(config(arr[0]), arr[1]);
-		});
-	}
-
-	function doOdd(el, i) {
-		var addOdd = _.partial(utils.addClass, 'odd'),
-			sections = doThrice(simpleInvoke)('section')('getElementsByTagName')(document);
-		_.each(_.toArray(sections), function (el, i) {
-			if ((i % 2) === 0) {
-				addOdd(el);
-			}
-		});
 	}
 	var config = {
 			id: 'current'
@@ -84,6 +49,31 @@
 		found = ptL(_.filter, links(), function (link) {
 			return new RegExp(getTerm(document), 'i').test(getDomTargetLink(link).innerHTML);
 		}),
+        doOdd = function () {
+            var addOdd = _.partial(utils.addClass, 'odd'),
+                sections = doThrice(simpleInvoke)('section')('getElementsByTagName')(document);
+            _.each(_.toArray(sections), function (el, i) {
+                if ((i % 2) === 0) {
+                    addOdd(el);
+                }
+            });
+        },
+        setId = function (el, id) {
+            utils.setAttributes({
+                id: id
+            }, el);
+        },
+        setIdBridge = function (i, el, id) {
+            setId(el.parentNode, id);
+        },
+        fallback = function (test_el, deco, config) {
+            var fb = utils.$("FacebookBadge").getElementsByTagName("img")[0],
+                insta = utils.$("InstagramIcon").getElementsByTagName("img")[0];
+            _.each(_.zip(paths, [test_el, insta, fb]), function (arr, i) {
+                deco(i, arr[1], 'pologirl');
+                utils.setAttributes(config(arr[0]), arr[1]);
+            });
+        },
 		sub = doTwice(getSubString)(document.getElementById('home') ? 3 : 0),
 		hiLite = _.compose(ptL(utils.setAttributes, config), utils.getZero, found),
 		doHover = _.compose(ptL(utils.addClass, 'sfhover'), getTarget),

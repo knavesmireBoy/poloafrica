@@ -424,16 +424,13 @@
 					options = options.reverse();
 				},
 				undo: function (el) {
-					//var $el = utils.machElement(utils.always(el)).execute();
 					return utils.removeNodeOnComplete(el);
-					//$el.undo();
 				},
 				execute: function (el) {
 					var base = $('base'),
 						ancr = base ? anCrIn(base, getThumbs) : anCr(getThumbs);
 					//doesn't really matter where #base is placed as all other LIS are hidden when it is present. But tidier to append
 					return ancr(el);
-					//return utils.machElement(ancr, utils.always(el)).execute();
 				},
 				query: function (coll) {
 					var lis = getColl(),
@@ -700,7 +697,6 @@
 		go_execute = thrice(doMethod)('execute')(null),
 		go_set = thrice(lazyVal)('set')($toggler),
 		undo_toggler = thricedefer(doMethod)('undo')()($toggler),
-		//doExitShow = doComp(thrice(lazyVal)('undo')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
 		doExitShow = thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc),
 		factory = function () {
 			var remPause = doComp(utils.removeNodeOnComplete, $$('paused')),
@@ -767,7 +763,7 @@
 		mock = {
 			target: {
 				nodeName: 'IMG',
-				src: "http://81.131.244.169/Alpacas/gal/big/Sancho.jpg"
+				src: "http://81.131.244.169/poloafrica/images/gallery/fullsize/001.jpg"
 			}
 		},
         */
@@ -778,7 +774,7 @@
 			doComp(setindex, utils.drillDown([mytarget, 'src']))(e);
 			doComp(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			doMakeBase(e[mytarget].src, 'base', doOrient, getBaseChild, showtime);
-			//doMakeBase("../gal/big/Sancho.jpg", 'base', doOrient, getBaseChild, showtime);
+			//doMakeBase("../images/gallery/fullsize/001.jpg", 'base', doOrient, getBaseChild, showtime);
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
 				close_cb = ptL(doComp(utils.getDomParent(utils.getNodeByTag('main')), thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(getThumbs, main)), 'a'),

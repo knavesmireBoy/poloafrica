@@ -3,88 +3,71 @@
 /*global document: false */
 /*global poloAF: false */
 /*global setTimeout: false */
+/*global Modernizr: false */
 /*global _: false */
 if (!window.poloAF) {
 	window.poloAF = {};
 }
 (function (logo_paths) {
 	"use strict";
-    
-    
-    	function getNativeOpacity(bool) {
+
+	function getNativeOpacity(bool) {
 		return {
 			getKey: function () {
 				return bool ? 'filter' : Modernizr.prefixedCSS('opacity');
 			},
 			getValue: function (val) {
-				return bool ? 'alpha(opacity=' + val + ')' : val / 100;
+				return bool ? 'alpha(opacity=' + val + ')' : (val / 100).toString();
 			}
 		};
+	}
+
+	function doMethod(o, v, p) {
+		return o[p] && o[p](v);
+	}
+
+	function lazyVal(v, o, p) {
+		return doMethod(o, v, p);
 	}
 
 	function modulo(i, n) {
 		return i % n;
 	}
-
-	function curry2(fun) {
-		return function (secondArg) {
-			return function (firstArg) {
-				return fun(firstArg, secondArg);
-			};
-		};
-	}
-
-	function curryDefer(fun) {
-		return function (firstArg) {
-			return function () {
-				return fun(firstArg);
-			};
-		};
-	}
-
-	function always(val) {
-		return function () {
-			return val;
-		};
-	}
-
-	function ani(o) {
-		var anCrIn = o.insert(),
-			section = o.getByTag('section', document),
-			ancr = section[section.length - 1],
-			article = o.getByTag('article', ancr)[0],
-			ret = o.machElement(_.partial(o.setAttributes, {
-				id: 'ani'
-			}), anCrIn(article, ancr), always('aside'));
-		ret.render();
-	}
-
-	function flower(o) {
-		var anCr = o.append(),
-			ret = o.machElement(_.partial(o.setAttributes, {
-				id: 'flower',
-				src: logo_paths[0],
-				alt: ''
-			}), anCr(o.$('ani')), always('img'));
-		ret.render();
-	}
 	var U = poloAF.Util,
-		ptL = _.partial,
 		$ = function (str) {
 			return document.getElementById(str);
 		},
+		twice = U.curryFactory(2),
+		doMap = twice(U.doMap),
+		thricedefer = U.curryFactory(3, true),
+		curryDefer = U.curryFactory(1, true),
+		anCr = U.append(),
+		anCrIn = U.insert(),
+		$$ = thricedefer(lazyVal)('getElementById')(document),
+		doAni = function (tag_str) {
+			var ancr = U.findByTag(2)('section'),
+				article = U.findByTag(0)('article', ancr);
+			return _.compose(doMap([
+				['id', 'ani']
+			]), anCrIn(article, ancr))(tag_str);
+		},
 		tween = document.getElementById('tween'),
 		ie6 = poloAF.Util.getComputedStyle(tween, 'color') === 'red' ? true : false,
-        cssopacity = getNativeOpacity(!window.addEventListener),
-        key = cssopacity.getKey(),
+		cssopacity = getNativeOpacity(!window.addEventListener),
+		key = cssopacity.getKey(),
 		doAlt = U.doAlternate(),
+		doFlower = _.compose(doMap([
+			['id', 'flower'],
+			['src', logo_paths[0]],
+			['alt', '']
+		]), anCr($$('ani'))),
 		fader = (function () {
 			var base_el,
 				fade_el,
 				parent,
-				domod = curry2(modulo)(3),
+				domod = twice(modulo)(3),
 				j = 0,
-				timer;
+				timer = 1;
 
 			function doFade(i) {
 				fade_el.style[key] = cssopacity.getValue(i);
@@ -93,16 +76,18 @@ if (!window.poloAF) {
 
 			function exit() {
 				window.clearTimeout(timer);
+				timer = null;
 				exit.opacity = fade_el.style[key];
 				fade_el.style[key] = 100;
 			}
 
 			function enter() {
+				timer = 1;
 				doFade(exit.opacity);
 			}
 			if (!ie6) {
-				ani(U);
-				flower(U);
+				doAni('aside');
+				doFlower('img');
 				U.removeNodeOnComplete(tween);
 				base_el = poloAF.Util.getDomChild(poloAF.Util.getNodeByTag('img'))($('ani'));
 				fade_el = base_el.cloneNode();
@@ -115,14 +100,16 @@ if (!window.poloAF) {
 					j = isNaN(j) ? 0 : domod(j += 1);
 					base_el.src = logo_paths[j];
 				};
-				U.addHandler('click', $('ani'), doAlt([exit, enter]));
+				poloAF.Util.eventer('click', [], doAlt([exit, enter]), $('ani')).execute();
 				return function (i) {
 					i -= 1;
-					if (i >= 0) {
-						timer = doFade(i);
-					} else {
-						fade_el.src = base_el.src;
-						setTimeout(curryDefer(fader)(101), 3000);
+					if (timer) {
+						if (i >= 0) {
+							timer = doFade(i);
+						} else {
+							fade_el.src = base_el.src;
+							setTimeout(curryDefer(fader)(101), 3000);
+						}
 					}
 				};
 			}

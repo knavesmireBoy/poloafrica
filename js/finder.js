@@ -35,11 +35,6 @@
 		doThrice = utils.curryThrice(),
 		doAlt = utils.doAlternate(),
 		//con = window.console.log.bind(window),
-		report = function (msg, el) {
-			el = el || utils.getByTag('h2', document)[0];
-			msg = msg === undefined ? document.documentElement.className : msg;
-			el.innerHTML = msg;
-		},
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
 		//https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		/*ORIGINAL TEST CHECKS FOR MIN-WIDTH OF 668px HOWEVER NETRENDERER REPORTS ZERO PX AND WILL THEN INVOKE MOVE
