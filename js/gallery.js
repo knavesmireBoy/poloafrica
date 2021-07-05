@@ -77,10 +77,6 @@
 		return F;
 	}
 
-	function doubleGet(o, sub, v, p) {
-		return o[sub][p](v);
-	}
-
 	function greater(a, b) {
 		return a > b;
 	}
@@ -186,6 +182,8 @@
 		main = document.getElementsByTagName('main')[0],
 		getThumbs = doComp(utils.getZero, ptL(utils.getByTag, 'ul', main)),
 		getAllPics = doComp(ptL(utils.getByTag, 'img'), getThumbs),
+		getLeadingPic = doComp(ptL(utils.findByTag(0), 'img'), getThumbs),
+        getLeadingPicSrc = doComp(twice(utils.getter)('src'), getLeadingPic),
 		doAltSVG = utils.doAlternate(),
         getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
 		execMobile = _.compose(ptL(utils.removeClass, 'invisible'), getSvgPath),
@@ -392,9 +390,12 @@
 				desktop = _.compose(_.flatten, ptL(bookEnd, 0), ptL(spread, _.zip, 1)),
 				mobile = _.compose(_.flatten, ptL(spread, thrice(doMethod)('concat'), 0));
 			return {
-				getList: function () {
-					//crucial slice, remember arrays passed as reference, so if we interfere with above we're in trubble
-					return _.map(all, thrice(doMethod)('slice')(0)).slice(0);
+				getList: function (flag) {
+                    //crucial slice, remember arrays passed as reference, so if we interfere with above we're in trubble
+                    var coll = _.map(all, thrice(doMethod)('slice')(0)).slice(0);
+                    /*flag is present when creating a cross-page iterator as on exiting showtime the gallery will reflect
+                    the current "page" so we need to shuffle the array to sync with DOM */
+                    return flag ? utils.shuffleArray(coll)(this.findIndex(getLeadingPicSrc)) : coll;
 				},
 				findInt: function (finder) {
 					var str = doMatch(getResult(finder));
@@ -402,7 +403,7 @@
 					return str && parseFloat(str.match(picnum)[1]);
 				},
 				findIndex: function (finder) {
-					return _.findIndex(_.map(this.getList(), twice(_.filter)(ptL(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
+					return _.findIndex(_.map(all, twice(_.filter)(ptL(equalNum, this.findInt(finder)))), _.negate(_.isEmpty));
 				},
 				getPortraitPics: ptL(getAspectPriority, true),
 				getLscpPics: ptL(getAspectPriority, false),
@@ -497,7 +498,7 @@
        incrementer = doComp(doInc, getLength),
 		advanceRoute = function (m) {
 			if (!poloAF.LoopIterator.cross_page) {
-                $looper.build(pages.getList(), incrementer);
+                $looper.build(pages.getList(true), incrementer);
 				poloAF.LoopIterator.cross_page = true;
 			}
 			return populate($looper[m]());
@@ -505,9 +506,8 @@
 		advanceRouteListener = ptL(utils.invokeThen, advanceRouteBridge, advanceRoute),
 		pageNavHandler = doComp(ptL(eventing, 'click', event_actions.slice(0, 1), _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
 		$nav = addPageNav(ptL(anCrIn, getThumbs), 'gal_back', pageNavHandler),        
-        slide_player_factory = function (flag) {
+        slide_player_factory = function () {
             
-            if(flag){
 			return {
 				/*remember because images are a mix of landscape and portrait we re-order collection for the slideshow
 				so landscapes follow portraits or vice-versa (depending what is the leading pic), this requires undoing when reverting to manual navigation which is invoked by clicking forward/back button, a fresh slideplayer is created on entering slideshow */
@@ -519,9 +519,8 @@
 						return _.find(arr, ptL(equalNum, picsrc));
 					}),
                     group = pages.doGroup(pages.fixPageOrder(pages.getLeadingGroup(myptrt, mylscp, !!is_portrait[0]), picsrc));
-				
-                $looper.build(_.map(group, makePath), incrementer);
-			},
+                    $looper.build(_.map(group, makePath), incrementer);
+                },
                 undo: function (page_index) {
 				/*restores on page iterator post slideshow
 				if omitted manual navigation would cross page boundaries*/
@@ -532,20 +531,17 @@
 				page = $looper.get();
 				$LI.query(page);
                     gallery_pics = _.filter(getAllPics(), function (img) {
-					return !getLI(img).id;
-				});
+                        return !getLI(img).id;
+                    });
                     _.each(gallery_pics, function (img, i) {
-					populatePage(img, makePath(page[i]), 'src');
-				});
+                        populatePage(img, makePath(page[i]), 'src');
+                    });
                     $looper.build(_.map(gallery_pics, function (img) {
                         return img.src;
                     }), incrementer);  
                     $looper.find(getBaseSrc());
-                    //poloAF.LoopIterator.cross_page = false;
                 }
             };
-            }
-            return makeDummy();
         },
 		do_static_factory = function () {
 			return {
@@ -556,15 +552,14 @@
 		},        
 		in_play = thricedefer(doMethod)('findByClass')('inplay')(utils),
 		//could find a none dom dependent predicate
-		//get_player = ptL(utils.getBest, _.negate(in_play), [slide_player, makeDummy()]),
-        ///slideshow..., must run to determine start index for EITHER collection
+        //slideshow..., must run to determine start index for EITHER collection
 		get_play_iterator = function (flag) {
 			var myint = pages.findInt(getBaseSrc),
                 page_index = pages.findIndex(getBaseSrc),
 				m = 'undo';
 			if (flag) {
 				m = 'execute';
-				$slide_swapper.set(slide_player_factory(true));
+				$slide_swapper.set(slide_player_factory());
                 
 			}
             $slide_swapper[m](page_index, myint);
@@ -819,6 +814,7 @@
                 $exit = eventing('click', event_actions.slice(0, 1), function (e) {
                     var go_undo = thrice(doMethod)('undo')();
 					if (e[mytarget].id === 'exit') {
+                        poloAF.LoopIterator.cross_page = false;
 						chain = chain.validate();
 						exitshowtime();
 						unsetPortrait();
