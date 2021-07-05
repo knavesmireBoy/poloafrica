@@ -1313,6 +1313,31 @@ poloAF.Util = (function() {
 			return getResult(x) === getResult(y);
 		},
 		lsThan: lsThan,
+        makeContext: function () {
+			var iCommand = poloAF.Intaface('Command', ['execute', 'undo']);
+			return {
+				init: function ($command) {
+					if ($command) {
+						poloAF.Intaface.ensures($command, iCommand);
+						this.$command = $command;
+					}
+					return this;
+				},
+				execute: function () {
+					if (this.$command) {
+						return this.$command.execute.apply(this.$command, arguments);
+					}
+				},
+				undo: function () {
+					if (this.$command) {
+						return this.$command.undo.apply(this.$command, arguments);
+					}
+				},
+				set: function ($command) {
+					return this.init($command);
+				}
+			};
+		},
 		machElement: machElement,
 		makeElement: makeElement,
 		map: function(coll, mapper) {
