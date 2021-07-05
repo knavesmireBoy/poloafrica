@@ -112,10 +112,9 @@
 	function equalNum(tgt, cur) {
 		return cur === tgt || parseFloat(cur) === parseFloat(tgt);
 	}
-
-	function invoke(f, arg) {
-		arg = _.isArray(arg) ? arg : [arg];
-		return f.apply(null, arg);
+    
+	function invoke(f) {
+		return f.apply(null, _.rest(arguments));
 	}
 
 	function invokeCB(arg, cb) {
@@ -124,7 +123,7 @@
 	}
 
 	function invokeBridge(arr) {
-		return invoke(arr[0], arr[1]);
+		return applyArg(arr[0], arr[1]);
 	}
 
 	function invokeArgs(f) {
@@ -198,7 +197,7 @@
 		doGet = twice(utils.getter),
 		doVal = doGet('value'),
 		doParse = doComp(ptL(add, '../'), doGet(0), parser),
-		doAlt = doComp(twice(invoke)(null), utils.getZero, thrice(doMethod)('reverse')()),
+		doAlt = doComp(twice(applyArg)(null), utils.getZero, thrice(doMethod)('reverse')(null)),
 		unsetPortrait = ptL(klasRem, 'portrait', getThumbs),
 		setPortrait = ptL(klasAdd, 'portrait', getThumbs),
 		mytarget = !window.addEventListener ? 'srcElement' : 'target',
@@ -220,7 +219,7 @@
 		$toggler = utils.makeContext(),
 		$controlbar = utils.makeContext(),
 		addElements = function () {
-			return doComp(twice(invoke)('img'), anCr, twice(invoke)('a'), anCr, anCr(getThumbs))('li');
+			return doComp(twice(applyArg)('img'), anCr, twice(applyArg)('a'), anCr, anCr(getThumbs))('li');
 		},
 		//height and width of image are compared BUT a) must invoke the comparison AFTER image loaded
 		//b) must remove load listener or will intefere with slideshow
@@ -328,13 +327,11 @@
 		playing = doComp(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', main)),
 		unplayin = ptL(klasRem, 'playing', main),
 		exit_inplay = ptL(klasRem, 'inplay', $('wrap')),
-		exitswap = ptL(klasRem, 'swap', utils.getBody()),
-		exitshow = doComp(ptL(klasAdd, 'gallery', getThumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exit_inplay),
-        
+		exitswap = ptL(klasRem, 'swap', utils.getBody()),        
         exitshowtime = doComp(ptL(klasAdd, 'gallery', getThumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exit_inplay, unplayin),
         
 		undostatic = ptL(klasRem, 'static', $$('controls')),
-		doOrient = doComp(ptL(invoke), ptL(utils.getBest, queryOrientation, [setPortrait, unsetPortrait])),
+		doOrient = doComp(ptL(applyArg), ptL(utils.getBest, queryOrientation, [setPortrait, unsetPortrait])),
 		galleryCount = doComp(twice(equals)(12), getLength),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
@@ -685,7 +682,7 @@
 					},
                     doPlay = doComp(doVal, _.bind($looper.forward, $looper, true)),
                     doBase = ptL(invoke, loadImageBridge, doPlay, 'base', setPlayer, doSwap),
-					doSlide = ptL(invoke, utils.con, loadImageBridge, doComp(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doOrient),
+					doSlide = ptL(invoke, loadImageBridge, doComp(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doOrient),
 					fadeOut = {
 						validate: function () {
 							return $recur.i <= -15.5;
@@ -744,15 +741,12 @@
 					}
 					if (player.validate()) {
 						player.reset();
-                        con('val')
 					} else {
-                        con('recur');
 						doOpacity();
 						doRecur();
 					}
 				},
 				undo: function (flag) {
-                     console.log('undo recur');
 					doOpacity(flag);
 					window.cancelAnimationFrame($recur.t);
 					$controlbar.set(do_static_factory());
@@ -895,7 +889,6 @@
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 	_.each(getAllPics(), fixNoNthChild);
 	svg_handler();
-    console.log(utils.findByClass('galleryx'))
 	utils.addHandler('resize', window, _.throttle(svg_handler, 99));
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
