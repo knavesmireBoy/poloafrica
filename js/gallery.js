@@ -285,6 +285,18 @@
 			]);
 			return onLoad(img, path);
 		},
+        
+        doMakePause = function (path) {
+			if (path) {
+                var img = addElements(),
+                    styles = [[cssopacity.getKey(), cssopacity.getValue(0.5)]];
+                doMap(img.parentNode.parentNode, [['id', 'paused'], styles]);
+                return onLoad(img, path);
+            }
+			//ensure only gets called when in in_play mode
+            return onLoad(getDomTargetImg($('paused')), getPausePath());
+        },
+        
         loadImage = function (getnexturl, id, promise) {
 			var img = getDomTargetImg($(id)),
 				next;
@@ -513,14 +525,17 @@
 				//Looper.onpage = Looper.from(_.map(group, makePath), doInc(getLength(group)));
                 $looper.build(_.map(group, makePath), incrementer);
 			},
+                /*gets called on exiting slideshow, doesn't need to run again (ie forward/back in manual slideshow) until fresh slide_player
 				undo1: _.once(_.wrap(do_page_iterator, function (orig, coll) {
-					/*gets called on exiting slideshow, doesn't need to run again (ie forward/back in manual slideshow) until fresh slide_player*/
+					
 					orig(coll);
 					//fulfills the duty of clicking an image when entering showtime 
 					$looper.find(getBaseSrc());
 				})),
-                
+                */
                 undo: function (page_index) {
+                    
+                    console.log('undo slie')
 				/*restores on page iterator post slideshow
 				if omitted manual navigation would cross page boundaries*/
 				var page,
@@ -553,9 +568,7 @@
 				execute: _.once(undostatic),
 				undo: function () {}
 			};
-		},
-        
-        
+		},        
 		in_play = thricedefer(doMethod)('findByClass')('inplay')(utils),
 		//could find a none dom dependent predicate
 		//get_player = ptL(utils.getBest, _.negate(in_play), [slide_player, makeDummy()]),
@@ -569,35 +582,37 @@
 		},
         ///slideshow..., must run to determine start index for EITHER collection
 		get_play_iterator = function (flag) {
-			var coll,
-                filter = function (coll, pred1) {
+			var filter = function (coll, pred1) {
                     var tmp = _.filter(coll, pred1),
                         arr = _.reject(coll, pred1);
                     return arr.concat(tmp);
                 },
                 myint = pages.findInt(getBaseSrc),
                 page_index = pages.findIndex(getBaseSrc),
-				index = $looper.get('index'),
-                slider = get_player(),
-				outcomes = [_.negate(queryOrientation), queryOrientation],
-				provisional = _.map(_.filter(_.map(getAllPics(), getLI), function (li) {
+				//index = $looper.get('index'),
+				//outcomes = [_.negate(queryOrientation), queryOrientation],
+				/*provisional = _.map(_.filter(_.map(getAllPics(), getLI), function (li) {
 					return !li.id;
 				}), getDomTargetImg),
-				i = outcomes[0](provisional[index]) ? 0 : 1,
+                */
+				//i = outcomes[0](provisional[index]) ? 0 : 1,
 				m = 'undo';
 			if (flag) {
 				m = 'execute';
 				//re-order
-				coll = utils.shuffleArray(provisional)(index);
+				//coll = utils.shuffleArray(provisional)(index);
 				//split and join again
-				coll = i ? filter(coll, outcomes[0]) : filter(coll, outcomes[1]);
+				//coll = i ? filter(coll, outcomes[0]) : filter(coll, outcomes[1]);
+                //live = utils.getBestOnly(in_play, slide_player_factory);
 				$slide_swapper.set(slide_player_factory(true));
+                
 			} else {
 				//sends original dom-ordered collection when exiting slideshow
-				coll = provisional;
+				//coll = provisional;
 			}
-            slider[m](page_index, myint);
-            $slide_swapper[m](coll);
+            //slider[m](page_index, myint);
+            //$slide_swapper[m](coll);
+            $slide_swapper[m](page_index, myint);
 		},
         do_page_iterator = function (coll) {
 			if (coll && typeof coll.length !== 'undefined') {
@@ -608,7 +623,6 @@
 			do_page_iterator(getAllPics());
 			return $looper.find(arg);
 		},
-        
 		nextcaller = twicedefer(getValue)('forward')('value'),
 		prevcaller = twicedefer(getValue)('back')('value'),
 		locator = function (forward, back) {
@@ -671,12 +685,7 @@
 					},
                     doPlay = doComp(doVal, _.bind($looper.forward, $looper, true)),
                     doBase = ptL(invoke, loadImageBridge, doPlay, 'base', setPlayer, doSwap),
-					doSlide = ptL(invoke, loadImageBridge, doComp(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doOrient),
-                    /*
-					doBase = function () {
-						return loadImageBridge(_.bind(Looper.onpage.play, Looper.onpage), 'base', setPlayer, doSwap);
-					},
-                    */
+					doSlide = ptL(invoke, utils.con, loadImageBridge, doComp(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doOrient),
 					fadeOut = {
 						validate: function () {
 							return $recur.i <= -15.5;
@@ -735,12 +744,15 @@
 					}
 					if (player.validate()) {
 						player.reset();
+                        con('val')
 					} else {
+                        con('recur');
 						doOpacity();
 						doRecur();
 					}
 				},
 				undo: function (flag) {
+                     console.log('undo recur');
 					doOpacity(flag);
 					window.cancelAnimationFrame($recur.t);
 					$controlbar.set(do_static_factory());
@@ -756,7 +768,6 @@
 		clear = _.bind($recur.undo, $recur),
 		doplay = _.bind($recur.execute, $recur),
 		go_execute = thrice(doMethod)('execute')(null),
-		go_undo = thrice(doMethod)('undo')(),
         go_set = thrice(lazyVal)('set')($toggler),
 		undo_toggler = thricedefer(doMethod)('undo')()($toggler),
 		//doExitShow = doComp(thrice(lazyVal)('undo')(slide_player), thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc)),
@@ -860,22 +871,8 @@
 				}, $('controls')),
 				$controls_undostat = eventing('mouseover', [], undostatic, utils.getByTag('footer', document)[0]),
 				$controls_dostat = eventing('mouseover', [], dostatic, $('controls')),
-                /*
-				exit1 = eventing('click', event_actions.slice(0, 1), function (e) {
-					//con(event_actions.slice(1, 2))
-					if (e[mytarget].id === 'exit') {
-						chain = chain.validate();
-						doExitShow();
-						_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
-						exitshow();
-						locate.undo();
-						$setup.execute();
-					}
-				}, close_cb),
-                */
                 $exit = eventing('click', event_actions.slice(0, 1), function (e) {
                     var go_undo = thrice(doMethod)('undo')();
-
 					if (e[mytarget].id === 'exit') {
 						chain = chain.validate();
 						exitshowtime();
@@ -898,6 +895,7 @@
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 	_.each(getAllPics(), fixNoNthChild);
 	svg_handler();
+    console.log(utils.findByClass('galleryx'))
 	utils.addHandler('resize', window, _.throttle(svg_handler, 99));
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
