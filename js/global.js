@@ -1046,7 +1046,7 @@ poloAF.Util = (function() {
 			}
 		}());
 	return {
-		$: function(str) {
+        $: function(str) {
 			return document.getElementById(str);
 		},
 		addClass: _.partial(setFromArray, always(true), 'add'),

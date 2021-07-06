@@ -256,7 +256,6 @@ if (!window.poloAF) {
 		fig2 = [PTL(klasAdd, ['cat', 'bottom']), levelTWO(doMap([myalt, catsrc]))],
 		opt_fig1 = [PTL(klasAdd, ['dogs', 'top']), levelTWO(doMap([myalt, opt_dogsrc]))],
 		opt_fig2 = [PTL(klasAdd, ['cat', 'top']), levelTWO(doMap([myalt, opt_catsrc]))],
-		mod = false,
 		/*
 		obj = {
 			email: 'email',
@@ -265,13 +264,7 @@ if (!window.poloAF) {
         */
 		listener = function (e) {
 			//splice ino neue_nodes
-            
-			if (Modernizr.cssgrid && Modernizr.cssanimations) {
-				getNodes(neue_nodes, ['figure', 'img'], 0);
-				getNodes(neue_nodes, ['figure', 'img'], -1);
-				mod = true;
-			}
-            
+                        
 			var $tgt = PTL(utils.doMap, myform.parentNode, [
 					['id', 'response']
 				]),
@@ -298,13 +291,17 @@ if (!window.poloAF) {
 					return notEmpty(ar);
 				}),
 				config = [fig1, thanker, sender, messenger, fig2];
-			if (mod) {
-				config.splice(1, 0, opt_fig1);
-				config.splice(6, 0, opt_fig2);
-			}
+			
 			if (_.isEmpty(res)) {
-				_.reduce(config, response, $tgt());
-				utils.removeNodeOnComplete(myform);
+                if (Modernizr.cssgrid && Modernizr.cssanimations) {
+                    getNodes(neue_nodes, ['figure', 'img'], 0);
+                    getNodes(neue_nodes, ['figure', 'img'], -1);
+                    config.splice(1, 0, opt_fig1);
+                    config.splice(6, 0, opt_fig2);
+                }
+                _.reduce(config, response, $tgt());
+                utils.removeNodeOnComplete(myform);
+				utils.removeNodeOnComplete(utils.$('cat').parentNode);
 			} else {
 				doAlert(res);
 			}
