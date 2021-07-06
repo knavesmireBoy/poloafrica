@@ -358,13 +358,14 @@ poloAF.Util = (function() {
 	}
 
 	function handleScroll($el, cb, klas) {
-		if (!$el.getElementsByTagName) {
+		if ($el.getElement) {
 			if (poloAF.Intaface) {
 				var inta = new poloAF.Intaface('Element', ['render', 'unrender', 'getElement']);
 				poloAF.Intaface.ensures($el, inta);
 			}
 			handleElement($el, cb);
 		} else { //default treatment
+            $el = getResult($el);
 			//getPageOffset() > ($el.offsetTop - window.innerHeight)
 			if (getPageOffset() > cb($el)) {
 				poloAF.Util.addClass(klas, $el);

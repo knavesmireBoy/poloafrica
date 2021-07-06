@@ -4,7 +4,7 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function(mq, query, tween) {
+(function(mq, query) {
 	"use strict";
 
 	function noOp() {
@@ -109,10 +109,12 @@
 			}); //map           
 		},
 		float_handler,
-		$sections;
+		$sections = _.map(document.getElementsByTagName('section'), function(el) {
+		return _.compose(ptL(klasAdd, 'display'), utils.always(el));
+	});
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels to toggle display of image and article.
-	 */
-	utils.addHandler('click', main, bridge);
+	 */    
+    utils.eventer('click', [], bridge, main).execute();
 	dummy[mytarget] = firstlink;
 	bridge(dummy);
 	if (animation && !ie6) {
@@ -121,13 +123,8 @@
 	}
 	float_handler = ptL(negater, floating_elements(images, getArticle, getHeading, utils.insertBefore, utils.insertAfter));
 	float_handler();
-	utils.addHandler('resize', window, _.throttle(float_handler, 99));
-	$sections = _.map(document.getElementsByTagName('section'), function(el) {
-		var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
-		$el.unrender = noOp;
-		return $el;
-	});
-	utils.setScrollHandlers($sections, doTwice(utils.getScrollThreshold)(0.4), 'display', 1);
-	window.setTimeout($sections[0].render, 666);
+    utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
+	//utils.setScrollHandlers($sections, doTwice(utils.getScrollThreshold)(0.4), 'display', 1);
+	//window.setTimeout($sections[0], 666);
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 667px)'), document.getElementById('tween'));

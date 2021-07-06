@@ -190,7 +190,7 @@ if (!window.poloAF) {
 			return !(v.match(/Please use this area \w*/i));
 		},
 		is_suspect = function (v) {
-			return !/<[^>]+>/.test(v);
+			return !new RegExp('<[^>]+>').test(v);
 		},
 		string_min = function (v) {
 			return v.length > 15;
