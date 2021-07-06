@@ -7,7 +7,7 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-(function (mq, query) {
+(function (mq, query, suspect) {
 	"use strict";
 
 	function viewBoxDims(s) {
@@ -191,6 +191,9 @@ if (!window.poloAF) {
 		comment_name = function (v) {
 			return !(v.match(/Please use this area \w*/i));
 		},
+        is_suspect = function(v){
+            return !/<[^>]+>/.test(v);
+        },
 		string_min = function (v) {
 			return v.length > 15;
 		},
@@ -198,10 +201,16 @@ if (!window.poloAF) {
 			return v.length < 1000;
 		},
 		clear = function () { //listener on textarea
-			this.value = "";
-			undoWarning(this);
+            if(!utils.findByClass('warning')){
+                this.value = ""; 
+            }
+            else {
+                undoWarning(this);
+            }
+			
 		},
 		//Use this area for comments or questions
+		isSuspect = utils.validator('suspicious angled brackets found', preCon(utils.always(true), is_suspect)),
 		isNotEmptyComment = utils.validator('this is a required field', preCon(isComment, notEmpty)),
 		isNewMessage = utils.validator('Please use this area for comments or questions', preCon(isComment, comment_name)),
 		isSmallMessage = utils.validator('Message is very small, please elaborate', preCon(isComment, string_min)),
@@ -276,18 +285,15 @@ if (!window.poloAF) {
 				sent = doMap([
 					['txt', 'An email has been sent to ']
 				]),
-				mailto = {
-					href: "mailto:" + obj.email
-				},
-				sender = [sent, levelTWO(PTL(setAttrs, mailto), doMap([
-					['txt', obj.email]
+				sender = [sent, levelTWO(doMap([
+					['txt', obj.email], ['href',  "mailto:" + obj.email]
 				]))],
 				messenger = [levelONE(here), levelTWO(PTL(klasAdd, 'msg'), doMap([
 					['txt', obj.comments]
 				]))],
 				thanker = [_.identity, levelONE(thx)],
 				response = reducer(neue_nodes),
-				checker = validateForm(isEmptyName, isProperName, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage),
+				checker = validateForm(isSuspect, isEmptyName, isProperName, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage),
 				res = _.filter(_.map(obj, checker), function (ar) {
 					return notEmpty(ar);
 				}),
@@ -312,4 +318,5 @@ if (!window.poloAF) {
 	svg_handler();
 	eventer('resize', [], _.throttle(svg_handler, 99), window).execute();
 	mobileToggler(dum); //can run in "desktop" environment with no ill effects, toggles display of sections
+        
 }(Modernizr.mq('only all'), '(min-width: 667px)'));
