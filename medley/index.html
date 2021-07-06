@@ -234,10 +234,12 @@ https://developers.facebook.com/docs/javascript/quickstart/
         function undef(x) {
 		return typeof (x) === 'undefined';
 	}
+        /* copies text in brackets for every list element in Press Coverage into title attribute for desktop environments*/
     var mq = Modernizr.mq('only all'),
         query = '(min-width: 668px)',
         touch = Modernizr.touchevents,
         utils = poloAF.Util,
+        eventer = utils.eventer,
         //con = window.console.log.bind(window),
         report = function (msg, el) {
 			el = el || utils.getByTag('h2', document)[0];
@@ -289,7 +291,8 @@ https://developers.facebook.com/docs/javascript/quickstart/
             var doAlt = utils.doAlternate(),
                 toggler = doAlt([command.render, command.unrender]),
                 handler = ptL(negater, toggler);
-        utils.addHandler('resize', window, _.throttle(handler, 99));
+            eventer('resize', [], _.throttle(handler, 99), window).execute();
+            
         if(getEnvironment()){
             toggler();
         }

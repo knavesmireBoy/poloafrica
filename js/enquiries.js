@@ -7,15 +7,15 @@
 if (!window.poloAF) {
 	window.poloAF = {};
 }
-(function (mq, query, suspect) {
+(function (mq, query) {
 	"use strict";
 
 	function viewBoxDims(s) {
 		var a = s.split(' ').slice(-2);
-		return {
-			width: a[0],
-			height: a[1]
-		};
+		return [
+			['width', a[0]],
+			['height', a[1]]
+		];
 	}
 
 	function getResult(arg) {
@@ -23,9 +23,8 @@ if (!window.poloAF) {
 	}
 
 	function reducer(tags) {
-        
 		return function (ancor, config, i, gang) {
-            var anCr = poloAF.Util.append();
+			var anCr = poloAF.Util.append();
 			if (_.isArray(tags[i])) {
 				return _.reduce(gang[i], reducer(tags[i]), ancor);
 			}
@@ -88,7 +87,6 @@ if (!window.poloAF) {
 		invokemethod = function (o, arg, m) {
 			return o[m] && o[m](arg);
 		},
-		setAttrs = utils.setAttributes,
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
 		doWarning = PTL(klasAdd, 'warning'),
@@ -120,12 +118,12 @@ if (!window.poloAF) {
 		doSvg = function (svg) {
 			return function (str) {
 				if (svg && str) {
-					utils.setAttributes({
-						viewBox: str
-					}, svg);
+					utils.doMap(svg, [
+						['viewBox', str]
+					]);
 					//ipod ios(6.1.6) requires height
 					if (!Modernizr.objectfit) {
-						utils.setAttributes(viewBoxDims(str), svg);
+						utils.doMap(svg, viewBoxDims(str));
 					}
 				}
 			};
@@ -191,9 +189,9 @@ if (!window.poloAF) {
 		comment_name = function (v) {
 			return !(v.match(/Please use this area \w*/i));
 		},
-        is_suspect = function(v){
-            return !/<[^>]+>/.test(v);
-        },
+		is_suspect = function (v) {
+			return !/<[^>]+>/.test(v);
+		},
 		string_min = function (v) {
 			return v.length > 15;
 		},
@@ -201,13 +199,11 @@ if (!window.poloAF) {
 			return v.length < 1000;
 		},
 		clear = function () { //listener on textarea
-            if(!utils.findByClass('warning')){
-                this.value = ""; 
-            }
-            else {
-                undoWarning(this);
-            }
-			
+			if (!utils.findByClass('warning')) {
+				this.value = "";
+			} else {
+				undoWarning(this);
+			}
 		},
 		//Use this area for comments or questions
 		isSuspect = utils.validator('suspicious angled brackets found', preCon(utils.always(true), is_suspect)),
@@ -264,7 +260,6 @@ if (!window.poloAF) {
         */
 		listener = function (e) {
 			//splice ino neue_nodes
-                        
 			var $tgt = PTL(utils.doMap, myform.parentNode, [
 					['id', 'response']
 				]),
@@ -279,7 +274,8 @@ if (!window.poloAF) {
 					['txt', 'An email has been sent to ']
 				]),
 				sender = [sent, levelTWO(doMap([
-					['txt', obj.email], ['href',  "mailto:" + obj.email]
+					['txt', obj.email],
+					['href', "mailto:" + obj.email]
 				]))],
 				messenger = [levelONE(here), levelTWO(PTL(klasAdd, 'msg'), doMap([
 					['txt', obj.comments]
@@ -291,16 +287,15 @@ if (!window.poloAF) {
 					return notEmpty(ar);
 				}),
 				config = [fig1, thanker, sender, messenger, fig2];
-			
 			if (_.isEmpty(res)) {
-                if (Modernizr.cssgrid && Modernizr.cssanimations) {
-                    getNodes(neue_nodes, ['figure', 'img'], 0);
-                    getNodes(neue_nodes, ['figure', 'img'], -1);
-                    config.splice(1, 0, opt_fig1);
-                    config.splice(6, 0, opt_fig2);
-                }
-                _.reduce(config, response, $tgt());
-                utils.removeNodeOnComplete(myform);
+				if (Modernizr.cssgrid && Modernizr.cssanimations) {
+					getNodes(neue_nodes, ['figure', 'img'], 0);
+					getNodes(neue_nodes, ['figure', 'img'], -1);
+					config.splice(1, 0, opt_fig1);
+					config.splice(6, 0, opt_fig2);
+				}
+				_.reduce(config, response, $tgt());
+				utils.removeNodeOnComplete(myform);
 				utils.removeNodeOnComplete(utils.$('cat').parentNode);
 			} else {
 				doAlert(res);
@@ -314,6 +309,5 @@ if (!window.poloAF) {
 	dum[tgt] = articles[0].getElementsByTagName('a')[0];
 	svg_handler();
 	eventer('resize', [], _.throttle(svg_handler, 99), window).execute();
-	mobileToggler(dum); //can run in "desktop" environment with no ill effects, toggles display of sections
-        
+	mobileToggler(dum); //can run in "desktop" environment with no ill effects, toggles display of sections for mobile devices
 }(Modernizr.mq('only all'), '(min-width: 667px)'));
