@@ -128,14 +128,12 @@ restrict animation for proper grid support as we are using grid positioning to o
        display: block;
        width: 100%;
 	}
-   #response figure img {
-       object-fit: contain;
-}
+
 	#response .cat {
 		grid-column: 3/4;
 		border-width: 0 0 0 1px;
-       display: block;
-       width: 100%;
+        display: block;
+        width: 100%;
 	}
 	#response .top {
        /*

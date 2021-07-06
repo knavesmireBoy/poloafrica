@@ -256,11 +256,13 @@ if (!window.poloAF) {
         */
 		listener = function (e) {
 			//splice ino neue_nodes
+            
 			if (Modernizr.cssgrid && Modernizr.cssanimations) {
 				getNodes(neue_nodes, ['figure', 'img'], 0);
 				getNodes(neue_nodes, ['figure', 'img'], -1);
 				mod = true;
 			}
+            
 			var $tgt = PTL(utils.doMap, myform.parentNode, [
 					['id', 'response']
 				]),
