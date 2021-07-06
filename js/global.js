@@ -898,6 +898,16 @@ poloAF.Util = (function() {
 	function getEventObject(e) {
 		return e || window.event;
 	}
+    
+    function fillArray(value, len) {
+		var arr = [],
+			i;
+		for (i = 0; i < len; i += 1) {
+			arr.push(value);
+		}
+		return arr;
+	}
+    
 	var getNewElement = dispatch(curry2(cloneNode)(true), _.bind(document.createElement, document), _.bind(document.createDocumentFragment, document)),
 		removeNodeOnComplete = _.wrap(removeElement, function(f, node) {
 			if (validateRemove(node)) {
@@ -1059,6 +1069,10 @@ poloAF.Util = (function() {
 			return curry3(setAnchor)(getNewElement)(null);
 		},
 		byIndex: byIndex,
+        climbDom: function (n, el) {
+			n = n || 1;
+			return drillDown(fillArray('parentNode', n))(el);
+		},
 		conditional: function() {
 			var validators = _.toArray(arguments);
 			return function(fun, arg) {

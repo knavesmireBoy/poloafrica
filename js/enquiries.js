@@ -19,19 +19,13 @@ if (!window.poloAF) {
 		return _.isFunction(arg) ? arg() : arg;
 	}
 
-	function helper(ancor, tag, config) {
-		var anCr = poloAF.Util.append();
-        //return _.compose(config, anCr(ancor))(tag);
-		return poloAF.Util.machElement(config, anCr(ancor), poloAF.Util.always(tag)).render();
-	}
-
 	function reducer(tags) {
 		return function (ancor, config, i, gang) {
 			if (_.isArray(tags[i])) {
 				return _.reduce(gang[i], reducer(tags[i]), ancor);
 			}
-			return helper(ancor, tags[i], config).getElement();
-		};
+            return  COMP(config, anCr(ancor))(tags[i]);
+        };
 	}
     function getNodes(nodes, newnode, pos) {
         return newnode ? nodes.splice(pos, 0, newnode) : nodes;
@@ -83,42 +77,41 @@ if (!window.poloAF) {
 	}
 	var dum = {},
         utils = poloAF.Util,
-		ptL = _.partial,
-		comp = _.compose,
+		PTL = _.partial,
+		COMP = _.compose,
 		invokemethod = function (o, arg, m) {
 			return o[m] && o[m](arg);
 		},
-		makeElement = utils.machElement,
 		setAttrs = utils.setAttributes,
 		klasAdd = utils.addClass,
 		klasRem = utils.removeClass,
-		doWarning = ptL(klasAdd, 'warning'),
-		undoWarning = ptL(klasRem, 'warning'),
+		doWarning = PTL(klasAdd, 'warning'),
+		undoWarning = PTL(klasRem, 'warning'),
 		doTwice = utils.curryFactory(2),
 		doThrice = utils.curryFactory(3),
         doAlt = utils.doAlternate(),
         doMap = doTwice(utils.doMap),
         event_actions = ['preventDefault', 'stopPropagation', 'stopImmediatePropagation'],
 		eventer = utils.eventer,
-        
+        anCr = poloAF.Util.append(),
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		tgt = !window.addEventListener ? 'srcElement' : 'target',
 		getTarget = utils.drillDown([tgt, 'parentNode']),
-		getNext = ptL(simpleInvoke, utils, 'getNextElement'),
+		getNext = PTL(simpleInvoke, utils, 'getNextElement'),
 		getId = doThrice(invokemethod)('getAttribute')('id'),
 		getFor = doThrice(invokemethod)('getAttribute')('for'),
 		getNodeName = doTwice(getter)('nodeName'),
-		isHeading = _.compose(headingmatch, getNodeName),
+		isHeading = COMP(headingmatch, getNodeName),
 		main = document.getElementsByTagName('main')[0],
 		articles = document.getElementsByTagName('article'),
         number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
-        getEnvironment = ptL(utils.isDesktop, threshold),
+        getEnvironment = PTL(utils.isDesktop, threshold),
         getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
-		execMobile = _.compose(ptL(klasRem, 'invisible'), getSvgPath),
-		execDesktop = _.compose(ptL(klasRem, 'invisible'), utils.getNext, getSvgPath),
-		undoMobile = _.compose(ptL(klasAdd, 'invisible'), getSvgPath),
-		undoDesktop = _.compose(ptL(klasAdd, 'invisible'), utils.getNext, getSvgPath),
+		execMobile = COMP(PTL(klasRem, 'invisible'), getSvgPath),
+		execDesktop = COMP(PTL(klasRem, 'invisible'), utils.getNext, getSvgPath),
+		undoMobile = COMP(PTL(klasAdd, 'invisible'), getSvgPath),
+		undoDesktop = COMP(PTL(klasAdd, 'invisible'), utils.getNext, getSvgPath),
         doSvg = function (svg){
             return function(str){
                 if(svg && str){
@@ -133,8 +126,8 @@ if (!window.poloAF) {
         doSVGview = function () {
             var mq = window.matchMedia("(max-width: 667px)"),
                 setViewBox = doSvg(document.getElementById('logo')),
-                doMobile = _.compose(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 125")),
-                doDesktop = _.compose(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
+                doMobile = COMP(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 125")),
+                doDesktop = COMP(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
             return function () {
                 if (mq.matches) { //onload
                     doMobile();
@@ -153,15 +146,15 @@ if (!window.poloAF) {
 		myform = document.forms[0],
 		legend = myform.getElementsByTagName('legend')[0],
         textarea = utils.findByTag(0)('textarea', myform),
-		isEmail = ptL(isEqual, 'email'),
-		isName = ptL(isEqual, 'name'),
-		isComment = ptL(isEqual, 'comments'),
-		isLabel = ptL(isEqual, 'LABEL'),
+		isEmail = PTL(isEqual, 'email'),
+		isName = PTL(isEqual, 'name'),
+		isComment = PTL(isEqual, 'comments'),
+		isLabel = PTL(isEqual, 'LABEL'),
 		levelup = function (leveller) {
-			return comp.apply(null, construct(leveller, _.rest(arguments)));
+			return COMP.apply(null, construct(leveller, _.rest(arguments)));
 		},
-		levelONE = ptL(levelup, utils.drillDown(['parentNode'])),
-		levelTWO = ptL(levelup, utils.drillDown(['parentNode', 'parentNode'])),
+		levelONE = PTL(levelup, PTL(utils.climbDom, 1)),
+		levelTWO = PTL(levelup, PTL(utils.climbDom, 2)),
 		mobileToggler = function (e) {
 			var el = getTarget(e),
 				myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
@@ -174,11 +167,6 @@ if (!window.poloAF) {
 			});
 			if (!hit) {
 				utils.show(myarticles);
-			}
-		},
-		relocate = function (e) {
-			if (e.target.nodeName.toLowerCase() === 'legend') {
-				window.location.assign("../admin");
 			}
 		},
 		notEmpty = _.negate(_.isEmpty),
@@ -217,10 +205,10 @@ if (!window.poloAF) {
 		isEmailAddress = utils.validator('please supply an email address', preCon(isEmail, email_address)),
 		doAlert = (function (el) {
 			var orig = el.innerHTML,
-				labels = _.filter(el.parentNode.childNodes, comp(isLabel, getNodeName)),
+				labels = _.filter(el.parentNode.childNodes, COMP(isLabel, getNodeName)),
 				sib = utils.drillDown(['parentNode', 'nextSibling']),
 				fKid = utils.drillDown(['firstChild']);
-			labels.push(comp(getNext, fKid, getNext, sib)(el));
+			labels.push(COMP(getNext, fKid, getNext, sib)(el));
 			return function (msgs) {
 				el.innerHTML = orig;
 				_.each(labels, undoWarning);
@@ -231,7 +219,7 @@ if (!window.poloAF) {
 					var label = _.find(labels, function (node) {
 						return (getFor(node) === msgs[0][0]) || (getId(node) === msgs[0][0]);
 					});
-					utils.doWhen(label, ptL(doWarning, label));
+					utils.doWhen(label, PTL(doWarning, label));
 				}
 			};
 		}(legend)),
@@ -242,6 +230,7 @@ if (!window.poloAF) {
 			['p', 'p'],
 			['figure', 'img']
 		],
+        myalt = ['alt', ''],
 		dogsrc = {
 			alt: "",
 			src: "../images/resource/dog_gone.jpg"
@@ -258,10 +247,10 @@ if (!window.poloAF) {
 			alt: "",
 			src: "../images/resource/cat_gone.jpg"
 		},
-		fig1 = [ptL(klasAdd, ['dogs', 'bottom']), levelTWO(ptL(setAttrs, dogsrc))],
-		fig2 = [ptL(klasAdd, ['cat', 'bottom']), levelTWO(ptL(setAttrs, catsrc))],
-		opt_fig1 = [ptL(klasAdd, ['dogs', 'top']), levelTWO(ptL(setAttrs, opt_dogsrc))],
-		opt_fig2 = [ptL(klasAdd, ['cat', 'top']), levelTWO(ptL(setAttrs, opt_catsrc))],
+		fig1 = [PTL(klasAdd, ['dogs', 'bottom']), levelTWO(PTL(setAttrs, dogsrc))],
+		fig2 = [PTL(klasAdd, ['cat', 'bottom']), levelTWO(PTL(setAttrs, catsrc))],
+		opt_fig1 = [PTL(klasAdd, ['dogs', 'top']), levelTWO(PTL(setAttrs, opt_dogsrc))],
+		opt_fig2 = [PTL(klasAdd, ['cat', 'top']), levelTWO(PTL(setAttrs, opt_catsrc))],
 		mod = false,
         /*
 		obj = {
@@ -270,24 +259,23 @@ if (!window.poloAF) {
 		},
         */
 		listener = function (e) {
-            /*
+            
+            //splice ino neue_nodes
             if (Modernizr.cssgrid && Modernizr.cssanimations) {
                 getNodes(neue_nodes, ['figure', 'img'], 0);
                 getNodes(neue_nodes, ['figure', 'img'], -1);
                 mod = true;
             }
-            */
-		
-			var $tgt = ptL(utils.doMap, myform.parentNode, [['id', 'response']]),
+            var $tgt = PTL(utils.doMap, myform.parentNode, [['id', 'response']]),
 				obj = utils.serializeObject(e.target),
-				thx = utils.setText('Thankyou for your enquiry'),
-				here = utils.setText('Here is your message:'),
-				sent = utils.setText('An email has been sent to '),
+                thx = doMap([['txt', 'Thankyou for your enquiry']]),
+                here = doMap([['txt', 'Here is your message:']]),
+				sent = doMap([['txt', 'An email has been sent to ']]),
 				mailto = {
 					href: "mailto:" + obj.email
 				},
-				sender = [sent, levelTWO(ptL(setAttrs, mailto), utils.setText(obj.email))],
-				messenger = [levelONE(here), levelTWO(ptL(klasAdd, 'msg'), utils.setText(obj.comments))],
+				sender = [sent, levelTWO(PTL(setAttrs, mailto), doMap([['txt', obj.email]]))],
+				messenger = [levelONE(here), levelTWO(PTL(klasAdd, 'msg'), doMap([['txt', obj.comments]]))],
 				thanker = [_.identity, levelONE(thx)],
 				response = reducer(neue_nodes),
 				checker = validateForm(isEmptyName, isProperName, isEmptyEmail, isEmailAddress/*, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage*/),
@@ -296,8 +284,8 @@ if (!window.poloAF) {
 				}),
 				config = [fig1, thanker, sender, messenger, fig2];
 			if (mod) {
-				//config.splice(1, 0, opt_fig1);
-				//config.splice(6, 0, opt_fig2);
+				config.splice(1, 0, opt_fig1);
+				config.splice(6, 0, opt_fig2);
 			}
 			if (_.isEmpty(res)) {
 				_.reduce(config, response, $tgt());
@@ -306,7 +294,7 @@ if (!window.poloAF) {
 				doAlert(res);
 			}
 		},
-        svg_handler = ptL(negater, doSVGview()());
+        svg_handler = PTL(negater, doSVGview()());
 	//listener();
     
     eventer('submit', event_actions.slice(0, 1), listener, myform).execute();
