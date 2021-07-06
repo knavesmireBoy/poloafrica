@@ -38,19 +38,16 @@ if (!window.poloAF) {
 			return document.getElementById(str);
 		},
 		twice = U.curryFactory(2),
-		doMap = twice(U.doMap),
-		thricedefer = U.curryFactory(3, true),
+        thricedefer = U.curryFactory(3, true),
 		curryDefer = U.curryFactory(1, true),
+		doMap = twice(U.doMap),
 		anCr = U.append(),
 		anCrIn = U.insert(),
 		$$ = thricedefer(lazyVal)('getElementById')(document),
-		doAni = function (tag_str) {
-			var ancr = U.findByTag(2)('section'),
-				article = U.findByTag(0)('article', ancr);
-			return _.compose(doMap([
-				['id', 'ani']
-			]), anCrIn(article, ancr))(tag_str);
-		},
+        doPause = _.partial(U.addClass, ['paused'], $$('ani')),
+        doResume = _.partial(U.removeClass, ['paused'], $$('ani')),
+        section = U.findByTag(2)('section'),
+        doAni = _.compose(doMap([['id', 'ani']]), anCrIn(U.findByTag(0)('article', section), section)),
 		tween = document.getElementById('tween'),
 		ie6 = poloAF.Util.getComputedStyle(tween, 'color') === 'red' ? true : false,
 		cssopacity = getNativeOpacity(!window.addEventListener),
@@ -79,11 +76,13 @@ if (!window.poloAF) {
 				timer = null;
 				exit.opacity = fade_el.style[key];
 				fade_el.style[key] = 100;
+                doPause();
 			}
 
 			function enter() {
 				timer = 1;
 				doFade(exit.opacity);
+                doResume();
 			}
 			if (!ie6) {
 				doAni('aside');

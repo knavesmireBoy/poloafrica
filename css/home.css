@@ -31,6 +31,10 @@ h2 span {
 	margin: 0;
 }
 
+#ani.paused {
+    filter: saturate(0);
+}
+
 .js #tween, .no-js #flower {
 	display: none;
 }
