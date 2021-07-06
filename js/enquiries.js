@@ -97,8 +97,9 @@ if (!window.poloAF) {
 		doTwice = utils.curryTwice(),
 		doThrice = utils.curryThrice(),
         doAlt = utils.doAlternate(),
-		clicker = ptL(utils.addHandler, 'click'),
-		submitter = ptL(utils.addHandler, 'submit'),
+        event_actions = ['preventDefault', 'stopPropagation', 'stopImmediatePropagation'],
+		eventer = utils.eventer,
+        
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		tgt = !window.addEventListener ? 'srcElement' : 'target',
 		getTarget = utils.drillDown([tgt, 'parentNode']),
@@ -150,6 +151,7 @@ if (!window.poloAF) {
 		},        
 		myform = document.forms[0],
 		legend = myform.getElementsByTagName('legend')[0],
+        textarea = utils.findByTag(0)('textarea', myform),
 		isEmail = ptL(isEqual, 'email'),
 		isName = ptL(isEqual, 'name'),
 		isComment = ptL(isEqual, 'comments'),
@@ -200,8 +202,9 @@ if (!window.poloAF) {
 			return v.length < 1000;
 		},
 		clear = function () { //listener on textarea
-			this.value = "";
-			undoWarning(this);
+			//this.value = "";
+            console.log(this)
+			//undoWarning(this);
 		},
 		//Use this area for comments or questions
 		isNotEmptyComment = utils.validator('this is a required field', preCon(isComment, notEmpty)),
@@ -288,7 +291,7 @@ if (!window.poloAF) {
 				messenger = [levelONE(here), levelTWO(ptL(klasAdd, 'msg'), utils.setText(obj.comments))],
 				thanker = [_.identity, levelONE(thx)],
 				response = reducer(neue_nodes),
-				checker = validateForm(isEmptyName, isProperName, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage),
+				checker = validateForm(isEmptyName, isProperName, isEmptyEmail, isEmailAddress/*, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage*/),
 				res = _.filter(_.map(obj, checker), function (ar) {
 					return notEmpty(ar);
 				}),
@@ -305,15 +308,21 @@ if (!window.poloAF) {
 		},
         svg_handler = ptL(negater, doSVGview()());
 	//listener();
-	utils.addEvent(clicker, relocate)(legend);
-	utils.addEvent(submitter, listener)(myform);
-	utils.addHandler('click', bridge, main);
-	utils.addHandler('focus', clear, utils.getByTag('textarea', myform)[0]);
+    
+    //eventer('click', event_actions.slice(0), relocate, legend).execute();
+    eventer('submit', event_actions.slice(0), listener, myform).execute();
+	//utils.addEvent(submitter, listener)(myform);
+	//utils.addHandler('click', bridge, main);
+    eventer('click', [], bridge, main).execute();
+	//utils.addHandler('focus', clear, utils.getByTag('textarea', myform)[0]);
+    eventer('focus', [], _.bind(clear, textarea), textarea).execute();
+    
 	dum[tgt] = articles[0].getElementsByTagName('a')[0];
     svg_handler();
-    utils.addHandler('resize', window, _.throttle(svg_handler, 99));
+    //utils.addHandler('resize', window, _.throttle(svg_handler, 99));
+    eventer('resize', [], _.throttle(svg_handler, 99), window).execute();
 	bridge(dum);
-
     
+    console.log(utils.findByTag(0)('textarea', myform))
     
 }(Modernizr.mq('only all'), '(min-width: 667px)'));
