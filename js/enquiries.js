@@ -9,27 +9,33 @@ if (!window.poloAF) {
 }
 (function (mq, query) {
 	"use strict";
-    
-     function viewBoxDims(s){
-        var a = s.split(' ').slice(-2);
-        return {width: a[0], height: a[1]};
-    }
-    
-    function getResult(arg) {
+
+	function viewBoxDims(s) {
+		var a = s.split(' ').slice(-2);
+		return {
+			width: a[0],
+			height: a[1]
+		};
+	}
+
+	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
 	}
 
 	function reducer(tags) {
+        
 		return function (ancor, config, i, gang) {
+            var anCr = poloAF.Util.append();
 			if (_.isArray(tags[i])) {
 				return _.reduce(gang[i], reducer(tags[i]), ancor);
 			}
-            return  COMP(config, anCr(ancor))(tags[i]);
-        };
+			return _.compose(config, anCr(ancor))(tags[i]);
+		};
 	}
-    function getNodes(nodes, newnode, pos) {
-        return newnode ? nodes.splice(pos, 0, newnode) : nodes;
-    }
+
+	function getNodes(nodes, newnode, pos) {
+		return newnode ? nodes.splice(pos, 0, newnode) : nodes;
+	}
 
 	function simpleInvoke(o, m, arg) {
 		return o[m](arg);
@@ -76,7 +82,7 @@ if (!window.poloAF) {
 		};
 	}
 	var dum = {},
-        utils = poloAF.Util,
+		utils = poloAF.Util,
 		PTL = _.partial,
 		COMP = _.compose,
 		invokemethod = function (o, arg, m) {
@@ -89,11 +95,10 @@ if (!window.poloAF) {
 		undoWarning = PTL(klasRem, 'warning'),
 		doTwice = utils.curryFactory(2),
 		doThrice = utils.curryFactory(3),
-        doAlt = utils.doAlternate(),
-        doMap = doTwice(utils.doMap),
-        event_actions = ['preventDefault', 'stopPropagation', 'stopImmediatePropagation'],
+		doAlt = utils.doAlternate(),
+		doMap = doTwice(utils.doMap),
+		event_actions = ['preventDefault', 'stopPropagation', 'stopImmediatePropagation'],
 		eventer = utils.eventer,
-        anCr = poloAF.Util.append(),
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
 		tgt = !window.addEventListener ? 'srcElement' : 'target',
 		getTarget = utils.drillDown([tgt, 'parentNode']),
@@ -104,48 +109,50 @@ if (!window.poloAF) {
 		isHeading = COMP(headingmatch, getNodeName),
 		main = document.getElementsByTagName('main')[0],
 		articles = document.getElementsByTagName('article'),
-        number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
+		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
-        getEnvironment = PTL(utils.isDesktop, threshold),
-        getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
+		getEnvironment = PTL(utils.isDesktop, threshold),
+		getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
 		execMobile = COMP(PTL(klasRem, 'invisible'), getSvgPath),
 		execDesktop = COMP(PTL(klasRem, 'invisible'), utils.getNext, getSvgPath),
 		undoMobile = COMP(PTL(klasAdd, 'invisible'), getSvgPath),
 		undoDesktop = COMP(PTL(klasAdd, 'invisible'), utils.getNext, getSvgPath),
-        doSvg = function (svg){
-            return function(str){
-                if(svg && str){
-                    utils.setAttributes({viewBox: str}, svg);
-                   //ipod ios(6.1.6) requires height
-                    if(!Modernizr.objectfit){
-                        utils.setAttributes(viewBoxDims(str), svg);
-                    }
-                }
-            }
-        },
-        doSVGview = function () {
-            var mq = window.matchMedia("(max-width: 667px)"),
-                setViewBox = doSvg(document.getElementById('logo')),
-                doMobile = COMP(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 125")),
-                doDesktop = COMP(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
-            return function () {
-                if (mq.matches) { //onload
-                    doMobile();
-                }
-                return doAlt([doMobile, doDesktop]);
-            };
-        },  
+		doSvg = function (svg) {
+			return function (str) {
+				if (svg && str) {
+					utils.setAttributes({
+						viewBox: str
+					}, svg);
+					//ipod ios(6.1.6) requires height
+					if (!Modernizr.objectfit) {
+						utils.setAttributes(viewBoxDims(str), svg);
+					}
+				}
+			};
+		},
+		doSVGview = function () {
+			var mq = window.matchMedia("(max-width: 667px)"),
+				setViewBox = doSvg(document.getElementById('logo')),
+				doMobile = COMP(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 125")),
+				doDesktop = COMP(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
+			return function () {
+				if (mq.matches) { //onload
+					doMobile();
+				}
+				return doAlt([doMobile, doDesktop]);
+			};
+		},
 		negater = function (alternator) {
-         //report();
-         /*NOTE netrenderer reports window.width AS ZERO*/
+			//report();
+			/*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
-                alternator();
+				alternator();
 				getEnvironment = _.negate(getEnvironment);
 			}
-		},        
+		},
 		myform = document.forms[0],
 		legend = myform.getElementsByTagName('legend')[0],
-        textarea = utils.findByTag(0)('textarea', myform),
+		textarea = utils.findByTag(0)('textarea', myform),
 		isEmail = PTL(isEqual, 'email'),
 		isName = PTL(isEqual, 'name'),
 		isComment = PTL(isEqual, 'comments'),
@@ -230,55 +237,55 @@ if (!window.poloAF) {
 			['p', 'p'],
 			['figure', 'img']
 		],
-        myalt = ['alt', ''],
-		dogsrc = {
-			alt: "",
-			src: "../images/resource/dog_gone.jpg"
-		},
-		catsrc = {
-			alt: "",
-			src: "../images/resource/cat_real_gone.jpg"
-		},
-		opt_dogsrc = {
-			alt: "",
-			src: "../images/resource/dogs.jpg"
-		},
-		opt_catsrc = {
-			alt: "",
-			src: "../images/resource/cat_gone.jpg"
-		},
-		fig1 = [PTL(klasAdd, ['dogs', 'bottom']), levelTWO(PTL(setAttrs, dogsrc))],
-		fig2 = [PTL(klasAdd, ['cat', 'bottom']), levelTWO(PTL(setAttrs, catsrc))],
-		opt_fig1 = [PTL(klasAdd, ['dogs', 'top']), levelTWO(PTL(setAttrs, opt_dogsrc))],
-		opt_fig2 = [PTL(klasAdd, ['cat', 'top']), levelTWO(PTL(setAttrs, opt_catsrc))],
+		myalt = ['alt', ''],
+		mysrc = ['src'],
+		dogsrc = mysrc.slice().concat("../images/resource/dog_gone.jpg"),
+		catsrc = mysrc.slice().concat("../images/resource/cat_real_gone.jpg"),
+		opt_dogsrc = mysrc.slice().concat("../images/resource/dogs.jpg"),
+		opt_catsrc = mysrc.slice().concat("../images/resource/cat_gone.jpg"),
+		fig1 = [PTL(klasAdd, ['dogs', 'bottom']), levelTWO(doMap([myalt, dogsrc]))],
+		fig2 = [PTL(klasAdd, ['cat', 'bottom']), levelTWO(doMap([myalt, catsrc]))],
+		opt_fig1 = [PTL(klasAdd, ['dogs', 'top']), levelTWO(doMap([myalt, opt_dogsrc]))],
+		opt_fig2 = [PTL(klasAdd, ['cat', 'top']), levelTWO(doMap([myalt, opt_catsrc]))],
 		mod = false,
-        /*
+		/*
 		obj = {
 			email: 'email',
 			comments: 'comments'
 		},
         */
 		listener = function (e) {
-            
-            //splice ino neue_nodes
-            if (Modernizr.cssgrid && Modernizr.cssanimations) {
-                getNodes(neue_nodes, ['figure', 'img'], 0);
-                getNodes(neue_nodes, ['figure', 'img'], -1);
-                mod = true;
-            }
-            var $tgt = PTL(utils.doMap, myform.parentNode, [['id', 'response']]),
+			//splice ino neue_nodes
+			if (Modernizr.cssgrid && Modernizr.cssanimations) {
+				getNodes(neue_nodes, ['figure', 'img'], 0);
+				getNodes(neue_nodes, ['figure', 'img'], -1);
+				mod = true;
+			}
+			var $tgt = PTL(utils.doMap, myform.parentNode, [
+					['id', 'response']
+				]),
 				obj = utils.serializeObject(e.target),
-                thx = doMap([['txt', 'Thankyou for your enquiry']]),
-                here = doMap([['txt', 'Here is your message:']]),
-				sent = doMap([['txt', 'An email has been sent to ']]),
+				thx = doMap([
+					['txt', 'Thankyou for your enquiry']
+				]),
+				here = doMap([
+					['txt', 'Here is your message:']
+				]),
+				sent = doMap([
+					['txt', 'An email has been sent to ']
+				]),
 				mailto = {
 					href: "mailto:" + obj.email
 				},
-				sender = [sent, levelTWO(PTL(setAttrs, mailto), doMap([['txt', obj.email]]))],
-				messenger = [levelONE(here), levelTWO(PTL(klasAdd, 'msg'), doMap([['txt', obj.comments]]))],
+				sender = [sent, levelTWO(PTL(setAttrs, mailto), doMap([
+					['txt', obj.email]
+				]))],
+				messenger = [levelONE(here), levelTWO(PTL(klasAdd, 'msg'), doMap([
+					['txt', obj.comments]
+				]))],
 				thanker = [_.identity, levelONE(thx)],
 				response = reducer(neue_nodes),
-				checker = validateForm(isEmptyName, isProperName, isEmptyEmail, isEmailAddress/*, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage*/),
+				checker = validateForm(isEmptyName, isProperName, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage),
 				res = _.filter(_.map(obj, checker), function (ar) {
 					return notEmpty(ar);
 				}),
@@ -289,20 +296,18 @@ if (!window.poloAF) {
 			}
 			if (_.isEmpty(res)) {
 				_.reduce(config, response, $tgt());
-                utils.removeNodeOnComplete(myform);
+				utils.removeNodeOnComplete(myform);
 			} else {
 				doAlert(res);
 			}
 		},
-        svg_handler = PTL(negater, doSVGview()());
+		svg_handler = PTL(negater, doSVGview()());
 	//listener();
-    
-    eventer('submit', event_actions.slice(0, 1), listener, myform).execute();
-    eventer('click', [], mobileToggler, main).execute();
-    eventer('focus', [], _.bind(clear, textarea), textarea).execute();
+	eventer('submit', event_actions.slice(0, 1), listener, myform).execute();
+	eventer('click', [], mobileToggler, main).execute();
+	eventer('focus', [], _.bind(clear, textarea), textarea).execute();
 	dum[tgt] = articles[0].getElementsByTagName('a')[0];
-    svg_handler();
-    eventer('resize', [], _.throttle(svg_handler, 99), window).execute();
-	mobileToggler(dum);//can run in "desktop" environment with no ill effects, toggles display of sections
-        
+	svg_handler();
+	eventer('resize', [], _.throttle(svg_handler, 99), window).execute();
+	mobileToggler(dum); //can run in "desktop" environment with no ill effects, toggles display of sections
 }(Modernizr.mq('only all'), '(min-width: 667px)'));
