@@ -2,6 +2,7 @@
 /*global window: false */
 /*global poloAF: false */
 /*global document: false */
+/*global Modernizr: false */
 /*global _: false */
 if (!window.poloAF) {
 	window.poloAF = {};
@@ -1272,7 +1273,7 @@ poloAF.Util = (function() {
 		hide: _.partial(setFromArray, always(true), 'remove', ['show']),
 		highLighter: {
 			perform: function() {
-				if (!poloAF.Util.hasFeature('nthchild')) { // utils.hasFeature('nthchild') || Modernizr.nthchild
+				if (!Modernizr.nthchild) {
 					this.perform = function() {
 						var ptL = _.partial,
 							getBody = curry3(simpleInvoke)('body')('getElementsByTagName'),
