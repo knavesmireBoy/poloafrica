@@ -94,9 +94,10 @@ if (!window.poloAF) {
 		klasRem = utils.removeClass,
 		doWarning = ptL(klasAdd, 'warning'),
 		undoWarning = ptL(klasRem, 'warning'),
-		doTwice = utils.curryTwice(),
-		doThrice = utils.curryThrice(),
+		doTwice = utils.curryFactory(2),
+		doThrice = utils.curryFactory(3),
         doAlt = utils.doAlternate(),
+        doMap = doTwice(utils.doMap),
         event_actions = ['preventDefault', 'stopPropagation', 'stopImmediatePropagation'],
 		eventer = utils.eventer,
         
@@ -161,7 +162,7 @@ if (!window.poloAF) {
 		},
 		levelONE = ptL(levelup, utils.drillDown(['parentNode'])),
 		levelTWO = ptL(levelup, utils.drillDown(['parentNode', 'parentNode'])),
-		bridge = function (e) {
+		mobileToggler = function (e) {
 			var el = getTarget(e),
 				myarticles = utils.getDomParent(utils.getNodeByTag('article'))(el),
 				hit = myarticles && utils.getClassList(myarticles).contains('show');
@@ -202,9 +203,8 @@ if (!window.poloAF) {
 			return v.length < 1000;
 		},
 		clear = function () { //listener on textarea
-			//this.value = "";
-            console.log(this)
-			//undoWarning(this);
+			this.value = "";
+			undoWarning(this);
 		},
 		//Use this area for comments or questions
 		isNotEmptyComment = utils.validator('this is a required field', preCon(isComment, notEmpty)),
@@ -270,16 +270,15 @@ if (!window.poloAF) {
 		},
         */
 		listener = function (e) {
-            
+            /*
             if (Modernizr.cssgrid && Modernizr.cssanimations) {
                 getNodes(neue_nodes, ['figure', 'img'], 0);
                 getNodes(neue_nodes, ['figure', 'img'], -1);
                 mod = true;
             }
+            */
 		
-			var $tgt = makeElement(ptL(setAttrs, {
-					id: 'response'
-				}), utils.always(myform.parentNode)),
+			var $tgt = ptL(utils.doMap, myform.parentNode, [['id', 'response']]),
 				obj = utils.serializeObject(e.target),
 				thx = utils.setText('Thankyou for your enquiry'),
 				here = utils.setText('Here is your message:'),
@@ -297,11 +296,12 @@ if (!window.poloAF) {
 				}),
 				config = [fig1, thanker, sender, messenger, fig2];
 			if (mod) {
-				config.splice(1, 0, opt_fig1);
-				config.splice(6, 0, opt_fig2);
+				//config.splice(1, 0, opt_fig1);
+				//config.splice(6, 0, opt_fig2);
 			}
 			if (_.isEmpty(res)) {
-				_.reduce(config, response, $tgt.render().getElement());
+				_.reduce(config, response, $tgt());
+                utils.removeNodeOnComplete(myform);
 			} else {
 				doAlert(res);
 			}
@@ -309,20 +309,12 @@ if (!window.poloAF) {
         svg_handler = ptL(negater, doSVGview()());
 	//listener();
     
-    //eventer('click', event_actions.slice(0), relocate, legend).execute();
-    eventer('submit', event_actions.slice(0), listener, myform).execute();
-	//utils.addEvent(submitter, listener)(myform);
-	//utils.addHandler('click', bridge, main);
-    eventer('click', [], bridge, main).execute();
-	//utils.addHandler('focus', clear, utils.getByTag('textarea', myform)[0]);
+    eventer('submit', event_actions.slice(0, 1), listener, myform).execute();
+    eventer('click', [], mobileToggler, main).execute();
     eventer('focus', [], _.bind(clear, textarea), textarea).execute();
-    
 	dum[tgt] = articles[0].getElementsByTagName('a')[0];
     svg_handler();
-    //utils.addHandler('resize', window, _.throttle(svg_handler, 99));
     eventer('resize', [], _.throttle(svg_handler, 99), window).execute();
-	bridge(dum);
-    
-    console.log(utils.findByTag(0)('textarea', myform))
-    
+	mobileToggler(dum);//can run in "desktop" environment with no ill effects, toggles display of sections
+        
 }(Modernizr.mq('only all'), '(min-width: 667px)'));
