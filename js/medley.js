@@ -72,6 +72,7 @@ if (!window.poloAF) {
 					]);
 				}),
 				unrender: function () {
+                    /*
 					_.each(coll, function (a, i) {
 						if (!repl.length) {
 							return;
@@ -84,6 +85,7 @@ if (!window.poloAF) {
 						]);
 					});
 					repl = [];
+                    */
 				}
 			};
 		}(_.compose(ptL(utils.getByTag, 'a'), ptL(utils.findByTag(0), 'nav'))(utils.$('presslinks')))),
