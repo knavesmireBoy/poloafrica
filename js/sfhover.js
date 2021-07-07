@@ -104,7 +104,8 @@
     
     utils.eventer('mouseover', [], doHover, nav1).execute();
     utils.eventer('mouseout', [], unDoHover, nav1).execute();
-	hiLite();
+	//hiLite();
+    utils.highLighter.perform();
     
 	utils.doWhen(!window.addEventListener, doOdd);
     

@@ -816,7 +816,9 @@
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 	_.each(getAllPics(), fixNoNthChild);
 	svg_handler();
-    eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();    
+    eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();
+    utils.highLighter.perform();
+    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
 	if (path) {
