@@ -7,10 +7,6 @@
 (function(mq, query) {
 	"use strict";
 
-	function noOp() {
-		//console.log('default')
-	}
-
 	function invokemethod(o, arg, m) {
 		return o[m](arg);
 	}
@@ -25,8 +21,8 @@
 		utils = poloAF.Util,
 		ie6 = utils.$('tween'),
 		ptL = _.partial,
-		doTwice = utils.curryTwice(),
-		doThrice = utils.curryThrice(),
+		doTwice = utils.curryFactory(2),
+		doThrice = utils.curryFactory(3),
 		doAlt = utils.doAlternate(),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),
@@ -39,7 +35,6 @@
 		getArticle = utils.getSibling(utils.getNodeByTag('article')),
 		getSection = utils.getDomParent(utils.getNodeByTag('section')),
 		getHeading = _.compose(utils.getDomChild(utils.getNodeByTag('h3')), utils.getChild),
-		klasAdd = utils.addClass,
 		headingmatch = doThrice(invokemethod)('match')(/^h\d$/i),
 		isHeading = _.compose(headingmatch, utils.drillDown(['nodeName'])),
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),

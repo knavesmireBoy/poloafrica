@@ -82,6 +82,12 @@ h2 span {
 	border-bottom: solid 1px;
 }
 
+#presslinks li a code {
+    font-size: .9em;
+    font-variant: small-caps;
+    color: #333;
+}
+
 #medley_links li:before, #presslinks li:before {
 	content: '» ';
 }

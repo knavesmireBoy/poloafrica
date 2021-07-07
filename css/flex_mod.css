@@ -236,7 +236,7 @@ hard code a class of flexy? ot fallback to inline-block
 		}
 	}
 	/*Q*/
-
+/*
 .flexboxlegacy #medley .override {
     background-color: ivory;
 }
@@ -250,3 +250,4 @@ hard code a class of flexy? ot fallback to inline-block
 .flexwrap #medley .override {
     background-color: orangered;
 }
+*/

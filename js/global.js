@@ -662,8 +662,13 @@ poloAF.Util = (function () {
 			o;
 		for (k in map) {
 			if (map.hasOwnProperty(k)) {
-				if (k.match(/^te?xt$/)) {
-					el.innerHTML = map[k];
+				if (k.match(/^te?xt$/i)) {
+                    if(k.toUpperCase() === k){
+                      el.innerHTML += map[k];  
+                    }
+                    else {
+                      el.innerHTML = map[k]  
+                    }
 					continue;
 				}
 				if (style) {
@@ -840,7 +845,7 @@ poloAF.Util = (function () {
 					}
 				},
 				// To assign the branch, try each method; return whatever doesn't fail.
-				testObject;
+                testObject = {};
 			try {
 				testObject = standard.createXhrObject();
 				return standard; // Return this if no error was thrown.
@@ -874,6 +879,10 @@ poloAF.Util = (function () {
 		climbDom: function (n, el) {
 			n = n || 1;
 			return drillDown(fillArray('parentNode', n))(el);
+		},
+        con: function (arg) {
+			window.console.log(arg);
+			return arg;
 		},
 		conditional: function () {
 			var validators = _.toArray(arguments);
@@ -1280,9 +1289,9 @@ poloAF.Util = (function () {
 			};
 		},
 		report: function (arg) {
-			document.getElementsByTagName('h2')[0].innerHTML = arg || document.documentElement.className;
-		},
-		dog: 'spadger'
+			var txt = existy(arg) ? arg : document.documentElement.className;
+			document.getElementsByTagName('h2')[0].innerHTML = txt;
+		}
 	}; //end
 }());
 poloAF.Util.eventCache = (function (list) {
