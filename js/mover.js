@@ -108,10 +108,7 @@
 				}
 			}); //map           
 		},
-		float_handler,
-		$sections = _.map(document.getElementsByTagName('section'), function(el) {
-		return _.compose(ptL(klasAdd, 'display'), utils.always(el));
-	});
+		float_handler;
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels to toggle display of image and article.
 	 */    
     utils.eventer('click', [], bridge, main).execute();
@@ -124,7 +121,5 @@
 	float_handler = ptL(negater, floating_elements(images, getArticle, getHeading, utils.insertBefore, utils.insertAfter));
 	float_handler();
     utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
-	//utils.setScrollHandlers($sections, doTwice(utils.getScrollThreshold)(0.4), 'display', 1);
-	//window.setTimeout($sections[0], 666);
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 667px)'), document.getElementById('tween'));
