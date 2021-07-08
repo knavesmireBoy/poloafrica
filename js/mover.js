@@ -92,7 +92,7 @@
                    n = i ? 0 : 1,
                    justMobile = ptL(utils.doWhen, n, _.compose(execMobile, undoDesktop, doMobile)),
                    justDesktop = ptL(utils.doWhen, n, _.compose(undoMobile, execDesktop, doDesktop)),
-					onmobile = _.compose(ptL(after, el, h), justMobile),
+					onmobile = _.compose(utils.con, ptL(after, el, h), justMobile),
 					ondesktop = _.compose(ptL(before, article, el), justDesktop),
                    outcomes = [onmobile, ondesktop];
 				if (mq.matches && !n) { //onload
