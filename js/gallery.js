@@ -54,6 +54,7 @@
 	}
 
 	function applyArg(f, arg) {
+        console.log(arguments)
 		arg = _.isArray(arg) ? arg : [arg];
 		return f.apply(null, arg);
 	}
@@ -319,7 +320,7 @@
 		swapping = ptL(utils.findByClass, 'swap'),
 		exitshowtime = doComp(ptL(klasAdd, 'gallery', getThumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exit_inplay, unplayin),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
-		doOrient = doComp(ptL(applyArg), ptL(utils.getBest, queryOrientation, [setPortrait, unsetPortrait])),
+		doOrient = doComp(applyArg, ptL(utils.getBest, queryOrientation, [setPortrait, unsetPortrait])),
 		galleryCount = doComp(twice(equals)(12), getLength),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
 		threshold = Number(query.match(number_reg)[1]),

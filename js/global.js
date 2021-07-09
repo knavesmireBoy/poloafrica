@@ -779,6 +779,57 @@ poloAF.Util = (function () {
 		return arr;
 	}
     
+      function getBestFactory(i){
+                
+    function doBest(coll, fun){
+        return _.reduce(coll, function (champ, contender) {
+			return fun(champ, contender) ? champ : contender;
+		});
+    }
+    
+    function arrayCheck(fun){
+        return _.isArray(fun) ? fun[0] : fun;
+    }
+	//note a function that ignores any state of champ or contender will return the first element if true and last if false
+	function best(fun, coll, arg) {
+		fun = arrayCheck(fun);
+		coll = _.toArray(coll);
+		if (arg) {
+			coll = _.map(coll, function (ptl) {
+				return _.partial(ptl, arg);
+			});
+		}
+		fun = arg ? _.partial(fun, arg) : fun;
+		return doBest(coll, fun);
+	}
+
+	function bestOnly(fun, coll) {
+        fun = arrayCheck(fun);
+		return doBest(coll, fun);
+	}
+
+	function bestPred(fun, coll, arg) {
+        fun = arrayCheck(fun);
+		coll = _.toArray(coll);
+		fun = arg ? _.partial(fun, arg) : fun;
+		return doBest(coll, fun);
+	}
+
+	function bestColl(fun, coll, arg) {
+        fun = arrayCheck(fun);
+		coll = _.toArray(coll);
+		if (arg) {
+			coll = _.map(coll, function (ptl) {
+				return _.partial(ptl, arg);
+			});
+		}
+		return doBest(coll, fun);
+	}
+                
+        return [bestOnly, bestPred, bestColl, best][i];
+    }
+
+    
     var getNewElement = dispatch(curryFactory(2)(cloneNode)(true), _.bind(document.createElement, document), _.bind(document.createDocumentFragment, document)),
 		removeNodeOnComplete = _.wrap(removeElement, function (f, node) {
 			if (validateRemove(node)) {
@@ -1013,7 +1064,10 @@ poloAF.Util = (function () {
 		findIndex: function (collection, predicate) {
 			return _.findIndex(collection, predicate || always(true));
 		},
-		getBest: best,
+		getBestOnly: getBestFactory(0),
+		getBestPred: getBestFactory(1),
+		getBestColl: getBestFactory(2),
+        getBest: getBestFactory(3),
 		getBody: function (flag) {
 			var body = document.body || document.getElementsByTagName('body')[0];
 			if (flag) {
