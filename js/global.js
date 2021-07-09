@@ -152,7 +152,7 @@ poloAF.Util = (function () {
 	}
 
 	function getter(o, k) {
-		//console.log(arguments)
+		console.log(arguments)
 		return o && o[k];
 	}
 

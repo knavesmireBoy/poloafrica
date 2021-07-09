@@ -54,7 +54,7 @@
 	}
 
 	function applyArg(f, arg) {
-        console.log(arguments)
+        //console.log(arguments)
 		arg = _.isArray(arg) ? arg : [arg];
 		return f.apply(null, arg);
 	}
@@ -558,8 +558,8 @@
 			do_page_iterator(getAllPics());
 			return $looper.find(arg);
 		},
-		nextcaller = twicedefer(getValue)('forward')('value'),
-		prevcaller = twicedefer(getValue)('back')('value'),
+		nextcaller = twicedefer(getValue)('forward')(),
+		prevcaller = twicedefer(getValue)('back')(),
 		locator = function (forward, back) {
 			var getLoc = function (e) {
 				var box = e[mytarget].getBoundingClientRect();

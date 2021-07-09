@@ -263,7 +263,7 @@ poloAF.Looper = function () {
 	poloAF.LoopIterator.prototype = {
 		constructor: poloAF.LoopIterator,
 		back: function (flag) {
-			if (!this.rev || flag) {
+			if (!this.rev || (flag && _.isBoolean(flag))) {
 				this.group.members = this.group.members.reverse();
 				this.position = this.group.members.length - 2 - (this.position);
 				this.position = this.advance(this.position);
