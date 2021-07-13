@@ -309,8 +309,6 @@
 			return doComp(cb, anCr(doComp(ptL(klasAdd, 'pagenav'), doComp(thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')(id)), myAnCr(main), utils.always('a'))))('span');
 		},
 		makeToolTip = doComp(thrice(doMethod)('init')(null), ptL(poloAF.Tooltip, getThumbs, tooltip_msg, touchevents ? 0 : 2)),
-		//getValue = doComp(doVal, ptL(doubleGet, Looper, 'onpage')),
-		getValue = doComp(doVal, ptL(doMethod, $looper)),
         getNextFromLoop = doComp(doVal, ptL(doMethod, $looper)),
 		showtime = doComp(ptL(klasRem, ['gallery'], getThumbs), ptL(klasAdd, ['showtime'], utils.getBody())),
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
