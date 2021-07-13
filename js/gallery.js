@@ -698,7 +698,7 @@
 		doplay = _.bind($recur.execute, $recur),
 		go_execute = thrice(doMethod)('execute')(null),
 		go_set = thrice(lazyVal)('set')($toggler),
-		undo_toggler = thricedefer(doMethod)('undo')()($toggler),
+        doUndoToggler = ptL(utils.doWhen, $$('slide'), thricedefer(doMethod)('undo')()($toggler)),
 		doExitShow = thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc),
 		factory = function () {
 			var remPause = doComp(utils.removeNodeOnComplete, $$('paused')),
@@ -714,7 +714,7 @@
 				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), getThumbs),
 				relocate = ptL(lazyVal, null, $locate, 'execute'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
-				farewell = [unplayin, exit_inplay, exitswap, undo_toggler, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
+				farewell = [unplayin, exit_inplay, exitswap, doUndoToggler, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				doExitSlideshow = ptL(utils.doWhen, $$('slide'), doComp(get_play_iterator, defer_once(clear)())),
                 next_driver = deferEach([doExitSlideshow, thricedefer(loadImageBridge)(doOrient)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([doExitSlideshow, thricedefer(loadImageBridge)(doOrient)('base')(prevcaller)].concat(farewell))(getResult),
