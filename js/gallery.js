@@ -311,6 +311,7 @@
 		makeToolTip = doComp(thrice(doMethod)('init')(null), ptL(poloAF.Tooltip, getThumbs, tooltip_msg, touchevents ? 0 : 2)),
 		//getValue = doComp(doVal, ptL(doubleGet, Looper, 'onpage')),
 		getValue = doComp(doVal, ptL(doMethod, $looper)),
+        getNextFromLoop = doComp(doVal, ptL(doMethod, $looper)),
 		showtime = doComp(ptL(klasRem, ['gallery'], getThumbs), ptL(klasAdd, ['showtime'], utils.getBody())),
 		playtime = ptL(klasAdd, 'inplay', $('wrap')),
 		playing = doComp(ptL(utils.doWhen, once(2), ptL(makeToolTip, true)), ptL(klasAdd, 'playing', main)),
@@ -558,8 +559,8 @@
 			do_page_iterator(getAllPics());
 			return $looper.find(arg);
 		},
-		nextcaller = twicedefer(getValue)('forward')(),
-		prevcaller = twicedefer(getValue)('back')(),
+		nextcaller = twice(getNextFromLoop)('forward'),
+		prevcaller = twice(getNextFromLoop)('back'),
 		locator = function (forward, back) {
 			var getLoc = function (e) {
 				var box = e[mytarget].getBoundingClientRect();
