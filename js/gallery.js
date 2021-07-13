@@ -715,10 +715,9 @@
 				relocate = ptL(lazyVal, null, $locate, 'execute'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
 				farewell = [unplayin, exit_inplay, exitswap, undo_toggler, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
-				exit_slideshow = ptL(utils.doWhen, $$('slide'), doComp(get_play_iterator, defer_once(clear)())),
-                //thricedefer(loadImageBridge)(doOrient)('base')
-				next_driver = deferEach([exit_slideshow, twicedefer(loadImageBridge)('base')(nextcaller)].concat(farewell))(getResult),
-				prev_driver = deferEach([exit_slideshow, twicedefer(loadImageBridge)('base')(prevcaller)].concat(farewell))(getResult),
+				doExitSlideshow = ptL(utils.doWhen, $$('slide'), doComp(get_play_iterator, defer_once(clear)())),
+                next_driver = deferEach([doExitSlideshow, thricedefer(loadImageBridge)(doOrient)('base')(nextcaller)].concat(farewell))(getResult),
+				prev_driver = deferEach([doExitSlideshow, thricedefer(loadImageBridge)(doOrient)('base')(prevcaller)].concat(farewell))(getResult),
 				toggler = function () {
 					//make BOTH slide and pause but only make pause visible on NOT playing
 					if (!$('slide')) {
