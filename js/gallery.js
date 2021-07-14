@@ -205,6 +205,7 @@
 		getTarget = utils.drillDown([mytarget]),
 		text_from_target = doComp(doGet('id'), getTarget),
 		node_from_target = doComp(doGet('nodeName'), getTarget),
+        setup_val = doComp(thrice(doMethod)('match')(/img/i), node_from_target),
 		id_from_target = doComp(doGet('id'), getTarget),
 		queryOrientation = thrice(greaterBridge)('clientWidth')('clientHeight'),
 		getLI = utils.getDomParent(utils.getNodeByTag('li')),
@@ -767,7 +768,6 @@
 			}
 		},
         */
-		setup_val = doComp(thrice(doMethod)('match')(/img/i), node_from_target),
 		//setup_val = utils.always(mock),
 		svg_handler = ptL(svg_resizer, doSVGview()()),
 		setup = function (e) {
