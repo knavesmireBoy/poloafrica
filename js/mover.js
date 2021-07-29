@@ -4,18 +4,20 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function(mq, query) {
+(function (mq, query) {
 	"use strict";
 
 	function invokemethod(o, arg, m) {
 		return o[m](arg);
 	}
-    
-    function viewBoxDims(s){
-        var a = s.split(' ').slice(-2);
-        return {width: a[0], height: a[1]};
-    }
-    
+
+	function viewBoxDims(s) {
+		var a = s.split(' ').slice(-2);
+		return {
+			width: a[0],
+			height: a[1]
+		};
+	}
 	var dummy = {},
 		//con = window.console.log.bind(window),
 		utils = poloAF.Util,
@@ -40,29 +42,33 @@
 		images = _.compose(_.flatten, doTwice(_.map)(_.toArray), ptL(_.map, sections, ptL(utils.getByTag, 'img')))(),
 		//https://stackoverflow.com/questions/9991179/modernizr-2-5-3-media-query-testing-breaks-page-in-ie-and-opera
 		getEnvironment = ptL(utils.isDesktop, threshold),
-        getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
+		getSvgPath = utils.getDomChildDefer(utils.getNodeByTag('path'))(document.getElementsByTagName('svg')[0]),
 		execMobile = _.compose(ptL(utils.removeClass, 'invisible'), getSvgPath),
 		execDesktop = _.compose(ptL(utils.removeClass, 'invisible'), utils.getNext, getSvgPath),
 		undoMobile = _.compose(ptL(utils.addClass, 'invisible'), getSvgPath),
 		undoDesktop = _.compose(ptL(utils.addClass, 'invisible'), utils.getNext, getSvgPath),
-		negater = function(alternators) {
+        removeLabels = function(node){
+            utils.removeNodeOnComplete(utils.getNext(node));
+            utils.removeNodeOnComplete(node);
+        },
+		negater = function (alternators) {
 			//report();
 			/*NOTE netrenderer reports window.width AS ZERO*/
 			if (!getEnvironment()) {
-				_.each(alternators, function(f) {
+				_.each(alternators, function (f) {
 					f();
 				});
 				getEnvironment = _.negate(getEnvironment);
 			}
 		},
-		bridge = function(e) {
+		bridge = function (e) {
 			var tgt = getTarget(e),
 				section = tgt && getSection(tgt),
 				hit = section && utils.getClassList(section).contains('show');
 			if (!section || !isHeading(utils.getParent(tgt))) {
 				return;
 			}
-			_.each(sections, function(sec) {
+			_.each(sections, function (sec) {
 				utils.hide(sec);
 			});
 			if (!hit) {
@@ -70,33 +76,35 @@
 			}
 			// 
 		},
-         doSvg = function(svg){
-           return function(str){
-               if(svg && str){
-                   utils.setAttributes({viewBox: str}, svg);
-                   //ipod ios(6.1.6) requires height
-                   if(!Modernizr.objectfit){
-                       utils.setAttributes(viewBoxDims(str), svg);
-                   }
-               }
-           }
-       },
-       setViewBox = doSvg(document.getElementById('logo')),
-       doMobile = ptL(setViewBox, "0 0 155 130"),
-       doDesktop = ptL(setViewBox, "2 0 340 75"),
-		floating_elements = function(elements, getArticle, getHeading, before, after) {
-           var mq = window.matchMedia("(max-width: 667px)");
-			return _.map(elements, function(el, i) {
+		doSvg = function (svg) {
+			return function (str) {
+				if (svg && str) {
+					utils.setAttributes({
+						viewBox: str
+					}, svg);
+					//ipod ios(6.1.6) requires height
+					if (!Modernizr.objectfit) {
+						utils.setAttributes(viewBoxDims(str), svg);
+					}
+				}
+			}
+		},
+		setViewBox = doSvg(document.getElementById('logo')),
+		doMobile = ptL(setViewBox, "0 0 155 130"),
+		doDesktop = ptL(setViewBox, "2 0 340 75"),
+		floating_elements = function (elements, getArticle, getHeading, before, after) {
+			var mq = window.matchMedia("(max-width: 667px)");
+			return _.map(elements, function (el, i) {
 				var article = getArticle(el),
 					h = article && getHeading(article),
-                   n = i ? 0 : 1,
-                   justMobile = ptL(utils.doWhen, n, _.compose(execMobile, undoDesktop, doMobile)),
-                   justDesktop = ptL(utils.doWhen, n, _.compose(undoMobile, execDesktop, doDesktop)),
+					n = i ? 0 : 1,
+					justMobile = ptL(utils.doWhen, n, _.compose(execMobile, undoDesktop, doMobile)),
+					justDesktop = ptL(utils.doWhen, n, _.compose(undoMobile, execDesktop, doDesktop)),
 					onmobile = _.compose(utils.con, ptL(after, el, h), justMobile),
 					ondesktop = _.compose(ptL(before, article, el), justDesktop),
-                   outcomes = [onmobile, ondesktop];
+					outcomes = [onmobile, ondesktop];
 				if (mq.matches && !n) { //onload
-                   onmobile();
+					onmobile();
 				}
 				if (h) {
 					return doAlt(outcomes);
@@ -105,8 +113,9 @@
 		},
 		float_handler;
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels to toggle display of image and article.
-	 */    
-    utils.eventer('click', [], bridge, main).execute();
+	 */
+	utils.eventer('click', [], bridge, main).execute();
+    _.each(_.toArray(utils.getByClass('read-more-state')), removeLabels);
 	dummy[mytarget] = firstlink;
 	bridge(dummy);
 	if (animation && !ie6) {
@@ -115,6 +124,6 @@
 	}
 	float_handler = ptL(negater, floating_elements(images, getArticle, getHeading, utils.insertBefore, utils.insertAfter));
 	float_handler();
-    utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
+	utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 667px)'), document.getElementById('tween'));
