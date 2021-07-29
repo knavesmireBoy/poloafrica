@@ -27,6 +27,13 @@ h2 span {
     }
 }
 
+@media screen and (max-width: 867px) {
+	#polo li:nth-child(6):hover ul {
+		left: auto;
+		right: 0px;
+	}
+}
+
 @media screen and (max-width: 667px) {
     
     h2, h2 span {

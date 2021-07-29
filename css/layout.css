@@ -10,47 +10,8 @@ html, body {
 img {
 	display: block;
 }
-section img.hide {
-	display: none;
-}
 header {
 	position: relative;
-	width: 100%;
-}
-header>a {
-	white-space: nowrap;
-	overflow: hidden;
-	position: relative;
-	display: block;
-	box-sizing: border-box;
-	margin: 0 0 0 1em;
-	top: 2em;
-	width: 55%;
-	text-align: left;
-	border: solid 1px lime;
-}
-/*
-.no-js header > a {
-    margin: 0 0 7em .5em;
-    width: 56%;
-}
-
-.no-js #logo {
-    position: absolute;
-    left: -999em;
-}
-*/
-
-.no-svgfilters #logo {
-	position: absolute;
-	left: -999em;
-}
-.no-svgfilters header>a {
-	margin: 0 0 9em 1em;
-	top: 5em;
-}
-#logo {
-	box-sizing: border-box;
 	width: 100%;
 }
 main {
@@ -64,6 +25,18 @@ section {
 footer {
 	width: 100%;
 	margin: -10.1em auto 0;
+}
+header>a {
+	white-space: nowrap;
+	overflow: hidden;
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	margin: 0 0 0 1em;
+	top: 2em;
+	width: 55%;
+	text-align: left;
+	border: solid 1px lime;
 }
 footer div {
 	display: inline-block;
@@ -85,22 +58,27 @@ section img {
 	float: left;
 	width: 40%;
 }
-#nav a, #fb a {
-	display: block;
+/*
+.no-js header > a {
+    margin: 0 0 7em .5em;
+    width: 56%;
 }
-nav li#current:hover ul, nav li#current.sfhover ul {
-	left: 0;
+
+.no-js #logo {
+    position: absolute;
+    left: -999em;
 }
-section.ptrt img {
-	float: right;
-	width: 18%;
-}
+*/
+
 header ul {
 	display: table;
 	width: 100%;
 }
 header li {
 	display: table-cell;
+}
+footer>a {
+	display: block;
 }
 header ul ul {
 	width: auto;
@@ -115,11 +93,28 @@ header h1 img {
 footer div img {
 	width: 100%;
 }
+.invisible {
+	visibility: hidden;
+}
 section:first-child {
 	margin: 2em 0 0 0;
 }
 /* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
 
+section img.hide {
+	display: none;
+}
+section.ptrt img {
+	float: right;
+	width: 18%;
+}
+.no-svgfilters header>a {
+	margin: 0 0 9em 1em;
+	top: 5em;
+}
+nav li#current:hover ul, nav li#current.sfhover ul {
+	left: 0;
+}
 section:nth-child(odd) img, #ani, #tween {
 	margin: 0 0 1em 2em;
 	float: right;
@@ -140,6 +135,10 @@ section:nth-child(odd) img, #ani, #tween {
 	margin: 0 0 .75em -9em;
 	left: 25%;
 }
+#logo {
+	box-sizing: border-box;
+	width: 100%;
+}
 #footer_girl a {
 	width: auto;
 	height: auto;
@@ -147,13 +146,17 @@ section:nth-child(odd) img, #ani, #tween {
 	white-space: nowrap;
 	position: relative;
 }
+#nav a, #fb a {
+	display: block;
+}
+.no-svgfilters #logo {
+	position: absolute;
+	left: -999em;
+}
 #footer_girl a:first-child {
 	width: 12em;
 	margin: 0 -4em 0 0;
 	bottom: -2em;
-}
-footer>a {
-	display: block;
 }
 #home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
 	left: auto;
@@ -162,11 +165,6 @@ footer>a {
 	left: auto;
 	right: 0px;
 }
-.invisible {
-	visibility: hidden;
-}
-
-
 @media screen and (min-width: 1281px) {
 	#wrap, footer {
 		max-width: 100em;
@@ -178,6 +176,14 @@ footer>a {
 	}
 }
 @media screen and (min-width: 1024px) {
+	.no-svgfilters header>a {
+		width: 25%;
+		margin: 0 auto 16em;
+		border: solid 1px red;
+	}
+	.no-svgfilters header a h1 {
+		display: inline-block;
+	}
 	#wrap header>a {
 		margin: 0 auto 12em;
 		top: 3em;
@@ -188,14 +194,6 @@ footer>a {
         line-height: 3.1;
     }
 */
-	.no-svgfilters header>a {
-		width: 25%;
-		margin: 0 auto 16em;
-		border: solid 1px red;
-	}
-	.no-svgfilters header a h1 {
-		display: inline-block;
-	}
 }
 @media screen and (min-width: 1024px) and (-ms-high-contrast: none) {
 	/*Hacks to account for extra space around svg IE 10/11*/
@@ -208,11 +206,16 @@ footer>a {
 	}
 }
 @media screen and (max-width: 667px) {
+	.no-js path.invisible {
+		visibility: visible;
+	}
+	.no-js path:nth-of-type(2) {
+		visibility: hidden;
+	}
 	body {
 		margin: 2%;
 	}
-    
-    p {
+	p {
 		margin: 0;
 	}
 	h2 {
@@ -220,61 +223,33 @@ footer>a {
 		margin: -3.4rem 0 0 0;
 		padding: 0 0 0 1.75rem;
 		font-size: 2rem;
-        line-height: 1.6;
-	}
-    	h2 span {
-		text-align: center;
-		display: inline-block;
-		margin: 0 auto;
-		padding: 0;
-        box-sizing: border-box;
-        border: solid 1px yellow;
-	}
-	section, section img, .touchevents body {
-		margin: 0;
-	}
-    
-    .touchevents article p {
-		padding: 0 1rem;
-	}
-	.no-js path.invisible {
-		visibility: visible;
-	}
-	.no-js path:nth-of-type(2) {
-		visibility: hidden;
+		line-height: 1.6;
 	}
 	main {
 		padding: 0 0 10.1em 0;
 		margin: 0;
 	}
-    
-    header>a {
-		margin: 0 0 0 1.75rem;	
-        border: solid 1px lime;
+	h2 span {
+		text-align: center;
+		display: inline-block;
+		margin: 0 auto;
+		padding: 0;
+		box-sizing: border-box;
+		border: solid 1px yellow;
 	}
-    
-    header>a, h2 span {
-        width: 20rem;
-    }
-	
-    #logo {
-        margin: 0 0 -1.5rem 0;
-    }
-    
-	.no-js header>a {
-		width: 133%;
+	header>a {
 		margin: 0 0 0 1.75rem;
-		padding-bottom: 7.5rem;
+		border: solid 1px lime;
+	}
+	header>a, h2 span {
+		width: 20rem;
+	}
+	section, section img, .touchevents body {
+		margin: 0;
 	}
 	header h1 {
 		position: absolute;
 	}
-	/* older mobile browsers ie9 supports inline svg but not filters*/
-	.no-svgfilters header a h1 {
-		line-height: 4.45;
-		margin-bottom: 3em;
-	}
-	
 	header ul {
 		position: absolute;
 		right: -99rem;
@@ -284,13 +259,12 @@ footer>a {
 		display: block;
 		width: 100%;
 	}
-
 	/*width reqd, other properties reqd in no-js scenario; */
 	section img {
 		/* explicitly set float to none in case browser doesn't support flex/grid*/
 		float: none;
 		border-radius: 0;
-        border-width: 0;
+		border-width: 0;
 		box-shadow: none;
 		width: 100%;
 	}
@@ -303,6 +277,21 @@ footer>a {
 		height: 0px;
 		transition: height .9s ease-out;
 	}
+	.menu {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		height: 2.5rem;
+		width: 2.5rem;
+	}
+	.touchevents article p {
+		padding: 0 1rem;
+	}
+	.no-js header>a {
+		width: 133%;
+		margin: 0 0 0 1.75rem;
+		padding-bottom: 7.5rem;
+	}
 	header input:checked+ul {
 		top: 3.6rem;
 		right: 1rem;
@@ -314,32 +303,35 @@ footer>a {
 	header input:checked+ul>li {
 		height: 2rem;
 	}
-	.menu {
-		position: absolute;
-		top: 1rem;
-		right: 1rem;
-		height: 2.5rem;
-		width: 2.5rem;
-	}
-	
 	article p:first-of-type, article p:last-child {
 		margin: .8rem 0;
 	}
 	section.ptrt img {
 		margin: 1rem 0 1rem 1rem;
 	}
-	.read-more-trigger:before, .no-js section:first-child, .no-js .read-more-state:checked~.read-more-trigger:before {
+	/* older mobile browsers ie9 supports inline svg but not filters*/
+	.no-svgfilters header a h1 {
+		line-height: 4.45;
+		margin-bottom: 3em;
+	}
+	.read-more-trigger:before, .no-js section:first-child, read-more-state:checked~.read-more-trigger:before {
 		display: block;
 	}
 	/*first section is shown by default?*/
-	.js .read-more-state, .no-js article h3, .no-js .read-more-state~article, .no-js .read-more-state~img, .no-js section:first-child .read-more-state:checked~article, .no-js section:first-child .read-more-state:checked~img, .js article>*, header ul ul {
+	header ul ul, .no-js article h3, .read-more-state~article, .read-more-state~img, section:first-child .read-more-state:checked~article, section:first-child .read-more-state:checked~img, .js article>* {
 		position: absolute;
 		top: 0px;
 		left: -999em;
 	}
-	.no-js section:first-child .read-more-state~article, .no-js section:first-child .read-more-state~img, .no-js .read-more-state:checked~article, .read-more-state:checked~img, .js section.show article>*, .js article h3 {
+	.js article h3, section:first-child .read-more-state~article, section:first-child .read-more-state~img, .read-more-state:checked~article, .read-more-state:checked~img, section.show article>* {
 		position: static;
 		left: 0;
+	}
+	article h3 {
+		background-color: black;
+	}
+	#logo {
+		margin: 0 0 -1.5rem 0;
 	}
 	#footer_girl a:first-child {
 		width: 8em;
@@ -350,35 +342,30 @@ footer>a {
 		display: block;
 	}
 }
-
 @media only screen and (max-width: 568px) {
-    
-    header>a, h2 span{
+	h2 {
+		padding: 0 0 0 1rem;
+	}
+	header>a, h2 span {
 		width: 18rem;
 	}
-    header>a {
+	header>a {
 		top: 1.3rem;
-        margin: 0 0 0 1rem;
+		margin: 0 0 0 1rem;
 	}
-    h2 {
-        padding: 0 0 0 1rem;
-    }
 }
 @media only screen and (max-width: 480px) {
-    
-    header>a, h2 span {
+	h2 {
+		margin: -2.7rem 0 0 0;
+		font-size: 1.75rem;
+		line-height: 1.4;
+	}
+	header>a, h2 span {
 		width: 16rem;
 	}
-    h2 {
-        margin: -2.7rem 0 0 0;
-        font-size: 1.75rem;
-        line-height: 1.4;
-    }
-	
 	header input:checked+ul {
 		top: 4rem;
 	}
-	
 	.menu {
 		height: 3rem;
 		width: 3rem;
@@ -389,7 +376,6 @@ footer>a {
 	.no-touchevents h2 {
 		line-height: 1.4;
 	}
-
 	/*https://css-tricks.com/scale-svg/*/
 	.no-objectfit header>a {
 		position: relative;
@@ -400,6 +386,13 @@ footer>a {
 		padding-bottom: 46.12%;
 		margin: 0 0 0 1rem;
 	}
+	.no-objectfit h2 {
+		margin: -3.5rem 0 0;
+		line-height: 2;
+	}
+	.no-objectfit h2 span {
+		width: 15.7rem;
+	}
 	.no-objectfit #logo {
 		position: absolute;
 		height: 100%;
@@ -407,46 +400,29 @@ footer>a {
 		left: 0;
 		top: 0;
 	}
-	.no-objectfit h2 {
-		margin: -3.5rem 0 0;
-        line-height: 2;
-	}
-	.no-objectfit h2 span {
-		width: 15.7rem;
-	}
 }
-
 @media only screen and (max-width: 400px) {
-
-	
 	.no-objectfit h2 span {
 		width: 13rem;
 	}
 }
-
 @media only screen and (max-width: 360px) {
-
 	header>a, h2 span {
 		width: 14rem;
 	}
-
-    #logo {
-        margin: 0 0 -1rem 0;
-    }
-}
-
-@media only screen and (max-width: 320px) {
-
-    h2 {
-        font-size: 1.6rem;
-    }
-     header>a {
-		top: 1rem;
-        margin: 0 0 0 .6rem;
+	#logo {
+		margin: 0 0 -1rem 0;
 	}
-    h2 {
-        padding: 0 0 0 .6rem;
-    }
+}
+@media only screen and (max-width: 320px) {
+	h2 {
+		font-size: 1.6rem;
+		padding: 0 0 0 .6rem;
+	}
+	header>a {
+		top: 1rem;
+		margin: 0 0 0 .6rem;
+	}
 	.menu {
 		height: 2rem;
 		width: 2rem;
@@ -454,7 +430,15 @@ footer>a {
 	header input:checked+ul {
 		top: 3rem;
 	}
-
+	.no-objectfit h2 {
+		margin: -3.6rem 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 12rem;
+	}
+	.no-objectfit h2 {
+		line-height: 1.5;
+	}
 	/*https://css-tricks.com/scale-svg/*/
 	.no-objectfit header>a {
 		width: 12rem;
@@ -462,29 +446,16 @@ footer>a {
 		padding-bottom: 52%;
 		margin: 0 0 6% .6rem;
 	}
-	.no-objectfit h2 {
-		margin: -3.6rem 0 0;
-	}
-	.no-objectfit h2 span {
-		width: 12rem;
-	}
-    
-    .no-objectfit h2 {
-        line-height: 1.5;
-	}
 }
 @media only screen and (max-width: 280px) {
 	h2 {
 		font-size: 1.3rem;
+		margin: -2.3rem 0 0 0;
+		line-height: 1.8;
 	}
-    header>a, h2 span {
+	header>a, h2 span {
 		width: 12rem;
 	}
-     h2 {
-        margin: -2.3rem 0 0 0;
-         line-height: 1.8;
-    }
-
 }
 @media only screen and (-ms-high-contrast: none) {
 	.touchevents footer {

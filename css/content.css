@@ -3,12 +3,6 @@ body {
 	background-color: rgb(255, 233, 100);
 	background-color: white;
 }
-.no-js body {
-	background-color: mintcream;
-}
-.no-svg body {
-	background-color: blue;
-}
 header {
 	/*
 	background: #b6b686 url(../images/resource/header.png) no-repeat 0 76%/100%;
@@ -18,6 +12,14 @@ header {
 	background-color: hsl(258, 60%, 67%);
 	background-repeat: no-repeat;
 	box-sizing: border-box;
+	background-position: 0 60%;
+}
+header {
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	-ms-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
 }
 h2 {
 	margin: .8em 0 0;
@@ -68,6 +70,9 @@ h2 span {
 	padding: 0 0 0 15%;
 	padding: 0 0 0 3.75em;
 	padding: 0 0 0 9rem;
+	background-repeat: no-repeat;
+	background-color: white;
+	background-position: 0 50%;
 }
 header ul {
 	font: bold 1em/2 'Roboto', 'Arial Black', Arial, Verdana, Helvetica, serif;
@@ -81,20 +86,16 @@ article a {
 	font-weight: bold;
 	outline: none;
 }
+footer>a {
+	border-top: dotted 1px #cc6;
+	text-align: right;
+	padding: .75em 1em .75em 0;
+}
 footer b, footer div a:hover {
 	color: #cc6;
 }
 header h1, h2 span, header h1 img {
 	border-width: 0px;
-}
-footer a:link, footer a:visited {
-	color: white;
-	line-height: normal;
-}
-footer>a {
-	border-top: dotted 1px #cc6;
-	text-align: right;
-	padding: .75em 1em .75em 0;
 }
 header a h1 {
 	text-indent: -9999px;
@@ -124,12 +125,34 @@ header ul a {
 	border: solid 1px;
 	border-color: #ccc #306 #306 #ccc;
 }
+header ul ul a, header ul ul a:hover {
+	background-image: none;
+}
+footer a:link, footer a:visited {
+	color: white;
+	line-height: normal;
+}
 header ul a:hover, header ul a:active {
 	background-image: url("../images/resource/navbghov1.gif");
 	background-image: linear-gradient(hsl(60, 25%, 62%), hsl(60, 35%, 72%), hsl(60, 25%, 62%));
 }
-header ul ul a, header ul ul a:hover {
-	background-image: none;
+.no-js body {
+	background-color: mintcream;
+}
+.no-svg body {
+	background-color: blue;
+}
+.cssgradients h2 {
+	background-image: linear-gradient(to right, #b8b32e, white);
+	background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
+	background-color: transparent;
+}
+.backgroundsize h2 span {
+	-o-background-size: 14%;
+	-moz-background-size: 14%;
+	-ms-background-size: 14%;
+	-webkit-background-size: 14%;
+	background-size: contain;
 }
 a:link, a:visited, .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
 	color: #990;
@@ -145,8 +168,6 @@ p a:hover, p a:active {
 footer a[href^="mailto:i"]:before {
 	content: " | ";
 }
-/* #wrap used as override for sub-menu*/
-
 header ul a, header ul a:link, header ul a:visited {
 	color: #306;
 	color: hsl(270, 100%, 20%);
@@ -155,11 +176,9 @@ header ul li a:hover, header ul li a:active {
 	background-color: #b6b686;
 	background-color: hsl(60, 25%, 62%);
 }
-header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
+li#current a {
 	color: white;
 }
-/*spacer for submenu desktop*/
-
 #wrap ul ul li {
 	border: solid 1px transparent;
 	border-width: 3px 1px 0;
@@ -179,47 +198,27 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	background-color: white;
 	border-color: #900;
 }
-li#current a {
+header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
 	color: white;
-}
-h2 span {
-	background-repeat: no-repeat;
-	background-color: white;
-	background-position: 0 50%;
-}
-.cssgradients h2 {
-	background-image: linear-gradient(to right, #b8b32e, white);
-	background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
-	background-color: transparent;
-}
-.backgroundsize h2 span {
-	-o-background-size: 14%;
-	-moz-background-size: 14%;
-	-ms-background-size: 14%;
-	-webkit-background-size: 14%;
-	background-size: contain;
-}
-header {
-	background-position: 0 60%;
-}
-header {
-	-o-background-size: cover;
-	-moz-background-size: cover;
-	-ms-background-size: cover;
-	-webkit-background-size: cover;
-	background-size: cover;
 }
 @media screen and (min-width: 1024px) {
 	body {
 		background-color: hsla(265, 64%, 74%, .05);
 	}
 	h3 {
-		white-space: nowrap
+		white-space: nowrap;
+		margin: 0 0 1.5em 0;
+		text-transform: uppercase;
+		text-align: center;
+		border-width: 0 !important;
 	}
 	header {
 		background-image: url(../images/resource/crop.JPG);
 		background-blend-mode: multiply;
 		background-position: 0 40%;
+	}
+	header ul {
+		text-transform: uppercase;
 	}
 	h2 span {
 		padding: 0 1em;
@@ -227,23 +226,10 @@ header {
 		border-radius: 1em;
 		color: white;
 	}
-	.no-cssgradients h2 span, .no-js h2 span {
-		background-image: none;
-		background-color: #9b72d5;
-		background-color: hsl(265, 64%, 74%);
-	}
-	h3 {
-		margin: 0 0 1.5em 0;
-		text-transform: uppercase;
-		text-align: center;
-		border-width: 0 !important;
-	}
-	#wrap h2 {
-		background: none !important;
-		text-align: center;
-	}
-	header ul {
-		text-transform: uppercase;
+	section img {
+		box-shadow: none;
+		border-color: #444;
+		border-radius: 1em;
 	}
 	h2:after {
 		content: '';
@@ -254,29 +240,19 @@ header {
 		background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
 		background-color: transparent;
 	}
-	.no-cssgradients h2:after, .no-js h2:after {
+	p:first-of-type {
+		margin: 0;
+	}
+	h3:after {
+		margin: -.6em 0 0;
+	}
+	.no-cssgradients h2 span, .no-js h2 span {
+		background-image: none;
+		background-color: #9b72d5;
 		background-color: hsl(265, 64%, 74%);
 	}
-	.no-js h2 span {
-		background-image: none;
-	}
-	/*default to flat color on no-js, override here wrap required to trump individual pages*/
-	@supports (background-image: linear-gradient(black, white)) {
-		#wrap h2 span {
-			background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
-		}
-		.no-js h2:after {
-			background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
-			background-color: transparent;
-		}
-	}
-	.cssgradients #wrap h2 span {
-		background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
-	}
-	section img {
-		box-shadow: none;
-		border-color: #444;
-		border-radius: 1em;
+	.no-cssgradients h2:after, .no-js h2:after {
+		background-color: hsl(265, 64%, 74%);
 	}
 	.override h3 a {
 		border: solid 1px #a39f29;
@@ -286,18 +262,12 @@ header {
 		background: white;
 		color: #666;
 	}
-	p:first-of-type {
-		margin: 0;
-	}
 	/* para rules before/after don't work on float layout */
 	h3:after, p:first-of-type:after, p:first-of-type+p:before {
 		content: '';
 		display: block;
 		border-top: solid 1px #a39f29;
 		border-top: solid 1px hsl(58, 60%, 40%);
-	}
-	h3:after {
-		margin: -.6em 0 0;
 	}
 	p:first-of-type:after {
 		margin: 1em 15%;
@@ -309,14 +279,27 @@ header {
 		margin: -1.5em auto 1em;
 		border-radius: 50%;
 	}
+	#wrap h2 {
+		background: none !important;
+		text-align: center;
+	}
+	.cssgradients #wrap h2 span {
+		background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+	}
+	/*default to flat color on no-js, override here wrap required to trump individual pages*/
+	@supports (background-image: linear-gradient(black, white)) {
+		.no-js h2:after {
+			background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
+			background-color: transparent;
+		}
+		#wrap h2 span {
+			background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+		}
+	}
 }
 /*1024*/
 
 @media screen and (max-width: 867px) {
-	#polo li:nth-child(6):hover ul {
-		left: auto;
-		right: 0px;
-	}
 	h2 span {
 		-o-background-size: 16%;
 		-moz-background-size: 16%;
@@ -341,17 +324,6 @@ header {
 		-webkit-background-size: 222%;
 		background-size: 222% !important;
 	}
-	/* older mobile browsers ie9 supports inline svg but not filters*/
-	.no-svgfilters header a h1 {
-		background-position: left bottom;
-	}
-	header>a {
-		top: 0;
-	}
-	/*ZAP*/
-	#wrap h2, #wrap h2 span {
-		background-image: none;
-	}
 	h2 {
 		color: white;
 		background: none;
@@ -368,6 +340,9 @@ header {
 		-ms-background-size: 240%;
 		-webkit-background-size: 240%;
 		background-size: cover;
+	}
+	header>a {
+		top: 0;
 	}
 	section>label {
 		font-weight: bold;
@@ -410,37 +385,36 @@ header {
 		-o-transition: transform 1s;
 		transition: transform 1s;
 	}
-	.menu:hover {
-		background-position: 50% 100%;
-		-webkit-transform: rotate(360deg);
-		transform: rotate(360deg);
+	h2:hover, h2:focus, h2:active {
+		color: hsl(58, 60%, 90%);
 	}
 	section.show h3 a {
 		color: white;
 		background-color: transparent;
 	}
-	h2:hover, h2:focus, h2:active {
-		color: hsl(58, 60%, 90%);
-	}
 	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
-	h3, .read-more-trigger:before {
-		color: #990;
-		color: hsl(58, 60%, 40%);
-		padding: .5em .5em .4em;
-	}
 	h3, .read-more-trigger:before, .js section img {
 		border-bottom: solid 1px white;
 	}
+	/* older mobile browsers ie9 supports inline svg but not filters*/
+	.no-svgfilters header a h1 {
+		background-position: left bottom;
+	}
 	.override article p {
 		line-height: 1.55;
+	}
+	.menu:hover {
+		background-position: 50% 100%;
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+	.no-touchevents h3 a:hover {
+		color: white;
 	}
 	.read-more-trigger:before:hover {
 		background-color: white;
 		color: hsl(58, 60%, 45%);
 		color: #b8b32e;
-	}
-	.no-touchevents h3 a:hover {
-		color: white;
 	}
 	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
 		color: #990;
@@ -448,6 +422,7 @@ header {
 		text-shadow: none;
 		background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
+		padding: .5em .5em .4em;
 	}
 	section.show h3, .read-more-state:checked~.read-more-trigger:before, section:first-child .read-more-state~.read-more-trigger:before {
 		color: white;
@@ -457,6 +432,10 @@ header {
 	}
 	footer div:first-child a:last-child:before {
 		content: "";
+	}
+	/*ZAP*/
+	#wrap h2, #wrap h2 span {
+		background-image: none;
 	}
 	#main_nav header nav ul {
 		font: bold 1em/2 "Arial Back", Arial, Verdana, Helvetica, sans-serif;
