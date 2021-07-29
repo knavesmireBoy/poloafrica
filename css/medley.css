@@ -102,8 +102,11 @@ h2 span {
 
 .no-touchevents #presslinks ul {
 	line-height: 1.3;
-    text-indent: -1.7em;
-	padding: 0 0 0 1.7em;
+}
+/*aligns subsequent lines*/
+.no-touchevents #presslinks li {
+	text-indent: -1.7em;
+    padding-left: 1.7em;
 }
 
 #presslinks li:nth-child(odd) a:link, #medley_links li:nth-child(odd) a:link {
@@ -111,6 +114,10 @@ h2 span {
 }
 #presslinks li:nth-child(odd) a:hover, #medley_links ul li:nth-child(odd) a:hover {
 	color: #306;
+}
+/*for older safari..*/
+#presslinks li:nth-child(odd) a:visited, #medley_links li:nth-child(odd) a:visited {
+	color: #900;
 }
 
 .no-touchevents.backgroundsize #presslinks ul {
@@ -152,6 +159,7 @@ h2 span {
 	background-image: url(../images/resource/p5.jpg);
 	background-size: cover;
 }
+
 
 @media only screen {
     .backgroundsize h2 span {
@@ -205,6 +213,12 @@ section:nth-child(5) p+p:before {
 #medley_links p:after, #medley_links p:before, #medley section:nth-child(7) p:after, #medley section:nth-child(7) p+p:before, #presslinks p:after, section:nth-child(5) p:last-child:after, section:nth-child(3) p:first-of-type:after, section:nth-child(3) p:first-of-type+p:before {
     content: none;
 }
+}
+
+@media screen and (min-width: 668px) and (max-width: 800px) { 
+    #tvcoverage p {
+        text-align: left;
+    }
 }
 
 @media screen and (max-width: 667px) {

@@ -11,6 +11,7 @@ main>* {
 }
 footer {
 	margin: 0 auto;
+    background-color: transparent;
 }
 main img, main ul {
 	border: 1px solid black;
@@ -21,14 +22,13 @@ main {
 main img {
 	width: 100%;
 }
-#photos .override h2 span {
+h2 span {
 	color: white;
-    background: white;
 }
 main ul {
 	text-align: center;
 	padding: 3px;
-	width: 88%;
+	width: 80%;
 	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
 	*padding: 1.2em 1.2em .4em 1.2em;*/
 	-webkit-transition: width 1s ease-in-out;
@@ -117,6 +117,10 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 }
 .showtime footer {
 	margin: -4.1em auto 0;
+	margin: -3.1em auto 0;
+}
+#photos {
+    background-color: #fff;
 }
 .js #exit {
 	width: 2em;
@@ -141,7 +145,24 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 .swap #slide {
 	margin-left: 0%;
 }
-
+#controls {
+	top: 0em;
+	position: relative;
+	text-align: center;
+	font-size: 1.5em;
+	margin: 0 auto;
+	z-index: 2;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+	clear: both;
+	display: table;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	zoom: 1;
+    width: 100%;
+    /*border-spacing: .5em;*/
+}
 #tooltip {
 	position: absolute;
 	z-index: 3;
@@ -161,6 +182,43 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	transition-duration: 2s;
 	opacity: 0;
 	filter: alpha(opacity=0);
+	zoom: 1;
+}
+#controls button {
+	width: 1.5em;
+	height: 1.5em;
+	padding: 0;
+	margin: 0 .3em;
+	display: table-cell;
+	border: solid 1px;
+	cursor: pointer;
+	background-color: #990;
+	border: 1px solid #cc6;
+	border-radius: .2em;
+	line-height: 1.6;
+	background-image: url(../images/resource/buttons_sprite_lowend8.png);
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	-webkit-box-shadow: 2px 2px 4px black;
+	box-shadow: 2px 2px 4px black;
+	text-shadow: 1px 1px 1px black;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	zoom: 1;
+}
+#controls>button {
+	background-image: url(../images/resource/buttons_sprite_lowend.png);
+	background-color: hsla(50, 50%, 40%, .3);
+}
+#controls.static {
+	top: -3.1em;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	zoom: 1;
+}
+.touchevents #controls {
+	opacity: 1;
+	filter: alpha(opacity=100);
 	zoom: 1;
 }
 #tooltip.tip {
@@ -189,62 +247,6 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	background: #cc6;
 	padding: 3px;
 }
-#controls {
-	top: 0em;
-	position: relative;
-	text-align: center;
-	font-size: 1.5em;
-	margin: 0 auto;
-	z-index: 2;
-	border-spacing: .5em;
-	-webkit-transition: all 1s;
-	-o-transition: all 1s;
-	transition: all 1s;
-	clear: both;
-	display: table;
-	opacity: 0;
-	filter: alpha(opacity=0);
-	zoom: 1;
-}
-
-#controls button {
-	width: 1.5em;
-	height: 1.5em;
-	padding: 0;
-	margin: 0 .3em;
-	display: table-cell;
-	border: solid 1px;
-	cursor: pointer;
-	background-color: #990;
-	border: 1px solid #cc6;
-	border-radius: .2em;
-	line-height: 1.6;
-	background-image: url(../images/resource/buttons_sprite_lowend8.png);
-	background-repeat: no-repeat;
-	background-position: 50% 0%;
-	-webkit-box-shadow: 2px 2px 4px black;
-	box-shadow: 2px 2px 4px black;
-	text-shadow: 1px 1px 1px black;
-	opacity: 1;
-	filter: alpha(opacity=100);
-	zoom: 1;
-}
-#controls>button {
-	background-image: url(../images/resource/buttons_sprite_lowend.png);
-	background-color: hsla(50, 50%, 40%, .3);
-}
-#controls.static {
-	top: -3.5em;
-	opacity: 1;
-	filter: alpha(opacity=100);
-	zoom: 1;
-}
-.touchevents #controls {
-	opacity: 1;
-	filter: alpha(opacity=100);
-	zoom: 1;
-}
-
 #controls.static button {
 	border: 1px solid #FFF;
 	border: 1px solid rgba(255, 255, 255, .75);
@@ -302,7 +304,7 @@ logic dictates that we only get to this point courtesy of javascript so moderniz
 #wrap h2 {
 	background: none;
 }
-main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .pagenav, .playing li#paused {
+main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paused {
 	position: absolute;
 	top: 0em;
 	left: -9999px;
@@ -331,19 +333,12 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 .no-touchevents.playing #playbutton:hover {
 	background-position: 50% 100%;
 }
-#photos h2 span {
+#photos #wrap h2 span {
 	background: none;
 }
-
 #photos h2:after {
 	content: none;
 }
-
-#photos #wrap h2 span {
-	color: white;
-    background: none;
-}
-
 @media only screen {
 	.showtime main ul li {
 		width: 100%;
@@ -390,7 +385,7 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 	.no-js #placeholder {
 		font-size: .5em;
 		text-shadow: none;
-		text-align: left;
+		text-align: center;
 		width: 100%;
 		color: yellow;
 	}
@@ -505,12 +500,15 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .no-js #photos .
 	.no-js h2, .no-js h2:hover {
 		color: #444;
 		font: 1.5em normal serif;
+        text-align: center;
 	}
 	.no-js h2 span {
 		padding: .5em 0;
 	}
+    /*
 	.backgroundsize .showtime footer:hover {
 		background: url(../images/resource/footer_green_ko.png) no-repeat bottom right, url(../images/resource/sky.png) no-repeat top left;
 	}
+    */
 }
 /*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/

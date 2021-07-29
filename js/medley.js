@@ -9,7 +9,7 @@ if (!window.poloAF) {
 }
 (function () {
 	"use strict";
-
+/*presslinks, moves link acknowledgements to title attribute on desktop devices*/
 	function simpleInvoke(o, m, arg) {
 		//console.log(arguments)
 		return o && o[m] && o[m](arg);

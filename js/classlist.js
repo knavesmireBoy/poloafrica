@@ -7,31 +7,25 @@ if (!window.poloAF) {
 }
 poloAF.ClassList = (function () {
 	"use strict";
-
-	function existy(x) {
-		return x != null;
+	//https://stackoverflow.com/questions/29454340/detecting-classname-of-svganimatedstring/29454358
+	function isSVG(node) {
+		return typeof node.className.baseVal !== 'undefined';
 	}
-    //https://stackoverflow.com/questions/29454340/detecting-classname-of-svganimatedstring/29454358
-     function isSVG(node){
-        return typeof node.className.baseVal !== 'undefined'
-    }
 
 	function setter(o, k, v) {
-        if(isSVG(o)){
-           o[k].baseVal = v; 
-        }
-		else {
-            o[k] = v;
-        }
+		if (isSVG(o)) {
+			o[k].baseVal = v;
+		} else {
+			o[k] = v;
+		}
 	}
 
 	function setterplus(o, k, v) {
-        if(isSVG(o)){
-           o[k].baseVal += v; 
-        }
-        else {
-         o[k] += v;   
-        }
+		if (isSVG(o)) {
+			o[k].baseVal += v;
+		} else {
+			o[k] += v;
+		}
 	}
 
 	function best(fun, coll) {
@@ -48,7 +42,7 @@ poloAF.ClassList = (function () {
 
 	function cat() {
 		var head = _.first(arguments);
-		if (existy(head)) {
+		if (poloAF.Util.existy(head)) {
 			return head.concat.apply(head, _.rest(arguments));
 		} else {
 			return [];
@@ -79,27 +73,26 @@ poloAF.ClassList = (function () {
 		f.message = message;
 		return f;
 	}
-    
 	var constr = function (node) {
 		var set = _.partial(setter, node, 'className'),
 			superset = _.partial(setterplus, node, 'className'),
 			contains = function (klas) {
 				var pattern = new RegExp('(^| )' + klas + '( |$)'),
-                    name = node.className.baseVal || node.className;
+					name = node.className.baseVal || node.className;
 				return pattern.test(name) ? true : false;
 			},
 			add = function (klas) {
 				if (!contains(klas)) {
-                    var k = isSVG(node) ? node.className.baseVal : node.className;
+					var k = isSVG(node) ? node.className.baseVal : node.className;
 					superset(_.isEmpty(k) ? klas : ' ' + klas);
 				}
 			},
 			remove = function (klas) {
 				var pattern = new RegExp('(^| )' + klas + '( |$)'),
-                    name = isSVG(node) ? node.className.baseVal : node.className;
+					name = isSVG(node) ? node.className.baseVal : node.className;
 				set(name.replace(pattern, '$1').replace(/ $/, ''));
 			},
-            outcomes = [add, remove],
+			outcomes = [add, remove],
 			toggle = function (klas, bool) {
 				if (_.isBoolean(bool)) {
 					best(always(bool), outcomes)(klas);

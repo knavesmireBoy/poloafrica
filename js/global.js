@@ -18,7 +18,7 @@ poloAF.Util = (function () {
 				spreadArgs = [],
 				length = arguments.length,
 				currentArg;
-			for (i = 0; i < length; i++) {
+			for (i = 0; i < length; i += 1) {
 				currentArg = arguments[i];
 				if (Array.isArray(currentArg)) {
 					spreadArgs = spreadArgs.concat(currentArg);
@@ -397,7 +397,8 @@ poloAF.Util = (function () {
 
 	function getClassList(el) {
 		if (el) {
-			if (typeof el.classList === 'undefined') {
+			if (typeof el.classList === 'undefined' || _.isArray(el)) {
+				el = _.isArray(el) ? el[0] : el;
 				return poloAF.ClassList(el);
 			}
 			return el.classList;
@@ -659,30 +660,30 @@ poloAF.Util = (function () {
 
 	function attrMap(el, map, style) {
 		var k,
-			o;
+			o,
+            cont = true;
 		for (k in map) {
 			if (map.hasOwnProperty(k)) {
 				if (k.match(/^te?xt$/i)) {
-                    if(k.toUpperCase() === k){
-                      el.innerHTML += map[k];  
-                    }
-                    else {
-                      el.innerHTML = map[k]  
-                    }
-					continue;
+					if (k.toUpperCase() === k) {
+						el.innerHTML += map[k];
+					} else {
+						el.innerHTML = map[k];
+					}
+					cont = false;
 				}
-				if (style) {
+				if (style && cont) {
 					if (poloAF.slice_shim) {
 						el.style[toCamelCase(k)] = map[k];
 					} else {
 						el.style.setProperty(k, map[k]);
 					}
-				} else {
+				} else if (cont) {
 					o = {};
 					o[k] = map[k]; //to support ie 6,7
 					poloAF.Util.setAttributes(o, el);
 				}
-			}
+			}//own
 		}
 		return el;
 	}
@@ -778,59 +779,58 @@ poloAF.Util = (function () {
 		}
 		return arr;
 	}
-    
-      function getBestFactory(i){
-                
-    function doBest(coll, fun){
-        return _.reduce(coll, function (champ, contender) {
-			return fun(champ, contender) ? champ : contender;
-		});
-    }
-    
-    function arrayCheck(fun){
-        return _.isArray(fun) ? fun[0] : fun;
-    }
-	//note a function that ignores any state of champ or contender will return the first element if true and last if false
-	function best(fun, coll, arg) {
-		fun = arrayCheck(fun);
-		coll = _.toArray(coll);
-		if (arg) {
-			coll = _.map(coll, function (ptl) {
-				return _.partial(ptl, arg);
+
+	function getBestFactory(i) {
+		function doBest(coll, fun) {
+			return _.reduce(coll, function (champ, contender) {
+				return fun(champ, contender) ? champ : contender;
 			});
 		}
-		fun = arg ? _.partial(fun, arg) : fun;
-		return doBest(coll, fun);
-	}
 
-	function bestOnly(fun, coll) {
-        fun = arrayCheck(fun);
-		return doBest(coll, fun);
-	}
-
-	function bestPred(fun, coll, arg) {
-        fun = arrayCheck(fun);
-		coll = _.toArray(coll);
-		fun = arg ? _.partial(fun, arg) : fun;
-		return doBest(coll, fun);
-	}
-
-	function bestColl(fun, coll, arg) {
-        fun = arrayCheck(fun);
-		coll = _.toArray(coll);
-		if (arg) {
-			coll = _.map(coll, function (ptl) {
-				return _.partial(ptl, arg);
-			});
+		function arrayCheck(fun) {
+			return _.isArray(fun) ? fun[0] : fun;
 		}
-		return doBest(coll, fun);
-	}
-                
-        return [bestOnly, bestPred, bestColl, best][i];
-    }
+		//note a function that ignores any state of champ or contender will return the first element if true and last if false
+		function best(fun, coll, arg) {
+			//console.log(coll[0], arg)
+			fun = arrayCheck(fun);
+			coll = _.toArray(coll);
+			if (arg) {
+				arg = getResult(arg);
+				coll = _.map(coll, function (ptl) {
+					return _.partial(ptl, arg);
+				});
+			}
+			fun = arg ? _.partial(fun, arg) : fun;
+			return doBest(coll, fun);
+		}
 
-    
-    var getNewElement = dispatch(curryFactory(2)(cloneNode)(true), _.bind(document.createElement, document), _.bind(document.createDocumentFragment, document)),
+		function bestOnly(fun, coll) {
+			fun = arrayCheck(fun);
+			return doBest(coll, fun);
+		}
+
+		function bestPred(fun, coll, arg) {
+			fun = arrayCheck(fun);
+			coll = _.toArray(coll);
+			fun = arg ? _.partial(fun, getResult(arg)) : fun;
+			return doBest(coll, fun);
+		}
+
+		function bestColl(fun, coll, arg) {
+			fun = arrayCheck(fun);
+			coll = _.toArray(coll);
+			if (arg) {
+				arg = getResult(arg);
+				coll = _.map(coll, function (ptl) {
+					return _.partial(ptl, arg);
+				});
+			}
+			return doBest(coll, fun);
+		}
+		return [bestOnly, bestPred, bestColl, best][i];
+	}
+	var getNewElement = dispatch(curryFactory(2)(cloneNode)(true), _.bind(document.createElement, document), _.bind(document.createDocumentFragment, document)),
 		removeNodeOnComplete = _.wrap(removeElement, function (f, node) {
 			if (validateRemove(node)) {
 				return f(node);
@@ -896,7 +896,7 @@ poloAF.Util = (function () {
 					}
 				},
 				// To assign the branch, try each method; return whatever doesn't fail.
-                testObject = {};
+				testObject = {};
 			try {
 				testObject = standard.createXhrObject();
 				return standard; // Return this if no error was thrown.
@@ -922,16 +922,16 @@ poloAF.Util = (function () {
 		always: always,
 		append: function (flag) {
 			if (flag) {
-                return curryFactory(3, true)(setAnchor)(getNewElement)(null);
+				return curryFactory(3, true)(setAnchor)(getNewElement)(null);
 			}
-            return curryFactory(3)(setAnchor)(getNewElement)(null);
+			return curryFactory(3)(setAnchor)(getNewElement)(null);
 		},
 		byIndex: byIndex,
 		climbDom: function (n, el) {
 			n = n || 1;
 			return drillDown(fillArray('parentNode', n))(el);
 		},
-        con: function (arg) {
+		con: function (arg) {
 			window.console.log(arg);
 			return arg;
 		},
@@ -1008,11 +1008,13 @@ poloAF.Util = (function () {
 			el = getResult(el);
 			return {
 				execute: function (flag) {
+					//console.log('exec', el);
 					myEventListener.add(el, type, fn);
 					poloAF.Util.eventCache.add(this, flag);
 					return this;
 				},
 				undo: function (flag) {
+					//console.log('undo', el);
 					myEventListener.remove(el, type, fn);
 					if (flag && _.isBoolean(flag)) {
 						el = removeNodeOnComplete(el);
@@ -1034,6 +1036,7 @@ poloAF.Util = (function () {
 				}
 			};
 		},
+		existy: existy,
 		fadeUp: function (element, red, green, blue) {
 			var fromFull = curryFactory(2)(subtract)(255),
 				byTen = curryFactory(2)(divideBy)(10),
@@ -1067,7 +1070,7 @@ poloAF.Util = (function () {
 		getBestOnly: getBestFactory(0),
 		getBestPred: getBestFactory(1),
 		getBestColl: getBestFactory(2),
-        getBest: getBestFactory(3),
+		getBest: getBestFactory(3),
 		getBody: function (flag) {
 			var body = document.body || document.getElementsByTagName('body')[0];
 			if (flag) {

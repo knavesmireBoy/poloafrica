@@ -219,7 +219,6 @@ poloAF.Looper = function () {
 		_.each(methods, mapper);
 		return tgt;
 	}
-    
 	poloAF.LoopIterator = function (group, advancer) {
 		this.group = group;
 		this.position = 0;
@@ -271,11 +270,10 @@ poloAF.Looper = function () {
 			}
 			return this.forward(this.rev);
 		},
-		
 		find: function (tgt) {
 			return this.set(_.findIndex(this.group.members, _.partial(equals, tgt)));
 		},
-        forward: function (flag) {
+		forward: function (flag) {
 			if (!flag && this.rev) {
 				return this.back(true);
 			}
@@ -286,7 +284,7 @@ poloAF.Looper = function () {
 			m = m || 'value';
 			return this.status()[m];
 		},
-        set: function (pos) {
+		set: function (pos) {
 			if (!isNaN(parseFloat(pos)) && pos >= 0) {
 				this.position = pos;
 			}
@@ -295,7 +293,7 @@ poloAF.Looper = function () {
 				index: this.position
 			};
 		},
-        status: function () {
+		status: function () {
 			return {
 				members: this.group.members,
 				value: this.group.members[this.position],
@@ -306,22 +304,20 @@ poloAF.Looper = function () {
 			this.group.visit(cb);
 		}
 	};
-    
-    var target = {
-        setSubject: function (s) {
-			this.$subject = s;
-        },
-        getSubject: function () {
-			return this.$subject;
-        },
-        build: function (coll, advancer) {
-            this.setSubject(poloAF.LoopIterator.from(coll, advancer(coll)));
-        }
-    },
-        twice = poloAF.Util.curryFactory(2),
+	var target = {
+			setSubject: function (s) {
+				this.$subject = s;
+			},
+			getSubject: function () {
+				return this.$subject;
+			},
+			build: function (coll, advancer) {
+				this.setSubject(poloAF.LoopIterator.from(coll, advancer(coll)));
+			}
+		},
+		twice = poloAF.Util.curryFactory(2),
 		doGet = twice(poloAF.Util.getter),
 		getLength = doGet('length'),
 		incrementer = _.compose(doInc, getLength);
-	
-	return makeProxyIterator(poloAF.LoopIterator.from([], incrementer), target, ['back', 'status', 'find', 'forward', 'get', 'play', 'set',  'visit']);
+	return makeProxyIterator(poloAF.LoopIterator.from([], incrementer), target, ['back', 'status', 'find', 'forward', 'get', 'play', 'set', 'visit']);
 };

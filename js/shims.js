@@ -103,19 +103,23 @@ window.cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAni
 window.dispatchEvent = window.dispatchEvent || window.fireEvent;
 if (!String.prototype.trim) {
 	String.prototype.trim = function () {
+        "use strict";
 		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 	};
 }
 String.prototype.sansNumber = function () {
+    "use strict";
 	var str = '',
 		n = parseFloat(this),
 		i = !isNaN(n) ? str + n : 0;
 	return this.substring(i.length);
 };
 String.prototype.isUpper = function () {
+    "use strict";
 	return this.toString() === this.toUpperCase();
 };
 String.prototype.bloated = function () {
+    "use strict";
 	var str = this.toString();
 	return Number(str.length - str.trim().length);
 };
@@ -143,6 +147,7 @@ String.prototype.honor = function () {
 	return str;
 };
 String.prototype.toCamelCase = function (char) {
+    "use strict";
 	var reg = new RegExp(char + "([a-z])", 'g');
 	return this.replace(reg, function (match, captured) {
 		return captured.toUpperCase();
@@ -173,6 +178,7 @@ if (typeof Function.prototype.bind === 'undefined') {
 if (typeof Function.prototype.wrap === 'undefined') {
 	//WORKHORSE
 	Function.prototype.wrap = function (wrapper, options) {
+        "use strict";
 		var method = this;
 		return function () {
 			var args = [],
@@ -197,13 +203,16 @@ if (typeof Function.prototype.wrap === 'undefined') {
 }
 
 function ieOpacity(v) {
-	this['-ms-filter'] = 'progid:DXImageTransform.Microsoft.Alpha=' + (v * 100) + ')';
+    "use strict";
+    var val = (v * 100) + ')';
+	this['-ms-filter'] = 'progid:DXImageTransform.Microsoft.Alpha=' + val;
 	this.filter = 'alpha(opacity=' + (v * 100) + ')';
 	return this;
 }
 
 function getNativeOpacity(bool) {
 	return function (v) {
+        "use strict";
 		return {
 			getKey: function () {
 				return bool ? 'filter' : Modernizr.prefixedCSS('opacity');
@@ -216,7 +225,6 @@ function getNativeOpacity(bool) {
 	};
 }
 poloAF.getOpacity = getNativeOpacity(!window.addEventListener);
-
 if (typeof Object.getPrototypeOf !== "function") {
 	if (typeof "test".__proto__ === "object") {
 		Object.getPrototypeOf = function (object) {
@@ -229,6 +237,7 @@ if (typeof Object.getPrototypeOf !== "function") {
 		};
 	}
 }
+
 /*! matchMedia() polyfill - Test a CSS media type/query in JS. Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas, David Knight. MIT license */
 window.matchMedia || (window.matchMedia = function () {
 	"use strict";

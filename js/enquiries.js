@@ -48,13 +48,9 @@ if (!window.poloAF) {
 		return getResult(x) === getResult(y);
 	}
 
-	function existy(x) {
-		return x != null;
-	}
-
 	function cat() {
 		var head = _.first(arguments);
-		if (existy(head)) {
+		if (poloAF.Util.existy(head)) {
 			return head.concat.apply(head, _.rest(arguments));
 		} else {
 			return [];
@@ -115,6 +111,10 @@ if (!window.poloAF) {
 		execDesktop = COMP(PTL(klasRem, 'invisible'), utils.getNext, getSvgPath),
 		undoMobile = COMP(PTL(klasAdd, 'invisible'), getSvgPath),
 		undoDesktop = COMP(PTL(klasAdd, 'invisible'), utils.getNext, getSvgPath),
+		removeLabels = function (node) {
+			utils.removeNodeOnComplete(utils.getNext(node));
+			utils.removeNodeOnComplete(node);
+		},
 		doSvg = function (svg) {
 			return function (str) {
 				if (svg && str) {
@@ -208,7 +208,7 @@ if (!window.poloAF) {
 		//Use this area for comments or questions
 		isSuspect = utils.validator('suspicious angled brackets found', preCon(utils.always(true), is_suspect)),
 		isNotEmptyComment = utils.validator('this is a required field', preCon(isComment, notEmpty)),
-		isNewMessage = utils.validator('Please use this area for comments or questions', preCon(isComment, comment_name)),
+		isNewMessage = utils.validator('Please write your own message', preCon(isComment, comment_name)),
 		isSmallMessage = utils.validator('Message is very small, please elaborate', preCon(isComment, string_min)),
 		isLargeMessage = utils.validator('Word count of your message is too great. Reduce word count or please email instead', preCon(isComment, string_max)),
 		isProperName = utils.validator('please supply a first name and a last name', preCon(isName, form_name)),
@@ -309,5 +309,6 @@ if (!window.poloAF) {
 	dum[tgt] = articles[0].getElementsByTagName('a')[0];
 	svg_handler();
 	eventer('resize', [], _.throttle(svg_handler, 99), window).execute();
+	_.each(_.toArray(utils.getByClass('read-more-state')), removeLabels);
 	mobileToggler(dum); //can run in "desktop" environment with no ill effects, toggles display of sections for mobile devices
 }(Modernizr.mq('only all'), '(min-width: 667px)'));

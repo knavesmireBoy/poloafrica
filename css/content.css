@@ -61,11 +61,13 @@ footer {
 	background-position: bottom right;
 	background-position: 100% 100%;
 	background-blend-mode: multiply;
+	background-size: cover;
 }
 h2 span {
 	display: block;
-	padding: 0 0 0 12%;
-	padding: 0 0 0 8rem;
+	padding: 0 0 0 15%;
+	padding: 0 0 0 3.75em;
+	padding: 0 0 0 9rem;
 }
 header ul {
 	font: bold 1em/2 'Roboto', 'Arial Black', Arial, Verdana, Helvetica, serif;
@@ -226,7 +228,8 @@ header {
 		color: white;
 	}
 	.no-cssgradients h2 span, .no-js h2 span {
-		background-color: purple;
+		background-image: none;
+		background-color: #9b72d5;
 		background-color: hsl(265, 64%, 74%);
 	}
 	h3 {
@@ -258,14 +261,17 @@ header {
 		background-image: none;
 	}
 	/*default to flat color on no-js, override here wrap required to trump individual pages*/
-    @supports (background-image: linear-gradient(black, white)) {
+	@supports (background-image: linear-gradient(black, white)) {
 		#wrap h2 span {
 			background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
 		}
-		#wrap h2:after {
+		.no-js h2:after {
 			background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
 			background-color: transparent;
 		}
+	}
+	.cssgradients #wrap h2 span {
+		background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
 	}
 	section img {
 		box-shadow: none;
@@ -329,13 +335,12 @@ header {
 		background-image: url(../images/resource/crop.JPG);
 		background-position: 70% 0;
 		background-blend-mode: multiply;
-        	-o-background-size: 222%;
+		-o-background-size: 222%;
 		-moz-background-size: 222%;
 		-ms-background-size: 222%;
 		-webkit-background-size: 222%;
-        background-size: 222% !important;
+		background-size: 222% !important;
 	}
- 
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-svgfilters header a h1 {
 		background-position: left bottom;
@@ -426,7 +431,6 @@ header {
 	h3, .read-more-trigger:before, .js section img {
 		border-bottom: solid 1px white;
 	}
-
 	.override article p {
 		line-height: 1.55;
 	}
@@ -468,17 +472,14 @@ header {
 		color: hsl(58, 60%, 48%);
 	}
 }
-
 @media only screen and (max-width: 667px) and (orientation: portrait) {
-    
-    header {
+	header {
 		-o-background-size: 300%;
 		-moz-background-size: 300%;
 		-ms-background-size: 300%;
 		-webkit-background-size: 300%;
-        background-size: 300% !important;
+		background-size: 300% !important;
 	}
-    
 }
 @media only screen and (max-width: 580px) {
 	footer {
@@ -488,7 +489,6 @@ header {
 		-webkit-background-size: 280%;
 		background-size: cover;
 	}
-
 }
 @media only screen and (max-width: 480px) {
 	footer {

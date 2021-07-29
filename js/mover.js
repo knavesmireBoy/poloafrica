@@ -47,10 +47,10 @@
 		execDesktop = _.compose(ptL(utils.removeClass, 'invisible'), utils.getNext, getSvgPath),
 		undoMobile = _.compose(ptL(utils.addClass, 'invisible'), getSvgPath),
 		undoDesktop = _.compose(ptL(utils.addClass, 'invisible'), utils.getNext, getSvgPath),
-        removeLabels = function(node){
-            utils.removeNodeOnComplete(utils.getNext(node));
-            utils.removeNodeOnComplete(node);
-        },
+		removeLabels = function (node) {
+			utils.removeNodeOnComplete(utils.getNext(node));
+			utils.removeNodeOnComplete(node);
+		},
 		negater = function (alternators) {
 			//report();
 			/*NOTE netrenderer reports window.width AS ZERO*/
@@ -87,7 +87,7 @@
 						utils.setAttributes(viewBoxDims(str), svg);
 					}
 				}
-			}
+			};
 		},
 		setViewBox = doSvg(document.getElementById('logo')),
 		doMobile = ptL(setViewBox, "0 0 155 130"),
@@ -100,7 +100,7 @@
 					n = i ? 0 : 1,
 					justMobile = ptL(utils.doWhen, n, _.compose(execMobile, undoDesktop, doMobile)),
 					justDesktop = ptL(utils.doWhen, n, _.compose(undoMobile, execDesktop, doDesktop)),
-					onmobile = _.compose(utils.con, ptL(after, el, h), justMobile),
+					onmobile = _.compose(ptL(after, el, h), justMobile),
 					ondesktop = _.compose(ptL(before, article, el), justDesktop),
 					outcomes = [onmobile, ondesktop];
 				if (mq.matches && !n) { //onload
@@ -115,7 +115,7 @@
 	/* float is used for layout on older browsers and requires that the image comes before content in page source order We provide a javascript fallback for browsers that don't support flex(wrap). If javascript is disabled we can use input/labels to toggle display of image and article.
 	 */
 	utils.eventer('click', [], bridge, main).execute();
-    _.each(_.toArray(utils.getByClass('read-more-state')), removeLabels);
+	_.each(_.toArray(utils.getByClass('read-more-state')), removeLabels);
 	dummy[mytarget] = firstlink;
 	bridge(dummy);
 	if (animation && !ie6) {
@@ -126,4 +126,4 @@
 	float_handler();
 	utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
 	return true;
-}(Modernizr.mq('only all'), '(min-width: 667px)'), document.getElementById('tween'));
+}(Modernizr.mq('only all'), '(min-width: 667px)'));
