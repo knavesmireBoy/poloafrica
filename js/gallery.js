@@ -476,7 +476,7 @@
 		advance_validators = [doComp(thrice(doMethod)('match')(/a/i), node_from_target), notExit, notMain],
 		get_back = doComp(thrice(doMethod)('match')(/back$/), text_from_target),
 		doValidate = deferEvery(advance_validators),
-		getDirection = ptL(utils.getBest, get_back, ['back', 'forward']),
+		getDirection = ptL(utils.getBestPred, get_back, ['back', 'forward']),
 		every = doComp(doValidate, doPartial(true, invokeCB)),
 		advanceRouteBridge = ptL(utils.invokeWhen, every, getDirection),
 		doInc = function (n) {
