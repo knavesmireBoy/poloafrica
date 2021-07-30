@@ -18,7 +18,7 @@ fieldset {
 	padding: 0 0 0 2%;
 	border: solid 1px black;
 	border-width: 1px 0 0;
-    position: relative;
+	position: relative;
 }
 label, input, textarea, legend {
 	border-radius: 8px;
@@ -37,16 +37,15 @@ textarea {
 	height: 7em;
 	margin-right: 1.2%;
 }
-
 h2 span {
 	background-image: url(../images/resource/sub_enq.jpg);
 }
 /* reset*/
-form input {
-    position: static;
-    left: 0;
-}
 
+form input {
+	position: static;
+	left: 0;
+}
 form label {
 	font: bold .8em/2 Verdana, Arial, Helvetica, sans-serif;
 	text-align: center;
@@ -57,7 +56,7 @@ form label {
 	/*declaring width w/o height causes label to reduce vertically when clicked???*/
 	height: 2.4em;
 	box-sizing: border-box;
-    color: black;
+	color: black;
 }
 legend, form label {
 	background-color: hsl(60, 40%, 55%);
@@ -68,12 +67,6 @@ textarea, form input, form label {
 	vertical-align: text-bottom;
 }
 
-#response img {
-    width: auto;
-    margin: 0;
-    border-width: 0;
-    box-shadow: none;
-}
 fieldset:last-child {
 	border-width: 0px;
 	padding: .3em 2% 0 2%;
@@ -104,11 +97,12 @@ form label:hover {
 form input:first-of-type, form label:first-of-type {
 	margin-top: 1em;
 }
-label[for="email"]:before, label[for="name"]:before{
-    content: "*";
-    color: white;
+label[for="email"]:before, label[for="name"]:before {
+	content: "*";
+	color: white;
 }
 /*real submit button*/
+
 fieldset:last-child input:last-child, #web {
 	position: absolute;
 	left: -999em;
@@ -138,7 +132,7 @@ fieldset:last-child input:last-child, #web {
 	position: relative;
 	width: 26.8%;
 	border: solid 1px white;
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 /*
 #dogs {
@@ -146,6 +140,7 @@ left: 100%;
 margin-left: -100%;
 }
 */
+
 #cat {
 	/* firefox 48.0.2 required this:*/
 	min-height: 25.75em;
@@ -154,16 +149,16 @@ margin-left: -100%;
 	margin: 0;
 	object-fit: cover;
 	border-radius: 10px;
-    box-shadow: none;
+	box-shadow: none;
 }
-
 #response {
 	background-color: whitesmoke;
 	border-radius: 10px;
 	overflow: hidden;
 }
-
-
+#response>* {
+	margin: 0;
+}
 form, figure, #response>* {
 	display: table-cell;
 	/*crucial*/
@@ -171,13 +166,19 @@ form, figure, #response>* {
 	border-radius: 10px;
 	box-sizing: border-box;
 }
-
 #intro article {
 	margin: 0 38% 0 0;
 }
+
 #response p {
 	margin: 0;
 	color: indigo;
+}
+#response img {
+	width: auto;
+	margin: 0;
+	border-width: 0;
+	box-shadow: none;
 }
 #cath img {
 	position: absolute;
@@ -186,14 +187,8 @@ form, figure, #response>* {
 div#response {
 	display: block;
 }
-#post>article>div {
-	display: table;
-	margin-top: .5em;
-	border-spacing: 1em;
-}
-#response>* {
-	margin: 0;
-}
+
+
 #response p {
 	color: black;
 	text-align: left;
@@ -214,22 +209,20 @@ div#response {
 #response em {
 	font-weight: bold;
 }
-#response p[class="msg"] {
-	border-top: 1px dotted #444;
+#post>article>div {
+	display: table;
 	margin-top: .5em;
-	padding: .4em;
-	font: 1em/1.5 Georgia, sans-serif;
-	max-height: 250px;
-	overflow: auto;
+	border-spacing: 1em;
+}
+#enquiries p:after, #enquiries p:before {
+	content: none;
 }
 #intro article p {
 	margin: 0 0 1.3em 0;
 }
 
-.no-js #intro {
-    display: block;
-}
 /* to prevent crazy heights if big message posted*/
+
 #response figure img {
 	height: 300px;
 	max-height: 360px;
@@ -248,14 +241,27 @@ div#response {
 #dogs:hover {
 	opacity: .9;
 }
-#response div p.msg {
-	margin-bottom: 1em;
+
+.no-js #intro {
+	display: block;
 }
+#response p[class="msg"] {
+	border-top: 1px dotted #444;
+	margin-top: .5em;
+	padding: .4em;
+	font: 1em/1.5 Georgia, sans-serif;
+	max-height: 250px;
+	overflow: auto;
+}
+
 #response p:nth-child(4) {
 	background-color: white;
 	border-width: 0;
 	padding: .3em;
 	border-radius: 8px;
+}
+#response div p.msg {
+	margin-bottom: 1em;
 }
 /*
 non-cms?
@@ -267,7 +273,6 @@ non-cms?
 .no-cssgrid #response .top {
 	display: none;
 }
-
 /* https://matthewjamestaylor.com/blog/equal-height-columns-2-column.htm
 section:nth-child(2) {
 	clear:left;
@@ -301,9 +306,6 @@ section:nth-child(2) {
 }
 */
 
-#enquiries p:after, #enquiries p:before {
-    content: none;
-}
 
 @media only screen {
 	.backgroundsize h2 span {
@@ -311,10 +313,11 @@ section:nth-child(2) {
 	}
 }
 /*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
-@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
-    h2 span {
+
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+	h2 span {
 		background-image: url(../images/resource/sub_enq.png);
-    }
+	}
 }
 @media screen and (max-width: 888px) {
 	form {
@@ -335,10 +338,9 @@ section:nth-child(2) {
 	}
 	#post>article div {
 		display: block;
-        border-spacing: 0;
-         width: auto;
+		border-spacing: 0;
+		width: auto;
 	}
-   
 }
 @media screen and (max-width: 667px) {
 	h2, h2 span {
@@ -370,8 +372,7 @@ section:nth-child(2) {
 		width: 50%;
 		margin-left: 23%;
 		text-align: center;
-	}	
-    
+	}
 	@supports(column-gap: 20px) {
 		#cath {
 			display: grid;
@@ -411,13 +412,11 @@ section:nth-child(2) {
 	fieldset:first-child input {
 		margin: 0;
 	}
-    
-     article.show h3 {
+	article.show h3 {
 		color: white;
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);
 	}
-	
 	fieldset:first-child label, fieldset:first-child input {
 		width: 98%;
 		border-width: 0px;
@@ -425,12 +424,10 @@ section:nth-child(2) {
 		font: normal .875em/normal Arial, sans-serif;
 		color: hsl(60, 50%, 20%);
 	}
-    
-     article.show h3 a {
+	article.show h3 a {
 		color: white;
 		background-color: transparent;
 	}
-    
 	fieldset:first-child label:first-of-type {
 		margin-top: .5em;
 	}
@@ -440,11 +437,10 @@ section:nth-child(2) {
 		display: block;
 		margin: 0 auto;
 		border-radius: 0;
-	}    
-    	li:nth-child(8):hover ul {
+	}
+	li:nth-child(8):hover ul {
 		right: 9999px;
 	}
-        
 	.no-js section>label:nth-of-type(1):before {
 		content: "Donations and sponsorship";
 	}
@@ -464,26 +460,24 @@ section:nth-child(2) {
 		position: absolute;
 		left: -999em;
 	}
-    
-    #post form input {
-        width: 100%;
-        margin: .1em 0;
-    }
-    #post form input[type="submit"] {
-        width: auto;
-        margin: .1em auto;
-        padding: .1em .5em;
-        border-radius: 2px;
-        border-width: 0;
-        background-color: rgba(255, 255, 255, .25);
-    }
-    #post form input[type="submit"]:hover {
-        background-color: rgba(255, 255, 255, .75);
-    }
-    
-    #post>article>div {
-        margin: 1em 0;
-    }
+	#post form input {
+		width: 100%;
+		margin: .1em 0;
+	}
+	#post form input[type="submit"] {
+		width: auto;
+		margin: .1em auto;
+		padding: .1em .5em;
+		border-radius: 2px;
+		border-width: 0;
+		background-color: rgba(255, 255, 255, .25);
+	}
+	#post form input[type="submit"]:hover {
+		background-color: rgba(255, 255, 255, .75);
+	}
+	#post>article>div {
+		margin: 1em 0;
+	}
 	#intro article p {
 		margin: 1em 0 1.3em 0;
 	}
