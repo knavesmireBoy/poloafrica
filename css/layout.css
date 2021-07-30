@@ -212,9 +212,18 @@ section:nth-child(odd) img, #ani, #tween {
 	.no-js path:nth-of-type(2) {
 		visibility: hidden;
 	}
+    
+    .no-js #logo {
+        filter: blur(.5);
+    }
+    
+    .no-js .one {
+        border: solid 1px red;
+    }
 	body {
 		margin: 2%;
 	}
+
 	p {
 		margin: 0;
 	}
