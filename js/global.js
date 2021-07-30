@@ -201,7 +201,6 @@ poloAF.Util = (function () {
 		function alternate(i, n) {
 			return function () {
 				i = (i += 1) % n;
-                console.log(i);
 				return i;
 			};
 		}

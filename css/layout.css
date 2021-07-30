@@ -288,12 +288,12 @@ section:nth-child(odd) img, #ani, #tween {
 		padding-bottom: 7.5rem;
 	}
     
-    /*firefox appears recognize svg as separate document to the html so have put a class of nojs on symbol tag, removed when JS enabled*/
+    /*firefox doesn't recognize the class of .no-js on the html, so we add it to the svg document and remove when JS enabled*/
     
-    .no-js .invisible, .nojs .invisible {
+    .no-js .invisible {
 		visibility: visible;
 	}
-    .no-js path:nth-of-type(2), .nojs path:nth-of-type(2) {
+    .no-js path:nth-of-type(2) {
 		visibility: hidden;
 	}
     

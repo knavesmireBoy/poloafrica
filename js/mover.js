@@ -125,6 +125,6 @@
 	float_handler = ptL(negater, floating_elements(images, getArticle, getHeading, utils.insertBefore, utils.insertAfter));
 	float_handler();
 	utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
-    _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'nojs'))();
+    _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 667px)'));
