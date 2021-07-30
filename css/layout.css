@@ -206,20 +206,6 @@ section:nth-child(odd) img, #ani, #tween {
 	}
 }
 @media screen and (max-width: 667px) {
-	.no-js path.invisible {
-		visibility: visible;
-	}
-	.no-js path:nth-of-type(2) {
-		visibility: hidden;
-	}
-    
-    .no-js #logo {
-        filter: blur(.5);
-    }
-    
-    .no-js .one {
-        border: solid 1px red;
-    }
 	body {
 		margin: 2%;
 	}
@@ -301,6 +287,16 @@ section:nth-child(odd) img, #ani, #tween {
 		margin: 0 0 0 1.75rem;
 		padding-bottom: 7.5rem;
 	}
+    
+    /*firefox appears recognize svg as separate document to the html so have put a class of nojs on symbol tag, removed when JS enabled*/
+    
+    .no-js .invisible, .nojs .invisible {
+		visibility: visible;
+	}
+    .no-js path:nth-of-type(2), .nojs path:nth-of-type(2) {
+		visibility: hidden;
+	}
+    
 	header input:checked+ul {
 		top: 3.6rem;
 		right: 1rem;

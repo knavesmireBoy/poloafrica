@@ -818,6 +818,7 @@
 	svg_handler();
     eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();
     utils.highLighter.perform();
+    _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'nojs'))();
     
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
