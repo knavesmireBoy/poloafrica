@@ -332,9 +332,7 @@ section:nth-child(odd) img, #ani, #tween {
 		position: static;
 		left: 0;
 	}
-	article h3 {
-		background-color: black;
-	}
+
 	#logo {
 		margin: 0 0 -1.5rem 0;
 	}

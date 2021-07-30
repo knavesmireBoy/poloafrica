@@ -311,5 +311,5 @@ if (!window.poloAF) {
 	eventer('resize', [], _.throttle(svg_handler, 99), window).execute();
 	_.each(_.toArray(utils.getByClass('read-more-state')), removeLabels);
 	mobileToggler(dum); //can run in "desktop" environment with no ill effects, toggles display of sections for mobile devices    
-    _.compose(PTL(utils.removeClass, 'nojs'),PTL(utils.findByClass, 'nojs'))();
+    _.compose(PTL(utils.removeClass, 'nojs'), PTL(utils.findByClass, 'nojs'))();
 }(Modernizr.mq('only all'), '(min-width: 667px)'));
