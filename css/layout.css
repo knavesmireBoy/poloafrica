@@ -242,9 +242,7 @@ section:nth-child(odd) img, #ani, #tween {
 	section, section img, .touchevents body {
 		margin: 0;
 	}
-	header h1 {
-		position: absolute;
-	}
+
 	header ul {
 		position: absolute;
 		right: -99rem;
@@ -319,16 +317,19 @@ section:nth-child(odd) img, #ani, #tween {
 		line-height: 4.45;
 		margin-bottom: 3em;
 	}
-	.read-more-trigger:before, .no-js section:first-child, read-more-state:checked~.read-more-trigger:before {
+    
+	.read-more-trigger:before/*, .no-js section:first-child, read-more-state:checked~.read-more-trigger:before*/ {
 		display: block;
 	}
+    
 	/*first section is shown by default?*/
-	header ul ul, .no-js article h3, .read-more-state~article, .read-more-state~img, section:first-child .read-more-state:checked~article, section:first-child .read-more-state:checked~img, .js article>* {
+    /*in no-js img, "labels" and articles are siblings in js all other elements are children of article*/
+	header ul ul, .no-js h3, .read-more-state~article, .read-more-state~img, section:first-child .read-more-state:checked~article, section:first-child .read-more-state:checked~img, .js article>* {
 		position: absolute;
-		top: 0px;
+		top: 0;
 		left: -999em;
 	}
-	.js article h3, section:first-child .read-more-state~article, section:first-child .read-more-state~img, .read-more-state:checked~article, .read-more-state:checked~img, section.show article>* {
+	.js h3, section:first-child .read-more-state~article, section:first-child .read-more-state~img, .read-more-state:checked~article, .read-more-state:checked~img, section.show article>* {
 		position: static;
 		left: 0;
 	}

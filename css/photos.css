@@ -456,7 +456,7 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paus
 		border-color: silver;
 	}
 	.touchevents #wrap.inplay+footer {
-		background: url(../images/resource/resource/sil_bg.png) no-repeat 60% top;
+		background: url(../images/resource/sil_bg.png) no-repeat 60% top;
 		background-size: cover;
 	}
 }
