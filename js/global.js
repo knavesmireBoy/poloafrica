@@ -277,6 +277,7 @@ poloAF.Util = (function () {
 		}
 		node = node.nodeType === 1 ? node : getNextElement(node);
 		var res = node && node.nodeName.match(reg);
+        console.log(res);
 		if (!res) {
 			node = node && getNextElement(node[dir]);
 			return node && getTargetNode(node, reg, dir);
@@ -820,7 +821,8 @@ poloAF.Util = (function () {
 		function bestColl(fun, coll, arg) {
 			fun = arrayCheck(fun);
 			coll = _.toArray(coll);
-			if (arg) {
+            //coll may not consist of functions, could be primitives
+			if (arg && _.isFunction(coll[0])) {
 				arg = getResult(arg);
 				coll = _.map(coll, function (ptl) {
 					return _.partial(ptl, arg);
@@ -1348,6 +1350,7 @@ poloAF.Util = (function () {
 		report: function (arg) {
 			var txt = existy(arg) ? arg : document.documentElement.className;
 			document.getElementsByTagName('h2')[0].innerHTML = txt;
+            return arg;
 		}
 	}; //end
 }());
