@@ -479,7 +479,7 @@
 		advance_validators = [utils.always(true), notExit, notMain],
 		get_back = doComp(thrice(doMethod)('match')(/back$/), doGet('id'), utils.con, getLink, getTarget),
 		doValidate = deferEvery(advance_validators),
-		getDirection = _.compose(utils.report, ptL(utils.getBestPred, get_back, ['back', 'forward'])),
+		getDirection = ptL(utils.getBestPred, get_back, ['back', 'forward']),
 		every = doComp(doValidate, doPartial(true, invokeCB)),
 		advanceRouteBridge = ptL(utils.invokeWhen, every, getDirection),
 		doInc = function (n) {
@@ -537,7 +537,7 @@
 				/* the class of static should be removed from #control on entering slideshow but should run only once PER slideshow session a fresh instance is set up on exiting slideshow */
 				execute: _.once(undostatic),
 				//undo: ptL(klasAdd, 'static', $$('controls')),
-				undo: function(){},
+				undo: function () {}
 			};
 		},
 		in_play = thricedefer(doMethod)('findByClass')('inplay')(utils),
@@ -823,7 +823,6 @@
     eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();
     utils.highLighter.perform();
     _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
-    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
 	if (path) {
