@@ -320,6 +320,7 @@
 		swapping = ptL(utils.findByClass, 'swap'),
 		exitshowtime = doComp(ptL(klasAdd, 'gallery', getThumbs), exitswap, ptL(klasRem, 'showtime', utils.getBody()), exit_inplay, unplayin),
 		undostatic = ptL(klasRem, 'static', $$('controls')),
+		dostatic = ptL(klasAdd, 'static', $$('controls')),
 		doOrient = doComp(applyArg, ptL(utils.getBest, queryOrientation, [setPortrait, unsetPortrait])),
 		galleryCount = doComp(twice(equals)(12), getLength),
 		number_reg = new RegExp('[^\\d]+(\\d+)[^\\d]+'),
@@ -533,7 +534,8 @@
 			return {
 				/* the class of static should be removed from #control on entering slideshow but should run only once PER slideshow session a fresh instance is set up on exiting slideshow */
 				execute: _.once(undostatic),
-				undo: function () {}
+				//undo: ptL(klasAdd, 'static', $$('controls')),
+				undo: function(){},
 			};
 		},
 		in_play = thricedefer(doMethod)('findByClass')('inplay')(utils),
@@ -713,7 +715,7 @@
 				do_invoke_player = doComp(ptL(eventing, 'click', event_actions.slice(0, 2), invoke_player), getThumbs),
 				relocate = ptL(lazyVal, null, $locate, 'execute'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
-				farewell = [unplayin, exit_inplay, exitswap, doUndoToggler, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
+				farewell = [dostatic, unplayin, exit_inplay, exitswap, doUndoToggler, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
 				doExitSlideshow = ptL(utils.doWhen, $$('slide'), doComp(get_play_iterator, defer_once(clear)())),
                 next_driver = deferEach([doExitSlideshow, thricedefer(loadImageBridge)(doOrient)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([doExitSlideshow, thricedefer(loadImageBridge)(doOrient)('base')(prevcaller)].concat(farewell))(getResult),
@@ -779,7 +781,6 @@
 				aButton = anCr($('controls')),
 				close_cb = ptL(doComp(utils.getDomParent(utils.getNodeByTag('main')), thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(getThumbs, main)), 'a'),
 				dombuttons = _.map(buttons, doComp(thrice(doMapLateVal)('id'), aButton, thrice(doMethod)('slice')(-6))),
-				dostatic = ptL(klasAdd, 'static', $$('controls')),
 				chain = factory(),
 				$controls = eventing('click', event_actions.slice(0, 1), function (e) {
 					var str = text_from_target(e),
@@ -791,7 +792,8 @@
 					}
 				}, $('controls')),
 				$controls_undostat = eventing('mouseover', [], undostatic, utils.getByTag('footer', document)[0]),
-				$controls_dostat = eventing('mouseover', [], dostatic, $('controls')),
+				$controls_dostat = eventing('mouseover', [], dostatic, getThumbs),
+				//$controls_dostat = eventing('mouseover', [], dostatic, $('controls')),
 				$exit = eventing('click', event_actions.slice(0, 1), function (e) {
 					var go_undo = thrice(doMethod)('undo')();
 					if (e[mytarget].id === 'exit') {

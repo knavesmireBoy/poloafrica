@@ -116,7 +116,6 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 	left: auto;
 }
 .showtime footer {
-	margin: -4.1em auto 0;
 	margin: -3.1em auto 0;
 }
 #photos {
@@ -428,13 +427,9 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paus
 	}
 	.touchevents #controls {
 		font-size: 1.3em;
+        margin: .2em 0 0;
 	}
-	.touchevents #controls.static {
-		top: -3.3em;
-	}
-	.touchevents .inplay #controls {
-		top: .2em;
-	}
+    
 	/*#photos specificity*/
 	.touchevents #photos a.pagenav {
 		width: 1.6em;
@@ -459,6 +454,7 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paus
 		background: url(../images/resource/sil_bg.png) no-repeat 60% top;
 		background-size: cover;
 	}
+
 }
 /*667*/
 
