@@ -277,7 +277,6 @@ poloAF.Util = (function () {
 		}
 		node = node.nodeType === 1 ? node : getNextElement(node);
 		var res = node && node.nodeName.match(reg);
-        console.log(res);
 		if (!res) {
 			node = node && getNextElement(node[dir]);
 			return node && getTargetNode(node, reg, dir);
