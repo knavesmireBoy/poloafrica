@@ -88,6 +88,11 @@
 	function add(a, b) {
 		return a + b;
 	}
+    
+    function multiply(a, b) {
+		return a * b;
+	}
+
 
 	function modulo(n, i) {
 		return i % n;
@@ -812,6 +817,7 @@
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
 			_.each([$controls, $exit, $locate, $controls_undostat, $controls_dostat], go_execute);
 			$setup.undo();
+			$nav.undo();
 		};
 	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
 	$setup.execute();
@@ -822,7 +828,8 @@
 	svg_handler();
     eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();
     utils.highLighter.perform();
-    _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
+    _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();      
+    
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
 	if (path) {

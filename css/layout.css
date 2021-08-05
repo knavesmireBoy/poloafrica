@@ -126,6 +126,9 @@ section:nth-child(odd) img, #ani, #tween {
 	overflow: hidden;
 	position: relative;
 }
+#main_nav {
+    position: relative;
+}
 #footer_girl {
 	margin: 0 0 .75em 2%;
 	width: 73%;
