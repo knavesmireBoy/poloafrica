@@ -8,6 +8,16 @@ if (!window.poloAF) {
 	window.poloAF = {};
 }
 poloAF.Util = (function () {
+    
+    function reduceFunctions(memo, f){
+           return f = f(memo);
+   }
+   function reduceMethods(memo, method){
+           return memo = memo[method]();
+   }
+   function reduceSubProp(o, sub){
+           return o = o[sub];
+   }
 	"use strict";
 
 	function spreadify(fn, fnThis) {
@@ -399,6 +409,7 @@ poloAF.Util = (function () {
 		if (el) {
 			if (typeof el.classList === 'undefined' || _.isArray(el)) {
 				el = _.isArray(el) ? el[0] : el;
+                
 				return poloAF.ClassList(el);
 			}
 			return el.classList;
@@ -790,12 +801,23 @@ poloAF.Util = (function () {
 		function arrayCheck(fun) {
 			return _.isArray(fun) ? fun[0] : fun;
 		}
+        /*
+        function mapArg(arg, coll){
+            if (arg && _.isFunction(coll[0])) {
+				arg = getResult(arg);
+				coll = _.map(coll, function (ptl) {
+					return _.partial(ptl, arg);
+				});
+			}
+            return {arg: arg, coll: coll};
+        }
+        */
 		//note a function that ignores any state of champ or contender will return the first element if true and last if false
 		function best(fun, coll, arg) {
 			//console.log(coll[0], arg)
 			fun = arrayCheck(fun);
 			coll = _.toArray(coll);
-			if (arg) {
+			if (arg && _.isFunction(coll[0])) {
 				arg = getResult(arg);
 				coll = _.map(coll, function (ptl) {
 					return _.partial(ptl, arg);
@@ -1155,6 +1177,7 @@ poloAF.Util = (function () {
 							getTerm = _.compose(curryFactory(2)(getter)('id'), ptL(byIndex, 0), getBody),
 							links = _.compose(getLinks, poloAF.Util.getZero, curryFactory(3)(simpleInvoke)('nav')('getElementsByTagName'))(document),
 							found = ptL(_.filter, _.toArray(links), function (link) {
+                                //poloAF.Util.report(link);
 								return new RegExp(link.innerHTML.replace(/ /gi, '_'), 'i').test(getTerm(document));
 							});
 						_.compose(ptL(poloAF.Util.addClass, 'current'), ptL(byIndex, 0), found)();
@@ -1234,6 +1257,10 @@ poloAF.Util = (function () {
 				});
 			};
 		},
+        reducer: function(memo, f){
+            //calls the each function with the result of the previous function COOL
+            return f = f(memo);
+        },
 		removeClass: _.partial(setFromArray, always(true), 'remove'),
 		removeNodeOnComplete: removeNodeOnComplete,
 		render: render,

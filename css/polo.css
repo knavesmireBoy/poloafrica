@@ -67,6 +67,6 @@ h2 span {
 		content: "Your polo day";
 	}
     #polo li:nth-child(6):hover ul {
-        right: 999px;
+        right: 9999px;
     }
 }

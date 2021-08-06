@@ -207,8 +207,12 @@ restrict animation for proper grid support as we are using grid positioning to o
 
 .no-cssgrid.flexbox #response figure, .no-cssgrid.flexboxtweener #response figure, .no-cssgrid.flexboxlegacy #response figure {
     margin: 0 .5em;
-    width: auto;
+
+}
+.no-cssgrid.flexbox #response figure img, .no-cssgrid.flexboxtweener #response figure img, .no-cssgrid.flexboxlegacy #response figure img{
+    width: 100%;
 }
 
 .no-cssgrid.flexbox #response div, .no-cssgrid.flexboxtweener #response div, .no-cssgrid.flexboxlegacy #response div {
+    flex: 2 1 auto;
 }

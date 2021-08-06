@@ -17,6 +17,11 @@ if (!window.poloAF) {
 			['height', a[1]]
 		];
 	}
+    
+    function spaceCount(str){
+       return str.trim().split(" ").length - 1;
+
+    }
 
 	function getResult(arg) {
 		return _.isFunction(arg) ? arg() : arg;
@@ -47,6 +52,10 @@ if (!window.poloAF) {
 	function isEqual(x, y) {
 		return getResult(x) === getResult(y);
 	}
+    
+    function gtThan(x, y) {
+		return getResult(x) > getResult(y);
+	}
 
 	function cat() {
 		var head = _.first(arguments);
@@ -70,7 +79,7 @@ if (!window.poloAF) {
 		var validators = _.toArray(arguments);
 		return function (v, k) {
 			var errors = mapcat(function (isValid) {
-				return isValid(k, v) ? [] : [k, isValid.message];
+				return isValid(k, v) ? [] : [k, getResult(isValid.message)];
 				//return isValid(k, v) ? [] : [new Message(k, v)];
 			}, validators);
 			return errors;
@@ -91,6 +100,8 @@ if (!window.poloAF) {
 		doThrice = utils.curryFactory(3),
 		doAlt = utils.doAlternate(),
 		doMap = doTwice(utils.doMap),
+        gtThanOne = doTwice(gtThan)(1),
+        gtThanTwo = doTwice(gtThan)(2),
 		event_actions = ['preventDefault', 'stopPropagation', 'stopImmediatePropagation'],
 		eventer = utils.eventer,
 		headingmatch = doThrice(invokemethod)('match')(/h3/i),
@@ -131,7 +142,7 @@ if (!window.poloAF) {
 		doSVGview = function () {
 			var mq = window.matchMedia("(max-width: 667px)"),
 				setViewBox = doSvg(document.getElementById('logo')),
-				doMobile = COMP(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 125")),
+				doMobile = COMP(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 130")),
 				doDesktop = COMP(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
 			return function () {
 				if (mq.matches) { //onload
@@ -175,16 +186,29 @@ if (!window.poloAF) {
 			}
 		},
 		notEmpty = _.negate(_.isEmpty),
-		preCon = function (pre, post) {
+        preCon = function (pre, post) {
 			return function (k, v) {
-				return pre(k) ? post(v) : true;
+                if(!pre(k)){
+                    return true;
+                }
+                /* we may need to determine the algorithm on the fly for instance a name could consist of two parts or three parts and each part must conform to certain rules we use utils.getBest to partially apply the argument (input string) to the predicate and action functions so post(v) could be a value or a function hence getResult*/
+                return getResult(post(v));
 			};
 		},
 		email_address = function (v) {
 			return v.match(/^[\w][\w.\-]+@[\w][\w.\-]+\.[A-Za-z]{2,6}$/);
 		},
 		form_name = function (v) {
-			return v.match(/\S+\s\S{2,}/);
+			return v.match(/[a-zA-Z]{2,}\s[a-zA-Z]{2,}/);
+		},
+        form_name_three = function (v) {
+			return v.match(/[a-zA-Z]{2,}\s[a-zA-Z]+\s[a-zA-Z]{2,}/);
+		},
+        form_name_strict = function (v) {
+			return v.match(/[A-Z][a-zA-Z]+\s[A-Z][a-zA-Z]+/);
+		},
+        form_name_strict_three = function (v) {
+			return v.match(/[A-Z][a-zA-Z]+\s[A-Z][a-z]*\s[A-Z][a-zA-Z]{1,}/);
 		},
 		comment_name = function (v) {
 			return !(v.match(/Please use this area \w*/i));
@@ -193,10 +217,10 @@ if (!window.poloAF) {
 			return !new RegExp('<[^>]+>').test(v);
 		},
 		string_min = function (v) {
-			return v.length > 15;
+			return v.trim().length > 15;
 		},
 		string_max = function (v) {
-			return v.length < 1000;
+			return v.trim().length < 1000;
 		},
 		clear = function () { //listener on textarea
 			if (!utils.findByClass('warning')) {
@@ -205,16 +229,21 @@ if (!window.poloAF) {
 				undoWarning(this);
 			}
 		},
+        checkSpacesStrict = PTL(utils.getBest, COMP(gtThanOne, spaceCount), [form_name_strict_three, form_name_strict]),
+        checkSpaces = PTL(utils.getBest, COMP(gtThanOne, spaceCount), [form_name_three, form_name]),
 		//Use this area for comments or questions
 		isSuspect = utils.validator('suspicious angled brackets found', preCon(utils.always(true), is_suspect)),
 		isNotEmptyComment = utils.validator('this is a required field', preCon(isComment, notEmpty)),
 		isNewMessage = utils.validator('Please write your own message', preCon(isComment, comment_name)),
 		isSmallMessage = utils.validator('Message is very small, please elaborate', preCon(isComment, string_min)),
 		isLargeMessage = utils.validator('Word count of your message is too great. Reduce word count or please email instead', preCon(isComment, string_max)),
-		isProperName = utils.validator('please supply a first name and a last name', preCon(isName, form_name)),
+        atLeastFourWords = utils.validator('message shoud consist of at least four words', preCon(isComment, COMP(gtThanTwo, spaceCount))),
+		isProperName = utils.validator('Expect at least 2 characters for first and last names', preCon(isName, checkSpaces)),
+		isProperNameStrict = utils.validator('please Capitalise your individual name parts', preCon(isName, checkSpacesStrict)),
 		isEmptyName = utils.validator('this is a required field', preCon(isName, notEmpty)),
 		isEmptyEmail = utils.validator('this is a required field', preCon(isEmail, notEmpty)),
 		isEmailAddress = utils.validator('please supply an email address', preCon(isEmail, email_address)),
+		
 		doAlert = (function (el) {
 			var orig = el.innerHTML,
 				labels = _.filter(el.parentNode.childNodes, COMP(isLabel, getNodeName)),
@@ -225,6 +254,7 @@ if (!window.poloAF) {
 				el.innerHTML = orig;
 				_.each(labels, undoWarning);
 				undoWarning(utils.$('warning'));
+                console.log(msgs[0], msgs[1]);
 				if (msgs) {
 					el.innerHTML = msgs[0][1];
 					doWarning(el.parentNode.parentNode);
@@ -263,7 +293,7 @@ if (!window.poloAF) {
 			var $tgt = PTL(utils.doMap, myform.parentNode, [
 					['id', 'response']
 				]),
-				obj = utils.serializeObject(e.target),
+				obj = utils.serializeObject(e[tgt]),
 				thx = doMap([
 					['txt', 'Thankyou for your enquiry']
 				]),
@@ -282,9 +312,9 @@ if (!window.poloAF) {
 				]))],
 				thanker = [_.identity, levelONE(thx)],
 				response = reducer(neue_nodes),
-				checker = validateForm(isSuspect, isEmptyName, isProperName, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage),
+				checker = validateForm(isSuspect, isEmptyName, isProperName, isProperNameStrict, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage, atLeastFourWords),
 				res = _.filter(_.map(obj, checker), function (ar) {
-					return notEmpty(ar);
+                    return notEmpty(ar);
 				}),
 				config = [fig1, thanker, sender, messenger, fig2];
 			if (_.isEmpty(res)) {

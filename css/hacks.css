@@ -11,11 +11,8 @@ footer {
     _background-image: url("../images/resource/footer_green_ko8.png");
 }
 
-
-#wrap header>a {
-    width: 100%;
-    border: solid 1px red !important;
-    top: 0;
+main {
+	padding: 0 1em 10.1em;
 }
 
 main ul {
@@ -32,9 +29,9 @@ section img {
 }
 
  .no-svgfilters  #wrap header a {
-     text-align: left;
      margin: 0;
      width: auto;
+     top: 0;
     }
 
 main > a {
@@ -43,11 +40,14 @@ main > a {
     *display: inline;
 	zoom: 1;
 }
+
 .no-svgfilters header a h1 {
-    _text-indent: -9999px;
+    line-height: 2.7;
     margin: 1.5em 0 1.5em .5em;
+    background-image: url("../images/resource/logo_desktop.png");
     _background-image: url("../images/resource/logo_desktop8.png");
     background-position: left top;
+    background-repeat: no-repeat;
 }
 
 
@@ -94,6 +94,10 @@ section.odd img {
 a:link, a:visited, a:hover, a:active, .no-touchevents a:hover h3, .no-touchevents a:active h3 {
 	*color: #990;
 	/*color: hsl(58, 60%, 40%);*/
+}
+
+h3 {
+    width: auto;/*without this article will not float*/
 }
 
 header ul a:link, header ul a:visited {

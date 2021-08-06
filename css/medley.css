@@ -278,7 +278,7 @@ section:nth-child(5) p+p:before {
         border-width: 0;
 	}
 	
-	li:nth-child(7):hover ul {
+	#medley li:nth-child(7):hover ul {
 		right: 9999px;
 	}
 	.no-js section:nth-child(1) .read-more-trigger:before {

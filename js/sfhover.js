@@ -2,6 +2,7 @@
 /*global window: false */
 /*global poloAF: false */
 /*global document: false */
+/*global Modernizr: false */
 /*global _: false */
 (function (paths) {
 	"use strict";
@@ -16,11 +17,11 @@
 	}
 
 	function isOddCb(el, i) {
-		return i % 2 === 0;
+		return !(i % 2);
 	}
 
 	function invoke(f) {
-		return f.apply(null, arguments);
+		return f.apply(null, _.rest(arguments));
 	}
 
 	function doCallbacks(cb, coll, p) {
@@ -38,7 +39,7 @@
 		gal = utils.$('footer_girl'),
 		gal_img = gal.getElementsByTagName("img")[0],
 		ie6 = utils.getComputedStyle(gal_img, 'color') === 'red' ? true : false,
-		doOdd = doEach(utils.getByTag('section'))(ptL(utils.invokeWhen, ptL(utils.addClass, 'odd'), ptL(invoke, isOddCb))),
+		doOdd = doEach(utils.getByTag('section'))(ptL(utils.invokeWhen, ptL(invoke, isOddCb), ptL(utils.addClass, 'odd'))),
 		setId = function (el, id) {
 			utils.setAttributes({
 				id: id
@@ -61,8 +62,9 @@
 		unDoHover = _.compose(ptL(utils.removeClass, 'sfhover'), getTarget);
 	utils.eventer('mouseover', [], doHover, nav1).execute();
 	utils.eventer('mouseout', [], unDoHover, nav1).execute();
-	utils.highLighter.perform();
-	utils.doWhen(!window.addEventListener, doOdd);
+	//utils.highLighter.perform();
+	utils.doWhen(!Modernizr.nthchild, doOdd);
 	utils.doWhen(ie6, ptL(fallback, gal_img, ptL(utils.invokeOnFirst, setIdBridge), _.compose(ptL(setter, {}, 'src'), sub)));
 	_.compose(doTwice(setId)('mark'), _.last, getLinks)();
+  //utils.report();
 }(["../images/resource/footer_girl8.png", "../images/resource/instagram.png", "../images/resource/facebook8.png"]));

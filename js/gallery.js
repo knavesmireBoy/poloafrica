@@ -88,11 +88,6 @@
 	function add(a, b) {
 		return a + b;
 	}
-    
-    function multiply(a, b) {
-		return a * b;
-	}
-
 
 	function modulo(n, i) {
 		return i % n;
@@ -189,7 +184,7 @@
         doSVGview = function () {
             var mq = window.matchMedia("(max-width: 667px)"),
                 setViewBox = doSvg(document.getElementById('logo')),
-                doMobile = _.compose(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 125")),
+                doMobile = _.compose(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 130")),
                 doDesktop = _.compose(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
             return function () {
                 if (mq.matches) { //onload
@@ -482,7 +477,7 @@
 		notExit = _.negate(doComp(ptL(equals, 'exit'), id_from_target)),
 		//advance_validators = [doComp(thrice(doMethod)('match')(/a/i), node_from_target), notExit, notMain],
 		advance_validators = [utils.always(true), notExit, notMain],
-		get_back = doComp(thrice(doMethod)('match')(/back$/), doGet('id'), utils.con, getLink, getTarget),
+		get_back = doComp(thrice(doMethod)('match')(/back$/), doGet('id'), getLink, getTarget),
 		doValidate = deferEvery(advance_validators),
 		getDirection = ptL(utils.getBestPred, get_back, ['back', 'forward']),
 		every = doComp(doValidate, doPartial(true, invokeCB)),
@@ -708,6 +703,7 @@
 		go_set = thrice(lazyVal)('set')($toggler),
         doUndoToggler = ptL(utils.doWhen, $$('slide'), thricedefer(doMethod)('undo')()($toggler)),
 		doExitShow = thricedefer(lazyVal)('findIndex')(pages)(getBaseSrc),
+        doExitSlideshow = ptL(utils.doWhen, $$('slide'), doComp(get_play_iterator, defer_once(clear)())),
 		factory = function () {
 			var remPause = doComp(utils.removeNodeOnComplete, $$('paused')),
 				remSlide = doComp(utils.removeNodeOnComplete, $$('slide')),
@@ -723,7 +719,6 @@
 				relocate = ptL(lazyVal, null, $locate, 'execute'),
 				doReLocate = ptL(utils.doWhen, $$('base'), relocate),
 				farewell = [dostatic, unplayin, exit_inplay, exitswap, doUndoToggler, doReLocate, doExitShow, doComp(doOrient, $$('base')), deferEach([remPause, remSlide])(getResult)],
-				doExitSlideshow = ptL(utils.doWhen, $$('slide'), doComp(get_play_iterator, defer_once(clear)())),
                 next_driver = deferEach([doExitSlideshow, thricedefer(loadImageBridge)(doOrient)('base')(nextcaller)].concat(farewell))(getResult),
 				prev_driver = deferEach([doExitSlideshow, thricedefer(loadImageBridge)(doOrient)('base')(prevcaller)].concat(farewell))(getResult),
 				toggler = function () {
@@ -807,17 +802,19 @@
 						poloAF.LoopIterator.cross_page = false;
 						chain = chain.validate();
 						exitshowtime();
+                       doExitSlideshow();
 						unsetPortrait();
 						_.each([$recur, $locate, $toggler], go_undo);
 						_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
 						$setup.execute();
+						$nav.execute();
 					}
 				}, close_cb);
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
 			_.each([$controls, $exit, $locate, $controls_undostat, $controls_dostat], go_execute);
+            $nav.undo();
 			$setup.undo();
-			$nav.undo();
 		};
 	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
 	$setup.execute();
@@ -828,8 +825,8 @@
 	svg_handler();
     eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();
     utils.highLighter.perform();
-    _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();      
-    
+    _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
+
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
 	if (path) {

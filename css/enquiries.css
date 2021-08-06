@@ -37,6 +37,10 @@ textarea {
 	height: 7em;
 	margin-right: 1.2%;
 }
+/*https://stackoverflow.com/questions/2920306/google-chrome-form-autofill-and-its-yellow-background*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 999px white inset !important;
+}
 h2 span {
 	background-image: url(../images/resource/sub_enq.jpg);
 }
@@ -72,12 +76,12 @@ fieldset:last-child {
 	padding: .3em 2% 0 2%;
 }
 .warning legend, label.warning {
-	color: crimson;
-	background-color: indigo;
+	color: rgb(244, 244, 225);
+	background-color: hsl(20, 76%, 20%);
 }
 textarea.warning {
 	color: crimson;
-	background-color: lightsalmon;
+	background-color: rgb(255, 255, 200);
 }
 label.warning+input {
 	color: crimson;
@@ -397,11 +401,28 @@ section:nth-child(2) {
 			color: white;
 		}
 	}
-	fieldset:first-child label {
+	fieldset:first-child label, fieldset:first-child legend {
 		text-transform: uppercase;
 	}
 	fieldset:first-child legend {
-		display: none;
+		position: absolute;
+        left: -999px;
+	}
+    
+    .warning fieldset:first-child legend {
+		position: relative;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        background-color: transparent;
+        background-color: hsl(60, 50%, 20%);
+        text-align: left;
+        padding: .5em;
+        color: hsl(60, 33.33%,70%);
+        color: yellow;
+        font-weight: bold;
+        box-sizing: border-box;
+        
 	}
 	fieldset:first-child label {
 		background: none;
@@ -417,13 +438,20 @@ section:nth-child(2) {
 		text-shadow: 1px 1px 1px black;
 		background-color: hsl(60, 40%, 64%);
 	}
-	fieldset:first-child label, fieldset:first-child input {
+	fieldset:first-child label, fieldset:first-child input, fieldset:first-child legend {
 		width: 98%;
 		border-width: 0px;
 		text-align: left;
 		font: normal .875em/normal Arial, sans-serif;
 		color: hsl(60, 50%, 20%);
 	}
+    fieldset:first-child label.warning {
+        font-weight: bold;
+        color: black;
+    }
+      fieldset:first-child label.warning + input{
+        background-color: rgb(233, 233, 200);
+    }
 	article.show h3 a {
 		color: white;
 		background-color: transparent;
@@ -438,7 +466,7 @@ section:nth-child(2) {
 		margin: 0 auto;
 		border-radius: 0;
 	}
-	li:nth-child(8):hover ul {
+	#enquiries li:nth-child(8):hover ul {
 		right: 9999px;
 	}
 	.no-js section>label:nth-of-type(1):before {
