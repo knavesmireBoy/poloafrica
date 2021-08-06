@@ -1,0 +1,129 @@
+@import "flex_mod.css";
+
+h2 span {
+	background: white 0% 50% url(../images/resource/sub_home.jpg) no-repeat;
+}
+
+#ani, #tween {
+	width: 18em;
+	height: auto;
+	padding: 2em;
+	margin: -3em -2em 0 0;
+    position: relative;
+    /*
+    z-index: -2;
+    z-index: 2;
+    */
+}
+
+#tween {
+    flex: 1 1 1%;
+    border-width: 0;
+    box-shadow: none;
+}
+
+#ani img {
+	width: 100%;
+	float: left;
+    display: inline;
+	box-shadow: none;
+	border-width: 0;
+	margin: 0;
+}
+
+#ani.paused {
+    filter: saturate(0);
+}
+
+.js #tween, .no-js #flower {
+	display: none;
+}
+.no-js #tween {
+	display: block;
+    float: right;
+}
+
+.js #flower {
+	display: block;
+}
+
+#ani img+img {
+	margin: 0 0 0 -100%;
+}
+/* test float
+#wrap p {
+    font-size: 1.3em;
+    color: red;
+}
+*/
+@media only screen {
+    .backgroundsize h2 span {
+        background-image: url(../images/resource/sub_home.png);
+    }
+}
+
+/*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
+@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
+    h2 span {
+		background-image: url(../images/resource/sub_home.png);
+    }
+}
+
+@media screen and (max-width: 800px) {
+	#ani {
+		width: 14em;
+		padding: 1.6em 1.6em 0;
+	}
+}
+@media screen and (max-width: 667px) {
+    
+    section {
+        display: block;
+    }
+
+	h2, h2 span {
+		background: none;
+	}
+    
+    h2 {
+        padding-left: calc(14px + (12) * (100vw - 320px) / (667 - 320));
+    }
+
+	.no-js section:nth-child(1) .read-more-trigger:before {
+		content: "The Poloafrica Development Trust";
+	}
+	.no-js section:nth-child(2) .read-more-trigger:before {
+		content: "The Uitgedacht experience";
+	}
+	.no-js section:nth-child(3) .read-more-trigger:before {
+		content: "The Poloafrica / Polo 150 tour to England";
+	}
+	.no-js section:nth-child(3) {
+		display: block;
+	}
+    	#ani, #tween {
+		width: 9em;
+		height: auto;
+		margin: 1em 0 0;
+		padding: .5em;
+	}
+     #ani {
+         position: absolute;
+         left: -999em;
+    }
+	section.show #ani, .read-more-state:checked~#ani, section.show #tween {
+		position: relative;
+		left: auto;
+	}
+
+}
+@media only screen and (max-width: 510px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
+	section:last-child h3, section:last-child label {
+		line-height: normal;
+	}
+}
+@media only screen and (max-width: 425px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
+	section:first-child h3, section:first-child label {
+		line-height: normal;
+	}
+}

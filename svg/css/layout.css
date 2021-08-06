@@ -1,0 +1,517 @@
+body {
+	margin: 2% 0 0;
+}
+html, body {
+	height: 100%;
+}
+img {
+	display: block;
+}
+header {
+	position: relative;
+	width: 100%;
+}
+main {
+	overflow: hidden;
+	margin: .2em 0 0em;
+	padding: 0 2em 10.1em;
+}
+section {
+	margin: 3em 0 0;
+}
+footer {
+	width: 100%;
+	margin: -10.1em auto 0;
+}
+header>a {
+	overflow: hidden;
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	width: 56%;
+    margin: 0 0 9em 1em;
+	top: 5em;
+    min-width: 40em;
+}
+
+footer div {
+	display: inline-block;
+	vertical-align: bottom;
+	position: relative;
+}
+section input, nav input {
+	cursor: pointer;
+	position: absolute;
+	left: -9999px;
+}
+section:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+section img {
+	margin: .5em 2% 1em 0;
+	float: left;
+	width: 40%;
+}
+/*
+.no-js header > a {
+    margin: 0 0 7em .5em;
+    width: 56%;
+}
+
+.no-js #logo {
+    position: absolute;
+    left: -999em;
+}
+*/
+
+
+header ul {
+	display: table;
+	width: 100%;
+}
+header li {
+	display: table-cell;
+}
+footer>a {
+	display: block;
+}
+header ul ul, h1 img {
+	width: auto;
+	position: absolute;
+	left: -9999px;
+}
+footer div img {
+	width: 100%;
+}
+.invisible {
+	visibility: hidden;
+}
+section:first-child {
+	margin: 2em 0 0 0;
+}
+/* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
+
+section img.hide {
+	display: none;
+}
+section.ptrt img {
+	float: right;
+	width: 18%;
+}
+
+.inlinesvg header > a {
+    margin: 0 0 0 1em;
+    top: 0;
+}
+
+.no-js #logo {
+    position: absolute;
+    left: -9999px;
+}
+
+nav li.current:hover ul, nav li.current.sfhover ul {
+	left: 0;
+}
+section:nth-child(odd) img, #ani, #tween {
+	margin: 0 0 1em 2em;
+	float: right;
+	overflow: hidden;
+}
+#wrap {
+	margin: 0 auto;
+	min-height: 100%;
+	overflow: hidden;
+	position: relative;
+}
+#main_nav {
+	position: relative;
+	/*stacking*/
+}
+#footer_girl {
+	margin: 0 0 .75em 2%;
+	width: 73%;
+}
+#fb {
+	width: 8em;
+	margin: 0 0 .75em -9em;
+	left: 25%;
+}
+#logo {
+	box-sizing: border-box;
+	width: 100%;
+}
+#footer_girl a {
+	width: auto;
+	height: auto;
+	display: inline-block;
+	white-space: nowrap;
+	position: relative;
+}
+#nav a, #fb a {
+	display: block;
+}
+.no-inlinesvg #logo {
+	position: absolute;
+	left: -9999px;
+}
+#footer_girl a:first-child {
+	width: 12em;
+	margin: 0 -4em 0 0;
+	bottom: -2em;
+}
+#home li:nth-child(1):hover ul, #trust li:nth-child(2):hover ul, #place li:nth-child(4):hover ul, #stay li:nth-child(5):hover ul, #polo li:nth-child(6):hover ul {
+	left: auto;
+}
+#medley li:nth-child(7):hover ul, #enquiries li:nth-child(8):hover ul {
+	left: auto;
+	right: 0px;
+}
+
+
+@media screen and (min-width: 1281px) {
+	#wrap, footer {
+		max-width: 100em;
+	}
+}
+@media screen and (max-width: 1280px) {
+	body {
+		margin: 0%;
+	}
+}
+@media screen and (min-width: 1024px) {
+  
+	header>a {
+		width: 100%;
+		margin: 0 auto 16em;
+	}
+    .inlinesvg header {
+        background-size: cover;
+    }
+    
+    .inlinesvg header>a {
+		width: 56%;
+        margin: 0 auto 9em;
+	}
+    
+}
+@media screen and (min-width: 1024px) and (-ms-high-contrast: none) {
+	/*Hacks to account for extra space around svg IE 10/11*/
+	#logo {
+		margin: 0 0 0 -.3em;
+	}
+    
+    /*https://css-tricks.com/scale-svg/*/
+/* 100% * 155/130 */
+
+.no-objectfit #logo {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		left: 0;
+		top: 4em;
+	}
+
+.no-objectfit header>a {
+		position: relative;
+		height: 0;
+		width: 15.7rem;
+		padding: 0 0 12em 0;
+		margin: 0 0 0 1rem;
+	}
+}
+@media screen and (max-width: 667px) {
+	body {
+		margin: 2%;
+	}
+	p {
+		margin: 0;
+	}
+	h2 {
+		position: relative;
+        margin: -1.7em 0 0 0;
+		margin: -3.4rem 0 0 0;
+        padding: 0 0 0 .9em;
+		padding: 0 0 0 1.6rem;
+		padding: 0 0 0 1rem;
+        font-size: 2em;
+		font-size: 2rem;
+		line-height: 1.6;
+	}
+    
+    .inlinesvg header h1 {
+        margin-top: -3em;
+    }
+
+	main {
+		padding: 0 0 10.1em 0;
+		margin: 0;
+	}
+	h2 span {
+		text-align: center;
+		display: inline-block;
+		margin: 0 auto;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	header>a, h2 span {
+		width: 9.1em;
+		width: 20rem;
+	}
+	header>a {
+		margin: 0 0 0 1.75em;
+		top: 2em;
+		min-width: 18.2em;
+	}
+    
+    .inlinesvg header>a {
+        padding: 0;
+    }
+	section, section img, .touchevents body {
+		margin: 0;
+	}
+	header ul {
+		position: absolute;
+		right: -9999px;
+		width: 9.142em;/* 1.143*/
+		width: 8rem;
+	}
+	section>label {
+		display: block;
+		width: 100%;
+	}
+	/*width reqd, other properties reqd in no-js scenario; */
+	section img {
+		/* explicitly set float to none in case browser doesn't support flex/grid*/
+		float: none;
+		border-radius: 0;
+		border-width: 0;
+		box-shadow: none;
+		width: 100%;
+	}
+	header ul a, header ul li {
+		display: block;
+		/*a may not be reqd check ie*/
+	}
+	header ul>li {
+		height: 0px;
+		line-height: 2.4;
+		transition: height .9s ease-out;
+	}
+	#main_nav {
+		/*so that menu is relative to header*/
+		position: static;
+	}
+	.menu {
+		position: absolute;
+		top: 1.143em;
+		top: 1rem;
+		right: 1.143em;
+		right: 1rem;
+		height: 2.971em;
+		height: 2.6rem;
+		width: 2.857em;
+		width: 2.5rem;
+	}
+	.touchevents article p {
+		padding: 0 1em;
+		padding: 0 1rem;
+	}
+	/*firefox doesn't recognize the class of .no-js on the html, so we add it to the svg document and remove when JS enabled*/
+	.no-js .invisible {
+		visibility: visible;
+	}
+	.no-js path:nth-of-type(2) {
+		visibility: hidden;
+	}
+	header input:checked+ul {
+		top: 4.5em;
+		top: 3.6rem;
+		right: 1.143em;
+		right: 1rem;
+		z-index: 2;
+		/*override display:table not really required as li's set to block*/
+		display: block;
+	}
+	/*no need to fix advanced selectors for ie as mobile only layout*/
+	header input:checked+ul>li {
+		height: 2.286em;
+		height: 2rem;
+	}
+	article p:first-of-type, article p:last-child {
+		margin: .8rem 0;
+	}
+	section.ptrt img {
+		margin: 1rem 0 1rem 1rem;
+	}
+	/* older mobile browsers ie9 supports inline svg but not filters*/
+	.no-inlinesvg header a h1, .no-js header a h1 {
+		margin-bottom: 3em;
+	}
+	.read-more-trigger:before {
+		display: block;
+	}
+	/*first section is shown by default?*/
+	/*in no-js img, "labels" and articles are siblings in js all other elements are children of article*/
+	header ul ul, .no-js h3, .read-more-state~article, .read-more-state~img, section:first-child .read-more-state:checked~article, section:first-child .read-more-state:checked~img, .js article>* {
+		position: absolute;
+		top: 0;
+		left: -999em;
+	}
+	.js h3, section:first-child .read-more-state~article, section:first-child .read-more-state~img, .read-more-state:checked~article, .read-more-state:checked~img, section.show article>* {
+		position: static;
+		left: 0;
+	}
+	#logo {
+		margin: 0 0 -1.5rem 0;
+	}
+	#footer_girl a:first-child {
+		width: 8em;
+		margin: 0;
+		visibility: hidden;
+	}
+	#footer_girl a {
+		display: block;
+	}
+    
+    header>a:first-child, h2 span:first-child {
+        /*255px corresponds to min-width of header > a */
+     width: calc(255px + (65) * (100vw - 335px) / (667 - 335));
+    }
+    
+    .menu {
+        width: calc(32px + (14) * (100vw - 320px) / (667 - 320));
+    }
+}
+
+@media only screen and (max-width: 568px) {
+	h2 {
+		padding: 0 0 0 1rem;
+	}
+	header>a, h2 span {
+		width: 18rem;
+	}
+	header>a {
+		top: 1.3rem;
+		margin: 0 0 0 1rem;
+	}
+}
+@media only screen and (max-width: 480px) {
+	h2 {
+		margin: -2.7rem 0 0 0;
+		font-size: 1.75rem;
+		line-height: 1.4;
+	}
+	header>a, h2 span {
+		width: 16rem;
+	}
+	header input:checked+ul {
+		top: 4rem;
+	}
+	.menu {
+		height: 3rem;
+		width: 3rem;
+	}
+    .no-touchevents h2 {
+		line-height: 1.4;
+	}
+	.no-objectfit h2 span {
+		width: 15.7rem;
+	}
+	
+    /*
+	.no-objectfit header>a {
+		position: relative;
+		height: 0;
+		padding: 3em 0 0 0;
+		width: 15.7rem;
+		padding-bottom: 46.12%;
+		margin: 0 0 0 1rem;
+	}
+	.no-objectfit h2 {
+		margin: -3.5rem 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 15.7rem;
+	}
+	.no-objectfit #logo {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		left: 0;
+		top: 0;
+	}
+    */
+
+}
+@media only screen and (max-width: 400px) {
+	.no-objectfit h2 span {
+		width: 13rem;
+	}
+}
+@media only screen and (max-width: 360px) {
+	header>a, h2 span {
+		width: 14rem;
+	}
+	#logo {
+		margin: 0 0 -1rem 0;
+	}
+}
+@media only screen and (max-width: 320px) {
+
+	h2 {
+		font-size: 1.6rem;
+		padding: 0 0 0 .6rem;
+	}
+	header>a {
+        padding: 2em 0 0 0;
+		margin: 0 0 0 .6rem;
+	}
+	.menu {
+		height: 33.28px;
+		width: 32px;
+	}
+	header input:checked+ul {
+		top: 3rem;
+	}
+    /*
+	.no-objectfit h2 {
+		margin: -3.6rem 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 12rem;
+	}
+	.no-objectfit h2 {
+		line-height: 1.5;
+	}
+
+	.no-objectfit header>a {
+		width: 12rem;
+		padding-bottom: 52%;
+		margin: 0 0 6% .6rem;
+	}
+    */
+}
+@media only screen and (max-width: 280px) {
+	h2 {
+        font-size: 1.3rem;
+		margin: -2.3rem 0 0 0;
+		line-height: 1.8;
+	}
+	header>a, h2 span {
+		width: 12rem;
+	}
+}
+@media only screen and (-ms-high-contrast: none) {
+	.touchevents footer {
+		background: url(../images/resource/sil_bg.png) no-repeat top center;
+		background-size: cover;
+		padding: 7em 0 0 0;
+	}
+}
+/*remove border's above when in production*/
+
+header>a, h2 span, .no-objectfit #logo {
+	border-width: 0px;
+}

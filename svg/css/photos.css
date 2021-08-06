@@ -1,0 +1,510 @@
+main {
+	position: relative;
+	font: normal 1rem Arial, sans-serif;
+	padding: 0;
+	text-align: center;
+	height: 100%;
+}
+main>* {
+	display: inline-block;
+	vertical-align: middle;
+}
+footer {
+	margin: 0 auto;
+    background-color: transparent;
+}
+main img, main ul {
+	border: 1px solid black;
+}
+main {
+	margin: 0 2%;
+}
+main img {
+	width: 100%;
+}
+h2 span {
+	color: white;
+}
+main ul {
+	text-align: center;
+	padding: 3px;
+	width: 80%;
+	/*https://stackoverflow.com/questions/1823551/what-is-this-ie-css-bug-called-double-vertical-padding
+	*padding: 1.2em 1.2em .4em 1.2em;*/
+	-webkit-transition: width 1s ease-in-out;
+	-o-transition: width 1s ease-in-out;
+	transition: width 1s ease-in-out;
+	overflow: hidden;
+}
+main ul li {
+	float: left;
+	border: solid 6px white;
+}
+main ul li, main ul li img {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+main img:hover {
+	border-color: indigo;
+}
+.pagenav {
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	position: relative;
+	margin: 1px;
+}
+.showtime main {
+	border-width: 0;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	display: block;
+	/*force override flex ?*/
+}
+li.portrait img {
+	border: solid 1px red;
+}
+/*
+main ul.portrait {
+	margin: 0 30%;
+	width: auto;
+}
+*/
+
+.no-js #placeholder {
+	color: #444;
+}
+main ul li img[src*="99"], main ul li img[src*="98"], main ul li img[src*="97"], main ul li img[src*="96"] {
+	border-color: white;
+}
+/* IMPORTANT class of alt goes on the UL in the CMS version (because of ajax) class of .gallery is also on the UL
+in the pure JS version .alt went on main. Suggest we change it on the JS version for consistency
+*/
+
+.gallery li:nth-child(n+5) {
+	width: 16.666%;
+}
+.alt li:nth-child(n+5), .gallery li:nth-last-child(-n+4) {
+	width: 25%;
+}
+.gallery li.portrait {
+	width: 16.666%;
+}
+.alt li.portrait, .gallery li {
+	width: 25%;
+}
+.gallery li:nth-child(5), .gallery li:nth-child(11), .alt li:nth-child(9) {
+	clear: left;
+}
+.alt li:nth-child(11) {
+	clear: none;
+}
+.showtime ul.portrait {
+	width: 40%;
+	margin: 0 auto;
+	display: block;
+}
+.js .showtime main ul li {
+	width: 100%;
+}
+.pagenav:hover, .pagenav:focus {
+	border-right-color: royalblue;
+}
+.gallery li, main ul li.show, .showtime li#base, .showtime li#slide, .showtime li#paused {
+	position: relative;
+	left: auto;
+}
+.showtime footer {
+	margin: -3.1em auto 0;
+}
+#photos {
+    background-color: #fff;
+}
+.js #exit {
+	width: 2em;
+	height: 2em;
+	left: 100%;
+	margin: .5em 0 .5em -2.5em;
+	display: block;
+	background: url("../images/resource/sticks_sprite_fat.png") no-repeat;
+	background-position: 50% 0%;
+	background-size: 100%;
+	position: relative;
+}
+.js #exit:hover, .js #exit:focus {
+	background-position: 50% 106%;
+}
+#slide, #paused {
+	margin-left: -100%;
+}
+.swap #base {
+	display: none;
+}
+.swap #slide {
+	margin-left: 0%;
+}
+#controls {
+	top: 0em;
+	position: relative;
+	text-align: center;
+	font-size: 1.5em;
+	margin: 0 auto;
+	z-index: 2;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+	clear: both;
+	display: table;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	zoom: 1;
+    width: 100%;
+    /*border-spacing: .5em;*/
+}
+#tooltip {
+	position: absolute;
+	z-index: 3;
+	bottom: 0em;
+	font-weight: normal;
+	font-size: .7em;
+	-webkit-transform: translate(-10em, -10em);
+	-ms-transform: translate(-10em, -10em);
+	transform: translate(-10em, -10em);
+	-webkit-transition-property: opacity, -webkit-transform;
+	transition-property: opacity, -webkit-transform;
+	-o-transition-property: transform, opacity;
+	transition-property: transform, opacity;
+	transition-property: transform, opacity, -webkit-transform;
+	-webkit-transition-duration: 2s;
+	-o-transition-duration: 2s;
+	transition-duration: 2s;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	zoom: 1;
+}
+#controls button {
+	width: 1.5em;
+	height: 1.5em;
+	padding: 0;
+	margin: 0 .3em;
+	display: table-cell;
+	border: solid 1px;
+	cursor: pointer;
+	background-color: #990;
+	border: 1px solid #cc6;
+	border-radius: .2em;
+	line-height: 1.6;
+	background-image: url(../images/resource/buttons_sprite_lowend8.png);
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	-webkit-box-shadow: 2px 2px 4px black;
+	box-shadow: 2px 2px 4px black;
+	text-shadow: 1px 1px 1px black;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	zoom: 1;
+}
+#controls>button {
+	background-image: url(../images/resource/buttons_sprite_lowend.png);
+	background-color: hsla(50, 50%, 40%, .3);
+}
+#controls.static {
+	top: -3.1em;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	zoom: 1;
+}
+.touchevents #controls {
+	opacity: 1;
+	filter: alpha(opacity=100);
+	zoom: 1;
+}
+#tooltip.tip {
+	-webkit-transform: translate(10em, -3em);
+	-ms-transform: translate(10em, -3em);
+	transform: translate(10em, -3em);
+	opacity: .75;
+	filter: alpha(opacity=75);
+	zoom: 1;
+}
+#tooltip.tb1 {
+	-webkit-transform: translate(2em, -3em);
+	-ms-transform: translate(2em, -3em);
+	transform: translate(2em, -3em);
+	opacity: 1;
+	filter: alpha(opacity=100);
+	zoom: 1;
+}
+#tooltip.tb2 {
+	-webkit-transform: translate(2em, 10em);
+	-ms-transform: translate(2em, 10em);
+	transform: translate(2em, 10em);
+	z-index: 5;
+}
+#tooltip div:first-child {
+	background: #cc6;
+	padding: 3px;
+}
+#controls.static button {
+	border: 1px solid #FFF;
+	border: 1px solid rgba(255, 255, 255, .75);
+}
+#controls button:hover, #controls button:focus {
+	background-color: silver;
+	background-color: rgba(150, 150, 150, .5);
+	color: black;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, .75);
+}
+.touchevents .inplay #controls {
+	top: 0em;
+	opacity: .25;
+	filter: alpha(opacity=25);
+	zoom: 1;
+}
+button#backbutton {
+	background-position: 50% 14.9%;
+}
+button#playbutton {
+	background-position: 50% 29%;
+}
+#controls.playing #playbutton {
+	background-position: 50% 44%;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
+	zoom: 1;
+}
+/*.touchevents replaces media queries (hover: hover) || (pointer: fine) where support is doubtful
+logic dictates that we only get to this point courtesy of javascript so modernizr supplies the className .(no-)touchevents */
+
+/*
+#wrap {
+	width: 832px;
+	background-color: white;
+}
+*/
+
+#slide, #paused, #base {
+	display: block;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	/* IE8 and lower */
+	zoom: 1;
+	/* Triggers "hasLayout" in IE 7 and lower */
+}
+#gal_back {
+	border-right: 31px solid crimson;
+	/*animation: myright 5s infinite;*/
+}
+#gal_forward {
+	border-left: 31px solid crimson;
+	/*animation: myleft 5s infinite;*/
+}
+#wrap h2 {
+	background: none;
+}
+main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paused {
+	position: absolute;
+	top: 0em;
+	left: -9999px;
+}
+#wrap .override img {
+	border-radius: 0px;
+	box-shadow: none;
+}
+#tooltip #triangle {
+	width: 0;
+	height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	border-top: 12px solid #cc6;
+	margin: -1px 0px 0px 5em;
+}
+.no-touchevents #forwardbutton:hover {
+	background-position: 50% 56%;
+}
+.no-touchevents #backbutton:hover {
+	background-position: 50% 70.5%;
+}
+.no-touchevents #playbutton:hover {
+	background-position: 50% 85%;
+}
+.no-touchevents.playing #playbutton:hover {
+	background-position: 50% 100%;
+}
+#photos #wrap h2 span {
+	background: none;
+}
+#photos h2:after {
+	content: none;
+}
+@media only screen {
+	.showtime main ul li {
+		width: 100%;
+	}
+	#controls button {
+		background-image: url(../images/resource/buttons_sprite.png);
+		background-color: hsla(75, 50%, 40%, .3);
+		-o-background-size: 128%;
+		-moz-background-size: 128%;
+		-ms-background-size: 128%;
+		-webkit-background-size: 128%;
+		background-size: 128%;
+	}
+	#exit:hover, #exit:focus {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+	/*li.width/ul.width(-ul.padding)*/
+	/*
+	#wrap {
+		max-width: 80em;
+		width: 100%;
+	}
+    */
+}
+@media only screen and (max-width: 968px) {
+	.showtime main ul.portrait {
+		width: 50%;
+		margin: 0 25%;
+	}
+}
+@media only screen and (max-width: 800px) {
+	main ul.portrait {
+		margin: 0 10%;
+	}
+}
+@media only screen and (max-width: 667px) {
+	main {
+		padding: 2.5em 0 0 0;
+	}
+	h2 {
+		text-shadow: 2px 2px 2px black;
+	}
+	.no-js #placeholder {
+		font-size: .5em;
+		text-shadow: none;
+		text-align: center;
+		width: 100%;
+		color: yellow;
+	}
+	main ul {
+		width: 80%;
+	}
+	.touchevents h2 {
+		position: relative;
+		left: auto;
+	}
+	.touchevents footer {
+		-webkit-transition: background-position 2s ease;
+		-moz-transition: background-position 2s ease;
+		-o-transition: background-position 2s ease;
+		transition: background-position 2s ease;
+	}
+	.showtime main ul {
+		width: auto;
+		margin: 0 8%;
+		/*display: block;*/
+	}
+	.touchevents .showtime main {
+		padding: .5em 0 0 0;
+	}
+	.showtime main ul.portrait {
+		margin: 0 20%;
+		width: 60%;
+	}
+	.touchevents ul.gallery li {
+		border: solid 3px white;
+	}
+	.gallery li, ul.alt li:nth-child(n+5), .alt li.portrait, ul.gallery li:nth-last-child(-n+4) {
+		width: 50%;
+	}
+	.gallery li:nth-child(n+5), .override .gallery li.portrait {
+		width: 33.333%;
+	}
+	.touchevents main.override>a:active {
+		background: blue;
+	}
+	.touchevents #controls {
+		font-size: 1.3em;
+        margin: .2em 0 0;
+	}
+    
+	/*#photos specificity*/
+	.touchevents #photos a.pagenav {
+		width: 1.6em;
+		border-width: 0;
+		overflow: hidden;
+		background-color: hsla(349, 86%, 45%, 100);
+	}
+	.touchevents a.pagenav span {
+		position: absolute;
+		top: 33%;
+		bottom: 33%;
+		display: block;
+		border: solid 1.2em whitesmoke;
+	}
+	.touchevents a.pagenav:hover, .touchevents a.pagenav:focus {
+		background-color: hsla(349, 86%, 30%, 100);
+	}
+	.touchevents a.pagenav:hover span, .touchevents a.pagenav:focus span {
+		border-color: silver;
+	}
+	.touchevents #wrap.inplay+footer {
+		background: url(../images/resource/sil_bg.png) no-repeat 60% top;
+		background-size: cover;
+	}
+
+}
+/*667*/
+
+@media only screen and (max-width: 480px) {
+	.touchevents.no-flexbox main {
+		display: table;
+		border-spacing: 9px;
+	}
+	.touchevents.no-flexbox main>* {
+		display: table-cell;
+		position: relative;
+	}
+	.touchevents.no-flexbox .showtime main, .touchevents.no-flexbox .showtime main>* {
+		display: block;
+	}
+	/*reset */
+	.touchevents.no-flexbox .showtime main {
+		border-spacing: 0;
+	}
+}
+/* do min width to save .override h2 */
+
+@media only screen and (min-width: 668px) {
+	h2 {
+		/*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
+		background: none;
+		color: white;
+		text-shadow: none;
+		margin: 0;
+	}
+	h2:hover {
+		color: white;
+	}
+	.showtime h2 {
+		position: absolute;
+		left: -9999px;
+		top: 0;
+	}
+	.no-js h2, .no-js h2:hover {
+		color: #444;
+		font: 1.5em normal serif;
+        text-align: center;
+	}
+	.no-js h2 span {
+		padding: .5em 0;
+	}
+    /*
+	.backgroundsize .showtime footer:hover {
+		background: url(../images/resource/footer_green_ko.png) no-repeat bottom right, url(../images/resource/sky.png) no-repeat top left;
+	}
+    */
+}
+/*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/
