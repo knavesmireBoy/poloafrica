@@ -18,9 +18,8 @@ if (!window.poloAF) {
 		];
 	}
     
-    function spaceCount(str){
-       return str.trim().split(" ").length - 1;
-
+    function spaceCount(str) {
+        return _.isString(str) ? str.trim().split(" ").length - 1 : 1; 
     }
 
 	function getResult(arg) {
@@ -188,7 +187,7 @@ if (!window.poloAF) {
 		notEmpty = _.negate(_.isEmpty),
         preCon = function (pre, post) {
 			return function (k, v) {
-                if(!pre(k)){
+                if (!pre(k)) {
                     return true;
                 }
                 /* we may need to determine the algorithm on the fly for instance a name could consist of two parts or three parts and each part must conform to certain rules we use utils.getBest to partially apply the argument (input string) to the predicate and action functions so post(v) could be a value or a function hence getResult*/
@@ -254,7 +253,7 @@ if (!window.poloAF) {
 				el.innerHTML = orig;
 				_.each(labels, undoWarning);
 				undoWarning(utils.$('warning'));
-                console.log(msgs[0], msgs[1]);
+                //console.log(msgs[0], msgs[1]);
 				if (msgs) {
 					el.innerHTML = msgs[0][1];
 					doWarning(el.parentNode.parentNode);
@@ -313,10 +312,10 @@ if (!window.poloAF) {
 				thanker = [_.identity, levelONE(thx)],
 				response = reducer(neue_nodes),
 				checker = validateForm(isSuspect, isEmptyName, isProperName, isProperNameStrict, isEmptyEmail, isEmailAddress, isNotEmptyComment, isNewMessage, isSmallMessage, isLargeMessage, atLeastFourWords),
-				res = _.filter(_.map(obj, checker), function (ar) {
+                res = _.filter(_.map(obj, checker), function (ar) {
                     return notEmpty(ar);
 				}),
-				config = [fig1, thanker, sender, messenger, fig2];
+                config = [fig1, thanker, sender, messenger, fig2];
 			if (_.isEmpty(res)) {
 				if (Modernizr.cssgrid && Modernizr.cssanimations) {
 					getNodes(neue_nodes, ['figure', 'img'], 0);
@@ -342,4 +341,5 @@ if (!window.poloAF) {
 	_.each(_.toArray(utils.getByClass('read-more-state')), removeLabels);
 	mobileToggler(dum); //can run in "desktop" environment with no ill effects, toggles display of sections for mobile devices    
     _.compose(PTL(utils.removeClass, 'nojs'), PTL(utils.findByClass, 'no-js'))();
+    //utils.report();
 }(Modernizr.mq('only all'), '(min-width: 667px)'));

@@ -1,0 +1,222 @@
+
+@media only screen and (max-width: 667px) {
+	header {
+		background-image: url(../images/resource/crop.JPG);
+		background-position: 70% 0;
+		background-blend-mode: multiply;
+		-o-background-size: 222%;
+		-moz-background-size: 222%;
+		-ms-background-size: 222%;
+		-webkit-background-size: 222%;
+		background-size: 222%;
+	}
+	h2 {
+		color: white;
+		background: none;
+		text-shadow: 2px 2px 2px black;
+		border: 1px solid;
+		border-width: 1px 0 0;
+	}
+	footer {
+		background-image: url(../images/resource/sil_bg.png);
+		background-repeat: no-repeat;
+		background-position: center bottom;
+		-o-background-size: 240%;
+		-moz-background-size: 240%;
+		-ms-background-size: 240%;
+		-webkit-background-size: 240%;
+		background-size: cover;
+	}
+	header>a {
+		top: 0;
+	}
+	section>label {
+		font-weight: bold;
+	}
+	h3, section>label {
+		font-size: 1.4em;
+		margin: 0;
+		line-height: 1.75;
+		word-spacing: 1px;
+		letter-spacing: 1px;
+	}
+	header nav ul {
+		background: white;
+		-webkit-box-shadow: -3px 3px 6px hsla(300, 10%, 20%, .75);
+		box-shadow: -3px 3px 6px hsla(300, 10%, 20%, .75);
+		border-radius: 2px;
+	}
+	header ul>li a {
+		background: none;
+		padding: 0 1em 0 0;
+		display: block;
+		text-align: right;
+		border-width: 0 0 1px;
+	}
+	header ul>li:last-child a {
+		border-width: 0;
+	}
+	.noir {
+		background: black;
+	}
+	.menu {
+		background: 50% 0% url("../images/resource/polo_ball_sprite.png") no-repeat;
+		-o-background-size: 105%;
+		-moz-background-size: 100%;
+		-ms-background-size: 100%;
+		-webkit-background-size: 100%;
+		background-size: 100%;
+		cursor: pointer;
+		-webkit-transition: transform 1s;
+		-o-transition: transform 1s;
+		transition: transform 1s;
+	}
+	h2:hover, h2:focus, h2:active {
+		color: hsl(58, 60%, 90%);
+	}
+	section.show h3 a {
+		color: white;
+		background-color: transparent;
+	}
+	/*https://stackoverflow.com/questions/31412645/pseudo-element-100-width-is-not-taking-container-size*/
+	h3, .read-more-trigger:before, .js section img {
+		border-bottom: solid 1px white;
+	}
+	.override article p {
+		line-height: 1.55;
+	}
+	.menu:hover {
+		background-position: 50% 100%;
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+	.no-touchevents h3 a:hover {
+		color: white;
+	}
+	.read-more-trigger:before:hover {
+		background-color: white;
+		color: hsl(58, 60%, 45%);
+		color: #b8b32e;
+	}
+	h3, .read-more-trigger:before, section:first-child .read-more-state:checked~.read-more-trigger:before {
+		color: #990;
+		color: hsl(58, 60%, 40%);
+		text-shadow: none;
+		background-color: #E7E7C7;
+		background-color: hsl(60, 40%, 84%);
+		padding: .5em .5em .4em;
+	}
+	section.show h3, .read-more-state:checked~.read-more-trigger:before, section:first-child .read-more-state~.read-more-trigger:before {
+		color: white;
+		text-shadow: 1px 1px 1px black;
+		background-color: #c8c87e;
+		background-color: hsl(60, 40%, 64%);
+	}
+	footer div:first-child a:last-child:before {
+		content: "";
+	}
+	.no-js header>a {
+		text-align: left;
+	}
+	header a h1 {
+		background-position: left bottom;
+		line-height: 4.4;
+	}
+	/*ZAP*/
+	#wrap h2, #wrap h2 span {
+		background-image: none;
+	}
+	#main_nav header nav ul {
+		font: bold 1em/2 "Arial Back", Arial, Verdana, Helvetica, sans-serif;
+	}
+	#main_nav ul li a:hover, #main_nav ul li a:active {
+		color: #b8b32e;
+		background-color: #E7E7C7;
+		background-color: hsl(60, 40%, 84%);
+		background-image: none;
+	}
+	#home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
+		color: #cc6;
+		color: hsl(58, 60%, 48%);
+	}
+}
+@media only screen and (max-width: 667px) and (orientation: portrait) {
+	header {
+		-o-background-size: 300%;
+		-moz-background-size: 300%;
+		-ms-background-size: 300%;
+		-webkit-background-size: 300%;
+		background-size: 300% !important;
+	}
+}
+@media only screen and (max-width: 580px) {
+	footer {
+		-o-background-size: 280%;
+		-moz-background-size: 280%;
+		-ms-background-size: 280%;
+		-webkit-background-size: 280%;
+		background-size: cover;
+	}
+}
+@media only screen and (max-width: 480px) {
+	footer {
+		-o-background-size: 320%;
+		-moz-background-size: 320%;
+		-ms-background-size: 320%;
+		-webkit-background-size: 320%;
+		background-size: cover;
+	}
+}
+@media only screen and (max-width: 440px) {
+	footer>a {
+		padding: .75em .6em;
+	}
+}
+/*
+@media only screen and (min-width: 1024px) {
+
+.js article, .js section>img, aside {
+		-webkit-transition-property: opacity, -webkit-transform;
+		transition-property: opacity, -webkit-transform;
+		-o-transition-property: transform, opacity;
+		transition-property: transform, opacity, -webkit-transform;
+    transition-property: transform, opacity;
+		-webkit-transition-duration: 3s;
+		-o-transition-duration: 3s;
+		transition-duration: 3s;
+		opacity: 0;
+	}
+	.js section>img, .js aside {
+		-webkit-transform: translate(100em, 0);
+		-ms-transform: translate(100em, 0);
+		transform: translate(100em, 0);
+	}
+	.js  section>img:last-of-type {
+		-webkit-transform: translate(150em, 0);
+		-ms-transform: translate(150em, 0);
+		transform: translate(150em, 0);
+	}
+	.js article, .js section:nth-child(even)>img {
+		-webkit-transform: translate(-100em, 0);
+		-ms-transform: translate(-100em, 0);
+		transform: translate(-100em, 0);
+	}
+	.js section:nth-child(even) article {
+		-webkit-transform: translate(100em, 0);
+		-ms-transform: translate(100em, 0);
+		transform: translate(100em, 0);
+	}
+	.js .override .display article, .js .override .display>img, .js .display aside {
+		-webkit-transform: translate(0, 0);
+		-ms-transform: translate(0, 0);
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	#enquiries article, #enquiries section img {
+		-webkit-transform: translate(0, 0);
+		-ms-transform: translate(0, 0);
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+}
+*/

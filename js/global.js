@@ -687,7 +687,8 @@ poloAF.Util = (function () {
 					if (poloAF.slice_shim) {
 						el.style[toCamelCase(k)] = map[k];
 					} else {
-						el.style.setProperty(k, map[k]);
+                        //https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty
+						el.style.setProperty(k, map[k], '');//third argument required in Opera 9.62
 					}
 				} else if (cont) {
 					o = {};
@@ -703,16 +704,27 @@ poloAF.Util = (function () {
 		/*second argument (v) should be an array of arrays [[p,v], [p,v], [[p,v]]]
 		    with style properties wrapped in an extra array and sent last
 		    eg [id, 'fred'], [title, 'our fred'], [txt, 'freddie'], [[opacity: '0.5'], [background-color: 'blue']]*/
-		var tgt = v.length && v.splice(0, 1)[0],
+        var tgt = v.length && v.splice(0, 1)[0],
 			pass;
-		if (!tgt) {
+        if (!tgt) {
 			return el;
 		}
 		pass = _.isArray(tgt[0]);
-		tgt = pass ? tgt[0] : tgt;
-		el = attrMap(getResult(el), toObject(tgt), pass);
-		return doMapRecur(el, v);
+        tgt = pass ? tgt[0] : tgt;
+        el = attrMap(getResult(el), toObject(tgt), pass);
+        return doMapRecur(el, v);
 	}
+    
+    function doMappy(el, v){
+         var tgt,
+             pass = false;
+        _.each(v, function(arr){
+            pass = _.isArray(arr[0]);
+            tgt = pass ? arr[0] : arr;
+            el = attrMap(getResult(el), toObject(tgt), pass);
+        });
+        return el;
+    }
 
 	function reverseArray(array) {
 		var i,
@@ -860,12 +872,23 @@ poloAF.Util = (function () {
 			}
 		}),
 		myEventListener = (function (flag) {
+            function fixUnknownElement(el){
+                //fix for unknown (main in this case) element issue preventing listeners from being removed, remove then append element to remove listener
+                var tmp = toString.call(el).toLowerCase() ===  '[object htmlunknownelement]';
+                if(tmp){
+                    tmp = el.parentNode;
+                    el = removeNodeOnComplete(el);
+                    tmp.appendChild(el);
+                }
+                return el;
+            }
 			if (flag) {
 				return {
 					add: function (el, type, fn) {
 						el.addEventListener(type, fn, false);
 					},
 					remove: function (el, type, fn) {
+                        el = fixUnknownElement(el);
 						el.removeEventListener(type, fn, false);
 					},
 					preventers: {
@@ -886,6 +909,7 @@ poloAF.Util = (function () {
 					el.attachEvent('on' + type, fn);
 				},
 				remove: function (el, type, fn) {
+                    el = fixUnknownElement(el);
 					el.detachEvent('on' + type, fn);
 				},
 				preventers: {
@@ -979,7 +1003,8 @@ poloAF.Util = (function () {
 		curryTwice: curryFactory(2),
 		curryThrice: curryFactory(3),
 		doAlternate: doAlternate,
-		doMap: doMapRecur,
+		//doMap: doMapRecur,
+		doMap: doMappy,
 		/*USAGE:
         var once = doOnce(),
         actions = [func1, func2, ...];
@@ -1037,7 +1062,6 @@ poloAF.Util = (function () {
 					return this;
 				},
 				undo: function (flag) {
-					//console.log('undo', el);
 					myEventListener.remove(el, type, fn);
 					if (flag && _.isBoolean(flag)) {
 						el = removeNodeOnComplete(el);
@@ -1438,8 +1462,7 @@ poloAF.Util.eventCache = (function (list) {
 		////$element.triggerEvent($element.getElement(), 'scroll');
 		triggerEvent: function (el, type) {
 			var e;
-			//if ('createEvent' in document) {
-			if (document.hasOwnProperty('createEvent')) {
+			if ('createEvent' in document) {
 				// modern browsers, IE9+
 				e = document.createEvent('HTMLEvents');
 				e.initEvent(type, false, true);

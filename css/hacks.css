@@ -35,9 +35,9 @@ section img {
     }
 
 main > a {
-    *border-width: 0px;
-    *display:inline-block;
-    *display: inline;
+    border-width: 0px;
+    display:inline-block;
+    display: inline;
 	zoom: 1;
 }
 
@@ -247,6 +247,7 @@ header ul li a:hover, header ul li a:active {
 }
 
 #photos ul.gallery li.portrait {
+	width: 16.66%;
 	*width: 15%;
 	_width: 14.8%;
 }
@@ -309,4 +310,8 @@ header ul li a:hover, header ul li a:active {
     width: 12em;
     margin: 0 -4em 0 0;
     bottom: -2em;
+}
+
+#photos {
+    background-color: aquamarine;
 }

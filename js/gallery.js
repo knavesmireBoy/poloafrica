@@ -55,7 +55,7 @@
 
 	function applyArg(f, arg) {
         //console.log(arguments)
-		arg = _.isArray(arg) ? arg : [arg];
+		arg = arg && _.isArray(arg) ? arg : [arg];
 		return f.apply(null, arg);
 	}
 
@@ -74,6 +74,7 @@
 	}
 
 	function greaterBridge(o, p1, p2) {
+        utils.report(p1)
 		return greater(o[p1], o[p2]);
 	}
 
@@ -212,7 +213,7 @@
 		getLink = utils.getDomParent(utils.getNodeByTag('^a$')),
 		getDomTargetImg = utils.getDomChild(utils.getNodeByTag('img')),
 		getLength = doGet('length'),
-		doClass = ptL(utils.getBest, queryOrientation, ['addClass', 'removeClass']),
+		doClass = ptL(utils.getBestOnly, queryOrientation, ['addClass', 'removeClass']),
 		getSlideChild = doComp(utils.getChild, utils.getChild, $$('slide')),
 		getBaseChild = doComp(utils.getChild, utils.getChild, $$('base')),
 		getBaseSrc = doComp(utils.drillDown(['src']), getBaseChild),
@@ -227,7 +228,7 @@
 		//height and width of image are compared BUT a) must invoke the comparison AFTER image loaded
 		//b) must remove load listener or will intefere with slideshow
 		onBase = function (img, path, promise) {
-			var ev = eventing('load', event_actions.slice(0, 1), function (e) {
+            var ev = eventing('load', event_actions.slice(0, 1), function (e) {
 				promise.then(e[mytarget]);
 				ev.undo();
 			}, img).execute();
@@ -295,6 +296,7 @@
 					promise.then(e[mytarget]);
 				};
 				next = getnexturl();
+              
 				if (!next) {
 					return;
 				}
@@ -302,7 +304,7 @@
 				img.parentNode.href = doParse(img.src);
 			}
 		},
-		loadImageBridge = function () {
+		loadImageBridge = function (a, b) {
 			var args = _.rest(arguments, 2);
 			args = args.length ? args : [function () {}];
 			loadImage.apply(null, _.first(arguments, 2).concat(new utils.FauxPromise(args)));
@@ -479,9 +481,9 @@
 		advance_validators = [utils.always(true), notExit, notMain],
 		get_back = doComp(thrice(doMethod)('match')(/back$/), doGet('id'), getLink, getTarget),
 		doValidate = deferEvery(advance_validators),
-		getDirection = ptL(utils.getBestPred, get_back, ['back', 'forward']),
+		getDirection = ptL(utils.getBest, get_back, ['back', 'forward']),
 		every = doComp(doValidate, doPartial(true, invokeCB)),
-		advanceRouteBridge = ptL(utils.invokeWhen, every, getDirection),
+		advanceRouteBridge = ptL(utils.invokeWhen, utils.always(true), getDirection),
 		doInc = function (n) {
 			return doComp(ptL(modulo, n), increment);
 		},
@@ -566,8 +568,9 @@
 		prevcaller = twice(getNextFromLoop)('back'),
 		locator = function (forward, back) {
 			var getLoc = function (e) {
-				var box = e[mytarget].getBoundingClientRect();
-				return e.clientX - box.left > box.width / 2;
+				var box = e[mytarget].getBoundingClientRect(),
+                    threshold = (box.right - box.left) / 2;
+				return (e.clientX - box.left) > threshold;
 			};
 			return function (e) {
 				return utils.getBest(function (agg) {
@@ -578,7 +581,7 @@
 				]);
 			};
 		},
-		$locate = eventing('click', event_actions.slice(0), function (e) {
+		$locate = eventing('click', event_actions.slice(0, 1), function (e) {
 			locator(twicedefer(loadImageBridge)('base')(nextcaller), twicedefer(loadImageBridge)('base')(prevcaller))(e)[1]();
 			doOrient(e[mytarget]);
 		}, getThumbs()),
@@ -606,13 +609,15 @@
 
 			function doOpacity(flag) {
 				var slide = $('slide'),
-					val;
+					key,
+                    val;
 				if (slide) {
-					val = flag ? 1 : $recur.i / 100;
-					val = cssopacity.getValue(val);
-					doMap(slide, [
+					val = flag ? 1 : ($recur.i / 100);
+					val = cssopacity.getValue(val),
+                        key = cssopacity.getKey();
+                    doMap(slide, [
 						[
-							[cssopacity.getKey(), val]
+							[key, val]
 						]
 					]);
 				}
@@ -671,6 +676,7 @@
 			player = playmaker();
 			return {
 				execute: function () {
+                    var pass = '';
 					if (!$recur.t) {
 						/*returns true if undefined, false if null which it will be as a result of pausing
 						ensures we only get a fresh collection when initiating a slideshow*/
@@ -682,10 +688,21 @@
 					if (player.validate()) {
 						player.reset();
 					} else {
-						doOpacity();
-						doRecur();
+                        try {
+                            doOpacity();
+                        }
+                        catch(e){
+                            for(var p in e){
+                               pass += '**';
+                               pass += e[p];
+                        }
+                            utils.report(pass);
 					}
-				},
+                                                
+						
+						doRecur();
+				}
+                },
 				undo: function (flag) {
 					doOpacity(flag);
 					window.cancelAnimationFrame($recur.t);
@@ -764,17 +781,17 @@
 			$recur.i = 47; //slide is clone of base initially, so fade can start quickly
 			return mynext;
 		},//factory
-        /*
+        
 		mock = {
 			target: {
 				nodeName: 'IMG',
-				src: "http://81.131.244.169/poloafrica/images/gallery/fullsize/001.jpg"
+				src: "http://109.156.97.131/poloafrica/images/gallery/fullsize/001.jpg"
 			}
 		},
-        */
 		//setup_val = utils.always(mock),
 		svg_handler = ptL(svg_resizer, doSVGview()()),
 		setup = function (e) {
+            console.log(e)
 			doComp(setindex, utils.drillDown([mytarget, 'src']))(e);
 			doComp(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
 			doMakeBase(e[mytarget].src, 'base', doOrient, getBaseChild, showtime);
@@ -802,7 +819,7 @@
 						poloAF.LoopIterator.cross_page = false;
 						chain = chain.validate();
 						exitshowtime();
-                       doExitSlideshow();
+                        doExitSlideshow();
 						unsetPortrait();
 						_.each([$recur, $locate, $toggler], go_undo);
 						_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
@@ -813,19 +830,24 @@
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
 			_.each([$controls, $exit, $locate, $controls_undostat, $controls_dostat], go_execute);
-            $nav.undo();
 			$setup.undo();
+            $nav.undo();
 		};
+    
 	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
 	$setup.execute();
 	addPageNav(anCr, 'gal_forward', makeDummy);
 	$nav.execute();
 	utils.$('placeholder').innerHTML = 'PHOTOS';
-	_.each(getAllPics(), fixNoNthChild);
 	svg_handler();
     eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();
     utils.highLighter.perform();
+    if(Modernizr.nthchild){
+        _.each(utils.getByClass('portrait'), ptL(klasRem, 'portrait'));
+    }
     _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
+    //poloAF.Util.eventCache.triggerEvent(main, 'click');
+   //utils.report();
 
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";

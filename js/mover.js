@@ -127,6 +127,6 @@
 	utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
     _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
    // console.log(utils.findByClass('menu'))
-   //utils.report(utils.getComputedStyle(utils.findByTag(0)('h2'), 'font-size'));
+   //utils.report();
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 667px)'));
