@@ -3,6 +3,11 @@ section {
     clear: left;
 }
 
+header {
+	background-image: url(../images/resource/header_only_lowend.jpg);
+    background-position: 0 100%;
+}
+
 form {
 	*background-color: #cc9;
 }
@@ -15,8 +20,12 @@ main {
 	padding: 0 1em 10.1em;
 }
 
-main ul {
+#photos main ul {
     width: 754px;
+}
+
+#photos.showtime main ul {
+    *width: 700px;
 }
 
 h2 span {
@@ -34,11 +43,21 @@ section img {
      top: 0;
     }
 
-main > a {
-    border-width: 0px;
-    display:inline-block;
-    display: inline;
-	zoom: 1;
+.pagenav {
+	border-top: 12px solid transparent;
+	border-bottom: 12px solid transparent;
+	margin: 1px;
+}
+
+#gal_back {
+	border-right: 19px solid crimson;
+    *border-right-width: 0;
+	/*animation: myright 5s infinite;*/
+}
+#gal_forward {
+	border-left: 19px solid crimson;
+    *border-left-width: 0;
+	/*animation: myleft 5s infinite;*/
 }
 
 .no-svgfilters header a h1 {
@@ -50,7 +69,6 @@ main > a {
     background-repeat: no-repeat;
 }
 
-
 footer > a {
     *clear: both;
 }
@@ -60,14 +78,6 @@ main ul.portrait {
 }
 .js body {
     background-color: white;
-}
-
-.showtime h2 {
-		display: none;
-}
-
-.showtime main > a {
-    display: none;
 }
 
 .showtime main > * {
@@ -127,7 +137,7 @@ header ul li a:hover, header ul li a:active {
 	*border-right: 1px solid crimson;
 }
 #gal_forward {
-	*border-left: 0px solid crimson;
+	*border-left: 1px solid crimson;
 }
 
 #mark {
@@ -158,7 +168,7 @@ header ul li a:hover, header ul li a:active {
 *min-height: 11em;
 }
 
-#photos main > * {
+#photos main ul, #photos main a {
     vertical-align: middle;
 }
 
@@ -171,7 +181,6 @@ header ul li a:hover, header ul li a:active {
 #controls button {
 	*background-position: 50% 1%;
 }
-
 
 #contactarea form {
     *float: left;
@@ -211,10 +220,18 @@ header ul li a:hover, header ul li a:active {
 	_display: none;
 }
 
-#nav li, #slide, #paused, #base, main ul, #enquiries form input, #enquiries form label, #controls, #controls button, footer a:link {
-	*display:inline-block;
+#nav li, #slide, #paused, #base, main ul, #enquiries form input, #enquiries form label, #controls, #controls button, footer a:link, #gal_forward, #gal_back {
+	*display: inline-block;
     *display: inline;
 	zoom: 1;
+}
+#photos #controls {
+    display: block;
+    width: 50%;
+}
+#photos #controls button {
+    display: inline-block;
+    border-spacing: 0;
 }
 
 #nav li a{
@@ -224,10 +241,11 @@ header ul li a:hover, header ul li a:active {
     *white-space: nowrap;
 }
 
-#photos main > a {
-    *width: 2em;
-    *height: 2em;
-    *background: crimson;
+#photos .pagenav {
+    *width: 1.1em;
+    *height: 1.1em;
+    *background-color: crimson;
+    border-width: 0;
 }
 
 #photos main li a {
@@ -236,12 +254,15 @@ header ul li a:hover, header ul li a:active {
     _background: none;
 }
 
-.js #exit {
-    width: 2.3em;
-    height: 2.3em;
-	background: url("../images/resource/sticks_sprite_fat_lowend.png") no-repeat;
+.js main #exit {
+     width: 2.4em;
+    height: 2.4em;
+    background-image: url("../images/resource/sticks_sprite_fat_lowend.jpg");
 }
 
+.js main > #exit {
+	background-image: url("../images/resource/sticks_sprite_fat_lowend.png");
+}
 #wrap h2:hover {
     color: white; 
 }
@@ -253,7 +274,7 @@ header ul li a:hover, header ul li a:active {
 }
 
 #photos ul.alt li.portrait, #photos ul.gallery li {
-   _width: 23.2%;
+   *width: 23.2%;
 }
 
 #photos #wrap h2 {
@@ -263,13 +284,20 @@ header ul li a:hover, header ul li a:active {
 }
 #photos #wrap main {
 	text-align: center;
-    margin: 0 auto;
+}
+
+.showtime #wrap main ul, #controls {
+	margin: 0 auto;
 }
 
 #photos #wrap h2 span {
     padding: 0;
     margin: 0;
     background: none;
+}
+
+#photos #exit {
+    *left: 50%;
 }
 
 #controls button#backbutton {
@@ -298,6 +326,18 @@ header ul li a:hover, header ul li a:active {
 	text-indent: 0;
 	padding: 0;
 }
+.no-touchevents #presslinks li {
+	text-indent: -1em;
+}
+
+#medley ul {
+    *list-style: disc;
+    color: #990;
+}
+
+#medley_links span {
+    display: block;
+}
 
 #post #contactarea figure {
     *height: auto;
@@ -312,6 +352,8 @@ header ul li a:hover, header ul li a:active {
     bottom: -2em;
 }
 
-#photos {
-    background-color: aquamarine;
+object {
+    border: solid 1px red;
+    padding: 1em;
+    display: block;
 }

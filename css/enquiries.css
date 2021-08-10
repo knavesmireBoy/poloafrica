@@ -2,7 +2,8 @@ section {
 	margin: 2em 0 0;
 }
 h3 {
-	border-bottom: solid 1px;
+	border-bottom: solid #990 1px;
+	border-bottom: solid hsl(58, 60%, 48%) 1px;
 }
 form {
 	font-family: Optima, Arial, Helvetica, Verdana, sans-serif;

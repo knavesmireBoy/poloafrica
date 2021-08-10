@@ -1003,8 +1003,8 @@ poloAF.Util = (function () {
 		curryTwice: curryFactory(2),
 		curryThrice: curryFactory(3),
 		doAlternate: doAlternate,
-		//doMap: doMapRecur,
-		doMap: doMappy,
+		doMap: doMapRecur,
+		//doMap: doMappy,
 		/*USAGE:
         var once = doOnce(),
         actions = [func1, func2, ...];

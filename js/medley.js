@@ -14,14 +14,14 @@ if (!window.poloAF) {
 		//console.log(arguments)
 		return o && o[m] && o[m](arg);
 	}
-
+/*
 	function fallBack(ancr) {
 		ancr.removeChild(poloAF.Util.getByTag('video'));
         var anCrIn = utils.insert(),
             node = poloAF.Util.getNextElement(ancr.firstChild),
             txt =  [['txt', 'No video with supported media and MIME type found']],
             setText = twice(poloAF.Util.doMap)(txt);
-        _.compose(setText, anCrIn(ancr, node))('p'),
+        _.compose(setText, anCrIn(ancr, node))('p');
 	}
 
 	function fixVideo() {
@@ -37,14 +37,14 @@ if (!window.poloAF) {
 			}, source).execute();
 		});
 	}
+    */
 	/* copies text in brackets for every list element in Press Coverage into title attribute for desktop environments*/
-	var poloAF.Util = poloAF.Util,
+	var utils = poloAF.Util,
 		//https://gist.github.com/vyspiansky/9779373
 		touch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false,
 		//con = window.console.log.bind(window),
 		ptL = _.partial,
-		doTwice = poloAF.Util.curryFactory(2),
-		doThrice = poloAF.Util.curryFactory(3),
+		doThrice = utils.curryFactory(3),
 		doMatch = doThrice(simpleInvoke)(/\d\)$/)('match'),
 		/*
        query = '(min-width: 668px)',
@@ -129,5 +129,4 @@ if (!window.poloAF) {
    */
 	//but we simply run the appropriate command dependent on touch/notouch
 	command.render(mysemicolon);
-	fixVideo();
 }());

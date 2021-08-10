@@ -53,7 +53,7 @@ if (!window.poloAF) {
 		cssopacity = getNativeOpacity(!window.addEventListener),
 		key = cssopacity.getKey(),
 		doAlt = U.doAlternate(),
-		doFlower = _.compose(doMap([
+        doFlower = _.compose(doMap([
 			['id', 'flower'],
 			['src', logo_paths[0]],
 			['alt', '']
@@ -83,23 +83,24 @@ if (!window.poloAF) {
 				timer = 1;
 				doFade(exit.opacity);
                 doResume();
+                
 			}
 			if (!ie6) {
-				doAni('aside');
+                doAni('aside');
 				doFlower('img');
 				U.removeNodeOnComplete(tween);
-				base_el = poloAF.Util.getDomChild(poloAF.Util.getNodeByTag('img'))($('ani'));
-				fade_el = base_el.cloneNode();
-				parent = base_el.parentNode;
-				parent.appendChild(fade_el);
+                base_el = poloAF.Util.getDomChild(poloAF.Util.getNodeByTag('img'))($('ani'));
+				fade_el = base_el.cloneNode(false);//reqd arg in some browsers
+                    parent = base_el.parentNode;
+                parent.appendChild(fade_el);
 				base_el.src = logo_paths[j];
-				fade_el.onload = function () {
-					this.style[key] = 100;
+                fade_el.onload = function () {
+                    this.style[key] = 100;
 					//isNaN : divide by zero
 					j = isNaN(j) ? 0 : domod(j += 1);
 					base_el.src = logo_paths[j];
 				};
-				poloAF.Util.eventer('click', [], doAlt([exit, enter]), $('ani')).execute();
+                poloAF.Util.eventer('click', [], doAlt([exit, enter]), $('ani')).execute();
 				return function (i) {
 					i -= 1;
 					if (timer) {
@@ -112,6 +113,8 @@ if (!window.poloAF) {
 					}
 				};
 			}
+           
 		}());
+    
 	setTimeout(curryDefer(fader)(101), 2222);
 }(["images/articles/fullsize/poloafrica_flower_logo.jpg", "images/articles/fullsize/polo150yrs_squared_logo.jpg", "images/articles/fullsize/polo_armed_forces_logo.jpg"]));

@@ -2,3 +2,5 @@
 @import "fonts.css";
 @import "content.css";
 @import "layout.css";
+@import "content_mobile.css";
+@import "layout_mobile.css";

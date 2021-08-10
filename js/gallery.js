@@ -74,7 +74,6 @@
 	}
 
 	function greaterBridge(o, p1, p2) {
-        utils.report(p1)
 		return greater(o[p1], o[p2]);
 	}
 
@@ -613,8 +612,8 @@
                     val;
 				if (slide) {
 					val = flag ? 1 : ($recur.i / 100);
-					val = cssopacity.getValue(val),
-                        key = cssopacity.getKey();
+					val = cssopacity.getValue(val);
+                    key = cssopacity.getKey();
                     doMap(slide, [
 						[
 							[key, val]
@@ -682,26 +681,15 @@
 						ensures we only get a fresh collection when initiating a slideshow*/
 						if (isNaN($recur.t)) {
 							get_play_iterator(true);
-						}
+                        }
 						$controlbar.set(do_static_factory());
-					}
+                    }
 					if (player.validate()) {
 						player.reset();
 					} else {
-                        try {
-                            doOpacity();
-                        }
-                        catch(e){
-                            for(var p in e){
-                               pass += '**';
-                               pass += e[p];
-                        }
-                            utils.report(pass);
-					}
-                                                
-						
-						doRecur();
-				}
+                        doOpacity();
+                        doRecur();
+                    }
                 },
 				undo: function (flag) {
 					doOpacity(flag);
@@ -788,14 +776,13 @@
 				src: "http://109.156.97.131/poloafrica/images/gallery/fullsize/001.jpg"
 			}
 		},
-		//setup_val = utils.always(mock),
+		setup_val = utils.always(mock),
 		svg_handler = ptL(svg_resizer, doSVGview()()),
 		setup = function (e) {
-            console.log(e)
 			doComp(setindex, utils.drillDown([mytarget, 'src']))(e);
 			doComp(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-			doMakeBase(e[mytarget].src, 'base', doOrient, getBaseChild, showtime);
-			//doMakeBase("../images/gallery/fullsize/001.jpg", 'base', doOrient, getBaseChild, showtime);
+			//doMakeBase(e[mytarget].src, 'base', doOrient, getBaseChild, showtime);
+			doMakeBase("../images/gallery/fullsize/001.jpg", 'base', doOrient, getBaseChild, showtime);
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
 				close_cb = ptL(doComp(utils.getDomParent(utils.getNodeByTag('main')), thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(getThumbs, main)), 'a'),
@@ -837,18 +824,15 @@
 	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
 	$setup.execute();
 	addPageNav(anCr, 'gal_forward', makeDummy);
-	$nav.execute();
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 	svg_handler();
     eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();
     utils.highLighter.perform();
-    if(Modernizr.nthchild){
+    if (Modernizr.nthchild) {
         _.each(utils.getByClass('portrait'), ptL(klasRem, 'portrait'));
     }
     _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
-    //poloAF.Util.eventCache.triggerEvent(main, 'click');
-   //utils.report();
-
+  poloAF.Util.eventCache.triggerEvent(main, 'click');
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
 	if (path) {

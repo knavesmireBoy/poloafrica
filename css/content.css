@@ -40,7 +40,7 @@ h2 {
 	-ms-background-size: 100%;
 	-webkit-background-size: 100%;
 	background-size: 100%;
-    border: solid 1px red;
+	width: 100%;
 }
 h3 {
 	margin: 0 0 .3em 0;
@@ -65,7 +65,7 @@ footer {
 	background-position: bottom right;
 	background-position: 100% 100%;
 	background-blend-mode: multiply;
-    -o-background-size: 100%;
+	-o-background-size: 100%;
 	-moz-background-size: 100%;
 	-ms-background-size: 100%;
 	-webkit-background-size: 100%;
@@ -73,13 +73,15 @@ footer {
 	background-size: cover;
 }
 h2 span {
-	display: block;
+	display: inline-block;
 	padding: 0 0 0 15%;
 	padding: 0 0 0 3.75em;
 	padding: 0 0 0 9rem;
 	background-repeat: no-repeat;
 	background-color: white;
 	background-position: 0 50%;
+	width: 100%;
+	/*to cover background gradient on h2*/
 }
 header ul {
 	font: bold 1em/2 'Roboto', 'Arial Black', Arial, Verdana, Helvetica, serif;
@@ -120,7 +122,7 @@ header a h1 {
 	line-height: 2.5;
 }
 .inlinesvg.svgfilters header a h1 {
-    background-image: none;
+	background-image: none;
 }
 header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
@@ -148,13 +150,11 @@ header ul a:hover, header ul a:active {
 .no-js body {
 	background-color: mintcream;
 }
-
 .cssgradients h2 {
 	background-image: linear-gradient(to right, #b8b32e, white);
 	background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
 	background-color: transparent;
 }
-
 .backgroundsize h2 span {
 	-o-background-size: 17%;
 	-moz-background-size: 17%;
@@ -210,80 +210,150 @@ li.current a:link, li.current a:visited {
 header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
 	color: white;
 }
-
 @media screen {
-    h2 {
-        line-height: 1.5;
-    }
+	h2 {
+		line-height: 1.5;
+	}
 }
 @media screen and (min-width: 1024px) {
-	body {
-		background-color: hsla(265, 64%, 74%, .05);
+	section img {
+		box-shadow: none;
+		border-color: #444;
+		border-radius: 1em;
 	}
-	h3 {
+	header ul {
+		text-transform: uppercase;
+	}
+	@supports(flex-wrap: wrapp) or (-webkit-flex-wrap: wrapp) {
+		body {
+			background-color: hsla(265, 64%, 74%, .05);
+		}
+		header {
+			background-image: url(../images/resource/crop.JPG);
+			background-blend-mode: multiply;
+			background-position: center 40%;
+		}
+		h3 {
+			white-space: nowrap;
+			margin: 0 0 1.5em 0;
+			text-transform: uppercase;
+			text-align: center;
+			border-width: 0 !important;
+		}
+		h2 span {
+			padding: 0 1em;
+			display: inline-block;
+			border-radius: 1em;
+			color: white;
+			width: auto;
+		}
+		h2:after {
+			content: '';
+			display: block;
+			height: .1em;
+			margin: -.8em 1% 1em;
+			border-radius: 1em;
+			background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
+			background-color: transparent;
+		}
+		p:first-of-type {
+			margin: 0;
+		}
+		h3:after {
+			margin: -.6em 0 0;
+		}
+		header a h1 {
+			background-position: center top;
+		}
+		.no-cssgradients h2:after, .no-js h2:after {
+			background-color: hsl(265, 64%, 74%);
+		}
+		.override h3 a {
+			border: solid 1px #a39f29;
+			border: solid 1px hsl(58, 60%, 40%);
+			padding: .2em .6em;
+			border-radius: 1em;
+			background: white;
+			color: #666;
+		}
+		h3:after, p:first-of-type:after, p:first-of-type+p:before {
+			content: '';
+			display: block;
+			border-top: solid 1px #a39f29;
+			border-top: solid 1px hsl(58, 60%, 40%);
+		}
+		p:first-of-type:after {
+			margin: 1em 15%;
+		}
+		p:first-of-type+p:before {
+			height: 1em;
+			width: 1em;
+			background: hsl(58, 60%, 40%);
+			margin: -1.5em auto 1em;
+			border-radius: 50%;
+		}
+		h2 {
+			background: none;
+			text-align: center;
+		}
+		h2 span {
+			background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+		}
+		.no-js h2 span {
+			background-image: none;
+			background-color: #9b72d5;
+			background-color: hsl(265, 64%, 74%);
+		}
+		/*default to flat color on no-js, override here wrap required to trump individual pages*/
+		@supports (background-image: linear-gradient(black, white)) {
+			.no-js h2:after {
+				background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
+				background-color: transparent;
+			}
+			#wrap h2 span {
+				background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
+			}
+		}
+	}
+	/* WRAP */
+	.no-cssgradients h2 span:first-child {
+		background-image: none;
+		background-color: #9b72d5;
+		background-color: hsl(265, 64%, 74%);
+	}
+	.flexwrap header {
+		background-image: url(../images/resource/crop.JPG);
+		background-blend-mode: multiply;
+		background-position: center 40%;
+	}
+	.flexwrap h3 {
 		white-space: nowrap;
 		margin: 0 0 1.5em 0;
 		text-transform: uppercase;
 		text-align: center;
 		border-width: 0 !important;
 	}
-	header {
-		background-image: url(../images/resource/crop.JPG);
-		background-blend-mode: multiply;
-		background-position: center 40%;
-        -o-background-size: 100%;
-        -moz-background-size: 100%;
-        -ms-background-size: 100%;
-        -webkit-background-size: 100%;
-        background-size: 100%;
+	.flexwrap h2 {
+		background: none;
+		text-align: center;
 	}
-    
-    
-	header ul {
-		text-transform: uppercase;
-	}
-	h2 span {
+	.flexwrap h2 span {
 		padding: 0 1em;
-        /*
 		display: inline-block;
-        */
 		border-radius: 1em;
 		color: white;
+		width: auto;
 	}
-
-	section img {
-		box-shadow: none;
-		border-color: #444;
-		border-radius: 1em;
-	}
-	h2:after {
+	.flexwrap h2:after {
 		content: '';
 		display: block;
 		height: .1em;
-		margin: -.9em 1% 1em;
+		margin: -.8em 1% 1em;
 		border-radius: 1em;
 		background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
 		background-color: transparent;
 	}
-	p:first-of-type {
-		margin: 0;
-	}
-	h3:after {
-		margin: -.6em 0 0;
-	}
-	.no-cssgradients h2 span:first-child, .no-js h2 span {
-		background-image: none;
-		background-color: #9b72d5;
-		background-color: hsl(265, 64%, 74%);
-	}
-      header a h1 {
-        background-position: center top;
-    }
-    
-	.no-cssgradients h2:after, .no-js h2:after {
-		background-color: hsl(265, 64%, 74%);
-	}
-	.override h3 a {
+	.flexwrap h3 a {
 		border: solid 1px #a39f29;
 		border: solid 1px hsl(58, 60%, 40%);
 		padding: .2em .6em;
@@ -292,48 +362,47 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		color: #666;
 	}
 	/* para rules before/after don't work on float layout */
-	.flexbox h3:after, .flexbox p:first-of-type:after, .flexbox p:first-of-type+p:before {
+	.flexwrap h3:after, .flexwrap p:first-of-type:after, .flexwrap p:first-of-type+p:before {
 		content: '';
 		display: block;
 		border-top: solid 1px #a39f29;
 		border-top: solid 1px hsl(58, 60%, 40%);
 	}
-	p:first-of-type:after {
+	.flexwrap p:first-of-type:after {
 		margin: 1em 15%;
 	}
-	.flexbox p:first-of-type+p:before {
+	.flexwrap p:first-of-type {
+		margin: 0;
+	}
+	.flexwrap h3:after {
+		margin: -.6em 0 0;
+	}
+	.flexwrap p:first-of-type+p:before {
 		height: 1em;
 		width: 1em;
 		background: hsl(58, 60%, 40%);
 		margin: -1.5em auto 1em;
 		border-radius: 50%;
 	}
-	#wrap h2 {
-		background: none !important;
-		text-align: center;
-	}
-	.cssgradients #wrap h2 span {
+	html.flexwrap h2 span {
 		background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
 	}
-	/*default to flat color on no-js, override here wrap required to trump individual pages*/
-	@supports (background-image: linear-gradient(black, white)) {
-		.no-js h2:after {
-			background-image: linear-gradient(to left, hsla(265, 54%, 64%, 0), hsl(265, 64%, 74%), hsla(265, 54%, 64%, 0));
-			background-color: transparent;
-		}
-		#wrap h2 span {
-			background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
-		}
+	.no-flexwrap #wrap h2 span {
+		background-position: 0% 50%;
+		-o-background-size: 13%;
+		-moz-background-size: 13%;
+		-ms-background-size: 13%;
+		-webkit-background-size: 13%;
+		background-size: contain;
 	}
 }
-/*1024*/
-
-@media screen and (max-width: 867px) {
-	h2 span {
-		-o-background-size: 16%;
-		-moz-background-size: 16%;
-		-ms-background-size: 16%;
-		-webkit-background-size: 16%;
+@media screen and (min-width: 1280px) {
+	.no-flexwrap #wrap h2 span {
+		background-position: 0% 50%;
+		-o-background-size: 11%;
+		-moz-background-size: 11%;
+		-ms-background-size: 11%;
+		-webkit-background-size: 11%;
 		background-size: contain;
 	}
 }

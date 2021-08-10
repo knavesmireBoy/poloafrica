@@ -198,16 +198,16 @@ if (!window.poloAF) {
 			return v.match(/^[\w][\w.\-]+@[\w][\w.\-]+\.[A-Za-z]{2,6}$/);
 		},
 		form_name = function (v) {
-			return v.match(/[a-zA-Z]{2,}\s[a-zA-Z]{2,}/);
+			return v.match(/[a-zA-Z]{2,}\.?\s[a-zA-Z]{2,}/);
 		},
         form_name_three = function (v) {
-			return v.match(/[a-zA-Z]{2,}\s[a-zA-Z]+\s[a-zA-Z]{2,}/);
+			return v.match(/[a-zA-Z\.]{2,}\.?\s[a-zA-Z]+\s[a-zA-Z]{2,}/);
 		},
         form_name_strict = function (v) {
-			return v.match(/[A-Z][a-zA-Z]+\s[A-Z][a-zA-Z]+/);
+			return v.match(/[A-Z][a-zA-Z]+\.*\s[A-Z][a-zA-Z]+/);
 		},
         form_name_strict_three = function (v) {
-			return v.match(/[A-Z][a-zA-Z]+\s[A-Z][a-z]*\s[A-Z][a-zA-Z]{1,}/);
+			return v.match(/[A-Z][a-zA-Z]+\.?\s[A-Z][a-z]*\s[A-Z][a-zA-Z]{1,}/);
 		},
 		comment_name = function (v) {
 			return !(v.match(/Please use this area \w*/i));

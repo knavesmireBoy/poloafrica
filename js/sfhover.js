@@ -67,4 +67,4 @@
 	utils.doWhen(ie6, ptL(fallback, gal_img, ptL(utils.invokeOnFirst, setIdBridge), _.compose(ptL(setter, {}, 'src'), sub)));
 	_.compose(doTwice(setId)('mark'), _.last, getLinks)();
   //utils.report();
-}(["../images/resource/footer_girl8.png", "../images/resource/instagram.png", "../images/resource/facebook8.png"]));
+}(["../images/resource/footer_girl8.png", "../images/resource/instagram8.png", "../images/resource/facebook8.png"]));

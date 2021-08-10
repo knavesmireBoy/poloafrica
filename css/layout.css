@@ -66,7 +66,6 @@ section img {
 }
 */
 
-
 header ul {
 	display: table;
 	width: 100%;
@@ -92,13 +91,37 @@ section:first-child {
 	margin: 2em 0 0 0;
 }
 /* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
-
-section img.hide {
-	display: none;
+.showtime h2, .showtime .pagenav, section img.hide {
+    display: none;
 }
+
 section.ptrt img {
 	float: right;
 	width: 18%;
+}
+.icon {
+background-color: pink;
+background-repeat: no-repeat;
+ background-image: url(../images/resource/instagram.png);
+ display: block;
+background-size: contain;
+ height: auto;
+ padding-bottom: 30%;
+ width: 100%;
+}
+svg ~ .icon {
+    background-image: url(../images/resource/insta_text.svg);
+}
+
+.support-svg {
+ position: absolute;
+ border: 0;
+ overflow: hidden;
+ clip: rect(0 0 0 0);
+ height: 1px;
+ margin: -1px;
+ padding: 0;
+ width: 1px; 
 }
 
 .inlinesvg.svgfilters header > a {
@@ -114,7 +137,12 @@ section.ptrt img {
 nav li.current:hover ul, nav li.current.sfhover ul {
 	left: 0;
 }
-section:nth-child(odd) img, #ani, #tween {
+section:nth-child(odd) img {
+	margin: 0 0 1em 2em;
+	float: right;
+	overflow: hidden;
+}
+#ani, #tween {
 	margin: 0 0 1em 2em;
 	float: right;
 	overflow: hidden;
@@ -169,7 +197,7 @@ section:nth-child(odd) img, #ani, #tween {
 	right: 0px;
 }
  
-@media screen and (-ms-high-contrast: none) {  
+@media only screen and (-ms-high-contrast: none) {  
  /*https://css-tricks.com/scale-svg/*/
      .inlinesvg.svgfilters #logo {
 		position: absolute;
@@ -187,29 +215,28 @@ section:nth-child(odd) img, #ani, #tween {
 	}
 }
 
-@media screen and (min-width: 1281px) {
+@media only screen and (min-width: 1281px) {
 	#wrap, footer {
 		max-width: 100em;
 	}
 }
-@media screen and (max-width: 1280px) {
+@media only screen and (max-width: 1280px) {
 	body {
 		margin: 0%;
 	}
 }
-@media screen and (min-width: 1024px) {
+@media only screen and (min-width: 1024px) {
   
-	header>a {
+	.inlinesvg.svgfilters header>a {
 		width: 100%;
 		margin: 0 auto 16em;
 	}
-    .inlinesvg header {
+    .inlinesvg.svgfilters header {
         background-size: cover;
     }
     
-    .inlinesvg header>a {
+    .inlinesvg.svgfilters header>a {
 		width: 56%;
         margin: 0 auto 9em;
 	}
-    
 }

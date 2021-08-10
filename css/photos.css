@@ -63,10 +63,7 @@ main img:hover {
 	display: block;
 	/*force override flex ?*/
 }
-li.portrait img {
-	border: solid 1px red;
-}
-/*
+
 main ul.portrait {
 	margin: 0 30%;
 	width: auto;
@@ -120,16 +117,24 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
 #photos {
     background-color: #fff;
 }
+
+.backgroundsize #photos {
+    background-color: yellowgreen;
+}
 .js #exit {
 	width: 2em;
 	height: 2em;
-	left: 100%;
 	margin: .5em 0 .5em -2.5em;
 	display: block;
-	background: url("../images/resource/sticks_sprite_fat.png") no-repeat;
+}
+
+.js #exit {
+    background-image: url("../images/resource/sticks_sprite_fat.png");
+    background-repeat: no-repeat;
 	background-position: 50% 0%;
-	background-size: 100%;
-	position: relative;
+    position: relative;
+    background-size: 100%;
+    left: 100%;
 }
 .js #exit:hover, .js #exit:focus {
 	background-position: 50% 106%;
@@ -168,13 +173,13 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
         width: auto;
 }
 }
-/*
+
 #controls:after {
 	content: "";
 	display: table;
 	clear: both;
 }
-*/
+
 .no-rgba #controls {
      width: 10%;
     border-spacing: .25em;
@@ -440,7 +445,6 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paus
 	.showtime main ul {
 		width: auto;
 		margin: 0 8%;
-		/*display: block;*/
 	}
 	.touchevents .showtime main {
 		padding: .5em 0 0 0;
@@ -544,8 +548,5 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paus
 		background: url(../images/resource/footer_green_ko.png) no-repeat bottom right, url(../images/resource/sky.png) no-repeat top left;
 	}
     */
-}
-html body {
-    background-color: antiquewhite;
 }
 /*https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/*/

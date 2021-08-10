@@ -42,7 +42,7 @@
 		min-width: 18.2em;
 	}
     
-    .inlinesvg header>a {
+    .inlinesvg.svgfilters header>a {
         padding: 0;
     }
 	section, section img, .touchevents body {
