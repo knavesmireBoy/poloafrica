@@ -832,7 +832,7 @@
         _.each(utils.getByClass('portrait'), ptL(klasRem, 'portrait'));
     }
     _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
-  poloAF.Util.eventCache.triggerEvent(main, 'click');
+  //poloAF.Util.eventCache.triggerEvent(main, 'click');
 }(Modernizr.mq('only all'), '(min-width: 668px)', Modernizr.touchevents, '../images/resource/', /images[a-z\/]+\d+\.jpe?g$/, new RegExp('[^\\d]+\\d(\\d+)[^\\d]+$'), ["move mouse in and out of footer...", "...to toggle the display of control buttons"], function (path) {
 	"use strict";
 	if (path) {

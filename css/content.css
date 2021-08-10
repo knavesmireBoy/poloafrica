@@ -61,6 +61,7 @@ p {
 }
 footer {
 	background-image: url(../images/resource/footer_green_ko.png);
+	/*background-image: url(../images/resource/footer2.png);*/
 	background-repeat: no-repeat;
 	background-position: bottom right;
 	background-position: 100% 100%;
@@ -316,7 +317,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		}
 	}
 	/* WRAP */
-	.no-cssgradients h2 span:first-child {
+	.flexwrap.no-cssgradients h2 span:first-child {
 		background-image: none;
 		background-color: #9b72d5;
 		background-color: hsl(265, 64%, 74%);

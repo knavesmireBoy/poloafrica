@@ -118,9 +118,6 @@ in the pure JS version .alt went on main. Suggest we change it on the JS version
     background-color: #fff;
 }
 
-.backgroundsize #photos {
-    background-color: yellowgreen;
-}
 .js #exit {
 	width: 2em;
 	height: 2em;

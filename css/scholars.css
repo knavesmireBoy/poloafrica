@@ -1,4 +1,4 @@
-    @import "flex_mod.css";
+@import "flex_mod.css";
 @import "fullflex_mod.css";
 #scholars li:nth-child(3):hover ul {
 	left: 0;
