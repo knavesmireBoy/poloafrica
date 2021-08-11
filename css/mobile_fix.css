@@ -1,0 +1,116 @@
+
+    
+    
+
+
+/*
+	h2 {
+		font-size: 1.6rem;
+		padding: 0 0 0 .6rem;
+	}
+	header>a {
+        padding: 2em 0 0 0;
+		margin: 0 0 0 .6rem;
+	}
+	.menu {
+		height: 33.28px;
+		width: 32px;
+	}
+	header input:checked+ul {
+		top: 3rem;
+	}
+    */
+    /*
+	.no-objectfit h2 {
+		margin: -3.6rem 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 12rem;
+	}
+	.no-objectfit h2 {
+		line-height: 1.5;
+	}
+
+	.no-objectfit header>a {
+		width: 12rem;
+		padding-bottom: 52%;
+		margin: 0 0 6% .6rem;
+	}
+    */
+
+
+@media only screen and (max-width: 480px) {
+    
+   header > a, h2 span {
+       min-width: 100px;
+    }
+    
+    .no-objectfit #wrap header>a, .no-objectfit #wrap h2 span{
+        width: 22rem;
+        margin: 0;
+    }
+    
+    .no-objectfit #wrap h2  {
+        padding: 0;
+    }
+    
+
+
+
+	.no-objectfit h2 {
+		margin: -3.7rem 0 0 0;
+	}
+    
+    
+    
+
+	header input:checked+ul {
+		top: 4rem;
+	}
+	.menu {
+		height: 3rem;
+		width: 3rem;
+	}
+    .no-touchevents h2 {
+		line-height: 1.4;
+	}
+   
+     .no-objectfit header {
+        background-position: 70% 0;
+        background-size: 250%;
+    }
+    
+    
+    
+     /*
+	.no-objectfit h2 {
+		margin: -3.5rem 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 15.7rem;
+	}
+	
+    */
+}
+
+@media only screen and (max-width: 320px) and (orientation: portrait){
+     .no-objectfit #wrap header>a, .no-objectfit #wrap h2 span{
+        width: 15rem;
+        margin: 0;
+    }
+    
+    	.no-objectfit #wrap header>a {
+
+		padding-bottom: 60%;
+	}
+    
+     .no-objectfit #wrap h2  {
+        font-size: 1.75rem;
+         margin: -3rem 0 0 0;
+    }
+    
+   
+}
+    
+
+

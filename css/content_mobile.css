@@ -25,11 +25,10 @@
 		-moz-background-size: 240%;
 		-ms-background-size: 240%;
 		-webkit-background-size: 240%;
+		background-size: 240%;
 		background-size: cover;
 	}
-	header>a {
-		top: 0;
-	}
+	
 	section>label {
 		font-weight: bold;
 	}
@@ -60,12 +59,13 @@
 		background: black;
 	}
 	.menu {
-		background: 50% 0% url("../images/resource/polo_ball_sprite.png") no-repeat;
-		-o-background-size: 105%;
+		background: 50% 1% url("../images/resource/polo_ball_sprite.png") no-repeat;
+		-o-background-size: 100%;
 		-moz-background-size: 100%;
 		-ms-background-size: 100%;
 		-webkit-background-size: 100%;
 		background-size: 100%;
+		background-size: cover;
 		cursor: pointer;
 		-webkit-transition: transform 1s;
 		-o-transition: transform 1s;
@@ -120,7 +120,7 @@
 	}
 	header a h1 {
 		background-position: left bottom;
-		line-height: 4.4;
+		line-height: 1;
 	}
 	/*ZAP*/
 	#wrap h2, #wrap h2 span {
@@ -139,39 +139,12 @@
 		color: #cc6;
 		color: hsl(58, 60%, 48%);
 	}
+    
+        
+  
+
 }
-@media only screen and (max-width: 667px) and (orientation: portrait) {
-	header {
-		-o-background-size: 300%;
-		-moz-background-size: 300%;
-		-ms-background-size: 300%;
-		-webkit-background-size: 300%;
-		background-size: 300% !important;
-	}
-}
-@media only screen and (max-width: 580px) {
-	footer {
-		-o-background-size: 280%;
-		-moz-background-size: 280%;
-		-ms-background-size: 280%;
-		-webkit-background-size: 280%;
-		background-size: cover;
-	}
-}
-@media only screen and (max-width: 480px) {
-	footer {
-		-o-background-size: 320%;
-		-moz-background-size: 320%;
-		-ms-background-size: 320%;
-		-webkit-background-size: 320%;
-		background-size: cover;
-	}
-}
-@media only screen and (max-width: 440px) {
-	footer>a {
-		padding: .75em .6em;
-	}
-}
+
 /*
 @media only screen and (min-width: 1024px) {
 

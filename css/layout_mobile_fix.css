@@ -1,0 +1,154 @@
+@media only screen and (max-width: 568px) {
+	h2 {
+		padding: 0 0 0 1rem;
+	}
+	header>a, h2 span {
+		width: 18rem;
+	}
+	header>a {
+		top: 1.3rem;
+		margin: 0 0 0 1rem;
+	}
+}
+@media only screen and (max-width: 480px) {
+	h2 {
+		margin: -2.7rem 0 0 0;
+		font-size: 1.75rem;
+		line-height: 1.4;
+	}
+	header>a, h2 span {
+		width: 16rem;
+	}
+	header input:checked+ul {
+		top: 4rem;
+	}
+	.menu {
+		height: 3rem;
+		width: 3rem;
+	}
+    .no-touchevents h2 {
+		line-height: 1.4;
+	}
+	.no-objectfit h2 span {
+		width: 15.7rem;
+	}
+	
+    /*
+	.no-objectfit header>a {
+		position: relative;
+		height: 0;
+		padding: 3em 0 0 0;
+		width: 15.7rem;
+		padding-bottom: 46.12%;
+		margin: 0 0 0 1rem;
+	}
+	.no-objectfit h2 {
+		margin: -3.5rem 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 15.7rem;
+	}
+	.no-objectfit #logo {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		left: 0;
+		top: 0;
+	}
+    */
+
+}
+
+@media only screen and (max-width: 400px) {
+	.no-objectfit h2 span {
+		width: 13rem;
+	}
+}
+@media only screen and (max-width: 360px) {
+	header>a, h2 span {
+		width: 14rem;
+	}
+	#logo {
+		margin: 0 0 -1rem 0;
+	}
+}
+@media only screen and (max-width: 320px) {
+
+	h2 {
+		font-size: 1.6rem;
+		padding: 0 0 0 .6rem;
+	}
+	header>a {
+        padding: 2em 0 0 0;
+		margin: 0 0 0 .6rem;
+	}
+	.menu {
+		height: 33.28px;
+		width: 32px;
+	}
+	header input:checked+ul {
+		top: 3rem;
+	}
+    /*
+	.no-objectfit h2 {
+		margin: -3.6rem 0 0;
+	}
+	.no-objectfit h2 span {
+		width: 12rem;
+	}
+	.no-objectfit h2 {
+		line-height: 1.5;
+	}
+
+	.no-objectfit header>a {
+		width: 12rem;
+		padding-bottom: 52%;
+		margin: 0 0 6% .6rem;
+	}
+    */
+}
+@media only screen and (max-width: 280px) {
+	h2 {
+        font-size: 1.3rem;
+		margin: -2.3rem 0 0 0;
+		line-height: 1.8;
+	}
+	header>a, h2 span {
+		width: 12rem;
+	}
+}
+
+@media only screen and (max-width: 667px) and (orientation: portrait) {
+	header {
+		-o-background-size: 300%;
+		-moz-background-size: 300%;
+		-ms-background-size: 300%;
+		-webkit-background-size: 300%;
+		background-size: 300% !important;
+	}
+}
+@media only screen and (max-width: 580px) {
+	footer {
+		-o-background-size: 280%;
+		-moz-background-size: 280%;
+		-ms-background-size: 280%;
+		-webkit-background-size: 280%;
+		background-size: 280%;
+		background-size: cover;
+	}
+}
+@media only screen and (max-width: 480px) {
+	footer {
+		-o-background-size: 320%;
+		-moz-background-size: 320%;
+		-ms-background-size: 320%;
+		-webkit-background-size: 320%;
+		background-size: 320%;
+		background-size: cover;
+	}
+}
+@media only screen and (max-width: 440px) {
+	footer>a {
+		padding: .75em .6em;
+	}
+}
