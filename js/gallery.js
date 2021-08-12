@@ -303,7 +303,7 @@
 				img.parentNode.href = doParse(img.src);
 			}
 		},
-		loadImageBridge = function (a, b) {
+		loadImageBridge = function () {
 			var args = _.rest(arguments, 2);
 			args = args.length ? args : [function () {}];
 			loadImage.apply(null, _.first(arguments, 2).concat(new utils.FauxPromise(args)));
@@ -453,7 +453,7 @@
 				}
 			};
 		}(['undo', 'execute'])),
-		negator = function (cb, page_coll) {
+        negator = function (cb, page_coll) {
 			if (galleryCount(page_coll.value)) {
 				cb();
 				galleryCount = _.negate(galleryCount);
@@ -475,14 +475,13 @@
 		The big idea is to avoid using the function keyword as much as possible making the transition to ES6 a little easier*/
 		populate = doComp(twice(_.each)(invokeBridge), twice(_.map)(thrice(doMethod)('reverse')(null)), ptL(invokeArgs, _.zip, getAllPics), twice(_.map)(pathMaker), ptL(negator, doComp(ptL(klasTog, 'alt', getThumbs), _.bind($LI.exec, $LI)))),
 		notMain = doComp(_.negate(doComp(ptL(equals, main), getTarget))),
-		notExit = _.negate(doComp(ptL(equals, 'exit'), id_from_target)),
-		//advance_validators = [doComp(thrice(doMethod)('match')(/a/i), node_from_target), notExit, notMain],
-		advance_validators = [utils.always(true), notExit, notMain],
-		get_back = doComp(thrice(doMethod)('match')(/back$/), doGet('id'), getLink, getTarget),
+        notExit = _.negate(doComp(ptL(equals, 'exit'), id_from_target)),
+        advance_validators = [utils.always(true), notExit, notMain],
+		get_back = doComp(thrice(doMethod)('match')(/back$/), doGet('id'), utils.con, getLink, getTarget),
 		doValidate = deferEvery(advance_validators),
-		getDirection = ptL(utils.getBest, get_back, ['back', 'forward']),
+		getDirection = ptL(utils.getBestPred, get_back, ['back', 'forward']),
 		every = doComp(doValidate, doPartial(true, invokeCB)),
-		advanceRouteBridge = ptL(utils.invokeWhen, utils.always(true), getDirection),
+		advanceRouteBridge = ptL(utils.invokeWhen, every, getDirection),
 		doInc = function (n) {
 			return doComp(ptL(modulo, n), increment);
 		},
@@ -497,7 +496,7 @@
 		advanceRouteListener = ptL(utils.invokeThen, advanceRouteBridge, advanceRoute),
 		pageNavHandler = doComp(ptL(eventing, 'click', event_actions.slice(0, 1), _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
 		$nav = addPageNav(ptL(anCrIn, getThumbs), 'gal_back', pageNavHandler),
-		slide_player_factory = function () {
+        slide_player_factory = function () {
 			return {
 				/*remember because images are a mix of landscape and portrait we re-order collection for the slideshow
 				so landscapes follow portraits or vice-versa (depending what is the leading pic), this requires undoing when reverting to manual navigation which is invoked by clicking forward/back button, a fresh slideplayer is created on entering slideshow */
@@ -675,7 +674,6 @@
 			player = playmaker();
 			return {
 				execute: function () {
-                    var pass = '';
 					if (!$recur.t) {
 						/*returns true if undefined, false if null which it will be as a result of pausing
 						ensures we only get a fresh collection when initiating a slideshow*/
@@ -769,7 +767,7 @@
 			$recur.i = 47; //slide is clone of base initially, so fade can start quickly
 			return mynext;
 		},//factory
-        
+        /*
 		mock = {
 			target: {
 				nodeName: 'IMG',
@@ -777,12 +775,13 @@
 			}
 		},
 		setup_val = utils.always(mock),
+        */
 		svg_handler = ptL(svg_resizer, doSVGview()()),
 		setup = function (e) {
 			doComp(setindex, utils.drillDown([mytarget, 'src']))(e);
 			doComp(ptL(klasAdd, 'static'), thrice(doMapBridge)('id')('controls'), anCr(main))('section');
-			//doMakeBase(e[mytarget].src, 'base', doOrient, getBaseChild, showtime);
-			doMakeBase("../images/gallery/fullsize/001.jpg", 'base', doOrient, getBaseChild, showtime);
+			doMakeBase(e[mytarget].src, 'base', doOrient, getBaseChild, showtime);
+			//doMakeBase("../images/gallery/fullsize/001.jpg", 'base', doOrient, getBaseChild, showtime);
 			var buttons = ['backbutton', 'playbutton', 'forwardbutton'],
 				aButton = anCr($('controls')),
 				close_cb = ptL(doComp(utils.getDomParent(utils.getNodeByTag('main')), thrice(doMapBridge)('href')('.'), thrice(doMapBridge)('id')('exit'), anCrIn(getThumbs, main)), 'a'),
@@ -823,6 +822,7 @@
     
 	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
 	$setup.execute();
+	$nav.execute();
 	addPageNav(anCr, 'gal_forward', makeDummy);
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 	svg_handler();
