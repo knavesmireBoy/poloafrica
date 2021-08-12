@@ -160,13 +160,13 @@
 		/*255px corresponds to min-width of header > a */
 		width: calc(215px + (160) * (100vw - 280px) / (667 - 280));
 	}
-	header {
+	.inlinesvg.svgfilters header {
 		background-size: calc(400% - (1200) * (100vw - 281px) / (667 - 280));
 	}
 	h3, section>label {
 		font-size: calc(1.4em + (8) * (100vw - 281px) / (667 - 280));
 	}
-	h2 {
+	.inlinesvg.svgfilters h2 {
 		font-size: calc(2.2em + (10) * (100vw - 281px) / (667 - 280));
 		margin: 0;
 		margin-top: calc(-1.2em - (10) * (100vw - 281px) / (667 - 280));
@@ -176,7 +176,7 @@
 		padding-left: 1rem;
 	}
     
-    header a h1 {
+    .inlinesvg.svgfilters header a h1 {
         line-height: calc(.5em + (8) * (100vw - 281px) / (667 - 280));
     }
 

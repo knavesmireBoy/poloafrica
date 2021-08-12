@@ -4,8 +4,12 @@
 /*global Modernizr: false */
 /*global poloAF: false */
 /*global _: false */
-(function (mq, query) {
+(function (mq, query, ipad) {
 	"use strict";
+    
+    function getResult(arg) {
+		return _.isFunction(arg) ? arg() : arg;
+	}
 
 	function invokemethod(o, arg, m) {
 		return o[m](arg);
@@ -18,9 +22,12 @@
 			height: a[1]
 		};
 	}
+    
+    
 	var dummy = {},
 		//con = window.console.log.bind(window),
 		utils = poloAF.Util,
+        options = ["2 -2 340 75", "2 -2 340 75"],
 		ie6 = utils.$('tween'),
 		ptL = _.partial,
 		doTwice = utils.curryFactory(2),
@@ -78,6 +85,7 @@
 		},
 		doSvg = function (svg) {
 			return function (str) {
+                str = getResult(str);
 				if (svg && str) {
 					utils.setAttributes({
 						viewBox: str
@@ -91,7 +99,8 @@
 		},
 		setViewBox = doSvg(document.getElementById('logo')),
 		doMobile = ptL(setViewBox, "0 0 155 115"),
-		doDesktop = ptL(setViewBox, "2 0 340 75"),
+		//doDesktop = ptL(setViewBox, "2 -2 340 75"),
+		doDesktop = ptL(setViewBox, ptL(utils.getBestOnly, ptL(Modernizr.mq, ipad), options)),
 		floating_elements = function (elements, getArticle, getHeading, before, after) {
 			var mq = window.matchMedia("(max-width: 667px)");
 			return _.map(elements, function (el, i) {
@@ -126,7 +135,7 @@
 	float_handler();
 	utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
     _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
-   // console.log(utils.findByClass('menu'))
    //utils.report();
+    //doDesktop();
 	return true;
-}(Modernizr.mq('only all'), '(min-width: 667px)'));
+}(Modernizr.mq('only all'), '(min-width: 667px)', '(min-width: 1024px)'));

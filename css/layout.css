@@ -224,6 +224,17 @@ section:nth-child(odd) img {
 	body {
 		margin: 0%;
 	}
+  
+}
+@media only screen and (min-width: 668px) and (max-width: 1280px) {
+    .inlinesvg.svgfilters header a h1 {
+        line-height: calc(1em + (40) * (100vw - 667px) / (1280 - 667));
+    }
+    
+     .inlinesvg.svgfilters header a {
+        top: calc(2em - (32) * (100vw - 667px) / (1280 - 667));
+    }
+    
 }
 @media only screen and (min-width: 1024px) {
   
@@ -240,3 +251,4 @@ section:nth-child(odd) img {
         margin: 0 auto 9em;
 	}
 }
+
