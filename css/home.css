@@ -86,9 +86,9 @@ h2 span {
 	}
     
     h2 {
-        padding-left: calc(14px + (12) * (100vw - 320px) / (667 - 320));
-    }
-
+		font-size: 2.1em;
+	}
+    
 	.no-js section:nth-child(1) .read-more-trigger:before {
 		content: "The Poloafrica Development Trust";
 	}

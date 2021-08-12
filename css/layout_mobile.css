@@ -101,7 +101,7 @@
 	header input:checked+ul {
 		top: 4.5em;
 		top: 3.6rem;
-		top: calc(3.6rem + (16) * (100vw - 320px) / (667 - 320));
+		top: calc(3.3rem + (16) * (100vw - 320px) / (667 - 320));
 		right: 1.143em;
 		right: 1rem;
 		z-index: 2;
@@ -162,7 +162,7 @@
 	}
 	header>a, h2 span {
 		/*255px corresponds to min-width of header > a */
-		width: calc(255px + (100) * (100vw - 280px) / (667 - 280));
+		width: calc(235px + (140) * (100vw - 280px) / (667 - 280));
 	}
 	.js header {
 		background-size: calc(500% - (1900) * (100vw - 281px) / (667 - 280));
@@ -170,17 +170,20 @@
 	h3, section>label {
 		font-size: calc(1.4em + (8) * (100vw - 281px) / (667 - 280));
 	}
-	.js h2 {
+	h2 {
 		font-size: calc(2.2em + (10) * (100vw - 281px) / (667 - 280));
 		margin: 0;
-		margin-top: calc(-1.5em + (2) * (100vw - 281px) / (667 - 280));
-        line-height: 1.5;
-	}
-	.js h2 {
-		padding: 0;
+		margin-top: calc(-1.3em - (10) * (100vw - 281px) / (667 - 280));
+        line-height: calc(1.2em + (10) * (100vw - 281px) / (667 - 280));
+        padding: 0;
 		padding-left: .64em;
 		padding-left: 1rem;
 	}
+    
+    header a h1 {
+        line-height: calc(.5em + (4) * (100vw - 281px) / (667 - 280));
+    }
+
 	.no-objectfit #wrap header>a {
 		position: relative;
 		height: 1px;

@@ -48,7 +48,7 @@
 	.no-objectfit h2 {
 		margin: -3.7rem 0 0 0;
 	}
-	header input:checked+ul {
+	.no-objectfit header input:checked+ul {
 		top: 4rem;
 	}
 	.menu {
