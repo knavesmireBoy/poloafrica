@@ -141,7 +141,7 @@ if (!window.poloAF) {
 		doSVGview = function () {
 			var mq = window.matchMedia("(max-width: 667px)"),
 				setViewBox = doSvg(document.getElementById('logo')),
-				doMobile = COMP(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 130")),
+				doMobile = COMP(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 115")),
 				doDesktop = COMP(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
 			return function () {
 				if (mq.matches) { //onload

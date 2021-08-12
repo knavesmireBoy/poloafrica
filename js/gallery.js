@@ -184,7 +184,7 @@
         doSVGview = function () {
             var mq = window.matchMedia("(max-width: 667px)"),
                 setViewBox = doSvg(document.getElementById('logo')),
-                doMobile = _.compose(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 130")),
+                doMobile = _.compose(execMobile, undoDesktop, _.partial(setViewBox, "0 0 155 115")),
                 doDesktop = _.compose(undoMobile, execDesktop, _.partial(setViewBox, "2 0 340 75"));
             return function () {
                 if (mq.matches) { //onload
