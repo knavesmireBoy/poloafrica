@@ -112,7 +112,7 @@
 	/*no need to fix advanced selectors for ie as mobile only layout*/
 	header input:checked+ul>li {
 		height: 2.286em;
-		height: 2rem;
+		height: 1.9rem;
 	}
 	article p:first-of-type, article p:last-child {
 		margin: .8rem 0;
@@ -144,11 +144,7 @@
 	.inlinesvg.svgfilters header>a {
 		padding: 0;
 	}
-	/*
-     .inlinesvg.svgfilters header h1 {
-        margin-top: -3em;
-    }
-    */
+
 	#logo {
 		margin: 0 0 -1.5rem 0;
 	}
@@ -162,10 +158,10 @@
 	}
 	header>a, h2 span {
 		/*255px corresponds to min-width of header > a */
-		width: calc(235px + (140) * (100vw - 280px) / (667 - 280));
+		width: calc(215px + (160) * (100vw - 280px) / (667 - 280));
 	}
-	.js header {
-		background-size: calc(500% - (1900) * (100vw - 281px) / (667 - 280));
+	header {
+		background-size: calc(400% - (1200) * (100vw - 281px) / (667 - 280));
 	}
 	h3, section>label {
 		font-size: calc(1.4em + (8) * (100vw - 281px) / (667 - 280));
@@ -173,7 +169,7 @@
 	h2 {
 		font-size: calc(2.2em + (10) * (100vw - 281px) / (667 - 280));
 		margin: 0;
-		margin-top: calc(-1.3em - (10) * (100vw - 281px) / (667 - 280));
+		margin-top: calc(-1.2em - (10) * (100vw - 281px) / (667 - 280));
         line-height: calc(1.2em + (10) * (100vw - 281px) / (667 - 280));
         padding: 0;
 		padding-left: .64em;
@@ -181,7 +177,7 @@
 	}
     
     header a h1 {
-        line-height: calc(.5em + (4) * (100vw - 281px) / (667 - 280));
+        line-height: calc(.5em + (8) * (100vw - 281px) / (667 - 280));
     }
 
 	.no-objectfit #wrap header>a {
