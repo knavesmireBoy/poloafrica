@@ -207,7 +207,7 @@ header>a, h2 span, .no-objectfit #logo {
 	border-width: 0px;
 }
 #logo, h2 span, header>a {
-	border: solid 0px red;
+	border: solid 1px red;
 }
 h2 span {
 	border-color: blue;

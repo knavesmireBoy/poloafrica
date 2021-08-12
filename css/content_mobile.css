@@ -119,6 +119,7 @@
 	header a h1 {
 		background-position: left bottom;
 		line-height: 1;
+		line-height: 4.4;
 	}
 	/*ZAP*/
 	#wrap h2, #wrap h2 span {
