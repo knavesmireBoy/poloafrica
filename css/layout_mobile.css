@@ -179,6 +179,10 @@
     .inlinesvg.svgfilters header a h1 {
         line-height: calc(.5em + (8) * (100vw - 281px) / (667 - 280));
     }
+    
+    .no-js #wrap header a h1 {
+        line-height: calc(3.8em + (78) * (100vw - 281px) / (667 - 280));
+    }
 
 	.no-objectfit #wrap header>a {
 		position: relative;
@@ -207,7 +211,7 @@ header>a, h2 span, .no-objectfit #logo {
 	border-width: 0px;
 }
 #logo, h2 span, header>a {
-	border: solid 1px red;
+	border: solid 0px red;
 }
 h2 span {
 	border-color: blue;
