@@ -98,11 +98,11 @@
 			};
 		},
 		setViewBox = doSvg(document.getElementById('logo')),
-		doMobile = ptL(setViewBox, "0 0 155 115"),
+		doMobile = ptL(setViewBox, "0 0 155 120"),
 		//doDesktop = ptL(setViewBox, "2 -2 340 75"),
 		doDesktop = ptL(setViewBox, ptL(utils.getBestOnly, ptL(Modernizr.mq, ipad), options)),
 		floating_elements = function (elements, getArticle, getHeading, before, after) {
-			var mq = window.matchMedia("(max-width: 667px)");
+			var mq = window.matchMedia("(max-width: 667px)");//?
 			return _.map(elements, function (el, i) {
 				var article = getArticle(el),
 					h = article && getHeading(article),

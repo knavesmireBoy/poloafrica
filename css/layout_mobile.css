@@ -1,4 +1,5 @@
 @media screen and (max-width: 667px) {
+
 	body {
 		margin: 2%;
 	}
@@ -169,7 +170,7 @@
 	.inlinesvg.svgfilters h2 {
 		font-size: calc(2.2em + (10) * (100vw - 281px) / (667 - 280));
 		margin: 0;
-		margin-top: calc(-1.2em - (10) * (100vw - 281px) / (667 - 280));
+		margin-top: calc(-1.3em - (10) * (100vw - 281px) / (667 - 280));
         line-height: calc(1.2em + (10) * (100vw - 281px) / (667 - 280));
         padding: 0;
 		padding-left: .64em;
@@ -206,12 +207,14 @@
 	}
 }
 /*remove border's above when in production*/
-
 header>a, h2 span, .no-objectfit #logo {
 	border-width: 0px;
 }
 #logo, h2 span, header>a {
-	border: solid 0px red;
+	border: solid 1px red;
+}
+#logo {
+    border-color: yellow;
 }
 h2 span {
 	border-color: blue;
