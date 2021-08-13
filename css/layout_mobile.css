@@ -1,5 +1,4 @@
 @media screen and (max-width: 667px) {
-
 	body {
 		margin: 2%;
 	}
@@ -123,7 +122,7 @@
 	}
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-inlinesvg header a h1, .no-js header a h1 {
-		margin-bottom: 3em;
+		margin-bottom: 4em;
 	}
 	.objectfit .menu {
 		width: 7.4vw;
@@ -145,7 +144,6 @@
 	.inlinesvg.svgfilters header>a {
 		padding: 0;
 	}
-
 	#logo {
 		margin: 0 0 -1.5rem 0;
 	}
@@ -171,24 +169,22 @@
 		font-size: calc(2.2em + (10) * (100vw - 281px) / (667 - 280));
 		margin: 0;
 		margin-top: calc(-1.3em - (10) * (100vw - 281px) / (667 - 280));
-        line-height: calc(1.2em + (10) * (100vw - 281px) / (667 - 280));
-        padding: 0;
+		line-height: calc(1.2em + (10) * (100vw - 281px) / (667 - 280));
+		padding: 0;
 		padding-left: .64em;
 		padding-left: 1rem;
 	}
-    
-    .inlinesvg.svgfilters header a h1 {
-        line-height: calc(.5em + (8) * (100vw - 281px) / (667 - 280));
-    }
-    
-    .no-js #wrap header a h1 {
-        line-height: calc(3.8em + (78) * (100vw - 281px) / (667 - 280));
-    }
-
+	.inlinesvg.svgfilters header a h1 {
+		line-height: calc(.5em + (8) * (100vw - 281px) / (667 - 280));
+	}
+	.no-js #wrap header a h1 {
+		line-height: calc(3.8em + (78) * (100vw - 281px) / (667 - 280));
+	}
 	.no-objectfit #wrap header>a {
 		position: relative;
 		height: 1px;
 		padding: 0;
+		width: 100%;
 		padding-bottom: 50%;
 	}
 	.no-objectfit #logo {
@@ -197,6 +193,18 @@
 		width: 100%;
 		left: 0;
 		top: 1em;
+	}
+	.no-js h1 {
+		line-height: 6.4;
+	}
+	.no-js header a h1 {
+		background-image: url("../images/resource/logo_mobile.svg");
+		position: relative;
+		height: 1px;
+		padding: 0;
+		width: 100%;
+		padding-bottom: 48%;
+		background-repeat: no-repeat;
 	}
 }
 @media only screen and (-ms-high-contrast: none) {
@@ -207,14 +215,15 @@
 	}
 }
 /*remove border's above when in production*/
+
 header>a, h2 span, .no-objectfit #logo {
 	border-width: 0px;
 }
 #logo, h2 span, header>a {
-	border: solid 1px red;
+	border: solid 0px red;
 }
 #logo {
-    border-color: yellow;
+	border-color: yellow;
 }
 h2 span {
 	border-color: blue;

@@ -119,6 +119,7 @@ header a h1 {
 }
 header a h1 {
 	background-image: url("../images/resource/logo_sprite.png");
+	background-image: url("../images/resource/logo_desk.svg");
 	background-repeat: no-repeat;
 	line-height: 2.5;
 }

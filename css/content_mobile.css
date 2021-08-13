@@ -50,6 +50,7 @@
 		text-align: right;
 		border-width: 0 0 1px;
 	}
+
 	header ul>li:last-child a {
 		border-width: 0;
 	}
@@ -120,11 +121,7 @@
 		background-position: left bottom;
 		line-height: 1;
 	}
-    .no-js h1 {
-		line-height: 6.4;
-            background-size: 220%;
-
-	}
+   
 	/*ZAP*/
 	#wrap h2, #wrap h2 span {
 		background-image: none;
