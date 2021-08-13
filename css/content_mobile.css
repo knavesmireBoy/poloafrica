@@ -103,6 +103,9 @@
 		text-shadow: none;
 		background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
+        /*
+		background-image: url(../images/resource/bg.jpg);
+        */
 		padding: .5em .5em .4em;
 	}
 	section.show h3, .read-more-state:checked~.read-more-trigger:before, section:first-child .read-more-state~.read-more-trigger:before {

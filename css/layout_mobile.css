@@ -198,12 +198,14 @@
 		line-height: 6.4;
 	}
 	.no-js header a h1 {
-		background-image: url("../images/resource/logo_mobile.svg");
+		background-image: url("../images/resource/logo_mobile.png");
+        background-image: url("../images/resource/logo_mobile.svg"), linear-gradient(transparent, transparent);
 		position: relative;
 		height: 1px;
 		padding: 0;
 		width: 100%;
 		padding-bottom: 48%;
+        background-size: cover;
 		background-repeat: no-repeat;
 	}
 }

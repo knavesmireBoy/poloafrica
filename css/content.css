@@ -118,8 +118,8 @@ header a h1 {
 	width: 100%;
 }
 header a h1 {
-	background-image: url("../images/resource/logo_sprite.png");
-	background-image: url("../images/resource/logo_desk.svg");
+	background-image: url("../images/resource/logo_desktop.png");
+    background-image: url("../images/resource/logo_desk.svg"), linear-gradient(transparent, transparent);
 	background-repeat: no-repeat;
 	line-height: 2.5;
 }
