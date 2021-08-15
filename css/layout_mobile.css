@@ -179,6 +179,7 @@
 	}
     .inlinesvg.svgfilters body {
         background-color: lavender;
+        background-color: #fff;
     }
 	.no-js #wrap header a h1 {
 		line-height: calc(3.8em + (78) * (100vw - 281px) / (667 - 280));
