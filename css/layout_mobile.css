@@ -166,7 +166,7 @@
 		font-size: calc(1.4em + (8) * (100vw - 281px) / (667 - 280));
 	}
 	.inlinesvg.svgfilters h2 {
-		font-size: calc(2.2em + (8) * (100vw - 281px) / (667 - 280));
+		font-size: calc(2em + (8) * (100vw - 281px) / (667 - 280));
 		margin: 0;
 		margin-top: calc(-1.3em - (10) * (100vw - 281px) / (667 - 280));
 		line-height: calc(1.2em + (10) * (100vw - 281px) / (667 - 280));
@@ -178,7 +178,7 @@
 		line-height: calc(.5em + (8) * (100vw - 281px) / (667 - 280));
 	}
     .inlinesvg.svgfilters body {
-        background-color: blueviolet;
+        background-color: lavender;
     }
 	.no-js #wrap header a h1 {
 		line-height: calc(3.8em + (78) * (100vw - 281px) / (667 - 280));
