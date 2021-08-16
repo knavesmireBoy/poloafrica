@@ -1,5 +1,8 @@
 /*https://www.smashingmagazine.com/2019/03/web-on-internet-explorer-ie8/
-“Optimize for the majority, make an effort for the minority, and never sacrifice security.”*/
+“Optimize for the majority, make an effort for the minority, and never sacrifice security.”
+https://stackoverflow.com/questions/52364501/fallback-for-svg-injection-with-no-javascript-svg-support
+https://codepen.io/ourmaninamsterdam/pen/ilBIz
+https://codepen.io/tigt/post/inline-svg-fallback-without-javascript-take-2*/
 body {
 	font: normal .875em/1.75 'Lora', Georgia, serif;
 	background-color: rgb(255, 233, 100);
