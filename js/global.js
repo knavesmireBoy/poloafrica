@@ -1333,9 +1333,21 @@ poloAF.Util = (function () {
 			// for a good intro into throttling and debouncing, see:
 			// https://css-tricks.com/debouncing-throttling-explained-examples/
 			klas = klas || 'show';
-			var deferHandle = curryFactory(3, true)(handleScroll)(klas)(getThreshold || poloAF.Util.getScrollThreshold),
+            
+			var scroll = _.partial(poloAF.Util.eventer, 'scroll', []),
+                deferHandle = curryFactory(3, true)(handleScroll)(klas)(getThreshold || poloAF.Util.getScrollThreshold),
 				funcs = _.map(collection, deferHandle);
-			return _.map(_.map(funcs, curryFactory(2)(_.throttle)(100)), _.partial(addHandler, 'scroll', window));
+            funcs = _.map(funcs, curryFactory(2, true)(_.throttle)(100));
+            funcs = _.map(funcs, function(f){
+                return _.partial(scroll, f);
+            });
+            
+            _.each(funcs, function(f){
+                f(window).execute();
+            })
+           
+           
+			//return _.map(_.map(funcs, curryFactory(2)(_.throttle)(100)), _.partial(addHandler, 'scroll', window));
 		},
 		setText: curryFactory(3)(setAdapter)('innerHTML'),
 		setter: setter,
