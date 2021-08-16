@@ -1,3 +1,5 @@
+/*https://www.smashingmagazine.com/2019/03/web-on-internet-explorer-ie8/
+“Optimize for the majority, make an effort for the minority, and never sacrifice security.”*/
 body {
 	font: normal .875em/1.75 'Lora', Georgia, serif;
 	background-color: rgb(255, 233, 100);
@@ -123,7 +125,11 @@ header a h1 {
 	background-repeat: no-repeat;
 	line-height: 2.5;
 }
-.inlinesvg.svgfilters header a h1 {
+.svgasimg h1 {
+    background-image: url("../images/resource/logo_desk.svg");
+    background-size: 10%;
+}
+.inlinesvg.svgfilters h1 {
 	background-image: none;
 }
 header ul ul {
