@@ -23,7 +23,6 @@
 		};
 	}
     
-    
 	var dummy = {},
 		//con = window.console.log.bind(window),
 		utils = poloAF.Util,

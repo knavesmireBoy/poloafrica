@@ -50,7 +50,6 @@
 		text-align: right;
 		border-width: 0 0 1px;
 	}
-
 	header ul>li:last-child a {
 		border-width: 0;
 	}
@@ -103,7 +102,7 @@
 		text-shadow: none;
 		background-color: #E7E7C7;
 		background-color: hsl(60, 40%, 84%);
-        /*
+		/*
 		background-image: url(../images/resource/bg.jpg);
         */
 		padding: .5em .5em .4em;
@@ -124,7 +123,6 @@
 		background-position: left bottom;
 		line-height: 1;
 	}
-   
 	/*ZAP*/
 	#wrap h2, #wrap h2 span {
 		background-image: none;
@@ -141,55 +139,7 @@
 	#home li:nth-child(1) a, #trust li:nth-child(2) a, #scholars li:nth-child(3) a, #place li:nth-child(4) a, #stay li:nth-child(5) a, #polo li:nth-child(6) a, #medley li:nth-child(7) a, #enquiries li:nth-child(8) a, #photos li:nth-child(9) a {
 		color: #cc6;
 		color: hsl(58, 60%, 48%);
-        background-color: #306;
-        background-color: hsl(270, 100%, 20%);
+		background-color: #306;
+		background-color: hsl(270, 100%, 20%);
 	}
 }
-/*
-@media only screen and (min-width: 1024px) {
-
-.js article, .js section>img, aside {
-		-webkit-transition-property: opacity, -webkit-transform;
-		transition-property: opacity, -webkit-transform;
-		-o-transition-property: transform, opacity;
-		transition-property: transform, opacity, -webkit-transform;
-    transition-property: transform, opacity;
-		-webkit-transition-duration: 3s;
-		-o-transition-duration: 3s;
-		transition-duration: 3s;
-		opacity: 0;
-	}
-	.js section>img, .js aside {
-		-webkit-transform: translate(100em, 0);
-		-ms-transform: translate(100em, 0);
-		transform: translate(100em, 0);
-	}
-	.js  section>img:last-of-type {
-		-webkit-transform: translate(150em, 0);
-		-ms-transform: translate(150em, 0);
-		transform: translate(150em, 0);
-	}
-	.js article, .js section:nth-child(even)>img {
-		-webkit-transform: translate(-100em, 0);
-		-ms-transform: translate(-100em, 0);
-		transform: translate(-100em, 0);
-	}
-	.js section:nth-child(even) article {
-		-webkit-transform: translate(100em, 0);
-		-ms-transform: translate(100em, 0);
-		transform: translate(100em, 0);
-	}
-	.js .override .display article, .js .override .display>img, .js .display aside {
-		-webkit-transform: translate(0, 0);
-		-ms-transform: translate(0, 0);
-		transform: translate(0, 0);
-		opacity: 1;
-	}
-	#enquiries article, #enquiries section img {
-		-webkit-transform: translate(0, 0);
-		-ms-transform: translate(0, 0);
-		transform: translate(0, 0);
-		opacity: 1;
-	}
-}
-*/

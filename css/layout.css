@@ -29,15 +29,13 @@ header>a {
 	display: block;
 	box-sizing: border-box;
 	width: 56%;
-    margin: 0 0 9em 1em;
+	margin: 0 0 9em 1em;
 	top: 5em;
-    min-width: 40em;
+	min-width: 40em;
 }
-
 .no-js header a {
-    top: 4em;
+	top: 4em;
 }
-
 footer div {
 	display: inline-block;
 	vertical-align: bottom;
@@ -58,17 +56,6 @@ section img {
 	float: left;
 	width: 40%;
 }
-/*
-.no-js header > a {
-    margin: 0 0 7em .5em;
-    width: 56%;
-}
-
-.no-js #logo {
-    position: absolute;
-    left: -999em;
-}
-*/
 
 header ul {
 	display: table;
@@ -94,50 +81,45 @@ footer div img {
 section:first-child {
 	margin: 2em 0 0 0;
 }
-/* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
-section img.hide {
-    display: none;
-}
 
+section img.hide {
+	display: none;
+}
 section.ptrt img {
 	float: right;
 	width: 18%;
 }
 .icon {
-background-color: pink;
-background-repeat: no-repeat;
- background-image: url(../images/resource/instagram.png);
- display: block;
-background-size: contain;
- height: auto;
- padding-bottom: 30%;
- width: 100%;
+	background-color: pink;
+	background-repeat: no-repeat;
+	background-image: url(../images/resource/instagram.png);
+	display: block;
+	background-size: contain;
+	height: auto;
+	padding-bottom: 30%;
+	width: 100%;
 }
-svg ~ .icon {
-    background-image: url(../images/resource/insta_text.svg);
+svg~.icon {
+	background-image: url(../images/resource/insta_text.svg);
 }
-
 .support-svg {
- position: absolute;
- border: 0;
- overflow: hidden;
- clip: rect(0 0 0 0);
- height: 1px;
- margin: -1px;
- padding: 0;
- width: 1px; 
+	position: absolute;
+	border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	width: 1px;
 }
-
-.inlinesvg.svgfilters header > a {
-    margin: 0 0 0 1rem;
-    top: 0;
+.inlinesvg.svgfilters header>a {
+	margin: 0 0 0 1rem;
+	top: 0;
 }
-
 .no-js #logo {
-    position: absolute;
-    left: -9999px;
+	position: absolute;
+	left: -9999px;
 }
-
 nav li.current:hover ul, nav li.current.sfhover ul {
 	left: 0;
 }
@@ -200,25 +182,23 @@ section:nth-child(odd) img {
 	left: auto;
 	right: 0px;
 }
- 
-@media only screen and (-ms-high-contrast: none) {  
- /*https://css-tricks.com/scale-svg/*/
-     .inlinesvg.svgfilters #logo {
+@media only screen and (-ms-high-contrast: none) {
+	/*https://css-tricks.com/scale-svg/*/
+	.inlinesvg.svgfilters #logo {
 		position: absolute;
 		height: 100%;
 		width: 100%;
 		left: 0;
 		top: 3em;
 	}
-    .inlinesvg.svgfilters header>a {
+	.inlinesvg.svgfilters header>a {
 		position: relative;
 		height: 1px;
-        padding: 0;
+		padding: 0;
 		padding-bottom: 13.371em;
 		margin: 0 0 0 1rem;
 	}
 }
-
 @media only screen and (min-width: 1281px) {
 	#wrap, footer {
 		max-width: 100em;
@@ -228,31 +208,25 @@ section:nth-child(odd) img {
 	body {
 		margin: 0%;
 	}
-  
 }
 @media only screen and (min-width: 668px) and (max-width: 1280px) {
-    .inlinesvg.svgfilters header a h1 {
-        line-height: calc(1em + (40) * (100vw - 667px) / (1280 - 667));
-    }
-    
-     .inlinesvg.svgfilters header a {
-        top: calc(2em - (32) * (100vw - 667px) / (1280 - 667));
-    }
-    
+	.inlinesvg.svgfilters header a h1 {
+		line-height: calc(1em + (40) * (100vw - 667px) / (1280 - 667));
+	}
+	.inlinesvg.svgfilters header a {
+		top: calc(2em - (32) * (100vw - 667px) / (1280 - 667));
+	}
 }
 @media only screen and (min-width: 1024px) {
-  
 	.inlinesvg.svgfilters header>a {
 		width: 100%;
 		margin: 0 auto 16em;
 	}
-    .inlinesvg.svgfilters header {
-        background-size: cover;
-    }
-    
-    .inlinesvg.svgfilters header>a {
+	.inlinesvg.svgfilters header {
+		background-size: cover;
+	}
+	.inlinesvg.svgfilters header>a {
 		width: 56%;
-        margin: 0 auto 9em;
+		margin: 0 auto 9em;
 	}
 }
-
