@@ -979,7 +979,7 @@ poloAF.Util = (function () {
 			return drillDown(fillArray('parentNode', n))(el);
 		},
 		con: function (arg) {
-			window.console.log(arg);
+			//window.console.log(arg);
 			return arg;
 		},
 		conditional: function () {
@@ -1377,8 +1377,9 @@ poloAF.Util = (function () {
 		SimpleXhrFactory: SimpleXhrFactory,
 		shout: function (m) {
 			var applier = function (f, args) {
-				return function () {
-					f.apply(null, args);
+				return function (newargs) {
+                    return f.apply(null, Array.prototype.concat.call(args, newargs));
+					//f.apply(null, args);
 				};
 			};
 			return applier(_.bind(window[m], window), _.rest(arguments));

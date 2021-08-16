@@ -34,6 +34,10 @@ header>a {
     min-width: 40em;
 }
 
+.no-js header a {
+    top: 4em;
+}
+
 footer div {
 	display: inline-block;
 	vertical-align: bottom;
@@ -91,7 +95,7 @@ section:first-child {
 	margin: 2em 0 0 0;
 }
 /* https://stackoverflow.com/questions/8366957/how-to-center-an-iframe-horizontally */
-.showtime h2, .showtime .pagenav, section img.hide {
+section img.hide {
     display: none;
 }
 

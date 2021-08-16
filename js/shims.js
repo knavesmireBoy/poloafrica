@@ -92,7 +92,8 @@ if (!Array.prototype.pop) {
 		return item;
 	};
 }
-window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (f) {
+
+window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function timer (f) {
 	"use strict";
 	return setTimeout(f, 1000 / 60);
 }; // simulate calling code 60 
@@ -100,6 +101,7 @@ window.cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAni
 	"use strict";
 	clearTimeout(requestID);
 }; //fall back
+
 window.dispatchEvent = window.dispatchEvent || window.fireEvent;
 if (!String.prototype.trim) {
 	String.prototype.trim = function () {

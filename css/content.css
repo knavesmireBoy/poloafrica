@@ -121,16 +121,15 @@ header a h1 {
 	margin: 0;
 	font-size: 2em;
 	width: 100%;
-}
-header a h1 {
-	background-image: url("../images/resource/logo_desktop.png");
+    background-image: url("../images/resource/logo_desktop.png");
     background-image: url("../images/resource/logo_desk.svg"), linear-gradient(transparent, transparent);
 	background-repeat: no-repeat;
 	line-height: 2.5;
 }
+/*fallback browsers that support svg as img but not inlinesvg assumes javascript*/
 .svgasimg h1 {
     background-image: url("../images/resource/logo_desk.svg");
-    background-size: 10%;
+    margin: 0 0 0 -3em;
 }
 .inlinesvg.svgfilters h1 {
 	background-image: none;

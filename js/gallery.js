@@ -477,7 +477,7 @@
 		notMain = doComp(_.negate(doComp(ptL(equals, main), getTarget))),
         notExit = _.negate(doComp(ptL(equals, 'exit'), id_from_target)),
         advance_validators = [utils.always(true), notExit, notMain],
-		get_back = doComp(thrice(doMethod)('match')(/back$/), doGet('id'), utils.con, getLink, getTarget),
+		get_back = doComp(thrice(doMethod)('match')(/back$/), doGet('id'), getLink, getTarget),
 		doValidate = deferEvery(advance_validators),
 		getDirection = ptL(utils.getBestPred, get_back, ['back', 'forward']),
 		every = doComp(doValidate, doPartial(true, invokeCB)),
@@ -494,8 +494,10 @@
 			return populate($looper[m]());
 		},
 		advanceRouteListener = ptL(utils.invokeThen, advanceRouteBridge, advanceRoute),
-		pageNavHandler = doComp(ptL(eventing, 'click', event_actions.slice(0, 1), _.debounce(advanceRouteListener, 300)), utils.getDomParent(utils.getNodeByTag('main'))),
-		$nav = addPageNav(ptL(anCrIn, getThumbs), 'gal_back', pageNavHandler),
+		pageNavHandler = ptL(eventing, 'click', event_actions.slice(0, 2), _.debounce(advanceRouteListener, 300)),
+		$forward,
+		$back = addPageNav(ptL(anCrIn, getThumbs), 'gal_back', doComp(pageNavHandler, $$('gal_back'))),
+        $forward = addPageNav(anCr, 'gal_forward', doComp(pageNavHandler, $$('gal_forward'))),
         slide_player_factory = function () {
 			return {
 				/*remember because images are a mix of landscape and portrait we re-order collection for the slideshow
@@ -602,7 +604,7 @@
 
 			function doRecur() {
 				player.inc();
-				$recur.t = window.requestAnimationFrame($recur.execute);
+				$recur.t = window.requestAnimationFrame(_.bind($recur.execute, $recur));
 			}
 
 			function doOpacity(flag) {
@@ -653,6 +655,7 @@
 					},
 					fade = {
 						validate: function () {
+                            //utils.report($recur.i);
 							return $recur.i <= -1;
 						},
 						inc: function () {
@@ -798,7 +801,6 @@
 				}, $('controls')),
 				$controls_undostat = eventing('mouseover', [], undostatic, utils.getByTag('footer', document)[0]),
 				$controls_dostat = eventing('mouseover', [], dostatic, getThumbs),
-				//$controls_dostat = eventing('mouseover', [], dostatic, $('controls')),
 				$exit = eventing('click', event_actions.slice(0, 1), function (e) {
 					var go_undo = thrice(doMethod)('undo')();
 					if (e[mytarget].id === 'exit') {
@@ -810,20 +812,20 @@
 						_.each([$recur, $locate, $toggler], go_undo);
 						_.each([$('exit'), $('tooltip'), $('controls'), $('paused'), $('base'), $('slide')], utils.removeNodeOnComplete);
 						$setup.execute();
-						$nav.execute();
 					}
 				}, close_cb);
 			//listeners...
 			_.each(_.zip(dombuttons, buttons), invokeBridge);
 			_.each([$controls, $exit, $locate, $controls_undostat, $controls_dostat], go_execute);
 			$setup.undo();
-            $nav.undo();
+            //$back.undo();
+            //$forward.undo();
 		};
     
 	$setup = eventing('click', event_actions.slice(0, 2), ptL(utils.invokeWhen, setup_val, setup), main);
 	$setup.execute();
-	$nav.execute();
-	addPageNav(anCr, 'gal_forward', makeDummy);
+	$back.execute();
+	$forward.execute();
 	utils.$('placeholder').innerHTML = 'PHOTOS';
 	svg_handler();
     eventing('resize', [],  _.throttle(svg_handler, 99), window).execute();
