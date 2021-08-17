@@ -92,7 +92,7 @@ if (!Array.prototype.pop) {
 		return item;
 	};
 }
-
+/*
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function timer (f) {
 	"use strict";
 	return setTimeout(f, 1000 / 60);
@@ -101,6 +101,48 @@ window.cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAni
 	"use strict";
 	clearTimeout(requestID);
 }; //fall back
+*/
+
+(function( window ) {
+  'use strict';
+  var lastTime = 0,
+      prefixes = 'webkit moz ms o'.split(' '),
+      requestAnimationFrame = window.requestAnimationFrame,//get unprefixed rAF and cAF, if present
+      cancelAnimationFrame = window.cancelAnimationFrame,
+      prefix,
+      i;
+  // loop through vendor prefixes and get prefixed rAF and cAF
+  for( i = 0; i < prefixes.length; i++ ) {
+    if ( requestAnimationFrame && cancelAnimationFrame ) {
+      break;
+    }
+    prefix = prefixes[i];
+    requestAnimationFrame = requestAnimationFrame || window[ prefix + 'RequestAnimationFrame' ];
+    cancelAnimationFrame  = cancelAnimationFrame  || window[ prefix + 'CancelAnimationFrame' ] ||
+                              window[ prefix + 'CancelRequestAnimationFrame' ];
+  }
+
+  // fallback to setTimeout and clearTimeout if either request/cancel is not supported
+  if ( !requestAnimationFrame || !cancelAnimationFrame ) {
+      requestAnimationFrame = function( callback, element ) {
+      var currTime = new Date().getTime(),
+          timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) ),
+          id = window.setTimeout( function() {
+        callback( currTime + timeToCall );
+      }, timeToCall );
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+
+    cancelAnimationFrame = function( id ) {
+      window.clearTimeout( id );
+    };
+  }
+  // put in global namespace
+  window.requestAnimationFrame = requestAnimationFrame;
+  window.cancelAnimationFrame = cancelAnimationFrame;
+})( window );
+
 
 window.dispatchEvent = window.dispatchEvent || window.fireEvent;
 if (!String.prototype.trim) {
