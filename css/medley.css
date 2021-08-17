@@ -55,6 +55,7 @@ h2 span {
 	padding-bottom: 1.5em;
 	border-bottom: dotted 1px #444;
 }
+
 #tvcoverage p {
 	margin-bottom: 1.5em;
 }
@@ -233,7 +234,7 @@ h2 span {
         margin-top: 1em;  
     }
     
-    .no-touchevents #presslinks ul {
+    #presslinks ul {
 	line-height: 1.3;
     text-indent: -1.7em;
 	padding: 0 0 0 1.7em;
@@ -266,7 +267,7 @@ h2 span {
 		margin: 0;
 	}
 	#tvcoverage iframe, #tvcoverage video {
-		margin: 0;
+		margin: 0 0 0 2vw;
 		width: 96vw;
 		height: 54vw;
 		float: none;
@@ -276,6 +277,10 @@ h2 span {
 		padding: 0;
         border-width: 0;
 	}
+    
+    #tvcoverage video:first-of-type {
+        margin: 2vw 0 0 2vw;
+    }
 	
 	#medley li:nth-child(7):hover ul {
 		right: 9999px;

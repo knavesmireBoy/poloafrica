@@ -63,12 +63,14 @@ h2 span {
 		content: "Location";
 	}
 	section.ptrt img {
-		width: 15rem;
+		width: 13rem;
+        width: calc(140px + (50) * (100vw - 320px) / (667 - 320));
 	}
 }
 @media screen and (max-width: 370px) {
-	.override section.ptrt article img {
-		width: 37%;
+    
+	section.ptrt article img {
+        width: 9rem;
 	}
 	section.ptrt article p:first-of-type {
 		text-align: left;

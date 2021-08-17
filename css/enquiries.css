@@ -391,9 +391,7 @@ section:nth-child(2) {
 			margin-bottom: 1em;
 			font-size: 1.1em;
 		}
-		#cath address {
-			padding-left: 1em;
-		}
+	
 		#cath img {
 			position: relative;
 			left: auto;

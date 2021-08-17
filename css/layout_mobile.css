@@ -117,8 +117,11 @@
 	article p:first-of-type, article p:last-child {
 		margin: .8rem 0;
 	}
-	section.ptrt img {
+
+    section.ptrt img {
 		margin: 1rem 0 1rem 1rem;
+        width: 13rem;
+        width: calc(140px + (50) * (100vw - 320px) / (667 - 320));
 	}
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-inlinesvg header a h1, .no-js header a h1 {
@@ -218,6 +221,16 @@
 		background: url(../images/resource/sil_bg.png) no-repeat top center;
 		background-size: cover;
 		padding: 7em 0 0 0;
+	}
+}
+
+@media screen and (max-width: 370px) {
+    
+	section.ptrt article img {
+        width: 9rem;
+	}
+	section.ptrt article p:first-of-type {
+		text-align: left;
 	}
 }
 /*remove border's above when in production*/
