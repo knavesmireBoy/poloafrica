@@ -575,8 +575,8 @@ poloAF.Util = (function () {
 			return ret;
 		};
 	}
-
-	function setFromFactory(bool) {
+    
+    function setFromFactory(bool) {
 		function doEachFactory(config, bound, target, bool) {
 			//ie 6 & 7 have issues with setAttribute, set props instead
 			if (bool) {
@@ -741,12 +741,7 @@ poloAF.Util = (function () {
 		}
 		return array;
 	}
-
-	function addHandler(type, func, el) {
-		//console.log(arguments);
-		return poloAF.Eventing.init.call(poloAF.Eventing, type, func, el).addListener();
-	}
-
+    
 	function validator(message, fun) {
 		var f = function () {
 			//console.log(arguments)
@@ -1328,26 +1323,20 @@ poloAF.Util = (function () {
 		setAttributes: _.partial(setFromFactory(!window.addEventListener), always(true), 'setAttribute'),
 		//setAttrsValidate: _.partial(setFromFactory(!window.addEventListener)),
 		setFromArray: setFromArray,
-		setScrollHandlers: function (collection, getThreshold, klas) {
+		setScrollHandlers: function (coll, getThreshold, klas) {
 			// ensure we don't fire this handler too often
 			// for a good intro into throttling and debouncing, see:
 			// https://css-tricks.com/debouncing-throttling-explained-examples/
 			klas = klas || 'show';
-            
-			var scroll = _.partial(poloAF.Util.eventer, 'scroll', []),
+            /*the partially applied function gets curried as we know the fourth argument to eventer but await the third*/
+			var scroll = curryFactory(2)(_.partial(poloAF.Util.eventer, 'scroll', []))(window),
                 deferHandle = curryFactory(3, true)(handleScroll)(klas)(getThreshold || poloAF.Util.getScrollThreshold),
-				funcs = _.map(collection, deferHandle);
-            funcs = _.map(funcs, curryFactory(2, true)(_.throttle)(100));
-            funcs = _.map(funcs, function(f){
-                return _.partial(scroll, f);
-            });
-            
+                funcs = _.map(coll, function(el){
+                    return _.throttle(deferHandle(el), 100);//returns (not invokes) a function
+                });
             _.each(funcs, function(f){
-                f(window).execute();
-            })
-           
-           
-			//return _.map(_.map(funcs, curryFactory(2)(_.throttle)(100)), _.partial(addHandler, 'scroll', window));
+                scroll(f).execute();
+            });
 		},
 		setText: curryFactory(3)(setAdapter)('innerHTML'),
 		setter: setter,
