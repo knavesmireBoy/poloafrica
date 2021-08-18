@@ -134,16 +134,8 @@
 	float_handler();
 	utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
     _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
-    /*
-    $sections = _.map(document.getElementsByTagName('section'), function (el) {
-		var $el = utils.machElement(ptL(klasAdd, 'display'), utils.always(el));
-		$el.unrender = noOp;
-		return $el;
-	});
-    */
-	utils.setScrollHandlers(document.getElementsByTagName('section'), doTwice(utils.getScrollThreshold)(0.4), 'display', 1);
-    
+	utils.setScrollHandlers(document.getElementsByTagName('section'), doTwice(utils.getScrollThreshold)(0.2), 'display', 1);
+    poloAF.Util.eventCache.triggerEvent(window, 'scroll');
    //utils.report();
-    //doDesktop();
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 667px)', '(min-width: 1024px)'));
