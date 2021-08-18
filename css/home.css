@@ -115,6 +115,9 @@ h2 span {
 		position: relative;
 		left: auto;
 	}
+    section:nth-child(3) h3 {
+        line-height: 1.2;
+    }
 
 }
 @media only screen and (max-width: 510px)/*, (not(-ms-high-contrast: active)), (not (-ms-high-contrast: none)) */{
@@ -127,3 +130,10 @@ h2 span {
 		line-height: normal;
 	}
 }
+
+@media only screen and (max-width: 350px) {
+ section:nth-child(2) h3 {
+        line-height: 1.2;
+    }
+}
+

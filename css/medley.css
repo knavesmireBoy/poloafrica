@@ -349,10 +349,14 @@ h2 span {
 	}
 }
 
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 346px) {
 	section:nth-child(5) h3, section:nth-child(5) label {
 		line-height: 1.2;
 	}
+}
+
+@media only screen and (max-width: 360px) {
+
 	#medley_links img {
 		display: none;
 	}

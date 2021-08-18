@@ -56,7 +56,9 @@ h3 {
 	letter-spacing: 1px;
 	color: #990;
 	color: hsl(58, 60%, 40%);
-	font: normal 1.75em/1.2 'Lora', Georgia, serif;
+	font-family: 'Lora', Georgia, serif;
+	font-size: 1.75em;
+    line-height: 1.2;
 	box-sizing: border-box;
 	width: 100%;
 }

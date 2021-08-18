@@ -533,8 +533,14 @@ section:nth-child(2) {
 }
 /*@*/
 
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 329px) {
 	.override #intro h3, .override #intro label {
+		line-height: 1.2;
+	}
+}
+
+@media only screen and (max-width: 272px) {
+	#post h3, #post label {
 		line-height: 1.2;
 	}
 }
