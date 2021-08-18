@@ -33,9 +33,7 @@ header>a {
 	top: 5em;
 	min-width: 40em;
 }
-.no-js header a {
-	top: 4em;
-}
+
 footer div {
 	display: inline-block;
 	vertical-align: bottom;
@@ -208,6 +206,13 @@ section:nth-child(odd) img {
 	body {
 		margin: 0%;
 	}
+}
+
+@media only screen and (min-width: 668px) {
+    
+.no-js header a {
+	top: 4em;
+}
 }
 @media only screen and (min-width: 668px) and (max-width: 1280px) {
 	.inlinesvg.svgfilters header a h1 {
