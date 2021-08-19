@@ -39,17 +39,15 @@ h2 span {
     h2, h2 span {
 		background: none;
 	}
-    
-      .override section.multi img {
+    .override section.multi img {
         display: inline-block;
-         vertical-align: top;
-         width: 49%;
-          float: none;
+        vertical-align: top;
+        width: 49%;
+        float: none;
     }
     
     .multi img:first-of-type {
         margin: 1em 1% 0 0;
-        
     }
     .multi img:last-of-type {
         margin: 1em 0 0 1%;

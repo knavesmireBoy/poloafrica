@@ -17,6 +17,9 @@
 }
 
  @media screen and (max-width: 667px) {
+     h2, h2 span {
+ 		background: none;
+ 	}
  	.no-js section:nth-child(1) .read-more-trigger:before {
  		content: "History";
  	}
@@ -32,8 +35,5 @@
  	.no-js section:nth-child(5) .read-more-trigger:before {
  		content: "Social change";
  	}
- 	h2, h2 span {
- 		background: none;
- 	}
-   
+ 	
 }

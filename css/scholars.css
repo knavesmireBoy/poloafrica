@@ -3,9 +3,11 @@
 #scholars li:nth-child(3):hover ul {
 	left: 0;
 }
+
 h2 span {
 	background-image: url(../images/resource/sub_scholars.jpg);
 }
+
 @media only screen {
 	.backgroundsize h2 span {
 		background-image: url(../images/resource/sub_scholars.png);
@@ -18,12 +20,7 @@ h2 span {
     }
 }
 @media screen and (max-width: 667px) {
-     section {
-        display: block;
-    }
-      h2 {
-          padding-left: calc(12px + (12) * (100vw - 320px) / (667 - 320));
-    }
+
 	h2, h2 span {
 		background: none;
 	}
@@ -45,12 +42,6 @@ h2 span {
 	.no-js section:nth-child(6) .read-more-trigger:before {
 		content: "A childhood dream";
 	}
-        
-    /*#home li:nth-child(1):hover ul*/
-    
-    #wrap .override ul  {
-       position: relative;
-    }
     
     #scholars li:nth-child(3):hover ul {
         left: -9999px;
