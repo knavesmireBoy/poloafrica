@@ -26,7 +26,7 @@
 	var dummy = {},
 		//con = window.console.log.bind(window),
 		utils = poloAF.Util,
-        options = ["2 -2 340 75", "2 -2 340 75"],
+        //options = ["2 -2 340 75", "2 -2 340 75"],
 		ie6 = utils.$('tween'),
 		ptL = _.partial,
 		doTwice = utils.curryFactory(2),
@@ -98,8 +98,8 @@
 		},
 		setViewBox = doSvg(document.getElementById('logo')),
 		doMobile = ptL(setViewBox, "0 0 155 120"),
-		//doDesktop = ptL(setViewBox, "2 -2 340 75"),
-		doDesktop = ptL(setViewBox, ptL(utils.getBestOnly, ptL(Modernizr.mq, ipad), options)),
+		doDesktop = ptL(setViewBox, "2 -2 340 75"),
+		//doDesktop = ptL(setViewBox, ptL(utils.getBestOnly, ptL(Modernizr.mq, ipad), options)),
 		floating_elements = function (elements, getArticle, getHeading, before, after) {
 			var mq = window.matchMedia("(max-width: 667px)");//?
 			return _.map(elements, function (el, i) {

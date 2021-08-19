@@ -1,7 +1,6 @@
 /*FLEX INSTRUCTIONS IN READINESS AND WILL BE APPLLIED IN JS/NO-JS SCENARIO BUT SEPARATE INSTRUCTIONS FROM UNITS*/
 
 /*REMEMBER override class hardcoded in HTML*/
-
 section {
 	-webkit-box-align: start;
 	-ms-flex-align: start;
@@ -29,53 +28,53 @@ article {
 	-webkit-flex: 6 1 1%;
 	flex: 6 1 1%;
 }
-
 section img {
 	-webkit-box-flex: 4;
 	-ms-flex: 4 1 1%;
 	-webkit-flex: 4 1 1%;
 	flex: 4 1 1%;
 }
-
 h2 span {
-    -o-background-size: 10%;
+	-o-background-size: 10%;
 	-moz-background-size: 10%;
 	-ms-background-size: 10%;
 	-webkit-background-size: 10%;
-	}
-
+    background-size: 10%;
+}
 section div .poligon {
-  display: inline-block;
-  position: relative;
-  width: 150px;
-  height: 150px;
-  background: red;
-  box-sizing: border-box;
- clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
-    margin-left: calc(-12.5% - 1px);
+	display: inline-block;
+	position: relative;
+	width: 150px;
+	height: 150px;
+	background: red;
+	box-sizing: border-box;
+	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+	margin-left: calc(-12.5% - 1px);
 }
 section div .poligon:first-child {
-    margin: 0;
+	margin: 0;
 }
 section div .poligon img {
-  position: absolute;
-  top: 1px; /* equal to border thickness */
-  left: 1px; /* equal to border thickness */
-  width: 148px; /* container height - (border thickness * 2) */
-  height: 148px; /* container height - (border thickness * 2) */
- clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
-    border-radius: 0;
-    border-width: 0;
-    margin: 0;
+	position: absolute;
+	top: 1px;
+	/* equal to border thickness */
+	left: 1px;
+	/* equal to border thickness */
+	width: 148px;
+	/* container height - (border thickness * 2) */
+	height: 148px;
+	/* container height - (border thickness * 2) */
+	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+	border-radius: 0;
+	border-width: 0;
+	margin: 0;
 }
-
 section.ptrt img {
 	-webkit-box-flex: 1;
 	-ms-flex: 1 1 %;
 	-webkit-flex: 1 1 1%;
 	flex: 1 1 1%;
 }
-
 #ani {
 	-webkit-box-flex: 2;
 	-ms-flex: 2 1 %;
@@ -107,127 +106,62 @@ footer>a {
 }
 /* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
 
-@supports(background-size: contain) {
-    /* background shorthand is used for individual pages and background-size: is omitted to support older browsers. ZAP @ no-js*/
+@supports((-o-background-size: contain) or (-moz-background-size: contain) or (-ms-background-size: contain) or (-webkit-background-size: contain) or (background-size: contain)){
+	/* background shorthand is used for individual pages and background-size: is omitted to support older browsers. ZAP @ no-js*/
 	#wrap h2 span {
-        -o-background-size: contain;
-        -o-background-size: contain;
-	-moz-background-size: contain;
-	-ms-background-size: contain;
-	-webkit-background-size: contain;
-	background-size: contain;
+		-o-background-size: contain;
+		-moz-background-size: contain;
+		-ms-background-size: contain;
+		-webkit-background-size: contain;
 		background-size: contain;
 	}
 }
-	.backgroundsize h2 span {
-        -o-background-size: contain;
+.backgroundsize h2 span {
+	-o-background-size: contain;
 	-moz-background-size: contain;
 	-ms-background-size: contain;
 	-webkit-background-size: contain;
 	background-size: contain;
-		background-size: contain;
+}
+@media screen and (max-width: 667px) {
+	#footer_girl {
+		-webkit-box-flex: 5;
+		-ms-flex: 5 1 5em;
+		-webkit-flex: 5 1 5em;
+		flex: 5 1 5em;
 	}
-	@media screen and (max-width: 667px) {
-		#footer_girl {
-			-webkit-box-flex: 5;
-			-ms-flex: 5 1 5em;
-			-webkit-flex: 5 1 5em;
-			flex: 5 1 5em;
-		}
-		#fb {
-			-webkit-box-flex: 1;
-			-ms-flex: 1 1 2em;
-			-webkit-flex: 1 1 2em;
-			flex: 1 1 2em;
-		}
-		@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-			footer>a {
-				padding: .75em 2% .75em 0;
-			}
-		}
-		.flexwrap footer>a {
+	#fb {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 2em;
+		-webkit-flex: 1 1 2em;
+		flex: 1 1 2em;
+	}
+	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+		footer>a {
 			padding: .75em 2% .75em 0;
 		}
 	}
-	/*IF js disbaled and feature queries not supported what to do?
+	.flexwrap footer>a {
+		padding: .75em 2% .75em 0;
+	}
+}
+/*IF js disbaled and feature queries not supported what to do?
 hard code a class of flexy? ot fallback to inline-block
 */
-	@media only screen and (min-width: 1024px) {
-		/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
-		@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
-			.no-js h2 span {
-				background-size: contain;
-			}
-			section {
-				display: -webkit-box;
-				display: -webkit-flex;
-				display: -ms-flexbox;
-				display: flex;
-			}
-			footer {
-				/*display: -webkit-box; ipod not resizing on orientation*/
-				display: -webkit-flex;
-				display: -ms-flexbox;
-				display: flex;
-				-ms-flex-wrap: wrap;
-				-webkit-flex-wrap: wrap;
-				flex-wrap: wrap;
-				-webkit-box-align: end;
-				-ms-flex-align: end;
-				-webkit-align-items: flex-end;
-				align-items: flex-end;
-			}
-			/* by default the border will run right up to the floating image, no margin, we choose to enable it only on flexwrap support*/
-			h3 {
-				border-bottom: solid 1px;
-			}
-			p:first-of-type {
-				margin: 0;
-			}
-		/*
-			header {
-				background-size: 100%;
-			}
-            */
-			section.ptrt img {
-				margin: 1em 1em 0;
-			}
-			#footer_girl {
-				width: auto;
-				margin: 0 0 .25rem 1rem;
-			}
-			#fb {
-				margin: 0 .7em .5rem 0;
-				left: 0;
-				min-width: 6em;
-			}
-			footer>a {
-				box-sizing: border-box;
-				padding: .75em 1% .75em 0;
-			}
+
+@media only screen and (min-width: 1024px) {
+	/* only bother if flex-wrap is supported, happy to fallback to floats for buggier flex implementations */
+	@supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap) {
+		.no-js h2 span {
+			background-size: contain;
 		}
-		/*@@
-		.flexwrap header {
-			background-size:100%;
+		section {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			display: flex;
 		}
-        */
-		.flexwrap section.ptrt img {
-			margin: 1em 1em 0;
-		}
-		.flexwrap #footer_girl {
-			width: auto;
-			margin: 0 0 .25rem 1rem;
-		}
-		.flexwrap #fb {
-			margin: 0 .7em .5rem 0;
-			left: 0;
-			min-width: 6em;
-		}
-		.flexwrap footer>a {
-			box-sizing: border-box;
-			padding: .75em 1% .75em 0;
-		}
-		.flexwrap footer {
+		footer {
 			/*display: -webkit-box; ipod not resizing on orientation*/
 			display: -webkit-flex;
 			display: -ms-flexbox;
@@ -240,20 +174,84 @@ hard code a class of flexy? ot fallback to inline-block
 			-webkit-align-items: flex-end;
 			align-items: flex-end;
 		}
-		.flexwrap section {
-			display: -webkit-box;
-			display: -webkit-flex;
-			display: -ms-flexbox;
-			display: flex;
-		}
-		.flexwrap h3 {
+		/* by default the border will run right up to the floating image, no margin, we choose to enable it only on flexwrap support*/
+		h3 {
 			border-bottom: solid 1px;
 		}
-		.flexwrap p:first-of-type {
+		p:first-of-type {
 			margin: 0;
 		}
+		/*
+			header {
+				background-size: 100%;
+			}
+            */
+		section.ptrt img {
+			margin: 1em 1em 0;
+		}
+		#footer_girl {
+			width: auto;
+			margin: 0 0 .25rem 1rem;
+		}
+		#fb {
+			margin: 0 .7em .5rem 0;
+			left: 0;
+			min-width: 6em;
+		}
+		footer>a {
+			box-sizing: border-box;
+			padding: .75em 1% .75em 0;
+		}
 	}
-	/*Q*/
+	/*@@
+		.flexwrap header {
+			background-size:100%;
+		}
+        */
+	.flexwrap section.ptrt img {
+		margin: 1em 1em 0;
+	}
+	.flexwrap #footer_girl {
+		width: auto;
+		margin: 0 0 .25rem 1rem;
+	}
+	.flexwrap #fb {
+		margin: 0 .7em .5rem 0;
+		left: 0;
+		min-width: 6em;
+	}
+	.flexwrap footer>a {
+		box-sizing: border-box;
+		padding: .75em 1% .75em 0;
+	}
+	.flexwrap footer {
+		/*display: -webkit-box; ipod not resizing on orientation*/
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		-webkit-flex-wrap: wrap;
+		flex-wrap: wrap;
+		-webkit-box-align: end;
+		-ms-flex-align: end;
+		-webkit-align-items: flex-end;
+		align-items: flex-end;
+	}
+	.flexwrap section {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	.flexwrap h3 {
+		border-bottom: solid 1px;
+	}
+	.flexwrap p:first-of-type {
+		margin: 0;
+	}
+}
+/*Q*/
+
 /*
 .flexboxlegacy #medley .override {
     background-color: ivory;

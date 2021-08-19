@@ -534,7 +534,7 @@ section:nth-child(2) {
 /*@*/
 
 @media only screen and (max-width: 329px) {
-	.override #intro h3, .override #intro label {
+	#intro article:first-of-type h3, #intro article:first-of-type label {
 		line-height: 1.2;
 	}
 }
