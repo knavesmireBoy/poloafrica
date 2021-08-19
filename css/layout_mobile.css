@@ -119,9 +119,9 @@
 	}
 
     section.ptrt img {
-		margin: 1rem 0 .5rem 1rem;
-        width: 13rem;
-        width: calc(140px + (50) * (100vw - 320px) / (667 - 320));
+		margin: 1rem 0 .25rem 1rem;
+        width: 11rem;
+        width: calc(150px + (60) * (100vw - 320px) / (667 - 320));
 	}
 	/* older mobile browsers ie9 supports inline svg but not filters*/
 	.no-inlinesvg header a h1, .no-js header a h1 {

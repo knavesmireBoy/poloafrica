@@ -570,7 +570,8 @@
 			var getLoc = function (e) {
 				var box = e[mytarget].getBoundingClientRect(),
                     threshold = (box.right - box.left) / 2;
-				return (e.clientX - box.left) > threshold;
+                //default to forward
+				return e.clientX ? (e.clientX - box.left) > threshold : true;
 			};
 			return function (e) {
 				return utils.getBest(function (agg) {
@@ -581,8 +582,10 @@
 				]);
 			};
 		},
-		$locate = eventing('click', event_actions.slice(0, 1), function (e) {
-			locator(twicedefer(loadImageBridge)('base')(nextcaller), twicedefer(loadImageBridge)('base')(prevcaller))(e)[1]();
+        
+		$locate = eventing('touchend', event_actions.slice(0, 1), function (e) {
+            var loadBase = twicedefer(loadImageBridge)('base');
+			locator(loadBase(nextcaller), loadBase(prevcaller))(e)[1]();
 			doOrient(e[mytarget]);
 		}, getThumbs()),
 		///slideshow...

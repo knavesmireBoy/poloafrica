@@ -35,9 +35,7 @@ h2 span {
 	}
 }
 @media screen and (max-width: 667px) {
-	section {
-		display: block;
-	}
+
 	h2, h2 span {
 		background: none;
 	}

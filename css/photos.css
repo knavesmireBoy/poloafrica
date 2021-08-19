@@ -482,7 +482,7 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paus
 		top: 33%;
 		bottom: 33%;
 		display: block;
-		border: solid 1.2em whitesmoke;
+		border: solid 1.6em whitesmoke;
 	}
 	.touchevents a.pagenav:hover, .touchevents a.pagenav:focus {
 		background-color: hsla(349, 86%, 30%, 100);
