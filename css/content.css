@@ -428,7 +428,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
 }
-/*
+
 @media only screen and (min-width: 1024px) {
 	.js article, .js section>img, aside {
 		-webkit-transition-property: opacity, -webkit-transform;
@@ -474,4 +474,3 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		opacity: 1;
 	}
 }
-*/

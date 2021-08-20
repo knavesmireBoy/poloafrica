@@ -134,8 +134,8 @@
 	float_handler();
 	utils.eventer('resize', [], _.throttle(float_handler, 99), window).execute();
     _.compose(ptL(utils.removeClass, 'nojs'), ptL(utils.findByClass, 'no-js'))();
-	//utils.setScrollHandlers(document.getElementsByTagName('section'), doTwice(utils.getScrollThreshold)(0.2), 'display', 1);
-    //poloAF.Util.eventCache.triggerEvent(window, 'scroll');
+	utils.setScrollHandlers(document.getElementsByTagName('section'), doTwice(utils.getScrollThreshold)(0.2), 'display', 1);
+    poloAF.Util.eventCache.triggerEvent(window, 'scroll');
    //utils.report();
 	return true;
 }(Modernizr.mq('only all'), '(min-width: 667px)', '(min-width: 1024px)'));
