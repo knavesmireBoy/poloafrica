@@ -494,6 +494,21 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paus
 		background: url(../images/resource/sil_bg.png) no-repeat 60% top;
 		background-size: cover;
 	}
+    
+    /*to accomodate no-js */
+    
+    .no-js #placeholder {
+        color: yellow;
+    }
+    
+    .no-js h2 {
+        padding: 0;
+    }
+    
+    .no-js header {
+        background-color: #9778dd;
+        background-color: hsla(258, 60%, 67%, 1);
+    }
 
 }
 /*667*/
@@ -522,7 +537,6 @@ main ul li, .inplay main ul li.show, #photos.showtime .pagenav, .playing li#paus
 		/*keeping this "visible" helps ie 7 otherwise margin collapses, so this IS the margin-top*/
 		background: none;
 		color: white;
-		color: red;
 		text-shadow: none;
 		margin: 0;
 	}

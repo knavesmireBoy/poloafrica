@@ -163,6 +163,7 @@ header ul a:hover, header ul a:active {
 }
 .no-js body {
 	background-color: mintcream;
+	background-color: #e1f8ed;
 }
 .cssgradients h2 {
 	background-image: linear-gradient(to right, #b8b32e, white);

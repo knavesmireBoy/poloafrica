@@ -174,10 +174,7 @@ hard code a class of flexy? ot fallback to inline-block
 			-webkit-align-items: flex-end;
 			align-items: flex-end;
 		}
-		/* by default the border will run right up to the floating image, no margin, we choose to enable it only on flexwrap support*/
-		h3 {
-			border-bottom: solid 1px;
-		}
+	
 		p:first-of-type {
 			margin: 0;
 		}
@@ -203,6 +200,10 @@ hard code a class of flexy? ot fallback to inline-block
 			padding: .75em 1% .75em 0;
 		}
 	}
+    	/* by default the border will run right up to the floating image, no margin, we choose to enable it only on flexwrap support*/
+		.flexwrap h3 {
+			border-bottom: solid 1px;
+		}
 	/*@@
 		.flexwrap header {
 			background-size:100%;

@@ -1,10 +1,7 @@
 section {
 	margin: 2em 0 0;
 }
-h3 {
-	border-bottom: solid #990 1px;
-	border-bottom: solid hsl(58, 60%, 48%) 1px;
-}
+
 form {
 	font-family: Optima, Arial, Helvetica, Verdana, sans-serif;
 	background-color: #cc9;
@@ -73,6 +70,11 @@ legend, form label {
 textarea, form input, form label {
 	display: inline-block;
 	vertical-align: text-bottom;
+}
+
+.js h3 {
+	border-bottom: solid #990 1px;
+	border-bottom: solid hsl(58, 60%, 48%) 1px;
 }
 
 fieldset:last-child {
@@ -381,28 +383,7 @@ section:nth-child(2) {
 		margin-left: 23%;
 		text-align: center;
 	}
-	@supports(column-gap: 20px) {
-		#cath {
-			display: grid;
-			grid-template-columns: 2fr 3fr;
-			background: #cc6;
-		}
-		#cath {
-			margin-bottom: 1em;
-			font-size: 1.1em;
-		}
 	
-		#cath img {
-			position: relative;
-			left: auto;
-			margin: 0 1em 0 0;
-			border-width: 0;
-			width: 100%;
-		}
-		#cath a {
-			color: white;
-		}
-	}
 	fieldset:first-child label, fieldset:first-child legend {
 		text-transform: uppercase;
 	}
@@ -534,7 +515,7 @@ section:nth-child(2) {
 /*@*/
 
 @media only screen and (max-width: 329px) {
-	#intro article:first-of-type h3, #intro article:first-of-type label {
+	#intro article:first-of-type h3, #intro article:first-of-type label, .no-js #intro label:first-of-type {
 		line-height: 1.2;
 	}
 }

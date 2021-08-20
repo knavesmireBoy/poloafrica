@@ -37,12 +37,11 @@
 .flexwrap section {
 	display: block;
 }
-
 /* response to form submission:
 restrict animation for proper grid support as we are using grid positioning to overlay images */
-@supports(column-gap: 20px) {
 
-   #intro label {
+@supports(column-gap: 20px) {
+	#intro label {
 		position: absolute;
 		left: -999em;
 	}
@@ -53,7 +52,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 		grid-template-columns: repeat(5, 1fr);
 		column-gap: 5%;
 	}
-	#intro>* {
+	#intro article {
 		width: 100%;
 	}
 	#intro article {
@@ -61,8 +60,10 @@ restrict animation for proper grid support as we are using grid positioning to o
 	}
 	#grooms {
 		grid-row: 1 / 4;
-       margin: 0;
 		grid-column: 4/6;
+	}
+	.js #grooms {
+		margin: 0;
 	}
 	#post>article>div {
 		margin-top: 1em;
@@ -77,11 +78,11 @@ restrict animation for proper grid support as we are using grid positioning to o
 	#contactarea>div form {
 		grid-column: 1/8;
 		height: auto;
-       width: 100%;
+		width: 100%;
 	}
 	#contactarea>div figure {
 		grid-column: 8/10;
-       width: 100%;
+		width: 100%;
 	}
 	#post #response {
 		display: grid;
@@ -89,16 +90,15 @@ restrict animation for proper grid support as we are using grid positioning to o
 		align-items: stretch;
 		background: linear-gradient(217deg, black, rgba(0, 0, 255, 0) 70.71%), linear-gradient(127deg, black, rgba(200, 255, 0, 0) 70.71%), linear-gradient(336deg, indigo, rgba(111, 111, 0, 0) 70.71%);
 	}
-
 	#response figure.top {
 		display: block;
 	}
-	#post #response > * {
+	#post #response>* {
 		width: 100%;
 		grid-row-start: 1;
 		margin: 0;
 		padding: 0;
-       overflow: hidden;
+		overflow: hidden;
 	}
 	#response p {
 		animation-name: fader_rev;
@@ -125,27 +125,27 @@ restrict animation for proper grid support as we are using grid positioning to o
 		grid-column: 1/2;
 		border: solid 1px white;
 		border-width: 0 1px 0 0;
-       display: block;
-       width: 100%;
+		display: block;
+		width: 100%;
 	}
-   #response figure img {
-       object-fit: contain;
-}
+	#response figure img {
+		object-fit: contain;
+	}
 	#response .cat {
 		grid-column: 3/4;
 		border-width: 0 0 0 1px;
-       display: block;
-       width: 100%;
+		display: block;
+		width: 100%;
 	}
 	#response .top {
-       /*
+		/*
        animation-name: fader;
 		animation-timing-function: ease-in-out;
 		animation-iteration-count: 1;
 		animation-duration: 10s;
 		animation-fill-mode: forwards;
        */
-       animation: 10s ease-in-out 1 forwards fader;
+		animation: 10s ease-in-out 1 forwards fader;
 	}
 	#post #response div {
 		grid-column: 2/3;
@@ -158,30 +158,27 @@ restrict animation for proper grid support as we are using grid positioning to o
 		animation-duration: 5s;
 		animation-fill-mode: forwards;
 		border-radius: 10px;
-       display: block;
-       width: 100%;
+		display: block;
+		width: 100%;
 	}
-   #post>article>div {
-       border-spacing: 0;
-   }
-
+	#post>article>div {
+		border-spacing: 0;
+	}
 }
 @media screen and (max-width: 888px) {
-
-   #post div {
-       border-radius: 0 !important;
+	#post div {
+		border-radius: 0 !important;
 	}
 	#post #response, #post>article>div, #intro {
 		display: block;
 	}
-
 	/*TRIED flex-wrapping in fieldset: https://stackoverflow.com/questions/46472136/fieldset-as-flex-container-not-working-in-google-chrome*/
 }
 @media screen and (max-width: 667px) {
 	section {
 		display: block;
 	}
-	#post > article > div {
+	#post>article>div {
 		margin: 0;
 	}
 	form {
@@ -191,28 +188,56 @@ restrict animation for proper grid support as we are using grid positioning to o
 	fieldset {
 		padding: 0 3% 3%;
 	}
-    #intro label {
+	#intro label {
 		position: static;
 		left: 0;
 	}
+	@supports(column-gap: 20px) {
+		#cath {
+			display: grid;
+			grid-template-columns: 2fr 3fr;
+			background: #cc6;
+			column-gap: 1em;
+			margin-bottom: 1em;
+			font-size: 1.1em;
+		}
+		#cath p {
+			padding: 0;
+		}
+		#cath img {
+			position: relative;
+			left: auto;
+			margin: 0 1em 0 0;
+			border-width: 0;
+			width: 100%;
+		}
+		#cath a {
+			color: white;
+		}
+		/*hide (email:)info@poloafrica*/
+		#cath address p:last-child b:last-of-type {
+			position: absolute;
+			left: -9999px;
+		}
+		#cath address p:last-child b:last-of-type+a:before {
+			content: 'e: ';
+			color: #444;
+		}
+	}
 }
-
 .no-cssgrid.flexbox #response, .no-cssgrid.flexboxtweener #response, .no-cssgrid.flexboxlegacy #response {
 	/*display: -webkit-box;*/
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-    padding: 1em;
+	padding: 1em;
 }
-
 .no-cssgrid.flexbox #response figure, .no-cssgrid.flexboxtweener #response figure, .no-cssgrid.flexboxlegacy #response figure {
-    margin: 0 .5em;
-
+	margin: 0 .5em;
 }
-.no-cssgrid.flexbox #response figure img, .no-cssgrid.flexboxtweener #response figure img, .no-cssgrid.flexboxlegacy #response figure img{
-    width: 100%;
+.no-cssgrid.flexbox #response figure img, .no-cssgrid.flexboxtweener #response figure img, .no-cssgrid.flexboxlegacy #response figure img {
+	width: 100%;
 }
-
 .no-cssgrid.flexbox #response div, .no-cssgrid.flexboxtweener #response div, .no-cssgrid.flexboxlegacy #response div {
-    flex: 2 1 auto;
+	flex: 2 1 auto;
 }
