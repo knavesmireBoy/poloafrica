@@ -25,17 +25,18 @@
 		-ms-background-size: 240%;
 		-webkit-background-size: 240%;
 		background-size: 240%;
+        -o-background-size: cover;
+		-moz-background-size: cover;
+		-ms-background-size: cover;
+		-webkit-background-size: cover;
 		background-size: cover;
 	}
 	section>label {
 		font-weight: bold;
 	}
 	h3, section>label {
-		font-size: 1.4em;
+        font: 1.4em/1.75 'Lora', Georgia, serif;
 		margin: 0;
-		line-height: 1.75;
-		word-spacing: 1px;
-		letter-spacing: 1px;
 	}
 	header nav ul {
 		background: white;
@@ -43,7 +44,7 @@
 		box-shadow: -3px 3px 6px hsla(300, 10%, 20%, .75);
 		border-radius: 2px;
 	}
-	header ul>li a {
+	header nav ul li a {
 		background: none;
 		padding: 0 1em 0 0;
 		display: block;
@@ -53,9 +54,7 @@
 	header ul>li:last-child a {
 		border-width: 0;
 	}
-	.noir {
-		background: black;
-	}
+
 	.menu {
 		background: 50% 1% url("../images/resource/polo_ball_sprite.png") no-repeat;
 		-o-background-size: 100%;
@@ -63,6 +62,10 @@
 		-ms-background-size: 100%;
 		-webkit-background-size: 100%;
 		background-size: 100%;
+        -o-background-size: cover;
+		-moz-background-size: cover;
+		-ms-background-size: cover;
+		-webkit-background-size: cover;
 		background-size: cover;
 		cursor: pointer;
 		-webkit-transition: transform 1s;

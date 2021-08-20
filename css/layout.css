@@ -65,7 +65,7 @@ header li {
 footer>a {
 	display: block;
 }
-header ul ul, h1 img {
+header ul ul, section img.hide, .no-inlinesvg #logo, .no-svgfilters #logo, .no-js #logo {
 	width: auto;
 	position: absolute;
 	left: -9999px;
@@ -80,13 +80,11 @@ section:first-child {
 	margin: 2em 0 0 0;
 }
 
-section img.hide {
-	display: none;
-}
 section.ptrt img {
 	float: right;
 	width: 18%;
 }
+/* no js svg support
 .icon {
 	background-color: pink;
 	background-repeat: no-repeat;
@@ -110,14 +108,12 @@ svg~.icon {
 	padding: 0;
 	width: 1px;
 }
+*/
 .inlinesvg.svgfilters header>a {
 	margin: 0 0 0 1rem;
 	top: 0;
 }
-.no-js #logo {
-	position: absolute;
-	left: -9999px;
-}
+
 nav li.current:hover ul, nav li.current.sfhover ul {
 	left: 0;
 }
@@ -164,10 +160,7 @@ section:nth-child(odd) img {
 #nav a, #fb a {
 	display: block;
 }
-.no-inlinesvg #logo, .no-svgfilters #logo {
-	position: absolute;
-	left: -9999px;
-}
+
 #footer_girl a:first-child {
 	width: 12em;
 	margin: 0 -4em 0 0;
