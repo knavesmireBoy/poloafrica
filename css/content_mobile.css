@@ -25,6 +25,10 @@
 		-ms-background-size: 240%;
 		-webkit-background-size: 240%;
 		background-size: 240%;
+        -o-background-size: cover;
+		-moz-background-size: cover;
+		-ms-background-size: cover;
+		-webkit-background-size: cover;
 		background-size: cover;
 	}
 	section>label {
@@ -34,8 +38,6 @@
 		font-size: 1.4em;
 		margin: 0;
 		line-height: 1.75;
-		word-spacing: 1px;
-		letter-spacing: 1px;
 	}
 	header nav ul {
 		background: white;

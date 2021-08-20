@@ -50,16 +50,9 @@ h2 {
 }
 h3 {
 	margin: 0 0 .3em 0;
-	line-height: 1.2;
-	font-size: 1.75em;
-	word-spacing: 1px;
-	letter-spacing: 1px;
 	color: #990;
 	color: hsl(58, 60%, 40%);
-	font-family: 'Lora', Georgia, serif;
-	font-size: 1.75em;
-    line-height: 1.2;
-	box-sizing: border-box;
+	font: 1.75em/1.2 'Lora', Georgia, serif;
 	width: 100%;
 }
 p {
@@ -83,12 +76,9 @@ footer {
 }
 h2 span {
 	display: inline-block;
-	padding: 0 0 0 15%;
 	padding: 0 0 0 3.75em;
 	padding: 0 0 0 9rem;
 	background-repeat: no-repeat;
-	background-color: white;
-	background-position: 0 50%;
 	width: 100%;
 	/*to cover background gradient on h2*/
 }
@@ -102,7 +92,6 @@ section img {
 }
 article a {
 	font-weight: bold;
-	outline: none;
 }
 footer>a {
 	border-top: dotted 1px #cc6;
@@ -111,9 +100,10 @@ footer>a {
 }
 footer b, footer div a:hover {
 	color: #cc6;
+	color: hsl(60, 50%, 60%);
 }
 header h1, h2 span, header h1 img {
-	border-width: 0px;
+	border-width: 0;
 }
 header>a {
 	white-space: nowrap;
@@ -121,13 +111,11 @@ header>a {
 }
 header a h1 {
 	text-indent: -9999px;
-	margin: 0;
-	font-size: 2em;
-	width: 100%;
 	background-image: url("../images/resource/logo_desktop.png");
 	background-image: url("../images/resource/logo_desk.svg"), linear-gradient(transparent, transparent);
 	background-repeat: no-repeat;
-	line-height: 2.6;
+    font: 2em/2.6 Arial, Verdana, Helvetica, serif;
+    width: 100%;
 }
 /*fallback browsers that support svg as img but not inlinesvg assumes javascript*/
 
@@ -142,27 +130,26 @@ header ul ul {
 	font: normal .9em/1.4 Arial, Verdana, Helvetica, serif;
 	padding: 0 0 1em;
 }
-header ul li a {
+
+header nav > ul > li > a {
 	background-color: #af8ddb;
 	background-image: url("../images/resource/navbg.gif");
 	background-image: linear-gradient(hsl(265, 54%, 64%), hsl(265, 64%, 74%), hsl(265, 54%, 64%));
-	border: solid 1px;
 	border-color: #ccc #306 #306 #ccc;
 	text-align: center;
 }
-header ul ul a, header ul ul a:hover {
-	background-image: none;
+
+header ul li a {
+	border: solid 1px;
 }
+
 footer a:link, footer a:visited {
 	color: white;
 	line-height: normal;
 }
-header ul a:hover, header ul a:active {
+header nav > ul > li > a:hover, header nav > ul > li > a:active {
 	background-image: url("../images/resource/navbghov1.gif");
 	background-image: linear-gradient(hsl(60, 25%, 62%), hsl(60, 35%, 72%), hsl(60, 25%, 62%));
-}
-.no-js body {
-	background-color: hsla(151, 62%, 93%, 0);
 }
 .no-js header {
 		background-blend-mode: multiply;
@@ -178,6 +165,11 @@ header ul a:hover, header ul a:active {
 	-ms-background-size: 17%;
 	-webkit-background-size: 17%;
 	background-size: 17%;
+    	-o-background-size: contain;
+	-moz-background-size: contain;
+	-ms-background-size: contain;
+	-webkit-background-size: contain;
+	background-size: contain;
 	background-size: contain;
 }
 a:link, a:visited, .no-touchevents h3 a:hover, .no-touchevents h3 a:active {
@@ -202,7 +194,7 @@ header ul li a:hover, header ul li a:active {
 	background-color: #b6b686;
 	background-color: hsl(60, 25%, 62%);
 }
-li.current a:link, li.current a:visited {
+li.current > a:link, li.current > a:visited {
 	color: white;
 }
 #wrap ul ul li {
