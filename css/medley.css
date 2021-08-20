@@ -247,12 +247,14 @@ h2 span {
 	}
 	#presslinks nav {
 		margin: 1em 0;
+        padding: 0 1em;
 	}
-	.no-js #presslinks nav {
-		width: 70%;
-	}
+	
 	#medley_links nav {
-		margin: 1em 0 0 .5em;
+		margin: 1em 0 0;
+	}
+    #medley_links nav span{
+		margin-left: 1em;
 	}
 	#tvcoverage h3 {
 		margin: 0;
