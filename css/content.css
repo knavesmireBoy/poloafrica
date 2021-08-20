@@ -162,9 +162,11 @@ header ul a:hover, header ul a:active {
 	background-image: linear-gradient(hsl(60, 25%, 62%), hsl(60, 35%, 72%), hsl(60, 25%, 62%));
 }
 .no-js body {
-	background-color: mintcream;
-	background-color: #e1f8ed;
+	background-color: hsla(151, 62%, 93%, 0);
 }
+.no-js header {
+		background-blend-mode: multiply;
+	}
 .cssgradients h2 {
 	background-image: linear-gradient(to right, #b8b32e, white);
 	background-image: linear-gradient(90deg, hsl(58, 60%, 45%), white);
@@ -338,8 +340,8 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	}
 	.flexwrap header {
 		background-image: url(../images/resource/crop.JPG);
-		background-blend-mode: multiply;
 		background-position: center 40%;
+        background-blend-mode: multiply;
 	}
 	.flexwrap h3 {
 		white-space: nowrap;
@@ -426,6 +428,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		font: bold .9em/2 'Arial Black', Arial, Verdana, Helvetica, serif;
 	}
 }
+/*
 @media only screen and (min-width: 1024px) {
 	.js article, .js section>img, aside {
 		-webkit-transition-property: opacity, -webkit-transform;
@@ -471,3 +474,4 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		opacity: 1;
 	}
 }
+*/

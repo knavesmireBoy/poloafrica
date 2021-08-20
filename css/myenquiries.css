@@ -217,7 +217,14 @@ restrict animation for proper grid support as we are using grid positioning to o
 		#cath a {
 			color: white;
 		}
-		/*hide (email:)info@poloafrica*/
+	}
+}
+
+@media screen and (max-width: 375px) {
+    
+    @supports(column-gap: 20px) {
+    
+    /*hide (email:)info@poloafrica*/
 		#cath address p:last-child b:last-of-type {
 			position: absolute;
 			left: -9999px;
@@ -226,7 +233,7 @@ restrict animation for proper grid support as we are using grid positioning to o
 			content: 'e: ';
 			color: #444;
 		}
-	}
+}
 }
 .no-cssgrid.flexbox #response, .no-cssgrid.flexboxtweener #response, .no-cssgrid.flexboxlegacy #response {
 	/*display: -webkit-box;*/
@@ -244,3 +251,4 @@ restrict animation for proper grid support as we are using grid positioning to o
 .no-cssgrid.flexbox #response div, .no-cssgrid.flexboxtweener #response div, .no-cssgrid.flexboxlegacy #response div {
 	flex: 2 1 auto;
 }
+

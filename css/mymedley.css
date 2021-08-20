@@ -114,9 +114,11 @@
 	.flexbox #presslinks article, .flexboxtweener #presslinks article, .flexboxlegacy #presslinks article, .flexbox #medley_links article, .flexboxtweener #medley_links article, .flexboxlegacy #medley_links article {
 		margin-left: 0;
 	}
+    /*
 	.touchevents #wrap #medley_links nav, .touchevents #wrap #presslinks nav {
 		margin: 1em;
 	}
+    */
 	.touchevents #wrap #medley_links img {
 		margin: 1em;
 	}

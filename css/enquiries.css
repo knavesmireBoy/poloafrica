@@ -72,11 +72,6 @@ textarea, form input, form label {
 	vertical-align: text-bottom;
 }
 
-.js h3 {
-	border-bottom: solid #990 1px;
-	border-bottom: solid hsl(58, 60%, 48%) 1px;
-}
-
 fieldset:last-child {
 	border-width: 0px;
 	padding: .3em 2% 0 2%;
@@ -531,10 +526,16 @@ section:nth-child(2) {
 		box-sizing: border-box;
 	}
 }
+
+
 @media screen and (min-width: 668px) {
 	#cath address {
 		font-style: normal;
 	}
+    .js h3 {
+	border-bottom: solid #990 1px;
+	border-bottom: solid hsl(58, 60%, 48%) 1px;
+}
 	@supports(column-gap: 20px) {
 		/*the textarea form element seems to confuse attempts at a grid layout
             The form expands if textarea is given explicit dimensions either as html attributes, or css.

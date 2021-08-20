@@ -245,8 +245,7 @@ h2 span {
 		float: right;
 		margin: 1em 0 0 3%;
 	}
-	#presslinks nav {
-		margin: 1em 0;
+	.no-js #presslinks nav {
         padding: 0 1em;
 	}
 	

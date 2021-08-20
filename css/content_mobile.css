@@ -142,4 +142,7 @@
 		background-color: #306;
 		background-color: hsl(270, 100%, 20%);
 	}
+    .no-js header {
+        background-color: #555;
+    }
 }
