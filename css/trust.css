@@ -16,6 +16,16 @@
     }
 }
 
+@media screen and (max-width: 1024px) {
+section.ptrt img {
+	-webkit-box-flex: 2;
+	-ms-flex: 2 1 %;
+	-webkit-flex: 2 1 1%;
+	flex: 2 1 1%;
+    width: auto;
+}
+}
+
  @media screen and (max-width: 667px) {
      h2, h2 span {
  		background: none;

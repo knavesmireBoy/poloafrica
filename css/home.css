@@ -4,6 +4,7 @@ h2 span {
 	background: white 0% 50% url(../images/resource/sub_home.jpg) no-repeat;
 }
 
+
 #ani, #tween {
 	width: 18em;
 	height: auto;
@@ -111,7 +112,7 @@ h2 span {
 		position: relative;
 		left: auto;
 	}
-    section:nth-child(3) h3 {
+    section:nth-child(3) h3, section:nth-child(3) label {
         line-height: 1.2;
     }
 

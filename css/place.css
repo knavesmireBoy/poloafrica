@@ -3,6 +3,7 @@
 h2 span {
 	background: white 0% 0% url(../images/resource/sub_place.jpg) no-repeat;
 }
+
 @media only screen {
 	.backgroundsize h2 span {
 		background-image: url(../images/resource/sub_place.png);
@@ -42,6 +43,16 @@ h2 span {
 	section:nth-child(3) p:first-of-type:after, section:nth-child(3) p:first-of-type+p:before, section:nth-child(4) p:first-of-type:after, section:nth-child(4) p:first-of-type+p:before {
 		content: none;
 	}
+    
+}
+@media screen and (max-width: 1024px) {
+section.ptrt img {
+	-webkit-box-flex: 2;
+	-ms-flex: 2 1 %;
+	-webkit-flex: 2 1 1%;
+	flex: 2 1 1%;
+    width: auto;
+}
 }
 @media screen and (max-width: 667px) {
 	h2, h2 span {
