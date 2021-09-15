@@ -202,6 +202,7 @@
 		unsetPortrait = ptL(klasRem, 'portrait', getThumbs),
 		setPortrait = ptL(klasAdd, 'portrait', getThumbs),
 		mytarget = !window.addEventListener ? 'srcElement' : 'target',
+        myTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false,
 		getTarget = utils.drillDown([mytarget]),
 		text_from_target = doComp(doGet('id'), getTarget),
 		node_from_target = doComp(doGet('nodeName'), getTarget),
@@ -583,7 +584,7 @@
 			};
 		},
         
-		$locate = eventing('touchend', event_actions.slice(0, 1), function (e) {
+		$locate = eventing(myTouch ? 'touchend' : 'click', event_actions.slice(0, 1), function (e) {
             var loadBase = twicedefer(loadImageBridge)('base');
 			locator(loadBase(nextcaller), loadBase(prevcaller))(e)[1]();
 			doOrient(e[mytarget]);

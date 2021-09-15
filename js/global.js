@@ -699,11 +699,11 @@ poloAF.Util = (function () {
 		}
 		return el;
 	}
+    
+        /*FATAL ERROR: this failed when called in a loop as v is modified in place and is empty when next called*/
+
 
 	function doMapRecur(el, v) {
-		/*second argument (v) should be an array of arrays [[p,v], [p,v], [[p,v]]]
-		    with style properties wrapped in an extra array and sent last
-		    eg [id, 'fred'], [title, 'our fred'], [txt, 'freddie'], [[opacity: '0.5'], [background-color: 'blue']]*/
         var tgt = v.length && v.splice(0, 1)[0],
 			pass;
         if (!tgt) {
@@ -715,7 +715,10 @@ poloAF.Util = (function () {
         return doMapRecur(el, v);
 	}
     
-    function doMappy(el, v){
+    function doMapLoop(el, v){
+        	/*second argument (v) should be an array of arrays [[p,v], [p,v], [[p,v]]]
+		    with style properties wrapped in an extra array and sent last
+		    eg [id, 'fred'], [title, 'our fred'], [txt, 'freddie'], [[opacity: '0.5'], [background-color: 'blue']]*/
          var tgt,
              pass = false;
         _.each(v, function(arr){
@@ -998,9 +1001,8 @@ poloAF.Util = (function () {
 		curryTwice: curryFactory(2),
 		curryThrice: curryFactory(3),
 		doAlternate: doAlternate,
-		doMap: doMapRecur,
-		//doMap: doMappy,
-		/*USAGE:
+		doMap: doMapLoop,
+		/*USAGE doOnce:
         var once = doOnce(),
         actions = [func1, func2, ...];
         function (flag) {
