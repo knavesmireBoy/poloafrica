@@ -556,9 +556,53 @@
 			}
 			$slide_swapper[m](page_index, myint);
 		},
+        
+        get_play_iteratorAlpacas = function (flag) {
+			var coll,
+                map_from_static = function (coll, sources){
+                    return _.map(sources, function(source){
+                        return _.reduce(coll, function(champ, contender){
+                            return (contender.src === source) ? contender : champ;
+                        });
+                    });              
+                },
+				index = $looper.get('index'),
+                //obtain Dom collection
+				provisional = _.map(_.filter(_.map(getAllPics(), getLI), function (li) {
+					return !li.id;
+				}), getDomTargetImg),
+				i = queryOrientation(provisional[index]) ? 1 : 0,
+				m = 'undo';
+			if (flag) {
+				m = 'execute';
+				/*a)map current running order (reversed or standard) of collection of image sources to img objects
+                in order to determine orientation
+                b) re-order from current index
+                c) groupBy lscp/ptrt*/
+                //coll = re_order(provisional);
+				coll = utils.shuffleArray(map_from_static(provisional, $looper.get('members')))(index);
+                coll = _.toArray(_.groupBy(coll, 'height'));
+				coll = i ? coll[1].concat(coll[0]) : coll[0].concat(coll[1]);
+				$slide_swapper.set(slide_player_factory());
+			} else {
+				//sends original dom-ordered collection when exiting slideshow
+				coll = provisional;
+			}
+            $slide_swapper[m](coll);
+		},
 		do_page_iterator = function (coll) {
 			if (coll && typeof coll.length !== 'undefined') {
 				$looper.build(_.map(coll, getSRC), incrementer);
+			}
+		},
+        do_page_iteratorAlpacas = function (coll) {
+			if (coll && typeof coll.length !== 'undefined') {
+                if(coll[0].src){
+                    $looper.build(_.pluck(coll, 'src'), incrementer);
+                }
+                else {
+                  $looper.build(coll, incrementer);  
+                }
 			}
 		},
 		setindex = function (arg) {
