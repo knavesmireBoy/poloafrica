@@ -110,7 +110,7 @@ if (!window.poloAF) {
 				doResume();
 			}
 			if (urlParams.has('cv')) {
-				var href = ['href', '?'],
+				var href = ['href', '.'],
 					xit = ['id', 'exit'],
 					cross = ['txt', 'close'],
 					head = U.findByTag(0)('header'),
