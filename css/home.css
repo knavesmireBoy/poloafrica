@@ -51,6 +51,70 @@ h2 span {
 #ani img+img {
 	margin: 0 0 0 -100%;
 }
+
+#exit {
+    width: 2em;
+	height: 2em;
+	margin: .5em 1em 5em;
+	display: block;
+    background-image: url("../images/resource/sticks_sprite_fat.png");
+    background-repeat: no-repeat;
+	background-position: 50% 0%;
+    position: relative;
+    -o-background-size: 100%;
+	-moz-background-size: 100%;
+	-ms-background-size: 100%;
+	-webkit-background-size: 100%;
+    background-size: 100%;
+    left: 0;
+    float: right;
+    background-color: transparent;
+    z-index: 2;
+    text-indent: 100%;
+    overflow: hidden;
+}
+#exit:hover, #exit:focus {
+	background-position: 50% 106%;
+}
+
+
+#intro {
+    background-color: black;
+    background-color: rgba(0,0,0, .9);
+    position: absolute;
+    padding: 2em;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    box-shadow: 0px 20px 20px black;
+    font-family: Georgia, serif;
+}
+/*
+#welcome #exit {
+    left: 0;
+    float: right;
+    margin: .5em;
+    background-color: transparent;
+    position: relative;
+    z-index: 2;
+    text-indent: 100%;
+    overflow: hidden;
+}
+*/
+#intro p {
+    margin: .5em;
+    color: white;
+    text-shadow: none;
+    position: relative;
+    z-index: 1;
+}
+#intro p:after {
+    content: none;
+}
+#intro a {
+    color: white;
+    text-decoration: underline;
+}
 /* test float
 #wrap p {
     font-size: 1.3em;
