@@ -79,6 +79,7 @@ h2 span {
 	padding: 0 0 0 3.75em;
 	padding: 0 0 0 9rem;
 	background-repeat: no-repeat;
+    background-color: white;
 	/*to cover background gradient on h2*/
 }
 header ul {
