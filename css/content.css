@@ -473,3 +473,27 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	}
 }
 */
+
+/*
+@media only screen and (min-width: 1024px) {
+    main, main section {
+        position: relative;
+    }
+	.js article, .js section>img, aside {
+        position: relative;
+		opacity: .5;
+        transition: all 1s;
+	}
+	.js section>img, .js aside, .js section:nth-child(even) article {
+		left: 1000px;
+	}
+    .js article, .js section:nth-child(even)>img {
+		left: -1000px;
+	}
+    .js .override section.display article, .js .override section.display>img, .js section.display aside {
+        left: 0px;
+        opacity: 1;
+    }
+
+}
+*/
