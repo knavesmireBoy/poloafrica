@@ -118,7 +118,7 @@ nav li.current:hover ul, nav li.current.sfhover ul {
 	left: 0;
 }
 section:nth-child(odd) img {
-	margin: 0 0 1em 2em;
+	margin: 0 0 1em 2%;
 	float: right;
 	overflow: hidden;
 }
