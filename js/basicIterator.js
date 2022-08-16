@@ -188,6 +188,8 @@ poloAF.Composite = (function () {
 		return composite || leaf;
 	}; //ret func
 }());
+
+
 poloAF.Looper = function () {
 	"use strict";
 

@@ -1,7 +1,7 @@
 /*jslint nomen: true */
 /*global window: false */
 /*global document: false */
-/*global gAlp: false */
+/*global poloAF: false */
 /*global _: false */
 //https://stackoverflow.com/questions/2446740/post-loading-check-if-an-image-is-in-the-browser-cache
 
@@ -43,7 +43,7 @@ function swap (els, filterCB, cb) {
     return _.each(_.filter(els, filterCB), cb);
 }
 
-gAlp.Cacher = function(path, lo, hi) {
+poloAF.Cacher = function(path, lo, hi) {
     
     function getHiRes(el, p) {
         return el.getAttribute(p).replace(lo, hi);
@@ -64,7 +64,7 @@ gAlp.Cacher = function(path, lo, hi) {
             logCache(doMatch(this.src, path, 1));
             //setHiRes(grp[i], 'src');
             if (!grp[i + 1]) {
-                gAlp.Util.addClass(['done'], document.documentElement);
+                poloAF.Util.addClass(['done'], document.documentElement);
                 //no need to filter at this point
                 swap(grp, always(true), curry(setHiRes)(null)('src'));
             }

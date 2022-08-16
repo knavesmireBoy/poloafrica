@@ -678,6 +678,7 @@
 					doPlay = doComp(doVal, _.bind($looper.forward, $looper, true)),
 					doBase = ptL(invoke, loadImageBridge, doPlay, 'base', setPlayer, doSwap),
 					doSlide = ptL(invoke, loadImageBridge, doComp(utils.drillDown(['src']), utils.getChild, utils.getChild, $$('base')), 'slide', doOrient),
+                    
 					fadeOut = {
 						validate: function () {
 							return $recur.i <= -15.5;
