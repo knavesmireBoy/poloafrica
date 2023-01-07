@@ -4,10 +4,15 @@ https://stackoverflow.com/questions/52364501/fallback-for-svg-injection-with-no-
 https://codepen.io/ourmaninamsterdam/pen/ilBIz
 https://codepen.io/tigt/post/inline-svg-fallback-without-javascript-take-2*/
 
+html {
+	--col1: green;
+}
+
 body {
 	font: normal .875em/1.75 'Lora', Georgia, serif;
 	background-color: white;
 }
+
 
 header, h2, h3, h2 span, header a h1 {
     width: 100%;
