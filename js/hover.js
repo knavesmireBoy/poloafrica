@@ -87,9 +87,11 @@ if (!window.poloAF) {
 				domod = twice(modulo)(3),
 				j = 0,
 				timer = 1,
-				intro = "We had been printing for <a href='https://rorypecktrust.org/'>The Rory Peck Trust</a> for some ten years when the late <a href='https://www.frontlineclub.com/in_memoriam_juliet_crawley_peck_1961_-_2007/' target='_blank'>Juliet Peck</a> introduced me to her friend Catherine Cairns who required a website but was short on funds. As I had a lot to learn on this project I agreed to work gratis in return for a print order. A brochure was designed and produced and I developed my first website and duly handed it over for hosting in the summer of 2005. Third parties have regularly updated it, albeit in the most rudimentary fashion, directly editing the html. If you dare squint at the source code of the original <a href='http://www.poloafrica.com' target='_blank'>site</a> its shortcomings are plain to see, more JAM than CMS. When lockdown hit, I thought I would attempt a basic CMS brushing up on php/mysql, whilst cleaning up the source code and making the site responsive. I'm currently maintaining a CMS version - it lives on an aging <a href='http://109.152.198.134/poloafrica/admin?logme=jeff.tracy@tbsrgo.com'>iMac</a> with a copy of the database - and this static version. Plan is get a MERN version hosted on the likes of heroku to give Catherine a fighting chance of uploading new content. For the moment she is content to let Facebook do the heavy lifting.",
-				urlParams = window.URLSearchParams ? new window.URLSearchParams(window.location.search) : {};
-			urlParams.has === urlParams.has || getUrlParameter;
+				urlParams = window.URLSearchParams ? new window.URLSearchParams(window.location.search) : {},
+				intro = "We had been printing for <a href='https://rorypecktrust.org/'>The Rory Peck Trust</a> for some ten years when the late <a href='https://www.frontlineclub.com/in_memoriam_juliet_crawley_peck_1961_-_2007/' target='_blank'>Juliet Peck</a> introduced me to her friend Catherine Cairns who required a website but was short on funds. As I had a lot to learn on this project I agreed to work gratis in return for a print order. A brochure was designed and produced and I developed my first website and duly handed it over for hosting in the summer of 2005. Third parties have regularly updated it, albeit in the most rudimentary fashion, directly editing the html. If you dare squint at the source code of the <a href='http://www.poloafrica.com' target='_blank'>live site</a> its shortcomings are plain to see, more JAM than CMS.",
+				intro2 = "When lockdown hit, one project was attempting a basic CMS brushing up on the old php/mysql combo, cleaning up the html, upgrading the css. That version, and a copy of the database, is currently hosted an old <a href='http://109.152.198.134/poloafrica/admin?logme=jeff.tracy@tbsrgo.com'>iMac.</a> This is simply the static version, but the plan would be get a ME(R)N version hosted on the likes of heroku to give Catherine a fighting chance of uploading new content. For the moment she is content to let Facebook do the heavy lifting in promoting her cause.";
+				
+				urlParams.has === urlParams.has || getUrlParameter;
 
 			function doFade(i) {
 				fade_el.style[key] = cssopacity.getValue(i);
@@ -115,7 +117,11 @@ if (!window.poloAF) {
 					cross = ['txt', 'close'],
 					head = U.findByTag(0)('header'),
 					anc = U.getDomChild(U.getNodeByTag('a'))(head.firstChild);
-				_.compose(twice(U.doMap)([
+				_.compose(
+					twice(U.doMap)([
+						['txt', intro2]
+					]), twice(applyArg)('p'), anCr, _.partial(U.climbDom, 1),
+					twice(U.doMap)([
 					['txt', intro]
 				]), twice(applyArg)('p'), anCr, _.partial(U.climbDom, 1), twice(U.doMap)([href, xit, cross]), twice(applyArg)('a'), anCr, twice(U.doMap)([
 					['id', 'intro']

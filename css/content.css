@@ -372,7 +372,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 		color: #666;
 	}
 	/* para rules before/after don't work on float layout */
-	.flexwrap h3:after, .flexwrap p:first-of-type:after, .flexwrap p:first-of-type+p:before {
+	.flexwrap h3:after, .flexwrap article p:first-of-type:after, .flexwrap article p:first-of-type+p:before {
 		content: '';
 		display: block;
 		border-top: solid 1px #a39f29;
@@ -387,7 +387,7 @@ header ul li a:hover, header ul li a:active, #home li:nth-child(1) a, #trust li:
 	.flexwrap h3:after {
 		margin: -.6em 0 0;
 	}
-	.flexwrap p:first-of-type+p:before {
+	.flexwrap article p:first-of-type+p:before {
 		height: 1em;
 		width: 1em;
 		background: hsl(58, 60%, 40%);
