@@ -16,7 +16,7 @@ h2 span {
 }
 /*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
 @supports(flex-wrap: wrap) or (-webkit-flex-wrap: wrap) or (-ms-flex-wrap: wrap){
-    h2 span {
+    .override h2 span {
 		background-image: url(../images/resource/sub_polo.png);
     }
 }

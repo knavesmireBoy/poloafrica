@@ -42,13 +42,12 @@ h2 span {
 	}
 	section:nth-child(3) p:first-of-type:after, section:nth-child(3) p:first-of-type+p:before, section:nth-child(4) p:first-of-type:after, section:nth-child(4) p:first-of-type+p:before {
 		content: none;
-	}
-    
+	} 
 }
 @media screen and (max-width: 1024px) {
 section.ptrt img {
 	-webkit-box-flex: 2;
-	-ms-flex: 2 1 %;
+	-ms-flex: 2 1 1%;
 	-webkit-flex: 2 1 1%;
 	flex: 2 1 1%;
     width: auto;

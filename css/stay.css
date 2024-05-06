@@ -6,6 +6,14 @@ h2 span {
 	.backgroundsize h2 span {
 		background-image: url(../images/resource/sub_stay.png);
 	}
+	.backgroundsize h2 span {
+		-o-background-size: 13%;
+		-moz-background-size: 13%;
+		-ms-background-size: 13%;
+		-webkit-background-size: 13%;
+		background-size: contain;
+		background-position: 0 center;
+	}
 }
 /*assume support for flex-wrap indicates support for backgroundsize to accommodate no-js scenario*/
 
@@ -14,6 +22,8 @@ h2 span {
 		background-image: url(../images/resource/sub_stay.png);
 	}
 }
+
+
 @media screen and (min-width: 1024px) {
 	section:nth-child(2) p:nth-of-type(2):after {
 		content: '';
