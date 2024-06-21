@@ -17,7 +17,78 @@ if (!window.poloAF) {
  * for the 2nd argument (as in Firefox), and prevents errors when
  * called on other DOM objects.
  */
-(function () {
+
+window.dispatchEvent = window.dispatchEvent || window.fireEvent;
+
+if (typeof Function.prototype.wrap === 'undefined') {
+	//WORKHORSE
+	Function.prototype.wrap = function (wrapper, options) {
+        "use strict";
+		var method = this;
+		return function () {
+			var args = [],
+				L = arguments.length,
+				i;
+			/* options could be provided when wrap is first invoked
+			OR when the returned function is invoked where it would be args[0] below
+			wrapper expects at least (method), maybe (method, options) maybe (method, options, ...rest)
+			if options is pre-supplied rest[0] is args[0] below otherwise rest[0] === options in (method, options)
+			*/
+			if (options) {
+				args.push(options);
+			}
+			for (i = 0; i < L; i += 1) {
+				args.push(arguments[i]);
+			}
+			if (wrapper) {
+				return wrapper.apply(this, [method.bind(this)].concat(args));
+			}
+		};
+	};
+}
+
+(function( window ) {
+	'use strict';
+	var lastTime = 0,
+		prefixes = 'webkit moz ms o'.split(' '),
+		requestAnimationFrame = window.requestAnimationFrame,//get unprefixed rAF and cAF, if present
+		cancelAnimationFrame = window.cancelAnimationFrame,
+		prefix,
+		i;
+	// loop through vendor prefixes and get prefixed rAF and cAF
+	for( i = 0; i < prefixes.length; i++ ) {
+	  if ( requestAnimationFrame && cancelAnimationFrame ) {
+		break;
+	  }
+	  prefix = prefixes[i];
+	  requestAnimationFrame = requestAnimationFrame || window[ prefix + 'RequestAnimationFrame' ];
+	  cancelAnimationFrame  = cancelAnimationFrame  || window[ prefix + 'CancelAnimationFrame' ] ||
+								window[ prefix + 'CancelRequestAnimationFrame' ];
+	}
+  
+	// fallback to setTimeout and clearTimeout if either request/cancel is not supported
+	if ( !requestAnimationFrame || !cancelAnimationFrame ) {
+		requestAnimationFrame = function( callback, element ) {
+		var currTime = new Date().getTime(),
+			timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) ),
+			id = window.setTimeout( function() {
+		  callback( currTime + timeToCall );
+		}, timeToCall );
+		lastTime = currTime + timeToCall;
+		return id;
+	  };
+  
+	  cancelAnimationFrame = function( id ) {
+		window.clearTimeout( id );
+	  };
+	}
+	// put in global namespace
+	window.requestAnimationFrame = requestAnimationFrame;
+	window.cancelAnimationFrame = cancelAnimationFrame;
+  })( window );
+
+
+  (function () {
 	'use strict';
 	var slice = Array.prototype.slice;
 	try {
@@ -74,6 +145,8 @@ if (!window.poloAF) {
 		};
 	}
 }());
+
+  
 if (!Array.prototype.push) {
 	Array.prototype.push = function () {
 		"use strict";
@@ -103,48 +176,9 @@ window.cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAni
 }; //fall back
 */
 
-(function( window ) {
-  'use strict';
-  var lastTime = 0,
-      prefixes = 'webkit moz ms o'.split(' '),
-      requestAnimationFrame = window.requestAnimationFrame,//get unprefixed rAF and cAF, if present
-      cancelAnimationFrame = window.cancelAnimationFrame,
-      prefix,
-      i;
-  // loop through vendor prefixes and get prefixed rAF and cAF
-  for( i = 0; i < prefixes.length; i++ ) {
-    if ( requestAnimationFrame && cancelAnimationFrame ) {
-      break;
-    }
-    prefix = prefixes[i];
-    requestAnimationFrame = requestAnimationFrame || window[ prefix + 'RequestAnimationFrame' ];
-    cancelAnimationFrame  = cancelAnimationFrame  || window[ prefix + 'CancelAnimationFrame' ] ||
-                              window[ prefix + 'CancelRequestAnimationFrame' ];
-  }
-
-  // fallback to setTimeout and clearTimeout if either request/cancel is not supported
-  if ( !requestAnimationFrame || !cancelAnimationFrame ) {
-      requestAnimationFrame = function( callback, element ) {
-      var currTime = new Date().getTime(),
-          timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) ),
-          id = window.setTimeout( function() {
-        callback( currTime + timeToCall );
-      }, timeToCall );
-      lastTime = currTime + timeToCall;
-      return id;
-    };
-
-    cancelAnimationFrame = function( id ) {
-      window.clearTimeout( id );
-    };
-  }
-  // put in global namespace
-  window.requestAnimationFrame = requestAnimationFrame;
-  window.cancelAnimationFrame = cancelAnimationFrame;
-})( window );
 
 
-window.dispatchEvent = window.dispatchEvent || window.fireEvent;
+
 if (!String.prototype.trim) {
 	String.prototype.trim = function () {
         "use strict";
@@ -219,32 +253,7 @@ if (typeof Function.prototype.bind === 'undefined') {
 		};
 	};
 }
-if (typeof Function.prototype.wrap === 'undefined') {
-	//WORKHORSE
-	Function.prototype.wrap = function (wrapper, options) {
-        "use strict";
-		var method = this;
-		return function () {
-			var args = [],
-				L = arguments.length,
-				i;
-			/* options could be provided when wrap is first invoked
-			OR when the returned function is invoked where it would be args[0] below
-			wrapper expects at least (method), maybe (method, options) maybe (method, options, ...rest)
-			if options is pre-supplied rest[0] is args[0] below otherwise rest[0] === options in (method, options)
-			*/
-			if (options) {
-				args.push(options);
-			}
-			for (i = 0; i < L; i += 1) {
-				args.push(arguments[i]);
-			}
-			if (wrapper) {
-				return wrapper.apply(this, [method.bind(this)].concat(args));
-			}
-		};
-	};
-}
+
 
 function ieOpacity(v) {
     "use strict";
