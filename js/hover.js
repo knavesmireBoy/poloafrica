@@ -90,9 +90,10 @@ if (!window.poloAF) {
                // imac = "<a href='http://86.155.78.122/poloafrica/admin?logme=jeff.tracy@tbsrgo.com'>iMac.</a> ",
 				urlParams = window.URLSearchParams ? new window.URLSearchParams(window.location.search) : {},
 				intro = "We had been printing for <a href='https://rorypecktrust.org/'>The Rory Peck Trust</a> for about a decade when the late <a href='https://www.frontlineclub.com/in_memoriam_juliet_crawley_peck_1961_-_2007/' target='_blank'>Juliet Peck</a> introduced me to her friend Catherine Cairns who required a website but was short of the kind of funds then generally demanded for a bespoke website. As I had a much to learn regarding web “design” I agreed to work gratis in return for a print order. A brochure was designed and produced and my first website was handed it over for hosting in the summer of 2005. Third parties have occasionally updated it, albeit in the most rudimentary fashion, directly editing my semantically challenged <a href='http://www.poloafrica.com' target='_blank'>html</a>.",
-				intro2a = "When lockdown hit, one project was attempting a roll-your-own CMS brushing up on the old php/mysql combo whilst cleaning up the html, upgrading the css, flirting with svg and diving into sass. That dynamic version, can still be found on my home <a href='http://86.182.63.112/poloafrica/admin?logme=jeff.tracy@tbsrgo.com'>network</a> at least until it is superseded by a new <a href='http://86.182.63.112'>version</a> (php8). This time I will be using docker, here's the current <a href='https://hub.docker.com/r/andrewjsykes/poloafrica'>repo</a>.",
+				intro2a = "When lockdown hit, one project was attempting a roll-your-own CMS brushing up on the old php/mysql combo whilst cleaning up the html, upgrading the css, flirting with svg and diving into sass. That dynamic version, can still be found on my home <a href='http://109.154.129.220/poloafrica/admin?logme=jeff.tracy@tbsrgo.com'>network</a> at least until it is superseded by a new <a href='http://109.154.129.220'>version</a> (php8). This time I will be using docker, here's the current <a href='https://hub.docker.com/r/andrewjsykes/poloafrica'>repo</a>.",
 				intro3 = "Click the logo to enter the admin pages, default permissions allow you to edit pages and manage assets. It will work without javascript but there are currently few concessions to older browsers.",
-				intro2 = "When lockdown hit, one project was attempting a roll-your-own CMS brushing up on the old php/mysql combo whilst cleaning up the html, upgrading the css, flirting with svg and diving into sass. I have upgraded that initial version to php8 and it MAY be found on my home <a href='http://86.182.63.112' target='_blank'>network</a>, until I can find a suitable host.";
+				intro2 = "When lockdown hit, one project was attempting a roll-your-own CMS brushing up on the old php/mysql combo whilst cleaning up the html, upgrading the css, flirting with svg and diving into sass. I have upgraded that initial version to php8 and it MAY be found on my home <a href='http://86.182.63.112' target='_blank'>network</a>, until I can find a suitable host.",
+				intro4 = "When lockdown hit, one project was attempting a roll-your-own CMS brushing up on the old php/mysql combo whilst cleaning up the html, upgrading the css, flirting with svg and diving into sass. I have upgraded that initial version to php8, learned a little docker and it is currently hosted on <a href='http://35.179.3.79/' target='_blank'AWS</a>. A super user can edit copy upload images shuffle the order of pages, articles and gallery images. Let me know if you would like that to be you!";
 				urlParams.has === urlParams.has || getUrlParameter;
 
 			function doFade(i) {
@@ -121,7 +122,7 @@ if (!window.poloAF) {
 					anc = U.getDomChild(U.getNodeByTag('a'))(head.firstChild);
 				_.compose(
 					twice(U.doMap)([
-						['txt', intro2]
+						['txt', intro4]
 					]), twice(applyArg)('p'), anCr, _.partial(U.climbDom, 1),
 					twice(U.doMap)([
 					['txt', intro]
