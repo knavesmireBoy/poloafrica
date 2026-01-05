@@ -90,7 +90,9 @@ if (!window.poloAF) {
                // imac = "<a href='http://86.143.187.98/poloafrica/admin?logme=jeff.tracy@tbsrgo.com'>iMac.</a> ",
 				urlParams = window.URLSearchParams ? new window.URLSearchParams(window.location.search) : {},
 				intro = "We had been printing for <a href='https://rorypecktrust.org/'>The Rory Peck Trust</a> for a number of years when the late <a href='https://www.frontlineclub.com/in_memoriam_juliet_crawley_peck_1961_-_2007/' target='_blank'>Juliet Peck</a> introduced me to her friend Catherine Cairns who required a website but was short of the kind of funds then generally demanded for a bespoke website. As I had a much to learn regarding web “design” I agreed to work gratis in return for a print order. I designed a print brochure prior to producing my first website and handed it over for hosting in the summer of 2005. Third parties have occasionally updated it, albeit in the most rudimentary manner, directly editing the rather am-dram <a href='http://www.poloafrica.com' target='_blank'>html</a>. This version is a static site that utilises underscore.js to help attain the goal of graceful degradation.",
-				intro4 = "When lockdown hit, one project that appelaed was deploying the MAMP stack to convert the static site into a bespoke CMS whilst cleaning up the html, upgrading the css, flirting with svg and diving into sass. More recently I have upgraded to php8, explored <abbr title=Object Relational Mapping'>ORM</abbr>, discovered nginx and learned a little <a href='https://www.docker.com'>Docker</a> and this <strong>development</strong> version is currently hosted on <a href='http://35.179.3.79/' target='_blank'>AWS</a>. An <em>administrator</em> can edit content, à-la markdown, upload/edit images, manage user authorisation and a fair bit more, and whilst for this roll your own project I've endeavoured to keep the use of tools and libraries to the bare minimum I may finally allow myself to explore a robust framework like Laravel and do myself a big favour and finally learn Wordpress.";
+				intro_php = "When lockdown hit, one project that appealed was deploying the MAMP stack to convert the static site into a bespoke CMS whilst cleaning up the html, upgrading the css, flirting with svg and diving into sass. More recently I have upgraded to php8, explored <abbr title=Object Relational Mapping'>ORM</abbr>, discovered nginx and learned a little <a href='https://www.docker.com'>Docker</a> and I have managed to get this <strong>development</strong> version on AWS before my free tier expired. The latest version can be made available to anyone who's interested, until it finds a new home. An <em>administrator</em> can edit content, à-la markdown, upload/edit images, manage user authorisation and a fair bit more.",
+				intro_aws = "When lockdown hit, one project that appealed was deploying the MAMP stack to convert the static site into a bespoke CMS whilst cleaning up the html, upgrading the css, flirting with svg and diving into sass. More recently I have upgraded to php8, explored <abbr title=Object Relational Mapping'>ORM</abbr>, discovered nginx and learned a little <a href='https://www.docker.com'>Docker</a> and this <strong>development</strong> version is currently hosted on <a href='http://35.179.3.79/' target='_blank'>AWS</a>. An <em>administrator</em> can edit content, à-la markdown, upload/edit images, manage user authorisation and a fair bit more, and whilst for this roll your own project I've endeavoured to keep the use of tools and libraries to the bare minimum I may finally allow myself to explore a robust framework like Laravel and do myself a big favour and finally learn Wordpress.";
+
 				urlParams.has === urlParams.has || getUrlParameter;
 
 			function doFade(i) {
@@ -119,7 +121,7 @@ if (!window.poloAF) {
 					anc = U.getDomChild(U.getNodeByTag('a'))(head.firstChild);
 				_.compose(
 					twice(U.doMap)([
-						['txt', intro4]
+						['txt', intro_php]
 					]), twice(applyArg)('p'), anCr, _.partial(U.climbDom, 1),
 					twice(U.doMap)([
 					['txt', intro]
@@ -158,3 +160,4 @@ if (!window.poloAF) {
 		}());
 	setTimeout(curryDefer(fader)(101), 2222);
 }(["images/articles/fullsize/poloafrica_flower_logo.jpg", "images/articles/fullsize/polo150yrs_squared_logo.jpg", "images/articles/fullsize/polo_armed_forces_logo.jpg"]));
+
